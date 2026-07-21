@@ -1,0 +1,248 @@
+name: Phase 0
+
+on:
+  pull_request:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: phase-0-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  control-plane:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version: 24.11.0
+      - name: Install frozen dependencies
+        run: corepack pnpm install --frozen-lockfile
+      - name: Lint
+        run: corepack pnpm lint
+      - name: Type-check
+        run: corepack pnpm typecheck
+      - name: Test
+        run: corepack pnpm test
+      - name: Build
+        run: corepack pnpm build
+
+  neoforge:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - name: Configure fixture-local Gradle caches
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${GITHUB_WORKSPACE:-}"
+          printf 'GRADLE_USER_HOME=%s/fixtures/basic-content/run/gradle-home\n' "$GITHUB_WORKSPACE" >> "$GITHUB_ENV"
+          printf 'GRADLE_PROJECT_CACHE_DIR=%s/fixtures/basic-content/run/project-cache\n' "$GITHUB_WORKSPACE" >> "$GITHUB_ENV"
+      - name: Set up auxiliary Java 21 toolchain
+        uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
+        with:
+          distribution: temurin
+          java-version: 21.0.11+10
+          check-latest: false
+      - name: Record auxiliary Java 21 toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf 'PHASE0_JAVA21_HOME=%s\n' "$JAVA_HOME" >> "$GITHUB_ENV"
+      - name: Set up Java 25
+        uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
+        with:
+          distribution: temurin
+          java-version: 25.0.3+9
+          check-latest: false
+      - name: Record primary Java 25 toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf 'PHASE0_JAVA25_HOME=%s\n' "$JAVA_HOME" >> "$GITHUB_ENV"
+      - name: Verify pinned Java toolchains and Gradle bootstrap
+        shell: bash
+        working-directory: fixtures/basic-content
+        run: |
+          set -euo pipefail
+
+          runtime_version() {
+            "$1/bin/java" -XshowSettings:properties -version 2>&1 |
+              awk -F' = ' '/^[[:space:]]*java\.runtime\.version = / { print $2; exit }'
+          }
+
+          test "$(realpath "$JAVA_HOME")" = "$(realpath "$PHASE0_JAVA25_HOME")"
+          test "$(runtime_version "$PHASE0_JAVA21_HOME")" = '21.0.11+10-LTS'
+          test "$(runtime_version "$PHASE0_JAVA25_HOME")" = '25.0.3+9-LTS'
+          test "$(runtime_version "$JAVA_HOME")" = '25.0.3+9-LTS'
+
+          toolchains=$(./gradlew --project-cache-dir "$GRADLE_PROJECT_CACHE_DIR" \
+            --dependency-verification strict -q javaToolchains)
+          printf '%s\n' "$toolchains"
+          grep -Eq '\| Auto-detection:[[:space:]]+Disabled$' <<<"$toolchains"
+          grep -Eq '\| Auto-download:[[:space:]]+Disabled$' <<<"$toolchains"
+          test "$(grep -Fc "$PHASE0_JAVA21_HOME" <<<"$toolchains")" -eq 1
+          test "$(grep -Fc "$PHASE0_JAVA25_HOME" <<<"$toolchains")" -eq 1
+          test "$(grep -Ec '^[[:space:]]*\| Location:' <<<"$toolchains")" -eq 2
+
+          ./gradlew --version
+      - name: Require reviewed dependency checksums
+        run: |
+          metadata=fixtures/basic-content/gradle/verification-metadata.xml
+          posix_wrapper=fixtures/basic-content/gradlew
+          windows_wrapper=fixtures/basic-content/gradlew.bat
+          wrapper_jar=fixtures/basic-content/gradle/wrapper/gradle-wrapper.jar
+          versions_lock=packs/neoforge-26.1.2/versions.lock.json
+          inventory=docs/provenance/neoforge-26.1.2-inventory.json
+          inventory_generator=scripts/provenance/build-neoforge-inventory.py
+          dependency_manifest=docs/provenance/neoforge-26.1.2-dependencies.json
+          expected_artifact_count=383
+          artifact_count=$(grep -c '<artifact name=' "$metadata")
+          checksum_count=$(grep -c '<sha256 value=' "$metadata")
+          readarray -t recorded_artifact_counts < <(python3 - \
+            "$versions_lock" "$inventory" "$dependency_manifest" \
+            "$inventory_generator" <<'PY'
+          import hashlib
+          import json
+          import sys
+
+          versions_lock_path, inventory_path, dependency_manifest_path, generator_path = sys.argv[1:]
+          versions_lock, inventory, dependency_manifest = [
+              json.load(open(path, encoding="utf-8"))
+              for path in (versions_lock_path, inventory_path, dependency_manifest_path)
+          ]
+          def sha256(path):
+              with open(path, "rb") as stream:
+                  return hashlib.sha256(stream.read()).hexdigest()
+
+          runtime_command = "python3 scripts/provenance/build-neoforge-inventory.py --emit-runtime-components"
+          assert inventory["inputs"]["generatorSha256"] == sha256(generator_path)
+          assert dependency_manifest["dependencyInventory"]["generator"]["sha256"] == sha256(generator_path)
+          assert dependency_manifest["dependencyInventory"]["sha256"] == sha256(inventory_path)
+          assert inventory["inputs"]["runtimeScopeCommand"] == runtime_command
+          assert {
+              component["evidence"]["runtimeScopeCommand"]
+              for component in inventory["components"]
+          } == {runtime_command}
+          dependencies = {item["name"]: item for item in dependency_manifest["dependencies"]}
+          assert dependencies["NeoForge"]["licenseSourceSha256"] == "b4c2a5b5a585f6217b0f1d75bdedfe2af9eebeedcd5e1613832d16fca4908b56"
+          assert dependencies["ModDevGradle"]["licenseSource"].endswith("/545875049fb624ce2af2c92263ce2907342b7a76/LICENSE")
+          print(versions_lock["verification"]["artifacts"])
+          print(inventory["summary"]["verificationMetadataArtifactCount"])
+          print(inventory["summary"]["inventoryArtifactReferenceCount"])
+          print(dependency_manifest["dependencyInventory"]["artifactReferenceCount"])
+          PY
+          )
+          windows_wrapper_sha=$(tr -d '\r' < "$windows_wrapper" |
+            sed -n 's/^set "WRAPPER_SHA256=\([0-9a-f]\{64\}\)"$/\1/p')
+          test "$artifact_count" -eq "$expected_artifact_count"
+          test "$checksum_count" -eq "$artifact_count"
+          test "${#recorded_artifact_counts[@]}" -eq 4
+          for recorded_count in "${recorded_artifact_counts[@]}"; do
+            test "$recorded_count" -eq "$expected_artifact_count"
+          done
+          ! grep -Eq '<trusted-artifacts|<sha1|<md5' "$metadata"
+          test "$windows_wrapper_sha" = "$(sha256sum "$wrapper_jar" | cut -d ' ' -f 1)"
+          grep -Fq 'elif command -v shasum' "$posix_wrapper"
+          grep -Fq 'shasum -a 256 "$WRAPPER_JAR"' "$posix_wrapper"
+          grep -Fq 'Get-FileHash -LiteralPath $env:WRAPPER_JAR -Algorithm SHA256' "$windows_wrapper"
+          grep -Fq 'if errorlevel 1 (' "$windows_wrapper"
+      - name: Verify Gradle configuration with strict dependency verification
+        working-directory: fixtures/basic-content
+        run: ./gradlew --project-cache-dir "$GRADLE_PROJECT_CACHE_DIR" --dependency-verification strict help
+      - name: Verify smoke logging is console-only
+        working-directory: fixtures/basic-content
+        run: ./gradlew --project-cache-dir "$GRADLE_PROJECT_CACHE_DIR" --dependency-verification strict verifySmokeLoggingConfiguration
+      - name: Clean build with strict dependency verification
+        working-directory: fixtures/basic-content
+        run: ./gradlew --project-cache-dir "$GRADLE_PROJECT_CACHE_DIR" --dependency-verification strict clean build
+      - name: Regenerate reviewed provenance inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${RUNNER_TEMP:-}"
+          fixture=fixtures/basic-content
+          candidate="$RUNNER_TEMP/neoforge-26.1.2-inventory.json"
+          (
+            cd "$fixture"
+            ./gradlew --project-cache-dir "$GRADLE_PROJECT_CACHE_DIR" \
+              --dependency-verification strict \
+              resolveProvenanceLicensePomEvidence
+          )
+          python3 scripts/provenance/build-neoforge-inventory.py \
+            --emit-runtime-components > "$fixture/run/inventory-runtime-components.txt"
+          python3 scripts/provenance/build-neoforge-inventory.py \
+            --runtime-components "$fixture/run/inventory-runtime-components.txt" > "$candidate"
+          cmp -- docs/provenance/neoforge-26.1.2-inventory.json "$candidate"
+      - name: Run infrastructure GameTest
+        working-directory: fixtures/basic-content
+        run: ./gradlew --project-cache-dir "$GRADLE_PROJECT_CACHE_DIR" --dependency-verification strict runGameTestServer
+      - name: Test smoke-process guards
+        run: ./scripts/test-smoke-guards.sh
+      - name: Smoke-test dedicated server
+        run: ./scripts/smoke-dedicated-server.sh
+
+  client-smoke:
+    needs: neoforge
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - name: Configure fixture-local Gradle caches
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${GITHUB_WORKSPACE:-}"
+          printf 'GRADLE_USER_HOME=%s/fixtures/basic-content/run/gradle-home\n' "$GITHUB_WORKSPACE" >> "$GITHUB_ENV"
+          printf 'GRADLE_PROJECT_CACHE_DIR=%s/fixtures/basic-content/run/project-cache\n' "$GITHUB_WORKSPACE" >> "$GITHUB_ENV"
+      - name: Set up auxiliary Java 21 toolchain
+        uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
+        with:
+          distribution: temurin
+          java-version: 21.0.11+10
+          check-latest: false
+      - name: Record auxiliary Java 21 toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf 'PHASE0_JAVA21_HOME=%s\n' "$JAVA_HOME" >> "$GITHUB_ENV"
+      - name: Set up Java 25
+        uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
+        with:
+          distribution: temurin
+          java-version: 25.0.3+9
+          check-latest: false
+      - name: Record primary Java 25 toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf 'PHASE0_JAVA25_HOME=%s\n' "$JAVA_HOME" >> "$GITHUB_ENV"
+      - name: Verify Java 25 remains the client default
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(realpath "$JAVA_HOME")" = "$(realpath "$PHASE0_JAVA25_HOME")"
+          "$PHASE0_JAVA21_HOME/bin/java" -version
+          "$PHASE0_JAVA25_HOME/bin/java" -version
+      - name: Install headless display dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends xvfb xauth x11-xkb-utils
+      - name: Smoke-test headless client
+        run: ./scripts/smoke-client-ci.sh

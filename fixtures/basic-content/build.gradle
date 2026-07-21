@@ -1,0 +1,123 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.141'
+}
+
+group = 'dev.mcdev.fixture'
+version = '0.0.0'
+
+def phase0SmokeLog4jConfig =
+    layout.projectDirectory.file('config/phase0-smoke-log4j2.xml')
+def provenanceLicensePomEvidence =
+    layout.projectDirectory.file('../../scripts/provenance/neoforge-license-pom-evidence.txt')
+
+base {
+    archivesName = 'basic-content-fixture'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+}
+
+neoForge {
+    version = '26.1.2.80'
+
+    runs {
+        client {
+            client()
+            gameDirectory = project.file('run/client')
+            loggingConfigFile.set(phase0SmokeLog4jConfig)
+            systemProperty 'neoforge.enabledGameTestNamespaces', 'basiccontent'
+        }
+
+        server {
+            server()
+            gameDirectory = project.file('run/server')
+            programArgument '--nogui'
+            loggingConfigFile.set(phase0SmokeLog4jConfig)
+            systemProperty 'neoforge.enabledGameTestNamespaces', 'basiccontent'
+        }
+
+        gameTestServer {
+            type = 'gameTestServer'
+            gameDirectory = project.file('run/gametest')
+            systemProperty 'neoforge.enabledGameTestNamespaces', 'basiccontent'
+        }
+    }
+
+    mods {
+        basiccontent {
+            sourceSet(sourceSets.main)
+        }
+    }
+}
+
+tasks.register('verifySmokeLoggingConfiguration') {
+    dependsOn 'prepareClientRun', 'prepareServerRun'
+
+    inputs.file(phase0SmokeLog4jConfig)
+
+    doLast {
+        [
+            client: [vmArgs: 'clientRunVmArgs.txt', config: 'clientLog4j2.xml'],
+            server: [vmArgs: 'serverRunVmArgs.txt', config: 'serverLog4j2.xml']
+        ].each { runName, filenames ->
+            def vmArgsFile = layout.buildDirectory.file("moddev/${filenames.vmArgs}").get().asFile
+            def configurationFile = layout.buildDirectory.file("moddev/${filenames.config}").get().asFile
+            def configurationArguments = vmArgsFile.readLines('UTF-8').findAll {
+                it.startsWith('-Dlog4j2.configurationFile=')
+            }
+
+            if (configurationArguments.size() != 1) {
+                throw new GradleException("${runName} must have exactly one Log4j2 configuration argument")
+            }
+            if (!java.util.Arrays.equals(phase0SmokeLog4jConfig.asFile.bytes, configurationFile.bytes)) {
+                throw new GradleException("${runName} must use the reviewed console-only Log4j2 configuration")
+            }
+        }
+    }
+}
+
+tasks.register('resolveProvenanceLicensePomEvidence') {
+    inputs.file(provenanceLicensePomEvidence)
+
+    doLast {
+        def coordinates = provenanceLicensePomEvidence.asFile.readLines('UTF-8')
+            .collect { it.trim() }
+            .findAll { !it.isEmpty() && !it.startsWith('#') }
+        if (coordinates != coordinates.toSet().toList().sort()) {
+            throw new GradleException(
+                'Provenance license-POM coordinates must be sorted and duplicate-free')
+        }
+
+        coordinates.each { coordinate ->
+            def parts = coordinate.split(':', -1)
+            if (parts.length != 3 || parts.any { it.isEmpty() }) {
+                throw new GradleException(
+                    "Malformed provenance license-POM coordinate: ${coordinate}")
+            }
+
+            def dependency = dependencies.create("${coordinate}@pom")
+            def evidenceConfiguration = configurations.detachedConfiguration(dependency)
+            evidenceConfiguration.transitive = false
+            def resolved = evidenceConfiguration.resolve().toList()
+            def expectedName = "${parts[1]}-${parts[2]}.pom"
+            if (resolved.size() != 1 || resolved[0].name != expectedName) {
+                throw new GradleException(
+                    "Expected exactly ${expectedName} for ${coordinate}, resolved ${resolved*.name}")
+            }
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 25
+}
+
+tasks.withType(AbstractArchiveTask).configureEach {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}

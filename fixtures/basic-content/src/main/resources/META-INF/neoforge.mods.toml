@@ -1,0 +1,23 @@
+license = "Apache-2.0"
+
+[[mods]]
+modId = "basiccontent"
+version = "0.0.0"
+displayName = "Basic Content Infrastructure Fixture"
+description = '''
+Minimal, original infrastructure fixture for the NeoForge 26.1.2 Phase 0 gates.
+'''
+
+[[dependencies.basiccontent]]
+modId = "neoforge"
+type = "required"
+versionRange = "[26.1.2.80]"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.basiccontent]]
+modId = "minecraft"
+type = "required"
+versionRange = "[26.1.2]"
+ordering = "NONE"
+side = "BOTH"
