@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "fabricempty",
+  "version": "${version}",
+  "name": "Fabric 26.2 Empty Fixture",
+  "description": "Minimal trusted baseline fixture for the Fabric-first mcdev compatibility pack.",
+  "authors": [
+    "MINECRAFT-MODS-SKILL contributors"
+  ],
+  "license": "Apache-2.0",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dev.mcdev.fixture.fabricempty.FabricEmpty"
+    ],
+    "client": [
+      "dev.mcdev.fixture.fabricempty.client.FabricEmptyClient"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.19.3",
+    "minecraft": "~26.2",
+    "java": ">=25",
+    "fabric-api": "*"
+  }
+}
