@@ -2,7 +2,7 @@
 
 ## Статус
 
-Принято 2026-07-21 только для двух frozen patches, перечисленных ниже, на базовом `HEAD` `f7bd04a9e0737de40b65c80c4eabed69cee206ce`.
+Принято 2026-07-21 только для двух frozen patches, перечисленных ниже, на базовом `HEAD` `b7567ea7dd4145e9117b1af70abe9e0f40f601d5`.
 
 ## Контекст
 
@@ -31,10 +31,10 @@ Phase 0 был разделён между изолированными worktree
 ### NeoForge baseline
 
 - agent: `phase0-neoforge-baseline`;
-- frozen patch SHA-256: `478fe5bfd73a5c25fc82f80bb149dd041ac00303e9841ab217922df61fa49115`;
-- размер: `1046004` байта, `27` файлов, `19854` вставки и `0` удалений;
+- frozen patch SHA-256: `7425431fd01f7cbd4f824a1a514155cfafd4605beb74040f8497c0a99828f24e`;
+- размер: `1052174` байта, `27` файлов, `19999` вставок и `0` удалений;
 - formal score: `0.30` при требуемых `0.85`;
-- score artifact SHA-256: `1a481da53700ead15074f6ef9338853873f92fa82392cbb6dfc93175b6c03a52`;
+- score artifact SHA-256: `d1590f5bb94d67212ea88c8a1bd0205750bee8c91cfa44581ab4fadc0b1f2955`;
 - scorer failures: `min_patch_score` и `ownership_match`;
 - пути вне первоначального claim: `scripts/provenance/build-neoforge-inventory.py`, `scripts/provenance/inventory-runtime.init.gradle`, `scripts/provenance/neoforge-license-pom-evidence.txt`.
 
@@ -42,7 +42,7 @@ Phase 0 был разделён между изолированными worktree
 
 Предыдущий SHA-256 NeoForge patch был заменён после формального review. Новый артефакт исправляет все содержательные findings: runtime provenance исполняется self-contained режимом `--emit-runtime-components` с exact JDK и fixture-local caches, NeoForge/ModDevGradle license evidence использует immutable SHA-проверенные источники, test-only process-group helpers удалены из production guard library, а runtime diagnostics fail closed валидирует всё дерево `logs/`.
 
-Финальное deadline-hardening запускает общий GNU `timeout` до любого preflight и связывает child с точными duration, direct parent PID/starttime, inode executable и полным bounded NUL-разделённым argv. `BASHPID` сохраняется до command substitution, исключая clock-tick flake. Preflight и diagnostics используют единственный capped NUL-safe `find` stream; второго newline-based обхода нет. Реальный wrong-duration supervisor отклоняется, hanging traversal завершается по лимиту без исполняемого потомка, а newline filename покрыт regression. Exact ShellCheck/bash/diff-check, десять суммарных последовательных full guard прогонов, реальные dedicated-server/headless-client smoke и strict byte-identical provenance reproduction прошли. Независимое финальное review дало `NEO QUALITY: APPROVE` без line-specific findings; full-index patch побайтно равен worktree diff и чисто применяется к базовому `HEAD`.
+Финальное deadline-hardening запускает общий GNU `timeout` до любого preflight и связывает child с точными duration, direct parent PID/starttime, inode executable и полным bounded NUL-разделённым argv. `BASHPID` сохраняется до command substitution, исключая clock-tick flake. Preflight и diagnostics используют единственный capped NUL-safe `find` stream; второго newline-based обхода нет. Полный producer+validator pipeline выполняется private worker под единым hard process-group deadline, поэтому зависнуть вне 30-секундного traversal cap не могут ни `find`, ни per-entry `stat`; статусы found/producer/validator остаются различимы. Реальный wrong-duration supervisor отклоняется, TERM-ignoring producer и validator уничтожаются без активного потомка, а newline filename покрыт regression. Exact ShellCheck/bash/diff-check, двенадцать суммарных последовательных full guard прогонов, реальные dedicated-server/headless-client smoke и strict byte-identical provenance reproduction прошли. Targeted rereview ранее найденного complete-scan blocker дало `COMPLETE SCAN: APPROVE`; full-index patch побайтно равен worktree diff и чисто применяется к базовому `HEAD`.
 
 ## Условия применения
 
