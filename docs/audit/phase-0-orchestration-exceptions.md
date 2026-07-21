@@ -29,16 +29,16 @@ Phase 0 был разделён между изолированными worktree
 ### NeoForge baseline
 
 - agent: `phase0-neoforge-baseline`;
-- frozen patch SHA-256: `b63118164a7087121fb430b5bb7f2323abe43ca210768e2f6c0b9c9758400b46`;
-- размер: `1025399` байт, `27` файлов, `19394` вставки и `0` удалений;
+- frozen patch SHA-256: `fd4777e990b4062b8c6c084f0592cb24d8f67b880993cb89734871456638c8bc`;
+- размер: `1026847` байт, `27` файлов, `19434` вставки и `0` удалений;
 - formal score: `0.30` при требуемых `0.85`;
-- score artifact SHA-256: `21571f5bdbab631145ed98182a3f471f55aed38a51d70be6ea8c1d201ce80a9b`;
+- score artifact SHA-256: `dc877d8fab6265869a3e45ad592e66f07b04c71053768769a3461822c29a8925`;
 - scorer failures: `min_patch_score` и `ownership_match`;
 - пути вне первоначального claim: `scripts/provenance/build-neoforge-inventory.py`, `scripts/provenance/inventory-runtime.init.gradle`, `scripts/provenance/neoforge-license-pom-evidence.txt`.
 
 Размер diff в основном создают проверяемый dependency inventory (`659512` байт), Gradle verification metadata (`95309` байт) и неизменённый Gradle wrapper JAR (`45633` байта). Три отмеченных provenance-файла нужны для воспроизводимого построения inventory и доказательств лицензий; они разрешены уточнённым claim. Независимое semantic review baseline дало `APPROVE` без code/doc blocker.
 
-Предыдущий SHA-256 NeoForge patch был заменён после формального review. Новый артефакт исправляет все содержательные findings: runtime provenance теперь исполняется self-contained режимом `--emit-runtime-components` с exact JDK и fixture-local caches, NeoForge/ModDevGradle license evidence использует immutable SHA-проверенные источники, а test-only process-group helpers удалены из production guard library. Strict provenance reproduction, poisoned-ambient regression, shell checks и полный smoke-guard self-test прошли; full-index patch заново проверен на побайтное равенство worktree diff и применимость к текущему `HEAD`.
+Предыдущий SHA-256 NeoForge patch был заменён после формального review. Новый артефакт исправляет все содержательные findings: runtime provenance теперь исполняется self-contained режимом `--emit-runtime-components` с exact JDK и fixture-local caches, NeoForge/ModDevGradle license evidence использует immutable SHA-проверенные источники, test-only process-group helpers удалены из production guard library, а runtime diagnostics fail closed валидирует всё дерево `logs/` и считает symlink, FIFO, socket, device, unreadable traversal и иной unsupported entry диагностикой. Strict provenance reproduction, poisoned-ambient regression, shell checks, focused special-file regressions и полный smoke-guard self-test прошли; full-index patch заново проверен на побайтное равенство worktree diff и применимость к текущему `HEAD`.
 
 ## Условия применения
 
