@@ -1,0 +1,140 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-21",
+  "productLicense": "Apache-2.0",
+  "completeInventory": {
+    "path": "docs/provenance/control-plane-inventory.json",
+    "sha256": "7f56908e0eade8ec2fd75944d77cf11a784f6231d9f52f07e475c959e5c7988d",
+    "bytes": 234032,
+    "workspaceCount": 5,
+    "selectedLicenseEntryCount": 168,
+    "uniquePackageVersionCount": 174,
+    "licenseGroupCount": 6,
+    "lockArtifactIntegrityCount": 174,
+    "resolvedTarballCount": 174,
+    "redistributedPackageCount": 0,
+    "vendoredPackageCount": 0,
+    "unresolvedCount": 0,
+    "acceptedAdvisoryCount": 1
+  },
+  "entries": [
+    {
+      "name": "Node.js",
+      "version": "24.11.0",
+      "scope": "toolchain",
+      "license": "MIT",
+      "source": "https://github.com/nodejs/node/tree/v24.11.0",
+      "documentation": "https://github.com/nodejs/node/blob/main/doc/changelogs/CHANGELOG_V24.md",
+      "integrity": "https://nodejs.org/dist/v24.11.0/SHASUMS256.txt.asc"
+    },
+    {
+      "name": "pnpm",
+      "version": "11.8.0",
+      "scope": "package-manager",
+      "license": "MIT",
+      "source": "https://github.com/pnpm/pnpm/tree/v11.8.0",
+      "documentation": "https://pnpm.io/installation#using-corepack",
+      "registryTarball": "https://registry.npmjs.org/pnpm/-/pnpm-11.8.0.tgz",
+      "integrity": "sha512-wfXnxMskHI8XS3Q4UdgvQrgCMkr8iw8Ra5atsVqgZmSUjd42lgo7oQebpbSyndAUATW5S1tfUmNZIknWjlVfJg==",
+      "corepackPackageManager": "pnpm@11.8.0+sha512.c1f5e7c4cb241c8f174b743851d82f42b802324afc8b0f116b96adb15aa06664948dde36960a3ba1079ba5b4b29dd0140135b94b5b5f5263592249d68e555f26"
+    },
+    {
+      "name": "@modelcontextprotocol/sdk",
+      "version": "1.29.0",
+      "scope": "runtime",
+      "license": "MIT",
+      "source": "https://github.com/modelcontextprotocol/typescript-sdk/tree/v1.29.0",
+      "documentation": "https://github.com/modelcontextprotocol/typescript-sdk/blob/v1.29.0/docs/server.md",
+      "integrity": "pnpm-lock.yaml"
+    },
+    {
+      "name": "zod",
+      "version": "4.4.2",
+      "scope": "runtime",
+      "license": "MIT",
+      "source": "https://github.com/colinhacks/zod/tree/v4.4.2",
+      "documentation": "https://zod.dev/json-schema",
+      "integrity": "pnpm-lock.yaml"
+    },
+    {
+      "name": "hono",
+      "version": "4.12.25",
+      "scope": "transitive-runtime-security-pin",
+      "license": "MIT",
+      "source": "https://github.com/honojs/hono/tree/fce483e11466b72d27e61d44523c7e6edeb19e50",
+      "documentation": "https://hono.dev/docs/middleware/builtin/cors",
+      "integrity": "sha512-2NFaIyNVgJmBs/ecmtGzlmluTFs5cHEWGTdu0t1HBwYzoGXOL5nUQBRMXsXWla5i4KkG//QMzVP88m1+I3fdAQ=="
+    },
+    {
+      "name": "body-parser",
+      "version": "2.3.0",
+      "scope": "transitive-runtime-security-pin",
+      "license": "MIT",
+      "source": "https://github.com/expressjs/body-parser/tree/d0f2ace6c74769da7d19b8661b9a01c01bdb0bf7",
+      "documentation": "https://expressjs.com/en/resources/middleware/body-parser.html",
+      "integrity": "sha512-2cGmJupaNgg+QUwVLAucDuWuoMZ6EX9iHDRswZ5lsNYEmwPaRknMPCLZz07yTzVq/83p4o/wzbDZbBrTvGGTIw==",
+      "advisory": "https://github.com/advisories/GHSA-v422-hmwv-36x6",
+      "patchedRange": ">=2.3.0"
+    },
+    {
+      "name": "ip-address",
+      "version": "10.1.0",
+      "scope": "transitive-runtime-residual-risk",
+      "license": "MIT",
+      "source": "https://github.com/beaugunderson/ip-address/tree/7c49446ebe28718676dfe04495347ecafb0c494a",
+      "documentation": "https://github.com/beaugunderson/ip-address",
+      "integrity": "sha512-XXADHxXmvT9+CRxhXg56LJovE+bmWnEWB78LB83VZTprKTmaC5QfruXocxzTZ2Kl0DNwKuBdlIhjL8LeY8Sf8Q==",
+      "advisory": "https://github.com/advisories/GHSA-v2v4-37r5-5v8g",
+      "severity": "moderate",
+      "patchedRange": ">=10.1.1",
+      "dependencyConstraint": "express-rate-limit@8.4.1 declares ip-address exactly 10.1.0",
+      "reachability": "HTTP rate-limit graph is not imported by the stdio-only Phase 0 entrypoint; vulnerable Address6 HTML emitters are not called",
+      "acceptance": "Do not force an override outside the upstream exact dependency constraint; track until express-rate-limit publishes a compatible graph"
+    },
+    {
+      "name": "typescript",
+      "version": "5.9.3",
+      "scope": "development",
+      "license": "Apache-2.0",
+      "source": "https://github.com/microsoft/TypeScript/tree/v5.9.3",
+      "documentation": "https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-9.html",
+      "integrity": "pnpm-lock.yaml"
+    },
+    {
+      "name": "@types/node",
+      "version": "24.12.2",
+      "scope": "development",
+      "license": "MIT",
+      "source": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node",
+      "documentation": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node",
+      "integrity": "pnpm-lock.yaml"
+    },
+    {
+      "name": "eslint",
+      "version": "10.7.0",
+      "scope": "development",
+      "license": "MIT",
+      "source": "https://github.com/eslint/eslint/tree/v10.7.0",
+      "documentation": "https://eslint.org/docs/latest/use/configure/configuration-files",
+      "integrity": "pnpm-lock.yaml"
+    },
+    {
+      "name": "@eslint/js",
+      "version": "10.0.1",
+      "scope": "development",
+      "license": "MIT",
+      "source": "https://github.com/eslint/eslint/tree/main/packages/js",
+      "documentation": "https://eslint.org/docs/latest/use/configure/configuration-files",
+      "integrity": "pnpm-lock.yaml"
+    },
+    {
+      "name": "typescript-eslint",
+      "version": "8.63.0",
+      "scope": "development",
+      "license": "MIT",
+      "source": "https://github.com/typescript-eslint/typescript-eslint/tree/v8.63.0",
+      "documentation": "https://typescript-eslint.io/getting-started/",
+      "integrity": "pnpm-lock.yaml"
+    }
+  ]
+}

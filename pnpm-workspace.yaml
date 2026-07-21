@@ -1,0 +1,14 @@
+packages:
+  - packages/*
+  - apps/*
+
+linkWorkspacePackages: true
+engineStrict: true
+overrides:
+  '@typescript-eslint/tsconfig-utils': 8.63.0
+  '@typescript-eslint/types': 8.63.0
+  body-parser: 2.3.0
+  hono: 4.12.25
+saveExact: true
+sharedWorkspaceLockfile: true
+verifyDepsBeforeRun: false

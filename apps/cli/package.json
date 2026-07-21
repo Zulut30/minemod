@@ -1,0 +1,14 @@
+{
+  "name": "@mcdev/cli",
+  "version": "0.0.0-phase.0",
+  "license": "Apache-2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node --experimental-strip-types index.ts",
+    "test": "node --experimental-strip-types test.ts"
+  },
+  "dependencies": {
+    "@mcdev/validation": "workspace:*"
+  }
+}
