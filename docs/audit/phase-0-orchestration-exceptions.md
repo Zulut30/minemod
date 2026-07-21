@@ -2,7 +2,7 @@
 
 ## Статус
 
-Принято 2026-07-21 только для двух frozen patches, перечисленных ниже.
+Принято 2026-07-21 только для двух frozen patches, перечисленных ниже, на базовом `HEAD` `f7bd04a9e0737de40b65c80c4eabed69cee206ce`.
 
 ## Контекст
 
@@ -15,30 +15,34 @@ Phase 0 был разделён между изолированными worktree
 ### Control plane
 
 - agent: `phase0-specs-control-plane`;
-- frozen patch SHA-256: `6b4031be4e8bbe41d8ae10c17c1da5a5a6b5dc71f1c467e40c6e1010ef459343`;
-- размер: `458234` байта, `23` файла;
+- frozen patch SHA-256: `c90420a81ec7ab379ad2ab2e353f9983a9112663fb9655d6717047cc9c7ef4f1`;
+- размер: `509687` байт, `23` файла, `14640` вставок и `0` удалений;
 - formal score: `0.26` при требуемых `0.85`;
-- score artifact SHA-256: `bc1edf968623ab643e775fe69c51809ea048b3f31b2d9350f01b4fe756a06b0c`;
+- score artifact SHA-256: `0c8aaaf4828a15f025dd3e50e126db5e92501b65bc203f4c11bb21566e0dd958`;
 - scorer failures: `min_patch_score` и `ownership_match`;
 - единственный путь вне первоначального claim: `tsconfig.json`.
 
 Размер diff существенно формируют обязательные воспроизводимые артефакты: dependency inventory (`234032` байта, SHA-256 `7f56908e0eade8ec2fd75944d77cf11a784f6231d9f52f07e475c959e5c7988d`) и `pnpm-lock.yaml` (`49719` байт, SHA-256 `ac83863800b68e7bdee1527ed89c01fe4266ca673a4ed55841e1bcb8a6131ced`). Корневой `tsconfig.json` (`452` байта, SHA-256 `0dca329e5ac270d7d881d9de750be1e67aebc603c47df1010ac2f03cb6fd397e`) необходим для единой TypeScript-конфигурации workspace и разрешён уточнённым claim.
 
-Первоначальное формальное review обнаружило semantic blocker в обходе inherited enumerable keys. До принятия этого исключения blocker исправлен fail-closed проверкой до накопления и сортировки ключей. Отдельные subprocess-регрессии с `250000` свойств на `Object.prototype` и `Array.prototype` подтверждают один детерминированный `NON_JSON_VALUE`, отсутствие вызова getter и semantic handlers и ограниченное время/память. Независимое повторное review исправления дало `APPROVE`.
+Первоначальное формальное review обнаружило semantic blocker в обходе inherited enumerable keys. До принятия этого исключения blocker исправлен fail-closed проверкой до накопления и сортировки ключей. Отдельные subprocess-регрессии с `250000` свойств на `Object.prototype` и `Array.prototype` подтверждают один детерминированный `NON_JSON_VALUE`, отсутствие вызова getter и semantic handlers и ограниченное время/память.
+
+Последующее contract review дополнительно отклонило hardcoded loader по умолчанию, generic `resources[]` вместо канонических разделов и неполный ArtSpec. Текущий exact patch делает базовую validation loader-neutral, оставляет NeoForge tuple только именованным trusted profile, вводит typed `items`/`blocks`/`entities`/`recipes`/`summoning`/`screens`, typed assets/integrations/GameTests и полный bounded ArtSpec с target matrix, class-specific contexts, visual constraints, provenance и budgets. Публичный wire contract использует числовой `schemaVersion: 0`; будущий production IR v1 явно отделён в roadmap. Все известные массивы имеют ранние caps, а одновременные максимальные ModSpec/ArtSpec укладываются в глобальные structural limits. Exact Node 24 frozen install, audit-high, lint, typecheck, все четыре test suite и build прошли; независимое contract review дало `CONTROL CONTRACT: APPROVE`.
 
 ### NeoForge baseline
 
 - agent: `phase0-neoforge-baseline`;
-- frozen patch SHA-256: `fd4777e990b4062b8c6c084f0592cb24d8f67b880993cb89734871456638c8bc`;
-- размер: `1026847` байт, `27` файлов, `19434` вставки и `0` удалений;
+- frozen patch SHA-256: `478fe5bfd73a5c25fc82f80bb149dd041ac00303e9841ab217922df61fa49115`;
+- размер: `1046004` байта, `27` файлов, `19854` вставки и `0` удалений;
 - formal score: `0.30` при требуемых `0.85`;
-- score artifact SHA-256: `dc877d8fab6265869a3e45ad592e66f07b04c71053768769a3461822c29a8925`;
+- score artifact SHA-256: `1a481da53700ead15074f6ef9338853873f92fa82392cbb6dfc93175b6c03a52`;
 - scorer failures: `min_patch_score` и `ownership_match`;
 - пути вне первоначального claim: `scripts/provenance/build-neoforge-inventory.py`, `scripts/provenance/inventory-runtime.init.gradle`, `scripts/provenance/neoforge-license-pom-evidence.txt`.
 
 Размер diff в основном создают проверяемый dependency inventory (`659512` байт), Gradle verification metadata (`95309` байт) и неизменённый Gradle wrapper JAR (`45633` байта). Три отмеченных provenance-файла нужны для воспроизводимого построения inventory и доказательств лицензий; они разрешены уточнённым claim. Независимое semantic review baseline дало `APPROVE` без code/doc blocker.
 
-Предыдущий SHA-256 NeoForge patch был заменён после формального review. Новый артефакт исправляет все содержательные findings: runtime provenance теперь исполняется self-contained режимом `--emit-runtime-components` с exact JDK и fixture-local caches, NeoForge/ModDevGradle license evidence использует immutable SHA-проверенные источники, test-only process-group helpers удалены из production guard library, а runtime diagnostics fail closed валидирует всё дерево `logs/` и считает symlink, FIFO, socket, device, unreadable traversal и иной unsupported entry диагностикой. Strict provenance reproduction, poisoned-ambient regression, shell checks, focused special-file regressions и полный smoke-guard self-test прошли; full-index patch заново проверен на побайтное равенство worktree diff и применимость к текущему `HEAD`.
+Предыдущий SHA-256 NeoForge patch был заменён после формального review. Новый артефакт исправляет все содержательные findings: runtime provenance исполняется self-contained режимом `--emit-runtime-components` с exact JDK и fixture-local caches, NeoForge/ModDevGradle license evidence использует immutable SHA-проверенные источники, test-only process-group helpers удалены из production guard library, а runtime diagnostics fail closed валидирует всё дерево `logs/`.
+
+Финальное deadline-hardening запускает общий GNU `timeout` до любого preflight и связывает child с точными duration, direct parent PID/starttime, inode executable и полным bounded NUL-разделённым argv. `BASHPID` сохраняется до command substitution, исключая clock-tick flake. Preflight и diagnostics используют единственный capped NUL-safe `find` stream; второго newline-based обхода нет. Реальный wrong-duration supervisor отклоняется, hanging traversal завершается по лимиту без исполняемого потомка, а newline filename покрыт regression. Exact ShellCheck/bash/diff-check, десять суммарных последовательных full guard прогонов, реальные dedicated-server/headless-client smoke и strict byte-identical provenance reproduction прошли. Независимое финальное review дало `NEO QUALITY: APPROVE` без line-specific findings; full-index patch побайтно равен worktree diff и чисто применяется к базовому `HEAD`.
 
 ## Условия применения
 
