@@ -4,15 +4,19 @@ import type {
   CompatibilityPackFile,
   CompatibilityPackManifest,
   CompatibilitySelector,
+  CompatibilitySelectorV2,
 } from "@mcdev/contracts";
-import { COMPATIBILITY_PACK_CONTRACT } from "@mcdev/contracts";
+import { COMPATIBILITY_PACK_CONTRACT, COMPATIBILITY_PACK_V2_CONTRACT } from "@mcdev/contracts";
 import {
+  BUILTIN_FABRIC_26_2,
+  BUILTIN_FABRIC_26_2_SELECTOR,
   BUILTIN_NEOFORGE_26_1_2,
   BUILTIN_NEOFORGE_26_1_2_SELECTOR,
   BuiltinPackIntegrityError,
   loadBuiltinCompatibilityPack,
   selectBuiltinCompatibilityPack,
 } from "./index.ts";
+import { readBuiltinCompatibilityPackSnapshot } from "./src/load-builtin.ts";
 import {
   calculateCompatibilityPackTreeSha256,
   type CompatibilityPackSnapshotEntry,
@@ -360,6 +364,55 @@ await assert.rejects(
   BuiltinPackIntegrityError,
 );
 
+assert.deepEqual(BUILTIN_FABRIC_26_2_SELECTOR, {
+  minecraft: "26.2",
+  loader: "fabric",
+  java: 25,
+});
+assert.equal(selectBuiltinCompatibilityPack(BUILTIN_FABRIC_26_2_SELECTOR), BUILTIN_FABRIC_26_2);
+assert.equal(BUILTIN_FABRIC_26_2.trust, "builtin-reviewed");
+assert.equal(BUILTIN_FABRIC_26_2.releaseStatus, "candidate");
+assert.equal(Object.isFrozen(BUILTIN_FABRIC_26_2), true);
+const loadedFabric = await loadBuiltinCompatibilityPack(BUILTIN_FABRIC_26_2_SELECTOR);
+assert.deepEqual(loadedFabric.ref, {
+  packId: BUILTIN_FABRIC_26_2.packId,
+  revision: BUILTIN_FABRIC_26_2.revision,
+  treeSha256: BUILTIN_FABRIC_26_2.treeSha256,
+});
+assert.equal(loadedFabric.manifest.contract, COMPATIBILITY_PACK_V2_CONTRACT);
+assert.deepEqual(loadedFabric.manifest.target, {
+  ...BUILTIN_FABRIC_26_2_SELECTOR,
+  fabricLoader: "0.19.3",
+});
+assert.equal(loadedFabric.listFiles().includes("templates/fabric.mod.json.tpl"), true);
+assert.equal(loadedFabric.listFiles().includes("templates/gradle/verification-metadata.xml"), true);
+const fabricVersions = JSON.parse(new TextDecoder().decode(loadedFabric.readFile("versions.lock.json"))) as {
+  tuple?: unknown;
+};
+assert.deepEqual(fabricVersions.tuple, {
+  minecraft: "26.2",
+  fabricLoader: "0.19.3",
+  fabricApi: "0.155.2+26.2",
+  fabricLoom: "1.17.16",
+  gradle: "9.5.1",
+  java: "25.0.3+9",
+});
+const fabricSnapshot = await readBuiltinCompatibilityPackSnapshot(BUILTIN_FABRIC_26_2);
+const fabricGradleProperties = fabricSnapshot.find(({ path }) => path === "templates/gradle.properties");
+assert.ok(fabricGradleProperties);
+expectIntegrityFailure(
+  fabricSnapshot.map((entry) => entry === fabricGradleProperties
+    ? { ...entry, bytes: encoder.encode("tampered\n") }
+    : entry),
+  {
+    packId: BUILTIN_FABRIC_26_2.packId,
+    revision: BUILTIN_FABRIC_26_2.revision,
+    selector: BUILTIN_FABRIC_26_2.target,
+    treeSha256: BUILTIN_FABRIC_26_2.treeSha256,
+  },
+  "Fabric pack payload tampering must fail",
+);
+
 expectIntegrityFailure(
   fixture.snapshot.filter((entry) => entry.path !== "templates/gradlew"),
   fixture.expected,
@@ -469,3 +522,5 @@ assert.equal(
 
 const typedSelector: CompatibilitySelector = BUILTIN_NEOFORGE_26_1_2_SELECTOR;
 assert.equal(selectBuiltinCompatibilityPack(typedSelector)?.packId, "neoforge-26.1.2-java-25");
+const typedFabricSelector: CompatibilitySelectorV2 = BUILTIN_FABRIC_26_2_SELECTOR;
+assert.equal(selectBuiltinCompatibilityPack(typedFabricSelector)?.packId, "fabric-26.2-java-25");

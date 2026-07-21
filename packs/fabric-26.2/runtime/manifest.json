@@ -1,0 +1,90 @@
+{
+  "contract": "mcdev.compatibility-pack/v2",
+  "packId": "fabric-26.2-java-25",
+  "revision": 1,
+  "target": {
+    "minecraft": "26.2",
+    "loader": "fabric",
+    "java": 25,
+    "fabricLoader": "0.19.3"
+  },
+  "files": [
+    {
+      "path": "templates/.gitignore",
+      "mode": 420,
+      "size": 33,
+      "sha256": "def8c1e10d19c3119199f1f3476c5a022a6f4956f5fa6dc9c47faa4e34a21c4e",
+      "role": "template"
+    },
+    {
+      "path": "templates/build.gradle.tpl",
+      "mode": 420,
+      "size": 1233,
+      "sha256": "87cd6994504dd3e7e4ca12f80f683bd5c3ac5fea0b43b72ad45b1d40d1050766",
+      "role": "template"
+    },
+    {
+      "path": "templates/fabric.mod.json.tpl",
+      "mode": 420,
+      "size": 569,
+      "sha256": "6a50d2a5faa51e8f887005746ec85b3378ede01e777409adebfffdb912f26751",
+      "role": "template"
+    },
+    {
+      "path": "templates/gradle.properties",
+      "mode": 420,
+      "size": 412,
+      "sha256": "02de3b09c13752ee2aaeb2ee40008d0efb2b984a2d7b39c4ada367a55821cc5d",
+      "role": "template"
+    },
+    {
+      "path": "templates/gradle/verification-metadata.xml",
+      "mode": 420,
+      "size": 99485,
+      "sha256": "892b8ef4cd0a784ac37dbccc41e31006db7c45f3b213425bacab9353ec2c625b",
+      "role": "template"
+    },
+    {
+      "path": "templates/gradle/wrapper/gradle-wrapper.jar",
+      "mode": 420,
+      "size": 48462,
+      "sha256": "497c8c2a7e5031f6aa847f88104aa80a93532ec32ee17bdb8d1d2f67a194a9c7",
+      "role": "template"
+    },
+    {
+      "path": "templates/gradle/wrapper/gradle-wrapper.properties",
+      "mode": 420,
+      "size": 368,
+      "sha256": "735b1ffb51d53b1ffaaad7ecaf66b36014d758aedaa35ec354cb2b2717b8ee7c",
+      "role": "template"
+    },
+    {
+      "path": "templates/gradlew",
+      "mode": 493,
+      "size": 9653,
+      "sha256": "de3a92b1a2ef691e70bda1a3cdd429c8bb3c3af9bf782fd7e9667e1684b5419e",
+      "role": "executable"
+    },
+    {
+      "path": "templates/gradlew.bat",
+      "mode": 420,
+      "size": 3502,
+      "sha256": "7cee161ce709f41cb0b8aee3c7f42be488363b0b52e4a4244f6cedf6e26bd5a8",
+      "role": "template"
+    },
+    {
+      "path": "templates/settings.gradle.tpl",
+      "mode": 420,
+      "size": 239,
+      "sha256": "64ecca23d7257099211180780684d5c9c33441d7d0962f7abea3fa958d8faf68",
+      "role": "template"
+    },
+    {
+      "path": "versions.lock.json",
+      "mode": 420,
+      "size": 2052,
+      "sha256": "2d945ef6f3e8d87f72368451ee42b658061779a14066203be73597e1438fc309",
+      "role": "metadata"
+    }
+  ]
+}

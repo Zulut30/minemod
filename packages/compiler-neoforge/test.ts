@@ -1,5 +1,9 @@
 import assert from "node:assert/strict";
-import { containsForbiddenExecutionSurface, isBuildPlan } from "@mcdev/contracts";
+import {
+  containsForbiddenExecutionSurface,
+  isBuildPlan,
+  type CompatibilityPackManifest,
+} from "@mcdev/contracts";
 import type { ModSpec } from "@mcdev/modspec";
 import {
   BUILTIN_NEOFORGE_26_1_2_SELECTOR,
@@ -455,7 +459,7 @@ assert.equal(Object.isFrozen(hardenedError), true);
 assert.equal(hostileErrorListTrapCalls, 0);
 
 const pack = await loadBuiltinCompatibilityPack(BUILTIN_NEOFORGE_26_1_2_SELECTOR);
-const wrongPack: VerifiedCompatibilityPack = {
+const wrongPack: VerifiedCompatibilityPack<CompatibilityPackManifest> = {
   ref: { ...pack.ref, treeSha256: "0".repeat(64) },
   manifest: pack.manifest,
   listFiles: () => pack.listFiles(),
@@ -465,7 +469,7 @@ assert.throws(
   () => compileVerifiedNeoForgePhase1(specFixture(), wrongPack),
   (error: unknown) => error instanceof CompilerError && error.code === "PACK_INTEGRITY_FAILED",
 );
-const wrongPackTarget: VerifiedCompatibilityPack = {
+const wrongPackTarget: VerifiedCompatibilityPack<CompatibilityPackManifest> = {
   ref: pack.ref,
   manifest: {
     ...pack.manifest,
@@ -481,7 +485,7 @@ assert.throws(
 const gitignoreBytes = pack.readFile("templates/.gitignore");
 const sharedPackBytes = new Uint8Array(new SharedArrayBuffer(gitignoreBytes.byteLength));
 sharedPackBytes.set(gitignoreBytes);
-const hostilePackBytes: VerifiedCompatibilityPack = {
+const hostilePackBytes: VerifiedCompatibilityPack<CompatibilityPackManifest> = {
   ref: pack.ref,
   manifest: pack.manifest,
   listFiles: () => pack.listFiles(),

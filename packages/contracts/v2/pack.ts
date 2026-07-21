@@ -17,24 +17,26 @@ import {
 
 export const COMPATIBILITY_PACK_V2_CONTRACT = "mcdev.compatibility-pack/v2" as const;
 
-export interface CompatibilitySelectorV2 {
-  readonly minecraft: string;
-  readonly loader: "fabric" | "neoforge";
-  readonly java: 25;
-}
-
-interface CompatibilityPackTargetBaseV2 extends CompatibilitySelectorV2 {
+interface CompatibilitySelectorBaseV2 {
   readonly minecraft: string;
   readonly java: 25;
 }
 
-export interface FabricCompatibilityPackTargetV2 extends CompatibilityPackTargetBaseV2 {
+export interface FabricCompatibilitySelectorV2 extends CompatibilitySelectorBaseV2 {
   readonly loader: "fabric";
+}
+
+export interface NeoForgeCompatibilitySelectorV2 extends CompatibilitySelectorBaseV2 {
+  readonly loader: "neoforge";
+}
+
+export type CompatibilitySelectorV2 = FabricCompatibilitySelectorV2 | NeoForgeCompatibilitySelectorV2;
+
+export interface FabricCompatibilityPackTargetV2 extends FabricCompatibilitySelectorV2 {
   readonly fabricLoader: string;
 }
 
-export interface NeoForgeCompatibilityPackTargetV2 extends CompatibilityPackTargetBaseV2 {
-  readonly loader: "neoforge";
+export interface NeoForgeCompatibilityPackTargetV2 extends NeoForgeCompatibilitySelectorV2 {
   readonly neoForge: string;
 }
 

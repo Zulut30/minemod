@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "tuple": {
+    "minecraft": "26.2",
+    "fabricLoader": "0.19.3",
+    "fabricApi": "0.155.2+26.2",
+    "fabricLoom": "1.17.16",
+    "gradle": "9.5.1",
+    "java": "25.0.3+9"
+  },
+  "javaToolchains": {
+    "autoDetect": false,
+    "autoDownload": false,
+    "locationEnvironmentVariables": [
+      "MCDEV_JAVA25_HOME"
+    ],
+    "primary": {
+      "distribution": "temurin",
+      "version": "25.0.3+9",
+      "linuxX64ArchiveUrl": "https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.3%2B9/OpenJDK25U-jdk_x64_linux_hotspot_25.0.3_9.tar.gz",
+      "linuxX64ArchiveSha256": "69264a7a211bf5029830d07bc3370f879769d62ebc5b5488e90c9343a2da0e1f",
+      "license": "GPL-2.0-only WITH Classpath-exception-2.0",
+      "licenseSource": "https://github.com/adoptium/jdk25u/blob/jdk-25.0.3%2B9/LICENSE"
+    }
+  },
+  "gradle": {
+    "distributionUrl": "https://services.gradle.org/distributions/gradle-9.5.1-bin.zip",
+    "distributionSha256": "bafc141b619ad6350fd975fc903156dd5c151998cc8b058e8c1044ab5f7b031f",
+    "wrapperJarUrl": "https://raw.githubusercontent.com/gradle/gradle/v9.5.1/gradle/wrapper/gradle-wrapper.jar",
+    "wrapperJarSourceCommit": "fd78213f09782e62ca4957f9cfd3d90c6c3f1767",
+    "wrapperJarSha256": "497c8c2a7e5031f6aa847f88104aa80a93532ec32ee17bdb8d1d2f67a194a9c7"
+  },
+  "fabric": {
+    "loom": {
+      "coordinate": "net.fabricmc:fabric-loom:1.17.16",
+      "sourceCommit": "ad89ffdb4e3c6fb1647e45cb5b3ca87ff1e77803",
+      "license": "MIT"
+    },
+    "loader": {
+      "coordinate": "net.fabricmc:fabric-loader:0.19.3",
+      "sourceCommit": "35b0b1c0268eb5f9d377322db491b0bb436541a8",
+      "license": "Apache-2.0"
+    },
+    "api": {
+      "coordinate": "net.fabricmc.fabric-api:fabric-api:0.155.2+26.2",
+      "sourceCommit": "f5f9b311e1c5c8269af5b46e089f163df972c6f3",
+      "license": "Apache-2.0"
+    }
+  },
+  "verification": {
+    "mode": "strict",
+    "metadata": "templates/gradle/verification-metadata.xml",
+    "components": 174,
+    "artifacts": 393,
+    "complete": true
+  }
+}

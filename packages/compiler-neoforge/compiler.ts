@@ -18,6 +18,7 @@ import {
   mcdevError,
   type BuildPlan,
   type BuildPlanNode,
+  type CompatibilityPackManifest,
   type McdevError,
   type PlannedOutput,
   type Sha256,
@@ -30,6 +31,8 @@ import type {
   CompiledOutput,
   CompilerNodeId,
 } from "./types.ts";
+
+type VerifiedNeoForgeCompatibilityPack = VerifiedCompatibilityPack<CompatibilityPackManifest>;
 
 const SPEC_DIGEST_DOMAIN = "mcdev.compiler-neoforge.modspec/v1";
 const NODE_INPUT_DIGEST_DOMAIN = "mcdev.compiler-neoforge.node-input/v1";
@@ -265,7 +268,7 @@ function scopePreflight(spec: ModSpec): NormalizedContent {
   });
 }
 
-function assertExactPack(pack: VerifiedCompatibilityPack): void {
+function assertExactPack(pack: VerifiedNeoForgeCompatibilityPack): void {
   const expected = BUILTIN_NEOFORGE_26_1_2;
   const ref = pack.ref;
   const manifest = pack.manifest;
@@ -292,7 +295,7 @@ function assertExactPack(pack: VerifiedCompatibilityPack): void {
   }
 }
 
-function packBytes(pack: VerifiedCompatibilityPack, path: ProjectTemplateSource): Uint8Array {
+function packBytes(pack: VerifiedNeoForgeCompatibilityPack, path: ProjectTemplateSource): Uint8Array {
   const descriptor = pack.manifest.files.find((entry) => entry.path === path);
   if (descriptor === undefined) {
     throw compilerError("PACK_INTEGRITY_FAILED", "A reviewed compatibility pack template is unavailable.");
@@ -379,7 +382,7 @@ function renderReviewedTemplate(
   return utf8FileBytes(source.replace(tokenPattern, (token) => replacements[token as TemplateToken]));
 }
 
-function projectInputs(spec: ModSpec, pack: VerifiedCompatibilityPack): readonly GeneratedFileInput[] {
+function projectInputs(spec: ModSpec, pack: VerifiedNeoForgeCompatibilityPack): readonly GeneratedFileInput[] {
   assertExactPack(pack);
   const inputs: GeneratedFileInput[] = [];
   for (const sourcePath of Object.keys(PROJECT_TEMPLATE_DESTINATIONS).sort(compareAscii) as ProjectTemplateSource[]) {
@@ -686,7 +689,7 @@ function makeDownstreamNode(
 
 function buildPlan(
   spec: ModSpec,
-  pack: VerifiedCompatibilityPack,
+  pack: VerifiedNeoForgeCompatibilityPack,
   projectFiles: readonly GeneratedFile[],
   contentFiles: readonly GeneratedFile[],
 ): BuildPlan {
@@ -771,7 +774,7 @@ function artifactKind(path: string, nodeId: CompilerNodeId): CompiledArtifactKin
  */
 export function compileVerifiedNeoForgePhase1(
   validatedSpec: ModSpec,
-  verifiedPack: VerifiedCompatibilityPack,
+  verifiedPack: VerifiedNeoForgeCompatibilityPack,
 ): CompiledNeoForgeProject {
   const spec = copyValidatedSpec(validatedSpec);
   const content = scopePreflight(spec);

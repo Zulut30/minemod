@@ -4,13 +4,16 @@ import {
   CONTRACT_LIMITS,
   hasPortableCaseCollision,
   isCompatibilityPackManifest,
+  isCompatibilityPackManifestV2,
   isCompatibilityPackRef,
   isFileMode,
   isPortableRelativePath,
   isSha256,
   type CompatibilityPackManifest,
+  type CompatibilityPackManifestV2,
   type CompatibilityPackRef,
   type CompatibilityPackTarget,
+  type CompatibilityPackTargetV2,
   type FileMode,
 } from "@mcdev/contracts";
 import { BuiltinPackIntegrityError } from "./errors.ts";
@@ -25,16 +28,21 @@ export interface CompatibilityPackSnapshotEntry {
 export interface TrustedPackExpectation {
   readonly packId: string;
   readonly revision: number;
-  readonly selector: CompatibilityPackTarget;
+  readonly selector: SupportedCompatibilityPackTarget;
   readonly treeSha256: string;
 }
 
-export interface VerifiedCompatibilityPack {
+export interface VerifiedCompatibilityPack<
+  Manifest extends SupportedCompatibilityPackManifest = SupportedCompatibilityPackManifest,
+> {
   readonly ref: CompatibilityPackRef;
-  readonly manifest: CompatibilityPackManifest;
+  readonly manifest: Manifest;
   listFiles(): readonly string[];
   readFile(path: unknown): Uint8Array;
 }
+
+type SupportedCompatibilityPackManifest = CompatibilityPackManifest | CompatibilityPackManifestV2;
+type SupportedCompatibilityPackTarget = CompatibilityPackTarget | CompatibilityPackTargetV2;
 
 interface TreeRecord {
   readonly path: string;
@@ -219,17 +227,15 @@ export function calculateCompatibilityPackTreeSha256(
   return hash.digest("hex");
 }
 
-function parseManifest(entry: CompatibilityPackSnapshotEntry): CompatibilityPackManifest {
+function parseManifest(entry: CompatibilityPackSnapshotEntry): SupportedCompatibilityPackManifest {
   let value: unknown;
   try {
     value = JSON.parse(decoder.decode(entry.bytes)) as unknown;
   } catch {
     return integrity("Compatibility pack manifest is not canonical UTF-8 JSON.");
   }
-  if (!isCompatibilityPackManifest(value)) {
-    return integrity("Compatibility pack manifest does not satisfy mcdev.compatibility-pack/v1.");
-  }
-  return value;
+  if (isCompatibilityPackManifest(value) || isCompatibilityPackManifestV2(value)) return value;
+  return integrity("Compatibility pack manifest does not satisfy a supported versioned contract.");
 }
 
 function parentDirectories(paths: readonly string[]): ReadonlySet<string> {
@@ -246,16 +252,26 @@ function parentDirectories(paths: readonly string[]): ReadonlySet<string> {
   return directories;
 }
 
-function copyExactTarget(value: unknown): CompatibilityPackTarget | undefined {
-  const values = exactDataValues(value, ["minecraft", "loader", "java", "neoForge"]);
-  if (values === undefined) return undefined;
-  const [minecraft, loader, java, neoForge] = values;
-  if (typeof minecraft !== "string" || minecraft.length < 1 || minecraft.length > 32 ||
-    loader !== "neoforge" || java !== 25 ||
-    typeof neoForge !== "string" || neoForge.length < 1 || neoForge.length > 64) {
+function copyExactTarget(value: unknown): SupportedCompatibilityPackTarget | undefined {
+  const neoForgeValues = exactDataValues(value, ["minecraft", "loader", "java", "neoForge"]);
+  if (neoForgeValues !== undefined) {
+    const [minecraft, loader, java, neoForge] = neoForgeValues;
+    if (typeof minecraft === "string" && minecraft.length >= 1 && minecraft.length <= 32 &&
+      loader === "neoforge" && java === 25 &&
+      typeof neoForge === "string" && neoForge.length >= 1 && neoForge.length <= 64) {
+      return Object.freeze({ minecraft, loader, java, neoForge });
+    }
     return undefined;
   }
-  return Object.freeze({ minecraft, loader, java, neoForge });
+  const fabricValues = exactDataValues(value, ["minecraft", "loader", "java", "fabricLoader"]);
+  if (fabricValues === undefined) return undefined;
+  const [minecraft, loader, java, fabricLoader] = fabricValues;
+  if (typeof minecraft !== "string" || minecraft.length < 1 || minecraft.length > 32 ||
+    loader !== "fabric" || java !== 25 ||
+    typeof fabricLoader !== "string" || fabricLoader.length < 1 || fabricLoader.length > 64) {
+    return undefined;
+  }
+  return Object.freeze({ minecraft, loader, java, fabricLoader });
 }
 
 function copyAndValidateExpectation(expected: TrustedPackExpectation): TrustedPackExpectation {
@@ -270,13 +286,23 @@ function copyAndValidateExpectation(expected: TrustedPackExpectation): TrustedPa
   return Object.freeze({ ...ref, selector });
 }
 
-function sameTarget(left: CompatibilityPackTarget, right: CompatibilityPackTarget): boolean {
-  return left.minecraft === right.minecraft && left.loader === right.loader && left.java === right.java &&
-    left.neoForge === right.neoForge;
+function sameTarget(left: SupportedCompatibilityPackTarget, right: SupportedCompatibilityPackTarget): boolean {
+  if (left.minecraft !== right.minecraft || left.loader !== right.loader || left.java !== right.java) return false;
+  if (left.loader === "fabric" && right.loader === "fabric") {
+    return left.fabricLoader === right.fabricLoader;
+  }
+  return left.loader === "neoforge" && right.loader === "neoforge" && left.neoForge === right.neoForge;
 }
 
-function frozenManifest(manifest: CompatibilityPackManifest): CompatibilityPackManifest {
+function frozenManifest(manifest: SupportedCompatibilityPackManifest): SupportedCompatibilityPackManifest {
   const files = manifest.files.map((file) => Object.freeze({ ...file }));
+  if (manifest.contract === "mcdev.compatibility-pack/v1") {
+    return Object.freeze({
+      ...manifest,
+      target: Object.freeze({ ...manifest.target }),
+      files: Object.freeze(files),
+    });
+  }
   return Object.freeze({
     ...manifest,
     target: Object.freeze({ ...manifest.target }),
