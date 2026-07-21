@@ -51,4 +51,3 @@
 ### Делать generic text-to-3D главным путём
 
 Отклонено для MVP: результат плохо соответствует Minecraft cuboid/UV/rig ограничениям. Generic 3D допускается только как experimental blockout provider.
-
