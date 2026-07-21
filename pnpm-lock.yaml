@@ -54,7 +54,19 @@ importers:
         specifier: workspace:*
         version: link:../contracts
 
+  packages/artifacts:
+    dependencies:
+      '@mcdev/contracts':
+        specifier: workspace:*
+        version: link:../contracts
+
   packages/contracts: {}
+
+  packages/logging:
+    dependencies:
+      '@mcdev/contracts':
+        specifier: workspace:*
+        version: link:../contracts
 
   packages/modspec:
     dependencies:

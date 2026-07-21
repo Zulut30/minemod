@@ -1,0 +1,14 @@
+{
+  "name": "@mcdev/artifacts",
+  "version": "0.1.0-phase.1",
+  "license": "Apache-2.0",
+  "private": true,
+  "type": "module",
+  "exports": "./index.ts",
+  "scripts": {
+    "test": "node --experimental-strip-types test.ts"
+  },
+  "dependencies": {
+    "@mcdev/contracts": "workspace:*"
+  }
+}
