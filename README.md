@@ -20,6 +20,7 @@ Agent-native инструмент для создания production-ready Minec
 ## Документация
 
 - [Research и план MVP](docs/RESEARCH_AND_MVP_PLAN.md)
+- [Production roadmap после MVP](docs/PRODUCTION_ROADMAP.md)
 - [ADR-0001: лицензия продукта и generated output](docs/decisions/0001-product-and-output-licensing.md)
 - [Art Quality Rubric v0](docs/quality/art-quality-rubric-v0.md)
 - [Third-party licensing boundary](THIRD_PARTY_NOTICES.md)
