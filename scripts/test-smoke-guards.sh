@@ -129,6 +129,16 @@ dependencies = json.loads(
 )
 workflow = (root / ".github/workflows/phase-0.yml").read_text()
 ci_counts = re.findall(r"^\s*expected_artifact_count=([0-9]+)$", workflow, re.MULTILINE)
+assert workflow.count('canonical_java_home=$(realpath -- "$JAVA_HOME")') == 4
+assert workflow.count('test -d "$canonical_java_home"') == 4
+assert workflow.count(
+    'printf \'PHASE0_JAVA21_HOME=%s\\n\' "$canonical_java_home"'
+) == 2
+assert workflow.count(
+    'printf \'PHASE0_JAVA25_HOME=%s\\n\' "$canonical_java_home"'
+) == 2
+assert 'printf \'PHASE0_JAVA21_HOME=%s\\n\' "$JAVA_HOME"' not in workflow
+assert 'printf \'PHASE0_JAVA25_HOME=%s\\n\' "$JAVA_HOME"' not in workflow
 assert 'canonical_java21_home=$(realpath "$PHASE0_JAVA21_HOME")' in workflow
 assert 'canonical_java25_home=$(realpath "$PHASE0_JAVA25_HOME")' in workflow
 assert 'grep -Fc "$canonical_java21_home"' in workflow
