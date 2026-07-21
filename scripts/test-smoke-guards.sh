@@ -145,6 +145,14 @@ assert 'grep -Fc "$canonical_java21_home"' in workflow
 assert 'grep -Fc "$canonical_java25_home"' in workflow
 assert 'grep -Fc "$PHASE0_JAVA21_HOME"' not in workflow
 assert 'grep -Fc "$PHASE0_JAVA25_HOME"' not in workflow
+client_prepare = (
+    './gradlew --project-cache-dir "$GRADLE_PROJECT_CACHE_DIR"\n'
+    '          --dependency-verification strict prepareClientRun'
+)
+assert workflow.count(client_prepare) == 1
+assert workflow.index('name: Prepare verified headless client runtime') < workflow.index(
+    'name: Smoke-test headless client'
+)
 counts = [
     sum(element.tag.rsplit("}", 1)[-1] == "artifact" for element in metadata.iter()),
     lock["verification"]["artifacts"],

@@ -254,5 +254,10 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install --yes --no-install-recommends xvfb xauth x11-xkb-utils
+      - name: Prepare verified headless client runtime
+        working-directory: fixtures/basic-content
+        run: >-
+          ./gradlew --project-cache-dir "$GRADLE_PROJECT_CACHE_DIR"
+          --dependency-verification strict prepareClientRun
       - name: Smoke-test headless client
         run: ./scripts/smoke-client-ci.sh
