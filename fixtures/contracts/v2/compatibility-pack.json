@@ -1,0 +1,27 @@
+{
+  "contract": "mcdev.compatibility-pack/v2",
+  "packId": "fabric-26.2-java-25",
+  "revision": 1,
+  "target": {
+    "minecraft": "26.2",
+    "loader": "fabric",
+    "java": 25,
+    "fabricLoader": "0.19.3"
+  },
+  "files": [
+    {
+      "path": "templates/build.gradle.tpl",
+      "mode": 420,
+      "size": 128,
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "role": "template"
+    },
+    {
+      "path": "templates/gradlew",
+      "mode": 493,
+      "size": 256,
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "role": "executable"
+    }
+  ]
+}

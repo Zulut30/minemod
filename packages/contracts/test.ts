@@ -7,6 +7,7 @@ import {
   APPLY_PLAN_RESULT_CONTRACT,
   BUILD_PLAN_CONTRACT,
   COMPATIBILITY_PACK_CONTRACT,
+  COMPATIBILITY_PACK_V2_CONTRACT,
   CONTRACT_LIMITS,
   ERROR_CONTRACT,
   LOG_EVENT_CONTRACT,
@@ -20,6 +21,8 @@ import {
   isApplyPlanResult,
   isBuildPlan,
   isCompatibilityPackManifest,
+  isCompatibilityPackManifestV2,
+  isCompatibilitySelectorV2,
   isLogEvent,
   isMcdevError,
   isPlanBuildRequest,
@@ -34,11 +37,17 @@ function fixture(name: string): unknown {
   return JSON.parse(readFileSync(path, "utf8")) as unknown;
 }
 
+function fixtureV2(name: string): unknown {
+  const path = fileURLToPath(new URL(`../../fixtures/contracts/v2/${name}.json`, import.meta.url));
+  return JSON.parse(readFileSync(path, "utf8")) as unknown;
+}
+
 function clone<T>(value: T): T {
   return structuredClone(value);
 }
 
 const pack = fixture("compatibility-pack");
+const fabricPack = fixtureV2("compatibility-pack");
 const plan = fixture("build-plan");
 const artifactIndex = fixture("artifact-index");
 const workspaceManifest = fixture("workspace-manifest");
@@ -47,6 +56,11 @@ const logEvent = fixture("log-event");
 const error = fixture("error");
 
 assert.equal(isCompatibilityPackManifest(pack), true);
+assert.equal(isCompatibilityPackManifestV2(fabricPack), true);
+assert.equal(isCompatibilityPackManifest(fabricPack), false, "v2 must not alias v1");
+assert.equal(isCompatibilityPackManifestV2(pack), false, "v1 must not alias v2");
+assert.equal(isCompatibilitySelectorV2({ minecraft: "26.2", loader: "fabric", java: 25 }), true);
+assert.equal(isCompatibilitySelectorV2({ minecraft: "26.2", loader: "fabric", java: 25, path: "." }), false);
 assert.equal(isBuildPlan(plan), true);
 assert.equal(isArtifactIndex(artifactIndex), true);
 assert.equal(isWorkspaceManifest(workspaceManifest), true);
@@ -120,6 +134,7 @@ assert.equal(isApplyPlanResult({
 
 const contractLiterals = [
   COMPATIBILITY_PACK_CONTRACT,
+  COMPATIBILITY_PACK_V2_CONTRACT,
   BUILD_PLAN_CONTRACT,
   ARTIFACT_INDEX_CONTRACT,
   WORKSPACE_MANIFEST_CONTRACT,
@@ -139,6 +154,15 @@ for (const wrongContract of contractLiterals.filter((value) => value !== BUILD_P
 assert.equal(isCompatibilityPackManifest({ ...(clone(pack) as object), status: "production" }), false);
 assert.equal(isCompatibilityPackManifest({ ...(clone(pack) as object), trusted: true }), false);
 assert.equal(isCompatibilityPackManifest({ ...(clone(pack) as object), path: "../../fixture" }), false);
+assert.equal(isCompatibilityPackManifestV2({ ...(clone(fabricPack) as object), status: "production" }), false);
+assert.equal(isCompatibilityPackManifestV2({ ...(clone(fabricPack) as object), trusted: true }), false);
+assert.equal(isCompatibilityPackManifestV2({ ...(clone(fabricPack) as object), path: "../../fixture" }), false);
+const fabricPackWithNeoForgeKey = clone(fabricPack) as Record<string, unknown>;
+(fabricPackWithNeoForgeKey.target as Record<string, unknown>).neoForge = "26.2.0";
+assert.equal(isCompatibilityPackManifestV2(fabricPackWithNeoForgeKey), false);
+const fabricPackWithoutLoaderVersion = clone(fabricPack) as Record<string, unknown>;
+delete (fabricPackWithoutLoaderVersion.target as Record<string, unknown>).fabricLoader;
+assert.equal(isCompatibilityPackManifestV2(fabricPackWithoutLoaderVersion), false);
 
 const planWithCommand = clone(plan) as Record<string, unknown>;
 const commandNodes = planWithCommand.nodes as Record<string, unknown>[];
