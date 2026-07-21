@@ -1,0 +1,20 @@
+{
+  "name": "@mcdev/compiler-neoforge",
+  "version": "0.1.0-phase.1",
+  "license": "Apache-2.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./index.ts"
+  },
+  "scripts": {
+    "test": "node --experimental-strip-types test.ts"
+  },
+  "dependencies": {
+    "@mcdev/codegen-core": "workspace:*",
+    "@mcdev/compatibility-packs": "workspace:*",
+    "@mcdev/contracts": "workspace:*",
+    "@mcdev/modspec": "workspace:*",
+    "@mcdev/validation": "workspace:*"
+  }
+}
