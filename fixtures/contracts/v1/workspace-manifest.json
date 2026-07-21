@@ -1,0 +1,23 @@
+{
+  "contract": "mcdev.workspace-manifest/v1",
+  "planId": "1111111111111111111111111111111111111111111111111111111111111111",
+  "pack": {
+    "packId": "neoforge-26.1.2-java-25",
+    "revision": 1,
+    "treeSha256": "3333333333333333333333333333333333333333333333333333333333333333"
+  },
+  "files": [
+    {
+      "path": "build.gradle",
+      "mode": 420,
+      "size": 1024,
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    {
+      "path": "src/main/java/dev/mcdev/generated/GeneratedContent.java",
+      "mode": 420,
+      "size": 512,
+      "sha256": "8888888888888888888888888888888888888888888888888888888888888888"
+    }
+  ]
+}

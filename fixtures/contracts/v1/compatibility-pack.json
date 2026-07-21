@@ -1,0 +1,27 @@
+{
+  "contract": "mcdev.compatibility-pack/v1",
+  "packId": "neoforge-26.1.2-java-25",
+  "revision": 1,
+  "target": {
+    "minecraft": "26.1.2",
+    "loader": "neoforge",
+    "java": 25,
+    "neoForge": "26.1.2.80"
+  },
+  "files": [
+    {
+      "path": "templates/build.gradle.tpl",
+      "mode": 420,
+      "size": 128,
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "role": "template"
+    },
+    {
+      "path": "templates/gradlew",
+      "mode": 493,
+      "size": 256,
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "role": "executable"
+    }
+  ]
+}

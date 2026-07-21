@@ -1,0 +1,106 @@
+{
+  "contract": "mcdev.build-plan/v1",
+  "planId": "1111111111111111111111111111111111111111111111111111111111111111",
+  "specDigest": "2222222222222222222222222222222222222222222222222222222222222222",
+  "pack": {
+    "packId": "neoforge-26.1.2-java-25",
+    "revision": 1,
+    "treeSha256": "3333333333333333333333333333333333333333333333333333333333333333"
+  },
+  "nodes": [
+    {
+      "nodeId": "apply-workspace",
+      "kind": "apply-workspace",
+      "dependsOn": [
+        "generate-content",
+        "generate-project"
+      ],
+      "inputDigest": "4444444444444444444444444444444444444444444444444444444444444444",
+      "cacheKey": "5555555555555555555555555555555555555555555555555555555555555555",
+      "outputs": [],
+      "retryPolicy": "never",
+      "logPolicy": "structured-redacted-v1",
+      "validatorPolicy": "workspace-manifest-v1",
+      "provenance": "workspace-transaction",
+      "policy": "create-only-cas-wal-v1"
+    },
+    {
+      "nodeId": "generate-content",
+      "kind": "generate-content",
+      "dependsOn": [],
+      "inputDigest": "6666666666666666666666666666666666666666666666666666666666666666",
+      "cacheKey": "7777777777777777777777777777777777777777777777777777777777777777",
+      "outputs": [
+        {
+          "path": "src/main/java/dev/mcdev/generated/GeneratedContent.java",
+          "mode": 420,
+          "size": 512,
+          "sha256": "8888888888888888888888888888888888888888888888888888888888888888"
+        }
+      ],
+      "retryPolicy": "never",
+      "logPolicy": "structured-redacted-v1",
+      "validatorPolicy": "sha256-outputs-v1",
+      "provenance": "compiler"
+    },
+    {
+      "nodeId": "generate-project",
+      "kind": "generate-project",
+      "dependsOn": [],
+      "inputDigest": "9999999999999999999999999999999999999999999999999999999999999999",
+      "cacheKey": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outputs": [
+        {
+          "path": "build.gradle",
+          "mode": 420,
+          "size": 1024,
+          "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+      ],
+      "retryPolicy": "never",
+      "logPolicy": "structured-redacted-v1",
+      "validatorPolicy": "sha256-outputs-v1",
+      "provenance": "compiler-and-pack"
+    },
+    {
+      "nodeId": "gradle-clean-build",
+      "kind": "gradle-clean-build",
+      "dependsOn": [
+        "apply-workspace"
+      ],
+      "inputDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "cacheKey": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "outputs": [
+        {
+          "path": "build/libs/compilerfixture.jar",
+          "mode": 420,
+          "size": 4096,
+          "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+        }
+      ],
+      "retryPolicy": "never",
+      "logPolicy": "structured-redacted-v1",
+      "validatorPolicy": "sha256-outputs-v1",
+      "provenance": "fixed-build-runner",
+      "policy": "neoforge-phase1-v1"
+    },
+    {
+      "nodeId": "index-artifacts",
+      "kind": "index-artifacts",
+      "dependsOn": [
+        "gradle-clean-build"
+      ],
+      "inputDigest": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "cacheKey": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+      "outputs": [],
+      "retryPolicy": "never",
+      "logPolicy": "structured-redacted-v1",
+      "validatorPolicy": "artifact-index-v1",
+      "provenance": "artifact-indexer",
+      "policy": "sha256-v1"
+    }
+  ],
+  "warnings": [
+    "PLACEHOLDER_ASSETS_USED"
+  ]
+}

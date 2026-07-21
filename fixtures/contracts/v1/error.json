@@ -1,0 +1,6 @@
+{
+  "contract": "mcdev.error/v1",
+  "code": "SPEC_UNSUPPORTED",
+  "message": "Phase 1 does not compile entity declarations.",
+  "path": "/gameplay/entities"
+}

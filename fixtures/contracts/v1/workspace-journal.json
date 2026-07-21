@@ -1,0 +1,22 @@
+{
+  "contract": "mcdev.workspace-journal/v1",
+  "planId": "1111111111111111111111111111111111111111111111111111111111111111",
+  "state": "materializing",
+  "files": [
+    {
+      "path": "build.gradle",
+      "mode": 420,
+      "size": 1024,
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    {
+      "path": "src/main/java/dev/mcdev/generated/GeneratedContent.java",
+      "mode": 420,
+      "size": 512,
+      "sha256": "8888888888888888888888888888888888888888888888888888888888888888"
+    }
+  ],
+  "createdPaths": [
+    "build.gradle"
+  ]
+}

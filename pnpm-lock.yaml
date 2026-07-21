@@ -48,6 +48,8 @@ importers:
         specifier: 4.4.2
         version: 4.4.2
 
+  packages/contracts: {}
+
   packages/modspec:
     dependencies:
       zod:
