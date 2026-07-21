@@ -55,6 +55,15 @@ importers:
         specifier: workspace:*
         version: link:../contracts
 
+  packages/build-runner:
+    dependencies:
+      '@mcdev/compatibility-packs':
+        specifier: workspace:*
+        version: link:../compatibility-packs
+      '@mcdev/contracts':
+        specifier: workspace:*
+        version: link:../contracts
+
   packages/codegen-core:
     dependencies:
       '@mcdev/contracts':
