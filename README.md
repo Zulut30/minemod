@@ -4,38 +4,44 @@ Agent-native инструмент для создания production-ready Minec
 
 ## Статус
 
-Проект развивается по поэтапному MVP-плану. Этот README не объявляет отдельную фазу завершённой: актуальный статус определяется содержимым текущей ревизии и связанными audit/evidence, а не самим roadmap.
+Проект развивается по [Fabric-first MVP-плану](docs/FABRIC_FIRST_MVP_PLAN.md). Уже реализованы строгие contracts, trusted pack registry, детерминированный codegen core, transactional workspace, artifact/logging слой, NeoForge 26.1.2 compiler и fixed build runner. Fabric backend, сквозная CLI/MCP orchestration и production AI asset pipeline ещё предстоит реализовать.
+
+Этот README не объявляет отдельную фазу завершённой: актуальный статус определяется кодом, тестами и связанными audit/evidence, а не самим roadmap.
 
 ## Планируемый первый MVP
 
 - локальные CLI и MCP-сервер для Codex, Claude Code и других MCP-клиентов;
 - строгие ModSpec и ArtSpec;
-- production compatibility pack для NeoForge 26.1.2 и Java 25;
+- основной production compatibility pack для Fabric 26.2 и Java 25;
 - генерация items, blocks, entities, AI, summoning recipes и native UI;
-- модели, текстуры и анимации через узкий Blockbench bridge и GeckoLib;
-- optional-интеграции JEI и Jade;
+- AI-generated concepts, модели, текстуры и анимации с editable `.bbmodel` и GeckoLib 5 export;
+- optional-интеграции EMI и Jade;
 - unit tests, GameTests, client/dedicated-server smoke tests;
 - воспроизводимый release bundle.
+
+NeoForge 26.1.2 сохраняется как проверенный второй backend и regression target; Fabric не строится заменой imports в NeoForge-коде.
 
 ## Документация
 
 - [Research и план MVP](docs/RESEARCH_AND_MVP_PLAN.md)
+- [Текущий Fabric-first MVP plan](docs/FABRIC_FIRST_MVP_PLAN.md)
 - [Production roadmap после MVP](docs/PRODUCTION_ROADMAP.md)
 - [ADR-0001: лицензия продукта и generated output](docs/decisions/0001-product-and-output-licensing.md)
+- [ADR-0003: Fabric как основной target MVP](docs/decisions/0003-fabric-first-mvp.md)
 - [Art Quality Rubric v0](docs/quality/art-quality-rubric-v0.md)
 - [Third-party licensing boundary](THIRD_PARTY_NOTICES.md)
 
 ## Этапы реализации
 
-Базовый scope Phase 0:
+Ближайший Fabric milestone:
 
-1. утвердить ModSpec v0 и ArtSpec v0;
-2. зафиксировать NeoForge 26.1.2 toolchain;
-3. создать пустой собираемый fixture;
-4. подготовить CLI/MCP monorepo;
-5. запустить clean build, GameTest и dedicated-server smoke в CI.
+1. зафиксировать exact Fabric 26.2 compatibility pack;
+2. собрать пустой native Fabric fixture;
+3. запустить GameTest, client и dedicated-server smoke в CI;
+4. добавить Fabric compiler для items/blocks;
+5. закрыть первый prompt-to-JAR с настоящими AI-generated textures.
 
-Дальнейшие этапы и их exit gates описаны в [research-плане](docs/RESEARCH_AND_MVP_PLAN.md). Наличие пункта в roadmap само по себе не означает, что соответствующая возможность уже реализована или проверена.
+Зависимости, критерии приёмки и exit gates описаны в [Fabric-first плане](docs/FABRIC_FIRST_MVP_PLAN.md). Наличие пункта в roadmap само по себе не означает, что соответствующая возможность уже реализована или проверена.
 
 ## Лицензия
 
