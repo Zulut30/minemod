@@ -29,14 +29,16 @@ Phase 0 был разделён между изолированными worktree
 ### NeoForge baseline
 
 - agent: `phase0-neoforge-baseline`;
-- frozen patch SHA-256: `6bc161dd887f7ea5efb093563b48c1e92428ff637066d0b15871194ad14544ca`;
-- размер: `1032230` байт, `27` файлов;
+- frozen patch SHA-256: `2d4502e3d2bac1b891056a73f57ef477bbcabf2f9fe4f32f0dda543b8b76bdeb`;
+- размер: `1033151` байт, `27` файлов, `19198` вставок и `0` удалений;
 - formal score: `0.30` при требуемых `0.85`;
-- score artifact SHA-256: `cf1531b3f47edf10e12baecac1888275d0c12daf48651a302635c9690a6f5e0f`;
+- score artifact SHA-256: `8dff5c0f91355ef54ae90d8219dd036adfedf708424a109acd486b9c2700750c`;
 - scorer failures: `min_patch_score` и `ownership_match`;
 - пути вне первоначального claim: `scripts/provenance/build-neoforge-inventory.py`, `scripts/provenance/inventory-runtime.init.gradle`, `scripts/provenance/neoforge-license-pom-evidence.txt`.
 
 Размер diff в основном создают проверяемый dependency inventory (`677108` байт), Gradle verification metadata (`95309` байт) и неизменённый Gradle wrapper JAR (`45633` байта). Три отмеченных provenance-файла нужны для воспроизводимого построения inventory и доказательств лицензий; они разрешены уточнённым claim. Независимое semantic review frozen patch дало `APPROVE` без code/doc blocker.
+
+Первоначальный SHA-256 NeoForge patch был заменён после формального review только ради синхронизации source-аудита с уже полученными score и semantic evidence. Build, fixture, provenance inventory и smoke implementation при этом не изменялись; новый full-index patch заново проверен на побайтное равенство worktree diff и применимость к текущему `HEAD`.
 
 ## Условия применения
 
