@@ -2,7 +2,7 @@
 
 ## Статус
 
-Принято 2026-07-21 только для двух frozen patches, перечисленных ниже. Родительский `HEAD` этого решения — `987af3d22be36b7f51ff8992f692c995cd8368cd`; оба артефакта обязаны чисто применяться и к exact commit решения перед dry-run.
+Принято 2026-07-21 только для двух frozen patches, перечисленных ниже. Родительский `HEAD` этого решения — `7f4254b0d74ccd815d5aa5f268e00d2588f8d0aa`; оба артефакта обязаны чисто применяться и к exact commit решения перед dry-run.
 
 ## Контекст
 
@@ -15,10 +15,10 @@ Phase 0 был разделён между изолированными worktree
 ### Control plane
 
 - agent: `phase0-specs-control-plane`;
-- frozen patch SHA-256: `b61969b9d5ea3b3264c0ebb45cb4fbdaae21f05f113b26221c8005ba7eb126bf`;
-- размер: `514611` байт, `23` файла, `14739` вставок и `0` удалений;
+- frozen patch SHA-256: `84c5f6319e60f85a9a89b603e3790502d0213a02d11261b6e62c50e04d83c355`;
+- размер: `514859` байт, `23` файла, `14743` вставки и `0` удалений;
 - formal score: `0.26` при требуемых `0.85`;
-- score artifact SHA-256: `af433bf000f76d035fb6237e6ee53a6b473b995527b6597178692650c35a0bb8`;
+- score artifact SHA-256: `8a0eb9c45191d3ae0728797bb99042c4e98daf5e5b68296c771227eeba25482a`;
 - scorer failures: `min_patch_score` и `ownership_match`;
 - единственный путь вне первоначального claim: `tsconfig.json`.
 
@@ -27,6 +27,8 @@ Phase 0 был разделён между изолированными worktree
 Первоначальное формальное review обнаружило semantic blocker в обходе inherited enumerable keys. До принятия этого исключения blocker исправлен fail-closed проверкой до накопления и сортировки ключей. Отдельные subprocess-регрессии с `250000` свойств на `Object.prototype` и `Array.prototype` подтверждают один детерминированный `NON_JSON_VALUE`, отсутствие вызова getter и semantic handlers и ограниченное время/память.
 
 Последующее contract review дополнительно отклонило hardcoded loader по умолчанию, generic `resources[]` вместо канонических разделов и неполный ArtSpec. Более позднее formal review нашло ещё два semantic blocker: глобальную дедупликацию ResourceLocation между независимыми registries/resource domains и отсутствие обязательного GeckoLib для анимаций в именованном NeoForge-профиле. Текущий exact patch закрывает оба finding: uniqueness действует внутри каждого фактического registry/resource domain, Block и BlockItem либо model/texture/animation могут законно разделять id, а профиль `neoforge-26.1.2-java-25` требует bare `geckolib` именно в `dependencies.required` при непустых `assets.animations`; loader-neutral validation этого требования не навязывает. Положительные cross-domain и отрицательные within-domain/profile regressions включены.
+
+Следующее formal review обнаружило ещё одно расхождение с authoritative agent claim: MCP tool публиковал optional `profile`, хотя его public schema обязана оставаться ровно `kind`/`payload`. Текущий exact patch удаляет profile только с hostile MCP wire boundary. `tools/list` linked и raw regressions требуют ровно два свойства и `additionalProperties:false`; даже точное имя доверенного профиля возвращает SDK `isError:true` до handler invocation. Сам handler типизирован как двухаргументный и всегда вызывает loader-neutral `validate(payload, kind)`. Именованный профиль и GeckoLib-политика остаются в trusted programmatic API и CLI `--profile`. Focused независимое rereview итогового worktree дало `MCP CONTRACT: APPROVE`, включая сохранность `__proto__` surrogate и near-cap frame regressions.
 
 Остальной contract сохраняется: базовая validation loader-neutral, NeoForge tuple существует только как именованный trusted profile, schema содержит typed `items`/`blocks`/`entities`/`recipes`/`summoning`/`screens`, typed assets/integrations/GameTests и полный bounded ArtSpec с target matrix, class-specific contexts, visual constraints, provenance и budgets. Публичный wire contract использует числовой `schemaVersion: 0`; будущий production IR v1 явно отделён в roadmap. Все известные массивы имеют ранние caps, а одновременные максимальные ModSpec/ArtSpec укладываются в глобальные structural limits. После последнего исправления exact Node 24.11.0 frozen install, audit-high, lint, typecheck, все четыре workspace test suite, build, adversarial key-bombs и diff-check прошли дважды — в agent worktree и независимо root-оркестратором; lockfile остался побайтно неизменным. Новый scorer честно сохраняет те же два bootstrap failure: `min_patch_score` и первоначальный ownership claim для необходимого root `tsconfig.json`.
 
