@@ -4,7 +4,7 @@ Agent-native инструмент для создания production-ready Minec
 
 ## Статус
 
-Проект находится на стадии Discovery / Phase 0. Реализация ещё не начата; текущий репозиторий содержит проверенный research и план MVP.
+Проект развивается по поэтапному MVP-плану. Этот README не объявляет отдельную фазу завершённой: актуальный статус определяется содержимым текущей ревизии и связанными audit/evidence, а не самим roadmap.
 
 ## Планируемый первый MVP
 
@@ -20,10 +20,13 @@ Agent-native инструмент для создания production-ready Minec
 ## Документация
 
 - [Research и план MVP](docs/RESEARCH_AND_MVP_PLAN.md)
+- [ADR-0001: лицензия продукта и generated output](docs/decisions/0001-product-and-output-licensing.md)
+- [Art Quality Rubric v0](docs/quality/art-quality-rubric-v0.md)
+- [Third-party licensing boundary](THIRD_PARTY_NOTICES.md)
 
-## Ближайший этап
+## Этапы реализации
 
-Phase 0:
+Базовый scope Phase 0:
 
 1. утвердить ModSpec v0 и ArtSpec v0;
 2. зафиксировать NeoForge 26.1.2 toolchain;
@@ -31,6 +34,8 @@ Phase 0:
 4. подготовить CLI/MCP monorepo;
 5. запустить clean build, GameTest и dedicated-server smoke в CI.
 
+Дальнейшие этапы и их exit gates описаны в [research-плане](docs/RESEARCH_AND_MVP_PLAN.md). Наличие пункта в roadmap само по себе не означает, что соответствующая возможность уже реализована или проверена.
+
 ## Лицензия
 
-Лицензия проекта пока не выбрана. До её утверждения не копируйте implementation или assets из исследованных сторонних проектов.
+Оригинальные implementation, документация и схемы репозитория распространяются по [Apache License 2.0](LICENSE), если явно не указано иное. Generated output не передаётся проекту автоматически, но остаётся ограничен правами на inputs, provider/model terms, сторонние компоненты и правила Minecraft. Точные границы и оговорки зафиксированы в [ADR-0001](docs/decisions/0001-product-and-output-licensing.md).

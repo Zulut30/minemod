@@ -1312,8 +1312,8 @@ Package разрешён, если:
 - заморозить NeoForge 26.1.2 compatibility baseline;
 - выбрать точные versions;
 - собрать пустой fixture;
-- юридически классифицировать dependencies/tools;
-- определить art quality rubric.
+- юридически классифицировать dependencies/tools и продуктовую лицензию ([ADR-0001](decisions/0001-product-and-output-licensing.md));
+- определить art quality rubric ([Art Quality Rubric v0](quality/art-quality-rubric-v0.md)).
 
 Exit:
 
@@ -1774,25 +1774,27 @@ MCP security principles требуют user consent, понятного опис
 
 ## 20. Решения, которые нужно принять перед реализацией
 
-1. Лицензия самого продукта: open core, source-available или proprietary.
+Статус на 2026-07-21: вопросы 1, 7 и 10 закрыты в [ADR-0001](decisions/0001-product-and-output-licensing.md) и [Art Quality Rubric v0](quality/art-quality-rubric-v0.md). Остальные пункты сохраняют статус открытых, пока для них не появится отдельное решение.
+
+1. **Решено:** оригинальные implementation, документация и schemas — Apache-2.0; generated output не передаётся проекту автоматически и сохраняет все применимые third-party/provider/Minecraft restrictions.
 2. Допустим ли GPL external Blockbench bridge.
 3. Какие image providers входят официально.
 4. Будет ли local-only режим обязательным.
 5. Где хранится artifact cache.
 6. Нужен ли hosted registry compatibility packs в MVP.
-7. Кто утверждает art quality rubric.
+7. **Решено:** rubric утверждает назначенный product owner человек с release authority; AI/validator не может выдать final approval.
 8. Какие minimum hardware requirements для локальной генерации.
 9. Будет ли NeoForge 26.1.2 единственным production target или Fabric 26.2 получит preview.
-10. Какие права на output заявляет продукт; лучше по умолчанию оставлять output пользователю с прозрачными provider restrictions.
+10. **Решено:** проект не требует передачи прав на generated output; фактические права и распространение ограничены применимым правом, inputs, provider/model terms, сторонними компонентами и правилами Minecraft.
 
 Моя рекомендация:
 
-- ядро и ModSpec schema — open source под permissive license;
+- ядро и ModSpec schema — open source под Apache-2.0;
 - official compatibility packs — подписанные;
 - Blockbench bridge — отдельный процесс/репозиторий;
 - local-first;
 - BYOK providers;
-- generated output принадлежит пользователю в пределах прав provider/source licenses;
+- проект не требует передачи ему прав на generated output и не заявляет дополнительный copyright interest только из-за факта генерации; output остаётся в пользовательском workspace и управляется пользователем в пределах реально существующих прав;
 - hosted team features позже.
 
 ---
