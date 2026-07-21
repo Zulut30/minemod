@@ -1,0 +1,90 @@
+{
+  "contract": "mcdev.compatibility-pack/v1",
+  "packId": "neoforge-26.1.2-java-25",
+  "revision": 1,
+  "target": {
+    "minecraft": "26.1.2",
+    "loader": "neoforge",
+    "java": 25,
+    "neoForge": "26.1.2.80"
+  },
+  "files": [
+    {
+      "path": "templates/.gitignore",
+      "mode": 420,
+      "size": 27,
+      "sha256": "051e6c3ddf8a190757b91799bf9b92df2df3a6648fdf6640ee2e616a59767462",
+      "role": "template"
+    },
+    {
+      "path": "templates/META-INF/neoforge.mods.toml.tpl",
+      "mode": 420,
+      "size": 509,
+      "sha256": "af45e74dd8ff9f8533b982b00f2ad076e49b9c935571e7d1aaf8d1e9e657c236",
+      "role": "template"
+    },
+    {
+      "path": "templates/build.gradle.tpl",
+      "mode": 420,
+      "size": 644,
+      "sha256": "c358643be5328bcd49ee4d4208e66fa48ac06c44ee8003e6ba4f2b6404221a34",
+      "role": "template"
+    },
+    {
+      "path": "templates/gradle.properties",
+      "mode": 420,
+      "size": 331,
+      "sha256": "3908d038981a3f37d48ab5d75c654771c9f272708092d9de5e14bc19396c895c",
+      "role": "template"
+    },
+    {
+      "path": "templates/gradle/verification-metadata.xml",
+      "mode": 420,
+      "size": 95309,
+      "sha256": "7b3509232632738740c7ee9bef04669e50311986f42ddd59fcfc8114aebb036b",
+      "role": "template"
+    },
+    {
+      "path": "templates/gradle/wrapper/gradle-wrapper.jar",
+      "mode": 420,
+      "size": 45633,
+      "sha256": "423cb469ccc0ecc31f0e4e1c309976198ccb734cdcbb7029d4bda0f18f57e8d9",
+      "role": "template"
+    },
+    {
+      "path": "templates/gradle/wrapper/gradle-wrapper.properties",
+      "mode": 420,
+      "size": 339,
+      "sha256": "ae9287ed83e55d3a7e1fc1475faaf03fe6cb6e216a976d64852b1c4312ae3559",
+      "role": "template"
+    },
+    {
+      "path": "templates/gradlew",
+      "mode": 493,
+      "size": 9586,
+      "sha256": "80754763ee2382237c72a002d8b0a6fc48055b8a9f2c72a5bbf35f9ad4a51b23",
+      "role": "executable"
+    },
+    {
+      "path": "templates/gradlew.bat",
+      "mode": 420,
+      "size": 3541,
+      "sha256": "21ccfc105c584c3b3aaa53cf3f6d04f9ab33982e5ad736cf3a83adcc45817b6e",
+      "role": "template"
+    },
+    {
+      "path": "templates/settings.gradle.tpl",
+      "mode": 420,
+      "size": 114,
+      "sha256": "fecf34c577c818bc2de30f7427891b2da2d07338c2d060f2ef02b5e26ab9e62b",
+      "role": "template"
+    },
+    {
+      "path": "versions.lock.json",
+      "mode": 420,
+      "size": 2054,
+      "sha256": "2862445a0137535e344bbd83862510fd95c58558ceb7b6085c86c50b2fe5f0c6",
+      "role": "metadata"
+    }
+  ]
+}
