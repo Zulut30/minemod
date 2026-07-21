@@ -1,0 +1,16 @@
+export {
+  WORKSPACE_LOCK_FILE,
+  WORKSPACE_STATE_DIRECTORY,
+  WorkspaceApplyError,
+  WorkspaceFaultInjectionError,
+  applyWorkspacePlan,
+  recoverWorkspace,
+  type WorkspaceApplyDependencies,
+  type WorkspaceApplyInput,
+  type WorkspaceApplyResult,
+  type WorkspaceFaultEvent,
+  type WorkspaceFaultPoint,
+  type WorkspaceFileInput,
+  type WorkspaceRecoveryInput,
+  type WorkspaceRecoveryResult,
+} from "./workspace.ts";
