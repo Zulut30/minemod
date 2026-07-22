@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 0,
+  "kind": "reference-study",
+  "id": "create_crushing_wheels_1_20_1",
+  "analysisMode": "visual-only",
+  "source": {
+    "project": "Create",
+    "homepage": "https://github.com/Creators-of-Create/Create",
+    "repository": "https://github.com/Creators-of-Create/Create",
+    "revision": "1a1a9a2819b4f89f78caec41b55ed8cb222fa24b",
+    "minecraftVersion": "1.20.1",
+    "loaders": ["forge"],
+    "codeLicense": {
+      "spdx": "MIT",
+      "status": "verified",
+      "evidenceUrl": "https://github.com/Creators-of-Create/Create/blob/1a1a9a2819b4f89f78caec41b55ed8cb222fa24b/LICENSE.md"
+    },
+    "assetLicense": {
+      "spdx": "LicenseRef-All-Rights-Reserved",
+      "status": "unknown",
+      "evidenceUrl": "https://github.com/Creators-of-Create/Create/blob/1a1a9a2819b4f89f78caec41b55ed8cb222fa24b/LICENSE.md"
+    },
+    "reviewedAt": "2026-07-22"
+  },
+  "subject": { "id": "crushing_wheels", "assetClass": "mechanism" },
+  "evidence": [
+    {
+      "kind": "behavior",
+      "sourcePath": "https://github.com/Creators-of-Create/Create/wiki/Crushing-Wheels",
+      "observation": "The official wiki describes a paired mechanism whose left and right wheels rotate in opposite directions."
+    },
+    {
+      "kind": "state",
+      "sourcePath": "https://github.com/Creators-of-Create/Create/wiki/Mechanical-Pump/cd9f6ad6f421924672b61c64a0dcf529d527f4af",
+      "observation": "The official wiki states that fluid direction is represented by an arrow on the machine."
+    }
+  ],
+  "observations": [
+    {
+      "dimension": "animation",
+      "statement": "Exposed counter-rotation makes the processing path understandable before reading UI text."
+    },
+    {
+      "dimension": "silhouette",
+      "statement": "A visible input gap between paired actors communicates where material enters the mechanism."
+    }
+  ],
+  "derivedRules": [
+    {
+      "id": "expose_motion_path_in_silhouette",
+      "appliesTo": ["mechanism"],
+      "statement": "Keep the primary moving actors and their material path readable in the idle silhouette.",
+      "validation": "human-review"
+    },
+    {
+      "id": "make_machine_state_visible",
+      "appliesTo": ["mechanism"],
+      "statement": "A mechanism must expose direction, activity, or load changes through a clearly distinguishable visual state.",
+      "validation": "in-game"
+    }
+  ],
+  "reusePolicy": {
+    "geometry": "forbidden",
+    "textures": "forbidden",
+    "distinctiveDesign": "forbidden",
+    "implementation": "abstract-rules-only"
+  }
+}

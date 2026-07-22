@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 0,
+  "kind": "reference-study",
+  "id": "mekanism_crusher_1_20_1",
+  "analysisMode": "source-inspection",
+  "source": {
+    "project": "Mekanism",
+    "homepage": "https://github.com/mekanism/Mekanism",
+    "repository": "https://github.com/mekanism/Mekanism",
+    "revision": "95b03e838aa94128596db42154a1527048372999",
+    "minecraftVersion": "1.20.1",
+    "loaders": ["forge"],
+    "codeLicense": {
+      "spdx": "MIT",
+      "status": "verified",
+      "evidenceUrl": "https://github.com/mekanism/Mekanism/blob/95b03e838aa94128596db42154a1527048372999/LICENSE"
+    },
+    "assetLicense": {
+      "spdx": "MIT",
+      "status": "verified",
+      "evidenceUrl": "https://github.com/mekanism/Mekanism/blob/95b03e838aa94128596db42154a1527048372999/LICENSE"
+    },
+    "reviewedAt": "2026-07-22"
+  },
+  "subject": { "id": "crusher", "assetClass": "mechanism" },
+  "evidence": [
+    {
+      "kind": "state",
+      "sourcePath": "src/main/resources/assets/mekanism/blockstates/crusher.json",
+      "observation": "Facing and active properties select one base orientation, bounded rotations, and separate idle or active models."
+    },
+    {
+      "kind": "model",
+      "sourcePath": "src/main/resources/assets/mekanism/models/block/crusher_active.json",
+      "observation": "The active model inherits the idle geometry and overrides only function-signaling texture zones."
+    }
+  ],
+  "observations": [
+    {
+      "dimension": "gameplay-state",
+      "statement": "Activity is communicated without duplicating the complete machine definition."
+    },
+    {
+      "dimension": "performance",
+      "statement": "Directional states reuse one geometry and rotate it around the block axis."
+    }
+  ],
+  "derivedRules": [
+    {
+      "id": "make_machine_state_visible",
+      "appliesTo": ["mechanism"],
+      "statement": "A mechanism must expose direction, activity, or load changes through a clearly distinguishable visual state.",
+      "validation": "in-game"
+    },
+    {
+      "id": "reuse_directional_geometry_with_rotation",
+      "appliesTo": ["mechanism"],
+      "statement": "Directional variants should reuse one validated geometry and apply bounded rotations instead of duplicating shapes.",
+      "validation": "automated"
+    }
+  ],
+  "reusePolicy": {
+    "geometry": "forbidden",
+    "textures": "forbidden",
+    "distinctiveDesign": "forbidden",
+    "implementation": "abstract-rules-only"
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 0,
+  "kind": "reference-study",
+  "id": "tech_reborn_grinder_1_20_1",
+  "analysisMode": "source-inspection",
+  "source": {
+    "project": "Tech Reborn",
+    "homepage": "https://github.com/TechReborn/TechReborn",
+    "repository": "https://github.com/TechReborn/TechReborn",
+    "revision": "c6674f4e9723dd6345b038483586fc6dafbc9ad3",
+    "minecraftVersion": "1.20.1",
+    "loaders": ["fabric"],
+    "codeLicense": {
+      "spdx": "MIT",
+      "status": "verified",
+      "evidenceUrl": "https://github.com/TechReborn/TechReborn/blob/c6674f4e9723dd6345b038483586fc6dafbc9ad3/LICENSE.md"
+    },
+    "assetLicense": {
+      "spdx": "MIT",
+      "status": "verified",
+      "evidenceUrl": "https://github.com/TechReborn/TechReborn/blob/c6674f4e9723dd6345b038483586fc6dafbc9ad3/LICENSE.md"
+    },
+    "reviewedAt": "2026-07-22"
+  },
+  "subject": { "id": "grinder", "assetClass": "mechanism" },
+  "evidence": [
+    {
+      "kind": "state",
+      "sourcePath": "src/main/resources/assets/techreborn/blockstates/grinder.json",
+      "observation": "Four facing values rotate the same idle or active grinder model."
+    },
+    {
+      "kind": "model",
+      "sourcePath": "src/main/resources/assets/techreborn/models/block/machines/tier1_machines/grinder_on.json",
+      "observation": "The active variant retains the orientable parent while changing top and front functional textures."
+    }
+  ],
+  "observations": [
+    {
+      "dimension": "gameplay-state",
+      "statement": "Front and top zones can signal activity while side materials preserve machine identity."
+    },
+    {
+      "dimension": "performance",
+      "statement": "One orientable shape covers every horizontal facing through state rotation."
+    }
+  ],
+  "derivedRules": [
+    {
+      "id": "make_machine_state_visible",
+      "appliesTo": ["mechanism"],
+      "statement": "A mechanism must expose direction, activity, or load changes through a clearly distinguishable visual state.",
+      "validation": "in-game"
+    },
+    {
+      "id": "reuse_directional_geometry_with_rotation",
+      "appliesTo": ["mechanism"],
+      "statement": "Directional variants should reuse one validated geometry and apply bounded rotations instead of duplicating shapes.",
+      "validation": "automated"
+    }
+  ],
+  "reusePolicy": {
+    "geometry": "forbidden",
+    "textures": "forbidden",
+    "distinctiveDesign": "forbidden",
+    "implementation": "abstract-rules-only"
+  }
+}

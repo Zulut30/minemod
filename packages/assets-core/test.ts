@@ -49,6 +49,18 @@ assert.deepEqual(diverseReferenceReport.candidateRules, [
   { id: "split_tall_crop_layers", projectSupport: 2, promotable: true },
 ]);
 
+const mechanismReferenceReport = analyzeReferenceCatalog([
+  referenceFixture("create-crushing-wheels-1.20.1.json"),
+  referenceFixture("mekanism-crusher-1.20.1.json"),
+  referenceFixture("tech-reborn-grinder-1.20.1.json"),
+], "mechanism");
+assert.equal(mechanismReferenceReport.readyForRulePromotion, true);
+assert.deepEqual(mechanismReferenceReport.candidateRules, [
+  { id: "expose_motion_path_in_silhouette", projectSupport: 1, promotable: false },
+  { id: "make_machine_state_visible", projectSupport: 3, promotable: true },
+  { id: "reuse_directional_geometry_with_rotation", projectSupport: 2, promotable: true },
+]);
+
 const waterRicePlan = fixture("water-rice.crop.json");
 const waterRiceStages = Array.from({ length: 4 }, (_, stage) => ({
   lower: renderCropStageTexture(waterRicePlan, "lower", stage),
