@@ -4,7 +4,7 @@ Agent-native инструмент для создания production-ready Minec
 
 ## Статус
 
-Проект развивается по [Fabric-first MVP-плану](docs/FABRIC_FIRST_MVP_PLAN.md). Основная цель — создание Fabric-модов для Minecraft 1.20.1. Уже реализованы строгие contracts, trusted Fabric 1.20.1/Fabric 26.2/NeoForge 26.1.2 packs, локально проверенный build и client/server smoke для Fabric 1.20.1, детерминированный codegen core, transactional workspace, artifact/logging слой, NeoForge compiler и fixed build runner. Fabric compiler, сквозная CLI/MCP orchestration и production AI asset pipeline ещё предстоит реализовать.
+Проект развивается по [Fabric-first MVP-плану](docs/FABRIC_FIRST_MVP_PLAN.md). Основная цель — создание Fabric-модов для Minecraft 1.20.1. Уже реализованы строгие contracts, trusted Fabric 1.20.1/Fabric 26.2/NeoForge 26.1.2 packs, локально проверенный build и client/server smoke для Fabric 1.20.1, детерминированный codegen core, transactional workspace, artifact/logging слой, NeoForge compiler и fixed build runner. Для моделирования уже есть bounded cuboid contract и детерминированный экспорт сложной геометрии и rig в editable Blockbench 5 `.bbmodel`. Fabric compiler, сквозная CLI/MCP orchestration, генерация текстур/анимаций и version-tested runtime export ещё предстоят.
 
 Этот README не объявляет отдельную фазу завершённой: актуальный статус определяется кодом, тестами и связанными audit/evidence, а не самим roadmap.
 
@@ -30,6 +30,7 @@ Fabric 26.2 и NeoForge 26.1.2 сохраняются как regression targets;
 - [ADR-0003: Fabric как основной target MVP](docs/decisions/0003-fabric-first-mvp.md)
 - [ADR-0004: Fabric 1.20.1 как production baseline](docs/decisions/0004-fabric-1.20.1-production-baseline.md)
 - [Аудит локального Fabric 1.20.1 baseline](docs/audit/fabric-1.20.1-baseline.md)
+- [Аудит основы cuboid-моделирования](docs/audit/cuboid-modeling-foundation.md)
 - [Art Quality Rubric v0](docs/quality/art-quality-rubric-v0.md)
 - [Third-party licensing boundary](THIRD_PARTY_NOTICES.md)
 
