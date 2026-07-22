@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "auditedAt": "2026-07-21",
+  "status": "candidate-local",
+  "productLicense": "Apache-2.0",
+  "dependencyInventory": {
+    "verificationMetadata": {
+      "path": "../../fixtures/fabric-26.2-empty/gradle/verification-metadata.xml",
+      "sha256": "892b8ef4cd0a784ac37dbccc41e31006db7c45f3b213425bacab9353ec2c625b"
+    },
+    "componentCount": 174,
+    "artifactReferenceCount": 393,
+    "artifactSha256Count": 393,
+    "weakHashCount": 0,
+    "trustedWildcardCount": 0,
+    "transitiveLicenseReviewComplete": false,
+    "redistributionBlockedUntilLicenseReview": true
+  },
+  "dependencies": [
+    {
+      "name": "Minecraft",
+      "version": "26.2",
+      "source": "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json",
+      "license": "Mojang EULA",
+      "redistributed": false,
+      "checksumStatus": "resolved by Fabric Loom and pinned in Gradle verification metadata"
+    },
+    {
+      "name": "Fabric Loom",
+      "version": "1.17.16",
+      "source": "https://github.com/FabricMC/fabric-loom/tree/ad89ffdb4e3c6fb1647e45cb5b3ca87ff1e77803",
+      "license": "MIT",
+      "licenseSource": "https://raw.githubusercontent.com/FabricMC/fabric-loom/ad89ffdb4e3c6fb1647e45cb5b3ca87ff1e77803/LICENSE",
+      "licenseSourceSha256": "a4c4e3a93dd8d73c067dbd99d5aaf9c3a19469d2a2526c04212d0cb7e2a6125a",
+      "redistributed": false
+    },
+    {
+      "name": "Fabric Loader",
+      "version": "0.19.3",
+      "source": "https://github.com/FabricMC/fabric-loader/tree/35b0b1c0268eb5f9d377322db491b0bb436541a8",
+      "license": "Apache-2.0",
+      "licenseSource": "https://raw.githubusercontent.com/FabricMC/fabric-loader/35b0b1c0268eb5f9d377322db491b0bb436541a8/LICENSE",
+      "licenseSourceSha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+      "redistributed": false
+    },
+    {
+      "name": "Fabric API",
+      "version": "0.155.2+26.2",
+      "source": "https://github.com/FabricMC/fabric/tree/f5f9b311e1c5c8269af5b46e089f163df972c6f3",
+      "license": "Apache-2.0",
+      "licenseSource": "https://raw.githubusercontent.com/FabricMC/fabric/f5f9b311e1c5c8269af5b46e089f163df972c6f3/LICENSE",
+      "licenseSourceSha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+      "redistributed": false
+    },
+    {
+      "name": "Gradle binary distribution",
+      "version": "9.5.1",
+      "source": "https://services.gradle.org/distributions/gradle-9.5.1-bin.zip",
+      "license": "Apache-2.0",
+      "licenseSource": "https://raw.githubusercontent.com/gradle/gradle/fd78213f09782e62ca4957f9cfd3d90c6c3f1767/LICENSE",
+      "licenseSourceSha256": "cf234c4188d773406f640bf89be680d9288f40ff96901c70d643fcea96ad46df",
+      "redistributed": false,
+      "sha256": "bafc141b619ad6350fd975fc903156dd5c151998cc8b058e8c1044ab5f7b031f"
+    },
+    {
+      "name": "Gradle Wrapper JAR and launchers",
+      "version": "9.5.1",
+      "source": "https://github.com/gradle/gradle/tree/fd78213f09782e62ca4957f9cfd3d90c6c3f1767",
+      "license": "Apache-2.0",
+      "licenseSource": "https://raw.githubusercontent.com/gradle/gradle/fd78213f09782e62ca4957f9cfd3d90c6c3f1767/LICENSE",
+      "licenseSourceSha256": "cf234c4188d773406f640bf89be680d9288f40ff96901c70d643fcea96ad46df",
+      "redistributed": true,
+      "wrapperJarSha256": "497c8c2a7e5031f6aa847f88104aa80a93532ec32ee17bdb8d1d2f67a194a9c7",
+      "localHardening": "POSIX sha256sum/shasum and Windows PowerShell Get-FileHash fail closed before Java"
+    },
+    {
+      "name": "Eclipse Temurin",
+      "version": "25.0.3+9",
+      "source": "https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.3%2B9/OpenJDK25U-jdk_x64_linux_hotspot_25.0.3_9.tar.gz",
+      "license": "GPL-2.0-only WITH Classpath-exception-2.0",
+      "licenseSource": "https://github.com/adoptium/jdk25u/blob/jdk-25.0.3%2B9/LICENSE",
+      "redistributed": false,
+      "sha256": "69264a7a211bf5029830d07bc3370f879769d62ebc5b5488e90c9343a2da0e1f"
+    }
+  ],
+  "unresolved": [
+    "Complete SPDX classification for all 174 resolved transitive components",
+    "GitHub-hosted build, dedicated-server, and headless-client evidence",
+    "Windows runtime execution of gradlew.bat checksum enforcement"
+  ]
+}

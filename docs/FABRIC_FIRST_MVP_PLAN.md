@@ -94,14 +94,14 @@ Generic image-to-3D остаётся experimental provider. Надёжный pro
 | Компонент | Состояние | Использование в Fabric MVP |
 |---|---|---|
 | Строгие wire contracts и bounded BuildPlan | Реализовано и протестировано | Расширить новой версией/закрытыми Fabric policies |
-| Trusted compatibility-pack registry | Реализовано | Добавить отдельный `fabric-26.2` pack |
+| Trusted compatibility-pack registry | Реализовано для Fabric 26.2 и NeoForge 26.1.2 | Добавлять новые revisions без изменения старых trees |
 | Детерминированное codegen core | Реализовано | Переиспользовать без loader imports |
 | Transactional create-only workspace apply | Реализовано | Переиспользовать без изменений semantics |
 | Artifact index и structured logging | Реализовано | Переиспользовать для Fabric build/assets/reports |
 | Fixed secure Gradle runner | Реализован для NeoForge | Выделить общую execution основу, добавить отдельную Fabric policy |
 | NeoForge 26.1.2 compiler | Реализован и остаётся зелёным | Не конвертировать подменой imports; оставить отдельным backend |
 | Application orchestration, CLI/MCP E2E | Не завершено | Закрыть в первом Fabric vertical slice |
-| Fabric pack/compiler/fixtures | Не реализовано | Главная ближайшая серия задач |
+| Fabric pack/compiler/fixtures | Exact pack и empty fixture реализованы локально; compiler отсутствует | Закрыть F0.2, затем Fabric compiler |
 | Production AI asset pipeline | Не реализован | Проверить минимальный путь уже в первом vertical slice |
 
 Следовательно, сейчас есть качественный control plane и рабочий NeoForge backend, но **инструмент ещё не генерирует Fabric-мод от промпта до JAR и не создаёт production-ассеты**.
@@ -404,4 +404,4 @@ MVP считается завершённым только когда однов
 
 ## 10. Ближайшая задача
 
-Следующий implementation milestone — **F0.1: trusted `fabric-26.2` compatibility pack**. Он должен завершиться отдельным коммитом, clean fixture build и client/dedicated-server evidence. Только после этого начинается Fabric compiler: иначе codegen будет строиться на непроверенной версии toolchain.
+Следующий implementation milestone — **F0.2: Fabric test harness**. Trusted `fabric-26.2` pack, clean fixture build и локальные client/dedicated-server evidence уже созданы. Теперь нужны server/client GameTests, hardened repeatable smoke scripts и hosted CI; только после этого начинается Fabric compiler.
