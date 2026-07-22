@@ -1,26 +1,14 @@
 import assert from "node:assert/strict";
 import { containsForbiddenExecutionSurface, isBuildPlan } from "@mcdev/contracts";
-import type { ModSpecV1 } from "@mcdev/modspec";
+import { fabricBasicContentFixture } from "../../fixtures/specs/fabric-basic-content.ts";
 import { validFabricV1Fixture } from "../../fixtures/specs/validation.ts";
 import {
-  compileFabricPhase0,
+  compileFabricPhase1,
   FabricCompilerError,
   type CompiledFabricProject,
 } from "./index.ts";
 
 const decoder = new TextDecoder("utf-8", { fatal: true });
-
-function phase0Fixture(): ModSpecV1 {
-  const spec = structuredClone(validFabricV1Fixture);
-  spec.project.name = "Infected \"Frontier\"";
-  spec.gameplay.entities = [];
-  spec.gameplay.structures = [];
-  spec.gameplay.screens = [];
-  spec.assets.models = [];
-  spec.assets.animations = [];
-  spec.packaging.includeSources = false;
-  return spec;
-}
 
 function textOutput(result: CompiledFabricProject, path: string): string {
   const output = result.outputs.find(({ file }) => file.path === path);
@@ -34,7 +22,7 @@ async function expectCompilerError(
   path?: string,
 ): Promise<FabricCompilerError> {
   try {
-    await compileFabricPhase0(payload);
+    await compileFabricPhase1(payload);
   } catch (error) {
     assert.ok(error instanceof FabricCompilerError);
     assert.equal(error.code, code);
@@ -58,12 +46,20 @@ const expectedPaths = [
   "gradlew.bat",
   "settings.gradle",
   "src/client/java/dev/mcdev/generated/m_infectedfrontier/client/GeneratedClient.java",
+  "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedContent.java",
   "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedMod.java",
+  "src/main/resources/assets/infectedfrontier/blockstates/blue_ore.json",
+  "src/main/resources/assets/infectedfrontier/lang/en_us.json",
+  "src/main/resources/assets/infectedfrontier/models/block/blue_ore.json",
+  "src/main/resources/assets/infectedfrontier/models/item/blue_ingot.json",
+  "src/main/resources/assets/infectedfrontier/models/item/blue_ore_item.json",
+  "src/main/resources/assets/infectedfrontier/textures/mcdev/placeholder.png",
+  "src/main/resources/data/infectedfrontier/loot_tables/blocks/blue_ore.json",
   "src/main/resources/fabric.mod.json",
 ];
 
-const fixture = phase0Fixture();
-const compiled = await compileFabricPhase0(JSON.stringify(fixture));
+const fixture = fabricBasicContentFixture();
+const compiled = await compileFabricPhase1(JSON.stringify(fixture));
 assert.deepEqual(compiled.outputs.map(({ file }) => file.path), expectedPaths);
 assert.equal(Object.isFrozen(compiled), true);
 assert.equal(Object.isFrozen(compiled.outputs), true);
@@ -80,9 +76,10 @@ assert.deepEqual(compiled.plan.nodes.map(({ nodeId }) => nodeId), [
 ]);
 const buildNode = compiled.plan.nodes.find(({ kind }) => kind === "gradle-clean-build");
 assert.ok(buildNode?.kind === "gradle-clean-build");
-assert.equal(buildNode.policy, "fabric-1.20.1-phase0-v1");
+assert.equal(buildNode.policy, "fabric-1.20.1-phase1-v1");
 assert.equal(compiled.plan.nodes.find(({ nodeId }) => nodeId === "generate-project")?.outputs.length, 10);
-assert.equal(compiled.plan.nodes.find(({ nodeId }) => nodeId === "generate-content")?.outputs.length, 2);
+assert.equal(compiled.plan.nodes.find(({ nodeId }) => nodeId === "generate-content")?.outputs.length, 10);
+assert.deepEqual(compiled.plan.warnings, ["PLACEHOLDER_ASSETS_USED"]);
 
 const fabricMod = JSON.parse(textOutput(compiled, "src/main/resources/fabric.mod.json")) as {
   name: string;
@@ -102,6 +99,49 @@ assert.match(
   textOutput(compiled, "src/client/java/dev/mcdev/generated/m_infectedfrontier/client/GeneratedClient.java"),
   /implements ClientModInitializer/u,
 );
+const generatedContent = textOutput(
+  compiled,
+  "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedContent.java",
+);
+assert.match(generatedContent, /Registry\.register\(BuiltInRegistries\.BLOCK/u);
+assert.match(generatedContent, /BLOCK_BLUE_UORE/u);
+assert.match(generatedContent, /Float\.intBitsToFloat\(0x40600000\)/u);
+assert.match(generatedContent, /new Item\(new Item\.Properties\(\)\.stacksTo\(32\)\)/u);
+assert.match(generatedContent, /new BlockItem\(BLOCK_BLUE_UORE, new Item\.Properties\(\)\.stacksTo\(64\)\)/u);
+assert.match(generatedContent, /modifyEntriesEvent\(CreativeModeTabs\.INGREDIENTS\)/u);
+assert.match(generatedContent, /modifyEntriesEvent\(CreativeModeTabs\.BUILDING_BLOCKS\)/u);
+assert.match(
+  textOutput(compiled, "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedMod.java"),
+  /GeneratedContent\.register\(\)/u,
+);
+assert.equal(
+  textOutput(compiled, "src/main/resources/assets/infectedfrontier/models/item/blue_ingot.json"),
+  '{"parent":"minecraft:item/generated","textures":{"layer0":"infectedfrontier:mcdev/placeholder"}}\n',
+);
+assert.equal(
+  textOutput(compiled, "src/main/resources/assets/infectedfrontier/models/item/blue_ore_item.json"),
+  '{"parent":"infectedfrontier:block/blue_ore"}\n',
+);
+assert.deepEqual(
+  JSON.parse(textOutput(compiled, "src/main/resources/assets/infectedfrontier/lang/en_us.json")),
+  {
+    "block.infectedfrontier.blue_ore": "Blue Ore",
+    "item.infectedfrontier.blue_ingot": "Blue Ingot",
+    "item.infectedfrontier.blue_ore_item": "Blue Ore Item",
+  },
+);
+assert.deepEqual(
+  JSON.parse(textOutput(compiled, "src/main/resources/data/infectedfrontier/loot_tables/blocks/blue_ore.json")),
+  {
+    pools: [{
+      bonus_rolls: 0,
+      conditions: [{ condition: "minecraft:survives_explosion" }],
+      entries: [{ name: "infectedfrontier:blue_ore_item", type: "minecraft:item" }],
+      rolls: 1,
+    }],
+    type: "minecraft:block",
+  },
+);
 
 const reorderedRoot = {
   packaging: fixture.packaging,
@@ -116,15 +156,28 @@ const reorderedRoot = {
   schemaVersion: fixture.schemaVersion,
 };
 assert.equal(
-  (await compileFabricPhase0(JSON.stringify(reorderedRoot, null, 2))).plan.planId,
+  (await compileFabricPhase1(JSON.stringify(reorderedRoot, null, 2))).plan.planId,
   compiled.plan.planId,
   "JSON whitespace and key order must not affect the Fabric plan",
 );
+const reorderedContent = fabricBasicContentFixture();
+reorderedContent.gameplay.items.reverse();
+assert.equal(
+  (await compileFabricPhase1(JSON.stringify(reorderedContent))).plan.planId,
+  compiled.plan.planId,
+  "item declaration order must not affect generated content",
+);
 
 await expectCompilerError(JSON.stringify(validFabricV1Fixture), "SPEC_UNSUPPORTED", "/gameplay/entities");
-const hyphenated = phase0Fixture();
+const hyphenated = fabricBasicContentFixture();
 hyphenated.project.modId = "infected-frontier";
 await expectCompilerError(JSON.stringify(hyphenated), "SPEC_UNSUPPORTED", "/project/modId");
+const foreignNamespace = fabricBasicContentFixture();
+foreignNamespace.gameplay.items[0]!.id = "othermod:blue_ingot";
+await expectCompilerError(JSON.stringify(foreignNamespace), "SPEC_UNSUPPORTED", "/gameplay/items/0/id");
+const referencedItem = fabricBasicContentFixture();
+referencedItem.gameplay.items[0]!.references = ["infectedfrontier:blue_ore_item"];
+await expectCompilerError(JSON.stringify(referencedItem), "SPEC_UNSUPPORTED", "/gameplay/items/0/references");
 const v0 = { ...fixture, schemaVersion: 0 };
 await expectCompilerError(JSON.stringify(v0), "SPEC_INVALID", "/schemaVersion");
 await expectCompilerError("{", "SPEC_INVALID");

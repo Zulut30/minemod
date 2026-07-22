@@ -4,7 +4,7 @@ import {
   loadBuiltinCompatibilityPack,
 } from "@mcdev/compatibility-packs";
 import { validateInlineSpec } from "@mcdev/validation";
-import { compileVerifiedFabricPhase0 } from "./compiler.ts";
+import { compileVerifiedFabricPhase1 } from "./compiler.ts";
 import {
   boundedFabricError,
   FabricCompilerError,
@@ -19,7 +19,7 @@ function packFailure(error: BuiltinPackIntegrityError): FabricCompilerError {
     : "The built-in Fabric 1.20.1 compatibility pack failed integrity verification.");
 }
 
-export async function compileFabricPhase0(payload: string): Promise<CompiledFabricProject> {
+export async function compileFabricPhase1(payload: string): Promise<CompiledFabricProject> {
   if (typeof payload !== "string") {
     throw fabricCompilerError("INVALID_REQUEST", "Fabric compiler payload must be an inline JSON string.");
   }
@@ -49,13 +49,16 @@ export async function compileFabricPhase0(payload: string): Promise<CompiledFabr
 
   try {
     const pack = await loadBuiltinCompatibilityPack(BUILTIN_FABRIC_1_20_1_SELECTOR);
-    return compileVerifiedFabricPhase0(validation.value, pack);
+    return compileVerifiedFabricPhase1(validation.value, pack);
   } catch (error) {
     if (error instanceof FabricCompilerError) throw error;
     if (error instanceof BuiltinPackIntegrityError) throw packFailure(error);
     throw fabricCompilerError("INTERNAL_ERROR", "Fabric compilation failed safely.");
   }
 }
+
+/** @deprecated Use compileFabricPhase1. Kept as a source-compatible scaffold alias. */
+export const compileFabricPhase0 = compileFabricPhase1;
 
 export { FabricCompilerError } from "./errors.ts";
 export type {

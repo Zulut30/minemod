@@ -88,6 +88,8 @@ const fabricBuildNode = (fabricPlan.nodes as Record<string, unknown>[])
 assert.ok(fabricBuildNode !== undefined);
 fabricBuildNode.policy = "fabric-1.20.1-phase0-v1";
 assert.equal(isBuildPlan(fabricPlan), true, "Fabric 1.20.1 phase-0 builds use a closed runner policy");
+fabricBuildNode.policy = "fabric-1.20.1-phase1-v1";
+assert.equal(isBuildPlan(fabricPlan), true, "Fabric 1.20.1 phase-1 builds use a closed runner policy");
 fabricBuildNode.policy = "fabric-latest";
 assert.equal(isBuildPlan(fabricPlan), false, "unversioned Fabric runner policies are rejected");
 assert.equal(isArtifactIndex(artifactIndex), true);
@@ -204,6 +206,7 @@ for (const forbidden of ["args", "command", "cwd", "env", "eval", "executable", 
 }
 assert.equal(containsForbiddenExecutionSurface({ policy: "neoforge-phase1-v1" }), false);
 assert.equal(containsForbiddenExecutionSurface({ policy: "fabric-1.20.1-phase0-v1" }), false);
+assert.equal(containsForbiddenExecutionSurface({ policy: "fabric-1.20.1-phase1-v1" }), false);
 
 const cyclic = clone(plan) as Record<string, unknown>;
 const cyclicNodes = cyclic.nodes as Record<string, unknown>[];

@@ -1,5 +1,6 @@
 import {
   canonicalJson,
+  canonicalJsonFileBytes,
   createGeneratedFile,
   finalizeGeneratedFiles,
   sha256Hex,
@@ -33,11 +34,13 @@ import type {
 
 type VerifiedFabricPack = VerifiedCompatibilityPack<CompatibilityPackManifestV3>;
 
-const COMPILER_ID = "@mcdev/compiler-fabric@0.1.0-phase.0";
+const COMPILER_ID = "@mcdev/compiler-fabric@0.1.0-phase.1";
 const SPEC_DIGEST_DOMAIN = "mcdev.compiler-fabric.modspec/v1";
 const NODE_INPUT_DIGEST_DOMAIN = "mcdev.compiler-fabric.node-input/v1";
 const NODE_CACHE_KEY_DOMAIN = "mcdev.compiler-fabric.node-cache/v1";
 const PLAN_ID_DOMAIN = "mcdev.compiler-fabric.plan/v1";
+const PLACEHOLDER_PNG_BASE64 =
+  "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAKElEQVR42mPIDur7j4xvrLBEwYTkGYaBAaRqQJcfDgaMpoPRdAA0AADYy4EfTnIAEwAAAABJRU5ErkJggg==";
 
 const PACK_PAYLOAD_PATHS = Object.freeze([
   "templates/.gitignore",
@@ -95,6 +98,19 @@ const TEMPLATE_TOKEN_COUNTS: Readonly<Record<string, Readonly<Partial<Record<Tem
 
 const decoder = new TextDecoder("utf-8", { fatal: true, ignoreBOM: true });
 
+interface ResourceLocationParts {
+  readonly namespace: string;
+  readonly path: string;
+}
+
+interface NormalizedContent {
+  readonly items: readonly ModSpecV1["gameplay"]["items"][number][];
+  readonly blocks: readonly ModSpecV1["gameplay"]["blocks"][number][];
+  readonly itemParts: ReadonlyMap<string, ResourceLocationParts>;
+  readonly blockParts: ReadonlyMap<string, ResourceLocationParts>;
+  readonly blockByItem: ReadonlyMap<string, ModSpecV1["gameplay"]["blocks"][number]>;
+}
+
 function compareAscii(left: string, right: string): number {
   if (left < right) return -1;
   if (left > right) return 1;
@@ -117,17 +133,20 @@ function pushUnsupported(errors: McdevError[], path: string, message: string): v
   if (errors.length < 100) errors.push(mcdevError("SPEC_UNSUPPORTED", message, path));
 }
 
-function phase0Preflight(spec: ModSpecV1): void {
+function parseResourceLocation(id: string): ResourceLocationParts {
+  const separator = id.indexOf(":");
+  return Object.freeze({ namespace: id.slice(0, separator), path: id.slice(separator + 1) });
+}
+
+function basicContentPreflight(spec: ModSpecV1): NormalizedContent {
   const errors: McdevError[] = [];
   if (!/^[a-z][a-z0-9_]{1,63}$/u.test(spec.project.modId)) {
-    pushUnsupported(errors, "/project/modId", "Fabric phase 0 requires a Java-safe mod id without hyphens.");
+    pushUnsupported(errors, "/project/modId", "Fabric phase 1 requires a Java-safe mod id without hyphens.");
   }
   if (spec.target.minecraft !== "1.20.1" || spec.target.loader !== "fabric" || spec.target.java !== 17) {
-    pushUnsupported(errors, "/target", "Fabric phase 0 supports only Minecraft 1.20.1 and Java 17.");
+    pushUnsupported(errors, "/target", "Fabric phase 1 supports only Minecraft 1.20.1 and Java 17.");
   }
   const sections: readonly [readonly unknown[], string][] = [
-    [spec.gameplay.items, "/gameplay/items"],
-    [spec.gameplay.blocks, "/gameplay/blocks"],
     [spec.gameplay.entities, "/gameplay/entities"],
     [spec.gameplay.recipes, "/gameplay/recipes"],
     [spec.gameplay.summoning, "/gameplay/summoning"],
@@ -142,19 +161,63 @@ function phase0Preflight(spec: ModSpecV1): void {
   ];
   for (const [entries, path] of sections) {
     if (entries.length > 0) {
-      pushUnsupported(errors, path, "This content is modeled by ModSpec v1 but is not generated in Fabric phase 0 yet.");
+      pushUnsupported(errors, path, "This content is modeled by ModSpec v1 but is not generated in Fabric phase 1 yet.");
     }
   }
   if (spec.integrations.jei !== "off") {
-    pushUnsupported(errors, "/integrations/jei", "JEI integration must be off in Fabric phase 0.");
+    pushUnsupported(errors, "/integrations/jei", "JEI integration must be off in Fabric phase 1.");
   }
   if (spec.integrations.jade !== "off") {
-    pushUnsupported(errors, "/integrations/jade", "Jade integration must be off in Fabric phase 0.");
+    pushUnsupported(errors, "/integrations/jade", "Jade integration must be off in Fabric phase 1.");
   }
   if (spec.packaging.includeSources) {
-    pushUnsupported(errors, "/packaging/includeSources", "Source packaging is not supported in Fabric phase 0.");
+    pushUnsupported(errors, "/packaging/includeSources", "Source packaging is not supported in Fabric phase 1.");
   }
+
+  const itemParts = new Map<string, ResourceLocationParts>();
+  spec.gameplay.items.forEach((item, index) => {
+    const parts = parseResourceLocation(item.id);
+    if (parts.namespace !== spec.project.modId) {
+      pushUnsupported(errors, `/gameplay/items/${index}/id`, "Fabric phase 1 item namespaces must equal project.modId.");
+    }
+    if (item.references.length > 0) {
+      pushUnsupported(errors, `/gameplay/items/${index}/references`, "Fabric phase 1 items cannot carry resource references.");
+    }
+    itemParts.set(item.id, parts);
+  });
+
+  const blockParts = new Map<string, ResourceLocationParts>();
+  const blockByItem = new Map<string, ModSpecV1["gameplay"]["blocks"][number]>();
+  spec.gameplay.blocks.forEach((block, index) => {
+    const parts = parseResourceLocation(block.id);
+    const item = parseResourceLocation(block.item);
+    if (parts.namespace !== spec.project.modId) {
+      pushUnsupported(errors, `/gameplay/blocks/${index}/id`, "Fabric phase 1 block namespaces must equal project.modId.");
+    }
+    if (item.namespace !== spec.project.modId) {
+      pushUnsupported(errors, `/gameplay/blocks/${index}/item`, "Fabric phase 1 block-item namespaces must equal project.modId.");
+    }
+    if (block.references.length > 0) {
+      pushUnsupported(errors, `/gameplay/blocks/${index}/references`, "Fabric phase 1 blocks cannot carry resource references.");
+    }
+    if (!itemParts.has(block.item)) {
+      pushUnsupported(errors, `/gameplay/blocks/${index}/item`, "Every Fabric phase 1 block item must be declared in gameplay.items.");
+    }
+    if (blockByItem.has(block.item)) {
+      pushUnsupported(errors, `/gameplay/blocks/${index}/item`, "A gameplay item can back at most one Fabric phase 1 block.");
+    }
+    blockParts.set(block.id, parts);
+    blockByItem.set(block.item, block);
+  });
+
   if (errors.length > 0) throw new FabricCompilerError("SPEC_UNSUPPORTED", errors);
+  return Object.freeze({
+    items: Object.freeze([...spec.gameplay.items].sort((left, right) => compareAscii(left.id, right.id))),
+    blocks: Object.freeze([...spec.gameplay.blocks].sort((left, right) => compareAscii(left.id, right.id))),
+    itemParts,
+    blockParts,
+    blockByItem,
+  });
 }
 
 function assertExactPack(pack: VerifiedFabricPack): void {
@@ -265,7 +328,120 @@ function javaString(value: string): string {
   return JSON.stringify(value);
 }
 
-function contentInputs(spec: ModSpecV1): readonly GeneratedFileInput[] {
+function javaConstantPath(path: string): string {
+  let result = "";
+  for (const character of path) {
+    if (character >= "a" && character <= "z") result += character.toUpperCase();
+    else if (character >= "0" && character <= "9") result += character;
+    else if (character === "_") result += "_U";
+    else if (character === "-") result += "_H";
+    else if (character === ".") result += "_D";
+    else if (character === "/") result += "_S";
+    else throw fabricCompilerError("SPEC_UNSUPPORTED", "A resource path cannot be encoded as a Java field name.");
+  }
+  return result;
+}
+
+function float32Bits(value: number): string {
+  const buffer = new ArrayBuffer(4);
+  const view = new DataView(buffer);
+  view.setFloat32(0, Object.is(value, -0) ? 0 : Math.fround(value), false);
+  return view.getUint32(0, false).toString(16).toUpperCase().padStart(8, "0");
+}
+
+function generatedContentSource(modId: string, content: NormalizedContent): string {
+  const blockLines = content.blocks.map((block) => {
+    const parts = content.blockParts.get(block.id);
+    if (parts === undefined) throw fabricCompilerError("INTERNAL_ERROR", "Block normalization failed safely.");
+    return `    public static final Block BLOCK_${javaConstantPath(parts.path)} = registerBlock(\n` +
+      `            ${javaString(parts.path)}, new Block(BlockBehaviour.Properties.of().strength(` +
+      `Float.intBitsToFloat(0x${float32Bits(block.hardness)}))));`;
+  });
+  const itemLines = content.items.map((item) => {
+    const parts = content.itemParts.get(item.id);
+    if (parts === undefined) throw fabricCompilerError("INTERNAL_ERROR", "Item normalization failed safely.");
+    const block = content.blockByItem.get(item.id);
+    const constructor = block === undefined
+      ? `new Item(new Item.Properties().stacksTo(${item.maxStackSize}))`
+      : (() => {
+          const blockParts = content.blockParts.get(block.id);
+          if (blockParts === undefined) {
+            throw fabricCompilerError("INTERNAL_ERROR", "Block-item normalization failed safely.");
+          }
+          return `new BlockItem(BLOCK_${javaConstantPath(blockParts.path)}, ` +
+            `new Item.Properties().stacksTo(${item.maxStackSize}))`;
+        })();
+    return `    public static final Item ITEM_${javaConstantPath(parts.path)} = registerItem(\n` +
+      `            ${javaString(parts.path)}, ${constructor});`;
+  });
+  const declarations = [...blockLines, ...itemLines];
+  const declarationSection = declarations.length === 0 ? "" : `${declarations.join("\n\n")}\n\n`;
+  const ingredientEntries = content.items
+    .filter((item) => !content.blockByItem.has(item.id))
+    .map((item) => {
+      const parts = content.itemParts.get(item.id);
+      if (parts === undefined) throw fabricCompilerError("INTERNAL_ERROR", "Creative item normalization failed safely.");
+      return `            entries.accept(ITEM_${javaConstantPath(parts.path)});`;
+    });
+  const buildingEntries = content.blocks.map((block) => {
+    const itemParts = content.itemParts.get(block.item);
+    if (itemParts === undefined) throw fabricCompilerError("INTERNAL_ERROR", "Creative block normalization failed safely.");
+    return `            entries.accept(ITEM_${javaConstantPath(itemParts.path)});`;
+  });
+  const creativeRegistrations = [
+    ingredientEntries.length === 0 ? "" :
+      `        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.INGREDIENTS).register(entries -> {\n` +
+      `${ingredientEntries.join("\n")}\n        });`,
+    buildingEntries.length === 0 ? "" :
+      `        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.BUILDING_BLOCKS).register(entries -> {\n` +
+      `${buildingEntries.join("\n")}\n        });`,
+  ].filter((entry) => entry.length > 0).join("\n");
+  return `package dev.mcdev.generated.m_${modId};
+
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+
+public final class GeneratedContent {
+${declarationSection}    private GeneratedContent() {}
+
+    public static void register() {
+${creativeRegistrations}
+    }
+
+    private static Block registerBlock(String path, Block block) {
+        return Registry.register(BuiltInRegistries.BLOCK, new ResourceLocation(GeneratedMod.MOD_ID, path), block);
+    }
+
+    private static Item registerItem(String path, Item item) {
+        return Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(GeneratedMod.MOD_ID, path), item);
+    }
+}
+`;
+}
+
+function titleFromPath(path: string): string {
+  return path.split(/[/_.-]+/u)
+    .filter((part) => part.length > 0)
+    .map((part) => `${part[0]?.toUpperCase() ?? ""}${part.slice(1)}`)
+    .join(" ");
+}
+
+function input(path: string, bytes: Uint8Array): GeneratedFileInput {
+  return { path, mode: 420, bytes, origin: "compiler" };
+}
+
+function jsonInput(path: string, value: unknown): GeneratedFileInput {
+  return input(path, canonicalJsonFileBytes(value));
+}
+
+function contentInputs(spec: ModSpecV1, content: NormalizedContent): readonly GeneratedFileInput[] {
   const modId = spec.project.modId;
   const packageRoot = `dev.mcdev.generated.m_${modId}`;
   const pathRoot = `dev/mcdev/generated/m_${modId}`;
@@ -278,7 +454,7 @@ public final class GeneratedMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        // Fabric content registries are added by later compiler phases.
+        GeneratedContent.register();
     }
 }
 `;
@@ -289,24 +465,68 @@ import net.fabricmc.api.ClientModInitializer;
 public final class GeneratedClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        // Client renderers and screens are added by later compiler phases.
     }
 }
 `;
-  return Object.freeze([
-    {
-      path: `src/main/java/${pathRoot}/GeneratedMod.java`,
-      mode: 420,
-      bytes: utf8FileBytes(mainSource),
-      origin: "compiler",
-    },
-    {
-      path: `src/client/java/${pathRoot}/client/GeneratedClient.java`,
-      mode: 420,
-      bytes: utf8FileBytes(clientSource),
-      origin: "compiler",
-    },
-  ]);
+  const resourceRoot = "src/main/resources";
+  const inputs: GeneratedFileInput[] = [
+    input(`src/main/java/${pathRoot}/GeneratedMod.java`, utf8FileBytes(mainSource)),
+    input(`src/main/java/${pathRoot}/GeneratedContent.java`, utf8FileBytes(generatedContentSource(modId, content))),
+    input(`src/client/java/${pathRoot}/client/GeneratedClient.java`, utf8FileBytes(clientSource)),
+  ];
+  const language: Record<string, string> = {};
+
+  for (const item of content.items) {
+    const parts = content.itemParts.get(item.id);
+    if (parts === undefined) throw fabricCompilerError("INTERNAL_ERROR", "Item resource normalization failed safely.");
+    const block = content.blockByItem.get(item.id);
+    const blockParts = block === undefined ? undefined : content.blockParts.get(block.id);
+    if (block !== undefined && blockParts === undefined) {
+      throw fabricCompilerError("INTERNAL_ERROR", "Block-item resource normalization failed safely.");
+    }
+    inputs.push(jsonInput(
+      `${resourceRoot}/assets/${parts.namespace}/models/item/${parts.path}.json`,
+      block === undefined
+        ? { parent: "minecraft:item/generated", textures: { layer0: `${modId}:mcdev/placeholder` } }
+        : { parent: `${modId}:block/${blockParts?.path}` },
+    ));
+    language[`item.${parts.namespace}.${parts.path.replaceAll("/", ".")}`] = titleFromPath(parts.path);
+  }
+
+  for (const block of content.blocks) {
+    const parts = content.blockParts.get(block.id);
+    if (parts === undefined) throw fabricCompilerError("INTERNAL_ERROR", "Block resource normalization failed safely.");
+    inputs.push(jsonInput(
+      `${resourceRoot}/assets/${parts.namespace}/blockstates/${parts.path}.json`,
+      { variants: { "": { model: `${parts.namespace}:block/${parts.path}` } } },
+    ));
+    inputs.push(jsonInput(
+      `${resourceRoot}/assets/${parts.namespace}/models/block/${parts.path}.json`,
+      { parent: "minecraft:block/cube_all", textures: { all: `${modId}:mcdev/placeholder` } },
+    ));
+    inputs.push(jsonInput(
+      `${resourceRoot}/data/${parts.namespace}/loot_tables/blocks/${parts.path}.json`,
+      {
+        type: "minecraft:block",
+        pools: [{
+          rolls: 1,
+          bonus_rolls: 0,
+          conditions: [{ condition: "minecraft:survives_explosion" }],
+          entries: [{ type: "minecraft:item", name: block.item }],
+        }],
+      },
+    ));
+    language[`block.${parts.namespace}.${parts.path.replaceAll("/", ".")}`] = titleFromPath(parts.path);
+  }
+
+  inputs.push(jsonInput(`${resourceRoot}/assets/${modId}/lang/en_us.json`, language));
+  if (content.items.length > 0 || content.blocks.length > 0) {
+    inputs.push(input(
+      `${resourceRoot}/assets/${modId}/textures/mcdev/placeholder.png`,
+      Buffer.from(PLACEHOLDER_PNG_BASE64, "base64"),
+    ));
+  }
+  return inputs;
 }
 
 function plannedOutputs(files: readonly GeneratedFile[]): readonly PlannedOutput[] {
@@ -373,7 +593,7 @@ function makeDownstreamNode(
       ...common,
       nodeId: "gradle-clean-build",
       kind: "gradle-clean-build",
-      policy: "fabric-1.20.1-phase0-v1",
+      policy: "fabric-1.20.1-phase1-v1",
       validatorPolicy: "sha256-outputs-v1",
       provenance: "fixed-build-runner",
     });
@@ -440,7 +660,11 @@ function buildPlan(
     specDigest,
     pack: packRef,
     nodes,
-    warnings: Object.freeze([]),
+    warnings: Object.freeze(
+      spec.gameplay.items.length > 0 || spec.gameplay.blocks.length > 0
+        ? ["PLACEHOLDER_ASSETS_USED" as const]
+        : [],
+    ),
   });
   const plan: BuildPlan = Object.freeze({ ...body, planId: domainDigest(PLAN_ID_DOMAIN, body) });
   if (!isBuildPlan(plan)) {
@@ -455,14 +679,22 @@ function artifactKind(path: string, nodeId: FabricCompilerNodeId): FabricArtifac
 }
 
 /** Internal deterministic seam used only after validation and exact pack selection. */
-export function compileVerifiedFabricPhase0(
+export function compileVerifiedFabricPhase1(
   validatedSpec: ModSpecV1,
   verifiedPack: VerifiedFabricPack,
 ): CompiledFabricProject {
   const spec = copyValidatedSpec(validatedSpec);
-  phase0Preflight(spec);
+  const content = basicContentPreflight(spec);
+  const normalizedSpec: ModSpecV1 = {
+    ...spec,
+    gameplay: {
+      ...spec.gameplay,
+      items: [...content.items],
+      blocks: [...content.blocks],
+    },
+  };
   const projectFileInputs = projectInputs(spec, verifiedPack);
-  const contentFileInputs = contentInputs(spec);
+  const contentFileInputs = contentInputs(spec, content);
   let files: readonly GeneratedFile[];
   try {
     files = finalizeGeneratedFiles([...projectFileInputs, ...contentFileInputs]);
@@ -476,7 +708,7 @@ export function compileVerifiedFabricPhase0(
   const projectPaths = new Set(projectFileInputs.map(({ path }) => path));
   const projectFiles = files.filter(({ path }) => projectPaths.has(path));
   const contentFiles = files.filter(({ path }) => !projectPaths.has(path));
-  const plan = buildPlan(spec, verifiedPack, projectFiles, contentFiles);
+  const plan = buildPlan(normalizedSpec, verifiedPack, projectFiles, contentFiles);
   const outputs: readonly CompiledFabricOutput[] = Object.freeze(files.map((file) => {
     const nodeId: FabricCompilerNodeId = projectPaths.has(file.path) ? "generate-project" : "generate-content";
     return Object.freeze({ file, nodeId, artifactKind: artifactKind(file.path, nodeId) });
