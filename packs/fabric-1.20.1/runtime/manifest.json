@@ -40,8 +40,8 @@
     {
       "path": "templates/gradle/verification-metadata.xml",
       "mode": 420,
-      "size": 151910,
-      "sha256": "4b3bdaa1da852e310e963c9a31709696c6c3b0632e4cc067885e92e2f1e43de1",
+      "size": 153914,
+      "sha256": "e3997f857c6adf8161cc377f9ecc030506f16a0065d02b61f88f494147be6075",
       "role": "template"
     },
     {
@@ -82,8 +82,8 @@
     {
       "path": "versions.lock.json",
       "mode": 420,
-      "size": 2273,
-      "sha256": "654504131f9d24ed107e09592d39b411bfd3aebc033ec937e96e792783a597ce",
+      "size": 2335,
+      "sha256": "bb2718910e85c467eb99cf3ef365f08f98fbf9ad46daf8a272a822ab65b0080a",
       "role": "metadata"
     }
   ]

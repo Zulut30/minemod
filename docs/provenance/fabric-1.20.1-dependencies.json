@@ -6,12 +6,15 @@
   "dependencyInventory": {
     "verificationMetadata": {
       "path": "../../fixtures/fabric-1.20.1-empty/gradle/verification-metadata.xml",
-      "sha256": "4b3bdaa1da852e310e963c9a31709696c6c3b0632e4cc067885e92e2f1e43de1"
+      "sha256": "e3997f857c6adf8161cc377f9ecc030506f16a0065d02b61f88f494147be6075"
     },
-    "componentCount": 263,
-    "artifactReferenceCount": 555,
-    "artifactSha256Count": 555,
+    "componentCount": 265,
+    "artifactReferenceCount": 562,
+    "artifactSha256Count": 562,
     "weakHashCount": 0,
+    "trustedArtifactRuleCount": 1,
+    "trustedWildcardCount": 0,
+    "trustedArtifactScope": "exact loom:mappings:layered+hash.2198 mappings-layered+hash.2198.jar generated locally by pinned Loom",
     "transitiveLicenseReviewComplete": false,
     "redistributionBlockedUntilLicenseReview": true
   },
@@ -85,7 +88,7 @@
     }
   ],
   "unresolved": [
-    "Complete SPDX classification for all 263 resolved transitive components",
+    "Complete SPDX classification for all 265 resolved transitive components",
     "GitHub-hosted build, dedicated-server, and headless-client evidence",
     "Server and client GameTest evidence for Fabric 1.20.1",
     "Windows runtime execution of gradlew.bat checksum enforcement"

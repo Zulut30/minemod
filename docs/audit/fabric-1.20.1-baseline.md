@@ -24,8 +24,9 @@
 - Gradle distribution проверен SHA-256 `544c35d6bd849ae8a5ed0bcea39ba677dc40f49df7d1835561582da2009b961d`;
 - committed wrapper JAR проверен SHA-256 `cb0da6751c2b753a16ac168bb354870ebb1e162e9083f116729cec9c781156b8` до запуска Java;
 - Gradle toolchain auto-detect и auto-download отключены, разрешён только `MCDEV_JAVA17_HOME`;
-- strict verification metadata содержит 263 компонента, 555 artifact records и 555 SHA-256, без SHA-1/MD5;
-- runtime pack проверяется manifest file hashes, exact tree entry count и tree SHA-256 `312f9a8d39a5fc50e4889ea42f14ef61fc0d91793319866e4d3e3e36b97f1deb`;
+- strict verification metadata содержит 265 компонентов, 562 artifact records и 562 SHA-256, без SHA-1/MD5;
+- единственное trust-исключение совпадает одновременно по exact group/name/version/file и разрешает только локально генерируемый Loom layered mappings JAR; group/regex/wildcard trust отсутствует;
+- runtime pack проверяется manifest file hashes, exact tree entry count и tree SHA-256 `c15b31971d2d78c14d4de6b0f507fe74a1b16cb2aa028535f5d2d7125e2c7c3a`;
 - selector registry принимает только exact tuple Minecraft 1.20.1/Fabric/Java 17.
 
 Полная классификация лицензий transitive компонентов ещё не завершена. Pack остаётся candidate, а release redistribution блокируется. Прямые зависимости и upstream sources записаны в [Fabric 1.20.1 dependency provenance](../provenance/fabric-1.20.1-dependencies.json).
@@ -37,7 +38,7 @@
 | Gate | Результат |
 |---|---|
 | wrapper JAR checksum enforcement | PASS локально |
-| `--dependency-verification strict --warning-mode all clean build` | PASS на exact Temurin 17.0.19+10 |
+| cold-cache `--dependency-verification strict --warning-mode all clean build` | PASS на exact Temurin 17.0.19+10 с пустым isolated Gradle home |
 | source JAR и remapped JAR | PASS |
 | dedicated server smoke | PASS; nonce-bound readiness опубликован после `SERVER_STARTED`, затем сервер штатно остановлен |
 | headless client smoke под Xvfb | PASS; main/client entrypoints загружены, title screen стабилен 20 ticks, nonce-bound readiness опубликован |

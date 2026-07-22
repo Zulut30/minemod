@@ -58,8 +58,10 @@
   "verification": {
     "mode": "strict",
     "metadata": "templates/gradle/verification-metadata.xml",
-    "components": 263,
-    "artifacts": 555,
+    "components": 265,
+    "artifacts": 562,
+    "trustedArtifactRules": 1,
+    "trustedWildcardRules": 0,
     "complete": true
   }
 }
