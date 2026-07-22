@@ -2,7 +2,7 @@
 
 ## Статус и назначение
 
-Дата решения: 21 июля 2026 года.
+Дата первоначального решения: 21 июля 2026 года. Production baseline уточнён 22 июля 2026 года в [ADR-0004](decisions/0004-fabric-1.20.1-production-baseline.md).
 
 Этот документ является текущим исполнимым планом первого MVP. Он меняет приоритет платформы из исходного [research-плана](RESEARCH_AND_MVP_PLAN.md): основной target теперь Fabric, а уже реализованный NeoForge backend сохраняется как второй адаптер и regression fixture.
 
@@ -35,14 +35,14 @@
 
 ### Входит
 
-- Minecraft 26.2, Fabric Loader и Java 25 как один exact compatibility pack;
+- Minecraft 1.20.1, Fabric Loader и Java 17 как один exact compatibility pack;
 - local-first CLI и MCP server;
 - items, blocks, recipes, tags, loot, entities и attributes;
 - owned companion с сохранением состояния и базовым AI;
 - декларативный ритуал/призывание;
 - безопасное client/server networking и native screen/menu;
 - Fabric data generation;
-- GeckoLib 5 cuboid entity models и animation presets;
+- cuboid entity models и animation presets с version-tested runtime export для 1.20.1;
 - AI-generated concepts, item icons и pixel textures;
 - editable `.bbmodel`, runtime model/animation JSON и PNG;
 - optional EMI recipe display и Jade tooltip integration;
@@ -68,21 +68,22 @@ Generic image-to-3D остаётся experimental provider. Надёжный pro
 
 | Компонент | MVP baseline | Источник решения |
 |---|---:|---|
-| Minecraft | 26.2 | [Fabric 26.2 announcement](https://fabricmc.net/2026/06/15/262.html) |
-| Java toolchain | Eclipse Temurin 25.0.3+9-LTS | Java 25 требует [официальный Fabric example mod](https://github.com/FabricMC/fabric-example-mod/tree/26.2); exact distribution уже закреплён проектом |
-| Gradle | 9.5.1 | [Fabric 26.2 announcement](https://fabricmc.net/2026/06/15/262.html) |
-| Fabric Loom | 1.17.16 | exact stable из [официального Fabric Maven](https://maven.fabricmc.net/net/fabricmc/fabric-loom/) |
-| Fabric Loader | 0.19.3 | [Fabric 26.2 announcement](https://fabricmc.net/2026/06/15/262.html) |
-| Fabric API | 0.155.2+26.2 | [официальный Fabric example mod](https://github.com/FabricMC/fabric-example-mod/blob/26.2/gradle.properties) |
-| GeckoLib | 5.5.1 | [GeckoLib 5 support matrix](https://wiki.geckolib.com/docs/geckolib5/) |
+| Minecraft | 1.20.1 | пользовательская product target; проверяется exact Fabric fixture |
+| Java toolchain | Eclipse Temurin 17.0.19+10 | Java 17 baseline Minecraft 1.20.1; exact archive и source зафиксированы в pack |
+| Gradle | 8.7 | локально проверенная пара с Loom 1.6.12 и Java 17 |
+| Fabric Loom | 1.6.12 | exact stable из [официального Fabric Maven](https://maven.fabricmc.net/net/fabricmc/fabric-loom/) |
+| Fabric Loader | 0.19.3 | exact stable из [Fabric Meta](https://meta.fabricmc.net/) для 1.20.1 |
+| Fabric API | 0.92.11+1.20.1 | exact release из [официального Fabric Maven](https://maven.fabricmc.net/net/fabricmc/fabric-api/fabric-api/) |
+| Mappings | official Mojang mappings | Loom mapping layer без перераспространения mappings |
+| GeckoLib/runtime animation | не выбран | отдельный compatibility test обязателен до F2.2 |
 
 Перед присвоением pack статуса `production` versions повторно разрешаются из официальных metadata, фиксируются lock-файлами и проходят полную fixture matrix. Обновление любой версии создаёт новый pack, а не молча изменяет существующий.
 
-Архитектурные ограничения Fabric 26.2:
+Архитектурные ограничения Fabric 1.20.1:
 
 - общие и client-only исходники физически разделены;
 - dedicated server не загружает client types;
-- rendering идёт через Minecraft/Fabric render abstractions и RenderState; raw OpenGL запрещён, в том числе из-за Vulkan backend 26.2;
+- rendering идёт через Minecraft/Fabric abstractions версии 1.20.1; raw OpenGL по-прежнему запрещён;
 - Mixins по умолчанию запрещены и добавляются только как именованная capability с allowlist, review и тестом;
 - регистрация и datagen используют актуальные типизированные IDs, а не устаревшие snippets;
 - optional APIs изолированы так, чтобы мод запускался без EMI/Jade.
@@ -94,14 +95,14 @@ Generic image-to-3D остаётся experimental provider. Надёжный pro
 | Компонент | Состояние | Использование в Fabric MVP |
 |---|---|---|
 | Строгие wire contracts и bounded BuildPlan | Реализовано и протестировано | Расширить новой версией/закрытыми Fabric policies |
-| Trusted compatibility-pack registry | Реализовано для Fabric 26.2 и NeoForge 26.1.2 | Добавлять новые revisions без изменения старых trees |
+| Trusted compatibility-pack registry | Реализовано для Fabric 1.20.1, Fabric 26.2 и NeoForge 26.1.2 | Добавлять новые revisions без изменения старых trees |
 | Детерминированное codegen core | Реализовано | Переиспользовать без loader imports |
 | Transactional create-only workspace apply | Реализовано | Переиспользовать без изменений semantics |
 | Artifact index и structured logging | Реализовано | Переиспользовать для Fabric build/assets/reports |
 | Fixed secure Gradle runner | Реализован для NeoForge | Выделить общую execution основу, добавить отдельную Fabric policy |
 | NeoForge 26.1.2 compiler | Реализован и остаётся зелёным | Не конвертировать подменой imports; оставить отдельным backend |
 | Application orchestration, CLI/MCP E2E | Не завершено | Закрыть в первом Fabric vertical slice |
-| Fabric pack/compiler/fixtures | Exact pack и empty fixture реализованы локально; compiler отсутствует | Закрыть F0.2, затем Fabric compiler |
+| Fabric pack/compiler/fixtures | Exact 1.20.1 pack, clean build и client/server smoke реализованы локально; compiler отсутствует | Добавить 1.20.1 GameTests/hosted gates, затем Fabric compiler |
 | Production AI asset pipeline | Не реализован | Проверить минимальный путь уже в первом vertical slice |
 
 Следовательно, сейчас есть качественный control plane и рабочий NeoForge backend, но **инструмент ещё не генерирует Fabric-мод от промпта до JAR и не создаёт production-ассеты**.
@@ -137,7 +138,7 @@ prompt
 Предлагаемые новые модули:
 
 ```text
-packs/fabric-26.2/
+packs/fabric-1.20.1/
 packages/compiler-fabric/
 packages/application/
 apps/cli/
@@ -147,7 +148,7 @@ packages/assets-core/
 packages/assets-image-provider/
 packages/assets-geckolib/
 packages/visual-qa/
-fixtures/fabric-26.2/
+fixtures/fabric-1.20.1-empty/
 ```
 
 ## 6. Порядок реализации
@@ -156,7 +157,7 @@ fixtures/fabric-26.2/
 
 ### F0. Fabric baseline и доверенная сборка — 1–2 недели
 
-#### F0.1. Compatibility pack `fabric-26.2`
+#### F0.1. Compatibility pack `fabric-1.20.1`
 
 **Зависимости:** нет.
 
@@ -170,13 +171,15 @@ fixtures/fabric-26.2/
 - Minecraft client и dedicated server стартуют с пустым fixture;
 - NeoForge pack и его tests остаются зелёными.
 
+**Статус на 22 июля 2026:** exact pack, tamper-checked Gradle wrapper, strict dependency metadata, clean build и client/server smoke проходят локально. GameTests, hosted evidence и полный transitive license review ещё не закрыты.
+
 **Проверка:** pack unit tests, checksum tamper tests, offline rebuild после прогрева cache, client/server smoke.
 
 #### F0.2. Fabric test harness
 
 **Зависимости:** F0.1.
 
-**Статус на 22 июля 2026:** JUnit, server/client GameTests, screenshots и hardened server/client smoke реализованы и проходят локально. GitHub Actions jobs и artifact upload настроены; для полного закрытия F0.2 нужен первый успешный hosted run.
+**Статус на 22 июля 2026:** hardened server/client smoke для 1.20.1 реализованы и проходят локально. JUnit/GameTests, screenshots и отдельные hosted jobs для 1.20.1 ещё не реализованы. Проверки 26.2 не считаются evidence для 1.20.1.
 
 **Работа:** настроить JUnit, server GameTests, client GameTests/screenshots, dedicated-server smoke и CI jobs. Для headless client использовать фиксированный Linux environment/Xvfb.
 
@@ -248,13 +251,13 @@ fixtures/fabric-26.2/
 
 **Проверка:** unit tests, server GameTests, save/reload and permission fixtures, dedicated-server smoke.
 
-#### F2.2. Cuboid model, rig и GeckoLib 5 exporter
+#### F2.2. Cuboid model, rig и version-tested animation exporter
 
 **Зависимости:** F2.1 и F1.3.
 
-**Работа:** из semantic anatomy и concept views строить cuboid blockout, pivots, named bones, box UV, texture atlas, editable `.bbmodel`, GeckoLib model/animation resources и presets `idle/walk/attack/sit`.
+**Работа:** сначала выбрать совместимую с Fabric 1.20.1 exact версию runtime animation library; затем из semantic anatomy и concept views строить cuboid blockout, pivots, named bones, box UV, texture atlas, editable `.bbmodel`, version-native model/animation resources и presets `idle/walk/attack/sit`.
 
-**Приёмка:** все references существуют; GeckoLib paths соответствуют версии 5; нет zero-size cubes, invalid UV, missing bones, NaN или превышения budgets; runtime и editable artifacts связаны hashes.
+**Приёмка:** все references существуют; runtime paths соответствуют зафиксированной версии библиотеки; нет zero-size cubes, invalid UV, missing bones, NaN или превышения budgets; runtime и editable artifacts связаны hashes.
 
 **Проверка:** schema/geometry/UV/animation validators, golden exports, generated-resource load test, animated client fixture.
 
@@ -367,7 +370,7 @@ fixtures/fabric-26.2/
 MVP считается завершённым только когда одновременно выполнено всё:
 
 - CLI и MCP проводят один и тот же prompt-to-bundle workflow;
-- Fabric 26.2 pack exact, hashed, documented и воспроизводим;
+- Fabric 1.20.1 pack exact, hashed, documented и воспроизводим;
 - пять dogfood-проектов генерируются из clean inputs без ручной правки generated source;
 - Tidecaller имеет рабочие gameplay, UI, model, textures, animations и optional integrations;
 - generated code читаем, отформатирован, без placeholders/TODO и проходит code review;
@@ -406,4 +409,4 @@ MVP считается завершённым только когда однов
 
 ## 10. Ближайшая задача
 
-Следующий implementation milestone — **F0.2: Fabric test harness**. Trusted `fabric-26.2` pack, clean fixture build и локальные client/dedicated-server evidence уже созданы. Теперь нужны server/client GameTests, hardened repeatable smoke scripts и hosted CI; только после этого начинается Fabric compiler.
+Следующий implementation milestone — **F0.2: Fabric 1.20.1 test harness**. Trusted `fabric-1.20.1` pack, strict clean fixture build и hardened local client/dedicated-server evidence уже созданы. Теперь нужны server/client GameTests, screenshots и hosted CI для того же exact baseline; после этого начинается Fabric-native compiler для basic content.
