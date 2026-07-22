@@ -25,7 +25,7 @@ fabricApi {
         createSourceSet = true
         modId = 'fabricempty-gametest'
         enableGameTests = true
-        enableClientGameTests = false
+        enableClientGameTests = true
         eula = true
     }
 }
