@@ -11,6 +11,7 @@
 - `packages/assets-core` создаёт byte-deterministic editable Blockbench project с `meta.format_version` 5.0, отдельными `elements`, `groups` и вложенным `outliner`.
 - `CuboidTexturePlan` назначает каждому кубоиду bounded material и один из четырёх pixel patterns: `solid`, `panel`, `riveted` или `striped`.
 - Texture renderer создаёт детерминированный RGBA PNG atlas, требует назначения для каждого кубоида и встраивает PNG в `.bbmodel` как internal data URL без абсолютного пути.
+- `PixelIconPlan` отдельно описывает bounded инвентарную иконку 16×16 или 32×32 из палитры, линий и прямоугольников; compiler создаёт PNG и стандартную item-model ссылку `minecraft:item/handheld`.
 - UUID выводятся из model resource ID и element ID; timestamps и абсолютные пути в результат не добавляются.
 - Метрики считаются до передачи артефакта дальше: bones, cubes и двенадцать треугольников на каждый cuboid.
 
@@ -42,7 +43,21 @@ Showcase weapon evidence:
 | Blue Steel Greatsword | 5 | 17 | 16 | `0e918e938f3dbe25f47eaf053ac17c0904e90d7299a204f540204eca39b0ef9a` | `bf5bd530bfb2578b4cfb12c2401e05ae0f607cbb2f7ca52e606ded264ebe44e3` |
 | Death Scythe | 4 | 19 | 16 | `3ad8236db226dcbba485a7f9e60337bce71e4fc9b8428722017d1f297010f2d3` | `ceb7ae11453aa4ce663d25ae154c4d34536a0eb13a289473de2d2a5332738444` |
 
+Inventory icon evidence:
+
+| Fixture | Размер | Непрозрачные пиксели | PNG colors | PNG SHA-256 | Item model SHA-256 |
+|---|---:|---:|---:|---|---|
+| Death Scythe | 32×32 | 223 | 6 | `149d8fbd69b0421e239f5b44be805ec79bd5af082905367c6e15e7f7863adbd9` | `2f93ae9cacc20023500dfc4f4997e067416b5f6733f7de184a1f220ed64bed45` |
+
+Entity showcase evidence:
+
+| Fixture | Bones | Cuboids | Triangles | PNG colors | PNG SHA-256 | Textured `.bbmodel` SHA-256 |
+|---|---:|---:|---:|---:|---|---|
+| Fungal Infected | 10 | 28 | 336 | ≥16 | `3a5d5c93ab6e58a7b00efa6fd44d03ea777ab1c308b8f54fe3acb92ab1dd7053` | `55a656fc7847977a59509dddc926f41adc682087a8b7b92c754d81a41330e50d` |
+
 Оба textured `.bbmodel` были загружены 22 июля 2026 года через `Open Model` в официальном Blockbench Web. Редактор распознал embedded texture 128×128, все 17/19 элементов и bone outliner; в консоли было 0 ошибок. Превью получены встроенной командой Blockbench `Screenshot Model`, а не отдельным image generator.
+
+`Fungal Infected` также загружен в официальный Blockbench Web: редактор распознал texture 128×128, 28/28 элементов и иерархию из 10 bones; в консоли было 0 ошибок. Прозрачное превью 338×581 получено той же встроенной командой `Screenshot Model`.
 
 Fixtures созданы как оригинальные технические примеры по общим визуальным признакам пользовательских референсов. Пиксели, текстуры и геометрия исходных изображений не копировались.
 
@@ -56,7 +71,7 @@ corepack pnpm --filter @mcdev/assets-core test
 corepack pnpm typecheck
 ```
 
-Покрыты valid entity/item fixtures, deterministic repeat export, golden hashes, counts, bounds, Blockbench metadata, UUID shape, PNG signature, color/opacity metrics, embedded data URL, missing/unknown texture assignments, model ID mismatch, unknown executable-looking fields, invalid resource locations, duplicate IDs, missing/cyclic parents, zero-size cuboids и UV overflow.
+Покрыты valid entity/item/icon fixtures, deterministic repeat export, golden hashes, counts, bounds, Blockbench metadata, UUID shape, PNG signature, color/opacity metrics, embedded data URL, item model JSON, missing/unknown texture assignments, model ID mismatch, unknown executable-looking fields, invalid resource locations, duplicate IDs, missing/cyclic parents, zero-size cuboids и UV overflow.
 
 ## Не доказано этим срезом
 
