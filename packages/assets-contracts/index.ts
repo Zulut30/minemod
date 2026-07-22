@@ -260,3 +260,98 @@ export const PixelIconPlanJsonSchema = Object.freeze({
   $schema: "https://json-schema.org/draft/2020-12/schema",
   $id: PIXEL_ICON_PLAN_SCHEMA_ID,
 });
+
+export const CUBOID_ANIMATION_PLAN_SCHEMA_ID =
+  "https://mcdev.local/schemas/cuboid-animation-plan-v0.json";
+export const CUBOID_ANIMATION_LIMITS = Object.freeze({
+  maxClips: 16,
+  maxTracksPerClip: CUBOID_MODEL_LIMITS.maxBones * 2,
+  maxKeyframesPerTrack: 64,
+  maxClipLengthSeconds: 20,
+  maxPositionMagnitude: 32,
+} as const);
+
+const animationName = z.string().regex(/^[a-z][a-z0-9_]*(?:\.[a-z][a-z0-9_]*)*$/u);
+const keyframeTime = z.number().min(0).max(CUBOID_ANIMATION_LIMITS.maxClipLengthSeconds);
+const interpolation = z.enum(["linear", "catmullrom"]);
+const PositionKeyframeSchema = z.strictObject({
+  time: keyframeTime,
+  value: z.tuple([
+    z.number().min(-CUBOID_ANIMATION_LIMITS.maxPositionMagnitude).max(CUBOID_ANIMATION_LIMITS.maxPositionMagnitude),
+    z.number().min(-CUBOID_ANIMATION_LIMITS.maxPositionMagnitude).max(CUBOID_ANIMATION_LIMITS.maxPositionMagnitude),
+    z.number().min(-CUBOID_ANIMATION_LIMITS.maxPositionMagnitude).max(CUBOID_ANIMATION_LIMITS.maxPositionMagnitude),
+  ]),
+  interpolation,
+});
+const RotationKeyframeSchema = z.strictObject({
+  time: keyframeTime,
+  value: rotation3,
+  interpolation,
+});
+const AnimationTrackSchema = z.discriminatedUnion("channel", [
+  z.strictObject({
+    boneId: identifier,
+    channel: z.literal("position"),
+    keyframes: z.array(PositionKeyframeSchema).min(1).max(CUBOID_ANIMATION_LIMITS.maxKeyframesPerTrack),
+  }),
+  z.strictObject({
+    boneId: identifier,
+    channel: z.literal("rotation"),
+    keyframes: z.array(RotationKeyframeSchema).min(1).max(CUBOID_ANIMATION_LIMITS.maxKeyframesPerTrack),
+  }),
+]);
+const AnimationClipSchema = z.strictObject({
+  id: identifier,
+  name: animationName,
+  loop: z.enum(["once", "loop", "hold"]),
+  length: z.number().positive().max(CUBOID_ANIMATION_LIMITS.maxClipLengthSeconds),
+  snapping: z.number().int().min(1).max(120),
+  tracks: z.array(AnimationTrackSchema).min(1).max(CUBOID_ANIMATION_LIMITS.maxTracksPerClip),
+}).superRefine((clip, context) => {
+  const trackIds = new Set<string>();
+  for (const [trackIndex, track] of clip.tracks.entries()) {
+    const trackId = `${track.boneId}:${track.channel}`;
+    if (trackIds.has(trackId)) {
+      context.addIssue({ code: "custom", path: ["tracks", trackIndex], message: "Each bone channel can have only one track per clip." });
+    }
+    trackIds.add(trackId);
+    let previousTime = -1;
+    for (const [keyframeIndex, keyframe] of track.keyframes.entries()) {
+      if (keyframe.time <= previousTime) {
+        context.addIssue({ code: "custom", path: ["tracks", trackIndex, "keyframes", keyframeIndex, "time"], message: "Keyframe times must be strictly increasing." });
+      }
+      if (keyframe.time > clip.length) {
+        context.addIssue({ code: "custom", path: ["tracks", trackIndex, "keyframes", keyframeIndex, "time"], message: "Keyframe time must not exceed clip length." });
+      }
+      previousTime = keyframe.time;
+    }
+  }
+});
+
+export const CuboidAnimationPlanSchema = z.strictObject({
+  schemaVersion: z.literal(0),
+  kind: z.literal("cuboid-animation-plan"),
+  modelId: z.string().regex(new RegExp(MODEL_RESOURCE_LOCATION_PATTERN, "u")),
+  clips: z.array(AnimationClipSchema).min(1).max(CUBOID_ANIMATION_LIMITS.maxClips),
+}).superRefine((plan, context) => {
+  const clipIds = new Set<string>();
+  const clipNames = new Set<string>();
+  for (const [index, clip] of plan.clips.entries()) {
+    if (clipIds.has(clip.id)) {
+      context.addIssue({ code: "custom", path: ["clips", index, "id"], message: "Clip ids must be unique." });
+    }
+    if (clipNames.has(clip.name)) {
+      context.addIssue({ code: "custom", path: ["clips", index, "name"], message: "Clip names must be unique." });
+    }
+    clipIds.add(clip.id);
+    clipNames.add(clip.name);
+  }
+});
+
+export type CuboidAnimationPlan = z.infer<typeof CuboidAnimationPlanSchema>;
+
+export const CuboidAnimationPlanJsonSchema = Object.freeze({
+  ...z.toJSONSchema(CuboidAnimationPlanSchema),
+  $schema: "https://json-schema.org/draft/2020-12/schema",
+  $id: CUBOID_ANIMATION_PLAN_SCHEMA_ID,
+});

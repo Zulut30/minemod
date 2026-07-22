@@ -1,7 +1,10 @@
 import assert from "node:assert/strict";
 import {
   CUBOID_MODEL_LIMITS,
+  CUBOID_ANIMATION_LIMITS,
   CUBOID_TEXTURE_LIMITS,
+  CuboidAnimationPlanJsonSchema,
+  CuboidAnimationPlanSchema,
   CuboidModelSpecJsonSchema,
   CuboidModelSpecSchema,
   CuboidTexturePlanJsonSchema,
@@ -9,6 +12,7 @@ import {
   PixelIconPlanJsonSchema,
   PixelIconPlanSchema,
   type CuboidModelSpec,
+  type CuboidAnimationPlan,
   type CuboidTexturePlan,
   type PixelIconPlan,
 } from "./index.ts";
@@ -168,3 +172,50 @@ assert.equal(PixelIconPlanSchema.safeParse({
   ...validIcon,
   size: 16,
 }).success, false, "primitive coordinates must fit the icon");
+
+const validAnimationPlan: CuboidAnimationPlan = {
+  schemaVersion: 0,
+  kind: "cuboid-animation-plan",
+  modelId: "mcdev:copper_guardian",
+  clips: [{
+    id: "walk",
+    name: "animation.mcdev.copper_guardian.walk",
+    loop: "loop",
+    length: 1,
+    snapping: 20,
+    tracks: [{
+      boneId: "left_arm",
+      channel: "rotation",
+      keyframes: [
+        { time: 0, value: [-25, 0, 0], interpolation: "linear" },
+        { time: 0.5, value: [25, 0, 0], interpolation: "catmullrom" },
+        { time: 1, value: [-25, 0, 0], interpolation: "linear" },
+      ],
+    }],
+  }],
+};
+assert.equal(CuboidAnimationPlanSchema.safeParse(validAnimationPlan).success, true);
+assert.equal(CuboidAnimationPlanJsonSchema.additionalProperties, false);
+assert.equal(CUBOID_ANIMATION_LIMITS.maxPositionMagnitude, 32);
+assert.equal(CuboidAnimationPlanSchema.safeParse({ ...validAnimationPlan, command: "animate" }).success, false);
+assert.equal(CuboidAnimationPlanSchema.safeParse({
+  ...validAnimationPlan,
+  clips: [{ ...validAnimationPlan.clips[0]!, tracks: [
+    validAnimationPlan.clips[0]!.tracks[0]!,
+    validAnimationPlan.clips[0]!.tracks[0]!,
+  ] }],
+}).success, false, "bone channels must be unique inside a clip");
+assert.equal(CuboidAnimationPlanSchema.safeParse({
+  ...validAnimationPlan,
+  clips: [{ ...validAnimationPlan.clips[0]!, tracks: [{
+    ...validAnimationPlan.clips[0]!.tracks[0]!,
+    keyframes: [
+      { time: 0.5, value: [0, 0, 0], interpolation: "linear" },
+      { time: 0.25, value: [0, 0, 0], interpolation: "linear" },
+    ],
+  }] }],
+}).success, false, "keyframe times must increase");
+assert.equal(CuboidAnimationPlanSchema.safeParse({
+  ...validAnimationPlan,
+  clips: [{ ...validAnimationPlan.clips[0]!, length: 0.25 }],
+}).success, false, "keyframes must fit the clip length");
