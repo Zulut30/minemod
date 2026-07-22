@@ -12,7 +12,18 @@ export const CUBOID_MODEL_LIMITS = Object.freeze({
 } as const);
 
 const identifier = z.string().regex(/^[a-z][a-z0-9_]{0,63}$/u);
-const modelName = z.string().min(1).max(80).regex(/^[\u0000-\uD7FF\uE000-\uFFFF]+$/u);
+function containsOnlyBmpCodeUnits(value: string): boolean {
+  for (let index = 0; index < value.length; index += 1) {
+    const codeUnit = value.charCodeAt(index);
+    if (codeUnit >= 0xD800 && codeUnit <= 0xDFFF) return false;
+  }
+  return true;
+}
+
+const modelName = z.string().min(1).max(80).refine(
+  containsOnlyBmpCodeUnits,
+  "Only BMP Unicode scalar values are supported in v0.",
+);
 const coordinate = z.number()
   .min(-CUBOID_MODEL_LIMITS.maxCoordinateMagnitude)
   .max(CUBOID_MODEL_LIMITS.maxCoordinateMagnitude);
