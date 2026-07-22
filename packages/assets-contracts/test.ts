@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
 import {
+  ArticulatedModelPlanJsonSchema,
+  ArticulatedModelPlanSchema,
   CUBOID_MODEL_LIMITS,
   CUBOID_ANIMATION_LIMITS,
   CUBOID_TEXTURE_LIMITS,
@@ -11,11 +13,51 @@ import {
   CuboidTexturePlanSchema,
   PixelIconPlanJsonSchema,
   PixelIconPlanSchema,
+  type ArticulatedModelPlan,
   type CuboidModelSpec,
   type CuboidAnimationPlan,
   type CuboidTexturePlan,
   type PixelIconPlan,
 } from "./index.ts";
+
+const validArticulatedPlan: ArticulatedModelPlan = {
+  schemaVersion: 0,
+  kind: "articulated-model-plan",
+  id: "mcdev:articulated_test",
+  name: "Articulated Test",
+  modelType: "entity",
+  texture: { width: 64, height: 64 },
+  uvPadding: 1,
+  bones: [
+    { id: "root", parent: null, pivotOffset: [0, 0, 0], rotation: [0, 0, 0], cubes: [] },
+    {
+      id: "body", parent: "root", pivotOffset: [0, 8, 0], rotation: [0, 0, 0],
+      cubes: [{
+        id: "body_core", originOffset: [-4, 0, -2], size: [8, 10, 4],
+        rotation: [0, 0, 0], inflate: 0, mirror: false,
+      }],
+    },
+    {
+      id: "head", parent: "body", pivotOffset: [0, 10, 0], rotation: [0, 0, 0],
+      cubes: [{
+        id: "head_core", originOffset: [-3, 0, -3], size: [6, 6, 6],
+        rotation: [0, 0, 0], inflate: 0, mirror: false,
+      }],
+    },
+  ],
+};
+
+assert.equal(ArticulatedModelPlanSchema.safeParse(validArticulatedPlan).success, true);
+assert.equal(ArticulatedModelPlanJsonSchema.additionalProperties, false);
+assert.equal(ArticulatedModelPlanSchema.safeParse({ ...validArticulatedPlan, command: "build" }).success, false);
+assert.equal(ArticulatedModelPlanSchema.safeParse({
+  ...validArticulatedPlan,
+  bones: validArticulatedPlan.bones.map((bone) => bone.id === "body" ? { ...bone, parent: "missing" } : bone),
+}).success, false, "articulated parents must exist");
+assert.equal(ArticulatedModelPlanSchema.safeParse({
+  ...validArticulatedPlan,
+  bones: validArticulatedPlan.bones.map((bone) => bone.id === "root" ? { ...bone, parent: "head" } : bone),
+}).success, false, "articulated hierarchy must be acyclic");
 
 const bodyCube: CuboidModelSpec["bones"][number]["cubes"][number] = {
   id: "body_core",

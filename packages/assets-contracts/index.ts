@@ -147,6 +147,85 @@ export const CuboidModelSpecJsonSchema = Object.freeze({
   $id: CUBOID_MODEL_SPEC_SCHEMA_ID,
 });
 
+export const ARTICULATED_MODEL_PLAN_SCHEMA_ID =
+  "https://mcdev.local/schemas/articulated-model-plan-v0.json";
+
+const ArticulatedCubeSchema = z.strictObject({
+  id: identifier,
+  originOffset: vector3,
+  size: z.tuple([
+    z.number().positive().max(CUBOID_MODEL_LIMITS.maxCubeSize),
+    z.number().positive().max(CUBOID_MODEL_LIMITS.maxCubeSize),
+    z.number().positive().max(CUBOID_MODEL_LIMITS.maxCubeSize),
+  ]),
+  rotation: rotation3,
+  inflate: z.number().min(0).max(4),
+  mirror: z.boolean(),
+});
+
+const ArticulatedBoneSchema = z.strictObject({
+  id: identifier,
+  parent: identifier.nullable(),
+  pivotOffset: vector3,
+  rotation: rotation3,
+  cubes: z.array(ArticulatedCubeSchema).max(CUBOID_MODEL_LIMITS.maxCubesPerBone),
+});
+
+export const ArticulatedModelPlanSchema = z.strictObject({
+  schemaVersion: z.literal(0),
+  kind: z.literal("articulated-model-plan"),
+  id: z.string().regex(new RegExp(MODEL_RESOURCE_LOCATION_PATTERN, "u")),
+  name: modelName,
+  modelType: z.enum(["entity", "held-item"]),
+  texture: z.strictObject({ width: textureDimension, height: textureDimension }),
+  uvPadding: z.number().int().min(0).max(4),
+  bones: z.array(ArticulatedBoneSchema).min(1).max(CUBOID_MODEL_LIMITS.maxBones),
+}).superRefine((plan, context) => {
+  const boneIds = new Set<string>();
+  const cubeIds = new Set<string>();
+  let totalCubes = 0;
+  for (const [boneIndex, bone] of plan.bones.entries()) {
+    if (boneIds.has(bone.id)) {
+      context.addIssue({ code: "custom", path: ["bones", boneIndex, "id"], message: "Bone ids must be unique." });
+    }
+    boneIds.add(bone.id);
+    totalCubes += bone.cubes.length;
+    for (const [cubeIndex, cube] of bone.cubes.entries()) {
+      if (cubeIds.has(cube.id)) {
+        context.addIssue({ code: "custom", path: ["bones", boneIndex, "cubes", cubeIndex, "id"], message: "Cube ids must be unique." });
+      }
+      cubeIds.add(cube.id);
+    }
+  }
+  if (totalCubes > CUBOID_MODEL_LIMITS.maxCubes) {
+    context.addIssue({ code: "custom", path: ["bones"], message: "Model cube limit exceeded." });
+  }
+  for (const [boneIndex, bone] of plan.bones.entries()) {
+    if (bone.parent !== null && !boneIds.has(bone.parent)) {
+      context.addIssue({ code: "custom", path: ["bones", boneIndex, "parent"], message: "Parent bone does not exist." });
+      continue;
+    }
+    const visited = new Set<string>([bone.id]);
+    let parent = bone.parent;
+    while (parent !== null) {
+      if (visited.has(parent)) {
+        context.addIssue({ code: "custom", path: ["bones", boneIndex, "parent"], message: "Bone hierarchy must be acyclic." });
+        break;
+      }
+      visited.add(parent);
+      parent = plan.bones.find(({ id }) => id === parent)?.parent ?? null;
+    }
+  }
+});
+
+export type ArticulatedModelPlan = z.infer<typeof ArticulatedModelPlanSchema>;
+
+export const ArticulatedModelPlanJsonSchema = Object.freeze({
+  ...z.toJSONSchema(ArticulatedModelPlanSchema),
+  $schema: "https://json-schema.org/draft/2020-12/schema",
+  $id: ARTICULATED_MODEL_PLAN_SCHEMA_ID,
+});
+
 export const CUBOID_TEXTURE_PLAN_SCHEMA_ID = "https://mcdev.local/schemas/cuboid-texture-plan-v0.json";
 
 const rgbHex = z.string().regex(/^#[0-9a-f]{6}$/u);
