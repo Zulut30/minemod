@@ -14,6 +14,7 @@ import {
   createBilateralBonePair,
   createDragonArchetype,
   createDragonTexturePlan,
+  createClockworkStampArchetype,
   materializeArticulatedModel,
   renderCropStageTexture,
   renderCuboidTextureAtlas,
@@ -60,6 +61,27 @@ assert.deepEqual(mechanismReferenceReport.candidateRules, [
   { id: "make_machine_state_visible", projectSupport: 3, promotable: true },
   { id: "reuse_directional_geometry_with_rotation", projectSupport: 2, promotable: true },
 ]);
+
+const clockworkStampPlan = createClockworkStampArchetype({
+  id: "mcdev:clockwork_stamp",
+  name: "Clockwork Stamp",
+}, mechanismReferenceReport);
+const clockworkStamp = materializeArticulatedModel(clockworkStampPlan);
+assertNoUvOverlap(clockworkStamp.model);
+const clockworkStampQuality = analyzeArticulatedModelQuality(clockworkStamp.model, {
+  minBones: 12,
+  minCubes: 35,
+  minHierarchyDepth: 4,
+  minScaleBands: 6,
+  symmetryTolerance: 0.001,
+  minDetailCubeRatio: 0.2,
+  requiredBones: ["drive_shaft", "cam", "press_slider", "press_head", "left_flywheel", "right_flywheel"],
+});
+assert.equal(clockworkStampQuality.passes, true);
+assert.throws(() => createClockworkStampArchetype({
+  id: "mcdev:unverified_stamp",
+  name: "Unverified Stamp",
+}, singleReferenceReport), /not ready/u);
 
 const waterRicePlan = fixture("water-rice.crop.json");
 const waterRiceStages = Array.from({ length: 4 }, (_, stage) => ({
