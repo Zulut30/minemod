@@ -12,6 +12,16 @@ base {
 loom {
     splitEnvironmentSourceSets()
 
+    runs {
+        gametest {
+            server()
+            name 'Spruce Ship Game Test'
+            vmArg '-Dfabric-api.gametest'
+            vmArg "-Dfabric-api.gametest.report-file=${project.buildDir}/gametest-report.xml"
+            runDir 'build/gametest'
+        }
+    }
+
     mods {
         spruceship {
             sourceSet sourceSets.main

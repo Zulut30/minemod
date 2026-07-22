@@ -9,6 +9,12 @@
   "entrypoints": {
     "main": [
       "dev.mcdev.spruceship.SpruceShipMod"
+    ],
+    "client": [
+      "dev.mcdev.spruceship.client.SpruceShipClient"
+    ],
+    "fabric-gametest": [
+      "dev.mcdev.spruceship.test.SpruceShipGameTests"
     ]
   },
   "depends": {
