@@ -179,6 +179,10 @@ function selfTest(): void {
   assert.equal(validateSpec(validArtFixture, "art").valid, true);
 
   assert.deepEqual(VALIDATION_PROFILE_IDS, ["fabric-1.20.1-java-17", "neoforge-26.1.2-java-25"]);
+  const fabricProfileRejectsV0 = validateSpec(validModFixture, "mod", {
+    profile: "fabric-1.20.1-java-17",
+  });
+  assert.ok(fabricProfileRejectsV0.diagnostics.some(({ path }) => path === "/schemaVersion"));
   const profile = "neoforge-26.1.2-java-25" as const;
   const loaderNeutralTargets = [
     { minecraft: "26.1.2", loader: "neoforge", java: 25 },
@@ -214,7 +218,7 @@ function selfTest(): void {
   );
   assert.deepEqual(
     validateSpec(validModFixture, "mod", { profile: fabricProfile }).diagnostics
-      .find(({ code }) => code === "INCOMPATIBLE_TARGET"),
+      .find(({ code, path }) => code === "INCOMPATIBLE_TARGET" && path === "/target"),
     {
       code: "INCOMPATIBLE_TARGET",
       path: "/target",

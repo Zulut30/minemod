@@ -561,6 +561,16 @@ function validateTarget(
     ? { minecraft: "1.20.1", loader: "fabric", java: 17 }
     : { minecraft: "26.1.2", loader: "neoforge", java: 25 };
   const loaderName = expected.loader === "fabric" ? "Fabric" : "NeoForge";
+  if (value.kind === "mod") {
+    const expectedSchemaVersion = profile === "fabric-1.20.1-java-17" ? 1 : 0;
+    if (value.schemaVersion !== expectedSchemaVersion) {
+      push(diagnostics, {
+        code: "INCOMPATIBLE_TARGET",
+        path: "/schemaVersion",
+        message: `Validation profile ${profile} requires ModSpec schemaVersion ${expectedSchemaVersion}.`,
+      });
+    }
+  }
   const matches = targets.some((target) =>
     target.minecraft === expected.minecraft && target.loader === expected.loader && target.java === expected.java);
   if (!matches) {

@@ -88,6 +88,24 @@ importers:
         specifier: workspace:*
         version: link:../contracts
 
+  packages/compiler-fabric:
+    dependencies:
+      '@mcdev/codegen-core':
+        specifier: workspace:*
+        version: link:../codegen-core
+      '@mcdev/compatibility-packs':
+        specifier: workspace:*
+        version: link:../compatibility-packs
+      '@mcdev/contracts':
+        specifier: workspace:*
+        version: link:../contracts
+      '@mcdev/modspec':
+        specifier: workspace:*
+        version: link:../modspec
+      '@mcdev/validation':
+        specifier: workspace:*
+        version: link:../validation
+
   packages/compiler-neoforge:
     dependencies:
       '@mcdev/codegen-core':
