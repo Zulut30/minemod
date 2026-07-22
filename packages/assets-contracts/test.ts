@@ -219,3 +219,28 @@ assert.equal(CuboidAnimationPlanSchema.safeParse({
   ...validAnimationPlan,
   clips: [{ ...validAnimationPlan.clips[0]!, length: 0.25 }],
 }).success, false, "keyframes must fit the clip length");
+assert.equal(CuboidAnimationPlanSchema.safeParse({
+  ...validAnimationPlan,
+  clips: [{ ...validAnimationPlan.clips[0]!, tracks: [{
+    ...validAnimationPlan.clips[0]!.tracks[0]!,
+    keyframes: [
+      { time: 0, value: [-25, 0, 0], interpolation: "linear" },
+      { time: 1, value: [10, 0, 0], interpolation: "linear" },
+    ],
+  }] }],
+}).success, false, "looping tracks must end at their starting value");
+assert.equal(CuboidAnimationPlanSchema.safeParse({
+  ...validAnimationPlan,
+  clips: [{
+    ...validAnimationPlan.clips[0]!,
+    loop: "once",
+    tracks: [{
+      boneId: "root",
+      channel: "position",
+      keyframes: [
+        { time: 0, value: [0, 0, 0], interpolation: "linear" },
+        { time: 1, value: [0, 16, 0], interpolation: "linear" },
+      ],
+    }],
+  }],
+}).success, false, "one-shot clips must restore root position");

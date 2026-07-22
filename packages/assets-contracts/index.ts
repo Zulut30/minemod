@@ -308,6 +308,8 @@ const AnimationClipSchema = z.strictObject({
   snapping: z.number().int().min(1).max(120),
   tracks: z.array(AnimationTrackSchema).min(1).max(CUBOID_ANIMATION_LIMITS.maxTracksPerClip),
 }).superRefine((clip, context) => {
+  const sameVector = (left: readonly number[], right: readonly number[]): boolean =>
+    left.every((value, index) => value === right[index]);
   const trackIds = new Set<string>();
   for (const [trackIndex, track] of clip.tracks.entries()) {
     const trackId = `${track.boneId}:${track.channel}`;
@@ -324,6 +326,28 @@ const AnimationClipSchema = z.strictObject({
         context.addIssue({ code: "custom", path: ["tracks", trackIndex, "keyframes", keyframeIndex, "time"], message: "Keyframe time must not exceed clip length." });
       }
       previousTime = keyframe.time;
+    }
+    const firstKeyframe = track.keyframes[0];
+    const lastKeyframe = track.keyframes.at(-1);
+    if (firstKeyframe === undefined || lastKeyframe === undefined) continue;
+    if (clip.loop === "loop" && (
+      firstKeyframe.time !== 0 ||
+      lastKeyframe.time !== clip.length ||
+      !sameVector(firstKeyframe.value, lastKeyframe.value)
+    )) {
+      context.addIssue({
+        code: "custom",
+        path: ["tracks", trackIndex, "keyframes"],
+        message: "Looping tracks must cover the full clip and end at their starting value.",
+      });
+    }
+    if (clip.loop !== "hold" && track.boneId === "root" && track.channel === "position" &&
+      !sameVector(firstKeyframe.value, lastKeyframe.value)) {
+      context.addIssue({
+        code: "custom",
+        path: ["tracks", trackIndex, "keyframes"],
+        message: "Non-hold clips must restore root position to avoid persistent visual root motion.",
+      });
     }
   }
 });

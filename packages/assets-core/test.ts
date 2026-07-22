@@ -165,8 +165,8 @@ const animatedFungalInfected = compileAnimatedTexturedBlockbenchModel(
   fixture("fungal-infected.texture.json"),
   fixture("fungal-infected.animation.json"),
 );
-assert.deepEqual(animatedFungalInfected.animationMetrics, { clips: 3, tracks: 22, keyframes: 110 });
-assert.equal(animatedFungalInfected.sha256, "978da0a366c499ca3ea728acae34e3449d8eeed501bee0459afcdd28b69a3af0");
+assert.deepEqual(animatedFungalInfected.animationMetrics, { clips: 4, tracks: 34, keyframes: 170 });
+assert.equal(animatedFungalInfected.sha256, "6fabbb24e8d020fc36e51b0f040f09a5d215bf108cb40e6b5ae91697e2d069d0");
 const animatedProject = JSON.parse(animatedFungalInfected.text) as {
   animations: Array<{
     name: string;
@@ -174,11 +174,13 @@ const animatedProject = JSON.parse(animatedFungalInfected.text) as {
   }>;
 };
 assert.deepEqual(animatedProject.animations.map(({ name }) => name), [
+  "animation.mcdev.fungal_infected.idle",
   "animation.mcdev.fungal_infected.walk",
   "animation.mcdev.fungal_infected.climb_block",
   "animation.mcdev.fungal_infected.attack",
 ]);
-const testAnimator = Object.values(animatedProject.animations[0]?.animators ?? {})[0];
+const walkAnimation = animatedProject.animations.find(({ name }) => name.endsWith(".walk"));
+const testAnimator = Object.values(walkAnimation?.animators ?? {})[0];
 assert.equal(testAnimator?.name, "root");
 assert.deepEqual(testAnimator?.keyframes.map(({ channel, time }) => ({ channel, time })), [
   { channel: "position", time: 0 },
