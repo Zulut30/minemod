@@ -19,7 +19,7 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { PassThrough } from "node:stream";
 import { fileURLToPath } from "node:url";
-import { BUILTIN_NEOFORGE_26_1_2 } from "@mcdev/compatibility-packs";
+import { BUILTIN_FABRIC_1_20_1, BUILTIN_NEOFORGE_26_1_2 } from "@mcdev/compatibility-packs";
 import {
   isBuildPlan,
   isWorkspaceManifest,
@@ -30,10 +30,12 @@ import {
 import {
   BUILD_RUNNER_LIMITS,
   BuildRunnerError,
+  createFabricPhase1BuildRunner,
   createNeoForgePhase1BuildRunner,
 } from "./index.ts";
 import {
   DEFAULT_RUNNER_DEPENDENCIES,
+  createFabricPhase1BuildRunnerWithDependencies,
   createNeoForgePhase1BuildRunnerWithDependencies,
   type ProcessGroups,
   type RunnerClock,
@@ -47,20 +49,27 @@ assert.equal(BUILD_RUNNER_LIMITS.rawOutputBytes, 8 * 1024 * 1024);
 assert.equal(BUILD_RUNNER_LIMITS.redactedTailBytes, 64 * 1024);
 assert.equal(BUILD_RUNNER_LIMITS.buildTimeoutMilliseconds, 20 * 60 * 1_000);
 assert.equal(typeof createNeoForgePhase1BuildRunner, "function");
+assert.equal(typeof createFabricPhase1BuildRunner, "function");
 assert.equal(new BuildRunnerError("BUILD_FAILED", "Build failed.").code, "BUILD_FAILED");
 
 const runtimePackRoot = fileURLToPath(new URL("../../packs/neoforge-26.1.2/runtime/", import.meta.url));
+const fabricRuntimePackRoot = fileURLToPath(new URL("../../packs/fabric-1.20.1/runtime/", import.meta.url));
 const sha = (bytes: Uint8Array): string => createHash("sha256").update(bytes).digest("hex");
 
 interface TestFixture {
   readonly root: string;
   readonly workspace: string;
+  readonly java17: string;
   readonly java21: string;
   readonly java25: string;
   readonly artifactCache: string;
   readonly config: {
     readonly java21Home: string;
     readonly java25Home: string;
+    readonly artifactCacheRoot: string;
+  };
+  readonly fabricConfig: {
+    readonly java17Home: string;
     readonly artifactCacheRoot: string;
   };
   readonly plan: BuildPlan;
@@ -74,14 +83,18 @@ function render(source: Uint8Array, replacements: Readonly<Record<string, string
   return new Uint8Array(Buffer.from(text, "utf8"));
 }
 
-async function makeFixture(): Promise<TestFixture> {
+async function makeFixture(loader: "fabric" | "neoforge" = "neoforge"): Promise<TestFixture> {
   const root = await mkdtemp(join(tmpdir(), "mcdev-runner-test-"));
   const workspace = join(root, "workspace");
+  const java17 = join(root, "jdk-17");
   const java21 = join(root, "jdk-21");
   const java25 = join(root, "jdk-25");
   const artifactCache = join(root, "artifact-cache");
   await Promise.all([
     mkdir(join(workspace, ".mcdev"), { recursive: true, mode: 0o700 }),
+    mkdir(join(java17, "bin"), { recursive: true, mode: 0o755 }),
+    mkdir(join(java17, "lib"), { recursive: true, mode: 0o755 }),
+    mkdir(join(java17, "conf"), { recursive: true, mode: 0o755 }),
     mkdir(join(java21, "bin"), { recursive: true, mode: 0o755 }),
     mkdir(join(java21, "lib"), { recursive: true, mode: 0o755 }),
     mkdir(join(java21, "conf"), { recursive: true, mode: 0o755 }),
@@ -91,19 +104,26 @@ async function makeFixture(): Promise<TestFixture> {
     mkdir(artifactCache, { recursive: true, mode: 0o700 }),
   ]);
   await Promise.all([
+    writeFile(join(java17, "bin", "java"), "fake java 17\n", { mode: 0o755 }),
+    writeFile(join(java17, "release"), "JAVA_VERSION=\"17.0.19\"\n", { mode: 0o644 }),
     writeFile(join(java21, "bin", "java"), "fake java 21\n", { mode: 0o755 }),
     writeFile(join(java21, "release"), "JAVA_VERSION=\"21.0.11\"\n", { mode: 0o644 }),
     writeFile(join(java25, "bin", "java"), "fake java 25\n", { mode: 0o755 }),
     writeFile(join(java25, "release"), "JAVA_VERSION=\"25.0.3\"\n", { mode: 0o644 }),
   ]);
   await Promise.all([
+    chmod(join(java17, "bin", "java"), 0o755),
     chmod(join(java21, "bin", "java"), 0o755),
     chmod(join(java25, "bin", "java"), 0o755),
   ]);
 
-  const packFile = (path: string): Promise<Uint8Array> => readFile(join(runtimePackRoot, ...path.split("/")));
+  const selectedPackRoot = loader === "fabric" ? fabricRuntimePackRoot : runtimePackRoot;
+  const packFile = (path: string): Promise<Uint8Array> => readFile(join(selectedPackRoot, ...path.split("/")));
   const replacements = {
+    "@@MCDEV_CLIENT_CLASS@@": "dev.mcdev.generated.m_runnerfixture.client.GeneratedClient",
+    "@@MCDEV_MAIN_CLASS@@": "dev.mcdev.generated.m_runnerfixture.GeneratedMod",
     "@@MCDEV_MOD_ID@@": "runnerfixture",
+    "@@MCDEV_PROJECT_AUTHOR@@": "Minecraft AI Mod Studio",
     "@@MCDEV_PROJECT_LICENSE@@": "MIT",
     "@@MCDEV_PROJECT_NAME@@": "Runner Fixture",
     "@@MCDEV_PROJECT_VERSION@@": "1.0.0",
@@ -118,8 +138,11 @@ async function makeFixture(): Promise<TestFixture> {
     ["gradle/wrapper/gradle-wrapper.properties", await packFile("templates/gradle/wrapper/gradle-wrapper.properties")],
     ["gradlew", await packFile("templates/gradlew")],
     ["gradlew.bat", await packFile("templates/gradlew.bat")],
-    ["src/main/resources/META-INF/neoforge.mods.toml",
-      render(await packFile("templates/META-INF/neoforge.mods.toml.tpl"), replacements)],
+    loader === "fabric"
+      ? ["src/main/resources/fabric.mod.json",
+          render(await packFile("templates/fabric.mod.json.tpl"), replacements)]
+      : ["src/main/resources/META-INF/neoforge.mods.toml",
+          render(await packFile("templates/META-INF/neoforge.mods.toml.tpl"), replacements)],
   ]);
   const contentSourceFiles = new Map<string, Uint8Array>([
     ["src/main/java/dev/mcdev/generated/m_runnerfixture/GeneratedContent.java",
@@ -127,6 +150,10 @@ async function makeFixture(): Promise<TestFixture> {
     ["src/main/java/dev/mcdev/generated/m_runnerfixture/GeneratedMod.java",
       Buffer.from("package dev.mcdev.generated.m_runnerfixture; public final class GeneratedMod {}\n")],
     ["src/main/resources/assets/runnerfixture/lang/en_us.json", Buffer.from("{}\n")],
+    ...(loader === "fabric" ? [[
+      "src/client/java/dev/mcdev/generated/m_runnerfixture/client/GeneratedClient.java",
+      Buffer.from("package dev.mcdev.generated.m_runnerfixture.client; public final class GeneratedClient {}\n"),
+    ] as const] : []),
   ]);
   const writeOwnedFiles = async (sourceFiles: ReadonlyMap<string, Uint8Array>): Promise<WorkspaceOwnedFile[]> => {
     const owned: WorkspaceOwnedFile[] = [];
@@ -144,10 +171,11 @@ async function makeFixture(): Promise<TestFixture> {
   const contentFiles = await writeOwnedFiles(contentSourceFiles);
   const files = [...projectFiles, ...contentFiles]
     .sort((left, right) => left.path < right.path ? -1 : left.path > right.path ? 1 : 0);
+  const selectedPack = loader === "fabric" ? BUILTIN_FABRIC_1_20_1 : BUILTIN_NEOFORGE_26_1_2;
   const pack = Object.freeze({
-    packId: BUILTIN_NEOFORGE_26_1_2.packId,
-    revision: BUILTIN_NEOFORGE_26_1_2.revision,
-    treeSha256: BUILTIN_NEOFORGE_26_1_2.treeSha256,
+    packId: selectedPack.packId,
+    revision: selectedPack.revision,
+    treeSha256: selectedPack.treeSha256,
   });
   const plan = {
     contract: "mcdev.build-plan/v1",
@@ -203,7 +231,7 @@ async function makeFixture(): Promise<TestFixture> {
         logPolicy: "structured-redacted-v1",
         validatorPolicy: "sha256-outputs-v1",
         provenance: "fixed-build-runner",
-        policy: "neoforge-phase1-v1",
+        policy: loader === "fabric" ? "fabric-1.20.1-phase1-v1" : "neoforge-phase1-v1",
       },
       {
         nodeId: "index-artifacts",
@@ -232,10 +260,12 @@ async function makeFixture(): Promise<TestFixture> {
   return {
     root,
     workspace,
+    java17,
     java21,
     java25,
     artifactCache,
     config: { java21Home: java21, java25Home: java25, artifactCacheRoot: artifactCache },
+    fabricConfig: { java17Home: java17, artifactCacheRoot: artifactCache },
     plan,
     manifest,
     cleanup: () => rm(root, { recursive: true, force: true }),
@@ -292,7 +322,8 @@ interface FakeRuntime {
 function fakeRuntime(
   fixture: TestFixture,
   buildAction: BuildAction,
-  versions: { readonly java21: string; readonly java25: string } = {
+  versions: { readonly java17?: string; readonly java21: string; readonly java25: string } = {
+    java17: "17.0.19+10",
     java21: "21.0.11+10-LTS",
     java25: "25.0.3+9-LTS",
   },
@@ -309,9 +340,10 @@ function fakeRuntime(
     children.set(child.pid, child);
     queueMicrotask(() => {
       if (args[0] === "-XshowSettings:properties") {
+        const is17 = command === join(fixture.java17, "bin", "java");
         const is21 = command === join(fixture.java21, "bin", "java");
-        const home = is21 ? fixture.java21 : fixture.java25;
-        const version = is21 ? versions.java21 : versions.java25;
+        const home = is17 ? fixture.java17 : is21 ? fixture.java21 : fixture.java25;
+        const version = is17 ? versions.java17 ?? "17.0.19+10" : is21 ? versions.java21 : versions.java25;
         child.stderr.write(`Property settings:\n    java.home = ${home}\n    java.runtime.version = ${version}\n`);
         child.finish(0, null);
         return;
@@ -394,6 +426,15 @@ async function expectRunnerError(promise: Promise<unknown>, code: BuildRunnerErr
 
 async function withFixture(test: (fixture: TestFixture) => Promise<void>): Promise<void> {
   const fixture = await makeFixture();
+  try {
+    await test(fixture);
+  } finally {
+    await fixture.cleanup();
+  }
+}
+
+async function withFabricFixture(test: (fixture: TestFixture) => Promise<void>): Promise<void> {
+  const fixture = await makeFixture("fabric");
   try {
     await test(fixture);
   } finally {
@@ -498,6 +539,73 @@ await withFixture(async (fixture) => {
   }
 });
 
+await withFabricFixture(async (fixture) => {
+  const runtime = fakeRuntime(fixture, async (child) => {
+    await writeOrdinaryJar(fixture.workspace, "runnerfixture-1.0.0.jar", Buffer.from("fabric-jar"));
+    child.stdout.write("fabric build ok\n");
+    child.finish(0, null);
+  });
+  const runner = createFabricPhase1BuildRunnerWithDependencies(
+    fixture.fabricConfig,
+    runnerDependencies(runtime),
+  );
+  const result = await runner.run({ workspaceRoot: fixture.workspace, plan: fixture.plan, manifest: fixture.manifest });
+  assert.deepEqual(result.outputs.entries[0], {
+    path: "build/libs/runnerfixture-1.0.0.jar",
+    mode: 420,
+    size: 10,
+    sha256: sha(Buffer.from("fabric-jar")),
+    kind: "build-output",
+    provenance: "build",
+  });
+  const buildCall = runtime.calls.find((call) => call.options.detached);
+  assert.equal(buildCall?.command, join(fixture.java17, "bin", "java"));
+  assert.deepEqual(buildCall?.args.slice(-6), [
+    "clean",
+    "build",
+    "-x",
+    "sourcesJar",
+    "-x",
+    "remapSourcesJar",
+  ]);
+  assert.deepEqual(Object.keys(buildCall?.options.env ?? {}).sort(), [
+    "GRADLE_USER_HOME",
+    "HOME",
+    "JAVA_HOME",
+    "LANG",
+    "LC_ALL",
+    "MCDEV_BUILD_NONCE",
+    "MCDEV_JAVA17_HOME",
+    "SOURCE_DATE_EPOCH",
+    "TMPDIR",
+    "TZ",
+  ]);
+  assert.equal(buildCall?.options.env.JAVA_HOME, fixture.java17);
+  assert.equal(buildCall?.options.env.MCDEV_JAVA17_HOME, fixture.java17);
+  assert.equal(
+    buildCall?.options.env.GRADLE_USER_HOME,
+    join(fixture.artifactCache, BUILTIN_FABRIC_1_20_1.treeSha256, "gradle-user-home"),
+  );
+  assert.equal(runtime.calls.filter((call) => !call.options.detached).length, 1);
+});
+
+await withFabricFixture(async (fixture) => {
+  const runtime = fakeRuntime(fixture, async (child) => child.finish(0, null));
+  const plan = structuredClone(fixture.plan) as BuildPlan;
+  const buildNode = plan.nodes.find((node) => node.kind === "gradle-clean-build");
+  assert.ok(buildNode?.kind === "gradle-clean-build");
+  Object.defineProperty(buildNode, "policy", { value: "neoforge-phase1-v1", enumerable: true });
+  const runner = createFabricPhase1BuildRunnerWithDependencies(
+    fixture.fabricConfig,
+    runnerDependencies(runtime),
+  );
+  await expectRunnerError(
+    runner.run({ workspaceRoot: fixture.workspace, plan, manifest: fixture.manifest }),
+    "PLAN_INVALID",
+  );
+  assert.equal(runtime.calls.length, 0, "a cross-loader policy fails before any process is spawned");
+});
+
 {
   let getterCalls = 0;
   const hostileConfig = Object.defineProperty({
@@ -518,6 +626,15 @@ await withFixture(async (fixture) => {
   assert.throws(
     () => createNeoForgePhase1BuildRunnerWithDependencies(new Proxy({}, {}), DEFAULT_RUNNER_DEPENDENCIES),
     BuildRunnerError,
+  );
+  assert.throws(
+    () => createFabricPhase1BuildRunnerWithDependencies({
+      java17Home: "/jdk17",
+      artifactCacheRoot: "/cache",
+      java21Home: "/unexpected",
+    }, DEFAULT_RUNNER_DEPENDENCIES),
+    (error: unknown) => error instanceof BuildRunnerError && error.code === "INTERNAL_ERROR",
+    "Fabric config must reject fields from another loader policy",
   );
 }
 

@@ -20,6 +20,8 @@ import {
 } from "node:path";
 import { isProxy, isSharedArrayBuffer, isUint8Array } from "node:util/types";
 import {
+  BUILTIN_FABRIC_1_20_1,
+  BUILTIN_FABRIC_1_20_1_SELECTOR,
   BUILTIN_NEOFORGE_26_1_2,
   BUILTIN_NEOFORGE_26_1_2_SELECTOR,
   BuiltinPackIntegrityError,
@@ -59,9 +61,87 @@ const MAX_SCAN_ENTRIES = 16_384;
 const MAX_MOUNTINFO_BYTES = 1_048_576;
 const MAX_MOUNTINFO_LINES = 16_384;
 const MAX_MOUNTINFO_LINE_BYTES = 32_768;
-const REQUIRED_WRAPPER_SHA256 = "423cb469ccc0ecc31f0e4e1c309976198ccb734cdcbb7029d4bda0f18f57e8d9";
+const NEOFORGE_WRAPPER_SHA256 = "423cb469ccc0ecc31f0e4e1c309976198ccb734cdcbb7029d4bda0f18f57e8d9";
+const FABRIC_WRAPPER_SHA256 = "cb0da6751c2b753a16ac168bb354870ebb1e162e9083f116729cec9c781156b8";
+const FABRIC_GRADLE_DISTRIBUTION_SHA256 = "544c35d6bd849ae8a5ed0bcea39ba677dc40f49df7d1835561582da2009b961d";
+const NEOFORGE_GRADLE_DISTRIBUTION_SHA256 = "72f44c9f8ebcb1af43838f45ee5c4aa9c5444898b3468ab3f4af7b6076c5bc3f";
+const EXPECTED_JAVA_17_RUNTIME = "17.0.19+10";
 const EXPECTED_JAVA_21_RUNTIME = "21.0.11+10-LTS";
 const EXPECTED_JAVA_25_RUNTIME = "25.0.3+9-LTS";
+
+type RunnerPackSelector = Parameters<typeof loadBuiltinCompatibilityPack>[0];
+type JavaConfigKey = "java17Home" | "java21Home" | "java25Home";
+
+interface FixedRunnerPolicy {
+  readonly buildPolicy: "fabric-1.20.1-phase1-v1" | "neoforge-phase1-v1";
+  readonly pack: BuildPlan["pack"];
+  readonly selector: RunnerPackSelector;
+  readonly java: readonly {
+    readonly configKey: JavaConfigKey;
+    readonly environmentKey: "MCDEV_JAVA17_HOME" | "MCDEV_JAVA21_HOME" | "MCDEV_JAVA25_HOME";
+    readonly expectedRuntime: string;
+  }[];
+  readonly buildJavaKey: JavaConfigKey;
+  readonly wrapperSha256: Sha256;
+  readonly distributionSha256: Sha256;
+  readonly excludedGradleTasks: readonly string[];
+  readonly projectPaths: readonly PortableRelativePath[];
+  readonly contentSourceRoots: readonly string[];
+  readonly reservedContentPaths: readonly PortableRelativePath[];
+}
+
+const COMMON_PROJECT_PATHS = Object.freeze([
+  ".gitignore",
+  "build.gradle",
+  "gradle.properties",
+  "gradle/verification-metadata.xml",
+  "gradle/wrapper/gradle-wrapper.jar",
+  "gradle/wrapper/gradle-wrapper.properties",
+  "gradlew",
+  "gradlew.bat",
+  "settings.gradle",
+] as const);
+
+const NEOFORGE_PHASE1_POLICY: FixedRunnerPolicy = Object.freeze({
+  buildPolicy: "neoforge-phase1-v1",
+  pack: Object.freeze({
+    packId: BUILTIN_NEOFORGE_26_1_2.packId,
+    revision: BUILTIN_NEOFORGE_26_1_2.revision,
+    treeSha256: BUILTIN_NEOFORGE_26_1_2.treeSha256,
+  }),
+  selector: BUILTIN_NEOFORGE_26_1_2_SELECTOR,
+  java: Object.freeze([
+    Object.freeze({ configKey: "java21Home", environmentKey: "MCDEV_JAVA21_HOME", expectedRuntime: EXPECTED_JAVA_21_RUNTIME }),
+    Object.freeze({ configKey: "java25Home", environmentKey: "MCDEV_JAVA25_HOME", expectedRuntime: EXPECTED_JAVA_25_RUNTIME }),
+  ]),
+  buildJavaKey: "java25Home",
+  wrapperSha256: NEOFORGE_WRAPPER_SHA256,
+  distributionSha256: NEOFORGE_GRADLE_DISTRIBUTION_SHA256,
+  excludedGradleTasks: Object.freeze([]),
+  projectPaths: Object.freeze([...COMMON_PROJECT_PATHS, "src/main/resources/META-INF/neoforge.mods.toml"]),
+  contentSourceRoots: Object.freeze(["src/main/java/", "src/main/resources/"]),
+  reservedContentPaths: Object.freeze(["src/main/resources/META-INF/neoforge.mods.toml"]),
+});
+
+const FABRIC_1_20_1_PHASE1_POLICY: FixedRunnerPolicy = Object.freeze({
+  buildPolicy: "fabric-1.20.1-phase1-v1",
+  pack: Object.freeze({
+    packId: BUILTIN_FABRIC_1_20_1.packId,
+    revision: BUILTIN_FABRIC_1_20_1.revision,
+    treeSha256: BUILTIN_FABRIC_1_20_1.treeSha256,
+  }),
+  selector: BUILTIN_FABRIC_1_20_1_SELECTOR,
+  java: Object.freeze([
+    Object.freeze({ configKey: "java17Home", environmentKey: "MCDEV_JAVA17_HOME", expectedRuntime: EXPECTED_JAVA_17_RUNTIME }),
+  ]),
+  buildJavaKey: "java17Home",
+  wrapperSha256: FABRIC_WRAPPER_SHA256,
+  distributionSha256: FABRIC_GRADLE_DISTRIBUTION_SHA256,
+  excludedGradleTasks: Object.freeze(["sourcesJar", "remapSourcesJar"]),
+  projectPaths: Object.freeze([...COMMON_PROJECT_PATHS, "src/main/resources/fabric.mod.json"]),
+  contentSourceRoots: Object.freeze(["src/client/java/", "src/main/java/", "src/main/resources/"]),
+  reservedContentPaths: Object.freeze(["src/main/resources/fabric.mod.json"]),
+});
 
 const typedArrayIntrinsics = (() => {
   const typedArrayPrototype = Object.getPrototypeOf(Uint8Array.prototype) as object;
@@ -126,6 +206,11 @@ export interface BuildRunnerConfig {
   readonly artifactCacheRoot: string;
 }
 
+export interface FabricBuildRunnerConfig {
+  readonly java17Home: string;
+  readonly artifactCacheRoot: string;
+}
+
 export interface BuildRunnerRunInput {
   readonly workspaceRoot: string;
   readonly plan: BuildPlan;
@@ -152,6 +237,10 @@ export interface BuildRunnerResult {
 }
 
 export interface NeoForgePhase1BuildRunner {
+  run(input: BuildRunnerRunInput): Promise<BuildRunnerResult>;
+}
+
+export interface FabricPhase1BuildRunner {
   run(input: BuildRunnerRunInput): Promise<BuildRunnerResult>;
 }
 
@@ -505,13 +594,20 @@ function copyPath(value: unknown, code: "WORKSPACE_INVALID" | "INTERNAL_ERROR"):
   return value;
 }
 
-function normalizeConfig(value: unknown): BuildRunnerConfig {
-  const raw = exactDataObject(value, ["java21Home", "java25Home", "artifactCacheRoot"]);
+interface NormalizedBuildRunnerConfig {
+  readonly artifactCacheRoot: string;
+  readonly javaHomes: ReadonlyMap<JavaConfigKey, string>;
+}
+
+function normalizeConfig(value: unknown, policy: FixedRunnerPolicy): NormalizedBuildRunnerConfig {
+  const javaKeys = policy.java.map(({ configKey }) => configKey);
+  const raw = exactDataObject(value, [...javaKeys, "artifactCacheRoot"]);
   if (raw === undefined) return failure("INTERNAL_ERROR", "Build runner configuration must use the closed data shape.");
+  const javaHomes = new Map<JavaConfigKey, string>();
+  for (const key of javaKeys) javaHomes.set(key, copyPath(raw[key], "INTERNAL_ERROR"));
   return Object.freeze({
-    java21Home: copyPath(raw.java21Home, "INTERNAL_ERROR"),
-    java25Home: copyPath(raw.java25Home, "INTERNAL_ERROR"),
     artifactCacheRoot: copyPath(raw.artifactCacheRoot, "INTERNAL_ERROR"),
+    javaHomes,
   });
 }
 
@@ -546,13 +642,11 @@ function samePack(left: BuildPlan["pack"], right: BuildPlan["pack"]): boolean {
   return left.packId === right.packId && left.revision === right.revision && left.treeSha256 === right.treeSha256;
 }
 
-function assertFixedPlan(plan: BuildPlan, manifest: WorkspaceManifest): void {
+function assertFixedPlan(plan: BuildPlan, manifest: WorkspaceManifest, policy: FixedRunnerPolicy): void {
   if (plan.planId !== manifest.planId || !samePack(plan.pack, manifest.pack)) {
     return failure("PLAN_INVALID", "Build plan and workspace manifest identities do not match.");
   }
-  if (plan.pack.packId !== BUILTIN_NEOFORGE_26_1_2.packId ||
-    plan.pack.revision !== BUILTIN_NEOFORGE_26_1_2.revision ||
-    plan.pack.treeSha256 !== BUILTIN_NEOFORGE_26_1_2.treeSha256) {
+  if (!samePack(plan.pack, policy.pack)) {
     return failure("PACK_INTEGRITY_FAILED", "Build plan does not reference the exact trusted compatibility pack.");
   }
   const expectedKinds = new Map<string, string>([
@@ -585,28 +679,18 @@ function assertFixedPlan(plan: BuildPlan, manifest: WorkspaceManifest): void {
       return failure("PLAN_INVALID", "Downstream Phase 1 nodes must not claim compiler-owned workspace outputs.");
     }
   }
-  const projectPaths = Object.freeze([
-    ".gitignore",
-    "build.gradle",
-    "gradle.properties",
-    "gradle/verification-metadata.xml",
-    "gradle/wrapper/gradle-wrapper.jar",
-    "gradle/wrapper/gradle-wrapper.properties",
-    "gradlew",
-    "gradlew.bat",
-    "settings.gradle",
-    "src/main/resources/META-INF/neoforge.mods.toml",
-  ] as const);
   const projectNode = byId.get("generate-project");
   const contentNode = byId.get("generate-content");
+  const buildNode = byId.get("gradle-clean-build");
   if (projectNode === undefined || contentNode === undefined || contentNode.outputs.length === 0 ||
-    projectNode.outputs.length !== projectPaths.length || projectNode.outputs.some((file, index) =>
-      file.path !== projectPaths[index])) {
+    buildNode?.kind !== "gradle-clean-build" || buildNode.policy !== policy.buildPolicy ||
+    projectNode.outputs.length !== policy.projectPaths.length || projectNode.outputs.some((file, index) =>
+      file.path !== policy.projectPaths[index])) {
     return failure("PLAN_INVALID", "Generator outputs do not match the fixed compiler ownership partition.");
   }
   if (contentNode.outputs.some((file) =>
-    !(file.path.startsWith("src/main/java/") || file.path.startsWith("src/main/resources/")) ||
-    file.path === "src/main/resources/META-INF/neoforge.mods.toml")) {
+    !policy.contentSourceRoots.some((root) => file.path.startsWith(root)) ||
+    policy.reservedContentPaths.includes(file.path))) {
     return failure("PLAN_INVALID", "Generated content outputs do not match the fixed compiler topology.");
   }
   const manifestByPath = new Map(manifest.files.map((file) => [file.path, file]));
@@ -1218,7 +1302,11 @@ function settingsTemplatePattern(template: string): RegExp {
   return new RegExp(`^${escapeRegExp(template).replace(escapeRegExp("@@MCDEV_MOD_ID@@"), "([a-z][a-z0-9_]{1,63})")}$`, "u");
 }
 
-function assertPackBuildInputs(pack: VerifiedCompatibilityPack, files: ReadonlyMap<string, Uint8Array>): void {
+function assertPackBuildInputs(
+  policy: FixedRunnerPolicy,
+  pack: VerifiedCompatibilityPack,
+  files: ReadonlyMap<string, Uint8Array>,
+): void {
   const exactMappings = [
     ["gradle.properties", "templates/gradle.properties"],
     ["gradle/verification-metadata.xml", "templates/gradle/verification-metadata.xml"],
@@ -1233,17 +1321,19 @@ function assertPackBuildInputs(pack: VerifiedCompatibilityPack, files: ReadonlyM
     }
   }
   const wrapper = requireManagedBytes(files, "gradle/wrapper/gradle-wrapper.jar");
-  if (sha256(wrapper) !== REQUIRED_WRAPPER_SHA256) {
+  if (sha256(wrapper) !== policy.wrapperSha256) {
     return failure("PACK_INTEGRITY_FAILED", "Gradle wrapper integrity verification failed.");
   }
   const properties = decodeUtf8(requireManagedBytes(files, "gradle.properties"));
   if (!properties.includes("org.gradle.java.installations.auto-detect=false\n") ||
     !properties.includes("org.gradle.java.installations.auto-download=false\n") ||
-    !properties.includes("org.gradle.java.installations.fromEnv=MCDEV_JAVA21_HOME,MCDEV_JAVA25_HOME\n")) {
+    !properties.includes(`org.gradle.java.installations.fromEnv=${
+      policy.java.map(({ environmentKey }) => environmentKey).join(",")
+    }\n`)) {
     return failure("PACK_INTEGRITY_FAILED", "Gradle toolchain policy is not fail closed.");
   }
   const wrapperProperties = decodeUtf8(requireManagedBytes(files, "gradle/wrapper/gradle-wrapper.properties"));
-  if (!wrapperProperties.includes("distributionSha256Sum=72f44c9f8ebcb1af43838f45ee5c4aa9c5444898b3468ab3f4af7b6076c5bc3f\n")) {
+  if (!wrapperProperties.includes(`distributionSha256Sum=${policy.distributionSha256}\n`)) {
     return failure("PACK_INTEGRITY_FAILED", "Gradle distribution integrity policy is missing.");
   }
   const buildTemplate = decodeUtf8(pack.readFile("templates/build.gradle.tpl"));
@@ -1996,6 +2086,7 @@ function fixedBuildArguments(
   toolHome: string,
   temporaryDirectory: string,
   projectCacheDirectory: string,
+  policy: FixedRunnerPolicy,
 ): readonly string[] {
   return Object.freeze([
     "-Xms64m",
@@ -2020,6 +2111,7 @@ function fixedBuildArguments(
     "strict",
     "clean",
     "build",
+    ...policy.excludedGradleTasks.flatMap((task) => ["-x", task]),
   ]);
 }
 
@@ -2170,9 +2262,9 @@ function immutableResult(snapshot: JarSnapshot): BuildRunnerResult {
   return Object.freeze({ nodeId: "gradle-clean-build" as const, outputs });
 }
 
-async function loadTrustedPack(): Promise<VerifiedCompatibilityPack> {
+async function loadTrustedPack(policy: FixedRunnerPolicy): Promise<VerifiedCompatibilityPack> {
   try {
-    return await loadBuiltinCompatibilityPack(BUILTIN_NEOFORGE_26_1_2_SELECTOR);
+    return await loadBuiltinCompatibilityPack(policy.selector);
   } catch (error) {
     if (error instanceof BuiltinPackIntegrityError) {
       return failure("PACK_INTEGRITY_FAILED", "Trusted compatibility pack failed integrity verification.");
@@ -2182,10 +2274,11 @@ async function loadTrustedPack(): Promise<VerifiedCompatibilityPack> {
 }
 
 async function runBuild(
-  config: BuildRunnerConfig,
+  config: NormalizedBuildRunnerConfig,
   input: NormalizedRunInput,
   dependencies: RunnerDependencies,
   priorBuild: PriorBuildProvenance | undefined,
+  policy: FixedRunnerPolicy,
 ): Promise<{ readonly result: BuildRunnerResult; readonly workspaceRoot: string; readonly provenance: PriorBuildProvenance }> {
   if (dependencies.platform() !== "linux" || dependencies.architecture() !== "x64") {
     return failure("INTERNAL_ERROR", "Phase 1 build runner supports Linux x64 only.");
@@ -2198,36 +2291,48 @@ async function runBuild(
   } catch {
     return failure("INTERNAL_ERROR", "Effective build-runner identity is unavailable.");
   }
-  assertFixedPlan(input.plan, input.manifest);
+  assertFixedPlan(input.plan, input.manifest, policy);
   const initialMounts = await loadMountTable(dependencies);
-  const [workspace, java21, java25, artifactCache] = await Promise.all([
+  const [workspace, artifactCache, ...javaDirectories] = await Promise.all([
     canonicalDirectory(input.workspaceRoot, "WORKSPACE_INVALID", effectiveUserId, "effective-user", dependencies),
-    canonicalDirectory(config.java21Home, "PACK_INTEGRITY_FAILED", effectiveUserId, "root-or-effective", dependencies),
-    canonicalDirectory(config.java25Home, "PACK_INTEGRITY_FAILED", effectiveUserId, "root-or-effective", dependencies),
     canonicalDirectory(config.artifactCacheRoot, "PACK_INTEGRITY_FAILED", effectiveUserId, "effective-user", dependencies),
+    ...policy.java.map(({ configKey }) => {
+      const path = config.javaHomes.get(configKey);
+      if (path === undefined) return failure("INTERNAL_ERROR", "Configured Java runtime is unavailable.");
+      return canonicalDirectory(path, "PACK_INTEGRITY_FAILED", effectiveUserId, "root-or-effective", dependencies);
+    }),
   ]);
   const verifiedPriorBuild = priorBuild !== undefined &&
     priorBuild.workspaceDevice === workspace.identity.dev && priorBuild.workspaceInode === workspace.identity.ino
     ? priorBuild
     : undefined;
-  if (samePath(java21.path, java25.path)) {
-    return failure("PACK_INTEGRITY_FAILED", "Java 21 and Java 25 homes must be distinct.");
+  if (javaDirectories.some((directory, index) =>
+    javaDirectories.slice(index + 1).some((other) => samePath(directory.path, other.path)))) {
+    return failure("PACK_INTEGRITY_FAILED", "Configured Java runtime homes must be distinct.");
   }
   const mountTrustRoots = Object.freeze([
     Object.freeze({ root: workspace.path, code: "WORKSPACE_INVALID" as const }),
     Object.freeze({ root: artifactCache.path, code: "PACK_INTEGRITY_FAILED" as const }),
-    Object.freeze({ root: java21.path, code: "PACK_INTEGRITY_FAILED" as const }),
-    Object.freeze({ root: java25.path, code: "PACK_INTEGRITY_FAILED" as const }),
+    ...javaDirectories.map((directory) =>
+      Object.freeze({ root: directory.path, code: "PACK_INTEGRITY_FAILED" as const })),
   ]);
   const mountTrust = verifyMountTrust(mountTrustRoots, initialMounts);
-  const pack = await loadTrustedPack();
+  const pack = await loadTrustedPack(policy);
   if (!samePack(input.plan.pack, pack.ref)) {
     return failure("PACK_INTEGRITY_FAILED", "Loaded compatibility pack identity does not match the build plan.");
   }
-  const [java21Runtime, java25Runtime] = await Promise.all([
-    verifyJavaHome(java21, EXPECTED_JAVA_21_RUNTIME, dependencies),
-    verifyJavaHome(java25, EXPECTED_JAVA_25_RUNTIME, dependencies),
-  ]);
+  const javaRuntimes = await Promise.all(policy.java.map(async (javaPolicy, index) => {
+    const directory = javaDirectories[index];
+    if (directory === undefined) return failure("INTERNAL_ERROR", "Configured Java runtime is unavailable.");
+    return Object.freeze({
+      configKey: javaPolicy.configKey,
+      environmentKey: javaPolicy.environmentKey,
+      directory,
+      runtime: await verifyJavaHome(directory, javaPolicy.expectedRuntime, dependencies),
+    });
+  }));
+  const buildJava = javaRuntimes.find(({ configKey }) => configKey === policy.buildJavaKey);
+  if (buildJava === undefined) return failure("INTERNAL_ERROR", "Build Java runtime is unavailable.");
 
   const lock = await acquireWorkspaceLock(workspace.path, dependencies);
   let primaryError: unknown;
@@ -2243,7 +2348,7 @@ async function runBuild(
       workspace.identity.dev,
       dependencies,
     );
-    assertPackBuildInputs(pack, beforeFiles);
+    assertPackBuildInputs(policy, pack, beforeFiles);
     await assertNoUnmanagedExecutionSurfaces(
       workspace.path,
       input.manifest,
@@ -2263,8 +2368,7 @@ async function runBuild(
     await assertNoGradleUserHomeInjection(directories.gradleUserHome, dependencies);
     await dependencies.checkpoint?.("before-build-spawn");
     verifyMountTrust(mountTrustRoots, await loadMountTable(dependencies), mountTrust);
-    await assertJavaRuntimeIdentity(java21Runtime, dependencies);
-    await assertJavaRuntimeIdentity(java25Runtime, dependencies);
+    await Promise.all(javaRuntimes.map(({ runtime }) => assertJavaRuntimeIdentity(runtime, dependencies)));
     await assertDirectoryIdentity(workspace, "WORKSPACE_INVALID", dependencies);
     await assertDirectoryIdentity(artifactCache, "PACK_INTEGRITY_FAILED", dependencies);
     for (const directory of directories.trustedDirectories) {
@@ -2277,11 +2381,12 @@ async function runBuild(
     await assertTrustedTree(directories.buildState, "WORKSPACE_INVALID", dependencies);
     await assertTrustedTree(directories.packCache, "PACK_INTEGRITY_FAILED", dependencies);
     const nonce = copyRandomNonce(dependencies);
+    const javaEnvironment = Object.fromEntries(javaRuntimes.map(({ environmentKey, directory }) =>
+      [environmentKey, directory.path]));
     const env = Object.freeze({
       HOME: directories.toolHome,
-      JAVA_HOME: java25.path,
-      MCDEV_JAVA21_HOME: java21.path,
-      MCDEV_JAVA25_HOME: java25.path,
+      JAVA_HOME: buildJava.directory.path,
+      ...javaEnvironment,
       GRADLE_USER_HOME: directories.gradleUserHome,
       TMPDIR: directories.temporaryDirectory,
       LANG: "C.UTF-8",
@@ -2290,12 +2395,13 @@ async function runBuild(
       SOURCE_DATE_EPOCH: "0",
       MCDEV_BUILD_NONCE: nonce,
     });
-    const command = java25Runtime.executable.path;
+    const command = buildJava.runtime.executable.path;
     const args = fixedBuildArguments(
       workspace.path,
       directories.toolHome,
       directories.temporaryDirectory,
       directories.projectCacheDirectory,
+      policy,
     );
     const processResult = await executeProcess({
       command,
@@ -2314,20 +2420,19 @@ async function runBuild(
       timeoutCode: "BUILD_TIMEOUT",
       outputCode: "BUILD_OUTPUT_LIMIT",
       spawnCode: "BUILD_FAILED",
-      secrets: [workspace.path, java21.path, java25.path, artifactCache.path, nonce],
+      secrets: [workspace.path, ...javaDirectories.map(({ path }) => path), artifactCache.path, nonce],
     }, dependencies);
     if (processResult.code !== 0 || processResult.signal !== null) {
       return failure("BUILD_FAILED", "Gradle clean build failed.", redactedTails(
         [processResult.stdout],
         [processResult.stderr],
-        [workspace.path, java21.path, java25.path, artifactCache.path, nonce],
+        [workspace.path, ...javaDirectories.map(({ path }) => path), artifactCache.path, nonce],
       ));
     }
     await dependencies.checkpoint?.("workspace-before-post-verify");
     verifyMountTrust(mountTrustRoots, await loadMountTable(dependencies), mountTrust);
     await assertDirectoryIdentity(workspace, "WORKSPACE_INVALID", dependencies);
-    await assertJavaRuntimeIdentity(java21Runtime, dependencies);
-    await assertJavaRuntimeIdentity(java25Runtime, dependencies);
+    await Promise.all(javaRuntimes.map(({ runtime }) => assertJavaRuntimeIdentity(runtime, dependencies)));
     await assertDirectoryIdentity(artifactCache, "PACK_INTEGRITY_FAILED", dependencies);
     for (const directory of directories.trustedDirectories) {
       await assertDirectoryIdentity(
@@ -2398,11 +2503,12 @@ async function runBuild(
   });
 }
 
-export function createNeoForgePhase1BuildRunnerWithDependencies(
+function createFixedPhase1BuildRunnerWithDependencies(
   configValue: unknown,
   dependencies: RunnerDependencies,
-): NeoForgePhase1BuildRunner {
-  const config = normalizeConfig(configValue);
+  policy: FixedRunnerPolicy,
+): NeoForgePhase1BuildRunner | FabricPhase1BuildRunner {
+  const config = normalizeConfig(configValue, policy);
   // Retry provenance is deliberately process-local. A restarted runner cannot prove ownership of an existing
   // build tree and therefore fails closed until a future CLI-level recovery policy supplies durable provenance.
   const priorBuilds = new Map<string, PriorBuildProvenance>();
@@ -2415,9 +2521,31 @@ export function createNeoForgePhase1BuildRunnerWithDependencies(
         candidate.packTreeSha256 === input.plan.pack.treeSha256
         ? candidate
         : undefined;
-      const completed = await runBuild(config, input, dependencies, priorBuild);
+      const completed = await runBuild(config, input, dependencies, priorBuild, policy);
       priorBuilds.set(completed.workspaceRoot, completed.provenance);
       return completed.result;
     },
   });
+}
+
+export function createNeoForgePhase1BuildRunnerWithDependencies(
+  configValue: unknown,
+  dependencies: RunnerDependencies,
+): NeoForgePhase1BuildRunner {
+  return createFixedPhase1BuildRunnerWithDependencies(
+    configValue,
+    dependencies,
+    NEOFORGE_PHASE1_POLICY,
+  );
+}
+
+export function createFabricPhase1BuildRunnerWithDependencies(
+  configValue: unknown,
+  dependencies: RunnerDependencies,
+): FabricPhase1BuildRunner {
+  return createFixedPhase1BuildRunnerWithDependencies(
+    configValue,
+    dependencies,
+    FABRIC_1_20_1_PHASE1_POLICY,
+  );
 }

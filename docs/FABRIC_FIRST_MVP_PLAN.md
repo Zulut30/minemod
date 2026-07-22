@@ -99,10 +99,10 @@ Generic image-to-3D остаётся experimental provider. Надёжный pro
 | Детерминированное codegen core | Реализовано | Переиспользовать без loader imports |
 | Transactional create-only workspace apply | Реализовано | Переиспользовать без изменений semantics |
 | Artifact index и structured logging | Реализовано | Переиспользовать для Fabric build/assets/reports |
-| Fixed secure Gradle runner | Реализован для NeoForge | Выделить общую execution основу, добавить отдельную Fabric policy |
+| Fixed secure Gradle runner | Общая hardened execution основа обслуживает отдельные NeoForge и Fabric 1.20.1 policies | Подключить Fabric runner к application orchestration и добавить hosted evidence |
 | NeoForge 26.1.2 compiler | Реализован и остаётся зелёным | Не конвертировать подменой imports; оставить отдельным backend |
 | Application orchestration, CLI/MCP E2E | Не завершено | Закрыть в первом Fabric vertical slice |
-| Fabric pack/compiler/fixtures | Pack revision 2 и compiler phase 1 генерируют и строго собирают scaffold, items, blocks, creative entries, shapeless/smelting recipes, models, blockstates, loot и localization | Расширить recipe contract для shaped recipes, добавить tags/datagen, runner, GameTests и hosted gates |
+| Fabric pack/compiler/fixtures | Pack revision 2 и compiler phase 1 генерируют и строго собирают scaffold, items, blocks, creative entries, shapeless/smelting recipes, models, blockstates, loot и localization | Расширить recipe contract, добавить tags/datagen, подключить runner к orchestration, GameTests и hosted gates |
 | Production AI asset pipeline | Частично: реализованы bounded model/material/animation contracts, local-space articulated plans с automatic pivot resolution и non-overlapping UV packing, entity/held-item geometry + rig, procedural pixel PNG atlases и детерминированный editable Blockbench 5 export с embedded texture и keyframe clips; concept provider и runtime exporters отсутствуют | Добавить semantic archetype planner, AI texture candidates и проверенный для 1.20.1 runtime export |
 
 Следовательно, сейчас есть качественный control plane и рабочий NeoForge backend, но **инструмент ещё не генерирует Fabric-мод от промпта до JAR и не создаёт production-ассеты**.
@@ -213,7 +213,7 @@ fixtures/fabric-1.20.1-empty/
 
 **Проверка:** adversarial runner tests и build пустого/basic fixture.
 
-**Интеграционный статус на 22 июля 2026:** wire contract принимает именованные policies `fabric-1.20.1-phase0-v1` и `fabric-1.20.1-phase1-v1`; выполнение Fabric policy существующим runner ещё не реализовано.
+**Интеграционный статус на 22 июля 2026:** wire contract и hardened runner исполняют именованную policy `fabric-1.20.1-phase1-v1` только для exact trusted pack revision 2 и Temurin 17.0.19+10. Policy проверяет закрытую конфигурацию, topology/ownership BuildPlan, pack templates, wrapper/distribution hashes, Java identity, mount/file integrity и запускает фиксированный strict `clean build`; source-JAR tasks исключены фиксированно, чтобы release gate принимал ровно один remapped JAR. Позитивный lifecycle и cross-loader rejection покрыты runner tests; подключение factory к application orchestration и hosted evidence ещё не реализованы.
 
 #### F1.3. Минимальный AI texture pipeline
 
