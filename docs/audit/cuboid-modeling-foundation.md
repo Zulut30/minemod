@@ -35,9 +35,12 @@ Articulated materialization evidence:
 
 | Fixture | Bones | Cuboids | UV rectangles | Used atlas | UV utilization | `.bbmodel` SHA-256 |
 |---|---:|---:|---:|---:|---:|---|
-| `articulated-biped.plan.json` | 13 | 12 | 12 | 63×61 of 64×64 | 65.48% | `829a203c7507a3cc35de7e653f333533df724b7676f22b0107e28d1510a3d8c0` |
+| `articulated-biped.plan.json` | 13 | 12 | 12 | 63×61 of 64×64 | 65.48% | `46e99621e21a28833419096e359edf7819dd5fe1fce23af0db52fe6f68a6f498` |
+| `merchant-galleon.plan.json` | 30 | 72 | 72 | 255×255 of 256×256 | 77.82% | `e0e1bda3ba1058cc8f3c7f284228f3dd25a9c0bacb780ec0a5cc0f9ebb523b63` |
 
 Fixture задаёт только local `pivotOffset`/`originOffset`: absolute pivot, cube origin и UV отсутствуют во входе. Pairwise test проверяет отсутствие пересечения всех UV rectangles; reversed bone order даёт те же world pivots. Атлас 16×16 для того же плана fail closed с указанием первого не помещающегося куба.
+
+`Merchant Galleon` используется как stress-test не-гуманоидного объекта: ступенчатый корпус, палуба, нос, корма, руль, бушприт, каюта, пушечные порты, три мачты, реи, паруса, флаги и такелаж собраны в одну редактируемую иерархию. Первоначальный shelf packer не мог разместить UV даже при достаточной суммарной площади. Детерминированный MaxRects-подобный packer размещает все 72 прямоугольника с padding 1; pairwise test подтверждает отсутствие пересечений.
 
 Textured export evidence:
 
@@ -65,6 +68,12 @@ Entity showcase evidence:
 |---|---:|---:|---:|---:|---|---|
 | Fungal Infected v2 | 27 | 60 | 720 | ≥20 | `9968f8e7a4c56d121650a22e98b131964365b29c640f4cca895eab0c092b3863` | `ec80872b28c1276b61593273c5510689e0259a491c36b57295540ccb6aa32cf6` |
 
+Large object showcase evidence:
+
+| Fixture | Bones | Cuboids | Triangles | PNG colors | Opaque pixels | PNG SHA-256 | Textured `.bbmodel` SHA-256 |
+|---|---:|---:|---:|---:|---:|---|---|
+| Merchant Galleon | 30 | 72 | 864 | 42 | 50,998 | `d159697b6102aa62d2ccbde351895a814a790f5d299ce3b1222369578f3bcf3b` | `e0e1bda3ba1058cc8f3c7f284228f3dd25a9c0bacb780ec0a5cc0f9ebb523b63` |
+
 Animation evidence:
 
 | Fixture | Clips | Tracks | Keyframes | Animated `.bbmodel` SHA-256 |
@@ -78,6 +87,8 @@ Animation evidence:
 `Fungal Infected v2` загружен в официальный Blockbench Web: редактор распознал embedded texture 128×128, 60/60 элементов и иерархию из 27 bones; в консоли было 0 ошибок. Иерархия включает pelvis/chest/neck, отдельные forearm/hand, shin/foot, грибные шляпки, щупальца и споровые наросты.
 
 Анимированный `Fungal Infected v2` повторно загружен в Blockbench Web. Вкладка Animate распознала четыре именованных клипа, включая новый двухсекундный `idle`; root timeline содержит все пять ожидаемых position keyframes, `idle` проигран, в консоли было 0 ошибок.
+
+`Merchant Galleon` загружен в официальный Blockbench Web: редактор распознал embedded texture 256×256, все 72/72 элемента и иерархию из 30 bones; в консоли было 0 ошибок. Визуально проверены полный силуэт, три мачты, отдельные ярусы парусов, флаги, бушприт и цветовые слои корпуса.
 
 Fixtures созданы как оригинальные технические примеры по общим визуальным признакам пользовательских референсов. Пиксели, текстуры и геометрия исходных изображений не копировались.
 
@@ -99,7 +110,7 @@ corepack pnpm typecheck
 - генерация AI/concept-aware текстуры; текущий atlas строится только из заданных palette/material/pattern;
 - GeckoLib или другой runtime export для Fabric 1.20.1;
 - переключение клипов из AI/навигации сущности и синхронизация root motion с Minecraft collision/navigation;
-- открытие golden files в GUI Blockbench;
+- автоматическое GUI-тестирование каждого golden file в Blockbench;
 - загрузка/рендер модели в Minecraft client;
 - визуальное соответствие пользовательскому референсу.
 
