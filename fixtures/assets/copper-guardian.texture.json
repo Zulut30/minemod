@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 0,
+  "kind": "cuboid-texture-plan",
+  "modelId": "mcdev:copper_guardian",
+  "materials": [
+    { "id": "copper", "colors": { "base": "#b85f3d", "shadow": "#67352d", "highlight": "#ed9a62", "accent": "#f4c542" } },
+    { "id": "dark_metal", "colors": { "base": "#343331", "shadow": "#1d1c1b", "highlight": "#5b5954", "accent": "#22645b" } },
+    { "id": "brass", "colors": { "base": "#c88b19", "shadow": "#78500e", "highlight": "#f2c94c", "accent": "#fff08a" } },
+    { "id": "glass", "colors": { "base": "#397d78", "shadow": "#183f42", "highlight": "#7cd4c8", "accent": "#e15d3a" } }
+  ],
+  "assignments": [
+    { "cubeId": "body_core", "materialId": "copper", "pattern": "panel", "seed": 1 },
+    { "cubeId": "chest_plate", "materialId": "copper", "pattern": "riveted", "seed": 2 },
+    { "cubeId": "belt", "materialId": "dark_metal", "pattern": "striped", "seed": 3 },
+    { "cubeId": "head_core", "materialId": "copper", "pattern": "panel", "seed": 4 },
+    { "cubeId": "nose", "materialId": "brass", "pattern": "solid", "seed": 5 },
+    { "cubeId": "crest", "materialId": "brass", "pattern": "striped", "seed": 6 },
+    { "cubeId": "left_upper_arm", "materialId": "copper", "pattern": "riveted", "seed": 7 },
+    { "cubeId": "left_pauldron", "materialId": "dark_metal", "pattern": "panel", "seed": 8 },
+    { "cubeId": "left_fist", "materialId": "brass", "pattern": "riveted", "seed": 9 },
+    { "cubeId": "right_upper_arm", "materialId": "copper", "pattern": "riveted", "seed": 7 },
+    { "cubeId": "right_pauldron", "materialId": "dark_metal", "pattern": "panel", "seed": 8 },
+    { "cubeId": "right_fist", "materialId": "brass", "pattern": "riveted", "seed": 9 },
+    { "cubeId": "left_leg_core", "materialId": "copper", "pattern": "panel", "seed": 10 },
+    { "cubeId": "left_foot", "materialId": "dark_metal", "pattern": "solid", "seed": 11 },
+    { "cubeId": "right_leg_core", "materialId": "copper", "pattern": "panel", "seed": 10 },
+    { "cubeId": "right_foot", "materialId": "dark_metal", "pattern": "solid", "seed": 11 },
+    { "cubeId": "backpack_tank", "materialId": "glass", "pattern": "striped", "seed": 12 },
+    { "cubeId": "backpack_exhaust", "materialId": "dark_metal", "pattern": "riveted", "seed": 13 }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 0,
+  "kind": "cuboid-texture-plan",
+  "modelId": "mcdev:clockwork_halberd",
+  "materials": [
+    { "id": "wood", "colors": { "base": "#6f4425", "shadow": "#372116", "highlight": "#a86b35", "accent": "#d39a53" } },
+    { "id": "steel", "colors": { "base": "#87969b", "shadow": "#3e5058", "highlight": "#d5e2df", "accent": "#55d6c2" } },
+    { "id": "gold", "colors": { "base": "#c79524", "shadow": "#765313", "highlight": "#f8dc62", "accent": "#fff2a8" } },
+    { "id": "arcane", "colors": { "base": "#286b91", "shadow": "#183152", "highlight": "#5fe0e6", "accent": "#f04f42" } }
+  ],
+  "assignments": [
+    { "cubeId": "shaft", "materialId": "wood", "pattern": "striped", "seed": 20 },
+    { "cubeId": "grip", "materialId": "wood", "pattern": "panel", "seed": 21 },
+    { "cubeId": "counterweight", "materialId": "gold", "pattern": "riveted", "seed": 22 },
+    { "cubeId": "socket", "materialId": "steel", "pattern": "riveted", "seed": 23 },
+    { "cubeId": "blade", "materialId": "steel", "pattern": "striped", "seed": 24 },
+    { "cubeId": "blade_tip", "materialId": "gold", "pattern": "solid", "seed": 25 },
+    { "cubeId": "clock_disc", "materialId": "arcane", "pattern": "panel", "seed": 26 },
+    { "cubeId": "clock_hub", "materialId": "gold", "pattern": "riveted", "seed": 27 }
+  ]
+}

@@ -3,6 +3,10 @@ import {
   CuboidModelSpecSchema,
   type CuboidModelSpec,
 } from "@mcdev/assets-contracts";
+import {
+  renderCuboidTextureAtlas,
+  type RenderedCuboidTextureAtlas,
+} from "./texture.ts";
 
 export interface BlockbenchModelMetrics {
   readonly bones: number;
@@ -16,6 +20,10 @@ export interface CompiledBlockbenchModel {
   readonly text: string;
   readonly sha256: string;
   readonly metrics: BlockbenchModelMetrics;
+}
+
+export interface CompiledTexturedBlockbenchModel extends CompiledBlockbenchModel {
+  readonly texture: RenderedCuboidTextureAtlas;
 }
 
 type Vector3 = readonly [number, number, number];
@@ -52,7 +60,7 @@ interface BlockbenchOutlinerGroup {
   readonly children: readonly (string | BlockbenchOutlinerGroup)[];
 }
 
-function deterministicUuid(modelId: string, kind: "bone" | "cube", id: string): string {
+function deterministicUuid(modelId: string, kind: "bone" | "cube" | "texture", id: string): string {
   const digest = createHash("sha256")
     .update(`mcdev:blockbench-5\0${modelId}\0${kind}\0${id}`, "utf8")
     .digest("hex")
@@ -188,6 +196,49 @@ export function compileBlockbenchModel(input: unknown): CompiledBlockbenchModel 
     text,
     sha256: createHash("sha256").update(text, "utf8").digest("hex"),
     metrics,
+  });
+}
+
+export function compileTexturedBlockbenchModel(
+  modelInput: unknown,
+  texturePlanInput: unknown,
+): CompiledTexturedBlockbenchModel {
+  const model = parseModel(modelInput);
+  const texture = renderCuboidTextureAtlas(model, texturePlanInput);
+  const compiled = compileBlockbenchModel(model);
+  const document = JSON.parse(compiled.text) as { textures: unknown[] };
+  const separator = model.id.indexOf(":");
+  const namespace = model.id.slice(0, separator);
+  const resourcePath = model.id.slice(separator + 1);
+  const textureName = `${resourcePath.split("/").at(-1) ?? resourcePath}.png`;
+  document.textures = [{
+    name: textureName,
+    folder: "",
+    namespace,
+    id: "0",
+    width: texture.width,
+    height: texture.height,
+    uv_width: texture.width,
+    uv_height: texture.height,
+    particle: false,
+    render_mode: "default",
+    render_sides: "auto",
+    frame_time: 1,
+    frame_order_type: "loop",
+    frame_order: "",
+    frame_interpolate: false,
+    visible: true,
+    internal: true,
+    saved: false,
+    uuid: deterministicUuid(model.id, "texture", textureName),
+    source: texture.dataUrl,
+  }];
+  const text = `${JSON.stringify(document, null, 2)}\n`;
+  return Object.freeze({
+    ...compiled,
+    text,
+    sha256: createHash("sha256").update(text, "utf8").digest("hex"),
+    texture,
   });
 }
 

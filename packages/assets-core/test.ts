@@ -1,7 +1,11 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { compileBlockbenchModel, renderCuboidTextureAtlas } from "./index.ts";
+import {
+  compileBlockbenchModel,
+  compileTexturedBlockbenchModel,
+  renderCuboidTextureAtlas,
+} from "./index.ts";
 
 function fixture(name: string): unknown {
   return JSON.parse(readFileSync(fileURLToPath(new URL(`../../fixtures/assets/${name}`, import.meta.url)), "utf8"));
@@ -75,6 +79,32 @@ assert.equal(compiledGolem.text.includes("/home/"), false);
 const weapon = compileBlockbenchModel(fixture("clockwork-halberd.model.json"));
 assert.deepEqual(weapon.metrics, { bones: 3, cubes: 8, triangles: 96 });
 assert.equal(weapon.sha256, "9231495fe8bb57b3272d2679258b68f6779d7949d9623e3915eab822f64274fd");
+
+const texturedGolem = compileTexturedBlockbenchModel(
+  golem,
+  fixture("copper-guardian.texture.json"),
+);
+const texturedProject = JSON.parse(texturedGolem.text) as {
+  textures: Array<{ name: string; uuid: string; internal: boolean; source: string }>;
+};
+assert.equal(texturedProject.textures.length, 1);
+assert.equal(texturedProject.textures[0]?.name, "copper_guardian.png");
+assert.equal(texturedProject.textures[0]?.internal, true);
+assert.match(texturedProject.textures[0]?.uuid ?? "", /^[0-9a-f]{8}-[0-9a-f]{4}-5[0-9a-f]{3}-8[0-9a-f]{3}-[0-9a-f]{12}$/u);
+assert.equal(texturedProject.textures[0]?.source, texturedGolem.texture.dataUrl);
+assert.equal(texturedGolem.text.includes("/home/"), false);
+assert.equal(texturedGolem.texture.colorCount > 8, true);
+assert.equal(texturedGolem.sha256, "94de00239c5c77512a4ddae2455332473a5a3a67d3526c8d511d1e26c530c5a2");
+assert.equal(texturedGolem.texture.sha256, "f102ca35b799828cc4b0a0300efd8e3308e9f1361afc58ea6876c6335908d828");
+
+const texturedWeapon = compileTexturedBlockbenchModel(
+  fixture("clockwork-halberd.model.json"),
+  fixture("clockwork-halberd.texture.json"),
+);
+assert.equal(texturedWeapon.texture.colorCount > 8, true);
+assert.notEqual(texturedWeapon.texture.sha256, texturedGolem.texture.sha256);
+assert.equal(texturedWeapon.sha256, "2432bc448de494d262b627040f78ad194093f4323b71b602ae7274ca383183fb");
+assert.equal(texturedWeapon.texture.sha256, "4dd514804d2ccccd01691c3700c1abbf8d04b8902e50f01f08e2b589d1801b84");
 
 assert.throws(
   () => compileBlockbenchModel({ ...(golem as object), command: "execute" }),
