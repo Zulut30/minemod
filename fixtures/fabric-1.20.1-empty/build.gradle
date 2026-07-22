@@ -1,0 +1,69 @@
+plugins {
+    id 'fabric-loom' version "${loom_version}"
+}
+
+version = project.mod_version
+group = project.maven_group
+
+def phase0SmokeLog4jConfig =
+    layout.projectDirectory.file('config/phase0-smoke-log4j2.xml')
+
+base {
+    archivesName = 'fabric-1.20.1-empty-fixture'
+}
+
+loom {
+    splitEnvironmentSourceSets()
+
+    runs {
+        client {
+            runDir 'run/client'
+            property 'log4j2.configurationFile', phase0SmokeLog4jConfig.asFile.absolutePath
+        }
+        server {
+            runDir 'run/server'
+            property 'log4j2.configurationFile', phase0SmokeLog4jConfig.asFile.absolutePath
+        }
+    }
+
+    mods {
+        fabriclegacy {
+            sourceSet sourceSets.main
+            sourceSet sourceSets.client
+        }
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+}
+
+processResources {
+    def modVersion = project.version.toString()
+    inputs.property 'version', modVersion
+    filesMatching('fabric.mod.json') {
+        expand version: modVersion
+    }
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+    withSourcesJar()
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 17
+}
+
+tasks.withType(AbstractArchiveTask).configureEach {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}

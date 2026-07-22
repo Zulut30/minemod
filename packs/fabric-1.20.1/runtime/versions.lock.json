@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "tuple": {
+    "minecraft": "1.20.1",
+    "fabricLoader": "0.19.3",
+    "fabricApi": "0.92.11+1.20.1",
+    "fabricLoom": "1.6.12",
+    "gradle": "8.7",
+    "java": "17.0.19+10"
+  },
+  "reference": {
+    "fabricExampleModBranch": "1.20.1",
+    "fabricExampleModCommit": "c2adad18e4f757ee437776b7ced0cc0e871d970a"
+  },
+  "javaToolchains": {
+    "autoDetect": false,
+    "autoDownload": false,
+    "locationEnvironmentVariables": [
+      "MCDEV_JAVA17_HOME"
+    ],
+    "primary": {
+      "distribution": "temurin",
+      "version": "17.0.19+10",
+      "linuxX64ArchiveUrl": "https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.19%2B10/OpenJDK17U-jdk_x64_linux_hotspot_17.0.19_10.tar.gz",
+      "linuxX64ArchiveSha256": "d8afc263758141a66e0e3aafc321e783f7016696f4eaea067d340a269037d331",
+      "sourceCommit": "982d53c227943a511e8d61694feced764b71a6c1",
+      "license": "GPL-2.0-only WITH Classpath-exception-2.0"
+    }
+  },
+  "gradle": {
+    "distributionUrl": "https://services.gradle.org/distributions/gradle-8.7-bin.zip",
+    "distributionSha256": "544c35d6bd849ae8a5ed0bcea39ba677dc40f49df7d1835561582da2009b961d",
+    "wrapperJarUrl": "https://raw.githubusercontent.com/gradle/gradle/v8.7.0/gradle/wrapper/gradle-wrapper.jar",
+    "wrapperJarSourceCommit": "650af14d7653aa949fce5e886e685efc9cf97c10",
+    "wrapperJarSha256": "cb0da6751c2b753a16ac168bb354870ebb1e162e9083f116729cec9c781156b8"
+  },
+  "fabric": {
+    "loom": {
+      "coordinate": "net.fabricmc:fabric-loom:1.6.12",
+      "sourceBranchCommit": "c4d36fac4ea7ccd1ef9526aa138139a154c8f581",
+      "license": "MIT"
+    },
+    "loader": {
+      "coordinate": "net.fabricmc:fabric-loader:0.19.3",
+      "sourceCommit": "35b0b1c0268eb5f9d377322db491b0bb436541a8",
+      "license": "Apache-2.0"
+    },
+    "api": {
+      "coordinate": "net.fabricmc.fabric-api:fabric-api:0.92.11+1.20.1",
+      "sourceCommit": "43c8677721b24b77688d8ad7e2fda2680842ba7f",
+      "license": "Apache-2.0"
+    },
+    "mappings": {
+      "kind": "officialMojangMappings",
+      "redistribution": false
+    }
+  },
+  "verification": {
+    "mode": "strict",
+    "metadata": "templates/gradle/verification-metadata.xml",
+    "components": 263,
+    "artifacts": 555,
+    "complete": true
+  }
+}

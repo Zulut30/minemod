@@ -7,11 +7,14 @@ import {
   isPortableRelativePath,
   type CompatibilityPackManifest,
   type CompatibilityPackManifestV2,
+  type CompatibilityPackManifestV3,
   type CompatibilitySelector,
   type FabricCompatibilitySelectorV2,
+  type FabricCompatibilitySelectorV3,
   type FileMode,
 } from "@mcdev/contracts";
 import {
+  BUILTIN_FABRIC_1_20_1,
   BUILTIN_FABRIC_26_2,
   BUILTIN_NEOFORGE_26_1_2,
   type BuiltinCompatibilityPackRegistration,
@@ -29,6 +32,9 @@ const BUILTIN_NEOFORGE_RUNTIME_PACK_ROOT = fileURLToPath(
 );
 const BUILTIN_FABRIC_RUNTIME_PACK_ROOT = fileURLToPath(
   new URL("../../../packs/fabric-26.2/runtime/", import.meta.url),
+);
+const BUILTIN_FABRIC_1_20_1_RUNTIME_PACK_ROOT = fileURLToPath(
+  new URL("../../../packs/fabric-1.20.1/runtime/", import.meta.url),
 );
 const FILE_READ_CHUNK_BYTES = 65_536;
 const MAX_TREE_ENTRIES = CONTRACT_LIMITS.generatedFiles + 4_096 + 1;
@@ -361,9 +367,9 @@ export async function readCompatibilityPackSnapshotAtRoot(
 }
 
 function builtinRuntimePackRoot(registration: BuiltinCompatibilityPackRegistration): string {
-  return registration === BUILTIN_FABRIC_26_2
-    ? BUILTIN_FABRIC_RUNTIME_PACK_ROOT
-    : BUILTIN_NEOFORGE_RUNTIME_PACK_ROOT;
+  if (registration === BUILTIN_FABRIC_1_20_1) return BUILTIN_FABRIC_1_20_1_RUNTIME_PACK_ROOT;
+  if (registration === BUILTIN_FABRIC_26_2) return BUILTIN_FABRIC_RUNTIME_PACK_ROOT;
+  return BUILTIN_NEOFORGE_RUNTIME_PACK_ROOT;
 }
 
 export async function readBuiltinCompatibilityPackSnapshot(
@@ -381,6 +387,9 @@ export function loadBuiltinCompatibilityPack(
 export function loadBuiltinCompatibilityPack(
   selector: FabricCompatibilitySelectorV2,
 ): Promise<VerifiedCompatibilityPack<CompatibilityPackManifestV2>>;
+export function loadBuiltinCompatibilityPack(
+  selector: FabricCompatibilitySelectorV3,
+): Promise<VerifiedCompatibilityPack<CompatibilityPackManifestV3>>;
 export function loadBuiltinCompatibilityPack(selector: unknown): Promise<VerifiedCompatibilityPack>;
 export async function loadBuiltinCompatibilityPack(
   selector: unknown,

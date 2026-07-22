@@ -6,6 +6,7 @@ import type {
   CompatibilityPackManifestV3,
   CompatibilitySelector,
   CompatibilitySelectorV2,
+  CompatibilitySelectorV3,
 } from "@mcdev/contracts";
 import {
   COMPATIBILITY_PACK_CONTRACT,
@@ -13,6 +14,8 @@ import {
   COMPATIBILITY_PACK_V3_CONTRACT,
 } from "@mcdev/contracts";
 import {
+  BUILTIN_FABRIC_1_20_1,
+  BUILTIN_FABRIC_1_20_1_SELECTOR,
   BUILTIN_FABRIC_26_2,
   BUILTIN_FABRIC_26_2_SELECTOR,
   BUILTIN_NEOFORGE_26_1_2,
@@ -436,6 +439,36 @@ assert.deepEqual(fabricVersions.tuple, {
   gradle: "9.5.1",
   java: "25.0.3+9",
 });
+assert.deepEqual(BUILTIN_FABRIC_1_20_1_SELECTOR, {
+  minecraft: "1.20.1",
+  loader: "fabric",
+  java: 17,
+});
+assert.equal(selectBuiltinCompatibilityPack(BUILTIN_FABRIC_1_20_1_SELECTOR), BUILTIN_FABRIC_1_20_1);
+assert.equal(BUILTIN_FABRIC_1_20_1.trust, "builtin-reviewed");
+assert.equal(BUILTIN_FABRIC_1_20_1.releaseStatus, "candidate");
+const loadedFabricJava17 = await loadBuiltinCompatibilityPack(BUILTIN_FABRIC_1_20_1_SELECTOR);
+assert.deepEqual(loadedFabricJava17.ref, {
+  packId: BUILTIN_FABRIC_1_20_1.packId,
+  revision: BUILTIN_FABRIC_1_20_1.revision,
+  treeSha256: BUILTIN_FABRIC_1_20_1.treeSha256,
+});
+assert.equal(loadedFabricJava17.manifest.contract, COMPATIBILITY_PACK_V3_CONTRACT);
+assert.deepEqual(loadedFabricJava17.manifest.target, {
+  ...BUILTIN_FABRIC_1_20_1_SELECTOR,
+  fabricLoader: "0.19.3",
+});
+const fabricJava17Versions = JSON.parse(
+  new TextDecoder().decode(loadedFabricJava17.readFile("versions.lock.json")),
+) as { tuple?: unknown };
+assert.deepEqual(fabricJava17Versions.tuple, {
+  minecraft: "1.20.1",
+  fabricLoader: "0.19.3",
+  fabricApi: "0.92.11+1.20.1",
+  fabricLoom: "1.6.12",
+  gradle: "8.7",
+  java: "17.0.19+10",
+});
 const fabricSnapshot = await readBuiltinCompatibilityPackSnapshot(BUILTIN_FABRIC_26_2);
 const fabricGradleProperties = fabricSnapshot.find(({ path }) => path === "templates/gradle.properties");
 assert.ok(fabricGradleProperties);
@@ -563,3 +596,5 @@ const typedSelector: CompatibilitySelector = BUILTIN_NEOFORGE_26_1_2_SELECTOR;
 assert.equal(selectBuiltinCompatibilityPack(typedSelector)?.packId, "neoforge-26.1.2-java-25");
 const typedFabricSelector: CompatibilitySelectorV2 = BUILTIN_FABRIC_26_2_SELECTOR;
 assert.equal(selectBuiltinCompatibilityPack(typedFabricSelector)?.packId, "fabric-26.2-java-25");
+const typedFabricJava17Selector: CompatibilitySelectorV3 = BUILTIN_FABRIC_1_20_1_SELECTOR;
+assert.equal(selectBuiltinCompatibilityPack(typedFabricJava17Selector)?.packId, "fabric-1.20.1-java-17");

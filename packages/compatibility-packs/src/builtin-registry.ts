@@ -2,8 +2,12 @@ import { types as utilTypes } from "node:util";
 import type {
   CompatibilityPackTarget,
   CompatibilityPackTargetV2,
+  CompatibilityPackTargetV3,
   CompatibilitySelector,
   CompatibilitySelectorV2,
+  CompatibilitySelectorV3,
+  FabricCompatibilityPackTargetV3,
+  FabricCompatibilitySelectorV3,
   FabricCompatibilityPackTargetV2,
   FabricCompatibilitySelectorV2,
 } from "@mcdev/contracts";
@@ -20,11 +24,19 @@ export const BUILTIN_FABRIC_26_2_SELECTOR: FabricCompatibilitySelectorV2 = Objec
   java: 25,
 });
 
+export const BUILTIN_FABRIC_1_20_1_SELECTOR: FabricCompatibilitySelectorV3 = Object.freeze({
+  minecraft: "1.20.1",
+  loader: "fabric",
+  java: 17,
+});
+
 export interface BuiltinCompatibilityPackRegistration<
-  Selector extends CompatibilitySelector | CompatibilitySelectorV2 = CompatibilitySelector | CompatibilitySelectorV2,
-  Target extends CompatibilityPackTarget | CompatibilityPackTargetV2 = CompatibilityPackTarget | CompatibilityPackTargetV2,
-  PackId extends "fabric-26.2-java-25" | "neoforge-26.1.2-java-25" =
-    "fabric-26.2-java-25" | "neoforge-26.1.2-java-25",
+  Selector extends CompatibilitySelector | CompatibilitySelectorV2 | CompatibilitySelectorV3 =
+    CompatibilitySelector | CompatibilitySelectorV2 | CompatibilitySelectorV3,
+  Target extends CompatibilityPackTarget | CompatibilityPackTargetV2 | CompatibilityPackTargetV3 =
+    CompatibilityPackTarget | CompatibilityPackTargetV2 | CompatibilityPackTargetV3,
+  PackId extends "fabric-1.20.1-java-17" | "fabric-26.2-java-25" | "neoforge-26.1.2-java-25" =
+    "fabric-1.20.1-java-17" | "fabric-26.2-java-25" | "neoforge-26.1.2-java-25",
 > {
   readonly selector: Selector;
   readonly target: Target;
@@ -72,16 +84,38 @@ export const BUILTIN_FABRIC_26_2: BuiltinCompatibilityPackRegistration<
   releaseStatus: "candidate",
 });
 
+export const BUILTIN_FABRIC_1_20_1: BuiltinCompatibilityPackRegistration<
+  FabricCompatibilitySelectorV3,
+  FabricCompatibilityPackTargetV3,
+  "fabric-1.20.1-java-17"
+> = Object.freeze({
+  selector: BUILTIN_FABRIC_1_20_1_SELECTOR,
+  target: Object.freeze({
+    ...BUILTIN_FABRIC_1_20_1_SELECTOR,
+    fabricLoader: "0.19.3",
+  }),
+  packId: "fabric-1.20.1-java-17",
+  revision: 1,
+  treeEntries: 15,
+  treeSha256: "312f9a8d39a5fc50e4889ea42f14ef61fc0d91793319866e4d3e3e36b97f1deb",
+  trust: "builtin-reviewed",
+  releaseStatus: "candidate",
+});
+
 const BUILTIN_PACKS = Object.freeze([
+  BUILTIN_FABRIC_1_20_1,
   BUILTIN_FABRIC_26_2,
   BUILTIN_NEOFORGE_26_1_2,
 ]);
 
 export type RegisteredBuiltinCompatibilityPack =
+  | typeof BUILTIN_FABRIC_1_20_1
   | typeof BUILTIN_FABRIC_26_2
   | typeof BUILTIN_NEOFORGE_26_1_2;
 
-function copyExactSelector(value: unknown): CompatibilitySelector | CompatibilitySelectorV2 | undefined {
+function copyExactSelector(
+  value: unknown,
+): CompatibilitySelector | CompatibilitySelectorV2 | CompatibilitySelectorV3 | undefined {
   if (typeof value !== "object" || value === null || utilTypes.isProxy(value) || Array.isArray(value)) return undefined;
   try {
     if (Object.getPrototypeOf(value) !== Object.prototype) return undefined;
@@ -97,7 +131,8 @@ function copyExactSelector(value: unknown): CompatibilitySelector | Compatibilit
       return undefined;
     }
     if (typeof minecraft.value !== "string" || minecraft.value.length < 1 || minecraft.value.length > 32 ||
-      (loader.value !== "fabric" && loader.value !== "neoforge") || java.value !== 25) return undefined;
+      !((java.value === 25 && (loader.value === "fabric" || loader.value === "neoforge")) ||
+        (java.value === 17 && loader.value === "fabric"))) return undefined;
     return Object.freeze({
       minecraft: minecraft.value,
       loader: loader.value,

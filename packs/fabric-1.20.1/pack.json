@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "fabric-1.20.1",
+  "displayName": "Fabric 1.20.1",
+  "status": "experimental-local-build-pass",
+  "productionTarget": true,
+  "productLicense": "Apache-2.0",
+  "contract": "ModSpec",
+  "runtime": {
+    "minecraft": "1.20.1",
+    "fabricLoader": "0.19.3",
+    "fabricApi": "0.92.11+1.20.1",
+    "fabricLoom": "1.6.12",
+    "java": "17.0.19+10",
+    "gradle": "8.7"
+  },
+  "toolchainPolicy": {
+    "distribution": "temurin",
+    "autoDetect": false,
+    "autoDownload": false,
+    "locationEnvironmentVariables": [
+      "MCDEV_JAVA17_HOME"
+    ],
+    "sourceAndChecksums": "runtime/versions.lock.json"
+  },
+  "capabilities": {
+    "cleanBuild": "local-pass",
+    "dedicatedServerSmoke": "pending",
+    "headlessClientSmoke": "pending",
+    "dependencyVerification": "strict-metadata-generated",
+    "gameTestServer": "pending",
+    "clientGameTest": "pending",
+    "hostedCi": "pending"
+  },
+  "artifacts": {
+    "runtimeManifest": "runtime/manifest.json",
+    "versionLock": "runtime/versions.lock.json",
+    "fixture": "../../fixtures/fabric-1.20.1-empty"
+  },
+  "knownIssues": [
+    "Only the clean build has local evidence; runtime and hosted gates remain pending.",
+    "Full transitive dependency license classification is not complete.",
+    "The Fabric compiler does not consume this pack yet."
+  ]
+}
