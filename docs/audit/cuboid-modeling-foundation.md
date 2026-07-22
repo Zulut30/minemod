@@ -54,21 +54,21 @@ Entity showcase evidence:
 
 | Fixture | Bones | Cuboids | Triangles | PNG colors | PNG SHA-256 | Textured `.bbmodel` SHA-256 |
 |---|---:|---:|---:|---:|---|---|
-| Fungal Infected | 10 | 28 | 336 | ≥16 | `3a5d5c93ab6e58a7b00efa6fd44d03ea777ab1c308b8f54fe3acb92ab1dd7053` | `55a656fc7847977a59509dddc926f41adc682087a8b7b92c754d81a41330e50d` |
+| Fungal Infected v2 | 27 | 60 | 720 | ≥20 | `9968f8e7a4c56d121650a22e98b131964365b29c640f4cca895eab0c092b3863` | `ec80872b28c1276b61593273c5510689e0259a491c36b57295540ccb6aa32cf6` |
 
 Animation evidence:
 
 | Fixture | Clips | Tracks | Keyframes | Animated `.bbmodel` SHA-256 |
 |---|---:|---:|---:|---|
-| Fungal Infected | 3 | 22 | 110 | `b32c26939c8919a8db263592704d67f624b0b4b1608cd974ad7ede5173fea8dc` |
+| Fungal Infected v2 | 4 | 34 | 170 | `6fabbb24e8d020fc36e51b0f040f09a5d215bf108cb40e6b5ae91697e2d069d0` |
 
-Клипы: циклический `walk` (1.0 s), однократный `climb_block` (1.0 s, подъём root на 16 модельных единиц) и однократный `attack` (0.8 s). Для вращений и позиций используются стабильные bone UUID; keyframe UUID детерминированы из model/clip/bone/channel/index.
+Клипы: циклические `idle` (2.0 s) и `walk` (1.0 s), однократные `climb_block` (1.0 s) и `attack` (0.8 s). `idle` использует отдельные pelvis/chest/neck и вторичное движение шляпок, щупалец и споровых наростов. Loop tracks обязаны покрывать полную длину и завершаться исходным значением; non-hold root position также обязан вернуться в начало, поэтому физическое перемещение остаётся ответственностью Minecraft entity. Для вращений и позиций используются стабильные bone UUID; keyframe UUID детерминированы из model/clip/bone/channel/index.
 
 Оба textured `.bbmodel` были загружены 22 июля 2026 года через `Open Model` в официальном Blockbench Web. Редактор распознал embedded texture 128×128, все 17/19 элементов и bone outliner; в консоли было 0 ошибок. Превью получены встроенной командой Blockbench `Screenshot Model`, а не отдельным image generator.
 
-`Fungal Infected` также загружен в официальный Blockbench Web: редактор распознал texture 128×128, 28/28 элементов и иерархию из 10 bones; в консоли было 0 ошибок. Прозрачное превью 338×581 получено той же встроенной командой `Screenshot Model`.
+`Fungal Infected v2` загружен в официальный Blockbench Web: редактор распознал embedded texture 128×128, 60/60 элементов и иерархию из 27 bones; в консоли было 0 ошибок. Иерархия включает pelvis/chest/neck, отдельные forearm/hand, shin/foot, грибные шляпки, щупальца и споровые наросты.
 
-Анимированный `Fungal Infected` повторно загружен в Blockbench Web. Вкладка Animate распознала все три именованных клипа, durations 1.0/1.0/0.8 s и keyframes на timeline; каждый клип проигран, в консоли было 0 ошибок. Встроенная команда `Record GIF` создала по 20 кадров для walk/climb/attack, все кадры внутри каждого GIF имеют разные image signatures.
+Анимированный `Fungal Infected v2` повторно загружен в Blockbench Web. Вкладка Animate распознала четыре именованных клипа, включая новый двухсекундный `idle`; root timeline содержит все пять ожидаемых position keyframes, `idle` проигран, в консоли было 0 ошибок.
 
 Fixtures созданы как оригинальные технические примеры по общим визуальным признакам пользовательских референсов. Пиксели, текстуры и геометрия исходных изображений не копировались.
 
@@ -82,7 +82,7 @@ corepack pnpm --filter @mcdev/assets-core test
 corepack pnpm typecheck
 ```
 
-Покрыты valid entity/item/icon/animation fixtures, deterministic repeat export, golden hashes, counts, bounds, Blockbench metadata, UUID shape, PNG signature, color/opacity metrics, embedded data URL, item model JSON, animation metrics, missing animation bones, mismatched model IDs, duplicate tracks, unordered/out-of-range keyframes, missing/unknown texture assignments, unknown executable-looking fields, invalid resource locations, duplicate IDs, missing/cyclic parents, zero-size cuboids и UV overflow.
+Покрыты valid entity/item/icon/animation fixtures, deterministic repeat export, golden hashes, counts, bounds, articulated-bone presence, Blockbench metadata, UUID shape, PNG signature, color/opacity metrics, embedded data URL, item model JSON, animation metrics, loop continuity, root-position restoration, missing animation bones, mismatched model IDs, duplicate tracks, unordered/out-of-range keyframes, missing/unknown texture assignments, unknown executable-looking fields, invalid resource locations, duplicate IDs, missing/cyclic parents, zero-size cuboids и UV overflow.
 
 ## Не доказано этим срезом
 
