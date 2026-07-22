@@ -420,3 +420,4 @@ export {
   createClockworkStampTexturePlan,
   type MechanismVisualState,
 } from "./mechanism-texture.ts";
+export { createClockworkStampAnimationPlan } from "./mechanism-animation.ts";

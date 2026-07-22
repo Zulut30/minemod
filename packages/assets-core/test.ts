@@ -16,6 +16,7 @@ import {
   createDragonTexturePlan,
   createClockworkStampArchetype,
   createClockworkStampTexturePlan,
+  createClockworkStampAnimationPlan,
   materializeArticulatedModel,
   renderCropStageTexture,
   renderCuboidTextureAtlas,
@@ -101,6 +102,18 @@ assert.deepEqual(compiledClockworkStampActive.metrics, {
   cubes: clockworkStamp.model.bones.flatMap(({ cubes }) => cubes).length,
   triangles: clockworkStamp.model.bones.flatMap(({ cubes }) => cubes).length * 12,
 });
+const clockworkStampAnimation = createClockworkStampAnimationPlan(clockworkStampPlan);
+const animatedClockworkStamp = compileAnimatedTexturedBlockbenchModel(
+  clockworkStamp.model,
+  clockworkStampActiveTexture,
+  clockworkStampAnimation,
+);
+assert.deepEqual(animatedClockworkStamp.animationMetrics, { clips: 1, tracks: 3, keyframes: 16 });
+assert.equal(animatedClockworkStamp.text.includes("animation.mcdev.clockwork_stamp.work_cycle"), true);
+assert.throws(() => createClockworkStampAnimationPlan({
+  ...clockworkStampPlan,
+  bones: clockworkStampPlan.bones.filter(({ id }) => id !== "cam"),
+}), /requires bone cam/u);
 
 const waterRicePlan = fixture("water-rice.crop.json");
 const waterRiceStages = Array.from({ length: 4 }, (_, stage) => ({
