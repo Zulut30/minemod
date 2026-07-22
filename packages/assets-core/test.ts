@@ -138,6 +138,15 @@ assert.deepEqual(JSON.parse(deathScytheIcon.itemModelText), {
 assert.equal(deathScytheIcon.texture.sha256, "149d8fbd69b0421e239f5b44be805ec79bd5af082905367c6e15e7f7863adbd9");
 assert.equal(deathScytheIcon.itemModelSha256, "2f93ae9cacc20023500dfc4f4997e067416b5f6733f7de184a1f220ed64bed45");
 
+const fungalInfected = compileTexturedBlockbenchModel(
+  fixture("fungal-infected.model.json"),
+  fixture("fungal-infected.texture.json"),
+);
+assert.deepEqual(fungalInfected.metrics, { bones: 10, cubes: 28, triangles: 336 });
+assert.equal(fungalInfected.texture.colorCount >= 16, true);
+assert.equal(fungalInfected.sha256, "55a656fc7847977a59509dddc926f41adc682087a8b7b92c754d81a41330e50d");
+assert.equal(fungalInfected.texture.sha256, "3a5d5c93ab6e58a7b00efa6fd44d03ea777ab1c308b8f54fe3acb92ab1dd7053");
+
 assert.throws(
   () => compileBlockbenchModel({ ...(golem as object), command: "execute" }),
   /CuboidModelSpec/u,

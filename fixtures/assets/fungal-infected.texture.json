@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 0,
+  "kind": "cuboid-texture-plan",
+  "modelId": "mcdev:fungal_infected",
+  "materials": [
+    { "id": "infected_skin", "colors": { "base": "#77795d", "shadow": "#3f4739", "highlight": "#a7a47b", "accent": "#596a45" } },
+    { "id": "torn_cloth", "colors": { "base": "#33434b", "shadow": "#18262d", "highlight": "#65747a", "accent": "#7d3b38" } },
+    { "id": "fungus", "colors": { "base": "#bd9f69", "shadow": "#65533b", "highlight": "#ead7a5", "accent": "#a95f43" } },
+    { "id": "wound", "colors": { "base": "#713733", "shadow": "#3b2024", "highlight": "#aa5b4f", "accent": "#d48963" } },
+    { "id": "bone", "colors": { "base": "#bcb493", "shadow": "#68634f", "highlight": "#eee5bd", "accent": "#8c7657" } },
+    { "id": "spore", "colors": { "base": "#62723f", "shadow": "#354127", "highlight": "#a6b664", "accent": "#d2b65d" } }
+  ],
+  "assignments": [
+    { "cubeId": "torso_core", "materialId": "infected_skin", "pattern": "panel", "seed": 70 },
+    { "cubeId": "torn_shirt", "materialId": "torn_cloth", "pattern": "striped", "seed": 71 },
+    { "cubeId": "rib_growth", "materialId": "bone", "pattern": "riveted", "seed": 72 },
+    { "cubeId": "shoulder_growth", "materialId": "fungus", "pattern": "panel", "seed": 73 },
+    { "cubeId": "head_core", "materialId": "infected_skin", "pattern": "riveted", "seed": 74 },
+    { "cubeId": "face_plate", "materialId": "fungus", "pattern": "striped", "seed": 75 },
+    { "cubeId": "neck", "materialId": "wound", "pattern": "panel", "seed": 76 },
+    { "cubeId": "jaw_core", "materialId": "infected_skin", "pattern": "panel", "seed": 77 },
+    { "cubeId": "jaw_teeth", "materialId": "bone", "pattern": "solid", "seed": 78 },
+    { "cubeId": "fungus_crown", "materialId": "fungus", "pattern": "panel", "seed": 79 },
+    { "cubeId": "fungus_cap_left", "materialId": "fungus", "pattern": "striped", "seed": 80 },
+    { "cubeId": "fungus_cap_right", "materialId": "fungus", "pattern": "striped", "seed": 80 },
+    { "cubeId": "fungus_cap_top", "materialId": "spore", "pattern": "riveted", "seed": 81 },
+    { "cubeId": "fungus_tendril_left", "materialId": "wound", "pattern": "striped", "seed": 82 },
+    { "cubeId": "fungus_tendril_right", "materialId": "wound", "pattern": "striped", "seed": 82 },
+    { "cubeId": "left_arm_core", "materialId": "infected_skin", "pattern": "panel", "seed": 83 },
+    { "cubeId": "left_arm_growth", "materialId": "fungus", "pattern": "riveted", "seed": 84 },
+    { "cubeId": "left_hand", "materialId": "infected_skin", "pattern": "riveted", "seed": 85 },
+    { "cubeId": "right_arm_core", "materialId": "infected_skin", "pattern": "panel", "seed": 83 },
+    { "cubeId": "right_arm_wound", "materialId": "wound", "pattern": "striped", "seed": 86 },
+    { "cubeId": "right_hand", "materialId": "infected_skin", "pattern": "riveted", "seed": 85 },
+    { "cubeId": "left_leg_core", "materialId": "torn_cloth", "pattern": "panel", "seed": 87 },
+    { "cubeId": "left_foot", "materialId": "infected_skin", "pattern": "solid", "seed": 88 },
+    { "cubeId": "right_leg_core", "materialId": "torn_cloth", "pattern": "panel", "seed": 87 },
+    { "cubeId": "right_foot", "materialId": "infected_skin", "pattern": "solid", "seed": 88 },
+    { "cubeId": "back_mass", "materialId": "fungus", "pattern": "panel", "seed": 89 },
+    { "cubeId": "back_spore_left", "materialId": "spore", "pattern": "riveted", "seed": 90 },
+    { "cubeId": "back_spore_right", "materialId": "spore", "pattern": "riveted", "seed": 90 }
+  ]
+}
