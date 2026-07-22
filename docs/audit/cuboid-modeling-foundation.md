@@ -12,13 +12,14 @@
 - `CuboidTexturePlan` назначает каждому кубоиду bounded material и один из четырёх pixel patterns: `solid`, `panel`, `riveted` или `striped`.
 - Texture renderer создаёт детерминированный RGBA PNG atlas, требует назначения для каждого кубоида и встраивает PNG в `.bbmodel` как internal data URL без абсолютного пути.
 - `PixelIconPlan` отдельно описывает bounded инвентарную иконку 16×16 или 32×32 из палитры, линий и прямоугольников; compiler создаёт PNG и стандартную item-model ссылку `minecraft:item/handheld`.
+- `CuboidAnimationPlan` описывает bounded position/rotation tracks с проверкой clip length, возрастающего времени keyframes, уникальности bone channels и ограничений координат/углов.
 - UUID выводятся из model resource ID и element ID; timestamps и абсолютные пути в результат не добавляются.
 - Метрики считаются до передачи артефакта дальше: bones, cubes и двенадцать треугольников на каждый cuboid.
 
 Структура `.bbmodel` сверялась с текущей документацией формата и официальным serializer Blockbench:
 
 - https://www.blockbench.net/wiki/docs/bbmodel/
-- https://github.com/JannisX11/blockbench/blob/master/js/formats/bbmodel.js
+- https://github.com/JannisX11/blockbench/blob/master/js/io/formats/bbmodel.js
 
 Blockbench не является runtime dependency и не вендорится в проект.
 
@@ -55,9 +56,19 @@ Entity showcase evidence:
 |---|---:|---:|---:|---:|---|---|
 | Fungal Infected | 10 | 28 | 336 | ≥16 | `3a5d5c93ab6e58a7b00efa6fd44d03ea777ab1c308b8f54fe3acb92ab1dd7053` | `55a656fc7847977a59509dddc926f41adc682087a8b7b92c754d81a41330e50d` |
 
+Animation evidence:
+
+| Fixture | Clips | Tracks | Keyframes | Animated `.bbmodel` SHA-256 |
+|---|---:|---:|---:|---|
+| Fungal Infected | 3 | 22 | 110 | `b32c26939c8919a8db263592704d67f624b0b4b1608cd974ad7ede5173fea8dc` |
+
+Клипы: циклический `walk` (1.0 s), однократный `climb_block` (1.0 s, подъём root на 16 модельных единиц) и однократный `attack` (0.8 s). Для вращений и позиций используются стабильные bone UUID; keyframe UUID детерминированы из model/clip/bone/channel/index.
+
 Оба textured `.bbmodel` были загружены 22 июля 2026 года через `Open Model` в официальном Blockbench Web. Редактор распознал embedded texture 128×128, все 17/19 элементов и bone outliner; в консоли было 0 ошибок. Превью получены встроенной командой Blockbench `Screenshot Model`, а не отдельным image generator.
 
 `Fungal Infected` также загружен в официальный Blockbench Web: редактор распознал texture 128×128, 28/28 элементов и иерархию из 10 bones; в консоли было 0 ошибок. Прозрачное превью 338×581 получено той же встроенной командой `Screenshot Model`.
+
+Анимированный `Fungal Infected` повторно загружен в Blockbench Web. Вкладка Animate распознала все три именованных клипа, durations 1.0/1.0/0.8 s и keyframes на timeline; каждый клип проигран, в консоли было 0 ошибок. Встроенная команда `Record GIF` создала по 20 кадров для walk/climb/attack, все кадры внутри каждого GIF имеют разные image signatures.
 
 Fixtures созданы как оригинальные технические примеры по общим визуальным признакам пользовательских референсов. Пиксели, текстуры и геометрия исходных изображений не копировались.
 
@@ -71,14 +82,14 @@ corepack pnpm --filter @mcdev/assets-core test
 corepack pnpm typecheck
 ```
 
-Покрыты valid entity/item/icon fixtures, deterministic repeat export, golden hashes, counts, bounds, Blockbench metadata, UUID shape, PNG signature, color/opacity metrics, embedded data URL, item model JSON, missing/unknown texture assignments, model ID mismatch, unknown executable-looking fields, invalid resource locations, duplicate IDs, missing/cyclic parents, zero-size cuboids и UV overflow.
+Покрыты valid entity/item/icon/animation fixtures, deterministic repeat export, golden hashes, counts, bounds, Blockbench metadata, UUID shape, PNG signature, color/opacity metrics, embedded data URL, item model JSON, animation metrics, missing animation bones, mismatched model IDs, duplicate tracks, unordered/out-of-range keyframes, missing/unknown texture assignments, unknown executable-looking fields, invalid resource locations, duplicate IDs, missing/cyclic parents, zero-size cuboids и UV overflow.
 
 ## Не доказано этим срезом
 
 - автоматическое построение модели из текста или concept image;
 - генерация AI/concept-aware текстуры; текущий atlas строится только из заданных palette/material/pattern;
-- keyframe animations;
 - GeckoLib или другой runtime export для Fabric 1.20.1;
+- переключение клипов из AI/навигации сущности и синхронизация root motion с Minecraft collision/navigation;
 - открытие golden files в GUI Blockbench;
 - загрузка/рендер модели в Minecraft client;
 - визуальное соответствие пользовательскому референсу.
