@@ -69,6 +69,11 @@ public final class SpruceMerchantShipRenderer
             part(SAIL, 0.0F, 5.23F, 0.78F, 2.80F, 1.05F, 0.14F),
             part(LOG_X, 0.0F, 6.36F, 0.78F, 2.25F, 0.20F, 0.20F),
 
+            // Short mizzen mast over the cargo deck.
+            part(LOG_Y, 0.0F, 1.45F, 2.82F, 0.30F, 3.55F, 0.30F),
+            part(LOG_X, 0.0F, 3.02F, 2.82F, 2.65F, 0.22F, 0.22F),
+            part(SAIL, 0.0F, 3.12F, 2.82F, 2.12F, 1.02F, 0.12F),
+
             // Two visible cargo chests assembled from blocks.
             chestBase(-0.72F, 1.53F, 2.18F),
             chestBand(-0.72F, 1.93F, 2.18F),
