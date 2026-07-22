@@ -6,8 +6,11 @@ import {
   CuboidModelSpecSchema,
   CuboidTexturePlanJsonSchema,
   CuboidTexturePlanSchema,
+  PixelIconPlanJsonSchema,
+  PixelIconPlanSchema,
   type CuboidModelSpec,
   type CuboidTexturePlan,
+  type PixelIconPlan,
 } from "./index.ts";
 
 const bodyCube: CuboidModelSpec["bones"][number]["cubes"][number] = {
@@ -139,3 +142,29 @@ assert.equal(CuboidTexturePlanSchema.safeParse({
   ...validTexturePlan,
   materials: [{ ...validTexturePlan.materials[0]!, colors: { ...validTexturePlan.materials[0]!.colors, base: "red" } }],
 }).success, false, "colors use exact RGB hex notation");
+
+const validIcon: PixelIconPlan = {
+  schemaVersion: 0,
+  kind: "pixel-icon",
+  id: "mcdev:item/death_scythe",
+  size: 32,
+  palette: [
+    { id: "shaft", color: "#241d31" },
+    { id: "edge", color: "#ede4c6" },
+  ],
+  primitives: [
+    { type: "line", from: [7, 28], to: [19, 8], thickness: 3, colorId: "shaft" },
+    { type: "rectangle", origin: [18, 6], size: [10, 2], colorId: "edge" },
+  ],
+};
+assert.equal(PixelIconPlanSchema.safeParse(validIcon).success, true);
+assert.equal(PixelIconPlanJsonSchema.additionalProperties, false);
+assert.equal(PixelIconPlanSchema.safeParse({ ...validIcon, command: "draw" }).success, false);
+assert.equal(PixelIconPlanSchema.safeParse({
+  ...validIcon,
+  primitives: [{ ...validIcon.primitives[0]!, colorId: "missing" }],
+}).success, false, "primitive colors must exist");
+assert.equal(PixelIconPlanSchema.safeParse({
+  ...validIcon,
+  size: 16,
+}).success, false, "primitive coordinates must fit the icon");

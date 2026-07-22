@@ -200,3 +200,63 @@ export const CuboidTexturePlanJsonSchema = Object.freeze({
   $schema: "https://json-schema.org/draft/2020-12/schema",
   $id: CUBOID_TEXTURE_PLAN_SCHEMA_ID,
 });
+
+export const PIXEL_ICON_PLAN_SCHEMA_ID = "https://mcdev.local/schemas/pixel-icon-plan-v0.json";
+export const PIXEL_ICON_LIMITS = Object.freeze({ maxPaletteColors: 16, maxPrimitives: 128 } as const);
+
+const iconCoordinate = z.number().int().min(0).max(31);
+const IconPaletteEntrySchema = z.strictObject({ id: identifier, color: rgbHex });
+const IconPrimitiveSchema = z.discriminatedUnion("type", [
+  z.strictObject({
+    type: z.literal("line"),
+    from: z.tuple([iconCoordinate, iconCoordinate]),
+    to: z.tuple([iconCoordinate, iconCoordinate]),
+    thickness: z.number().int().min(1).max(4),
+    colorId: identifier,
+  }),
+  z.strictObject({
+    type: z.literal("rectangle"),
+    origin: z.tuple([iconCoordinate, iconCoordinate]),
+    size: z.tuple([z.number().int().min(1).max(32), z.number().int().min(1).max(32)]),
+    colorId: identifier,
+  }),
+]);
+
+export const PixelIconPlanSchema = z.strictObject({
+  schemaVersion: z.literal(0),
+  kind: z.literal("pixel-icon"),
+  id: z.string().regex(new RegExp(MODEL_RESOURCE_LOCATION_PATTERN, "u")),
+  size: z.union([z.literal(16), z.literal(32)]),
+  palette: z.array(IconPaletteEntrySchema).min(1).max(PIXEL_ICON_LIMITS.maxPaletteColors),
+  primitives: z.array(IconPrimitiveSchema).min(1).max(PIXEL_ICON_LIMITS.maxPrimitives),
+}).superRefine((plan, context) => {
+  const colorIds = new Set<string>();
+  for (const [index, entry] of plan.palette.entries()) {
+    if (colorIds.has(entry.id)) {
+      context.addIssue({ code: "custom", path: ["palette", index, "id"], message: "Palette ids must be unique." });
+    }
+    colorIds.add(entry.id);
+  }
+  for (const [index, primitive] of plan.primitives.entries()) {
+    if (!colorIds.has(primitive.colorId)) {
+      context.addIssue({ code: "custom", path: ["primitives", index, "colorId"], message: "Primitive color does not exist." });
+    }
+    const points: readonly (readonly [number, number])[] = primitive.type === "line"
+      ? [primitive.from, primitive.to]
+      : [primitive.origin, [
+        primitive.origin[0] + primitive.size[0] - 1,
+        primitive.origin[1] + primitive.size[1] - 1,
+      ]];
+    if (points.some(([x, y]) => x >= plan.size || y >= plan.size)) {
+      context.addIssue({ code: "custom", path: ["primitives", index], message: "Primitive must fit inside the icon." });
+    }
+  }
+});
+
+export type PixelIconPlan = z.infer<typeof PixelIconPlanSchema>;
+
+export const PixelIconPlanJsonSchema = Object.freeze({
+  ...z.toJSONSchema(PixelIconPlanSchema),
+  $schema: "https://json-schema.org/draft/2020-12/schema",
+  $id: PIXEL_ICON_PLAN_SCHEMA_ID,
+});
