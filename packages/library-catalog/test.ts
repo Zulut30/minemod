@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import {
+  FABRIC_1_20_1_ALLOWED_GRADLE_LIBRARY_BLOCKS,
   listFabric1201Libraries,
+  renderFabric1201GradleLibraries,
   resolveFabric1201Libraries,
 } from "./index.ts";
 
@@ -8,7 +10,8 @@ const catalog = listFabric1201Libraries();
 assert.deepEqual(catalog.map(({ id }) => id), ["modmenu", "yet_another_config_lib_v3"]);
 assert.equal(Object.isFrozen(catalog), true);
 assert.equal(Object.isFrozen(catalog[0]), true);
-assert.equal(Object.isFrozen(catalog[0]?.repository), true);
+assert.equal(Object.isFrozen(catalog[0]?.repositories), true);
+assert.equal(Object.isFrozen(catalog[0]?.repositories[0]), true);
 
 const resolved = resolveFabric1201Libraries(
   ["yet_another_config_lib_v3"],
@@ -49,3 +52,11 @@ sparse.length = 1;
 const sparseResult = resolveFabric1201Libraries(sparse, []);
 assert.equal(sparseResult.valid, false);
 if (!sparseResult.valid) assert.equal(sparseResult.diagnostics[0]?.code, "INVALID_LIBRARY_ID");
+
+const gradle = renderFabric1201GradleLibraries(["yet_another_config_lib_v3"], ["modmenu"]);
+assert.match(gradle, /content \{ includeGroup 'org\.quiltmc\.parsers' \}/u);
+assert.match(gradle, /modImplementation "com\.terraformersmc:modmenu:7\.2\.2"/u);
+assert.match(gradle, /modImplementation "dev\.isxander:yet-another-config-lib:3\.5\.0\+1\.20\.1-fabric"/u);
+assert.equal(FABRIC_1_20_1_ALLOWED_GRADLE_LIBRARY_BLOCKS.length, 4);
+assert.equal(new Set(FABRIC_1_20_1_ALLOWED_GRADLE_LIBRARY_BLOCKS).size, 4);
+assert.throws(() => renderFabric1201GradleLibraries(["unknown"], []), TypeError);

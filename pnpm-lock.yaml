@@ -105,6 +105,9 @@ importers:
       '@mcdev/contracts':
         specifier: workspace:*
         version: link:../contracts
+      '@mcdev/library-catalog':
+        specifier: workspace:*
+        version: link:../library-catalog
 
   packages/codegen-core:
     dependencies:
@@ -129,6 +132,9 @@ importers:
       '@mcdev/contracts':
         specifier: workspace:*
         version: link:../contracts
+      '@mcdev/library-catalog':
+        specifier: workspace:*
+        version: link:../library-catalog
       '@mcdev/modspec':
         specifier: workspace:*
         version: link:../modspec

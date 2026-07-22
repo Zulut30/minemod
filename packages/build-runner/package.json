@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@mcdev/compatibility-packs": "workspace:*",
-    "@mcdev/contracts": "workspace:*"
+    "@mcdev/contracts": "workspace:*",
+    "@mcdev/library-catalog": "workspace:*"
   }
 }

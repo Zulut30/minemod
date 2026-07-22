@@ -14,7 +14,7 @@ export interface FabricLibraryCatalogEntry {
   readonly environment: "client" | "both";
   readonly version: string;
   readonly mavenCoordinate: string;
-  readonly repository: FabricLibraryRepository;
+  readonly repositories: readonly FabricLibraryRepository[];
   readonly license: "LGPL-3.0-or-later" | "MIT";
   readonly source: string;
   readonly allowedRelation: FabricLibraryRelation;
@@ -43,11 +43,11 @@ const CATALOG: Readonly<Record<FabricLibraryId, FabricLibraryCatalogEntry>> = Ob
     environment: "client",
     version: "7.2.2",
     mavenCoordinate: "com.terraformersmc:modmenu:7.2.2",
-    repository: Object.freeze({
+    repositories: Object.freeze([Object.freeze({
       name: "Terraformers",
       url: "https://maven.terraformersmc.com/releases/",
       includeGroup: "com.terraformersmc",
-    }),
+    })]),
     license: "MIT",
     source: "https://github.com/TerraformersMC/ModMenu/tree/v7.2.2",
     allowedRelation: "optional",
@@ -58,17 +58,24 @@ const CATALOG: Readonly<Record<FabricLibraryId, FabricLibraryCatalogEntry>> = Ob
     displayName: "YetAnotherConfigLib",
     minecraft: "1.20.1",
     environment: "both",
-    version: "3.6.6+1.20.1-fabric",
-    mavenCoordinate: "dev.isxander:yet-another-config-lib:3.6.6+1.20.1-fabric",
-    repository: Object.freeze({
-      name: "Xander Maven",
-      url: "https://maven.isxander.dev/releases/",
-      includeGroup: "dev.isxander",
-    }),
+    version: "3.5.0+1.20.1-fabric",
+    mavenCoordinate: "dev.isxander:yet-another-config-lib:3.5.0+1.20.1-fabric",
+    repositories: Object.freeze([
+      Object.freeze({
+        name: "Xander Maven",
+        url: "https://maven.isxander.dev/releases/",
+        includeGroup: "dev.isxander",
+      }),
+      Object.freeze({
+        name: "Quilt Releases",
+        url: "https://maven.quiltmc.org/repository/release/",
+        includeGroup: "org.quiltmc.parsers",
+      }),
+    ]),
     license: "LGPL-3.0-or-later",
-    source: "https://github.com/isXander/YetAnotherConfigLib/tree/3.6.6",
+    source: "https://github.com/isXander/YetAnotherConfigLib/tree/3.5.0",
     allowedRelation: "required",
-    manifestVersion: ">=3.6.6+1.20.1-fabric",
+    manifestVersion: ">=3.5.0+1.20.1-fabric",
   }),
 });
 
@@ -158,3 +165,49 @@ export function resolveFabric1201Libraries(
 export function listFabric1201Libraries(): readonly FabricLibraryCatalogEntry[] {
   return Object.freeze(Object.values(CATALOG).map((entry) => entry));
 }
+
+function compareAscii(left: string, right: string): number {
+  if (left < right) return -1;
+  if (left > right) return 1;
+  return 0;
+}
+
+function renderResolvedGradleLibraries(libraries: readonly ResolvedFabricLibrary[]): string {
+  if (libraries.length === 0) return "";
+  const repositories = new Map<string, FabricLibraryRepository>();
+  for (const library of libraries) {
+    for (const repository of library.repositories) {
+      repositories.set(`${repository.url}\0${repository.includeGroup}`, repository);
+    }
+  }
+  const repositoryLines = [...repositories.values()]
+    .sort((left, right) => compareAscii(left.url, right.url))
+    .map((repository) =>
+      `    maven {\n` +
+      `        name = '${repository.name}'\n` +
+      `        url = '${repository.url}'\n` +
+      `        content { includeGroup '${repository.includeGroup}' }\n` +
+      "    }"
+    );
+  const dependencyLines = libraries.map((library) =>
+    `    modImplementation "${library.mavenCoordinate}"`
+  );
+  return `\nrepositories {\n${repositoryLines.join("\n")}\n}\n` +
+    `\ndependencies {\n${dependencyLines.join("\n")}\n}\n`;
+}
+
+export function renderFabric1201GradleLibraries(
+  required: readonly string[],
+  optional: readonly string[],
+): string {
+  const resolution = resolveFabric1201Libraries(required, optional);
+  if (!resolution.valid) throw new TypeError("Fabric library selection is not renderable.");
+  return renderResolvedGradleLibraries(resolution.libraries);
+}
+
+export const FABRIC_1_20_1_ALLOWED_GRADLE_LIBRARY_BLOCKS: readonly string[] = Object.freeze([
+  renderFabric1201GradleLibraries([], []),
+  renderFabric1201GradleLibraries([], ["modmenu"]),
+  renderFabric1201GradleLibraries(["yet_another_config_lib_v3"], []),
+  renderFabric1201GradleLibraries(["yet_another_config_lib_v3"], ["modmenu"]),
+]);

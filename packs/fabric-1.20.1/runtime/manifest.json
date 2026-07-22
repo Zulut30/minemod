@@ -1,7 +1,7 @@
 {
   "contract": "mcdev.compatibility-pack/v3",
   "packId": "fabric-1.20.1-java-17",
-  "revision": 2,
+  "revision": 3,
   "target": {
     "minecraft": "1.20.1",
     "loader": "fabric",
@@ -40,8 +40,8 @@
     {
       "path": "templates/gradle/verification-metadata.xml",
       "mode": 420,
-      "size": 154161,
-      "sha256": "0ea9dda2dd4792acad4c450d1f4ccbe9b18dc574fb83dd64c4f49695558bc683",
+      "size": 178214,
+      "sha256": "f480d0c0f5d7c5c1bd220d7a14e8efdd30e85e71acd2f5cc983b38b170161ccd",
       "role": "template"
     },
     {
@@ -82,8 +82,8 @@
     {
       "path": "versions.lock.json",
       "mode": 420,
-      "size": 2335,
-      "sha256": "bb2718910e85c467eb99cf3ef365f08f98fbf9ad46daf8a272a822ab65b0080a",
+      "size": 3052,
+      "sha256": "a472c68b73bf17e1e782eba89f7105d2eb42be262845bc805b354371b5071d9e",
       "role": "metadata"
     }
   ]

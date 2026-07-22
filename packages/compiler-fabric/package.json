@@ -15,6 +15,7 @@
     "@mcdev/codegen-core": "workspace:*",
     "@mcdev/compatibility-packs": "workspace:*",
     "@mcdev/contracts": "workspace:*",
+    "@mcdev/library-catalog": "workspace:*",
     "@mcdev/modspec": "workspace:*",
     "@mcdev/validation": "workspace:*"
   }

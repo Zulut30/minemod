@@ -41,7 +41,7 @@ export interface BuiltinCompatibilityPackRegistration<
   readonly selector: Selector;
   readonly target: Target;
   readonly packId: PackId;
-  readonly revision: 1 | 2;
+  readonly revision: 1 | 2 | 3;
   readonly treeEntries: 15 | 16;
   readonly treeSha256: string;
   readonly trust: "builtin-reviewed";
@@ -95,9 +95,9 @@ export const BUILTIN_FABRIC_1_20_1: BuiltinCompatibilityPackRegistration<
     fabricLoader: "0.19.3",
   }),
   packId: "fabric-1.20.1-java-17",
-  revision: 2,
+  revision: 3,
   treeEntries: 15,
-  treeSha256: "0d4aa57d34128ba5bad99ef81862ce11d0d82b11133b00feb71774a0fb9b3d9d",
+  treeSha256: "e1a4c9b16670980edfd162301f56e042ff03fcaaad4deaebb288a1828f0bca37",
   trust: "builtin-reviewed",
   releaseStatus: "candidate",
 });

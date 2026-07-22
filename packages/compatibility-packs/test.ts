@@ -477,8 +477,9 @@ assert.deepEqual(
   [
     '<trust group="loom" name="mappings" version="layered+hash.2198" file="mappings-layered+hash.2198.jar" reason="Generated locally by pinned Fabric Loom from checksum-verified mapping inputs; ZIP bytes are nondeterministic"/>',
     '<trust group="^loom_mappings_1_20_1_layered_hash_2198_v2[.]net[.]fabricmc[.]fabric-api$" regex="true" reason="Generated locally by pinned Fabric Loom from checksum-verified Fabric API inputs; remapped ZIP bytes are workspace-dependent"/>',
+    '<trust group="^loom_mappings_1_20_1_layered_hash_2198_v2[.](?:com[.]terraformersmc|dev[.]isxander|net[.]fabricmc)$" name="^(?:modmenu|yet-another-config-lib|fabric-language-kotlin)$" regex="true" reason="Generated locally by pinned Fabric Loom from checksum-verified trusted-library inputs; remapped ZIP bytes are workspace-dependent"/>',
   ],
-  "Fabric 1.20.1 may trust only exact locally generated Loom mapping and remapped Fabric API groups",
+  "Fabric 1.20.1 may trust only exact locally generated mapping and reviewed remapped mod groups",
 );
 assert.equal(
   fabricJava17VerificationMetadata.includes('<trust group="loom"') &&

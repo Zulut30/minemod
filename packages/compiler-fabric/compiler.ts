@@ -23,6 +23,11 @@ import {
   type PlannedOutput,
   type Sha256,
 } from "@mcdev/contracts";
+import {
+  renderFabric1201GradleLibraries,
+  resolveFabric1201Libraries,
+  type ResolvedFabricLibrary,
+} from "@mcdev/library-catalog";
 import type { ModSpecV1 } from "@mcdev/modspec";
 import { FabricCompilerError, fabricCompilerError } from "./errors.ts";
 import type {
@@ -111,6 +116,7 @@ interface NormalizedContent {
   readonly blockParts: ReadonlyMap<string, ResourceLocationParts>;
   readonly recipeParts: ReadonlyMap<string, ResourceLocationParts>;
   readonly blockByItem: ReadonlyMap<string, ModSpecV1["gameplay"]["blocks"][number]>;
+  readonly libraries: readonly ResolvedFabricLibrary[];
 }
 
 function compareAscii(left: string, right: string): number {
@@ -156,8 +162,6 @@ function basicContentPreflight(spec: ModSpecV1): NormalizedContent {
     [spec.assets.models, "/assets/models"],
     [spec.assets.textures, "/assets/textures"],
     [spec.assets.animations, "/assets/animations"],
-    [spec.dependencies.required, "/dependencies/required"],
-    [spec.dependencies.optional, "/dependencies/optional"],
     [spec.tests.gameTests, "/tests/gameTests"],
   ];
   for (const [entries, path] of sections) {
@@ -173,6 +177,16 @@ function basicContentPreflight(spec: ModSpecV1): NormalizedContent {
   }
   if (spec.packaging.includeSources) {
     pushUnsupported(errors, "/packaging/includeSources", "Source packaging is not supported in Fabric phase 1.");
+  }
+
+  const libraryResolution = resolveFabric1201Libraries(
+    spec.dependencies.required,
+    spec.dependencies.optional,
+  );
+  if (!libraryResolution.valid) {
+    for (const entry of libraryResolution.diagnostics) {
+      pushUnsupported(errors, entry.path, entry.message);
+    }
   }
 
   const itemParts = new Map<string, ResourceLocationParts>();
@@ -272,6 +286,7 @@ function basicContentPreflight(spec: ModSpecV1): NormalizedContent {
     blockParts,
     recipeParts,
     blockByItem,
+    libraries: libraryResolution.valid ? libraryResolution.libraries : Object.freeze([]),
   });
 }
 
@@ -322,7 +337,38 @@ function jsonFragment(value: string): string {
   return JSON.stringify(value).slice(1, -1);
 }
 
-function renderTemplate(path: ProjectTemplateSource, bytes: Uint8Array, spec: ModSpecV1): Uint8Array {
+function fabricMetadataWithLibraries(
+  source: string,
+  libraries: readonly ResolvedFabricLibrary[],
+): Uint8Array {
+  if (libraries.length === 0) return utf8FileBytes(source);
+  let metadata: Record<string, unknown>;
+  try {
+    metadata = JSON.parse(source) as Record<string, unknown>;
+  } catch {
+    throw fabricCompilerError("PACK_INTEGRITY_FAILED", "The reviewed Fabric metadata template is invalid.");
+  }
+  const baseDepends = metadata.depends;
+  if (typeof baseDepends !== "object" || baseDepends === null || Array.isArray(baseDepends)) {
+    throw fabricCompilerError("PACK_INTEGRITY_FAILED", "The reviewed Fabric metadata dependency block is invalid.");
+  }
+  const depends: Record<string, unknown> = { ...baseDepends };
+  const suggests: Record<string, string> = {};
+  for (const library of libraries) {
+    if (library.relation === "required") depends[library.id] = library.manifestVersion;
+    else suggests[library.id] = library.manifestVersion;
+  }
+  metadata.depends = depends;
+  if (Object.keys(suggests).length > 0) metadata.suggests = suggests;
+  return canonicalJsonFileBytes(metadata);
+}
+
+function renderTemplate(
+  path: ProjectTemplateSource,
+  bytes: Uint8Array,
+  spec: ModSpecV1,
+  libraries: readonly ResolvedFabricLibrary[],
+): Uint8Array {
   const expectedCounts = TEMPLATE_TOKEN_COUNTS[path];
   if (expectedCounts === undefined) return bytes;
   let source: string;
@@ -358,10 +404,23 @@ function renderTemplate(path: ProjectTemplateSource, bytes: Uint8Array, spec: Mo
   if (source.replace(tokenPattern, "").includes("@@MCDEV_")) {
     throw fabricCompilerError("PACK_INTEGRITY_FAILED", "A reviewed template contains a malformed token.");
   }
-  return utf8FileBytes(source.replace(tokenPattern, (token) => replacements[token as TemplateToken]));
+  const rendered = source.replace(tokenPattern, (token) => replacements[token as TemplateToken]);
+  if (path === "templates/build.gradle.tpl") {
+    const required = libraries.filter(({ relation }) => relation === "required").map(({ id }) => id);
+    const optional = libraries.filter(({ relation }) => relation === "optional").map(({ id }) => id);
+    return utf8FileBytes(`${rendered.trimEnd()}\n${renderFabric1201GradleLibraries(required, optional)}`);
+  }
+  if (path === "templates/fabric.mod.json.tpl") {
+    return fabricMetadataWithLibraries(rendered, libraries);
+  }
+  return utf8FileBytes(rendered);
 }
 
-function projectInputs(spec: ModSpecV1, pack: VerifiedFabricPack): readonly GeneratedFileInput[] {
+function projectInputs(
+  spec: ModSpecV1,
+  pack: VerifiedFabricPack,
+  libraries: readonly ResolvedFabricLibrary[],
+): readonly GeneratedFileInput[] {
   assertExactPack(pack);
   return (Object.keys(PROJECT_TEMPLATE_DESTINATIONS).sort(compareAscii) as ProjectTemplateSource[])
     .map((sourcePath) => {
@@ -373,7 +432,9 @@ function projectInputs(spec: ModSpecV1, pack: VerifiedFabricPack): readonly Gene
       return {
         path: PROJECT_TEMPLATE_DESTINATIONS[sourcePath],
         mode: descriptor.mode,
-        bytes: template ? renderTemplate(sourcePath, packBytes(pack, sourcePath), spec) : packBytes(pack, sourcePath),
+        bytes: template
+          ? renderTemplate(sourcePath, packBytes(pack, sourcePath), spec, libraries)
+          : packBytes(pack, sourcePath),
         origin: template ? "compiler" as const : "pack" as const,
       };
     });
@@ -772,8 +833,12 @@ export function compileVerifiedFabricPhase1(
       blocks: [...content.blocks],
       recipes: [...content.recipes],
     },
+    dependencies: {
+      required: content.libraries.filter(({ relation }) => relation === "required").map(({ id }) => id),
+      optional: content.libraries.filter(({ relation }) => relation === "optional").map(({ id }) => id),
+    },
   };
-  const projectFileInputs = projectInputs(spec, verifiedPack);
+  const projectFileInputs = projectInputs(normalizedSpec, verifiedPack, content.libraries);
   const contentFileInputs = contentInputs(spec, content);
   let files: readonly GeneratedFile[];
   try {

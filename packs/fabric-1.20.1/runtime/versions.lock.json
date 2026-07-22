@@ -55,12 +55,31 @@
       "redistribution": false
     }
   },
+  "libraries": {
+    "modmenu": {
+      "coordinate": "com.terraformersmc:modmenu:7.2.2",
+      "modId": "modmenu",
+      "relation": "optional",
+      "environment": "client",
+      "license": "MIT",
+      "source": "https://github.com/TerraformersMC/ModMenu/tree/v7.2.2"
+    },
+    "yacl": {
+      "coordinate": "dev.isxander:yet-another-config-lib:3.5.0+1.20.1-fabric",
+      "modId": "yet_another_config_lib_v3",
+      "relation": "required-when-selected",
+      "environment": "both",
+      "license": "LGPL-3.0-or-later",
+      "source": "https://github.com/isXander/YetAnotherConfigLib/tree/3.5.0",
+      "compatibilityNote": "3.6.x artifacts require a newer Loom than the reviewed 1.6.12 baseline"
+    }
+  },
   "verification": {
     "mode": "strict",
     "metadata": "templates/gradle/verification-metadata.xml",
-    "components": 265,
-    "artifacts": 562,
-    "trustedArtifactRules": 1,
+    "components": 303,
+    "artifacts": 654,
+    "trustedArtifactRules": 3,
     "trustedWildcardRules": 0,
     "complete": true
   }

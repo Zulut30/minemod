@@ -29,6 +29,7 @@ import {
   loadBuiltinCompatibilityPack,
   type VerifiedCompatibilityPack,
 } from "@mcdev/compatibility-packs";
+import { FABRIC_1_20_1_ALLOWED_GRADLE_LIBRARY_BLOCKS } from "@mcdev/library-catalog";
 import {
   CONTRACT_LIMITS,
   containsControlCharacters,
@@ -1292,7 +1293,7 @@ function escapeRegExp(value: string): string {
   return value.replace(/[.*+?^${}()|[\]\\]/gu, "\\$&");
 }
 
-function buildTemplatePattern(template: string): RegExp {
+function buildTemplatePattern(template: string, policy: FixedRunnerPolicy): RegExp {
   const tokenPattern = /@@MCDEV_(MOD_ID|PROJECT_VERSION)@@/gu;
   let pattern = "^";
   let offset = 0;
@@ -1303,7 +1304,14 @@ function buildTemplatePattern(template: string): RegExp {
     pattern += token === "MOD_ID" ? "([a-z][a-z0-9_]{1,63})" : "([0-9A-Za-z][0-9A-Za-z.+-]{0,63})";
     offset = index + match[0].length;
   }
-  pattern += `${escapeRegExp(template.slice(offset))}$`;
+  pattern += escapeRegExp(template.slice(offset));
+  if (policy.buildPolicy === "fabric-1.20.1-phase1-v1") {
+    const libraryBlocks = FABRIC_1_20_1_ALLOWED_GRADLE_LIBRARY_BLOCKS
+      .filter((block) => block.length > 0)
+      .map(escapeRegExp);
+    pattern += `(?:${libraryBlocks.join("|")})?`;
+  }
+  pattern += "$";
   return new RegExp(pattern, "u");
 }
 
@@ -1347,7 +1355,9 @@ function assertPackBuildInputs(
   }
   const buildTemplate = decodeUtf8(pack.readFile("templates/build.gradle.tpl"));
   const settingsTemplate = decodeUtf8(pack.readFile("templates/settings.gradle.tpl"));
-  const buildMatch = buildTemplatePattern(buildTemplate).exec(decodeUtf8(requireManagedBytes(files, "build.gradle")));
+  const buildMatch = buildTemplatePattern(buildTemplate, policy).exec(
+    decodeUtf8(requireManagedBytes(files, "build.gradle")),
+  );
   const settingsMatch = settingsTemplatePattern(settingsTemplate).exec(
     decodeUtf8(requireManagedBytes(files, "settings.gradle")),
   );

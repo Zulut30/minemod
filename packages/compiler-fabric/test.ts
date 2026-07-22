@@ -192,6 +192,28 @@ assert.equal(
 );
 
 await expectCompilerError(JSON.stringify(validFabricV1Fixture), "SPEC_UNSUPPORTED", "/gameplay/entities");
+const libraries = fabricBasicContentFixture();
+libraries.dependencies.required = ["yet_another_config_lib_v3"];
+libraries.dependencies.optional = ["modmenu"];
+const compiledLibraries = await compileFabricPhase1(JSON.stringify(libraries));
+const libraryBuild = textOutput(compiledLibraries, "build.gradle");
+assert.match(libraryBuild, /https:\/\/maven\.isxander\.dev\/releases\//u);
+assert.match(libraryBuild, /https:\/\/maven\.quiltmc\.org\/repository\/release\//u);
+assert.match(libraryBuild, /https:\/\/maven\.terraformersmc\.com\/releases\//u);
+assert.match(libraryBuild, /com\.terraformersmc:modmenu:7\.2\.2/u);
+assert.match(libraryBuild, /dev\.isxander:yet-another-config-lib:3\.5\.0\+1\.20\.1-fabric/u);
+const libraryMetadata = JSON.parse(textOutput(
+  compiledLibraries,
+  "src/main/resources/fabric.mod.json",
+)) as { depends: Record<string, string>; suggests: Record<string, string> };
+assert.equal(libraryMetadata.depends.yet_another_config_lib_v3, ">=3.5.0+1.20.1-fabric");
+assert.equal(libraryMetadata.suggests.modmenu, "*");
+const unknownLibrary = fabricBasicContentFixture();
+unknownLibrary.dependencies.required = ["unknown_library"];
+await expectCompilerError(JSON.stringify(unknownLibrary), "SPEC_UNSUPPORTED", "/dependencies/required/0");
+const requiredModMenu = fabricBasicContentFixture();
+requiredModMenu.dependencies.required = ["modmenu"];
+await expectCompilerError(JSON.stringify(requiredModMenu), "SPEC_UNSUPPORTED", "/dependencies/required/0");
 const hyphenated = fabricBasicContentFixture();
 hyphenated.project.modId = "infected-frontier";
 await expectCompilerError(JSON.stringify(hyphenated), "SPEC_UNSUPPORTED", "/project/modId");
