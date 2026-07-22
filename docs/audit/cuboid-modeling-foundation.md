@@ -9,6 +9,7 @@
 - `packages/assets-contracts` принимает только закрытый `CuboidModelSpec` версии 0 для `entity` и `held-item`.
 - Контракт ограничивает число костей и кубоидов, координаты, размеры, UV atlas, уникальность IDs и ацикличность иерархии.
 - `packages/assets-core` создаёт byte-deterministic editable Blockbench project с `meta.format_version` 5.0, отдельными `elements`, `groups` и вложенным `outliner`.
+- `ArticulatedModelPlan` позволяет задавать pivot кости и origin куба локально относительно parent; materializer вычисляет world transforms независимо от порядка bones и автоматически упаковывает box UV с заданным padding без overlap.
 - `CuboidTexturePlan` назначает каждому кубоиду bounded material и один из четырёх pixel patterns: `solid`, `panel`, `riveted` или `striped`.
 - Texture renderer создаёт детерминированный RGBA PNG atlas, требует назначения для каждого кубоида и встраивает PNG в `.bbmodel` как internal data URL без абсолютного пути.
 - `PixelIconPlan` отдельно описывает bounded инвентарную иконку 16×16 или 32×32 из палитры, линий и прямоугольников; compiler создаёт PNG и стандартную item-model ссылку `minecraft:item/handheld`.
@@ -29,6 +30,14 @@ Blockbench не является runtime dependency и не вендорится
 |---|---:|---:|---:|---:|---|
 | `copper-guardian.model.json` | entity | 8 | 18 | 216 | `32760315de9f2a21aee4bb417267ae17b069954ced4f88d6f06f63a51d4fe3ab` |
 | `clockwork-halberd.model.json` | held-item | 3 | 8 | 96 | `9231495fe8bb57b3272d2679258b68f6779d7949d9623e3915eab822f64274fd` |
+
+Articulated materialization evidence:
+
+| Fixture | Bones | Cuboids | UV rectangles | Used atlas | UV utilization | `.bbmodel` SHA-256 |
+|---|---:|---:|---:|---:|---:|---|
+| `articulated-biped.plan.json` | 13 | 12 | 12 | 63×61 of 64×64 | 65.48% | `829a203c7507a3cc35de7e653f333533df724b7676f22b0107e28d1510a3d8c0` |
+
+Fixture задаёт только local `pivotOffset`/`originOffset`: absolute pivot, cube origin и UV отсутствуют во входе. Pairwise test проверяет отсутствие пересечения всех UV rectangles; reversed bone order даёт те же world pivots. Атлас 16×16 для того же плана fail closed с указанием первого не помещающегося куба.
 
 Textured export evidence:
 
@@ -82,7 +91,7 @@ corepack pnpm --filter @mcdev/assets-core test
 corepack pnpm typecheck
 ```
 
-Покрыты valid entity/item/icon/animation fixtures, deterministic repeat export, golden hashes, counts, bounds, articulated-bone presence, Blockbench metadata, UUID shape, PNG signature, color/opacity metrics, embedded data URL, item model JSON, animation metrics, loop continuity, root-position restoration, missing animation bones, mismatched model IDs, duplicate tracks, unordered/out-of-range keyframes, missing/unknown texture assignments, unknown executable-looking fields, invalid resource locations, duplicate IDs, missing/cyclic parents, zero-size cuboids и UV overflow.
+Покрыты valid entity/item/icon/animation/articulated fixtures, local-to-world transforms, bone-order independence, deterministic UV packing, pairwise UV non-overlap, atlas overflow, deterministic repeat export, golden hashes, counts, bounds, articulated-bone presence, Blockbench metadata, UUID shape, PNG signature, color/opacity metrics, embedded data URL, item model JSON, animation metrics, loop continuity, root-position restoration, missing animation bones, mismatched model IDs, duplicate tracks, unordered/out-of-range keyframes, missing/unknown texture assignments, unknown executable-looking fields, invalid resource locations, duplicate IDs, missing/cyclic parents, zero-size cuboids и UV overflow.
 
 ## Не доказано этим срезом
 
