@@ -35,6 +35,15 @@ Textured export evidence:
 | Copper Guardian | 16 | 5,628 | `f102ca35b799828cc4b0a0300efd8e3308e9f1361afc58ea6876c6335908d828` | `94de00239c5c77512a4ddae2455332473a5a3a67d3526c8d511d1e26c530c5a2` |
 | Clockwork Halberd | 15 | 1,640 | `4dd514804d2ccccd01691c3700c1abbf8d04b8902e50f01f08e2b589d1801b84` | `2432bc448de494d262b627040f78ad194093f4323b71b602ae7274ca383183fb` |
 
+Showcase weapon evidence:
+
+| Fixture | Bones | Cuboids | PNG colors | PNG SHA-256 | Textured `.bbmodel` SHA-256 |
+|---|---:|---:|---:|---|---|
+| Blue Steel Greatsword | 5 | 17 | 16 | `0e918e938f3dbe25f47eaf053ac17c0904e90d7299a204f540204eca39b0ef9a` | `bf5bd530bfb2578b4cfb12c2401e05ae0f607cbb2f7ca52e606ded264ebe44e3` |
+| Death Scythe | 4 | 19 | 16 | `3ad8236db226dcbba485a7f9e60337bce71e4fc9b8428722017d1f297010f2d3` | `ceb7ae11453aa4ce663d25ae154c4d34536a0eb13a289473de2d2a5332738444` |
+
+Оба textured `.bbmodel` были загружены 22 июля 2026 года через `Open Model` в официальном Blockbench Web. Редактор распознал embedded texture 128×128, все 17/19 элементов и bone outliner; в консоли было 0 ошибок. Превью получены встроенной командой Blockbench `Screenshot Model`, а не отдельным image generator.
+
 Fixtures созданы как оригинальные технические примеры по общим визуальным признакам пользовательских референсов. Пиксели, текстуры и геометрия исходных изображений не копировались.
 
 ## Выполненные проверки
