@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
+import type { CuboidModelSpec } from "@mcdev/assets-contracts";
 import {
   compileBlockbenchModel,
   compileAnimatedTexturedBlockbenchModel,
@@ -12,6 +13,26 @@ import {
 
 function fixture(name: string): unknown {
   return JSON.parse(readFileSync(fileURLToPath(new URL(`../../fixtures/assets/${name}`, import.meta.url)), "utf8"));
+}
+
+function assertNoUvOverlap(model: CuboidModelSpec): void {
+  const rectangles = model.bones.flatMap(({ cubes }) => cubes.map((cube) => ({
+    id: cube.id,
+    left: cube.uv[0],
+    top: cube.uv[1],
+    right: cube.uv[0] + 2 * (cube.size[0] + cube.size[2]),
+    bottom: cube.uv[1] + cube.size[1] + cube.size[2],
+  })));
+  for (const [index, left] of rectangles.entries()) {
+    for (const right of rectangles.slice(index + 1)) {
+      assert.equal(
+        left.right <= right.left || right.right <= left.left ||
+        left.bottom <= right.top || right.bottom <= left.top,
+        true,
+        `${left.id} and ${right.id} UV rectangles overlap`,
+      );
+    }
+  }
 }
 
 const articulatedPlan = fixture("articulated-biped.plan.json");
@@ -33,23 +54,7 @@ assert.deepEqual(
   [5, 13, -2],
 );
 
-const uvRectangles = articulated.model.bones.flatMap(({ cubes }) => cubes.map((cube) => ({
-  id: cube.id,
-  left: cube.uv[0],
-  top: cube.uv[1],
-  right: cube.uv[0] + 2 * (cube.size[0] + cube.size[2]),
-  bottom: cube.uv[1] + cube.size[1] + cube.size[2],
-})));
-for (const [index, left] of uvRectangles.entries()) {
-  for (const right of uvRectangles.slice(index + 1)) {
-    assert.equal(
-      left.right <= right.left || right.right <= left.left ||
-      left.bottom <= right.top || right.bottom <= left.top,
-      true,
-      `${left.id} and ${right.id} UV rectangles overlap`,
-    );
-  }
-}
+assertNoUvOverlap(articulated.model);
 
 const reversedPlan = structuredClone(articulatedPlan) as { bones: unknown[] };
 reversedPlan.bones.reverse();
@@ -64,6 +69,30 @@ assert.throws(
   () => materializeArticulatedModel({ ...(articulatedPlan as object), texture: { width: 16, height: 16 } }),
   /cannot fit cube/u,
 );
+
+const galleon = materializeArticulatedModel(fixture("merchant-galleon.plan.json"));
+assert.deepEqual(galleon.packing, {
+  rectangles: 72,
+  occupiedPixels: 50_998,
+  usedWidth: 255,
+  usedHeight: 255,
+  atlasPixels: 65_536,
+  utilization: 0.778167724609375,
+});
+assert.deepEqual(galleon.model.bones.find(({ id }) => id === "deck")?.pivot, [0, 17, 0]);
+assert.deepEqual(galleon.model.bones.find(({ id }) => id === "main_mast")?.pivot, [0, 18, 7]);
+assert.deepEqual(galleon.model.bones.find(({ id }) => id === "main_flag")?.pivot, [0, 58, 7]);
+assert.deepEqual(galleon.model.bones.find(({ id }) => id === "bowsprit")?.pivot, [0, 19, -24]);
+assertNoUvOverlap(galleon.model);
+const compiledGalleon = compileTexturedBlockbenchModel(
+  galleon.model,
+  fixture("merchant-galleon.texture.json"),
+);
+assert.deepEqual(compiledGalleon.metrics, { bones: 30, cubes: 72, triangles: 864 });
+assert.equal(compiledGalleon.texture.colorCount >= 40, true);
+assert.equal(compiledGalleon.texture.opaquePixels, 50_998);
+assert.equal(compiledGalleon.sha256, "e0e1bda3ba1058cc8f3c7f284228f3dd25a9c0bacb780ec0a5cc0f9ebb523b63");
+assert.equal(compiledGalleon.texture.sha256, "d159697b6102aa62d2ccbde351895a814a790f5d299ce3b1222369578f3bcf3b");
 
 const golem = fixture("copper-guardian.model.json");
 const golemObject = golem as { id: string; bones: Array<{ cubes: Array<{ id: string }> }> };

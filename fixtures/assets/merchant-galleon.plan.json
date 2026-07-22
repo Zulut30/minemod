@@ -11,23 +11,23 @@
     {
       "id": "hull", "parent": "root", "pivotOffset": [0, 6, 0], "rotation": [0, 0, 0],
       "cubes": [
-        { "id": "keel", "originOffset": [-2, -6, -22], "size": [4, 3, 44], "rotation": [0, 0, 0], "inflate": 0, "mirror": false },
-        { "id": "lower_hull", "originOffset": [-6, -3, -20], "size": [12, 5, 40], "rotation": [0, 0, 0], "inflate": 0, "mirror": false },
-        { "id": "waterline_hull", "originOffset": [-8, 1, -19], "size": [16, 3, 38], "rotation": [0, 0, 0], "inflate": 0, "mirror": false },
-        { "id": "upper_hull", "originOffset": [-10, 4, -18], "size": [20, 6, 36], "rotation": [0, 0, 0], "inflate": 0, "mirror": false },
-        { "id": "port_plating", "originOffset": [-11, 1, -18], "size": [2, 9, 36], "rotation": [0, 0, -8], "inflate": 0, "mirror": false },
-        { "id": "starboard_plating", "originOffset": [9, 1, -18], "size": [2, 9, 36], "rotation": [0, 0, 8], "inflate": 0, "mirror": true },
-        { "id": "gold_hull_band", "originOffset": [-10.5, 7, -18.5], "size": [21, 2, 37], "rotation": [0, 0, 0], "inflate": 0, "mirror": false },
-        { "id": "dark_hull_band", "originOffset": [-10.8, 3, -18.2], "size": [22, 1, 37], "rotation": [0, 0, 0], "inflate": 0, "mirror": false }
+        { "id": "keel", "originOffset": [-2, -6, -18], "size": [4, 3, 36], "rotation": [0, 0, 0], "inflate": 0, "mirror": false },
+        { "id": "lower_hull", "originOffset": [-6, -3, -17], "size": [12, 5, 34], "rotation": [0, 0, 0], "inflate": 0, "mirror": false },
+        { "id": "waterline_hull", "originOffset": [-8, 1, -16], "size": [16, 3, 32], "rotation": [0, 0, 0], "inflate": 0, "mirror": false },
+        { "id": "upper_hull", "originOffset": [-10, 4, -15], "size": [20, 6, 30], "rotation": [0, 0, 0], "inflate": 0, "mirror": false },
+        { "id": "port_plating", "originOffset": [-11, 1, -15], "size": [2, 9, 30], "rotation": [0, 0, -8], "inflate": 0, "mirror": false },
+        { "id": "starboard_plating", "originOffset": [9, 1, -15], "size": [2, 9, 30], "rotation": [0, 0, 8], "inflate": 0, "mirror": true },
+        { "id": "gold_hull_band", "originOffset": [-10.5, 7, -15.5], "size": [21, 2, 31], "rotation": [0, 0, 0], "inflate": 0, "mirror": false },
+        { "id": "dark_hull_band", "originOffset": [-10.8, 3, -15.5], "size": [22, 1, 31], "rotation": [0, 0, 0], "inflate": 0, "mirror": false }
       ]
     },
     {
       "id": "deck", "parent": "hull", "pivotOffset": [0, 11, 0], "rotation": [0, 0, 0],
       "cubes": [
-        { "id": "deck_floor", "originOffset": [-10, -1, -18], "size": [20, 2, 36], "rotation": [0, 0, 0], "inflate": 0, "mirror": false },
-        { "id": "deck_center_plank", "originOffset": [-1, 1, -18], "size": [2, 1, 36], "rotation": [0, 0, 0], "inflate": 0, "mirror": false },
-        { "id": "port_gunwale", "originOffset": [-11, 0, -18], "size": [2, 3, 36], "rotation": [0, 0, 0], "inflate": 0, "mirror": false },
-        { "id": "starboard_gunwale", "originOffset": [9, 0, -18], "size": [2, 3, 36], "rotation": [0, 0, 0], "inflate": 0, "mirror": true }
+        { "id": "deck_floor", "originOffset": [-10, -1, -16], "size": [20, 2, 32], "rotation": [0, 0, 0], "inflate": 0, "mirror": false },
+        { "id": "deck_center_plank", "originOffset": [-1, 1, -16], "size": [2, 1, 32], "rotation": [0, 0, 0], "inflate": 0, "mirror": false },
+        { "id": "port_gunwale", "originOffset": [-11, 0, -16], "size": [2, 3, 32], "rotation": [0, 0, 0], "inflate": 0, "mirror": false },
+        { "id": "starboard_gunwale", "originOffset": [9, 0, -16], "size": [2, 3, 32], "rotation": [0, 0, 0], "inflate": 0, "mirror": true }
       ]
     },
     {
@@ -54,6 +54,175 @@
       "cubes": [
         { "id": "rudder_stock", "originOffset": [-1, -5, -1], "size": [2, 8, 2], "rotation": [0, 0, 0], "inflate": 0, "mirror": false },
         { "id": "rudder_blade", "originOffset": [-3, -9, -1], "size": [6, 7, 2], "rotation": [0, 0, 0], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "cannon_ports", "parent": "hull", "pivotOffset": [0, 8, 0], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "port_cannon_1", "originOffset": [-11.5, 0, -14], "size": [1, 3, 4], "rotation": [0, 0, 0], "inflate": 0, "mirror": false },
+        { "id": "port_cannon_2", "originOffset": [-11.5, 0, -6], "size": [1, 3, 4], "rotation": [0, 0, 0], "inflate": 0, "mirror": false },
+        { "id": "port_cannon_3", "originOffset": [-11.5, 0, 2], "size": [1, 3, 4], "rotation": [0, 0, 0], "inflate": 0, "mirror": false },
+        { "id": "port_cannon_4", "originOffset": [-11.5, 0, 10], "size": [1, 3, 4], "rotation": [0, 0, 0], "inflate": 0, "mirror": false },
+        { "id": "starboard_cannon_1", "originOffset": [10.5, 0, -14], "size": [1, 3, 4], "rotation": [0, 0, 0], "inflate": 0, "mirror": true },
+        { "id": "starboard_cannon_2", "originOffset": [10.5, 0, -6], "size": [1, 3, 4], "rotation": [0, 0, 0], "inflate": 0, "mirror": true },
+        { "id": "starboard_cannon_3", "originOffset": [10.5, 0, 2], "size": [1, 3, 4], "rotation": [0, 0, 0], "inflate": 0, "mirror": true },
+        { "id": "starboard_cannon_4", "originOffset": [10.5, 0, 10], "size": [1, 3, 4], "rotation": [0, 0, 0], "inflate": 0, "mirror": true }
+      ]
+    },
+    {
+      "id": "bowsprit", "parent": "bow", "pivotOffset": [0, 6, -6], "rotation": [18, 0, 0],
+      "cubes": [
+        { "id": "bowsprit_beam", "originOffset": [-1, -1, -18], "size": [2, 2, 20], "rotation": [0, 0, 0], "inflate": 0, "mirror": false },
+        { "id": "bowsprit_tip", "originOffset": [-2, -2, -21], "size": [4, 3, 4], "rotation": [0, 0, 0], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "cabin", "parent": "deck", "pivotOffset": [0, 1, 14], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "cabin_body", "originOffset": [-7, 0, -4], "size": [14, 6, 8], "rotation": [0, 0, 0], "inflate": 0, "mirror": false },
+        { "id": "cabin_roof", "originOffset": [-8, 6, -5], "size": [16, 2, 10], "rotation": [0, 0, 0], "inflate": 0, "mirror": false },
+        { "id": "cabin_port_window_1", "originOffset": [-7.5, 2, -3], "size": [1, 3, 2], "rotation": [0, 0, 0], "inflate": 0, "mirror": false },
+        { "id": "cabin_port_window_2", "originOffset": [-7.5, 2, 1], "size": [1, 3, 2], "rotation": [0, 0, 0], "inflate": 0, "mirror": false },
+        { "id": "cabin_starboard_window_1", "originOffset": [6.5, 2, -3], "size": [1, 3, 2], "rotation": [0, 0, 0], "inflate": 0, "mirror": true },
+        { "id": "cabin_starboard_window_2", "originOffset": [6.5, 2, 1], "size": [1, 3, 2], "rotation": [0, 0, 0], "inflate": 0, "mirror": true }
+      ]
+    },
+    {
+      "id": "fore_mast", "parent": "deck", "pivotOffset": [0, 1, -9], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "fore_mast_shaft", "originOffset": [-1, 0, -1], "size": [2, 32, 2], "rotation": [0, 0, 0], "inflate": 0, "mirror": false },
+        { "id": "fore_mast_top", "originOffset": [-2, 31, -2], "size": [4, 3, 4], "rotation": [0, 0, 0], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "fore_lower_yard", "parent": "fore_mast", "pivotOffset": [0, 15, 0], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "fore_lower_yard_beam", "originOffset": [-14, -1, -1], "size": [28, 2, 2], "rotation": [0, 0, 0], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "fore_lower_sail", "parent": "fore_lower_yard", "pivotOffset": [0, -1, 0], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "fore_lower_sail_upper", "originOffset": [-12, -10, -1], "size": [24, 10, 1], "rotation": [3, 0, 0], "inflate": 0, "mirror": false },
+        { "id": "fore_lower_sail_lower", "originOffset": [-10, -17, -1], "size": [20, 7, 1], "rotation": [-4, 0, 0], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "fore_upper_yard", "parent": "fore_mast", "pivotOffset": [0, 26, 0], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "fore_upper_yard_beam", "originOffset": [-10, -1, -1], "size": [20, 2, 2], "rotation": [0, 0, 0], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "fore_upper_sail", "parent": "fore_upper_yard", "pivotOffset": [0, -1, 0], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "fore_upper_sail_cloth", "originOffset": [-8, -9, -1], "size": [16, 9, 1], "rotation": [3, 0, 0], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "fore_flag", "parent": "fore_mast", "pivotOffset": [0, 33, 0], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "fore_flag_pole", "originOffset": [-1, 0, -1], "size": [2, 7, 2], "rotation": [0, 0, 0], "inflate": 0, "mirror": false },
+        { "id": "fore_flag_cloth", "originOffset": [1, 2, -1], "size": [8, 4, 1], "rotation": [0, 0, -5], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "main_mast", "parent": "deck", "pivotOffset": [0, 1, 7], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "main_mast_shaft", "originOffset": [-1, 0, -1], "size": [2, 40, 2], "rotation": [0, 0, 0], "inflate": 0, "mirror": false },
+        { "id": "main_mast_top", "originOffset": [-2, 39, -2], "size": [4, 3, 4], "rotation": [0, 0, 0], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "main_lower_yard", "parent": "main_mast", "pivotOffset": [0, 15, 0], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "main_lower_yard_beam", "originOffset": [-17, -1, -1], "size": [34, 2, 2], "rotation": [0, 0, 0], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "main_lower_sail", "parent": "main_lower_yard", "pivotOffset": [0, -1, 0], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "main_lower_sail_upper", "originOffset": [-15, -10, -1], "size": [30, 10, 1], "rotation": [3, 0, 0], "inflate": 0, "mirror": false },
+        { "id": "main_lower_sail_lower", "originOffset": [-13, -18, -1], "size": [26, 8, 1], "rotation": [-4, 0, 0], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "main_middle_yard", "parent": "main_mast", "pivotOffset": [0, 28, 0], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "main_middle_yard_beam", "originOffset": [-13, -1, -1], "size": [26, 2, 2], "rotation": [0, 0, 0], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "main_middle_sail", "parent": "main_middle_yard", "pivotOffset": [0, -1, 0], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "main_middle_sail_upper", "originOffset": [-11, -9, -1], "size": [22, 9, 1], "rotation": [3, 0, 0], "inflate": 0, "mirror": false },
+        { "id": "main_middle_sail_lower", "originOffset": [-9, -15, -1], "size": [18, 6, 1], "rotation": [-4, 0, 0], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "main_upper_yard", "parent": "main_mast", "pivotOffset": [0, 37, 0], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "main_upper_yard_beam", "originOffset": [-9, -1, -1], "size": [18, 2, 2], "rotation": [0, 0, 0], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "main_upper_sail", "parent": "main_upper_yard", "pivotOffset": [0, -1, 0], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "main_upper_sail_cloth", "originOffset": [-7, -7, -1], "size": [14, 7, 1], "rotation": [3, 0, 0], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "main_flag", "parent": "main_mast", "pivotOffset": [0, 40, 0], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "main_flag_pole", "originOffset": [-1, 0, -1], "size": [2, 7, 2], "rotation": [0, 0, 0], "inflate": 0, "mirror": false },
+        { "id": "main_flag_cloth", "originOffset": [1, 2, -1], "size": [9, 4, 1], "rotation": [0, 0, -5], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "mizzen_mast", "parent": "deck", "pivotOffset": [0, 1, 17], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "mizzen_mast_shaft", "originOffset": [-1, 0, -1], "size": [2, 25, 2], "rotation": [0, 0, 0], "inflate": 0, "mirror": false },
+        { "id": "mizzen_mast_top", "originOffset": [-2, 24, -2], "size": [4, 3, 4], "rotation": [0, 0, 0], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "mizzen_yard", "parent": "mizzen_mast", "pivotOffset": [0, 17, 0], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "mizzen_yard_beam", "originOffset": [-9, -1, -1], "size": [18, 2, 2], "rotation": [0, 0, 0], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "mizzen_sail", "parent": "mizzen_yard", "pivotOffset": [0, -1, 0], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "mizzen_sail_cloth", "originOffset": [-7, -10, -1], "size": [14, 10, 1], "rotation": [4, 0, 0], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "mizzen_flag", "parent": "mizzen_mast", "pivotOffset": [0, 25, 0], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "mizzen_flag_pole", "originOffset": [-1, 0, -1], "size": [2, 6, 2], "rotation": [0, 0, 0], "inflate": 0, "mirror": false },
+        { "id": "mizzen_flag_cloth", "originOffset": [1, 1, -1], "size": [8, 4, 1], "rotation": [0, 0, -5], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "fore_rigging", "parent": "deck", "pivotOffset": [0, 1, -9], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "fore_port_shroud", "originOffset": [-1, 0, 0], "size": [1, 22, 1], "rotation": [0, 0, -23], "inflate": 0, "mirror": false },
+        { "id": "fore_starboard_shroud", "originOffset": [0, 0, 0], "size": [1, 22, 1], "rotation": [0, 0, 23], "inflate": 0, "mirror": true }
+      ]
+    },
+    {
+      "id": "main_rigging", "parent": "deck", "pivotOffset": [0, 1, 7], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "main_port_shroud", "originOffset": [-1, 0, 0], "size": [1, 28, 1], "rotation": [0, 0, -20], "inflate": 0, "mirror": false },
+        { "id": "main_starboard_shroud", "originOffset": [0, 0, 0], "size": [1, 28, 1], "rotation": [0, 0, 20], "inflate": 0, "mirror": true }
+      ]
+    },
+    {
+      "id": "mizzen_rigging", "parent": "deck", "pivotOffset": [0, 1, 17], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "mizzen_port_shroud", "originOffset": [-1, 0, 0], "size": [1, 18, 1], "rotation": [0, 0, -24], "inflate": 0, "mirror": false },
+        { "id": "mizzen_starboard_shroud", "originOffset": [0, 0, 0], "size": [1, 18, 1], "rotation": [0, 0, 24], "inflate": 0, "mirror": true }
       ]
     }
   ]
