@@ -476,14 +476,16 @@ assert.deepEqual(
   [...fabricJava17VerificationMetadata.matchAll(/<trust\b[^>]*\/>/gu)].map(([rule]) => rule),
   [
     '<trust group="loom" name="mappings" version="layered+hash.2198" file="mappings-layered+hash.2198.jar" reason="Generated locally by pinned Fabric Loom from checksum-verified mapping inputs; ZIP bytes are nondeterministic"/>',
+    '<trust group="^loom_mappings_1_20_1_layered_hash_2198_v2[.]net[.]fabricmc[.]fabric-api$" regex="true" reason="Generated locally by pinned Fabric Loom from checksum-verified Fabric API inputs; remapped ZIP bytes are workspace-dependent"/>',
   ],
-  "Fabric 1.20.1 may trust only its exact locally generated Loom mappings JAR",
+  "Fabric 1.20.1 may trust only exact locally generated Loom mapping and remapped Fabric API groups",
 );
 assert.equal(
   fabricJava17VerificationMetadata.includes('<trust group="loom"') &&
-    !fabricJava17VerificationMetadata.includes('<trust group="loom" regex="true"'),
+    !fabricJava17VerificationMetadata.includes('<trust group="loom" regex="true"') &&
+    !fabricJava17VerificationMetadata.includes('<trust group="net.fabricmc'),
   true,
-  "the Loom trust exception must not broaden into a group regex",
+  "Loom trust exceptions must not cover downloaded Fabric or arbitrary Loom groups",
 );
 const fabricSnapshot = await readBuiltinCompatibilityPackSnapshot(BUILTIN_FABRIC_26_2);
 const fabricGradleProperties = fabricSnapshot.find(({ path }) => path === "templates/gradle.properties");

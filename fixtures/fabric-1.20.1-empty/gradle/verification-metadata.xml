@@ -5,6 +5,7 @@
       <verify-signatures>false</verify-signatures>
       <trusted-artifacts>
          <trust group="loom" name="mappings" version="layered+hash.2198" file="mappings-layered+hash.2198.jar" reason="Generated locally by pinned Fabric Loom from checksum-verified mapping inputs; ZIP bytes are nondeterministic"/>
+         <trust group="^loom_mappings_1_20_1_layered_hash_2198_v2[.]net[.]fabricmc[.]fabric-api$" regex="true" reason="Generated locally by pinned Fabric Loom from checksum-verified Fabric API inputs; remapped ZIP bytes are workspace-dependent"/>
       </trusted-artifacts>
    </configuration>
    <components>

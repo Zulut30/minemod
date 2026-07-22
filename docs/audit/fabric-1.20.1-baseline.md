@@ -25,8 +25,8 @@
 - committed wrapper JAR проверен SHA-256 `cb0da6751c2b753a16ac168bb354870ebb1e162e9083f116729cec9c781156b8` до запуска Java;
 - Gradle toolchain auto-detect и auto-download отключены, разрешён только `MCDEV_JAVA17_HOME`;
 - strict verification metadata содержит 265 компонентов, 562 artifact records и 562 SHA-256, без SHA-1/MD5;
-- единственное trust-исключение совпадает одновременно по exact group/name/version/file и разрешает только локально генерируемый Loom layered mappings JAR; group/regex/wildcard trust отсутствует;
-- runtime pack проверяется manifest file hashes, exact tree entry count и tree SHA-256 `c15b31971d2d78c14d4de6b0f507fe74a1b16cb2aa028535f5d2d7125e2c7c3a`;
+- два trust-исключения ограничены локальными производными Loom: exact layered mappings JAR и exact regex группы remapped Fabric API для зафиксированного mapping hash; скачиваемые группы `net.fabricmc*` исключениями не покрываются;
+- runtime pack revision 2 проверяется manifest file hashes, exact tree entry count и tree SHA-256 `0d4aa57d34128ba5bad99ef81862ce11d0d82b11133b00feb71774a0fb9b3d9d`;
 - selector registry принимает только exact tuple Minecraft 1.20.1/Fabric/Java 17.
 
 Полная классификация лицензий transitive компонентов ещё не завершена. Pack остаётся candidate, а release redistribution блокируется. Прямые зависимости и upstream sources записаны в [Fabric 1.20.1 dependency provenance](../provenance/fabric-1.20.1-dependencies.json).
@@ -51,10 +51,10 @@
 - server/client GameTests и screenshots пока существуют только для другого Fabric baseline и должны быть реализованы нативно для 1.20.1;
 - hosted Linux/Windows evidence отсутствует;
 - transitive license inventory не завершён;
-- Fabric compiler ещё не выбирает и не потребляет этот pack;
+- Fabric compiler потребляет этот pack, но runner/application orchestration ещё не завершены;
 - runtime animation dependency для entities ещё не выбрана и не должна считаться GeckoLib 5 по умолчанию.
 
-Следующий gate — F0.2 для exact baseline 1.20.1: GameTests, screenshots и hosted build/client/server jobs. После него начинается Fabric-native compiler для items/blocks.
+Следующий baseline gate — F0.2 для exact 1.20.1: GameTests, screenshots и hosted build/client/server jobs. Fabric-native compiler для items/blocks развивается параллельно поверх revision 2.
 
 ## Официальные источники
 

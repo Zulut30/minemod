@@ -39,7 +39,6 @@
   },
   "knownIssues": [
     "Clean build and client/server smoke checks pass locally; GameTests and hosted gates remain pending.",
-    "Full transitive dependency license classification is not complete.",
-    "The Fabric compiler does not consume this pack yet."
+    "Full transitive dependency license classification is not complete."
   ]
 }
