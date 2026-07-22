@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 0,
+  "kind": "cuboid-model",
+  "id": "mcdev:death_scythe",
+  "name": "Death Scythe",
+  "modelType": "held-item",
+  "texture": { "width": 128, "height": 128 },
+  "bones": [
+    { "id": "root", "parent": null, "pivot": [0, 0, 0], "rotation": [0, 0, -20], "cubes": [] },
+    {
+      "id": "shaft", "parent": "root", "pivot": [0, 18, 0], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "shaft_main", "origin": [-1.5, -20, -1.5], "size": [3, 38, 3], "pivot": [0, 18, 0], "rotation": [0, 0, 0], "uv": [0, 0], "inflate": 0, "mirror": false },
+        { "id": "lower_grip", "origin": [-2.5, -12, -2.5], "size": [5, 8, 5], "pivot": [0, 18, 0], "rotation": [0, 0, 0], "uv": [14, 0], "inflate": 0, "mirror": false },
+        { "id": "upper_grip", "origin": [-2.5, 3, -2.5], "size": [5, 8, 5], "pivot": [0, 18, 0], "rotation": [0, 0, 0], "uv": [14, 0], "inflate": 0, "mirror": false },
+        { "id": "lower_wrap", "origin": [-2.5, -8, -2.5], "size": [5, 1, 5], "pivot": [0, 18, 0], "rotation": [0, 0, 0], "uv": [36, 0], "inflate": 0, "mirror": false },
+        { "id": "upper_wrap", "origin": [-2.5, 7, -2.5], "size": [5, 1, 5], "pivot": [0, 18, 0], "rotation": [0, 0, 0], "uv": [36, 0], "inflate": 0, "mirror": false },
+        { "id": "counterweight", "origin": [-3, -24, -3], "size": [6, 5, 6], "pivot": [0, 18, 0], "rotation": [0, 0, 0], "uv": [58, 0], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "skull", "parent": "shaft", "pivot": [0, 18, 0], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "head_socket", "origin": [-4, 15, -3], "size": [8, 7, 6], "pivot": [0, 18, 0], "rotation": [0, 0, 0], "uv": [0, 44], "inflate": 0, "mirror": false },
+        { "id": "skull_face", "origin": [-3.5, 16, -5], "size": [7, 6, 2], "pivot": [0, 18, 0], "rotation": [0, 0, 0], "uv": [30, 44], "inflate": 0, "mirror": false },
+        { "id": "left_horn", "origin": [-7, 18, -2], "size": [3, 7, 3], "pivot": [-4, 18, 0], "rotation": [0, 0, 25], "uv": [50, 44], "inflate": 0, "mirror": false },
+        { "id": "right_horn", "origin": [4, 18, -2], "size": [3, 7, 3], "pivot": [4, 18, 0], "rotation": [0, 0, -25], "uv": [50, 44], "inflate": 0, "mirror": true }
+      ]
+    },
+    {
+      "id": "blade", "parent": "skull", "pivot": [0, 20, 0], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "blade_root", "origin": [3, 17, -1.5], "size": [8, 5, 3], "pivot": [0, 20, 0], "rotation": [0, 0, 0], "uv": [64, 44], "inflate": 0, "mirror": false },
+        { "id": "blade_mid", "origin": [9, 20, -1], "size": [10, 4, 2], "pivot": [9, 20, 0], "rotation": [0, 0, 8], "uv": [88, 44], "inflate": 0, "mirror": false },
+        { "id": "blade_outer", "origin": [17, 23, -1], "size": [10, 3, 2], "pivot": [17, 23, 0], "rotation": [0, 0, 18], "uv": [0, 60], "inflate": 0, "mirror": false },
+        { "id": "blade_tip", "origin": [25, 27, -1], "size": [8, 2, 2], "pivot": [25, 27, 0], "rotation": [0, 0, 30], "uv": [26, 60], "inflate": 0, "mirror": false },
+        { "id": "blade_edge", "origin": [4, 15, -1.5], "size": [22, 1, 3], "pivot": [4, 16, 0], "rotation": [0, 0, 12], "uv": [48, 60], "inflate": 0, "mirror": false },
+        { "id": "blade_spike_1", "origin": [8, 13, -1], "size": [2, 5, 2], "pivot": [9, 17, 0], "rotation": [0, 0, -20], "uv": [100, 60], "inflate": 0, "mirror": false },
+        { "id": "blade_spike_2", "origin": [15, 16, -1], "size": [2, 5, 2], "pivot": [16, 20, 0], "rotation": [0, 0, -25], "uv": [100, 60], "inflate": 0, "mirror": false },
+        { "id": "blade_spike_3", "origin": [22, 19, -1], "size": [2, 5, 2], "pivot": [23, 23, 0], "rotation": [0, 0, -30], "uv": [100, 60], "inflate": 0, "mirror": false },
+        { "id": "soul_rune", "origin": [-2, 19, -2], "size": [4, 4, 4], "pivot": [0, 20, 0], "rotation": [0, 0, 0], "uv": [0, 70], "inflate": 0, "mirror": false }
+      ]
+    }
+  ]
+}

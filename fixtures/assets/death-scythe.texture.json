@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 0,
+  "kind": "cuboid-texture-plan",
+  "modelId": "mcdev:death_scythe",
+  "materials": [
+    { "id": "obsidian", "colors": { "base": "#241d31", "shadow": "#0d0a14", "highlight": "#514263", "accent": "#782d8d" } },
+    { "id": "dark_steel", "colors": { "base": "#3c424d", "shadow": "#171b23", "highlight": "#8a95a3", "accent": "#b8c7d1" } },
+    { "id": "bone", "colors": { "base": "#b7ad91", "shadow": "#625d50", "highlight": "#ede4c6", "accent": "#544457" } },
+    { "id": "soul", "colors": { "base": "#25736f", "shadow": "#143b46", "highlight": "#67f0d5", "accent": "#b4fff0" } }
+  ],
+  "assignments": [
+    { "cubeId": "shaft_main", "materialId": "obsidian", "pattern": "striped", "seed": 50 },
+    { "cubeId": "lower_grip", "materialId": "dark_steel", "pattern": "panel", "seed": 51 },
+    { "cubeId": "upper_grip", "materialId": "dark_steel", "pattern": "panel", "seed": 51 },
+    { "cubeId": "lower_wrap", "materialId": "bone", "pattern": "solid", "seed": 52 },
+    { "cubeId": "upper_wrap", "materialId": "bone", "pattern": "solid", "seed": 52 },
+    { "cubeId": "counterweight", "materialId": "obsidian", "pattern": "riveted", "seed": 53 },
+    { "cubeId": "head_socket", "materialId": "obsidian", "pattern": "panel", "seed": 54 },
+    { "cubeId": "skull_face", "materialId": "bone", "pattern": "riveted", "seed": 55 },
+    { "cubeId": "left_horn", "materialId": "bone", "pattern": "striped", "seed": 56 },
+    { "cubeId": "right_horn", "materialId": "bone", "pattern": "striped", "seed": 56 },
+    { "cubeId": "blade_root", "materialId": "dark_steel", "pattern": "riveted", "seed": 57 },
+    { "cubeId": "blade_mid", "materialId": "dark_steel", "pattern": "panel", "seed": 58 },
+    { "cubeId": "blade_outer", "materialId": "dark_steel", "pattern": "striped", "seed": 59 },
+    { "cubeId": "blade_tip", "materialId": "bone", "pattern": "solid", "seed": 60 },
+    { "cubeId": "blade_edge", "materialId": "bone", "pattern": "solid", "seed": 61 },
+    { "cubeId": "blade_spike_1", "materialId": "obsidian", "pattern": "solid", "seed": 62 },
+    { "cubeId": "blade_spike_2", "materialId": "obsidian", "pattern": "solid", "seed": 62 },
+    { "cubeId": "blade_spike_3", "materialId": "obsidian", "pattern": "solid", "seed": 62 },
+    { "cubeId": "soul_rune", "materialId": "soul", "pattern": "riveted", "seed": 63 }
+  ]
+}

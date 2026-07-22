@@ -115,6 +115,16 @@ assert.equal(blueSteelSword.texture.colorCount >= 12, true);
 assert.equal(blueSteelSword.sha256, "bf5bd530bfb2578b4cfb12c2401e05ae0f607cbb2f7ca52e606ded264ebe44e3");
 assert.equal(blueSteelSword.texture.sha256, "0e918e938f3dbe25f47eaf053ac17c0904e90d7299a204f540204eca39b0ef9a");
 
+const deathScythe = compileTexturedBlockbenchModel(
+  fixture("death-scythe.model.json"),
+  fixture("death-scythe.texture.json"),
+);
+assert.deepEqual(deathScythe.metrics, { bones: 4, cubes: 19, triangles: 228 });
+assert.equal(deathScythe.texture.colorCount >= 12, true);
+assert.notEqual(deathScythe.sha256, blueSteelSword.sha256);
+assert.equal(deathScythe.sha256, "ceb7ae11453aa4ce663d25ae154c4d34536a0eb13a289473de2d2a5332738444");
+assert.equal(deathScythe.texture.sha256, "3ad8236db226dcbba485a7f9e60337bce71e4fc9b8428722017d1f297010f2d3");
+
 assert.throws(
   () => compileBlockbenchModel({ ...(golem as object), command: "execute" }),
   /CuboidModelSpec/u,
