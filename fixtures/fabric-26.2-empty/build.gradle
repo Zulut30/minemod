@@ -5,12 +5,26 @@ plugins {
 version = project.mod_version
 group = project.maven_group
 
+def phase0SmokeLog4jConfig =
+    layout.projectDirectory.file('config/phase0-smoke-log4j2.xml')
+
 base {
     archivesName = 'fabric-26.2-empty-fixture'
 }
 
 loom {
     splitEnvironmentSourceSets()
+
+    runs {
+        client {
+            runDir 'run/client'
+            property 'log4j2.configurationFile', phase0SmokeLog4jConfig.asFile.absolutePath
+        }
+        server {
+            runDir 'run/server'
+            property 'log4j2.configurationFile', phase0SmokeLog4jConfig.asFile.absolutePath
+        }
+    }
 
     mods {
         fabricempty {

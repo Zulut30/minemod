@@ -71,6 +71,18 @@ cleanup_temporary_dir() {
 }
 trap cleanup_temporary_dir EXIT
 
+invalid_target_output="$temporary_dir/invalid-smoke-target.out"
+if PHASE0_SMOKE_TARGET=unreviewed-loader PHASE0_SMOKE_TIMEOUT_SECONDS=10 \
+  "$script_dir/smoke-dedicated-server.sh" >"$invalid_target_output" 2>&1; then
+  echo 'Dedicated-server smoke accepted an unreviewed target.' >&2
+  exit 1
+fi
+if ! grep -Fq 'Unsupported Phase 0 smoke target: unreviewed-loader' \
+  "$invalid_target_output"; then
+  echo 'Dedicated-server smoke did not report its rejected target.' >&2
+  exit 1
+fi
+
 python3 - "$smoke_log4j_config" <<'PY'
 import sys
 import xml.etree.ElementTree as ET
@@ -614,6 +626,14 @@ if smoke_client_ready "$client_log" "$client_sentinel" "$client_nonce"; then
 fi
 printf '%s\n' "$client_nonce" >"$client_sentinel"
 smoke_client_ready "$client_log" "$client_sentinel" "$client_nonce"
+cat >"$client_log" <<'LOG'
+FABRIC_EMPTY_FIXTURE_LOADED
+Backend library: LWJGL version test
+Using graphics backend OpenGL, using drivers: test
+Using graphics device: test
+LOG
+smoke_client_ready "$client_log" "$client_sentinel" "$client_nonce" \
+  FABRIC_EMPTY_FIXTURE_LOADED fabric
 printf '%s' "$client_nonce" >"$client_sentinel"
 if smoke_client_ready "$client_log" "$client_sentinel" "$client_nonce"; then
   echo 'Client readiness accepted a sentinel without its exact trailing newline.' >&2

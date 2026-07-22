@@ -1130,15 +1130,30 @@ smoke_client_ready() {
   local log_file=$1
   local readiness_sentinel=$2
   local expected_nonce=$3
+  local required_init_marker=${4:-BASIC_CONTENT_FIXTURE_LOADED}
+  local readiness_profile=${5:-full}
 
   smoke_validate_capped_log_file "$log_file" || return
   smoke_sentinel_matches "$readiness_sentinel" "$expected_nonce" || return 1
+  [[ "$required_init_marker" =~ ^[A-Z0-9_]{1,64}$ ]] || return 64
 
-  grep -Fq 'BASIC_CONTENT_FIXTURE_LOADED' "$log_file" \
-    && grep -Eq 'Backend library: LWJGL' "$log_file" \
-    && grep -Eq 'OpenAL initialized' "$log_file" \
-    && grep -Eq 'Sound engine started' "$log_file" \
-    && grep -Eq 'Created: [0-9]+x[0-9]+x[0-9]+ .*atlas' "$log_file"
+  grep -Fq "$required_init_marker" "$log_file" || return 1
+  grep -Eq 'Backend library: LWJGL' "$log_file" || return 1
+  case "$readiness_profile" in
+    full)
+      grep -Eq 'OpenAL initialized' "$log_file" \
+        && grep -Eq 'Sound engine started' "$log_file" \
+        && grep -Eq 'Created: [0-9]+x[0-9]+x[0-9]+ .*atlas' "$log_file"
+      ;;
+    fabric)
+      grep -Eq 'Using graphics backend' "$log_file" \
+        && grep -Eq 'Using graphics device:' "$log_file"
+      ;;
+    *)
+      echo "Unsupported smoke client readiness profile: $readiness_profile" >&2
+      return 64
+      ;;
+  esac
 }
 
 smoke_client_fatal() {

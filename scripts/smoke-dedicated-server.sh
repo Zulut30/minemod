@@ -15,8 +15,23 @@ smoke_enter_overall_timeout "$timeout_seconds" "$0"
 unset PHASE0_SMOKE_TIMEOUT_SECONDS
 
 repo_root=$(cd -- "$script_dir/.." && pwd -P)
-fixture="$repo_root/fixtures/basic-content"
-readiness_nonce="phase0-server-${BASHPID}-${RANDOM}-${RANDOM}-${SECONDS}"
+smoke_target=${PHASE0_SMOKE_TARGET:-neoforge}
+unset PHASE0_SMOKE_TARGET
+case "$smoke_target" in
+  neoforge)
+    fixture="$repo_root/fixtures/basic-content"
+    server_motd='Phase 0 NeoForge smoke test'
+    ;;
+  fabric)
+    fixture="$repo_root/fixtures/fabric-26.2-empty"
+    server_motd='Phase 0 Fabric smoke test'
+    ;;
+  *)
+    echo "Unsupported Phase 0 smoke target: $smoke_target" >&2
+    exit 64
+    ;;
+esac
+readiness_nonce="phase0-${smoke_target}-server-${BASHPID}-${RANDOM}-${RANDOM}-${SECONDS}"
 lifecycle_marker=PHASE0_SMOKE_SERVER_NONCE
 shutdown_timeout_seconds=30
 max_log_bytes=$((8 * 1024 * 1024))
@@ -73,11 +88,11 @@ smoke_clear_runtime_diagnostics "$run_dir"
 smoke_remove_prepared_entry "$readiness_sentinel" regular
 smoke_remove_prepared_entry "$readiness_sentinel_temp" regular
 printf 'eula=true\n' | smoke_write_prepared_file "$run_dir/eula.txt"
-smoke_write_prepared_file "$run_dir/server.properties" <<'PROPERTIES'
+smoke_write_prepared_file "$run_dir/server.properties" <<PROPERTIES
 enable-query=false
 enable-rcon=false
 max-players=1
-motd=Phase 0 NeoForge smoke test
+motd=$server_motd
 online-mode=false
 server-ip=127.0.0.1
 server-port=0

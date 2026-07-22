@@ -20,8 +20,25 @@ if ! command -v xvfb-run >/dev/null 2>&1; then
 fi
 
 repo_root=$(cd -- "$script_dir/.." && pwd -P)
-fixture="$repo_root/fixtures/basic-content"
-readiness_nonce="phase0-client-${BASHPID}-${RANDOM}-${RANDOM}-${SECONDS}"
+smoke_target=${PHASE0_SMOKE_TARGET:-neoforge}
+unset PHASE0_SMOKE_TARGET
+case "$smoke_target" in
+  neoforge)
+    fixture="$repo_root/fixtures/basic-content"
+    required_init_marker=BASIC_CONTENT_FIXTURE_LOADED
+    readiness_profile=full
+    ;;
+  fabric)
+    fixture="$repo_root/fixtures/fabric-26.2-empty"
+    required_init_marker=FABRIC_EMPTY_FIXTURE_LOADED
+    readiness_profile=fabric
+    ;;
+  *)
+    echo "Unsupported Phase 0 smoke target: $smoke_target" >&2
+    exit 64
+    ;;
+esac
+readiness_nonce="phase0-${smoke_target}-client-${BASHPID}-${RANDOM}-${RANDOM}-${SECONDS}"
 lifecycle_marker=PHASE0_SMOKE_CLIENT_NONCE
 max_log_bytes=$((8 * 1024 * 1024))
 poll_interval_seconds=0.25
@@ -115,7 +132,8 @@ while ((SECONDS < deadline)); do
     exit 1
   fi
 
-  if smoke_client_ready "$console_log" "$readiness_sentinel" "$readiness_nonce"; then
+  if smoke_client_ready "$console_log" "$readiness_sentinel" "$readiness_nonce" \
+    "$required_init_marker" "$readiness_profile"; then
     ((ready_observations += 1))
     if ((ready_observations >= required_ready_observations)); then
       if ! smoke_terminate_owned_run "$runner_pid" "$lifecycle_marker" \
