@@ -1,12 +1,15 @@
 import assert from "node:assert/strict";
 import { z } from "zod";
-import { validArtFixture, validModFixture } from "../../fixtures/specs/validation.ts";
+import { validArtFixture, validFabricV1Fixture, validModFixture } from "../../fixtures/specs/validation.ts";
 import {
+  AnyModSpecSchema,
   ArtSpecJsonSchema,
   ArtSpecSchema,
   BMP_ONLY_STRING_PATTERN,
   ModSpecJsonSchema,
   ModSpecSchema,
+  ModSpecV1JsonSchema,
+  ModSpecV1Schema,
   RESOURCE_LOCATION_PATTERN,
   SAFE_ASSET_PATH_PATTERN,
 } from "./index.ts";
@@ -31,9 +34,23 @@ assert.equal(artProperties.style?.additionalProperties, false);
 assert.equal(ModSpecSchema.safeParse({ schemaVersion: 0, kind: "mod", extra: true }).success, false);
 assert.equal(ArtSpecSchema.safeParse({ schemaVersion: 0, kind: "art", extra: true }).success, false);
 assert.equal(ModSpecSchema.safeParse(validModFixture).success, true);
+assert.equal(ModSpecV1Schema.safeParse(validFabricV1Fixture).success, true);
+assert.equal(AnyModSpecSchema.safeParse(validModFixture).success, true);
+assert.equal(AnyModSpecSchema.safeParse(validFabricV1Fixture).success, true);
 assert.equal(ArtSpecSchema.safeParse(validArtFixture).success, true);
 assert.equal(modProperties.schemaVersion?.const, 0);
+assert.equal(ModSpecV1JsonSchema.additionalProperties, false);
+assert.equal((ModSpecV1JsonSchema.properties as Record<string, Record<string, unknown>>).schemaVersion?.const, 1);
 assert.equal(artProperties.schemaVersion?.const, 0);
+
+const invalidStateMachine = structuredClone(validFabricV1Fixture);
+invalidStateMachine.gameplay.entities[0]!.behavior.stateMachine.states = [];
+assert.equal(ModSpecV1Schema.safeParse(invalidStateMachine).success, false);
+const unsafeAction = structuredClone(validFabricV1Fixture) as unknown as {
+  gameplay: { screens: Array<{ actions: Array<{ validation: { requireOpenMenu: boolean } }> }> };
+};
+unsafeAction.gameplay.screens[0]!.actions[0]!.validation.requireOpenMenu = false;
+assert.equal(ModSpecV1Schema.safeParse(unsafeAction).success, false);
 
 const resourceLocationPattern = new RegExp(RESOURCE_LOCATION_PATTERN);
 assert.equal(resourceLocationPattern.test("tidecaller:a/b.c"), true);

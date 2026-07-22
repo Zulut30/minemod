@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const MODSPEC_SCHEMA_ID = "https://mcdev.local/schemas/modspec-v0.json";
+export const MODSPEC_V1_SCHEMA_ID = "https://mcdev.local/schemas/modspec-v1.json";
 export const ARTSPEC_SCHEMA_ID = "https://mcdev.local/schemas/artspec-v0.json";
 export const SPEC_COLLECTION_LIMITS = Object.freeze({
   projectProvenance: 16,
@@ -10,6 +11,17 @@ export const SPEC_COLLECTION_LIMITS = Object.freeze({
   gameplayRecipes: 64,
   gameplaySummoning: 32,
   gameplayScreens: 32,
+  gameplayStructures: 32,
+  behaviorGoals: 32,
+  behaviorTargets: 16,
+  behaviorStates: 32,
+  behaviorTransitions: 64,
+  entityDataFields: 32,
+  structurePieces: 64,
+  structureSpawnOverrides: 16,
+  screenSlots: 64,
+  screenFields: 32,
+  screenActions: 32,
   resourceReferences: 16,
   assetModels: 64,
   assetTextures: 64,
@@ -136,6 +148,136 @@ const ScreenSchema = z.strictObject({
   serverValidation: z.boolean(),
 });
 
+const LocalId = z.string().min(1).max(64).regex(/^[a-z][a-z0-9_]*$/);
+
+export const BehaviorSpecSchema = z.strictObject({
+  goals: z.array(z.strictObject({
+    id: LocalId,
+    type: z.enum([
+      "swim", "wander", "look_at_player", "look_around", "melee_attack", "ranged_attack",
+      "flee", "follow_owner", "return_to_home", "custom",
+    ]),
+    priority: z.number().int().min(0).max(31),
+    speed: z.number().min(0).max(16).optional(),
+    range: z.number().min(0).max(128).optional(),
+    cooldownTicks: z.number().int().min(0).max(72_000).optional(),
+  })).max(SPEC_COLLECTION_LIMITS.behaviorGoals),
+  targets: z.array(z.strictObject({
+    id: LocalId,
+    type: z.enum(["player", "entity_type", "entity_tag", "attacker", "owner_target"]),
+    priority: z.number().int().min(0).max(31),
+    target: ResourceLocation.optional(),
+    range: z.number().positive().max(128),
+    requireLineOfSight: z.boolean(),
+  })).max(SPEC_COLLECTION_LIMITS.behaviorTargets),
+  stateMachine: z.strictObject({
+    initial: LocalId,
+    states: z.array(z.strictObject({
+      id: LocalId,
+      animation: ResourceLocation.optional(),
+      invulnerable: z.boolean(),
+      movementMultiplier: z.number().min(0).max(16),
+    })).min(1).max(SPEC_COLLECTION_LIMITS.behaviorStates),
+    transitions: z.array(z.strictObject({
+      from: LocalId,
+      to: LocalId,
+      trigger: z.enum([
+        "target_acquired", "target_lost", "in_melee_range", "outside_melee_range", "hurt",
+        "cooldown_ready", "animation_complete", "health_below", "custom",
+      ]),
+      threshold: z.number().min(0).max(1).optional(),
+    })).max(SPEC_COLLECTION_LIMITS.behaviorTransitions),
+  }),
+});
+
+export const SpawnSpecSchema = z.strictObject({
+  mode: z.enum(["none", "natural", "structure", "summoned"]),
+  group: z.enum(["monster", "creature", "ambient", "water_creature", "misc"]),
+  biomes: z.array(ResourceLocation).max(SPEC_COLLECTION_LIMITS.resourceReferences),
+  weight: z.number().int().min(0).max(10_000),
+  minGroupSize: z.number().int().min(1).max(64),
+  maxGroupSize: z.number().int().min(1).max(64),
+  placement: z.enum(["on_ground", "in_water", "no_restrictions"]),
+  heightmap: z.enum(["motion_blocking", "motion_blocking_no_leaves", "ocean_floor"]),
+  minLight: z.number().int().min(0).max(15),
+  maxLight: z.number().int().min(0).max(15),
+  maxNearby: z.number().int().min(1).max(128),
+});
+
+const EntityDataFieldSchema = z.strictObject({
+  id: LocalId,
+  type: z.enum(["boolean", "int", "float", "string", "uuid", "resource_location"]),
+});
+
+export const EntityV1Schema = EntitySchema.extend({
+  animation: ResourceLocation.optional(),
+  behavior: BehaviorSpecSchema,
+  spawn: SpawnSpecSchema,
+  persistence: z.strictObject({
+    fields: z.array(EntityDataFieldSchema).max(SPEC_COLLECTION_LIMITS.entityDataFields),
+  }),
+  syncedState: z.strictObject({
+    fields: z.array(EntityDataFieldSchema).max(SPEC_COLLECTION_LIMITS.entityDataFields),
+  }),
+});
+
+export const StructureSpecSchema = z.strictObject({
+  id: ResourceLocation,
+  references: ReferencesSchema,
+  startPool: ResourceLocation,
+  biomeTag: ResourceLocation,
+  step: z.enum(["surface_structures", "underground_structures", "strongholds"]),
+  terrainAdaptation: z.enum(["none", "beard_thin", "beard_box", "bury", "encapsulate"]),
+  size: z.number().int().min(0).max(20),
+  placement: z.strictObject({
+    spacing: z.number().int().min(1).max(4_096),
+    separation: z.number().int().min(0).max(4_095),
+    salt: z.number().int().min(0).max(2_147_483_647),
+  }),
+  pieces: z.array(z.strictObject({
+    id: LocalId,
+    asset: ResourceLocation,
+    weight: z.number().int().min(1).max(1_000),
+    processors: z.array(ResourceLocation).max(SPEC_COLLECTION_LIMITS.resourceReferences),
+  })).min(1).max(SPEC_COLLECTION_LIMITS.structurePieces),
+  spawnOverrides: z.array(z.strictObject({
+    entity: ResourceLocation,
+    weight: z.number().int().min(1).max(10_000),
+    minCount: z.number().int().min(1).max(64),
+    maxCount: z.number().int().min(1).max(64),
+  })).max(SPEC_COLLECTION_LIMITS.structureSpawnOverrides),
+});
+
+export const ScreenV1Schema = z.strictObject({
+  id: ResourceLocation,
+  references: ReferencesSchema,
+  menuId: ResourceLocation,
+  type: z.enum(["inventory", "machine", "configuration"]),
+  slots: z.array(z.strictObject({
+    id: LocalId,
+    inventory: z.enum(["player", "block_entity"]),
+    index: z.number().int().min(0).max(255),
+    x: z.number().int().min(-4_096).max(4_096),
+    y: z.number().int().min(-4_096).max(4_096),
+    role: z.enum(["input", "output", "fuel", "energy", "storage"]),
+  })).max(SPEC_COLLECTION_LIMITS.screenSlots),
+  syncedFields: z.array(z.strictObject({
+    id: LocalId,
+    type: z.enum(["boolean", "int", "long", "float"]),
+  })).max(SPEC_COLLECTION_LIMITS.screenFields),
+  actions: z.array(z.strictObject({
+    id: LocalId,
+    payload: z.enum(["none", "boolean", "bounded_int"]),
+    validation: z.strictObject({
+      requireOpenMenu: z.literal(true),
+      requireSameDimension: z.literal(true),
+      maxDistance: z.number().positive().max(16),
+      minimum: z.number().int().optional(),
+      maximum: z.number().int().optional(),
+    }),
+  })).max(SPEC_COLLECTION_LIMITS.screenActions),
+});
+
 const JeiIntegrationSchema = z.union([
   z.enum(["off", "auto"]),
   z.strictObject({ mode: z.literal("required"), pluginId: ResourceLocation }),
@@ -200,6 +342,19 @@ export const ModSpecSchema = z.strictObject({
     publish: z.literal(false),
   }),
 });
+
+const ModSpecV1GameplaySchema = ModSpecSchema.shape.gameplay.extend({
+  entities: z.array(EntityV1Schema).max(SPEC_COLLECTION_LIMITS.gameplayEntities),
+  structures: z.array(StructureSpecSchema).max(SPEC_COLLECTION_LIMITS.gameplayStructures),
+  screens: z.array(ScreenV1Schema).max(SPEC_COLLECTION_LIMITS.gameplayScreens),
+});
+
+export const ModSpecV1Schema = ModSpecSchema.extend({
+  schemaVersion: z.literal(1),
+  gameplay: ModSpecV1GameplaySchema,
+});
+
+export const AnyModSpecSchema = z.discriminatedUnion("schemaVersion", [ModSpecSchema, ModSpecV1Schema]);
 
 export const ArtSpecSchema = z.strictObject({
   schemaVersion: z.literal(0),
@@ -337,8 +492,10 @@ export const ArtSpecSchema = z.strictObject({
 });
 
 export type ModSpec = z.infer<typeof ModSpecSchema>;
+export type ModSpecV1 = z.infer<typeof ModSpecV1Schema>;
+export type AnyModSpec = z.infer<typeof AnyModSpecSchema>;
 export type ArtSpec = z.infer<typeof ArtSpecSchema>;
-export type Spec = ModSpec | ArtSpec;
+export type Spec = AnyModSpec | ArtSpec;
 
 function jsonSchema(schema: z.ZodType, id: string): Readonly<Record<string, unknown>> {
   return Object.freeze({
@@ -349,4 +506,5 @@ function jsonSchema(schema: z.ZodType, id: string): Readonly<Record<string, unkn
 }
 
 export const ModSpecJsonSchema = jsonSchema(ModSpecSchema, MODSPEC_SCHEMA_ID);
+export const ModSpecV1JsonSchema = jsonSchema(ModSpecV1Schema, MODSPEC_V1_SCHEMA_ID);
 export const ArtSpecJsonSchema = jsonSchema(ArtSpecSchema, ARTSPEC_SCHEMA_ID);

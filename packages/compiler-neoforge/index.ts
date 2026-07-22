@@ -27,7 +27,12 @@ export async function compileNeoForgePhase1(payload: string): Promise<CompiledNe
     "mod",
     { profile: "neoforge-26.1.2-java-25" },
   );
-  if (!validation.valid || validation.kind !== "mod" || validation.value?.kind !== "mod") {
+  if (
+    !validation.valid
+    || validation.kind !== "mod"
+    || validation.value?.kind !== "mod"
+    || validation.value.schemaVersion !== 0
+  ) {
     const errors = validation.diagnostics.map((diagnostic) => boundedMcdevError(
       "SPEC_INVALID",
       diagnostic.message,
@@ -36,7 +41,11 @@ export async function compileNeoForgePhase1(payload: string): Promise<CompiledNe
     throw new CompilerError(
       "SPEC_INVALID",
       errors.length === 0
-        ? [boundedMcdevError("SPEC_INVALID", "The ModSpec is invalid for the Phase-1 NeoForge target.")]
+        ? [boundedMcdevError(
+          "SPEC_INVALID",
+          "The Phase-1 NeoForge compiler requires a schemaVersion 0 ModSpec.",
+          "/schemaVersion",
+        )]
         : errors,
     );
   }

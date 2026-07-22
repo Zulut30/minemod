@@ -1,7 +1,7 @@
 import { isProxy } from "node:util/types";
 import {
+  AnyModSpecSchema,
   ArtSpecSchema,
-  ModSpecSchema,
   SPEC_COLLECTION_LIMITS,
   type Spec,
 } from "@mcdev/modspec";
@@ -21,7 +21,10 @@ export const MAX_SPEC_KEY_CHARS = 256;
 export const MAX_SPEC_TOTAL_KEY_CHARS = 131_072;
 
 export type SpecKind = "auto" | "mod" | "art";
-export const VALIDATION_PROFILE_IDS = ["neoforge-26.1.2-java-25"] as const;
+export const VALIDATION_PROFILE_IDS = [
+  "fabric-1.20.1-java-17",
+  "neoforge-26.1.2-java-25",
+] as const;
 export type ValidationProfile = typeof VALIDATION_PROFILE_IDS[number];
 export interface ValidationOptions {
   readonly profile?: ValidationProfile;
@@ -172,6 +175,8 @@ function knownArrayItemLimit(path: readonly PropertyKey[]): number | undefined {
       return SPEC_COLLECTION_LIMITS.gameplaySummoning;
     case "/gameplay/screens":
       return SPEC_COLLECTION_LIMITS.gameplayScreens;
+    case "/gameplay/structures":
+      return SPEC_COLLECTION_LIMITS.gameplayStructures;
     case "/assets/models":
       return SPEC_COLLECTION_LIMITS.assetModels;
     case "/assets/textures":
@@ -207,9 +212,19 @@ function knownArrayItemLimit(path: readonly PropertyKey[]): number | undefined {
     case "/provenancePolicy/allowedSourceKinds":
       return SPEC_COLLECTION_LIMITS.allowedSourceKinds;
     default:
-      if (/^\/gameplay\/(?:items|blocks|entities|recipes|summoning|screens)\/\d+\/(?:references|ingredients)$/u.test(location)) {
+      if (/^\/gameplay\/(?:items|blocks|entities|recipes|summoning|screens|structures)\/\d+\/(?:references|ingredients)$/u.test(location)) {
         return SPEC_COLLECTION_LIMITS.resourceReferences;
       }
+      if (/^\/gameplay\/entities\/\d+\/behavior\/goals$/u.test(location)) return SPEC_COLLECTION_LIMITS.behaviorGoals;
+      if (/^\/gameplay\/entities\/\d+\/behavior\/targets$/u.test(location)) return SPEC_COLLECTION_LIMITS.behaviorTargets;
+      if (/^\/gameplay\/entities\/\d+\/behavior\/stateMachine\/states$/u.test(location)) return SPEC_COLLECTION_LIMITS.behaviorStates;
+      if (/^\/gameplay\/entities\/\d+\/behavior\/stateMachine\/transitions$/u.test(location)) return SPEC_COLLECTION_LIMITS.behaviorTransitions;
+      if (/^\/gameplay\/entities\/\d+\/(?:persistence|syncedState)\/fields$/u.test(location)) return SPEC_COLLECTION_LIMITS.entityDataFields;
+      if (/^\/gameplay\/structures\/\d+\/pieces$/u.test(location)) return SPEC_COLLECTION_LIMITS.structurePieces;
+      if (/^\/gameplay\/structures\/\d+\/spawnOverrides$/u.test(location)) return SPEC_COLLECTION_LIMITS.structureSpawnOverrides;
+      if (/^\/gameplay\/screens\/\d+\/slots$/u.test(location)) return SPEC_COLLECTION_LIMITS.screenSlots;
+      if (/^\/gameplay\/screens\/\d+\/syncedFields$/u.test(location)) return SPEC_COLLECTION_LIMITS.screenFields;
+      if (/^\/gameplay\/screens\/\d+\/actions$/u.test(location)) return SPEC_COLLECTION_LIMITS.screenActions;
       if (/^\/tests\/gameTests\/\d+\/references$/u.test(location)) {
         return SPEC_COLLECTION_LIMITS.resourceReferences;
       }
@@ -542,13 +557,17 @@ function validateTarget(
     : value.kind === "art" && Array.isArray(value.targetMatrix)
       ? value.targetMatrix.filter(isObject)
       : [];
+  const expected = profile === "fabric-1.20.1-java-17"
+    ? { minecraft: "1.20.1", loader: "fabric", java: 17 }
+    : { minecraft: "26.1.2", loader: "neoforge", java: 25 };
+  const loaderName = expected.loader === "fabric" ? "Fabric" : "NeoForge";
   const matches = targets.some((target) =>
-    target.minecraft === "26.1.2" && target.loader === "neoforge" && target.java === 25);
+    target.minecraft === expected.minecraft && target.loader === expected.loader && target.java === expected.java);
   if (!matches) {
     push(diagnostics, {
       code: "INCOMPATIBLE_TARGET",
       path: value.kind === "art" ? "/targetMatrix" : "/target",
-      message: `Validation profile ${profile} requires Minecraft 26.1.2, NeoForge, and Java 25.`,
+      message: `Validation profile ${profile} requires Minecraft ${expected.minecraft}, ${loaderName}, and Java ${expected.java}.`,
     });
   }
 }
@@ -575,7 +594,7 @@ function collectUniqueIds(
   return seen;
 }
 
-const GAMEPLAY_SECTIONS = ["items", "blocks", "entities", "recipes", "summoning", "screens"] as const;
+const GAMEPLAY_SECTIONS = ["items", "blocks", "entities", "recipes", "summoning", "structures", "screens"] as const;
 
 function collectGameplayIds(value: JsonObject, diagnostics: Diagnostic[]): Set<string> {
   const result = new Set<string>();
@@ -791,6 +810,7 @@ function validateResourceGraph(value: JsonObject, diagnostics: Diagnostic[]): vo
   const entityIds = idsFromEntries(value.gameplay.entities);
   const itemOrBlockIds = new Set([...itemIds, ...blockIds]);
   const modelIds = isObject(value.assets) ? idsFromEntries(value.assets.models) : new Set<string>();
+  const animationIds = isObject(value.assets) ? idsFromEntries(value.assets.animations) : new Set<string>();
   for (const section of GAMEPLAY_SECTIONS) {
     const entries = value.gameplay[section];
     if (!Array.isArray(entries)) continue;
@@ -803,6 +823,62 @@ function validateResourceGraph(value: JsonObject, diagnostics: Diagnostic[]): vo
         validateKnownReference(entry.item, `${basePath}/item`, itemIds, diagnostics);
       } else if (section === "entities") {
         validateKnownReference(entry.renderer, `${basePath}/renderer`, modelIds, diagnostics);
+        if (typeof entry.animation === "string") {
+          validateKnownReference(entry.animation, `${basePath}/animation`, animationIds, diagnostics);
+        }
+        if (isObject(entry.behavior) && isObject(entry.behavior.stateMachine)) {
+          const machine = entry.behavior.stateMachine;
+          const stateIds = new Set<string>();
+          if (Array.isArray(machine.states)) {
+            machine.states.forEach((state, stateIndex) => {
+              if (!isObject(state)) return;
+              if (typeof state.id === "string") {
+                if (stateIds.has(state.id)) push(diagnostics, {
+                  code: "SEMANTIC_INVALID",
+                  path: `${basePath}/behavior/stateMachine/states/${stateIndex}/id`,
+                  message: `Duplicate behavior state: ${state.id}`,
+                });
+                stateIds.add(state.id);
+              }
+              if (typeof state.animation === "string") validateKnownReference(
+                state.animation,
+                `${basePath}/behavior/stateMachine/states/${stateIndex}/animation`,
+                animationIds,
+                diagnostics,
+              );
+            });
+          }
+          validateKnownReference(machine.initial, `${basePath}/behavior/stateMachine/initial`, stateIds, diagnostics);
+          if (Array.isArray(machine.transitions)) machine.transitions.forEach((transition, transitionIndex) => {
+            if (!isObject(transition)) return;
+            validateKnownReference(
+              transition.from,
+              `${basePath}/behavior/stateMachine/transitions/${transitionIndex}/from`,
+              stateIds,
+              diagnostics,
+            );
+            validateKnownReference(
+              transition.to,
+              `${basePath}/behavior/stateMachine/transitions/${transitionIndex}/to`,
+              stateIds,
+              diagnostics,
+            );
+          });
+        }
+        if (isObject(entry.spawn)) {
+          if (typeof entry.spawn.minGroupSize === "number" && typeof entry.spawn.maxGroupSize === "number" &&
+            entry.spawn.minGroupSize > entry.spawn.maxGroupSize) push(diagnostics, {
+            code: "SEMANTIC_INVALID",
+            path: `${basePath}/spawn/maxGroupSize`,
+            message: "Spawn maxGroupSize must be greater than or equal to minGroupSize.",
+          });
+          if (typeof entry.spawn.minLight === "number" && typeof entry.spawn.maxLight === "number" &&
+            entry.spawn.minLight > entry.spawn.maxLight) push(diagnostics, {
+            code: "SEMANTIC_INVALID",
+            path: `${basePath}/spawn/maxLight`,
+            message: "Spawn maxLight must be greater than or equal to minLight.",
+          });
+        }
       } else if (section === "recipes") {
         validateReferenceList(entry.ingredients, `${basePath}/ingredients`, itemOrBlockIds, diagnostics);
         validateKnownReference(entry.result, `${basePath}/result`, itemOrBlockIds, diagnostics);
@@ -816,11 +892,50 @@ function validateResourceGraph(value: JsonObject, diagnostics: Diagnostic[]): vo
       } else if (section === "summoning") {
         validateKnownReference(entry.entity, `${basePath}/entity`, entityIds, diagnostics);
         validateReferenceList(entry.ingredients, `${basePath}/ingredients`, itemOrBlockIds, diagnostics);
-      } else if (section === "screens" && entry.serverValidation !== true) {
+      } else if (section === "structures") {
+        if (isObject(entry.placement) && typeof entry.placement.spacing === "number" &&
+          typeof entry.placement.separation === "number" && entry.placement.separation >= entry.placement.spacing) {
+          push(diagnostics, {
+            code: "SEMANTIC_INVALID",
+            path: `${basePath}/placement/separation`,
+            message: "Structure separation must be smaller than spacing.",
+          });
+        }
+        if (Array.isArray(entry.pieces)) entry.pieces.forEach((piece, pieceIndex) => {
+          if (!isObject(piece)) return;
+          validateKnownReference(piece.asset, `${basePath}/pieces/${pieceIndex}/asset`, modelIds, diagnostics);
+        });
+        if (Array.isArray(entry.spawnOverrides)) entry.spawnOverrides.forEach((override, overrideIndex) => {
+          if (!isObject(override)) return;
+          validateKnownReference(
+            override.entity,
+            `${basePath}/spawnOverrides/${overrideIndex}/entity`,
+            entityIds,
+            diagnostics,
+          );
+          if (typeof override.minCount === "number" && typeof override.maxCount === "number" &&
+            override.minCount > override.maxCount) push(diagnostics, {
+            code: "SEMANTIC_INVALID",
+            path: `${basePath}/spawnOverrides/${overrideIndex}/maxCount`,
+            message: "Structure spawn maxCount must be greater than or equal to minCount.",
+          });
+        });
+      } else if (section === "screens" && value.schemaVersion === 0 && entry.serverValidation !== true) {
         push(diagnostics, {
           code: "SEMANTIC_INVALID",
           path: `${basePath}/serverValidation`,
           message: "Screens must declare server-side validation.",
+        });
+      } else if (section === "screens" && value.schemaVersion === 1 && Array.isArray(entry.actions)) {
+        entry.actions.forEach((action, actionIndex) => {
+          if (!isObject(action) || action.payload !== "bounded_int" || !isObject(action.validation)) return;
+          const minimum = action.validation.minimum;
+          const maximum = action.validation.maximum;
+          if (typeof minimum !== "number" || typeof maximum !== "number" || minimum > maximum) push(diagnostics, {
+            code: "SEMANTIC_INVALID",
+            path: `${basePath}/actions/${actionIndex}/validation`,
+            message: "A bounded_int screen action requires an ordered minimum and maximum.",
+          });
         });
       }
     }
@@ -1121,7 +1236,7 @@ export function validateSpec(
   validateResourceGraph(normalized, diagnostics);
 
   const schemaKind = actualKind ?? (expectedKind === "art" ? "art" : "mod");
-  const schema = schemaKind === "art" ? ArtSpecSchema : ModSpecSchema;
+  const schema = schemaKind === "art" ? ArtSpecSchema : AnyModSpecSchema;
   const parsed = schema.safeParse(normalized);
   if (!parsed.success) {
     for (const issue of parsed.error.issues) {

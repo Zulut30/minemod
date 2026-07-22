@@ -1,4 +1,4 @@
-import type { ArtSpec, ModSpec } from "../../packages/modspec/index.ts";
+import type { ArtSpec, ModSpec, ModSpecV1 } from "../../packages/modspec/index.ts";
 import type { DiagnosticCode } from "../../packages/validation/index.ts";
 
 export const source = {
@@ -67,6 +67,156 @@ export const validModFixture: ModSpec = {
   dependencies: { required: ["geckolib"], optional: ["jei", "jade"] },
   integrations: { jei: "auto", jade: "auto" },
   tests: { gameTests: [{ id: "tidecaller:crab_spawns", references: ["tidecaller:crab"] }] },
+  packaging: { includeSources: true, publish: false },
+};
+
+export const validFabricV1Fixture: ModSpecV1 = {
+  schemaVersion: 1,
+  kind: "mod",
+  project: {
+    modId: "infectedfrontier",
+    name: "Infected Frontier",
+    version: "0.1.0",
+    license: "Apache-2.0",
+    provenance: [source],
+  },
+  target: { minecraft: "1.20.1", loader: "fabric", java: 17 },
+  gameplay: {
+    items: [],
+    blocks: [],
+    entities: [{
+      id: "infectedfrontier:fungal_infected",
+      references: [],
+      attributes: { maxHealth: 30, movementSpeed: 0.24 },
+      renderer: "infectedfrontier:fungal_infected_model",
+      animation: "infectedfrontier:fungal_infected_animation",
+      dimensions: { width: 0.8, height: 2.1 },
+      behavior: {
+        goals: [
+          { id: "wander", type: "wander", priority: 5, speed: 0.8 },
+          { id: "melee", type: "melee_attack", priority: 2, speed: 1.1, range: 2, cooldownTicks: 20 },
+        ],
+        targets: [{
+          id: "players",
+          type: "player",
+          priority: 1,
+          range: 32,
+          requireLineOfSight: true,
+        }],
+        stateMachine: {
+          initial: "idle",
+          states: [
+            { id: "idle", animation: "infectedfrontier:fungal_infected_animation", invulnerable: false, movementMultiplier: 1 },
+            { id: "chase", animation: "infectedfrontier:fungal_infected_animation", invulnerable: false, movementMultiplier: 1.2 },
+            { id: "attack", animation: "infectedfrontier:fungal_infected_animation", invulnerable: false, movementMultiplier: 0 },
+          ],
+          transitions: [
+            { from: "idle", to: "chase", trigger: "target_acquired" },
+            { from: "chase", to: "attack", trigger: "in_melee_range" },
+            { from: "attack", to: "chase", trigger: "animation_complete" },
+          ],
+        },
+      },
+      spawn: {
+        mode: "structure",
+        group: "monster",
+        biomes: ["minecraft:plains"],
+        weight: 20,
+        minGroupSize: 1,
+        maxGroupSize: 2,
+        placement: "on_ground",
+        heightmap: "motion_blocking_no_leaves",
+        minLight: 0,
+        maxLight: 7,
+        maxNearby: 4,
+      },
+      persistence: { fields: [{ id: "behavior_state", type: "int" }] },
+      syncedState: { fields: [{ id: "attacking", type: "boolean" }] },
+    }],
+    recipes: [],
+    summoning: [],
+    structures: [{
+      id: "infectedfrontier:quarantine_camp",
+      references: ["infectedfrontier:fungal_infected"],
+      startPool: "infectedfrontier:quarantine_camp/start",
+      biomeTag: "infectedfrontier:has_structure/quarantine_camp",
+      step: "surface_structures",
+      terrainAdaptation: "beard_thin",
+      size: 3,
+      placement: { spacing: 32, separation: 12, salt: 1_820_431 },
+      pieces: [{
+        id: "camp_center",
+        asset: "infectedfrontier:quarantine_camp_structure",
+        weight: 1,
+        processors: ["minecraft:empty"],
+      }],
+      spawnOverrides: [{
+        entity: "infectedfrontier:fungal_infected",
+        weight: 10,
+        minCount: 1,
+        maxCount: 2,
+      }],
+    }],
+    screens: [{
+      id: "infectedfrontier:research_table",
+      references: [],
+      menuId: "infectedfrontier:research_table",
+      type: "machine",
+      slots: [
+        { id: "input", inventory: "block_entity", index: 0, x: 56, y: 35, role: "input" },
+        { id: "output", inventory: "block_entity", index: 1, x: 116, y: 35, role: "output" },
+      ],
+      syncedFields: [{ id: "progress", type: "int" }],
+      actions: [{
+        id: "set_mode",
+        payload: "bounded_int",
+        validation: {
+          requireOpenMenu: true,
+          requireSameDimension: true,
+          maxDistance: 8,
+          minimum: 0,
+          maximum: 2,
+        },
+      }],
+    }],
+  },
+  assets: {
+    artSpec: "infected-frontier-art.json",
+    models: [
+      {
+        id: "infectedfrontier:fungal_infected_model",
+        path: "infectedfrontier/models/entity/fungal_infected.bbmodel",
+        license: "CC0-1.0",
+        provenance: [source],
+        metrics: { textureBytes: 0, cubes: 32, bones: 12, triangles: 384, keyframes: 0 },
+      },
+      {
+        id: "infectedfrontier:quarantine_camp_structure",
+        path: "infectedfrontier/structures/quarantine_camp.nbt",
+        license: "CC0-1.0",
+        provenance: [source],
+        metrics: { textureBytes: 0, cubes: 0, bones: 0, triangles: 0, keyframes: 0 },
+      },
+    ],
+    textures: [],
+    animations: [{
+      id: "infectedfrontier:fungal_infected_animation",
+      path: "infectedfrontier/animations/entity/fungal_infected.json",
+      license: "CC0-1.0",
+      provenance: [source],
+      metrics: { textureBytes: 0, cubes: 0, bones: 0, triangles: 0, keyframes: 160 },
+    }],
+    budgets: {
+      maxTextureBytes: 1_048_576,
+      maxCubes: 128,
+      maxBones: 32,
+      maxTriangles: 2_048,
+      maxKeyframes: 1_024,
+    },
+  },
+  dependencies: { required: [], optional: [] },
+  integrations: { jei: "off", jade: "off" },
+  tests: { gameTests: [] },
   packaging: { includeSources: true, publish: false },
 };
 

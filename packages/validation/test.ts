@@ -11,6 +11,7 @@ import {
   invalidFixtures,
   source,
   validArtFixture,
+  validFabricV1Fixture,
   validModFixture,
 } from "../../fixtures/specs/validation.ts";
 import {
@@ -174,9 +175,11 @@ function assertBoundedPrototypeKeyBombSubprocess(kind: PrototypeKeyBombKind): vo
 
 function selfTest(): void {
   assert.equal(validateSpec(validModFixture, "mod").valid, true);
+  assert.equal(validateSpec(validFabricV1Fixture, "mod").valid, true);
   assert.equal(validateSpec(validArtFixture, "art").valid, true);
 
-  const profile = VALIDATION_PROFILE_IDS[0];
+  assert.deepEqual(VALIDATION_PROFILE_IDS, ["fabric-1.20.1-java-17", "neoforge-26.1.2-java-25"]);
+  const profile = "neoforge-26.1.2-java-25" as const;
   const loaderNeutralTargets = [
     { minecraft: "26.1.2", loader: "neoforge", java: 25 },
     { minecraft: "26.2", loader: "fabric", java: 25 },
@@ -202,6 +205,38 @@ function selfTest(): void {
       });
     }
   }
+
+  const fabricProfile = "fabric-1.20.1-java-17" as const;
+  assert.equal(
+    validateSpec(validFabricV1Fixture, "mod", { profile: fabricProfile }).valid,
+    true,
+    "the Fabric 1.20.1 v1 gameplay contract must pass its exact profile",
+  );
+  assert.deepEqual(
+    validateSpec(validModFixture, "mod", { profile: fabricProfile }).diagnostics
+      .find(({ code }) => code === "INCOMPATIBLE_TARGET"),
+    {
+      code: "INCOMPATIBLE_TARGET",
+      path: "/target",
+      message: "Validation profile fabric-1.20.1-java-17 requires Minecraft 1.20.1, Fabric, and Java 17.",
+    },
+  );
+
+  const invalidTransition = structuredClone(validFabricV1Fixture);
+  invalidTransition.gameplay.entities[0]!.behavior.stateMachine.transitions[0]!.to = "missing";
+  assert.ok(validateSpec(invalidTransition).diagnostics.some(({ code, path }) =>
+    code === "BROKEN_REFERENCE" && path.endsWith("/behavior/stateMachine/transitions/0/to")));
+  const invalidSpacing = structuredClone(validFabricV1Fixture);
+  invalidSpacing.gameplay.structures[0]!.placement.separation = 32;
+  assert.ok(validateSpec(invalidSpacing).diagnostics.some(({ code, path }) =>
+    code === "SEMANTIC_INVALID" && path === "/gameplay/structures/0/placement/separation"));
+  const invalidActionBounds = structuredClone(validFabricV1Fixture) as unknown as {
+    gameplay: { screens: Array<{ actions: Array<{ validation: { minimum: number; maximum: number } }> }> };
+  };
+  invalidActionBounds.gameplay.screens[0]!.actions[0]!.validation.minimum = 4;
+  invalidActionBounds.gameplay.screens[0]!.actions[0]!.validation.maximum = 2;
+  assert.ok(validateSpec(invalidActionBounds).diagnostics.some(({ code, path }) =>
+    code === "SEMANTIC_INVALID" && path === "/gameplay/screens/0/actions/0/validation"));
 
   const animationWithoutRequiredGeckoLib = {
     ...validModFixture,
