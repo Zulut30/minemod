@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 0,
+  "kind": "reference-study",
+  "id": "farmers_delight_rice_1_20_1",
+  "analysisMode": "source-inspection",
+  "source": {
+    "project": "Farmer's Delight",
+    "homepage": "https://github.com/vectorwing/FarmersDelight",
+    "repository": "https://github.com/vectorwing/FarmersDelight",
+    "revision": "00d826c390f772bd762b1a7eb5da4e5e30375c10",
+    "minecraftVersion": "1.20.1",
+    "loaders": ["forge"],
+    "codeLicense": {
+      "spdx": "MIT",
+      "status": "verified",
+      "evidenceUrl": "https://github.com/vectorwing/FarmersDelight/blob/00d826c390f772bd762b1a7eb5da4e5e30375c10/LICENSE"
+    },
+    "assetLicense": {
+      "spdx": "MIT",
+      "status": "verified",
+      "evidenceUrl": "https://github.com/vectorwing/FarmersDelight/blob/00d826c390f772bd762b1a7eb5da4e5e30375c10/LICENSE"
+    },
+    "reviewedAt": "2026-07-22"
+  },
+  "subject": { "id": "rice_crop", "assetClass": "crop" },
+  "evidence": [
+    {
+      "kind": "state",
+      "sourcePath": "src/generated/resources/assets/farmersdelight/blockstates/rice.json",
+      "observation": "The lower crop selects four age models and has a separate mature supporting state."
+    },
+    {
+      "kind": "state",
+      "sourcePath": "src/generated/resources/assets/farmersdelight/blockstates/rice_panicles.json",
+      "observation": "The upper panicle selects four age-specific models independently from the lower crop."
+    },
+    {
+      "kind": "model",
+      "sourcePath": "src/generated/resources/assets/farmersdelight/models/block/rice_stage3.json",
+      "observation": "The mature lower stage uses a cutout cross-plane model rather than cuboid-heavy geometry."
+    }
+  ],
+  "observations": [
+    {
+      "dimension": "gameplay-state",
+      "statement": "A crop can communicate growth through coordinated lower and upper state families."
+    },
+    {
+      "dimension": "silhouette",
+      "statement": "Cross-plane foliage keeps a thin plant readable while preserving a low geometry budget."
+    }
+  ],
+  "derivedRules": [
+    {
+      "id": "split_tall_crop_layers",
+      "appliesTo": ["crop"],
+      "statement": "Allow tall crops to generate independently addressable base and harvestable upper layers.",
+      "validation": "automated"
+    },
+    {
+      "id": "require_growth_silhouette_progression",
+      "appliesTo": ["crop"],
+      "statement": "Each growth stage must increase or clearly redistribute visible plant mass.",
+      "validation": "human-review"
+    }
+  ],
+  "reusePolicy": {
+    "geometry": "forbidden",
+    "textures": "forbidden",
+    "distinctiveDesign": "forbidden",
+    "implementation": "abstract-rules-only"
+  }
+}

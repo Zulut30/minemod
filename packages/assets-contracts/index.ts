@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+export * from "./reference-study.ts";
+
 export const CUBOID_MODEL_SPEC_SCHEMA_ID = "https://mcdev.local/schemas/cuboid-model-spec-v0.json";
 export const MODEL_RESOURCE_LOCATION_PATTERN =
   "^(?!\\.{1,2}:)[a-z0-9_.-]{1,64}:(?=[a-z0-9_./-]{1,128}$)(?:(?!\\.{1,2}(?:/|$))[a-z0-9_.-]+/)*(?!\\.{1,2}$)[a-z0-9_.-]+$";
