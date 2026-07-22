@@ -15,6 +15,7 @@ import {
   createDragonArchetype,
   createDragonTexturePlan,
   createClockworkStampArchetype,
+  createClockworkStampTexturePlan,
   materializeArticulatedModel,
   renderCropStageTexture,
   renderCuboidTextureAtlas,
@@ -82,6 +83,24 @@ assert.throws(() => createClockworkStampArchetype({
   id: "mcdev:unverified_stamp",
   name: "Unverified Stamp",
 }, singleReferenceReport), /not ready/u);
+const clockworkStampIdleTexture = createClockworkStampTexturePlan(clockworkStampPlan, "idle");
+const clockworkStampActiveTexture = createClockworkStampTexturePlan(clockworkStampPlan, "active");
+for (const texturePlan of [clockworkStampIdleTexture, clockworkStampActiveTexture]) {
+  assert.equal(analyzeTexturePlanQuality(clockworkStamp.model, texturePlan, {
+    minShadowLuminanceDelta: 0.02,
+    minHighlightLuminanceDelta: 0.03,
+    minAccentRgbDistance: 0.05,
+  }).passes, true);
+}
+const compiledClockworkStampIdle = compileTexturedBlockbenchModel(clockworkStamp.model, clockworkStampIdleTexture);
+const compiledClockworkStampActive = compileTexturedBlockbenchModel(clockworkStamp.model, clockworkStampActiveTexture);
+assert.notEqual(compiledClockworkStampIdle.texture.sha256, compiledClockworkStampActive.texture.sha256);
+assert.equal(compiledClockworkStampActive.texture.colorCount >= 18, true);
+assert.deepEqual(compiledClockworkStampActive.metrics, {
+  bones: clockworkStamp.model.bones.length,
+  cubes: clockworkStamp.model.bones.flatMap(({ cubes }) => cubes).length,
+  triangles: clockworkStamp.model.bones.flatMap(({ cubes }) => cubes).length * 12,
+});
 
 const waterRicePlan = fixture("water-rice.crop.json");
 const waterRiceStages = Array.from({ length: 4 }, (_, stage) => ({

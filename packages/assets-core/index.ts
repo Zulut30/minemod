@@ -416,3 +416,7 @@ export {
   createClockworkStampArchetype,
   type MechanismArchetypeOptions,
 } from "./mechanism-archetype.ts";
+export {
+  createClockworkStampTexturePlan,
+  type MechanismVisualState,
+} from "./mechanism-texture.ts";
