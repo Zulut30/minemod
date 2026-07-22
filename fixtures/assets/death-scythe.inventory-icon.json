@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 0,
+  "kind": "pixel-icon",
+  "id": "mcdev:item/death_scythe",
+  "size": 32,
+  "palette": [
+    { "id": "outline", "color": "#100b18" },
+    { "id": "obsidian", "color": "#281b35" },
+    { "id": "violet", "color": "#71318c" },
+    { "id": "steel", "color": "#667481" },
+    { "id": "bone", "color": "#d4c9a8" },
+    { "id": "highlight", "color": "#f3e9c6" },
+    { "id": "soul", "color": "#58f0d1" }
+  ],
+  "primitives": [
+    { "type": "line", "from": [7, 30], "to": [18, 9], "thickness": 4, "colorId": "outline" },
+    { "type": "line", "from": [8, 29], "to": [19, 8], "thickness": 3, "colorId": "obsidian" },
+    { "type": "line", "from": [9, 28], "to": [20, 8], "thickness": 1, "colorId": "violet" },
+    { "type": "rectangle", "origin": [4, 27], "size": [7, 4], "colorId": "outline" },
+    { "type": "rectangle", "origin": [5, 27], "size": [5, 3], "colorId": "obsidian" },
+    { "type": "rectangle", "origin": [5, 27], "size": [2, 1], "colorId": "violet" },
+    { "type": "rectangle", "origin": [15, 6], "size": [8, 7], "colorId": "outline" },
+    { "type": "rectangle", "origin": [16, 6], "size": [6, 6], "colorId": "bone" },
+    { "type": "rectangle", "origin": [17, 6], "size": [5, 2], "colorId": "highlight" },
+    { "type": "rectangle", "origin": [17, 9], "size": [2, 2], "colorId": "violet" },
+    { "type": "rectangle", "origin": [20, 9], "size": [1, 2], "colorId": "soul" },
+    { "type": "line", "from": [20, 8], "to": [27, 6], "thickness": 4, "colorId": "outline" },
+    { "type": "line", "from": [26, 6], "to": [30, 3], "thickness": 3, "colorId": "outline" },
+    { "type": "line", "from": [20, 7], "to": [27, 5], "thickness": 2, "colorId": "steel" },
+    { "type": "line", "from": [26, 5], "to": [30, 2], "thickness": 2, "colorId": "bone" },
+    { "type": "line", "from": [21, 6], "to": [28, 4], "thickness": 1, "colorId": "highlight" },
+    { "type": "line", "from": [23, 8], "to": [22, 11], "thickness": 2, "colorId": "outline" },
+    { "type": "line", "from": [23, 8], "to": [22, 10], "thickness": 1, "colorId": "violet" },
+    { "type": "line", "from": [27, 6], "to": [26, 9], "thickness": 2, "colorId": "outline" },
+    { "type": "line", "from": [27, 6], "to": [26, 8], "thickness": 1, "colorId": "violet" }
+  ]
+}

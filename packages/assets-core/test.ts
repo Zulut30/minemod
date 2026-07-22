@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import {
   compileBlockbenchModel,
+  compileInventoryIcon,
   compileTexturedBlockbenchModel,
   renderCuboidTextureAtlas,
 } from "./index.ts";
@@ -124,6 +125,18 @@ assert.equal(deathScythe.texture.colorCount >= 12, true);
 assert.notEqual(deathScythe.sha256, blueSteelSword.sha256);
 assert.equal(deathScythe.sha256, "ceb7ae11453aa4ce663d25ae154c4d34536a0eb13a289473de2d2a5332738444");
 assert.equal(deathScythe.texture.sha256, "3ad8236db226dcbba485a7f9e60337bce71e4fc9b8428722017d1f297010f2d3");
+
+const deathScytheIcon = compileInventoryIcon(fixture("death-scythe.inventory-icon.json"));
+assert.equal(deathScytheIcon.texture.width, 32);
+assert.equal(deathScytheIcon.texture.height, 32);
+assert.equal(deathScytheIcon.texture.opaquePixels > 120, true);
+assert.equal(deathScytheIcon.texture.colorCount >= 6, true);
+assert.deepEqual(JSON.parse(deathScytheIcon.itemModelText), {
+  parent: "minecraft:item/handheld",
+  textures: { layer0: "mcdev:item/death_scythe" },
+});
+assert.equal(deathScytheIcon.texture.sha256, "149d8fbd69b0421e239f5b44be805ec79bd5af082905367c6e15e7f7863adbd9");
+assert.equal(deathScytheIcon.itemModelSha256, "2f93ae9cacc20023500dfc4f4997e067416b5f6733f7de184a1f220ed64bed45");
 
 assert.throws(
   () => compileBlockbenchModel({ ...(golem as object), command: "execute" }),

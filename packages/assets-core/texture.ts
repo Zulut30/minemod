@@ -66,7 +66,7 @@ function pngChunk(type: string, data: Uint8Array): Buffer {
   return chunk;
 }
 
-function encodePng(width: number, height: number, pixels: Uint8Array): Uint8Array {
+export function encodeRgbaPng(width: number, height: number, pixels: Uint8Array): Uint8Array {
   const ihdr = Buffer.alloc(13);
   ihdr.writeUInt32BE(width, 0);
   ihdr.writeUInt32BE(height, 4);
@@ -150,7 +150,7 @@ export function renderCuboidTextureAtlas(modelInput: unknown, planInput: unknown
     opaquePixels += 1;
     colors.add(((pixels[offset] ?? 0) << 16) | ((pixels[offset + 1] ?? 0) << 8) | (pixels[offset + 2] ?? 0));
   }
-  const bytes = encodePng(model.texture.width, model.texture.height, pixels);
+  const bytes = encodeRgbaPng(model.texture.width, model.texture.height, pixels);
   return Object.freeze({
     format: "png" as const,
     width: model.texture.width,

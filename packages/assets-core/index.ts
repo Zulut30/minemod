@@ -246,3 +246,8 @@ export {
   renderCuboidTextureAtlas,
   type RenderedCuboidTextureAtlas,
 } from "./texture.ts";
+export {
+  compileInventoryIcon,
+  type CompiledInventoryIcon,
+  type RenderedPixelIcon,
+} from "./inventory-icon.ts";
