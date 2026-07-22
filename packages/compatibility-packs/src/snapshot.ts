@@ -5,15 +5,18 @@ import {
   hasPortableCaseCollision,
   isCompatibilityPackManifest,
   isCompatibilityPackManifestV2,
+  isCompatibilityPackManifestV3,
   isCompatibilityPackRef,
   isFileMode,
   isPortableRelativePath,
   isSha256,
   type CompatibilityPackManifest,
   type CompatibilityPackManifestV2,
+  type CompatibilityPackManifestV3,
   type CompatibilityPackRef,
   type CompatibilityPackTarget,
   type CompatibilityPackTargetV2,
+  type CompatibilityPackTargetV3,
   type FileMode,
 } from "@mcdev/contracts";
 import { BuiltinPackIntegrityError } from "./errors.ts";
@@ -41,8 +44,14 @@ export interface VerifiedCompatibilityPack<
   readFile(path: unknown): Uint8Array;
 }
 
-type SupportedCompatibilityPackManifest = CompatibilityPackManifest | CompatibilityPackManifestV2;
-type SupportedCompatibilityPackTarget = CompatibilityPackTarget | CompatibilityPackTargetV2;
+type SupportedCompatibilityPackManifest =
+  | CompatibilityPackManifest
+  | CompatibilityPackManifestV2
+  | CompatibilityPackManifestV3;
+type SupportedCompatibilityPackTarget =
+  | CompatibilityPackTarget
+  | CompatibilityPackTargetV2
+  | CompatibilityPackTargetV3;
 
 interface TreeRecord {
   readonly path: string;
@@ -234,7 +243,8 @@ function parseManifest(entry: CompatibilityPackSnapshotEntry): SupportedCompatib
   } catch {
     return integrity("Compatibility pack manifest is not canonical UTF-8 JSON.");
   }
-  if (isCompatibilityPackManifest(value) || isCompatibilityPackManifestV2(value)) return value;
+  if (isCompatibilityPackManifest(value) || isCompatibilityPackManifestV2(value) ||
+    isCompatibilityPackManifestV3(value)) return value;
   return integrity("Compatibility pack manifest does not satisfy a supported versioned contract.");
 }
 
@@ -267,7 +277,7 @@ function copyExactTarget(value: unknown): SupportedCompatibilityPackTarget | und
   if (fabricValues === undefined) return undefined;
   const [minecraft, loader, java, fabricLoader] = fabricValues;
   if (typeof minecraft !== "string" || minecraft.length < 1 || minecraft.length > 32 ||
-    loader !== "fabric" || java !== 25 ||
+    loader !== "fabric" || (java !== 17 && java !== 25) ||
     typeof fabricLoader !== "string" || fabricLoader.length < 1 || fabricLoader.length > 64) {
     return undefined;
   }
@@ -297,6 +307,13 @@ function sameTarget(left: SupportedCompatibilityPackTarget, right: SupportedComp
 function frozenManifest(manifest: SupportedCompatibilityPackManifest): SupportedCompatibilityPackManifest {
   const files = manifest.files.map((file) => Object.freeze({ ...file }));
   if (manifest.contract === "mcdev.compatibility-pack/v1") {
+    return Object.freeze({
+      ...manifest,
+      target: Object.freeze({ ...manifest.target }),
+      files: Object.freeze(files),
+    });
+  }
+  if (manifest.contract === "mcdev.compatibility-pack/v2") {
     return Object.freeze({
       ...manifest,
       target: Object.freeze({ ...manifest.target }),

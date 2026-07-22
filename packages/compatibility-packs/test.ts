@@ -3,10 +3,15 @@ import { createHash } from "node:crypto";
 import type {
   CompatibilityPackFile,
   CompatibilityPackManifest,
+  CompatibilityPackManifestV3,
   CompatibilitySelector,
   CompatibilitySelectorV2,
 } from "@mcdev/contracts";
-import { COMPATIBILITY_PACK_CONTRACT, COMPATIBILITY_PACK_V2_CONTRACT } from "@mcdev/contracts";
+import {
+  COMPATIBILITY_PACK_CONTRACT,
+  COMPATIBILITY_PACK_V2_CONTRACT,
+  COMPATIBILITY_PACK_V3_CONTRACT,
+} from "@mcdev/contracts";
 import {
   BUILTIN_FABRIC_26_2,
   BUILTIN_FABRIC_26_2_SELECTOR,
@@ -47,7 +52,9 @@ function directory(path: string): CompatibilityPackSnapshotEntry {
   return { path, mode: 493, kind: "directory", bytes: new Uint8Array() };
 }
 
-function manifestBytes(manifest: CompatibilityPackManifest | Record<string, unknown>): Uint8Array {
+function manifestBytes(
+  manifest: CompatibilityPackManifest | CompatibilityPackManifestV3 | Record<string, unknown>,
+): Uint8Array {
   return encoder.encode(`${JSON.stringify(manifest, null, 2)}\n`);
 }
 
@@ -118,6 +125,38 @@ assert.deepEqual(verifiedFixture.listFiles(), fixture.manifest.files.map(({ path
 const firstRead = verifiedFixture.readFile("templates/build.gradle.tpl");
 firstRead[0] = 0;
 assert.equal(new TextDecoder().decode(verifiedFixture.readFile("templates/build.gradle.tpl")), "plugins {}\n");
+
+const fabricJava17Template = file("templates/build.gradle.tpl", "plugins {}\n");
+const fabricJava17Manifest: CompatibilityPackManifestV3 = {
+  contract: COMPATIBILITY_PACK_V3_CONTRACT,
+  packId: "fabric-1.20.1-java-17",
+  revision: 1,
+  target: {
+    minecraft: "1.20.1",
+    loader: "fabric",
+    java: 17,
+    fabricLoader: "0.19.3",
+  },
+  files: [fabricJava17Template.descriptor],
+};
+const fabricJava17Snapshot = [
+  {
+    path: "manifest.json",
+    mode: 420 as const,
+    kind: "file" as const,
+    bytes: manifestBytes(fabricJava17Manifest),
+  },
+  directory("templates"),
+  fabricJava17Template.snapshot,
+];
+const verifiedFabricJava17Fixture = verifyCompatibilityPackSnapshot(fabricJava17Snapshot, {
+  packId: fabricJava17Manifest.packId,
+  revision: fabricJava17Manifest.revision,
+  selector: fabricJava17Manifest.target,
+  treeSha256: calculateCompatibilityPackTreeSha256(fabricJava17Snapshot),
+});
+assert.equal(verifiedFabricJava17Fixture.manifest.contract, COMPATIBILITY_PACK_V3_CONTRACT);
+assert.equal(verifiedFabricJava17Fixture.manifest.target.java, 17);
 assert.throws(() => verifiedFixture.readFile("manifest.json"), BuiltinPackIntegrityError);
 const unavailableFileMessage = "Compatibility pack payload file is unavailable.";
 let hostileReadPathCalls = 0;
