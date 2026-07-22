@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "fabricempty-gametest",
+  "version": "1.0.0",
+  "name": "Fabric 26.2 Empty Fixture GameTests",
+  "license": "Apache-2.0",
+  "environment": "server",
+  "entrypoints": {
+    "fabric-gametest": [
+      "dev.mcdev.fixture.fabricempty.gametest.FabricEmptyGameTests"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.19.3",
+    "minecraft": "~26.2",
+    "java": ">=25",
+    "fabric-api": "*",
+    "fabricempty": "*"
+  }
+}
