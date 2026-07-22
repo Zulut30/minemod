@@ -99,13 +99,13 @@ Generic image-to-3D остаётся experimental provider. Надёжный pro
 | Детерминированное codegen core | Реализовано | Переиспользовать без loader imports |
 | Transactional create-only workspace apply | Реализовано | Переиспользовать без изменений semantics |
 | Artifact index и structured logging | Реализовано | Переиспользовать для Fabric build/assets/reports |
-| Fixed secure Gradle runner | Общая hardened execution основа обслуживает отдельные NeoForge и Fabric 1.20.1 policies | Подключить Fabric runner к application orchestration и добавить hosted evidence |
+| Fixed secure Gradle runner | Общая hardened execution основа обслуживает отдельные NeoForge и Fabric 1.20.1 policies; Fabric application E2E проходит локально | Добавить hosted evidence и recovery/cancel integration |
 | NeoForge 26.1.2 compiler | Реализован и остаётся зелёным | Не конвертировать подменой imports; оставить отдельным backend |
-| Application orchestration, CLI/MCP E2E | Не завершено | Закрыть в первом Fabric vertical slice |
-| Fabric pack/compiler/fixtures | Pack revision 2 и compiler phase 1 генерируют и строго собирают scaffold, items, blocks, creative entries, shapeless/smelting recipes, models, blockstates, loot и localization | Расширить recipe contract, добавить tags/datagen, подключить runner к orchestration, GameTests и hosted gates |
+| Application orchestration, CLI/MCP E2E | Общий service соединяет Fabric compile → create-only workspace → fixed runner → artifact index; CLI и MCP adapters протестированы | Добавить отдельные plan/review/apply операции, assets, progress logging, cancel/resume и hosted evidence |
+| Fabric pack/compiler/fixtures | Pack revision 2 и compiler phase 1 генерируют и строго собирают scaffold, items, blocks, creative entries, shapeless/smelting recipes, models, blockstates, loot и localization | Расширить recipe contract, добавить tags/datagen, GameTests и hosted gates |
 | Production AI asset pipeline | Частично: реализованы bounded model/material/animation contracts, local-space articulated plans с automatic pivot resolution и non-overlapping UV packing, entity/held-item geometry + rig, procedural pixel PNG atlases и детерминированный editable Blockbench 5 export с embedded texture и keyframe clips; concept provider и runtime exporters отсутствуют | Добавить semantic archetype planner, AI texture candidates и проверенный для 1.20.1 runtime export |
 
-Следовательно, сейчас есть качественный control plane и рабочий NeoForge backend, но **инструмент ещё не генерирует Fabric-мод от промпта до JAR и не создаёт production-ассеты**.
+Следовательно, сейчас инструмент воспроизводимо превращает уже одобренный basic-content ModSpec в Fabric JAR, но **ещё не строит весь путь от свободного промпта и review до production-ассетов и игрового evidence**.
 
 ## 5. Целевая архитектура
 
@@ -213,7 +213,7 @@ fixtures/fabric-1.20.1-empty/
 
 **Проверка:** adversarial runner tests и build пустого/basic fixture.
 
-**Интеграционный статус на 22 июля 2026:** wire contract и hardened runner исполняют именованную policy `fabric-1.20.1-phase1-v1` только для exact trusted pack revision 2 и Temurin 17.0.19+10. Policy проверяет закрытую конфигурацию, topology/ownership BuildPlan, pack templates, wrapper/distribution hashes, Java identity, mount/file integrity и запускает фиксированный strict `clean build`; source-JAR tasks исключены фиксированно, чтобы release gate принимал ровно один remapped JAR. Позитивный lifecycle и cross-loader rejection покрыты runner tests; подключение factory к application orchestration и hosted evidence ещё не реализованы.
+**Интеграционный статус на 22 июля 2026:** wire contract и hardened runner исполняют именованную policy `fabric-1.20.1-phase1-v1` только для exact trusted pack revision 2 и Temurin 17.0.19+10. Policy проверяет закрытую конфигурацию, topology/ownership BuildPlan, pack templates, wrapper/distribution hashes, Java identity, mount/file integrity и запускает фиксированный strict `clean build`; source/dev JAR и Loom project cache обрабатываются закрытой Fabric policy, а release gate принимает ровно один remapped JAR. Позитивный lifecycle, cross-loader rejection и настоящий application/CLI E2E до JAR проходят локально; hosted evidence ещё не реализовано.
 
 #### F1.3. Минимальный AI texture pipeline
 
@@ -234,6 +234,8 @@ fixtures/fabric-1.20.1-empty/
 **Приёмка:** `plan` не меняет filesystem; `apply` принимает только подтверждённый content-derived plan ID; path escape/overwrite fail closed; события progress структурированы и одинаковы для CLI/MCP.
 
 **Проверка:** raw MCP frames, CLI integration tests, cancel/resume boundary tests, create-only workspace tests.
+
+**Интеграционный статус на 22 июля 2026:** создан общий `@mcdev/application`, который соединяет Fabric compiler, transactional workspace, fixed runner и artifact index. CLI предоставляет явную `fabric build`, MCP — отдельный `mcdev_fabric_build` с обязательным `approved: true`; оба adapter-а редактируют ошибки до публичного кода. Unit/integration tests и реальный CLI build basic-content fixture проходят. Отдельные `plan/review/apply`, asset stage, structured progress и cancel/resume ещё не реализованы, поэтому F1.4 остаётся открытым.
 
 #### F1.5. Basic-content E2E fixture
 

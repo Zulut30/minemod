@@ -4,7 +4,7 @@ Agent-native инструмент для создания production-ready Minec
 
 ## Статус
 
-Проект развивается по [Fabric-first MVP-плану](docs/FABRIC_FIRST_MVP_PLAN.md). Основная цель — создание Fabric-модов для Minecraft 1.20.1. Уже реализованы строгие contracts, trusted Fabric 1.20.1/Fabric 26.2/NeoForge 26.1.2 packs, локально проверенный build и client/server smoke для Fabric 1.20.1, детерминированный codegen core, transactional workspace, artifact/logging слой, NeoForge compiler и fixed build runner. Для моделирования уже есть bounded cuboid/material contracts, детерминированные pixel texture atlases и экспорт сложной геометрии, rig и embedded PNG в editable Blockbench 5 `.bbmodel`. Fabric compiler, сквозная CLI/MCP orchestration, concept/AI texture provider, анимации и version-tested runtime export ещё предстоят.
+Проект развивается по [Fabric-first MVP-плану](docs/FABRIC_FIRST_MVP_PLAN.md). Основная цель — создание Fabric-модов для Minecraft 1.20.1. Уже реализованы строгие contracts, trusted Fabric 1.20.1/Fabric 26.2/NeoForge 26.1.2 packs, детерминированный codegen, transactional workspace, artifact index, отдельные Fabric/NeoForge build policies и базовый Fabric compiler для items, blocks и shapeless/smelting recipes. Общий application service доступен через CLI и подтверждаемый MCP tool и локально проходит полный путь от одобренного ModSpec до проверенного JAR. Для моделирования уже есть bounded cuboid/material contracts, детерминированные pixel texture atlases и экспорт сложной геометрии, rig и embedded PNG в editable Blockbench 5 `.bbmodel`. Prompt/review orchestration, concept/AI texture provider, gameplay entities и version-tested runtime animation export ещё предстоят.
 
 Поверх базового cuboid pipeline теперь есть параметрический архетип большого дракона: раздельные pivots шеи, челюсти, крыльев, лап и хвоста, общий bilateral-компоновщик, органические texture patterns с регулируемой плотностью деталей, а также structural/palette/texture-symmetry preflight. Это техническая основа, а не автоматическое художественное одобрение: итоговый ассет всё ещё требует turntable и in-game human review по rubric.
 
@@ -22,6 +22,18 @@ Agent-native инструмент для создания production-ready Minec
 - воспроизводимый release bundle.
 
 Fabric 26.2 и NeoForge 26.1.2 сохраняются как regression targets; Fabric 1.20.1 не строится backport-ом или заменой imports в коде других версий/loaders.
+
+Текущая команда сборки одобренного inline ModSpec:
+
+```sh
+mcdev fabric build \
+  --workspace /path/to/new-workspace \
+  --java17-home /path/to/temurin-17.0.19+10 \
+  --artifact-cache /path/to/mcdev-cache \
+  '<modspec-json>'
+```
+
+MCP публикует `mcdev_spec_validate` и `mcdev_fabric_build`; второй инструмент требует literal-поле `approved: true`, создаёт только новый управляемый workspace и не принимает Gradle tasks/flags/environment от вызывающей стороны.
 
 ## Документация
 
@@ -44,7 +56,7 @@ Fabric 26.2 и NeoForge 26.1.2 сохраняются как regression targets;
 1. ~~зафиксировать exact Fabric 1.20.1 + Java 17 compatibility pack~~ — выполнено локально;
 2. ~~собрать и запустить пустой native Fabric 1.20.1 fixture на client/server~~ — выполнено локально;
 3. добавить GameTests и запустить build/client/server gates в hosted CI;
-4. добавить Fabric compiler для items/blocks;
+4. ~~добавить Fabric compiler для items/blocks и базовых recipes~~ — выполнено локально;
 5. закрыть первый prompt-to-JAR с настоящими AI-generated textures.
 
 Зависимости, критерии приёмки и exit gates описаны в [Fabric-first плане](docs/FABRIC_FIRST_MVP_PLAN.md). Наличие пункта в roadmap само по себе не означает, что соответствующая возможность уже реализована или проверена.
