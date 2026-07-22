@@ -26,6 +26,10 @@ case "$smoke_target" in
     fixture="$repo_root/fixtures/fabric-26.2-empty"
     server_motd='Phase 0 Fabric smoke test'
     ;;
+  fabric-1.20.1)
+    fixture="$repo_root/fixtures/fabric-1.20.1-empty"
+    server_motd='Phase 0 Fabric 1.20.1 smoke test'
+    ;;
   *)
     echo "Unsupported Phase 0 smoke target: $smoke_target" >&2
     exit 64

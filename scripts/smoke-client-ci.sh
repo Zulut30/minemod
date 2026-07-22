@@ -33,6 +33,11 @@ case "$smoke_target" in
     required_init_marker=FABRIC_EMPTY_FIXTURE_LOADED
     readiness_profile=fabric
     ;;
+  fabric-1.20.1)
+    fixture="$repo_root/fixtures/fabric-1.20.1-empty"
+    required_init_marker=FABRIC_1_20_1_FIXTURE_LOADED
+    readiness_profile=full
+    ;;
   *)
     echo "Unsupported Phase 0 smoke target: $smoke_target" >&2
     exit 64

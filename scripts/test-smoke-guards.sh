@@ -82,6 +82,11 @@ if ! grep -Fq 'Unsupported Phase 0 smoke target: unreviewed-loader' \
   echo 'Dedicated-server smoke did not report its rejected target.' >&2
   exit 1
 fi
+if [[ $(grep -Fc 'fabric-1.20.1)' "$script_dir/smoke-dedicated-server.sh") -ne 1 \
+  || $(grep -Fc 'fabric-1.20.1)' "$script_dir/smoke-client-ci.sh") -ne 1 ]]; then
+  echo 'Fabric 1.20.1 must remain an explicit reviewed smoke target.' >&2
+  exit 1
+fi
 
 python3 - "$smoke_log4j_config" <<'PY'
 import sys
@@ -650,6 +655,15 @@ Using graphics device: test
 LOG
 smoke_client_ready "$client_log" "$client_sentinel" "$client_nonce" \
   FABRIC_EMPTY_FIXTURE_LOADED fabric
+cat >"$client_log" <<'LOG'
+FABRIC_1_20_1_FIXTURE_LOADED
+Backend library: LWJGL version test
+OpenAL initialized test
+Sound engine started test
+Created: 16x16x0 test-atlas
+LOG
+smoke_client_ready "$client_log" "$client_sentinel" "$client_nonce" \
+  FABRIC_1_20_1_FIXTURE_LOADED full
 printf '%s' "$client_nonce" >"$client_sentinel"
 if smoke_client_ready "$client_log" "$client_sentinel" "$client_nonce"; then
   echo 'Client readiness accepted a sentinel without its exact trailing newline.' >&2

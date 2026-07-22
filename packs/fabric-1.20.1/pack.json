@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "fabric-1.20.1",
   "displayName": "Fabric 1.20.1",
-  "status": "experimental-local-build-pass",
+  "status": "experimental-local-runtime-pass",
   "productionTarget": true,
   "productLicense": "Apache-2.0",
   "contract": "ModSpec",
@@ -25,9 +25,9 @@
   },
   "capabilities": {
     "cleanBuild": "local-pass",
-    "dedicatedServerSmoke": "pending",
-    "headlessClientSmoke": "pending",
-    "dependencyVerification": "strict-metadata-generated",
+    "dedicatedServerSmoke": "local-pass",
+    "headlessClientSmoke": "local-pass",
+    "dependencyVerification": "strict-local-pass",
     "gameTestServer": "pending",
     "clientGameTest": "pending",
     "hostedCi": "pending"
@@ -38,7 +38,7 @@
     "fixture": "../../fixtures/fabric-1.20.1-empty"
   },
   "knownIssues": [
-    "Only the clean build has local evidence; runtime and hosted gates remain pending.",
+    "Clean build and client/server smoke checks pass locally; GameTests and hosted gates remain pending.",
     "Full transitive dependency license classification is not complete.",
     "The Fabric compiler does not consume this pack yet."
   ]
