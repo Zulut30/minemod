@@ -10,6 +10,10 @@ export const CUBOID_MODEL_LIMITS = Object.freeze({
   maxCoordinateMagnitude: 128,
   maxCubeSize: 64,
 } as const);
+export const CUBOID_TEXTURE_LIMITS = Object.freeze({
+  maxMaterials: 16,
+  maxAssignments: CUBOID_MODEL_LIMITS.maxCubes,
+} as const);
 
 const identifier = z.string().regex(/^[a-z][a-z0-9_]{0,63}$/u);
 function containsOnlyBmpCodeUnits(value: string): boolean {
@@ -141,4 +145,58 @@ export const CuboidModelSpecJsonSchema = Object.freeze({
   ...z.toJSONSchema(CuboidModelSpecSchema),
   $schema: "https://json-schema.org/draft/2020-12/schema",
   $id: CUBOID_MODEL_SPEC_SCHEMA_ID,
+});
+
+export const CUBOID_TEXTURE_PLAN_SCHEMA_ID = "https://mcdev.local/schemas/cuboid-texture-plan-v0.json";
+
+const rgbHex = z.string().regex(/^#[0-9a-f]{6}$/u);
+const MaterialSchema = z.strictObject({
+  id: identifier,
+  colors: z.strictObject({
+    base: rgbHex,
+    shadow: rgbHex,
+    highlight: rgbHex,
+    accent: rgbHex,
+  }),
+});
+const TextureAssignmentSchema = z.strictObject({
+  cubeId: identifier,
+  materialId: identifier,
+  pattern: z.enum(["solid", "panel", "riveted", "striped"]),
+  seed: z.number().int().min(0).max(4_294_967_295),
+});
+
+export const CuboidTexturePlanSchema = z.strictObject({
+  schemaVersion: z.literal(0),
+  kind: z.literal("cuboid-texture-plan"),
+  modelId: z.string().regex(new RegExp(MODEL_RESOURCE_LOCATION_PATTERN, "u")),
+  materials: z.array(MaterialSchema).min(1).max(CUBOID_TEXTURE_LIMITS.maxMaterials),
+  assignments: z.array(TextureAssignmentSchema).min(1).max(CUBOID_TEXTURE_LIMITS.maxAssignments),
+}).superRefine((plan, context) => {
+  const materialIds = new Set<string>();
+  for (const [index, material] of plan.materials.entries()) {
+    if (materialIds.has(material.id)) {
+      context.addIssue({ code: "custom", path: ["materials", index, "id"], message: "Material ids must be unique." });
+    }
+    materialIds.add(material.id);
+  }
+
+  const cubeIds = new Set<string>();
+  for (const [index, assignment] of plan.assignments.entries()) {
+    if (cubeIds.has(assignment.cubeId)) {
+      context.addIssue({ code: "custom", path: ["assignments", index, "cubeId"], message: "Each cube can have only one texture assignment." });
+    }
+    cubeIds.add(assignment.cubeId);
+    if (!materialIds.has(assignment.materialId)) {
+      context.addIssue({ code: "custom", path: ["assignments", index, "materialId"], message: "Assigned material does not exist." });
+    }
+  }
+});
+
+export type CuboidTexturePlan = z.infer<typeof CuboidTexturePlanSchema>;
+
+export const CuboidTexturePlanJsonSchema = Object.freeze({
+  ...z.toJSONSchema(CuboidTexturePlanSchema),
+  $schema: "https://json-schema.org/draft/2020-12/schema",
+  $id: CUBOID_TEXTURE_PLAN_SCHEMA_ID,
 });

@@ -1,9 +1,13 @@
 import assert from "node:assert/strict";
 import {
   CUBOID_MODEL_LIMITS,
+  CUBOID_TEXTURE_LIMITS,
   CuboidModelSpecJsonSchema,
   CuboidModelSpecSchema,
+  CuboidTexturePlanJsonSchema,
+  CuboidTexturePlanSchema,
   type CuboidModelSpec,
+  type CuboidTexturePlan,
 } from "./index.ts";
 
 const bodyCube: CuboidModelSpec["bones"][number]["cubes"][number] = {
@@ -102,3 +106,36 @@ assert.equal(CuboidModelSpecSchema.safeParse(invalid((candidate) => {
   const bones = candidate.bones as Array<{ cubes: Array<{ uv: number[] }> }>;
   bones[1]!.cubes[0]!.uv = [63, 63];
 })).success, false, "box UV must fit the texture atlas");
+
+const validTexturePlan: CuboidTexturePlan = {
+  schemaVersion: 0,
+  kind: "cuboid-texture-plan",
+  modelId: "mcdev:copper_guardian",
+  materials: [{
+    id: "copper",
+    colors: {
+      base: "#b85f3d",
+      shadow: "#67352d",
+      highlight: "#ed9a62",
+      accent: "#f4c542",
+    },
+  }],
+  assignments: [{ cubeId: "body_core", materialId: "copper", pattern: "riveted", seed: 42 }],
+};
+
+assert.equal(CuboidTexturePlanSchema.safeParse(validTexturePlan).success, true);
+assert.equal(CuboidTexturePlanJsonSchema.additionalProperties, false);
+assert.equal(CUBOID_TEXTURE_LIMITS.maxMaterials, 16);
+assert.equal(CuboidTexturePlanSchema.safeParse({ ...validTexturePlan, command: "paint" }).success, false);
+assert.equal(CuboidTexturePlanSchema.safeParse({
+  ...validTexturePlan,
+  materials: [...validTexturePlan.materials, validTexturePlan.materials[0]],
+}).success, false, "material ids are unique");
+assert.equal(CuboidTexturePlanSchema.safeParse({
+  ...validTexturePlan,
+  assignments: [{ ...validTexturePlan.assignments[0]!, materialId: "missing" }],
+}).success, false, "assigned materials must exist");
+assert.equal(CuboidTexturePlanSchema.safeParse({
+  ...validTexturePlan,
+  materials: [{ ...validTexturePlan.materials[0]!, colors: { ...validTexturePlan.materials[0]!.colors, base: "red" } }],
+}).success, false, "colors use exact RGB hex notation");
