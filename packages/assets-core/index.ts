@@ -410,3 +410,4 @@ export {
   type ReferenceCatalogReport,
   type ReferenceRuleCandidate,
 } from "./reference-analysis.ts";
+export { renderCropStageTexture, type CropLayer } from "./crop-texture.ts";

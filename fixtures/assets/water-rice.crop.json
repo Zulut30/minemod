@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 0,
+  "kind": "crop-asset-plan",
+  "id": "mcdev:water_rice",
+  "name": "Water Rice",
+  "runtimeAges": 8,
+  "visualStages": 4,
+  "layers": "double",
+  "placement": "water",
+  "upperStartsAt": 4,
+  "palette": {
+    "stem": "#456b32",
+    "leaf": "#6f963d",
+    "highlight": "#9fbe55",
+    "matureAccent": "#d5b84a"
+  },
+  "seed": 20260722,
+  "referenceRuleIds": [
+    "split_tall_crop_layers",
+    "require_growth_silhouette_progression"
+  ]
+}

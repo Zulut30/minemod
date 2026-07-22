@@ -14,6 +14,7 @@ import {
   createDragonArchetype,
   createDragonTexturePlan,
   materializeArticulatedModel,
+  renderCropStageTexture,
   renderCuboidTextureAtlas,
 } from "./index.ts";
 
@@ -46,6 +47,27 @@ assert.deepEqual(diverseReferenceReport.candidateRules, [
   { id: "require_growth_silhouette_progression", projectSupport: 3, promotable: true },
   { id: "split_tall_crop_layers", projectSupport: 2, promotable: true },
 ]);
+
+const waterRicePlan = fixture("water-rice.crop.json");
+const waterRiceStages = Array.from({ length: 4 }, (_, stage) => ({
+  lower: renderCropStageTexture(waterRicePlan, "lower", stage),
+  upper: renderCropStageTexture(waterRicePlan, "upper", stage),
+}));
+for (let stage = 1; stage < waterRiceStages.length; stage += 1) {
+  const previous = waterRiceStages[stage - 1];
+  const current = waterRiceStages[stage];
+  assert.equal((current?.lower.opaquePixels ?? 0) + (current?.upper.opaquePixels ?? 0) >
+    (previous?.lower.opaquePixels ?? 0) + (previous?.upper.opaquePixels ?? 0), true,
+  `crop stage ${stage} must increase visible plant mass`);
+}
+assert.equal(waterRiceStages[3]?.lower.colorCount, 4);
+assert.equal(waterRiceStages[3]?.upper.colorCount, 4);
+assert.equal(
+  waterRiceStages[3]?.lower.sha256,
+  renderCropStageTexture(structuredClone(waterRicePlan), "lower", 3).sha256,
+  "crop textures must be byte-deterministic",
+);
+assert.throws(() => renderCropStageTexture(waterRicePlan, "lower", 4), /between 0 and 3/u);
 
 function assertNoUvOverlap(model: CuboidModelSpec): void {
   const rectangles = model.bones.flatMap(({ cubes }) => cubes.map((cube) => ({
