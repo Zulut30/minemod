@@ -7,10 +7,11 @@ Phase 1 currently generates:
 - reproducible Gradle/Fabric project metadata and split main/client entrypoints;
 - item and block registration with bounded stack size and hardness;
 - creative-tab entries;
+- built-in shapeless crafting and smelting recipes;
 - item models, block models, blockstates, self-drop loot tables and `en_us` localization;
 - a closed deterministic BuildPlan using `fabric-1.20.1-phase1-v1`.
 
-Until authored textures are connected, generated basic content uses a deterministic placeholder PNG and reports `PLACEHOLDER_ASSETS_USED`. Recipes, tags, entities, structures, screens, integrations and authored assets fail closed with `SPEC_UNSUPPORTED`; they are not silently omitted.
+Until authored textures are connected, generated basic content uses a deterministic placeholder PNG and reports `PLACEHOLDER_ASSETS_USED`. Shaped/custom recipes cannot be represented safely by the current ModSpec recipe fields and fail closed with a precise `SPEC_UNSUPPORTED` diagnostic. Tags, entities, structures, screens, integrations and authored assets also fail closed; they are not silently omitted.
 
 The ordinary unit suite runs with `pnpm --filter @mcdev/compiler-fabric test`. A real strict offline Gradle build can be run with:
 

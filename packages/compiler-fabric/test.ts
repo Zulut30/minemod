@@ -55,6 +55,8 @@ const expectedPaths = [
   "src/main/resources/assets/infectedfrontier/models/item/blue_ore_item.json",
   "src/main/resources/assets/infectedfrontier/textures/mcdev/placeholder.png",
   "src/main/resources/data/infectedfrontier/loot_tables/blocks/blue_ore.json",
+  "src/main/resources/data/infectedfrontier/recipes/blue_ingot_recycling.json",
+  "src/main/resources/data/infectedfrontier/recipes/smelt_blue_ore.json",
   "src/main/resources/fabric.mod.json",
 ];
 
@@ -78,7 +80,7 @@ const buildNode = compiled.plan.nodes.find(({ kind }) => kind === "gradle-clean-
 assert.ok(buildNode?.kind === "gradle-clean-build");
 assert.equal(buildNode.policy, "fabric-1.20.1-phase1-v1");
 assert.equal(compiled.plan.nodes.find(({ nodeId }) => nodeId === "generate-project")?.outputs.length, 10);
-assert.equal(compiled.plan.nodes.find(({ nodeId }) => nodeId === "generate-content")?.outputs.length, 10);
+assert.equal(compiled.plan.nodes.find(({ nodeId }) => nodeId === "generate-content")?.outputs.length, 12);
 assert.deepEqual(compiled.plan.warnings, ["PLACEHOLDER_ASSETS_USED"]);
 
 const fabricMod = JSON.parse(textOutput(compiled, "src/main/resources/fabric.mod.json")) as {
@@ -142,6 +144,26 @@ assert.deepEqual(
     type: "minecraft:block",
   },
 );
+assert.deepEqual(
+  JSON.parse(textOutput(compiled, "src/main/resources/data/infectedfrontier/recipes/blue_ingot_recycling.json")),
+  {
+    category: "misc",
+    ingredients: [{ item: "infectedfrontier:blue_ore_item" }],
+    result: { item: "infectedfrontier:blue_ingot" },
+    type: "minecraft:crafting_shapeless",
+  },
+);
+assert.deepEqual(
+  JSON.parse(textOutput(compiled, "src/main/resources/data/infectedfrontier/recipes/smelt_blue_ore.json")),
+  {
+    category: "misc",
+    cookingtime: 200,
+    experience: 0,
+    ingredient: { item: "infectedfrontier:blue_ore_item" },
+    result: "infectedfrontier:blue_ingot",
+    type: "minecraft:smelting",
+  },
+);
 
 const reorderedRoot = {
   packaging: fixture.packaging,
@@ -162,6 +184,7 @@ assert.equal(
 );
 const reorderedContent = fabricBasicContentFixture();
 reorderedContent.gameplay.items.reverse();
+reorderedContent.gameplay.recipes.reverse();
 assert.equal(
   (await compileFabricPhase1(JSON.stringify(reorderedContent))).plan.planId,
   compiled.plan.planId,
@@ -173,11 +196,31 @@ const hyphenated = fabricBasicContentFixture();
 hyphenated.project.modId = "infected-frontier";
 await expectCompilerError(JSON.stringify(hyphenated), "SPEC_UNSUPPORTED", "/project/modId");
 const foreignNamespace = fabricBasicContentFixture();
+foreignNamespace.gameplay.recipes = [];
 foreignNamespace.gameplay.items[0]!.id = "othermod:blue_ingot";
 await expectCompilerError(JSON.stringify(foreignNamespace), "SPEC_UNSUPPORTED", "/gameplay/items/0/id");
 const referencedItem = fabricBasicContentFixture();
 referencedItem.gameplay.items[0]!.references = ["infectedfrontier:blue_ore_item"];
 await expectCompilerError(JSON.stringify(referencedItem), "SPEC_UNSUPPORTED", "/gameplay/items/0/references");
+const shapedRecipe = fabricBasicContentFixture();
+shapedRecipe.gameplay.recipes[0]!.type = "shaped";
+await expectCompilerError(JSON.stringify(shapedRecipe), "SPEC_UNSUPPORTED", "/gameplay/recipes/0/type");
+const customSerializer = fabricBasicContentFixture();
+customSerializer.gameplay.recipes[0]!.serializer = "infectedfrontier:custom";
+await expectCompilerError(JSON.stringify(customSerializer), "SPEC_UNSUPPORTED", "/gameplay/recipes/0/serializer");
+const invalidSmelting = fabricBasicContentFixture();
+invalidSmelting.gameplay.recipes[1]!.ingredients.push("infectedfrontier:blue_ingot");
+await expectCompilerError(
+  JSON.stringify(invalidSmelting),
+  "SPEC_UNSUPPORTED",
+  "/gameplay/recipes/1/ingredients",
+);
+const foreignRecipe = fabricBasicContentFixture();
+foreignRecipe.gameplay.recipes[0]!.id = "othermod:blue_ingot_recycling";
+await expectCompilerError(JSON.stringify(foreignRecipe), "SPEC_UNSUPPORTED", "/gameplay/recipes/0/id");
+const blockRecipeResult = fabricBasicContentFixture();
+blockRecipeResult.gameplay.recipes[0]!.result = "infectedfrontier:blue_ore";
+await expectCompilerError(JSON.stringify(blockRecipeResult), "SPEC_UNSUPPORTED", "/gameplay/recipes/0/result");
 const v0 = { ...fixture, schemaVersion: 0 };
 await expectCompilerError(JSON.stringify(v0), "SPEC_INVALID", "/schemaVersion");
 await expectCompilerError("{", "SPEC_INVALID");

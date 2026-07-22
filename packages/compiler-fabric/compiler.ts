@@ -106,8 +106,10 @@ interface ResourceLocationParts {
 interface NormalizedContent {
   readonly items: readonly ModSpecV1["gameplay"]["items"][number][];
   readonly blocks: readonly ModSpecV1["gameplay"]["blocks"][number][];
+  readonly recipes: readonly ModSpecV1["gameplay"]["recipes"][number][];
   readonly itemParts: ReadonlyMap<string, ResourceLocationParts>;
   readonly blockParts: ReadonlyMap<string, ResourceLocationParts>;
+  readonly recipeParts: ReadonlyMap<string, ResourceLocationParts>;
   readonly blockByItem: ReadonlyMap<string, ModSpecV1["gameplay"]["blocks"][number]>;
 }
 
@@ -148,7 +150,6 @@ function basicContentPreflight(spec: ModSpecV1): NormalizedContent {
   }
   const sections: readonly [readonly unknown[], string][] = [
     [spec.gameplay.entities, "/gameplay/entities"],
-    [spec.gameplay.recipes, "/gameplay/recipes"],
     [spec.gameplay.summoning, "/gameplay/summoning"],
     [spec.gameplay.screens, "/gameplay/screens"],
     [spec.gameplay.structures, "/gameplay/structures"],
@@ -210,12 +211,66 @@ function basicContentPreflight(spec: ModSpecV1): NormalizedContent {
     blockByItem.set(block.item, block);
   });
 
+  const recipeParts = new Map<string, ResourceLocationParts>();
+  spec.gameplay.recipes.forEach((recipe, index) => {
+    const parts = parseResourceLocation(recipe.id);
+    if (parts.namespace !== spec.project.modId) {
+      pushUnsupported(errors, `/gameplay/recipes/${index}/id`, "Fabric phase 1 recipe namespaces must equal project.modId.");
+    }
+    if (recipe.references.length > 0) {
+      pushUnsupported(errors, `/gameplay/recipes/${index}/references`, "Fabric phase 1 recipes cannot carry resource references.");
+    }
+    if (recipe.serializer !== undefined) {
+      pushUnsupported(errors, `/gameplay/recipes/${index}/serializer`, "Fabric phase 1 recipes use only built-in serializers.");
+    }
+    if (recipe.type === "shaped" || recipe.type === "custom") {
+      pushUnsupported(
+        errors,
+        `/gameplay/recipes/${index}/type`,
+        `Fabric phase 1 cannot safely generate ${recipe.type} recipes from the current ModSpec fields.`,
+      );
+    }
+    if (recipe.type === "shapeless" && (recipe.ingredients.length < 1 || recipe.ingredients.length > 9)) {
+      pushUnsupported(
+        errors,
+        `/gameplay/recipes/${index}/ingredients`,
+        "A Fabric 1.20.1 shapeless recipe requires between 1 and 9 item ingredients.",
+      );
+    }
+    if (recipe.type === "smelting" && recipe.ingredients.length !== 1) {
+      pushUnsupported(
+        errors,
+        `/gameplay/recipes/${index}/ingredients`,
+        "A Fabric 1.20.1 smelting recipe requires exactly one item ingredient.",
+      );
+    }
+    recipe.ingredients.forEach((ingredient, ingredientIndex) => {
+      if (!itemParts.has(ingredient)) {
+        pushUnsupported(
+          errors,
+          `/gameplay/recipes/${index}/ingredients/${ingredientIndex}`,
+          "Fabric phase 1 recipe ingredients must be declared gameplay items.",
+        );
+      }
+    });
+    if (!itemParts.has(recipe.result)) {
+      pushUnsupported(
+        errors,
+        `/gameplay/recipes/${index}/result`,
+        "Fabric phase 1 recipe results must be declared gameplay items.",
+      );
+    }
+    recipeParts.set(recipe.id, parts);
+  });
+
   if (errors.length > 0) throw new FabricCompilerError("SPEC_UNSUPPORTED", errors);
   return Object.freeze({
     items: Object.freeze([...spec.gameplay.items].sort((left, right) => compareAscii(left.id, right.id))),
     blocks: Object.freeze([...spec.gameplay.blocks].sort((left, right) => compareAscii(left.id, right.id))),
+    recipes: Object.freeze([...spec.gameplay.recipes].sort((left, right) => compareAscii(left.id, right.id))),
     itemParts,
     blockParts,
+    recipeParts,
     blockByItem,
   });
 }
@@ -519,6 +574,30 @@ public final class GeneratedClient implements ClientModInitializer {
     language[`block.${parts.namespace}.${parts.path.replaceAll("/", ".")}`] = titleFromPath(parts.path);
   }
 
+  for (const recipe of content.recipes) {
+    const parts = content.recipeParts.get(recipe.id);
+    if (parts === undefined) throw fabricCompilerError("INTERNAL_ERROR", "Recipe normalization failed safely.");
+    const value = recipe.type === "shapeless"
+      ? {
+          type: "minecraft:crafting_shapeless",
+          category: "misc",
+          ingredients: recipe.ingredients.map((item) => ({ item })),
+          result: { item: recipe.result },
+        }
+      : {
+          type: "minecraft:smelting",
+          category: "misc",
+          cookingtime: 200,
+          experience: 0,
+          ingredient: { item: recipe.ingredients[0] },
+          result: recipe.result,
+        };
+    inputs.push(jsonInput(
+      `${resourceRoot}/data/${parts.namespace}/recipes/${parts.path}.json`,
+      value,
+    ));
+  }
+
   inputs.push(jsonInput(`${resourceRoot}/assets/${modId}/lang/en_us.json`, language));
   if (content.items.length > 0 || content.blocks.length > 0) {
     inputs.push(input(
@@ -691,6 +770,7 @@ export function compileVerifiedFabricPhase1(
       ...spec.gameplay,
       items: [...content.items],
       blocks: [...content.blocks],
+      recipes: [...content.recipes],
     },
   };
   const projectFileInputs = projectInputs(spec, verifiedPack);

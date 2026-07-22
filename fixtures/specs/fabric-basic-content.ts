@@ -14,6 +14,22 @@ export function fabricBasicContentFixture(): ModSpecV1 {
     item: "infectedfrontier:blue_ore_item",
     hardness: 3.5,
   }];
+  spec.gameplay.recipes = [
+    {
+      id: "infectedfrontier:blue_ingot_recycling",
+      references: [],
+      type: "shapeless",
+      ingredients: ["infectedfrontier:blue_ore_item"],
+      result: "infectedfrontier:blue_ingot",
+    },
+    {
+      id: "infectedfrontier:smelt_blue_ore",
+      references: [],
+      type: "smelting",
+      ingredients: ["infectedfrontier:blue_ore_item"],
+      result: "infectedfrontier:blue_ingot",
+    },
+  ];
   spec.gameplay.entities = [];
   spec.gameplay.structures = [];
   spec.gameplay.screens = [];

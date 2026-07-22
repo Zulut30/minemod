@@ -102,7 +102,7 @@ Generic image-to-3D остаётся experimental provider. Надёжный pro
 | Fixed secure Gradle runner | Реализован для NeoForge | Выделить общую execution основу, добавить отдельную Fabric policy |
 | NeoForge 26.1.2 compiler | Реализован и остаётся зелёным | Не конвертировать подменой imports; оставить отдельным backend |
 | Application orchestration, CLI/MCP E2E | Не завершено | Закрыть в первом Fabric vertical slice |
-| Fabric pack/compiler/fixtures | Pack revision 2 и compiler phase 1 генерируют и строго собирают scaffold, items, blocks, creative entries, models, blockstates, loot и localization | Добавить recipes/tags/datagen, runner, GameTests и hosted gates |
+| Fabric pack/compiler/fixtures | Pack revision 2 и compiler phase 1 генерируют и строго собирают scaffold, items, blocks, creative entries, shapeless/smelting recipes, models, blockstates, loot и localization | Расширить recipe contract для shaped recipes, добавить tags/datagen, runner, GameTests и hosted gates |
 | Production AI asset pipeline | Частично: реализованы bounded model/material/animation contracts, local-space articulated plans с automatic pivot resolution и non-overlapping UV packing, entity/held-item geometry + rig, procedural pixel PNG atlases и детерминированный editable Blockbench 5 export с embedded texture и keyframe clips; concept provider и runtime exporters отсутствуют | Добавить semantic archetype planner, AI texture candidates и проверенный для 1.20.1 runtime export |
 
 Следовательно, сейчас есть качественный control plane и рабочий NeoForge backend, но **инструмент ещё не генерирует Fabric-мод от промпта до JAR и не создаёт production-ассеты**.
@@ -201,7 +201,7 @@ fixtures/fabric-1.20.1-empty/
 
 **Проверка:** golden tests, semantic compile fixtures, datagen diff, path/size/property tests.
 
-**Интеграционный статус на 22 июля 2026:** `compiler-fabric` phase 1 потребляет только trusted pack revision 2 и генерирует Gradle scaffold, `fabric.mod.json`, split main/client entrypoint, items, blocks, creative entries, item/block models, blockstates, self-drop loot и `en_us`. Golden tests и реальная strict offline Gradle-сборка generated fixture проходят. Пока используются явно помеченные placeholder textures; recipes, tags и datagen ещё не реализованы, поэтому F1.1 остаётся открытым.
+**Интеграционный статус на 22 июля 2026:** `compiler-fabric` phase 1 потребляет только trusted pack revision 2 и генерирует Gradle scaffold, `fabric.mod.json`, split main/client entrypoint, items, blocks, creative entries, shapeless/smelting recipes, item/block models, blockstates, self-drop loot и `en_us`. Golden tests и реальная strict offline Gradle-сборка generated fixture проходят. Shaped/custom recipes отклоняются до расширения ModSpec полями pattern/key/custom payload. Пока используются явно помеченные placeholder textures; tags и datagen ещё не реализованы, поэтому F1.1 остаётся открытым.
 
 #### F1.2. Закрытая Fabric build policy
 
