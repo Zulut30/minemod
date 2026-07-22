@@ -59,7 +59,7 @@ for (const bone of articulated.model.bones) {
 }
 const compiledArticulated = compileBlockbenchModel(articulated.model);
 assert.deepEqual(compiledArticulated.metrics, { bones: 13, cubes: 12, triangles: 144 });
-assert.equal(compiledArticulated.sha256, "829a203c7507a3cc35de7e653f333533df724b7676f22b0107e28d1510a3d8c0");
+assert.equal(compiledArticulated.sha256, "46e99621e21a28833419096e359edf7819dd5fe1fce23af0db52fe6f68a6f498");
 assert.throws(
   () => materializeArticulatedModel({ ...(articulatedPlan as object), texture: { width: 16, height: 16 } }),
   /cannot fit cube/u,
