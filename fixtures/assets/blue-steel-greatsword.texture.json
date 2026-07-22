@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 0,
+  "kind": "cuboid-texture-plan",
+  "modelId": "mcdev:blue_steel_greatsword",
+  "materials": [
+    { "id": "blue_steel", "colors": { "base": "#397fa8", "shadow": "#173752", "highlight": "#8ee8f2", "accent": "#3ac7e8" } },
+    { "id": "deep_steel", "colors": { "base": "#23384f", "shadow": "#101b2b", "highlight": "#566f86", "accent": "#277ea5" } },
+    { "id": "silver", "colors": { "base": "#9fb5bf", "shadow": "#516873", "highlight": "#e9fbff", "accent": "#6fcbdc" } },
+    { "id": "arcane", "colors": { "base": "#2454a6", "shadow": "#18255c", "highlight": "#6de8ff", "accent": "#d1fbff" } }
+  ],
+  "assignments": [
+    { "cubeId": "grip_core", "materialId": "deep_steel", "pattern": "striped", "seed": 31 },
+    { "cubeId": "grip_wrap_1", "materialId": "silver", "pattern": "solid", "seed": 32 },
+    { "cubeId": "grip_wrap_2", "materialId": "silver", "pattern": "solid", "seed": 32 },
+    { "cubeId": "grip_wrap_3", "materialId": "silver", "pattern": "solid", "seed": 32 },
+    { "cubeId": "grip_wrap_4", "materialId": "silver", "pattern": "solid", "seed": 32 },
+    { "cubeId": "pommel_core", "materialId": "deep_steel", "pattern": "riveted", "seed": 33 },
+    { "cubeId": "pommel_gem", "materialId": "arcane", "pattern": "panel", "seed": 34 },
+    { "cubeId": "guard_core", "materialId": "blue_steel", "pattern": "panel", "seed": 35 },
+    { "cubeId": "guard_left_wing", "materialId": "silver", "pattern": "striped", "seed": 36 },
+    { "cubeId": "guard_right_wing", "materialId": "silver", "pattern": "striped", "seed": 36 },
+    { "cubeId": "guard_gem", "materialId": "arcane", "pattern": "riveted", "seed": 37 },
+    { "cubeId": "blade_core", "materialId": "blue_steel", "pattern": "panel", "seed": 38 },
+    { "cubeId": "blade_left_edge", "materialId": "silver", "pattern": "solid", "seed": 39 },
+    { "cubeId": "blade_right_edge", "materialId": "silver", "pattern": "solid", "seed": 39 },
+    { "cubeId": "blade_upper", "materialId": "blue_steel", "pattern": "striped", "seed": 40 },
+    { "cubeId": "blade_tip", "materialId": "silver", "pattern": "solid", "seed": 41 },
+    { "cubeId": "blade_rune", "materialId": "arcane", "pattern": "riveted", "seed": 42 }
+  ]
+}

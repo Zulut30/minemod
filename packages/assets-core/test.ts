@@ -106,6 +106,15 @@ assert.notEqual(texturedWeapon.texture.sha256, texturedGolem.texture.sha256);
 assert.equal(texturedWeapon.sha256, "2432bc448de494d262b627040f78ad194093f4323b71b602ae7274ca383183fb");
 assert.equal(texturedWeapon.texture.sha256, "4dd514804d2ccccd01691c3700c1abbf8d04b8902e50f01f08e2b589d1801b84");
 
+const blueSteelSword = compileTexturedBlockbenchModel(
+  fixture("blue-steel-greatsword.model.json"),
+  fixture("blue-steel-greatsword.texture.json"),
+);
+assert.deepEqual(blueSteelSword.metrics, { bones: 5, cubes: 17, triangles: 204 });
+assert.equal(blueSteelSword.texture.colorCount >= 12, true);
+assert.equal(blueSteelSword.sha256, "bf5bd530bfb2578b4cfb12c2401e05ae0f607cbb2f7ca52e606ded264ebe44e3");
+assert.equal(blueSteelSword.texture.sha256, "0e918e938f3dbe25f47eaf053ac17c0904e90d7299a204f540204eca39b0ef9a");
+
 assert.throws(
   () => compileBlockbenchModel({ ...(golem as object), command: "execute" }),
   /CuboidModelSpec/u,
