@@ -59,7 +59,7 @@ export interface ApplyWorkspaceNode extends BuildPlanNodeBase {
 
 export interface GradleCleanBuildNode extends BuildPlanNodeBase {
   readonly kind: "gradle-clean-build";
-  readonly policy: "neoforge-phase1-v1";
+  readonly policy: "fabric-1.20.1-phase0-v1" | "neoforge-phase1-v1";
   readonly validatorPolicy: "sha256-outputs-v1";
   readonly provenance: "fixed-build-runner";
 }
@@ -140,7 +140,7 @@ function isBuildPlanNode(value: unknown): value is BuildPlanNode {
       return value.policy === "create-only-cas-wal-v1" &&
         value.validatorPolicy === "workspace-manifest-v1" && value.provenance === "workspace-transaction";
     case "gradle-clean-build":
-      return value.policy === "neoforge-phase1-v1" &&
+      return (value.policy === "fabric-1.20.1-phase0-v1" || value.policy === "neoforge-phase1-v1") &&
         value.validatorPolicy === "sha256-outputs-v1" && value.provenance === "fixed-build-runner";
     case "index-artifacts":
       return value.policy === "sha256-v1" &&
