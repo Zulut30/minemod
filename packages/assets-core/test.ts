@@ -6,6 +6,7 @@ import {
   analyzeArticulatedModelQuality,
   analyzeReferenceCatalog,
   analyzeTexturePlanQuality,
+  compileCropAssets,
   compileBlockbenchModel,
   compileAnimatedTexturedBlockbenchModel,
   compileInventoryIcon,
@@ -68,6 +69,34 @@ assert.equal(
   "crop textures must be byte-deterministic",
 );
 assert.throws(() => renderCropStageTexture(waterRicePlan, "lower", 4), /between 0 and 3/u);
+
+const compiledWaterRice = compileCropAssets(waterRicePlan, diverseReferenceReport);
+assert.deepEqual(compiledWaterRice.metrics, {
+  runtimeAges: 8,
+  visualStages: 4,
+  layers: 2,
+  modelFiles: 8,
+  textureFiles: 8,
+});
+const waterRiceBlockstate = JSON.parse(compiledWaterRice.blockstate.text) as {
+  variants: Record<string, { model: string }>;
+};
+assert.equal(Object.keys(waterRiceBlockstate.variants).length, 16);
+assert.equal(waterRiceBlockstate.variants["age=0,upper=false"]?.model, "mcdev:block/water_rice_lower_stage0");
+assert.equal(waterRiceBlockstate.variants["age=7,upper=true"]?.model, "mcdev:block/water_rice_upper_stage3");
+assert.equal(compiledWaterRice.models.every(({ text }) =>
+  (JSON.parse(text) as { parent?: string }).parent === "minecraft:block/crop"), true);
+assert.equal(compiledWaterRice.textures.every(({ texture }) => texture.width === 16 && texture.height === 16), true);
+assert.deepEqual(
+  compileCropAssets(structuredClone(waterRicePlan), diverseReferenceReport).models,
+  compiledWaterRice.models,
+  "crop resource JSON must be byte-deterministic",
+);
+assert.throws(() => compileCropAssets(waterRicePlan, singleReferenceReport), /not ready/u);
+assert.throws(() => compileCropAssets({
+  ...(waterRicePlan as object),
+  referenceRuleIds: ["compress_runtime_ages_into_visual_stages"],
+}, diverseReferenceReport), /unpromoted/u);
 
 function assertNoUvOverlap(model: CuboidModelSpec): void {
   const rectangles = model.bones.flatMap(({ cubes }) => cubes.map((cube) => ({
