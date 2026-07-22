@@ -7,3 +7,4 @@ export * from "./v1/pack.ts";
 export * from "./v1/plan.ts";
 export * from "./v1/workspace.ts";
 export * from "./v2/pack.ts";
+export * from "./v3/pack.ts";

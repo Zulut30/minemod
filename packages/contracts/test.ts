@@ -8,6 +8,7 @@ import {
   BUILD_PLAN_CONTRACT,
   COMPATIBILITY_PACK_CONTRACT,
   COMPATIBILITY_PACK_V2_CONTRACT,
+  COMPATIBILITY_PACK_V3_CONTRACT,
   CONTRACT_LIMITS,
   ERROR_CONTRACT,
   LOG_EVENT_CONTRACT,
@@ -22,7 +23,9 @@ import {
   isBuildPlan,
   isCompatibilityPackManifest,
   isCompatibilityPackManifestV2,
+  isCompatibilityPackManifestV3,
   isCompatibilitySelectorV2,
+  isCompatibilitySelectorV3,
   isLogEvent,
   isMcdevError,
   isPlanBuildRequest,
@@ -48,6 +51,17 @@ function clone<T>(value: T): T {
 
 const pack = fixture("compatibility-pack");
 const fabricPack = fixtureV2("compatibility-pack");
+const fabricJava17Pack = {
+  ...(clone(fabricPack) as Record<string, unknown>),
+  contract: COMPATIBILITY_PACK_V3_CONTRACT,
+  packId: "fabric-1.20.1-java-17",
+  target: {
+    minecraft: "1.20.1",
+    loader: "fabric",
+    java: 17,
+    fabricLoader: "0.19.3",
+  },
+};
 const plan = fixture("build-plan");
 const artifactIndex = fixture("artifact-index");
 const workspaceManifest = fixture("workspace-manifest");
@@ -57,10 +71,16 @@ const error = fixture("error");
 
 assert.equal(isCompatibilityPackManifest(pack), true);
 assert.equal(isCompatibilityPackManifestV2(fabricPack), true);
+assert.equal(isCompatibilityPackManifestV3(fabricJava17Pack), true);
 assert.equal(isCompatibilityPackManifest(fabricPack), false, "v2 must not alias v1");
 assert.equal(isCompatibilityPackManifestV2(pack), false, "v1 must not alias v2");
+assert.equal(isCompatibilityPackManifestV2(fabricJava17Pack), false, "v3 must not alias v2");
+assert.equal(isCompatibilityPackManifestV3(fabricPack), false, "v2 must not alias v3");
 assert.equal(isCompatibilitySelectorV2({ minecraft: "26.2", loader: "fabric", java: 25 }), true);
 assert.equal(isCompatibilitySelectorV2({ minecraft: "26.2", loader: "fabric", java: 25, path: "." }), false);
+assert.equal(isCompatibilitySelectorV3({ minecraft: "1.20.1", loader: "fabric", java: 17 }), true);
+assert.equal(isCompatibilitySelectorV3({ minecraft: "1.20.1", loader: "fabric", java: 21 }), false);
+assert.equal(isCompatibilitySelectorV3({ minecraft: "1.20.1", loader: "neoforge", java: 17 }), false);
 assert.equal(isBuildPlan(plan), true);
 assert.equal(isArtifactIndex(artifactIndex), true);
 assert.equal(isWorkspaceManifest(workspaceManifest), true);
@@ -135,6 +155,7 @@ assert.equal(isApplyPlanResult({
 const contractLiterals = [
   COMPATIBILITY_PACK_CONTRACT,
   COMPATIBILITY_PACK_V2_CONTRACT,
+  COMPATIBILITY_PACK_V3_CONTRACT,
   BUILD_PLAN_CONTRACT,
   ARTIFACT_INDEX_CONTRACT,
   WORKSPACE_MANIFEST_CONTRACT,
