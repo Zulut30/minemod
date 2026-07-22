@@ -143,10 +143,22 @@ const fungalInfected = compileTexturedBlockbenchModel(
   fixture("fungal-infected.model.json"),
   fixture("fungal-infected.texture.json"),
 );
-assert.deepEqual(fungalInfected.metrics, { bones: 10, cubes: 28, triangles: 336 });
-assert.equal(fungalInfected.texture.colorCount >= 16, true);
-assert.equal(fungalInfected.sha256, "55a656fc7847977a59509dddc926f41adc682087a8b7b92c754d81a41330e50d");
-assert.equal(fungalInfected.texture.sha256, "3a5d5c93ab6e58a7b00efa6fd44d03ea777ab1c308b8f54fe3acb92ab1dd7053");
+assert.deepEqual(fungalInfected.metrics, { bones: 27, cubes: 60, triangles: 720 });
+assert.equal(fungalInfected.texture.colorCount >= 20, true);
+assert.equal(fungalInfected.texture.opaquePixels >= 8_000, true);
+assert.equal(fungalInfected.sha256, "ec80872b28c1276b61593273c5510689e0259a491c36b57295540ccb6aa32cf6");
+assert.equal(fungalInfected.texture.sha256, "9968f8e7a4c56d121650a22e98b131964365b29c640f4cca895eab0c092b3863");
+const fungalProject = JSON.parse(fungalInfected.text) as {
+  groups: Array<{ name: string }>;
+  outliner: unknown[];
+};
+for (const articulatedBone of [
+  "pelvis", "chest", "neck", "left_forearm", "right_forearm",
+  "left_shin", "right_shin", "fungus_cap_left", "fungus_cap_right",
+]) {
+  assert.equal(fungalProject.groups.some(({ name }) => name === articulatedBone), true, articulatedBone);
+}
+assert.equal(fungalProject.outliner.length, 1);
 
 const animatedFungalInfected = compileAnimatedTexturedBlockbenchModel(
   fixture("fungal-infected.model.json"),
@@ -154,7 +166,7 @@ const animatedFungalInfected = compileAnimatedTexturedBlockbenchModel(
   fixture("fungal-infected.animation.json"),
 );
 assert.deepEqual(animatedFungalInfected.animationMetrics, { clips: 3, tracks: 22, keyframes: 110 });
-assert.equal(animatedFungalInfected.sha256, "b32c26939c8919a8db263592704d67f624b0b4b1608cd974ad7ede5173fea8dc");
+assert.equal(animatedFungalInfected.sha256, "978da0a366c499ca3ea728acae34e3449d8eeed501bee0459afcdd28b69a3af0");
 const animatedProject = JSON.parse(animatedFungalInfected.text) as {
   animations: Array<{
     name: string;
