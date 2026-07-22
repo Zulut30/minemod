@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 0,
+  "kind": "articulated-model-plan",
+  "id": "mcdev:articulated_biped",
+  "name": "Articulated Biped",
+  "modelType": "entity",
+  "texture": { "width": 64, "height": 64 },
+  "uvPadding": 1,
+  "bones": [
+    { "id": "root", "parent": null, "pivotOffset": [0, 0, 0], "rotation": [0, 0, 0], "cubes": [] },
+    {
+      "id": "pelvis", "parent": "root", "pivotOffset": [0, 12, 0], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "pelvis_core", "originOffset": [-4, -2, -2], "size": [8, 4, 4], "rotation": [0, 0, 0], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "torso", "parent": "pelvis", "pivotOffset": [0, 2, 0], "rotation": [4, 0, 0],
+      "cubes": [
+        { "id": "torso_core", "originOffset": [-4, 0, -2], "size": [8, 6, 4], "rotation": [0, 0, 0], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "chest", "parent": "torso", "pivotOffset": [0, 6, 0], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "chest_core", "originOffset": [-5, 0, -2.5], "size": [10, 6, 5], "rotation": [0, 0, 0], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "head", "parent": "chest", "pivotOffset": [0, 6, 0], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "head_core", "originOffset": [-4, 0, -4], "size": [8, 8, 8], "rotation": [0, 0, 0], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "left_arm", "parent": "chest", "pivotOffset": [5, 5, 0], "rotation": [0, 0, -5],
+      "cubes": [
+        { "id": "left_upper_arm", "originOffset": [0, -6, -2], "size": [4, 7, 4], "rotation": [0, 0, 0], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "left_forearm", "parent": "left_arm", "pivotOffset": [2, -6, 0], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "left_forearm_core", "originOffset": [-2, -6, -2], "size": [4, 7, 4], "rotation": [0, 0, 0], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "right_arm", "parent": "chest", "pivotOffset": [-5, 5, 0], "rotation": [0, 0, 5],
+      "cubes": [
+        { "id": "right_upper_arm", "originOffset": [-4, -6, -2], "size": [4, 7, 4], "rotation": [0, 0, 0], "inflate": 0, "mirror": true }
+      ]
+    },
+    {
+      "id": "right_forearm", "parent": "right_arm", "pivotOffset": [-2, -6, 0], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "right_forearm_core", "originOffset": [-2, -6, -2], "size": [4, 7, 4], "rotation": [0, 0, 0], "inflate": 0, "mirror": true }
+      ]
+    },
+    {
+      "id": "left_leg", "parent": "pelvis", "pivotOffset": [2, -2, 0], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "left_thigh", "originOffset": [-2, -6, -2], "size": [4, 7, 4], "rotation": [0, 0, 0], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "left_shin", "parent": "left_leg", "pivotOffset": [0, -6, 0], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "left_shin_core", "originOffset": [-2, -6, -2], "size": [4, 7, 4], "rotation": [0, 0, 0], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "right_leg", "parent": "pelvis", "pivotOffset": [-2, -2, 0], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "right_thigh", "originOffset": [-2, -6, -2], "size": [4, 7, 4], "rotation": [0, 0, 0], "inflate": 0, "mirror": true }
+      ]
+    },
+    {
+      "id": "right_shin", "parent": "right_leg", "pivotOffset": [0, -6, 0], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "right_shin_core", "originOffset": [-2, -6, -2], "size": [4, 7, 4], "rotation": [0, 0, 0], "inflate": 0, "mirror": true }
+      ]
+    }
+  ]
+}

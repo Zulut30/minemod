@@ -154,9 +154,9 @@ const ArticulatedCubeSchema = z.strictObject({
   id: identifier,
   originOffset: vector3,
   size: z.tuple([
-    z.number().positive().max(CUBOID_MODEL_LIMITS.maxCubeSize),
-    z.number().positive().max(CUBOID_MODEL_LIMITS.maxCubeSize),
-    z.number().positive().max(CUBOID_MODEL_LIMITS.maxCubeSize),
+    z.number().int().positive().max(CUBOID_MODEL_LIMITS.maxCubeSize),
+    z.number().int().positive().max(CUBOID_MODEL_LIMITS.maxCubeSize),
+    z.number().int().positive().max(CUBOID_MODEL_LIMITS.maxCubeSize),
   ]),
   rotation: rotation3,
   inflate: z.number().min(0).max(4),

@@ -6,12 +6,64 @@ import {
   compileAnimatedTexturedBlockbenchModel,
   compileInventoryIcon,
   compileTexturedBlockbenchModel,
+  materializeArticulatedModel,
   renderCuboidTextureAtlas,
 } from "./index.ts";
 
 function fixture(name: string): unknown {
   return JSON.parse(readFileSync(fileURLToPath(new URL(`../../fixtures/assets/${name}`, import.meta.url)), "utf8"));
 }
+
+const articulatedPlan = fixture("articulated-biped.plan.json");
+const articulated = materializeArticulatedModel(articulatedPlan);
+assert.deepEqual(articulated, materializeArticulatedModel(structuredClone(articulatedPlan)));
+assert.equal(articulated.model.bones.length, 13);
+assert.deepEqual(articulated.packing, {
+  rectangles: 12,
+  occupiedPixels: 2_682,
+  usedWidth: 63,
+  usedHeight: 61,
+  atlasPixels: 4_096,
+  utilization: 0.65478515625,
+});
+assert.deepEqual(articulated.model.bones.find(({ id }) => id === "head")?.pivot, [0, 26, 0]);
+assert.deepEqual(articulated.model.bones.find(({ id }) => id === "left_forearm")?.pivot, [7, 19, 0]);
+assert.deepEqual(
+  articulated.model.bones.find(({ id }) => id === "left_forearm")?.cubes[0]?.origin,
+  [5, 13, -2],
+);
+
+const uvRectangles = articulated.model.bones.flatMap(({ cubes }) => cubes.map((cube) => ({
+  id: cube.id,
+  left: cube.uv[0],
+  top: cube.uv[1],
+  right: cube.uv[0] + 2 * (cube.size[0] + cube.size[2]),
+  bottom: cube.uv[1] + cube.size[1] + cube.size[2],
+})));
+for (const [index, left] of uvRectangles.entries()) {
+  for (const right of uvRectangles.slice(index + 1)) {
+    assert.equal(
+      left.right <= right.left || right.right <= left.left ||
+      left.bottom <= right.top || right.bottom <= left.top,
+      true,
+      `${left.id} and ${right.id} UV rectangles overlap`,
+    );
+  }
+}
+
+const reversedPlan = structuredClone(articulatedPlan) as { bones: unknown[] };
+reversedPlan.bones.reverse();
+const reversed = materializeArticulatedModel(reversedPlan);
+for (const bone of articulated.model.bones) {
+  assert.deepEqual(reversed.model.bones.find(({ id }) => id === bone.id)?.pivot, bone.pivot);
+}
+const compiledArticulated = compileBlockbenchModel(articulated.model);
+assert.deepEqual(compiledArticulated.metrics, { bones: 13, cubes: 12, triangles: 144 });
+assert.equal(compiledArticulated.sha256, "829a203c7507a3cc35de7e653f333533df724b7676f22b0107e28d1510a3d8c0");
+assert.throws(
+  () => materializeArticulatedModel({ ...(articulatedPlan as object), texture: { width: 16, height: 16 } }),
+  /cannot fit cube/u,
+);
 
 const golem = fixture("copper-guardian.model.json");
 const golemObject = golem as { id: string; bones: Array<{ cubes: Array<{ id: string }> }> };

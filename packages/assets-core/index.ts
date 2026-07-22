@@ -377,3 +377,8 @@ export {
   type CompiledInventoryIcon,
   type RenderedPixelIcon,
 } from "./inventory-icon.ts";
+export {
+  materializeArticulatedModel,
+  type ArticulatedModelPackingMetrics,
+  type MaterializedArticulatedModel,
+} from "./articulated-model.ts";
