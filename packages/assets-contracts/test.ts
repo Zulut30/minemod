@@ -173,6 +173,12 @@ const validTexturePlan: CuboidTexturePlan = {
 };
 
 assert.equal(CuboidTexturePlanSchema.safeParse(validTexturePlan).success, true);
+for (const pattern of ["scales", "mottled", "gradient"] as const) {
+  assert.equal(CuboidTexturePlanSchema.safeParse({
+    ...validTexturePlan,
+    assignments: [{ ...validTexturePlan.assignments[0]!, pattern }],
+  }).success, true, `${pattern} is a supported organic texture pattern`);
+}
 assert.equal(CuboidTexturePlanJsonSchema.additionalProperties, false);
 assert.equal(CUBOID_TEXTURE_LIMITS.maxMaterials, 16);
 assert.equal(CuboidTexturePlanSchema.safeParse({ ...validTexturePlan, command: "paint" }).success, false);

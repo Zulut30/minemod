@@ -6,6 +6,8 @@ Agent-native инструмент для создания production-ready Minec
 
 Проект развивается по [Fabric-first MVP-плану](docs/FABRIC_FIRST_MVP_PLAN.md). Основная цель — создание Fabric-модов для Minecraft 1.20.1. Уже реализованы строгие contracts, trusted Fabric 1.20.1/Fabric 26.2/NeoForge 26.1.2 packs, локально проверенный build и client/server smoke для Fabric 1.20.1, детерминированный codegen core, transactional workspace, artifact/logging слой, NeoForge compiler и fixed build runner. Для моделирования уже есть bounded cuboid/material contracts, детерминированные pixel texture atlases и экспорт сложной геометрии, rig и embedded PNG в editable Blockbench 5 `.bbmodel`. Fabric compiler, сквозная CLI/MCP orchestration, concept/AI texture provider, анимации и version-tested runtime export ещё предстоят.
 
+Поверх базового cuboid pipeline теперь есть параметрический архетип большого дракона: раздельные pivots шеи, челюсти, крыльев, лап и хвоста, детерминированное зеркалирование парных частей, органические texture patterns и structural quality preflight. Это техническая основа, а не автоматическое художественное одобрение: итоговый ассет всё ещё требует turntable и in-game human review по rubric.
+
 Этот README не объявляет отдельную фазу завершённой: актуальный статус определяется кодом, тестами и связанными audit/evidence, а не самим roadmap.
 
 ## Планируемый первый MVP
@@ -32,6 +34,7 @@ Fabric 26.2 и NeoForge 26.1.2 сохраняются как regression targets;
 - [Аудит локального Fabric 1.20.1 baseline](docs/audit/fabric-1.20.1-baseline.md)
 - [Аудит основы cuboid-моделирования](docs/audit/cuboid-modeling-foundation.md)
 - [Art Quality Rubric v0](docs/quality/art-quality-rubric-v0.md)
+- [Dragon archetype и structural preflight](docs/specs/dragon-archetype-v0.md)
 - [Third-party licensing boundary](THIRD_PARTY_NOTICES.md)
 
 ## Этапы реализации

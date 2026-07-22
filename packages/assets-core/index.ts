@@ -382,3 +382,14 @@ export {
   type ArticulatedModelPackingMetrics,
   type MaterializedArticulatedModel,
 } from "./articulated-model.ts";
+export {
+  createDragonArchetype,
+  createDragonTexturePlan,
+  type DragonArchetypeOptions,
+} from "./dragon-archetype.ts";
+export {
+  analyzeArticulatedModelQuality,
+  type ArticulatedModelQualityReport,
+  type ArticulatedQualityThresholds,
+  type ModelQualityDiagnostic,
+} from "./model-quality.ts";

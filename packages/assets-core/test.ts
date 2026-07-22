@@ -3,10 +3,13 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import type { CuboidModelSpec } from "@mcdev/assets-contracts";
 import {
+  analyzeArticulatedModelQuality,
   compileBlockbenchModel,
   compileAnimatedTexturedBlockbenchModel,
   compileInventoryIcon,
   compileTexturedBlockbenchModel,
+  createDragonArchetype,
+  createDragonTexturePlan,
   materializeArticulatedModel,
   renderCuboidTextureAtlas,
 } from "./index.ts";
@@ -69,6 +72,56 @@ assert.throws(
   () => materializeArticulatedModel({ ...(articulatedPlan as object), texture: { width: 16, height: 16 } }),
   /cannot fit cube/u,
 );
+
+const dragonPlan = createDragonArchetype({
+  id: "mcdev:ancient_verdant_dragon",
+  name: "Ancient Verdant Dragon",
+});
+const dragon = materializeArticulatedModel(dragonPlan);
+assert.deepEqual(dragon.packing, {
+  rectangles: 88,
+  occupiedPixels: 47_052,
+  usedWidth: 255,
+  usedHeight: 253,
+  atlasPixels: 65_536,
+  utilization: 0.71795654296875,
+});
+assertNoUvOverlap(dragon.model);
+const dragonQuality = analyzeArticulatedModelQuality(dragon.model, {
+  minBones: 40,
+  minCubes: 70,
+  minHierarchyDepth: 7,
+  minScaleBands: 6,
+  symmetryTolerance: 0.001,
+  requiredBones: ["head", "jaw", "left_wing_shoulder", "right_wing_shoulder", "tail_tip"],
+});
+assert.equal(dragonQuality.passes, true);
+assert.deepEqual({
+  bones: dragonQuality.boneCount,
+  cubes: dragonQuality.cubeCount,
+  depth: dragonQuality.hierarchyDepth,
+  scaleBands: dragonQuality.scaleBands,
+  bilateralPairs: dragonQuality.bilateralPairs,
+  span: dragonQuality.bounds.span,
+}, { bones: 44, cubes: 88, depth: 10, scaleBands: 11, bilateralPairs: 14, span: [150, 52, 148] });
+const asymmetricDragon = structuredClone(dragon.model);
+const rightWing = asymmetricDragon.bones.find(({ id }) => id === "right_wing_shoulder");
+if (rightWing === undefined) throw new Error("Dragon fixture lost right_wing_shoulder.");
+rightWing.pivot[1] += 2;
+assert.equal(analyzeArticulatedModelQuality(asymmetricDragon, {
+  minBones: 40,
+  minCubes: 70,
+  minHierarchyDepth: 7,
+  minScaleBands: 6,
+  symmetryTolerance: 0.001,
+  requiredBones: ["head", "jaw"],
+}).diagnostics.some(({ id }) => id === "ART_ANATOMY_SYMMETRY_DRIFT"), true);
+const compiledDragon = compileTexturedBlockbenchModel(dragon.model, createDragonTexturePlan(dragonPlan));
+assert.deepEqual(compiledDragon.metrics, { bones: 44, cubes: 88, triangles: 1_056 });
+assert.equal(compiledDragon.texture.colorCount >= 20, true);
+assert.equal(compiledDragon.texture.opaquePixels, 47_052);
+assert.equal(compiledDragon.sha256, "8c5f2b512d30fc15a320dd9b6d22700addb9603a13cbf7d90dd4735788d143ea");
+assert.equal(compiledDragon.texture.sha256, "2772ec26b6a4fa9f64dd251644807307a2dd70a7d5f92f3380d15e81aee2499f");
 
 const galleon = materializeArticulatedModel(fixture("merchant-galleon.plan.json"));
 assert.deepEqual(galleon.packing, {

@@ -241,7 +241,15 @@ const MaterialSchema = z.strictObject({
 const TextureAssignmentSchema = z.strictObject({
   cubeId: identifier,
   materialId: identifier,
-  pattern: z.enum(["solid", "panel", "riveted", "striped"]),
+  pattern: z.enum([
+    "solid",
+    "panel",
+    "riveted",
+    "striped",
+    "scales",
+    "mottled",
+    "gradient",
+  ]),
   seed: z.number().int().min(0).max(4_294_967_295),
 });
 
