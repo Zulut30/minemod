@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 0,
+  "kind": "reference-study",
+  "id": "croptopia_rice_1_20_1",
+  "analysisMode": "source-inspection",
+  "source": {
+    "project": "Croptopia",
+    "homepage": "https://github.com/ExcessiveAmountsOfZombies/Croptopia",
+    "repository": "https://github.com/ExcessiveAmountsOfZombies/Croptopia",
+    "revision": "bae8e837dbb1743fd6b73a93cc320f0c0800fc14",
+    "minecraftVersion": "1.20.1",
+    "loaders": ["fabric", "forge"],
+    "codeLicense": {
+      "spdx": "MIT",
+      "status": "verified",
+      "evidenceUrl": "https://github.com/ExcessiveAmountsOfZombies/Croptopia/blob/bae8e837dbb1743fd6b73a93cc320f0c0800fc14/LICENSE"
+    },
+    "assetLicense": {
+      "spdx": "MIT",
+      "status": "verified",
+      "evidenceUrl": "https://github.com/ExcessiveAmountsOfZombies/Croptopia/blob/bae8e837dbb1743fd6b73a93cc320f0c0800fc14/LICENSE"
+    },
+    "reviewedAt": "2026-07-22"
+  },
+  "subject": { "id": "rice_crop", "assetClass": "crop" },
+  "evidence": [
+    {
+      "kind": "behavior",
+      "sourcePath": "gradle.properties",
+      "observation": "The inspected branch pins Minecraft 1.20.1 and contains both Fabric and Forge targets."
+    },
+    {
+      "kind": "state",
+      "sourcePath": "common/src/main/resources/assets/croptopia/blockstates/rice_crop.json",
+      "observation": "Eight runtime ages are compressed into four visible model stages."
+    },
+    {
+      "kind": "model",
+      "sourcePath": "common/src/main/resources/assets/croptopia/models/block/rice_crop_stage3.json",
+      "observation": "The mature stage uses the standard crop-plane parent and a dedicated stage texture."
+    }
+  ],
+  "observations": [
+    {
+      "dimension": "gameplay-state",
+      "statement": "Runtime growth resolution can exceed visual stage resolution without requiring a unique model for every age."
+    },
+    {
+      "dimension": "silhouette",
+      "statement": "A low-cost crop-plane silhouette remains suitable when stage-specific texture mass communicates maturity."
+    }
+  ],
+  "derivedRules": [
+    {
+      "id": "compress_runtime_ages_into_visual_stages",
+      "appliesTo": ["crop"],
+      "statement": "Allow multiple runtime ages to share one visual stage while preserving a distinct mature state.",
+      "validation": "automated"
+    },
+    {
+      "id": "require_growth_silhouette_progression",
+      "appliesTo": ["crop"],
+      "statement": "Each growth stage must increase or clearly redistribute visible plant mass.",
+      "validation": "human-review"
+    }
+  ],
+  "reusePolicy": {
+    "geometry": "forbidden",
+    "textures": "forbidden",
+    "distinctiveDesign": "forbidden",
+    "implementation": "abstract-rules-only"
+  }
+}

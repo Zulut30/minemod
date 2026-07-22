@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 0,
+  "kind": "reference-study",
+  "id": "corn_delight_corn_1_20_1",
+  "analysisMode": "source-inspection",
+  "source": {
+    "project": "Corn Delight",
+    "homepage": "https://github.com/0999312/Corn-Delight",
+    "repository": "https://github.com/0999312/Corn-Delight",
+    "revision": "0f2efa7477198403ace20e0c26ed8f51da69f1bb",
+    "minecraftVersion": "1.20.1",
+    "loaders": ["forge"],
+    "codeLicense": {
+      "spdx": "MIT",
+      "status": "verified",
+      "evidenceUrl": "https://github.com/0999312/Corn-Delight/blob/0f2efa7477198403ace20e0c26ed8f51da69f1bb/LICENSE"
+    },
+    "assetLicense": {
+      "spdx": "MIT",
+      "status": "verified",
+      "evidenceUrl": "https://github.com/0999312/Corn-Delight/blob/0f2efa7477198403ace20e0c26ed8f51da69f1bb/LICENSE"
+    },
+    "reviewedAt": "2026-07-22"
+  },
+  "subject": { "id": "corn_crop", "assetClass": "crop" },
+  "evidence": [
+    {
+      "kind": "behavior",
+      "sourcePath": "build.gradle",
+      "observation": "The inspected branch builds against Minecraft 1.20.1 and Forge 47.4.0."
+    },
+    {
+      "kind": "state",
+      "sourcePath": "src/main/resources/assets/corn_delight/blockstates/corn_crop.json",
+      "observation": "Every age selects distinct lower and upper model families through an upper-state flag."
+    },
+    {
+      "kind": "model",
+      "sourcePath": "src/main/resources/assets/corn_delight/models/block/corn_top_stage7.json",
+      "observation": "The mature upper layer uses a bounded pair of intersecting cutout planes."
+    }
+  ],
+  "observations": [
+    {
+      "dimension": "gameplay-state",
+      "statement": "A tall plant can preserve synchronized age semantics across separately rendered lower and upper blocks."
+    },
+    {
+      "dimension": "performance",
+      "statement": "A tall silhouette does not require cuboid-heavy geometry when two cutout layers carry the plant mass."
+    }
+  ],
+  "derivedRules": [
+    {
+      "id": "split_tall_crop_layers",
+      "appliesTo": ["crop"],
+      "statement": "Allow tall crops to generate independently addressable base and harvestable upper layers.",
+      "validation": "automated"
+    },
+    {
+      "id": "require_growth_silhouette_progression",
+      "appliesTo": ["crop"],
+      "statement": "Each growth stage must increase or clearly redistribute visible plant mass.",
+      "validation": "human-review"
+    }
+  ],
+  "reusePolicy": {
+    "geometry": "forbidden",
+    "textures": "forbidden",
+    "distinctiveDesign": "forbidden",
+    "implementation": "abstract-rules-only"
+  }
+}

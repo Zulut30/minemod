@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { ReferenceStudySchema, type CuboidModelSpec, type ReferenceStudy } from "@mcdev/assets-contracts";
+import { ReferenceStudySchema, type CuboidModelSpec } from "@mcdev/assets-contracts";
 import {
   analyzeArticulatedModelQuality,
   analyzeReferenceCatalog,
@@ -35,31 +35,16 @@ assert.deepEqual(singleReferenceReport.diagnostics.map(({ id }) => id), [
   "REFERENCE_RULE_SUPPORT_LOW",
 ]);
 
-function syntheticIndependentReference(index: 1 | 2): ReferenceStudy {
-  const marker = String(index);
-  return ReferenceStudySchema.parse({
-    ...riceReference,
-    id: `synthetic_crop_reference_${marker}`,
-    source: {
-      ...riceReference.source,
-      project: `Synthetic crop reference ${marker}`,
-      homepage: `https://example.com/project-${marker}`,
-      repository: `https://example.com/project-${marker}/source`,
-      revision: marker.repeat(40),
-    },
-    subject: { ...riceReference.subject, id: `crop_${marker}` },
-  });
-}
-
 const diverseReferenceReport = analyzeReferenceCatalog([
   riceReference,
-  syntheticIndependentReference(1),
-  syntheticIndependentReference(2),
+  referenceFixture("croptopia-rice-1.20.1.json"),
+  referenceFixture("corn-delight-corn-1.20.1.json"),
 ], "crop");
 assert.equal(diverseReferenceReport.readyForRulePromotion, true);
 assert.deepEqual(diverseReferenceReport.candidateRules, [
+  { id: "compress_runtime_ages_into_visual_stages", projectSupport: 1, promotable: false },
   { id: "require_growth_silhouette_progression", projectSupport: 3, promotable: true },
-  { id: "split_tall_crop_layers", projectSupport: 3, promotable: true },
+  { id: "split_tall_crop_layers", projectSupport: 2, promotable: true },
 ]);
 
 function assertNoUvOverlap(model: CuboidModelSpec): void {
