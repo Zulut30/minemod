@@ -4,6 +4,8 @@ import { Transform, type TransformCallback } from "node:stream";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
+import { createFabricApplication } from "@mcdev/application";
+import { isDomainErrorCode } from "@mcdev/contracts";
 import {
   MAX_INLINE_SPEC_BYTES,
   validateInlineSpec,
@@ -12,6 +14,7 @@ import {
 export const MCP_SERVER_NAME = "@mcdev/mcp-server";
 export const MCP_SERVER_VERSION = "0.0.0-phase.0";
 export const MCP_VALIDATE_TOOL_NAME = "mcdev_spec_validate";
+export const MCP_FABRIC_BUILD_TOOL_NAME = "mcdev_fabric_build";
 // A payload can expand by up to 6x when control characters are escaped in the
 // outer JSON-RPC string. Two MiB admits that worst case plus a bounded envelope.
 export const MAX_MCP_STDIO_FRAME_BYTES = 2 * 1024 * 1024;
@@ -157,6 +160,14 @@ export const McpValidateInputSchema = z.strictObject({
   payload: z.string().max(MAX_INLINE_SPEC_BYTES),
 });
 
+export const McpFabricBuildInputSchema = z.strictObject({
+  approved: z.literal(true).describe("Explicit human approval to create the workspace and run the fixed build policy."),
+  artifactCacheRoot: z.string().min(1).max(4_096),
+  java17Home: z.string().min(1).max(4_096),
+  payload: z.string().max(MAX_INLINE_SPEC_BYTES),
+  workspaceRoot: z.string().min(1).max(4_096),
+});
+
 type McpValidate = (
   payload: string,
   kind: "auto" | "mod" | "art",
@@ -164,6 +175,7 @@ type McpValidate = (
 
 export function createMcpServer(
   validate: McpValidate = validateInlineSpec,
+  createApplication: typeof createFabricApplication = createFabricApplication,
 ): McpServer {
   const server = new McpServer({ name: MCP_SERVER_NAME, version: MCP_SERVER_VERSION });
   server.registerTool(
@@ -175,6 +187,31 @@ export function createMcpServer(
     ({ kind, payload }) => {
       const result = validate(payload, kind);
       return { content: [{ type: "text" as const, text: JSON.stringify(result) }] };
+    },
+  );
+  server.registerTool(
+    MCP_FABRIC_BUILD_TOOL_NAME,
+    {
+      description: "Build one approved Fabric 1.20.1 ModSpec in a create-only workspace using the fixed Java 17 policy.",
+      inputSchema: McpFabricBuildInputSchema,
+    },
+    async ({ artifactCacheRoot, java17Home, payload, workspaceRoot }) => {
+      try {
+        const application = createApplication({ artifactCacheRoot, java17Home });
+        const result = await application.build({ payload, workspaceRoot });
+        return { content: [{ type: "text" as const, text: JSON.stringify(result) }] };
+      } catch (error) {
+        const descriptor = typeof error === "object" && error !== null
+          ? Object.getOwnPropertyDescriptor(error, "code")
+          : undefined;
+        const code = descriptor !== undefined && "value" in descriptor && isDomainErrorCode(descriptor.value)
+          ? descriptor.value
+          : "INTERNAL_ERROR";
+        return {
+          isError: true,
+          content: [{ type: "text" as const, text: JSON.stringify({ code }) }],
+        };
+      }
     },
   );
   return server;

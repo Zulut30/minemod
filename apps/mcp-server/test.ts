@@ -14,6 +14,7 @@ import {
   BoundedJsonLineInput,
   createMcpServer,
   MAX_MCP_STDIO_FRAME_BYTES,
+  MCP_FABRIC_BUILD_TOOL_NAME,
   MCP_SERVER_NAME,
   MCP_SERVER_VERSION,
   MCP_VALIDATE_TOOL_NAME,
@@ -138,10 +139,35 @@ async function stopServer(server: SpawnedServer): Promise<void> {
 
 async function testLinkedInMemoryProtocol(): Promise<void> {
   let handlerCalls = 0;
+  let buildCalls = 0;
+  let buildConfig: unknown;
+  let buildRequest: unknown;
   const server = createMcpServer(function validateForMcpTest(payload, kind) {
     assert.equal(arguments.length, 2, "MCP must pass only payload and kind to loader-neutral validation");
     handlerCalls += 1;
     return validateInlineSpec(payload, kind);
+  }, (config) => {
+    buildConfig = config;
+    return {
+      build: async (request) => {
+        buildCalls += 1;
+        buildRequest = request;
+        return {
+          planId: "1".repeat(64),
+          workspaceStatus: "created",
+          artifacts: {
+            contract: "mcdev.artifact-index/v1",
+            planId: "1".repeat(64),
+            pack: {
+              packId: "fabric-1.20.1-java-17",
+              revision: 2,
+              treeSha256: "2".repeat(64),
+            },
+            entries: [],
+          },
+        };
+      },
+    };
   });
   const client = new Client({ name: "mcdev-phase-0-test", version: "1.0.0" });
   const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair();
@@ -163,10 +189,11 @@ async function testLinkedInMemoryProtocol(): Promise<void> {
     const listResult = await client.listTools();
     assert.deepEqual(
       listResult.tools.map(({ name }) => name),
-      [MCP_VALIDATE_TOOL_NAME],
-      "tools/list must expose exactly one validator tool",
+      [MCP_VALIDATE_TOOL_NAME, MCP_FABRIC_BUILD_TOOL_NAME],
+      "tools/list must expose only the validator and approved Fabric builder",
     );
-    const linkedInputSchema = asObject(listResult.tools[0]?.inputSchema, "linked tool input schema");
+    const validateTool = listResult.tools.find(({ name }) => name === MCP_VALIDATE_TOOL_NAME);
+    const linkedInputSchema = asObject(validateTool?.inputSchema, "linked tool input schema");
     assert.equal(linkedInputSchema.additionalProperties, false);
     const linkedProperties = asObject(linkedInputSchema.properties, "linked tool input properties");
     assert.deepEqual(Object.keys(linkedProperties).sort(), ["kind", "payload"]);
@@ -190,6 +217,42 @@ async function testLinkedInMemoryProtocol(): Promise<void> {
     assert.equal(validation.valid, true);
     assert.equal(validation.kind, "mod");
     assert.equal(handlerCalls, 1);
+
+    const buildCall = await client.callTool({
+      name: MCP_FABRIC_BUILD_TOOL_NAME,
+      arguments: {
+        approved: true,
+        artifactCacheRoot: "/fixed/cache",
+        java17Home: "/fixed/jdk-17",
+        payload: JSON.stringify(validModFixture),
+        workspaceRoot: "/approved/workspace",
+      },
+    });
+    const buildContent = asObject(buildCall, "Fabric build tool result").content;
+    assert.ok(Array.isArray(buildContent));
+    const buildText = buildContent.map((entry) => asObject(entry, "Fabric build content"))
+      .find((entry) => entry.type === "text")?.text;
+    assert.ok(typeof buildText === "string");
+    assert.equal(asObject(JSON.parse(buildText) as unknown, "Fabric build result").workspaceStatus, "created");
+    assert.deepEqual(buildConfig, { artifactCacheRoot: "/fixed/cache", java17Home: "/fixed/jdk-17" });
+    assert.deepEqual(buildRequest, {
+      payload: JSON.stringify(validModFixture),
+      workspaceRoot: "/approved/workspace",
+    });
+    assert.equal(buildCalls, 1);
+
+    const unapprovedBuild = asObject(await client.callTool({
+      name: MCP_FABRIC_BUILD_TOOL_NAME,
+      arguments: {
+        approved: false,
+        artifactCacheRoot: "/fixed/cache",
+        java17Home: "/fixed/jdk-17",
+        payload: JSON.stringify(validModFixture),
+        workspaceRoot: "/approved/workspace",
+      },
+    }), "unapproved Fabric build result");
+    assert.equal(unapprovedBuild.isError, true);
+    assert.equal(buildCalls, 1, "unapproved MCP builds must stop before the application factory");
 
     const fabricFixture = {
       ...validModFixture,
@@ -336,9 +399,14 @@ async function testStdioStdoutPurity(): Promise<void> {
     assert.equal(listed.id, 2);
     const tools = asObject(listed.result, "tools/list result").tools;
     assert.ok(Array.isArray(tools));
-    assert.deepEqual(tools.map((tool) => asObject(tool, "tool").name), [MCP_VALIDATE_TOOL_NAME]);
+    assert.deepEqual(tools.map((tool) => asObject(tool, "tool").name), [
+      MCP_VALIDATE_TOOL_NAME,
+      MCP_FABRIC_BUILD_TOOL_NAME,
+    ]);
+    const rawValidateTool = tools.map((tool) => asObject(tool, "tool"))
+      .find((tool) => tool.name === MCP_VALIDATE_TOOL_NAME);
     const listedInputSchema = asObject(
-      asObject(tools[0], "listed tool").inputSchema,
+      rawValidateTool?.inputSchema,
       "listed input schema",
     );
     assert.equal(listedInputSchema.additionalProperties, false);
