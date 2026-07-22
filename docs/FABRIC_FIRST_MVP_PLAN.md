@@ -103,7 +103,7 @@ Generic image-to-3D остаётся experimental provider. Надёжный pro
 | NeoForge 26.1.2 compiler | Реализован и остаётся зелёным | Не конвертировать подменой imports; оставить отдельным backend |
 | Application orchestration, CLI/MCP E2E | Не завершено | Закрыть в первом Fabric vertical slice |
 | Fabric pack/compiler/fixtures | Exact 1.20.1 pack, clean build и client/server smoke реализованы локально; compiler отсутствует | Добавить 1.20.1 GameTests/hosted gates, затем Fabric compiler |
-| Production AI asset pipeline | Частично: реализованы bounded `CuboidModelSpec`, entity/held-item geometry + rig и детерминированный editable Blockbench 5 export; texture, animation и runtime exporters отсутствуют | Добавить concept-to-geometry planner, UV/PNG pipeline и проверенный для 1.20.1 runtime export |
+| Production AI asset pipeline | Частично: реализованы bounded model/material contracts, entity/held-item geometry + rig, procedural pixel PNG atlases и детерминированный editable Blockbench 5 export с embedded texture; concept provider, animation и runtime exporters отсутствуют | Добавить concept-to-geometry planner, AI texture candidates и проверенный для 1.20.1 runtime export |
 
 Следовательно, сейчас есть качественный control plane и рабочий NeoForge backend, но **инструмент ещё не генерирует Fabric-мод от промпта до JAR и не создаёт production-ассеты**.
 
@@ -261,7 +261,7 @@ fixtures/fabric-1.20.1-empty/
 
 **Проверка:** schema/geometry/UV/animation validators, golden exports, generated-resource load test, animated client fixture.
 
-**Промежуточный статус на 22 июля 2026:** реализованы строгий loader-neutral `CuboidModelSpec`, ограничения geometry/UV/hierarchy, детерминированный Blockbench 5 `.bbmodel` exporter и golden fixtures сложной сущности и составного оружия. Это основа blockout/rig, а не завершение F2.2: semantic anatomy/concept planner, PNG texture atlas, animations, runtime-библиотека и загрузка в Fabric 1.20.1 ещё не реализованы.
+**Промежуточный статус на 22 июля 2026:** реализованы строгие loader-neutral `CuboidModelSpec`/`CuboidTexturePlan`, ограничения geometry/UV/hierarchy/material assignments, процедурный pixel PNG atlas, детерминированный Blockbench 5 `.bbmodel` exporter с embedded texture и golden fixtures сложной сущности и составного оружия. Это основа blockout/rig/texturing, а не завершение F2.2: semantic anatomy/concept planner, animations, runtime-библиотека и загрузка в Fabric 1.20.1 ещё не реализованы.
 
 #### F2.3. Visual QA и bounded repair
 
