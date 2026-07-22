@@ -371,8 +371,9 @@ async function writeOrdinaryJar(
   name = "runnerfixture-1.0.0.jar",
   bytes = Buffer.from("jar"),
   mode = 0o644,
+  directory = "libs",
 ): Promise<void> {
-  const libs = join(workspace, "build", "libs");
+  const libs = join(workspace, "build", directory);
   await mkdir(libs, { recursive: true });
   const jar = join(libs, name);
   await writeFile(jar, bytes, { mode });
@@ -542,6 +543,15 @@ await withFixture(async (fixture) => {
 await withFabricFixture(async (fixture) => {
   const runtime = fakeRuntime(fixture, async (child) => {
     await writeOrdinaryJar(fixture.workspace, "runnerfixture-1.0.0.jar", Buffer.from("fabric-jar"));
+    await writeOrdinaryJar(
+      fixture.workspace,
+      "runnerfixture-1.0.0-dev.jar",
+      Buffer.from("fabric-dev-jar"),
+      0o644,
+      "devlibs",
+    );
+    await mkdir(join(fixture.workspace, ".gradle", "loom-cache"), { recursive: true, mode: 0o700 });
+    await writeFile(join(fixture.workspace, ".gradle", "loom-cache", "cache.bin"), "loom cache", { mode: 0o600 });
     child.stdout.write("fabric build ok\n");
     child.finish(0, null);
   });
@@ -560,6 +570,13 @@ await withFabricFixture(async (fixture) => {
   });
   const buildCall = runtime.calls.find((call) => call.options.detached);
   assert.equal(buildCall?.command, join(fixture.java17, "bin", "java"));
+  const wrapper = join(fixture.workspace, "gradle", "wrapper", "gradle-wrapper.jar");
+  assert.deepEqual(buildCall?.args.slice(9, 12), [
+    "-classpath",
+    wrapper,
+    "org.gradle.wrapper.GradleWrapperMain",
+  ]);
+  assert.equal(buildCall?.args.includes("-jar"), false);
   assert.deepEqual(buildCall?.args.slice(-6), [
     "clean",
     "build",
@@ -587,6 +604,8 @@ await withFabricFixture(async (fixture) => {
     join(fixture.artifactCache, BUILTIN_FABRIC_1_20_1.treeSha256, "gradle-user-home"),
   );
   assert.equal(runtime.calls.filter((call) => !call.options.detached).length, 1);
+  await assert.rejects(stat(join(fixture.workspace, "build", "devlibs", "runnerfixture-1.0.0-dev.jar")));
+  await assert.rejects(stat(join(fixture.workspace, ".gradle")));
 });
 
 await withFabricFixture(async (fixture) => {

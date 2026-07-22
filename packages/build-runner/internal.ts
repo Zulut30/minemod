@@ -7,6 +7,7 @@ import {
   open as nodeOpen,
   opendir as nodeOpendir,
   realpath as nodeRealpath,
+  rmdir as nodeRmdir,
   unlink as nodeUnlink,
   type FileHandle,
 } from "node:fs/promises";
@@ -83,8 +84,10 @@ interface FixedRunnerPolicy {
   }[];
   readonly buildJavaKey: JavaConfigKey;
   readonly wrapperSha256: Sha256;
+  readonly wrapperLaunch: "jar" | "main-class";
   readonly distributionSha256: Sha256;
   readonly excludedGradleTasks: readonly string[];
+  readonly discardDerivedDevJar: boolean;
   readonly projectPaths: readonly PortableRelativePath[];
   readonly contentSourceRoots: readonly string[];
   readonly reservedContentPaths: readonly PortableRelativePath[];
@@ -116,8 +119,10 @@ const NEOFORGE_PHASE1_POLICY: FixedRunnerPolicy = Object.freeze({
   ]),
   buildJavaKey: "java25Home",
   wrapperSha256: NEOFORGE_WRAPPER_SHA256,
+  wrapperLaunch: "jar",
   distributionSha256: NEOFORGE_GRADLE_DISTRIBUTION_SHA256,
   excludedGradleTasks: Object.freeze([]),
+  discardDerivedDevJar: false,
   projectPaths: Object.freeze([...COMMON_PROJECT_PATHS, "src/main/resources/META-INF/neoforge.mods.toml"]),
   contentSourceRoots: Object.freeze(["src/main/java/", "src/main/resources/"]),
   reservedContentPaths: Object.freeze(["src/main/resources/META-INF/neoforge.mods.toml"]),
@@ -136,8 +141,10 @@ const FABRIC_1_20_1_PHASE1_POLICY: FixedRunnerPolicy = Object.freeze({
   ]),
   buildJavaKey: "java17Home",
   wrapperSha256: FABRIC_WRAPPER_SHA256,
+  wrapperLaunch: "main-class",
   distributionSha256: FABRIC_GRADLE_DISTRIBUTION_SHA256,
   excludedGradleTasks: Object.freeze(["sourcesJar", "remapSourcesJar"]),
+  discardDerivedDevJar: true,
   projectPaths: Object.freeze([...COMMON_PROJECT_PATHS, "src/main/resources/fabric.mod.json"]),
   contentSourceRoots: Object.freeze(["src/client/java/", "src/main/java/", "src/main/resources/"]),
   reservedContentPaths: Object.freeze(["src/main/resources/fabric.mod.json"]),
@@ -278,6 +285,7 @@ export interface RunnerFileSystem {
   open(path: string, flags: number, mode?: number): Promise<FileHandle>;
   mkdir(path: string, mode: number): Promise<void>;
   openDirectory(path: string): Promise<RunnerDirectory>;
+  removeDirectory(path: string): Promise<void>;
   unlink(path: string): Promise<void>;
 }
 
@@ -396,6 +404,7 @@ export const DEFAULT_RUNNER_DEPENDENCIES: RunnerDependencies = Object.freeze({
       await nodeMkdir(path, { mode });
     },
     openDirectory: (path: string) => nodeOpendir(path),
+    removeDirectory: (path: string) => nodeRmdir(path),
     unlink: (path: string) => nodeUnlink(path),
   }),
   clock: Object.freeze({
@@ -2088,6 +2097,10 @@ function fixedBuildArguments(
   projectCacheDirectory: string,
   policy: FixedRunnerPolicy,
 ): readonly string[] {
+  const wrapper = join(workspaceRoot, "gradle", "wrapper", "gradle-wrapper.jar");
+  const wrapperLaunch = policy.wrapperLaunch === "jar"
+    ? ["-jar", wrapper]
+    : ["-classpath", wrapper, "org.gradle.wrapper.GradleWrapperMain"];
   return Object.freeze([
     "-Xms64m",
     "-Xmx64m",
@@ -2098,8 +2111,7 @@ function fixedBuildArguments(
     `-Duser.home=${toolHome}`,
     `-Djava.io.tmpdir=${temporaryDirectory}`,
     "-Dorg.gradle.appname=gradlew",
-    "-jar",
-    join(workspaceRoot, "gradle", "wrapper", "gradle-wrapper.jar"),
+    ...wrapperLaunch,
     "--no-daemon",
     "--console=plain",
     "--no-configuration-cache",
@@ -2118,6 +2130,140 @@ function fixedBuildArguments(
 interface JarSnapshot {
   readonly entry: BuildOutputEntry;
   readonly bytes: Uint8Array;
+}
+
+async function discardDerivedDevJar(
+  root: string,
+  release: BuildOutputEntry,
+  workspaceDevice: bigint,
+  effectiveUserId: bigint,
+  dependencies: RunnerDependencies,
+): Promise<void> {
+  const releaseName = basename(release.path);
+  if (!releaseName.endsWith(".jar")) {
+    return failure("ARTIFACT_INTEGRITY_FAILED", "Release JAR name is invalid.");
+  }
+  const expectedName = `${releaseName.slice(0, -4)}-dev.jar`;
+  const relativeDirectory = "build/devlibs";
+  const directory = join(root, "build", "devlibs");
+  try {
+    const before = await dependencies.fileSystem.lstat(directory);
+    const real = await dependencies.fileSystem.realpath(directory);
+    if (!isTrustedDirectoryMetadata(before, effectiveUserId, "effective-user", workspaceDevice) ||
+      !samePath(directory, real)) {
+      return failure("ARTIFACT_INTEGRITY_FAILED", "Derived Fabric JAR directory is unsafe.");
+    }
+    const names = await listDirectoryBounded(
+      directory,
+      2,
+      "ARTIFACT_INTEGRITY_FAILED",
+      "Derived Fabric JAR directory does not match the fixed policy.",
+      dependencies,
+    );
+    if (names.length !== 1 || names[0] !== expectedName) {
+      return failure("ARTIFACT_INTEGRITY_FAILED", "Derived Fabric JAR does not match the release artifact.");
+    }
+    const relativePath = `${relativeDirectory}/${expectedName}`;
+    const absolutePath = await assertCanonicalContainedFilePath(
+      root,
+      relativePath,
+      effectiveUserId,
+      workspaceDevice,
+      "ARTIFACT_INTEGRITY_FAILED",
+      dependencies,
+    );
+    const stats = await dependencies.fileSystem.lstat(absolutePath);
+    if (!stats.isFile() || stats.isSymbolicLink() || stats.nlink !== 1n ||
+      stats.uid !== effectiveUserId || stats.dev !== workspaceDevice || !hasTrustedPermissions(stats)) {
+      return failure("ARTIFACT_INTEGRITY_FAILED", "Derived Fabric JAR metadata is unsafe.");
+    }
+    await dependencies.fileSystem.unlink(absolutePath);
+    if ((await listDirectoryBounded(
+      directory,
+      1,
+      "ARTIFACT_INTEGRITY_FAILED",
+      "Derived Fabric JAR directory could not be verified after cleanup.",
+      dependencies,
+    )).length !== 0) {
+      return failure("ARTIFACT_INTEGRITY_FAILED", "Derived Fabric JAR cleanup was incomplete.");
+    }
+    const after = await dependencies.fileSystem.lstat(directory);
+    const realAfter = await dependencies.fileSystem.realpath(directory);
+    if (!sameIdentity(before, after) || !samePath(directory, realAfter) ||
+      !isTrustedDirectoryMetadata(after, effectiveUserId, "effective-user", workspaceDevice)) {
+      return failure("ARTIFACT_INTEGRITY_FAILED", "Derived Fabric JAR directory changed during cleanup.");
+    }
+  } catch (error) {
+    if (error instanceof BuildRunnerError) throw error;
+    return failure("ARTIFACT_INTEGRITY_FAILED", "Derived Fabric JAR could not be cleaned safely.");
+  }
+}
+
+async function discardFabricProjectCache(
+  root: string,
+  workspaceDevice: bigint,
+  effectiveUserId: bigint,
+  dependencies: RunnerDependencies,
+): Promise<void> {
+  const cacheRoot = join(root, ".gradle");
+  const pending = [cacheRoot];
+  const directories: string[] = [];
+  const files: string[] = [];
+  let entriesSeen = 0;
+  try {
+    while (pending.length > 0) {
+      const directory = pending.pop();
+      if (directory === undefined) break;
+      const before = await dependencies.fileSystem.lstat(directory);
+      const real = await dependencies.fileSystem.realpath(directory);
+      if (!isTrustedDirectoryMetadata(before, effectiveUserId, "effective-user", workspaceDevice) ||
+        !samePath(directory, real)) {
+        return failure("WORKSPACE_INVALID", "Fabric project cache contains an unsafe directory.");
+      }
+      directories.push(directory);
+      const names = await listDirectoryBounded(
+        directory,
+        MAX_SCAN_ENTRIES - entriesSeen,
+        "WORKSPACE_INVALID",
+        "Fabric project cache exceeds its cleanup safety limit.",
+        dependencies,
+      );
+      entriesSeen += names.length;
+      const foldedNames = new Set<string>();
+      for (const name of names) {
+        const folded = name.toLocaleLowerCase("en-US");
+        if (foldedNames.has(folded)) {
+          return failure("WORKSPACE_INVALID", "Fabric project cache contains case-colliding entries.");
+        }
+        foldedNames.add(folded);
+        if (name === "." || name === ".." || name.includes("/") || name.includes("\\") || name.includes("\0")) {
+          return failure("WORKSPACE_INVALID", "Fabric project cache contains an unsafe entry name.");
+        }
+        const path = join(directory, name);
+        const stats = await dependencies.fileSystem.lstat(path);
+        if (stats.isSymbolicLink() || stats.dev !== workspaceDevice || stats.uid !== effectiveUserId ||
+          !hasTrustedPermissions(stats)) {
+          return failure("WORKSPACE_INVALID", "Fabric project cache contains an unsafe entry.");
+        }
+        if (stats.isDirectory()) pending.push(path);
+        else if (stats.isFile() && stats.nlink === 1n) files.push(path);
+        else return failure("WORKSPACE_INVALID", "Fabric project cache contains an unsupported entry.");
+      }
+      const after = await dependencies.fileSystem.lstat(directory);
+      const realAfter = await dependencies.fileSystem.realpath(directory);
+      if (!sameStableFile(before, after) || !samePath(directory, realAfter)) {
+        return failure("WORKSPACE_INVALID", "Fabric project cache changed during cleanup verification.");
+      }
+    }
+    for (const file of files) await dependencies.fileSystem.unlink(file);
+    for (const directory of directories.reverse()) await dependencies.fileSystem.removeDirectory(directory);
+    if (await maybeLstat(cacheRoot, dependencies) !== undefined) {
+      return failure("WORKSPACE_INVALID", "Fabric project cache cleanup was incomplete.");
+    }
+  } catch (error) {
+    if (error instanceof BuildRunnerError) throw error;
+    return failure("WORKSPACE_INVALID", "Fabric project cache could not be cleaned safely.");
+  }
 }
 
 async function snapshotJar(
@@ -2450,6 +2596,21 @@ async function runBuild(
     );
     const firstSnapshot = await snapshotJar(workspace.path, workspace.identity.dev, effectiveUserId, dependencies);
     const firstEntry = firstSnapshot.entry;
+    if (policy.discardDerivedDevJar) {
+      await discardDerivedDevJar(
+        workspace.path,
+        firstEntry,
+        workspace.identity.dev,
+        effectiveUserId,
+        dependencies,
+      );
+      await discardFabricProjectCache(
+        workspace.path,
+        workspace.identity.dev,
+        effectiveUserId,
+        dependencies,
+      );
+    }
     const currentProvenance = Object.freeze({
       planId: input.plan.planId,
       packTreeSha256: input.plan.pack.treeSha256,
