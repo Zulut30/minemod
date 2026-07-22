@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export * from "./reference-study.ts";
+export * from "./crop-asset-plan.ts";
 
 export const CUBOID_MODEL_SPEC_SCHEMA_ID = "https://mcdev.local/schemas/cuboid-model-spec-v0.json";
 export const MODEL_RESOURCE_LOCATION_PATTERN =
