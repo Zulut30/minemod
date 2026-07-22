@@ -15,3 +15,5 @@ artifacts/
 !/packages/artifacts/
 !/packages/artifacts/**
 /packages/artifacts/node_modules/
+.playwright-cli/
+output/
