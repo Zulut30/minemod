@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "spruceship",
+  "version": "${version}",
+  "name": "Spruce Merchant Ship",
+  "description": "A controllable spruce merchant ship with a double-chest inventory.",
+  "license": "Apache-2.0",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dev.mcdev.spruceship.SpruceShipMod"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.19.3",
+    "fabric-api": "*",
+    "minecraft": "~1.20.1",
+    "java": ">=17"
+  }
+}
