@@ -102,7 +102,7 @@ Generic image-to-3D остаётся experimental provider. Надёжный pro
 | Fixed secure Gradle runner | Реализован для NeoForge | Выделить общую execution основу, добавить отдельную Fabric policy |
 | NeoForge 26.1.2 compiler | Реализован и остаётся зелёным | Не конвертировать подменой imports; оставить отдельным backend |
 | Application orchestration, CLI/MCP E2E | Не завершено | Закрыть в первом Fabric vertical slice |
-| Fabric pack/compiler/fixtures | Exact 1.20.1 pack, clean build и client/server smoke реализованы локально; compiler отсутствует | Добавить 1.20.1 GameTests/hosted gates, затем Fabric compiler |
+| Fabric pack/compiler/fixtures | Exact 1.20.1 pack, clean build и client/server smoke реализованы локально; compiler phase 0 генерирует детерминированный scaffold с раздельными main/client entrypoint | Расширить compiler basic content, добавить runner, GameTests и hosted gates |
 | Production AI asset pipeline | Частично: реализованы bounded model/material/animation contracts, local-space articulated plans с automatic pivot resolution и non-overlapping UV packing, entity/held-item geometry + rig, procedural pixel PNG atlases и детерминированный editable Blockbench 5 export с embedded texture и keyframe clips; concept provider и runtime exporters отсутствуют | Добавить semantic archetype planner, AI texture candidates и проверенный для 1.20.1 runtime export |
 
 Следовательно, сейчас есть качественный control plane и рабочий NeoForge backend, но **инструмент ещё не генерирует Fabric-мод от промпта до JAR и не создаёт production-ассеты**.
@@ -201,6 +201,8 @@ fixtures/fabric-1.20.1-empty/
 
 **Проверка:** golden tests, semantic compile fixtures, datagen diff, path/size/property tests.
 
+**Интеграционный статус на 22 июля 2026:** добавлен `ModSpec v1` для AI/spawn/persistence/worldgen/UI, exact профиль валидации `fabric-1.20.1-java-17` и `compiler-fabric` phase 0. Компилятор потребляет только trusted pack Fabric 1.20.1, генерирует Gradle scaffold, `fabric.mod.json`, физически разделённые main/client entrypoint и закрытый детерминированный `BuildPlan`. Все gameplay-секции пока отклоняются как `SPEC_UNSUPPORTED`, поэтому этот checkpoint ещё не считается basic-content MVP.
+
 #### F1.2. Закрытая Fabric build policy
 
 **Зависимости:** F0.1.
@@ -210,6 +212,8 @@ fixtures/fabric-1.20.1-empty/
 **Приёмка:** caller не может передать Gradle task, flag, environment, init script или plugin; timeout/kill очищает process tree; cache trust и artifact allowlist проверяются.
 
 **Проверка:** adversarial runner tests и build пустого/basic fixture.
+
+**Интеграционный статус на 22 июля 2026:** wire contract принимает только именованную policy `fabric-1.20.1-phase0-v1`; выполнение этой policy существующим runner ещё не реализовано.
 
 #### F1.3. Минимальный AI texture pipeline
 
