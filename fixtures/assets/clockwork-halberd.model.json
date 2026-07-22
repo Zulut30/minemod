@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 0,
+  "kind": "cuboid-model",
+  "id": "mcdev:clockwork_halberd",
+  "name": "Clockwork Halberd",
+  "modelType": "held-item",
+  "texture": { "width": 64, "height": 64 },
+  "bones": [
+    {
+      "id": "root", "parent": null, "pivot": [0, 0, 0], "rotation": [0, 0, -35],
+      "cubes": [
+        { "id": "shaft", "origin": [-1, -14, -1], "size": [2, 28, 2], "pivot": [0, 0, 0], "rotation": [0, 0, 0], "uv": [0, 0], "inflate": 0, "mirror": false },
+        { "id": "grip", "origin": [-2, -8, -2], "size": [4, 7, 4], "pivot": [0, 0, 0], "rotation": [0, 0, 0], "uv": [10, 0], "inflate": 0, "mirror": false },
+        { "id": "counterweight", "origin": [-3, -16, -3], "size": [6, 3, 6], "pivot": [0, 0, 0], "rotation": [0, 0, 0], "uv": [28, 0], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "head", "parent": "root", "pivot": [0, 12, 0], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "socket", "origin": [-3, 10, -2], "size": [6, 5, 4], "pivot": [0, 12, 0], "rotation": [0, 0, 0], "uv": [0, 32], "inflate": 0, "mirror": false },
+        { "id": "blade", "origin": [3, 9, -1], "size": [10, 8, 2], "pivot": [0, 12, 0], "rotation": [0, 0, 0], "uv": [24, 32], "inflate": 0, "mirror": false },
+        { "id": "blade_tip", "origin": [10, 11, -1], "size": [5, 4, 2], "pivot": [0, 12, 0], "rotation": [0, 0, 0], "uv": [0, 44], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "clock", "parent": "head", "pivot": [-4, 13, 0], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "clock_disc", "origin": [-10, 7, -1.5], "size": [9, 12, 3], "pivot": [-4, 13, 0], "rotation": [0, 0, 0], "uv": [16, 44], "inflate": 0, "mirror": false },
+        { "id": "clock_hub", "origin": [-7, 11, -2.5], "size": [3, 4, 5], "pivot": [-4, 13, 0], "rotation": [0, 0, 0], "uv": [42, 44], "inflate": 0, "mirror": false }
+      ]
+    }
+  ]
+}

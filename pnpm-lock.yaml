@@ -61,6 +61,12 @@ importers:
         specifier: 4.4.2
         version: 4.4.2
 
+  packages/assets-core:
+    dependencies:
+      '@mcdev/assets-contracts':
+        specifier: workspace:*
+        version: link:../assets-contracts
+
   packages/build-runner:
     dependencies:
       '@mcdev/compatibility-packs':

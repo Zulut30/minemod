@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 0,
+  "kind": "cuboid-model",
+  "id": "mcdev:copper_guardian",
+  "name": "Copper Guardian",
+  "modelType": "entity",
+  "texture": { "width": 128, "height": 128 },
+  "bones": [
+    { "id": "root", "parent": null, "pivot": [0, 0, 0], "rotation": [0, 0, 0], "cubes": [] },
+    {
+      "id": "body", "parent": "root", "pivot": [0, 9, 0], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "body_core", "origin": [-8, 9, -4], "size": [16, 14, 8], "pivot": [0, 9, 0], "rotation": [0, 0, 0], "uv": [0, 0], "inflate": 0, "mirror": false },
+        { "id": "chest_plate", "origin": [-7.5, 11, -4.75], "size": [15, 10, 1], "pivot": [0, 9, 0], "rotation": [0, 0, 0], "uv": [0, 24], "inflate": 0, "mirror": false },
+        { "id": "belt", "origin": [-8.5, 7, -4.5], "size": [17, 3, 9], "pivot": [0, 9, 0], "rotation": [0, 0, 0], "uv": [40, 0], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "head", "parent": "body", "pivot": [0, 23, 0], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "head_core", "origin": [-5, 23, -5], "size": [10, 8, 10], "pivot": [0, 23, 0], "rotation": [0, 0, 0], "uv": [0, 40], "inflate": 0, "mirror": false },
+        { "id": "nose", "origin": [-2, 24, -7], "size": [4, 3, 2], "pivot": [0, 23, 0], "rotation": [0, 0, 0], "uv": [44, 40], "inflate": 0, "mirror": false },
+        { "id": "crest", "origin": [-3, 31, -2], "size": [6, 3, 4], "pivot": [0, 23, 0], "rotation": [0, 0, 0], "uv": [60, 40], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "left_arm", "parent": "body", "pivot": [9, 20, 0], "rotation": [0, 0, -8],
+      "cubes": [
+        { "id": "left_upper_arm", "origin": [8, 9, -4], "size": [6, 13, 8], "pivot": [9, 20, 0], "rotation": [0, 0, 0], "uv": [0, 60], "inflate": 0, "mirror": false },
+        { "id": "left_pauldron", "origin": [7.5, 18, -4.5], "size": [7, 4, 9], "pivot": [9, 20, 0], "rotation": [0, 0, 0], "uv": [32, 60], "inflate": 0, "mirror": false },
+        { "id": "left_fist", "origin": [8, 5, -4], "size": [6, 5, 8], "pivot": [9, 20, 0], "rotation": [0, 0, 0], "uv": [68, 60], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "right_arm", "parent": "body", "pivot": [-9, 20, 0], "rotation": [0, 0, 8],
+      "cubes": [
+        { "id": "right_upper_arm", "origin": [-14, 9, -4], "size": [6, 13, 8], "pivot": [-9, 20, 0], "rotation": [0, 0, 0], "uv": [0, 60], "inflate": 0, "mirror": true },
+        { "id": "right_pauldron", "origin": [-14.5, 18, -4.5], "size": [7, 4, 9], "pivot": [-9, 20, 0], "rotation": [0, 0, 0], "uv": [32, 60], "inflate": 0, "mirror": true },
+        { "id": "right_fist", "origin": [-14, 5, -4], "size": [6, 5, 8], "pivot": [-9, 20, 0], "rotation": [0, 0, 0], "uv": [68, 60], "inflate": 0, "mirror": true }
+      ]
+    },
+    {
+      "id": "left_leg", "parent": "root", "pivot": [4, 9, 0], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "left_leg_core", "origin": [1, 0, -3], "size": [6, 9, 6], "pivot": [4, 9, 0], "rotation": [0, 0, 0], "uv": [0, 84], "inflate": 0, "mirror": false },
+        { "id": "left_foot", "origin": [0, -2, -5], "size": [8, 3, 10], "pivot": [4, 9, 0], "rotation": [0, 0, 0], "uv": [28, 84], "inflate": 0, "mirror": false }
+      ]
+    },
+    {
+      "id": "right_leg", "parent": "root", "pivot": [-4, 9, 0], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "right_leg_core", "origin": [-7, 0, -3], "size": [6, 9, 6], "pivot": [-4, 9, 0], "rotation": [0, 0, 0], "uv": [0, 84], "inflate": 0, "mirror": true },
+        { "id": "right_foot", "origin": [-8, -2, -5], "size": [8, 3, 10], "pivot": [-4, 9, 0], "rotation": [0, 0, 0], "uv": [28, 84], "inflate": 0, "mirror": true }
+      ]
+    },
+    {
+      "id": "backpack", "parent": "body", "pivot": [0, 18, 4], "rotation": [0, 0, 0],
+      "cubes": [
+        { "id": "backpack_tank", "origin": [-6, 12, 4], "size": [12, 10, 4], "pivot": [0, 18, 4], "rotation": [0, 0, 0], "uv": [68, 84], "inflate": 0, "mirror": false },
+        { "id": "backpack_exhaust", "origin": [-2, 22, 4], "size": [4, 4, 4], "pivot": [0, 18, 4], "rotation": [0, 0, 0], "uv": [104, 84], "inflate": 0, "mirror": false }
+      ]
+    }
+  ]
+}
