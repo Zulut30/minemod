@@ -12,6 +12,8 @@
 | Fabric Loader | 0.19.3 |
 | Fabric API | 0.92.11+1.20.1 |
 | Fabric Loom | 1.6.12 |
+| YACL | 3.5.0+1.20.1-fabric |
+| Mod Menu | 7.2.2 (optional) |
 | Gradle | 8.7 |
 | Java | Eclipse Temurin 17.0.19+10 |
 | Mappings | official Mojang mappings |
@@ -24,9 +26,9 @@
 - Gradle distribution проверен SHA-256 `544c35d6bd849ae8a5ed0bcea39ba677dc40f49df7d1835561582da2009b961d`;
 - committed wrapper JAR проверен SHA-256 `cb0da6751c2b753a16ac168bb354870ebb1e162e9083f116729cec9c781156b8` до запуска Java;
 - Gradle toolchain auto-detect и auto-download отключены, разрешён только `MCDEV_JAVA17_HOME`;
-- strict verification metadata содержит 265 компонентов, 562 artifact records и 562 SHA-256, без SHA-1/MD5;
-- два trust-исключения ограничены локальными производными Loom: exact layered mappings JAR и exact regex группы remapped Fabric API для зафиксированного mapping hash; скачиваемые группы `net.fabricmc*` исключениями не покрываются;
-- runtime pack revision 2 проверяется manifest file hashes, exact tree entry count и tree SHA-256 `0d4aa57d34128ba5bad99ef81862ce11d0d82b11133b00feb71774a0fb9b3d9d`;
+- strict verification metadata содержит 303 компонента, 654 artifact records и 654 SHA-256, без SHA-1/MD5;
+- три trust-исключения ограничены локальными производными Loom: exact layered mappings JAR, remapped Fabric API и exact names Mod Menu/YACL/Fabric Language Kotlin для зафиксированного mapping hash; скачиваемые исходные artifacts остаются под SHA-256;
+- runtime pack revision 3 проверяется manifest file hashes, exact tree entry count и tree SHA-256 `e1a4c9b16670980edfd162301f56e042ff03fcaaad4deaebb288a1828f0bca37`;
 - selector registry принимает только exact tuple Minecraft 1.20.1/Fabric/Java 17.
 
 Полная классификация лицензий transitive компонентов ещё не завершена. Pack остаётся candidate, а release redistribution блокируется. Прямые зависимости и upstream sources записаны в [Fabric 1.20.1 dependency provenance](../provenance/fabric-1.20.1-dependencies.json).
@@ -51,10 +53,10 @@
 - server/client GameTests и screenshots пока существуют только для другого Fabric baseline и должны быть реализованы нативно для 1.20.1;
 - hosted Linux/Windows evidence отсутствует;
 - transitive license inventory не завершён;
-- Fabric compiler потребляет этот pack, но runner/application orchestration ещё не завершены;
+- отдельные plan/review/apply операции и hosted application evidence ещё не завершены;
 - runtime animation dependency для entities ещё не выбрана и не должна считаться GeckoLib 5 по умолчанию.
 
-Следующий baseline gate — F0.2 для exact 1.20.1: GameTests, screenshots и hosted build/client/server jobs. Fabric-native compiler для items/blocks развивается параллельно поверх revision 2.
+Следующий baseline gate — F0.2 для exact 1.20.1: GameTests, screenshots и hosted build/client/server jobs. Fabric-native compiler и trusted library resolver используют revision 3.
 
 ## Официальные источники
 

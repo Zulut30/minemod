@@ -74,6 +74,8 @@ Generic image-to-3D остаётся experimental provider. Надёжный pro
 | Fabric Loom | 1.6.12 | exact stable из [официального Fabric Maven](https://maven.fabricmc.net/net/fabricmc/fabric-loom/) |
 | Fabric Loader | 0.19.3 | exact stable из [Fabric Meta](https://meta.fabricmc.net/) для 1.20.1 |
 | Fabric API | 0.92.11+1.20.1 | exact release из [официального Fabric Maven](https://maven.fabricmc.net/net/fabricmc/fabric-api/fabric-api/) |
+| YACL | 3.5.0+1.20.1-fabric | exact версия, реально совместимая с зафиксированным Loom 1.6.12 |
+| Mod Menu | 7.2.2 | optional client integration; отсутствие не блокирует загрузку generated mod |
 | Mappings | official Mojang mappings | Loom mapping layer без перераспространения mappings |
 | GeckoLib/runtime animation | не выбран | отдельный compatibility test обязателен до F2.2 |
 
@@ -102,7 +104,7 @@ Generic image-to-3D остаётся experimental provider. Надёжный pro
 | Fixed secure Gradle runner | Общая hardened execution основа обслуживает отдельные NeoForge и Fabric 1.20.1 policies; Fabric application E2E проходит локально | Добавить hosted evidence и recovery/cancel integration |
 | NeoForge 26.1.2 compiler | Реализован и остаётся зелёным | Не конвертировать подменой imports; оставить отдельным backend |
 | Application orchestration, CLI/MCP E2E | Общий service соединяет Fabric compile → create-only workspace → fixed runner → artifact index; CLI и MCP adapters протестированы | Добавить отдельные plan/review/apply операции, assets, progress logging, cancel/resume и hosted evidence |
-| Fabric pack/compiler/fixtures | Pack revision 2 и compiler phase 1 генерируют и строго собирают scaffold, items, blocks, creative entries, shapeless/smelting recipes, models, blockstates, loot и localization | Расширить recipe contract, добавить tags/datagen, GameTests и hosted gates |
+| Fabric pack/compiler/fixtures | Pack revision 3 и compiler phase 1 генерируют и строго собирают scaffold, items, blocks, creative entries, shapeless/smelting recipes, models, blockstates, loot, localization и закрытые Mod Menu/YACL dependencies | Добавить config-screen adapters, расширить recipe contract, tags/datagen, GameTests и hosted gates |
 | Production AI asset pipeline | Частично: реализованы bounded model/material/animation contracts, local-space articulated plans с automatic pivot resolution и non-overlapping UV packing, entity/held-item geometry + rig, procedural pixel PNG atlases и детерминированный editable Blockbench 5 export с embedded texture и keyframe clips; concept provider и runtime exporters отсутствуют | Добавить semantic archetype planner, AI texture candidates и проверенный для 1.20.1 runtime export |
 
 Следовательно, сейчас инструмент воспроизводимо превращает уже одобренный basic-content ModSpec в Fabric JAR, но **ещё не строит весь путь от свободного промпта и review до production-ассетов и игрового evidence**.
@@ -201,7 +203,7 @@ fixtures/fabric-1.20.1-empty/
 
 **Проверка:** golden tests, semantic compile fixtures, datagen diff, path/size/property tests.
 
-**Интеграционный статус на 22 июля 2026:** `compiler-fabric` phase 1 потребляет только trusted pack revision 2 и генерирует Gradle scaffold, `fabric.mod.json`, split main/client entrypoint, items, blocks, creative entries, shapeless/smelting recipes, item/block models, blockstates, self-drop loot и `en_us`. Golden tests и реальная strict offline Gradle-сборка generated fixture проходят. Shaped/custom recipes отклоняются до расширения ModSpec полями pattern/key/custom payload. Пока используются явно помеченные placeholder textures; tags и datagen ещё не реализованы, поэтому F1.1 остаётся открытым.
+**Интеграционный статус на 22 июля 2026:** `compiler-fabric` phase 1 потребляет только trusted pack revision 3 и генерирует Gradle scaffold, `fabric.mod.json`, split main/client entrypoint, items, blocks, creative entries, shapeless/smelting recipes, item/block models, blockstates, self-drop loot и `en_us`. Trusted library resolver поддерживает обязательный YACL 3.5.0 и optional Mod Menu 7.2.2; unknown IDs, duplicates и неверная relation отклоняются, а реальная strict CLI-сборка выбранной пары завершается JAR. Java API adapters и config screen ещё не генерируются. Shaped/custom recipes отклоняются до расширения ModSpec полями pattern/key/custom payload. Пока используются явно помеченные placeholder textures; tags и datagen ещё не реализованы, поэтому F1.1 остаётся открытым.
 
 #### F1.2. Закрытая Fabric build policy
 
@@ -213,7 +215,7 @@ fixtures/fabric-1.20.1-empty/
 
 **Проверка:** adversarial runner tests и build пустого/basic fixture.
 
-**Интеграционный статус на 22 июля 2026:** wire contract и hardened runner исполняют именованную policy `fabric-1.20.1-phase1-v1` только для exact trusted pack revision 2 и Temurin 17.0.19+10. Policy проверяет закрытую конфигурацию, topology/ownership BuildPlan, pack templates, wrapper/distribution hashes, Java identity, mount/file integrity и запускает фиксированный strict `clean build`; source/dev JAR и Loom project cache обрабатываются закрытой Fabric policy, а release gate принимает ровно один remapped JAR. Позитивный lifecycle, cross-loader rejection и настоящий application/CLI E2E до JAR проходят локально; hosted evidence ещё не реализовано.
+**Интеграционный статус на 22 июля 2026:** wire contract и hardened runner исполняют именованную policy `fabric-1.20.1-phase1-v1` только для exact trusted pack revision 3 и Temurin 17.0.19+10. Policy проверяет закрытую конфигурацию, topology/ownership BuildPlan, pack templates, allowlisted library blocks, wrapper/distribution hashes, Java identity, mount/file integrity и запускает фиксированный strict `clean build`; source/dev JAR и Loom project cache обрабатываются закрытой Fabric policy, а release gate принимает ровно один remapped JAR. Позитивный lifecycle, cross-loader rejection и настоящие application/CLI E2E до JAR, включая YACL + Mod Menu dependency profile, проходят локально; hosted evidence ещё не реализовано.
 
 #### F1.3. Минимальный AI texture pipeline
 
