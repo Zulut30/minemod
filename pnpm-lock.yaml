@@ -156,6 +156,8 @@ importers:
 
   packages/contracts: {}
 
+  packages/library-catalog: {}
+
   packages/logging:
     dependencies:
       '@mcdev/contracts':
