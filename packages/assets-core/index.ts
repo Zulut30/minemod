@@ -404,3 +404,9 @@ export {
   type TextureQualityReport,
   type TextureQualityThresholds,
 } from "./texture-quality.ts";
+export {
+  analyzeReferenceCatalog,
+  type ReferenceAnalysisThresholds,
+  type ReferenceCatalogReport,
+  type ReferenceRuleCandidate,
+} from "./reference-analysis.ts";

@@ -1,9 +1,10 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import type { CuboidModelSpec } from "@mcdev/assets-contracts";
+import { ReferenceStudySchema, type CuboidModelSpec, type ReferenceStudy } from "@mcdev/assets-contracts";
 import {
   analyzeArticulatedModelQuality,
+  analyzeReferenceCatalog,
   analyzeTexturePlanQuality,
   compileBlockbenchModel,
   compileAnimatedTexturedBlockbenchModel,
@@ -19,6 +20,47 @@ import {
 function fixture(name: string): unknown {
   return JSON.parse(readFileSync(fileURLToPath(new URL(`../../fixtures/assets/${name}`, import.meta.url)), "utf8"));
 }
+
+function referenceFixture(name: string): unknown {
+  return JSON.parse(readFileSync(fileURLToPath(new URL(`../../fixtures/reference-studies/${name}`, import.meta.url)), "utf8"));
+}
+
+const riceReference = ReferenceStudySchema.parse(referenceFixture("farmers-delight-rice-1.20.1.json"));
+const singleReferenceReport = analyzeReferenceCatalog([riceReference], "crop");
+assert.equal(singleReferenceReport.readyForRulePromotion, false);
+assert.deepEqual(singleReferenceReport.diagnostics.map(({ id }) => id), [
+  "REFERENCE_STUDY_COUNT_LOW",
+  "REFERENCE_PROJECT_DIVERSITY_LOW",
+  "REFERENCE_SUBJECT_DIVERSITY_LOW",
+  "REFERENCE_RULE_SUPPORT_LOW",
+]);
+
+function syntheticIndependentReference(index: 1 | 2): ReferenceStudy {
+  const marker = String(index);
+  return ReferenceStudySchema.parse({
+    ...riceReference,
+    id: `synthetic_crop_reference_${marker}`,
+    source: {
+      ...riceReference.source,
+      project: `Synthetic crop reference ${marker}`,
+      homepage: `https://example.com/project-${marker}`,
+      repository: `https://example.com/project-${marker}/source`,
+      revision: marker.repeat(40),
+    },
+    subject: { ...riceReference.subject, id: `crop_${marker}` },
+  });
+}
+
+const diverseReferenceReport = analyzeReferenceCatalog([
+  riceReference,
+  syntheticIndependentReference(1),
+  syntheticIndependentReference(2),
+], "crop");
+assert.equal(diverseReferenceReport.readyForRulePromotion, true);
+assert.deepEqual(diverseReferenceReport.candidateRules, [
+  { id: "require_growth_silhouette_progression", projectSupport: 3, promotable: true },
+  { id: "split_tall_crop_layers", projectSupport: 3, promotable: true },
+]);
 
 function assertNoUvOverlap(model: CuboidModelSpec): void {
   const rectangles = model.bones.flatMap(({ cubes }) => cubes.map((cube) => ({
