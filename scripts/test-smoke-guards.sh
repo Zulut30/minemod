@@ -140,17 +140,22 @@ dependencies = json.loads(
     (root / "docs/provenance/neoforge-26.1.2-dependencies.json").read_text()
 )
 workflow = (root / ".github/workflows/phase-0.yml").read_text()
+fabric_build = (root / "fixtures/fabric-26.2-empty/build.gradle").read_text()
 ci_counts = re.findall(r"^\s*expected_artifact_count=([0-9]+)$", workflow, re.MULTILINE)
-assert workflow.count('canonical_java_home=$(realpath -- "$JAVA_HOME")') == 4
-assert workflow.count('test -d "$canonical_java_home"') == 4
+assert workflow.count('canonical_java_home=$(realpath -- "$JAVA_HOME")') == 6
+assert workflow.count('test -d "$canonical_java_home"') == 6
 assert workflow.count(
     'printf \'PHASE0_JAVA21_HOME=%s\\n\' "$canonical_java_home"'
 ) == 2
 assert workflow.count(
     'printf \'PHASE0_JAVA25_HOME=%s\\n\' "$canonical_java_home"'
 ) == 2
+assert workflow.count(
+    'printf \'MCDEV_JAVA25_HOME=%s\\n\' "$canonical_java_home"'
+) == 2
 assert 'printf \'PHASE0_JAVA21_HOME=%s\\n\' "$JAVA_HOME"' not in workflow
 assert 'printf \'PHASE0_JAVA25_HOME=%s\\n\' "$JAVA_HOME"' not in workflow
+assert 'printf \'MCDEV_JAVA25_HOME=%s\\n\' "$JAVA_HOME"' not in workflow
 assert 'canonical_java21_home=$(realpath "$PHASE0_JAVA21_HOME")' in workflow
 assert 'canonical_java25_home=$(realpath "$PHASE0_JAVA25_HOME")' in workflow
 assert 'grep -Fc "$canonical_java21_home"' in workflow
@@ -164,6 +169,17 @@ client_prepare = (
 assert workflow.count(client_prepare) == 1
 assert workflow.index('name: Prepare verified headless client runtime') < workflow.index(
     'name: Smoke-test headless client'
+)
+assert workflow.count('PHASE0_SMOKE_TARGET: fabric') == 2
+assert workflow.count(
+    'uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2'
+) == 2
+assert 'fabric-api.gametest.report-file' in fabric_build
+assert 'fixtures/fabric-26.2-empty/build/run/gameTest/gametest-report.xml' in workflow
+assert 'fixtures/fabric-26.2-empty/build/run/clientGameTest/screenshots/*.png' in workflow
+assert 'fabric_expected_artifact_count=411' in workflow
+assert workflow.index('name: Run Fabric client GameTest') < workflow.index(
+    'name: Smoke-test Fabric headless client'
 )
 counts = [
     sum(element.tag.rsplit("}", 1)[-1] == "artifact" for element in metadata.iter()),

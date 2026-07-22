@@ -1,16 +1,16 @@
 {
   "schemaVersion": 1,
-  "auditedAt": "2026-07-21",
+  "auditedAt": "2026-07-22",
   "status": "candidate-local",
   "productLicense": "Apache-2.0",
   "dependencyInventory": {
     "verificationMetadata": {
       "path": "../../fixtures/fabric-26.2-empty/gradle/verification-metadata.xml",
-      "sha256": "892b8ef4cd0a784ac37dbccc41e31006db7c45f3b213425bacab9353ec2c625b"
+      "sha256": "3bd0604ebfcec03ff59e55cdf04c07cbc5c5d0e15c3d8386215b57bb006d16ea"
     },
-    "componentCount": 174,
-    "artifactReferenceCount": 393,
-    "artifactSha256Count": 393,
+    "componentCount": 183,
+    "artifactReferenceCount": 411,
+    "artifactSha256Count": 411,
     "weakHashCount": 0,
     "trustedWildcardCount": 0,
     "transitiveLicenseReviewComplete": false,
@@ -53,6 +53,15 @@
       "redistributed": false
     },
     {
+      "name": "JUnit Jupiter",
+      "version": "5.13.4",
+      "source": "https://github.com/junit-team/junit5/tree/8a21048605e61dc388c1c83cbecf9dd5097a595d",
+      "license": "EPL-2.0",
+      "licenseSource": "https://raw.githubusercontent.com/junit-team/junit5/8a21048605e61dc388c1c83cbecf9dd5097a595d/LICENSE.md",
+      "licenseSourceSha256": "5aa4cd44c111add178d1c2e2fe36d58a484012c80167df925f826cd64d411bf0",
+      "redistributed": false
+    },
+    {
       "name": "Gradle binary distribution",
       "version": "9.5.1",
       "source": "https://services.gradle.org/distributions/gradle-9.5.1-bin.zip",
@@ -84,7 +93,7 @@
     }
   ],
   "unresolved": [
-    "Complete SPDX classification for all 174 resolved transitive components",
+    "Complete SPDX classification for all 183 resolved transitive components",
     "GitHub-hosted build, dedicated-server, and headless-client evidence",
     "Windows runtime execution of gradlew.bat checksum enforcement"
   ]

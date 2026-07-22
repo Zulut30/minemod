@@ -176,6 +176,8 @@ fixtures/fabric-26.2/
 
 **Зависимости:** F0.1.
 
+**Статус на 22 июля 2026:** JUnit, server/client GameTests, screenshots и hardened server/client smoke реализованы и проходят локально. GitHub Actions jobs и artifact upload настроены; для полного закрытия F0.2 нужен первый успешный hosted run.
+
 **Работа:** настроить JUnit, server GameTests, client GameTests/screenshots, dedicated-server smoke и CI jobs. Для headless client использовать фиксированный Linux environment/Xvfb.
 
 **Приёмка:** намеренно сломанные registration, client/server boundary и GameTest дают красный gate; reports и screenshots индексируются как artifacts.

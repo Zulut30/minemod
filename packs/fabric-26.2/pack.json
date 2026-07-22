@@ -28,9 +28,9 @@
     "dedicatedServerSmoke": "local-pass",
     "headlessClientSmoke": "local-pass",
     "dependencyVerification": "strict-local-pass",
-    "gameTestServer": "pending-f0.2",
-    "clientGameTest": "pending-f0.2",
-    "hostedCi": "pending-f0.2"
+    "gameTestServer": "local-pass",
+    "clientGameTest": "local-pass",
+    "hostedCi": "configured-pending-first-run"
   },
   "optionalDependencies": [
     "emi",
@@ -44,8 +44,7 @@
     "provenance": "../../docs/provenance/fabric-26.2-dependencies.json"
   },
   "knownIssues": [
-    "The baseline has local build/client/server evidence but no GitHub-hosted run yet.",
-    "Fabric server and client GameTests are F0.2 work and are not claimed by this pack.",
+    "Server/client GameTests and hardened smoke gates pass locally, but the new GitHub-hosted jobs have not run yet.",
     "Full transitive dependency license classification is not complete; release redistribution is blocked until it is.",
     "Windows gradlew.bat checksum enforcement is statically reviewed but has not run on a Windows worker."
   ]

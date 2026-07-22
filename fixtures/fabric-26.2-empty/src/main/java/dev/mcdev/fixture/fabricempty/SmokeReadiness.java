@@ -15,7 +15,10 @@ public final class SmokeReadiness {
             String environmentName,
             Path temporaryPath,
             Path readinessPath) {
-        String nonce = System.getenv(environmentName);
+        return publish(System.getenv(environmentName), temporaryPath, readinessPath);
+    }
+
+    static boolean publish(String nonce, Path temporaryPath, Path readinessPath) {
         if (nonce == null) {
             return false;
         }

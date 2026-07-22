@@ -261,3 +261,136 @@ jobs:
           --dependency-verification strict prepareClientRun
       - name: Smoke-test headless client
         run: ./scripts/smoke-client-ci.sh
+
+  fabric:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - name: Configure Fabric fixture-local Gradle caches
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${GITHUB_WORKSPACE:-}"
+          printf 'GRADLE_USER_HOME=%s/fixtures/fabric-26.2-empty/run/gradle-home\n' "$GITHUB_WORKSPACE" >> "$GITHUB_ENV"
+          printf 'GRADLE_PROJECT_CACHE_DIR=%s/fixtures/fabric-26.2-empty/run/project-cache\n' "$GITHUB_WORKSPACE" >> "$GITHUB_ENV"
+      - name: Set up Fabric Java 25 toolchain
+        uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
+        with:
+          distribution: temurin
+          java-version: 25.0.3+9
+          check-latest: false
+      - name: Record Fabric Java 25 toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          canonical_java_home=$(realpath -- "$JAVA_HOME")
+          test -d "$canonical_java_home"
+          printf 'MCDEV_JAVA25_HOME=%s\n' "$canonical_java_home" >> "$GITHUB_ENV"
+      - name: Verify Fabric Java toolchain and Gradle bootstrap
+        shell: bash
+        working-directory: fixtures/fabric-26.2-empty
+        run: |
+          set -euo pipefail
+
+          runtime_version() {
+            "$1/bin/java" -XshowSettings:properties -version 2>&1 |
+              awk -F' = ' '/^[[:space:]]*java\.runtime\.version = / { print $2; exit }'
+          }
+
+          test "$(realpath "$JAVA_HOME")" = "$(realpath "$MCDEV_JAVA25_HOME")"
+          test "$(runtime_version "$MCDEV_JAVA25_HOME")" = '25.0.3+9-LTS'
+          canonical_java25_home=$(realpath "$MCDEV_JAVA25_HOME")
+
+          toolchains=$(./gradlew --project-cache-dir "$GRADLE_PROJECT_CACHE_DIR" \
+            --dependency-verification strict -q javaToolchains)
+          printf '%s\n' "$toolchains"
+          grep -Eq '\| Auto-detection:[[:space:]]+Disabled$' <<<"$toolchains"
+          grep -Eq '\| Auto-download:[[:space:]]+Disabled$' <<<"$toolchains"
+          test "$(grep -Fc "$canonical_java25_home" <<<"$toolchains")" -eq 1
+          test "$(grep -Ec '^[[:space:]]*\| Location:' <<<"$toolchains")" -eq 1
+
+          ./gradlew --version
+      - name: Require reviewed Fabric dependency checksums
+        shell: bash
+        run: |
+          set -euo pipefail
+          metadata=fixtures/fabric-26.2-empty/gradle/verification-metadata.xml
+          fabric_expected_artifact_count=411
+          test "$(grep -c '<artifact name=' "$metadata")" -eq "$fabric_expected_artifact_count"
+          test "$(grep -c '<sha256 value=' "$metadata")" -eq "$fabric_expected_artifact_count"
+          ! grep -Eq '<trusted-artifacts|<sha1|<md5' "$metadata"
+      - name: Clean-build Fabric and run server GameTests
+        working-directory: fixtures/fabric-26.2-empty
+        run: >-
+          ./gradlew --project-cache-dir "$GRADLE_PROJECT_CACHE_DIR"
+          --dependency-verification strict clean build
+      - name: Upload Fabric server GameTest report
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: fabric-26.2-server-gametest-report
+          path: fixtures/fabric-26.2-empty/build/run/gameTest/gametest-report.xml
+          if-no-files-found: error
+          retention-days: 14
+      - name: Test smoke-process guards
+        run: ./scripts/test-smoke-guards.sh
+      - name: Smoke-test Fabric dedicated server
+        env:
+          PHASE0_SMOKE_TARGET: fabric
+        run: ./scripts/smoke-dedicated-server.sh
+
+  fabric-client:
+    needs: fabric
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - name: Configure Fabric fixture-local Gradle caches
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${GITHUB_WORKSPACE:-}"
+          printf 'GRADLE_USER_HOME=%s/fixtures/fabric-26.2-empty/run/gradle-home\n' "$GITHUB_WORKSPACE" >> "$GITHUB_ENV"
+          printf 'GRADLE_PROJECT_CACHE_DIR=%s/fixtures/fabric-26.2-empty/run/project-cache\n' "$GITHUB_WORKSPACE" >> "$GITHUB_ENV"
+      - name: Set up Fabric Java 25 toolchain
+        uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
+        with:
+          distribution: temurin
+          java-version: 25.0.3+9
+          check-latest: false
+      - name: Record Fabric Java 25 toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          canonical_java_home=$(realpath -- "$JAVA_HOME")
+          test -d "$canonical_java_home"
+          printf 'MCDEV_JAVA25_HOME=%s\n' "$canonical_java_home" >> "$GITHUB_ENV"
+      - name: Install headless display dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends xvfb xauth x11-xkb-utils
+      - name: Run Fabric client GameTest
+        env:
+          ALSOFT_DRIVERS: "null"
+        working-directory: fixtures/fabric-26.2-empty
+        run: >-
+          xvfb-run --auto-servernum --server-args='-screen 0 1280x720x24'
+          ./gradlew --project-cache-dir "$GRADLE_PROJECT_CACHE_DIR"
+          --dependency-verification strict runClientGameTest
+      - name: Upload Fabric client GameTest screenshots
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: fabric-26.2-client-gametest-screenshots
+          path: fixtures/fabric-26.2-empty/build/run/clientGameTest/screenshots/*.png
+          if-no-files-found: error
+          retention-days: 14
+      - name: Smoke-test Fabric headless client
+        env:
+          PHASE0_SMOKE_TARGET: fabric
+        run: ./scripts/smoke-client-ci.sh
