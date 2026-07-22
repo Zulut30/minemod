@@ -1,13 +1,54 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { compileBlockbenchModel } from "./index.ts";
+import { compileBlockbenchModel, renderCuboidTextureAtlas } from "./index.ts";
 
 function fixture(name: string): unknown {
   return JSON.parse(readFileSync(fileURLToPath(new URL(`../../fixtures/assets/${name}`, import.meta.url)), "utf8"));
 }
 
 const golem = fixture("copper-guardian.model.json");
+const golemObject = golem as { id: string; bones: Array<{ cubes: Array<{ id: string }> }> };
+const copperTexturePlan = {
+  schemaVersion: 0,
+  kind: "cuboid-texture-plan",
+  modelId: golemObject.id,
+  materials: [{
+    id: "copper",
+    colors: {
+      base: "#b85f3d",
+      shadow: "#67352d",
+      highlight: "#ed9a62",
+      accent: "#f4c542",
+    },
+  }],
+  assignments: golemObject.bones.flatMap(({ cubes }) => cubes.map(({ id }, index) => ({
+    cubeId: id,
+    materialId: "copper",
+    pattern: index % 2 === 0 ? "riveted" : "panel",
+    seed: index,
+  }))),
+};
+
+const copperAtlas = renderCuboidTextureAtlas(golem, copperTexturePlan);
+assert.equal(copperAtlas.format, "png");
+assert.equal(copperAtlas.width, 128);
+assert.equal(copperAtlas.height, 128);
+assert.equal(copperAtlas.bytes.subarray(1, 4).toString(), "80,78,71");
+assert.equal(copperAtlas.dataUrl.startsWith("data:image/png;base64,iVBOR"), true);
+assert.equal(copperAtlas.opaquePixels > 1_000, true);
+assert.equal(copperAtlas.colorCount >= 4, true);
+assert.equal(copperAtlas.sha256, "3a7b7c92dd0ea8533bae8d9624c8fb57b4019e6b87cf03eb676148f64db02447");
+assert.equal(copperAtlas.sha256, renderCuboidTextureAtlas(structuredClone(golem), structuredClone(copperTexturePlan)).sha256);
+assert.throws(
+  () => renderCuboidTextureAtlas(golem, { ...copperTexturePlan, assignments: copperTexturePlan.assignments.slice(1) }),
+  /missing assignments/u,
+);
+assert.throws(
+  () => renderCuboidTextureAtlas(golem, { ...copperTexturePlan, modelId: "mcdev:wrong" }),
+  /modelId/u,
+);
+
 const compiledGolem = compileBlockbenchModel(golem);
 const repeatedGolem = compileBlockbenchModel(structuredClone(golem));
 assert.equal(compiledGolem.text, repeatedGolem.text, "export must be byte-deterministic");

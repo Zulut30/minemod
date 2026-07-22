@@ -190,3 +190,8 @@ export function compileBlockbenchModel(input: unknown): CompiledBlockbenchModel 
     metrics,
   });
 }
+
+export {
+  renderCuboidTextureAtlas,
+  type RenderedCuboidTextureAtlas,
+} from "./texture.ts";
