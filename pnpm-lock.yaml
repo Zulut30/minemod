@@ -33,6 +33,12 @@ importers:
 
   apps/cli:
     dependencies:
+      '@mcdev/application':
+        specifier: workspace:*
+        version: link:../../packages/application
+      '@mcdev/contracts':
+        specifier: workspace:*
+        version: link:../../packages/contracts
       '@mcdev/validation':
         specifier: workspace:*
         version: link:../../packages/validation

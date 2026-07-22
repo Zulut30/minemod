@@ -42,6 +42,72 @@ assert.equal(
 assert.equal(await runCli(["publish"], () => undefined, () => undefined), 2);
 assert.equal(await runCli(["--self-test"], () => undefined, () => undefined), 2);
 
+{
+  let receivedConfig: unknown;
+  let receivedRequest: unknown;
+  output.length = 0;
+  const code = await runCli([
+    "fabric",
+    "build",
+    "--workspace",
+    "/approved/workspace",
+    "--java17-home",
+    "/fixed/jdk-17",
+    "--artifact-cache",
+    "/fixed/cache",
+    JSON.stringify(validModFixture),
+  ], (text) => output.push(text), () => undefined, {
+    createFabricApplication: (config) => {
+      receivedConfig = config;
+      return {
+        build: async (request) => {
+          receivedRequest = request;
+          return {
+            planId: "1".repeat(64),
+            workspaceStatus: "created",
+            artifacts: {
+              contract: "mcdev.artifact-index/v1",
+              planId: "1".repeat(64),
+              pack: {
+                packId: "fabric-1.20.1-java-17",
+                revision: 2,
+                treeSha256: "2".repeat(64),
+              },
+              entries: [],
+            },
+          };
+        },
+      };
+    },
+  });
+  assert.equal(code, 0);
+  assert.deepEqual(receivedConfig, {
+    java17Home: "/fixed/jdk-17",
+    artifactCacheRoot: "/fixed/cache",
+  });
+  assert.deepEqual(receivedRequest, {
+    workspaceRoot: "/approved/workspace",
+    payload: JSON.stringify(validModFixture),
+  });
+  assert.match(output.join(""), /"workspaceStatus": "created"/u);
+}
+
+{
+  const errors: string[] = [];
+  const code = await runCli([
+    "fabric", "build", "--workspace", "/workspace", "--java17-home", "/jdk",
+    "--artifact-cache", "/cache", "{}",
+  ], () => undefined, (text) => errors.push(text), {
+    createFabricApplication: () => ({
+      build: async () => Promise.reject(Object.assign(new Error("must not leak /workspace"), {
+        code: "BUILD_FAILED",
+      })),
+    }),
+  });
+  assert.equal(code, 1);
+  assert.deepEqual(errors, ["Fabric build failed: BUILD_FAILED\n"]);
+}
+
 const entrypoint = fileURLToPath(new URL("./index.ts", import.meta.url));
 const spawnCli = (args: readonly string[]) => spawnSync(
   process.execPath,

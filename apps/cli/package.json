@@ -9,6 +9,8 @@
     "test": "node --experimental-strip-types test.ts"
   },
   "dependencies": {
+    "@mcdev/application": "workspace:*",
+    "@mcdev/contracts": "workspace:*",
     "@mcdev/validation": "workspace:*"
   }
 }
