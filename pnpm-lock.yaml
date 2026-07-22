@@ -49,6 +49,24 @@ importers:
         specifier: 4.4.2
         version: 4.4.2
 
+  packages/application:
+    dependencies:
+      '@mcdev/artifacts':
+        specifier: workspace:*
+        version: link:../artifacts
+      '@mcdev/build-runner':
+        specifier: workspace:*
+        version: link:../build-runner
+      '@mcdev/compiler-fabric':
+        specifier: workspace:*
+        version: link:../compiler-fabric
+      '@mcdev/contracts':
+        specifier: workspace:*
+        version: link:../contracts
+      '@mcdev/workspace':
+        specifier: workspace:*
+        version: link:../workspace
+
   packages/artifacts:
     dependencies:
       '@mcdev/contracts':
