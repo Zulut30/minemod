@@ -1,6 +1,8 @@
 import { createHash } from "node:crypto";
 import {
+  CuboidAnimationPlanSchema,
   CuboidModelSpecSchema,
+  type CuboidAnimationPlan,
   type CuboidModelSpec,
 } from "@mcdev/assets-contracts";
 import {
@@ -24,6 +26,16 @@ export interface CompiledBlockbenchModel {
 
 export interface CompiledTexturedBlockbenchModel extends CompiledBlockbenchModel {
   readonly texture: RenderedCuboidTextureAtlas;
+}
+
+export interface BlockbenchAnimationMetrics {
+  readonly clips: number;
+  readonly tracks: number;
+  readonly keyframes: number;
+}
+
+export interface CompiledAnimatedTexturedBlockbenchModel extends CompiledTexturedBlockbenchModel {
+  readonly animationMetrics: BlockbenchAnimationMetrics;
 }
 
 type Vector3 = readonly [number, number, number];
@@ -60,7 +72,11 @@ interface BlockbenchOutlinerGroup {
   readonly children: readonly (string | BlockbenchOutlinerGroup)[];
 }
 
-function deterministicUuid(modelId: string, kind: "bone" | "cube" | "texture", id: string): string {
+function deterministicUuid(
+  modelId: string,
+  kind: "animation" | "bone" | "cube" | "keyframe" | "texture",
+  id: string,
+): string {
   const digest = createHash("sha256")
     .update(`mcdev:blockbench-5\0${modelId}\0${kind}\0${id}`, "utf8")
     .digest("hex")
@@ -117,6 +133,18 @@ function parseModel(input: unknown): CuboidModelSpec {
       ? "unknown validation error"
       : `${firstIssue.path.join(".") || "model"}: ${firstIssue.message}`;
     throw new TypeError(`Invalid CuboidModelSpec (${detail}).`);
+  }
+  return result.data;
+}
+
+function parseAnimationPlan(input: unknown): CuboidAnimationPlan {
+  const result = CuboidAnimationPlanSchema.safeParse(input);
+  if (!result.success) {
+    const firstIssue = result.error.issues[0];
+    const detail = firstIssue === undefined
+      ? "unknown validation error"
+      : `${firstIssue.path.join(".") || "plan"}: ${firstIssue.message}`;
+    throw new TypeError(`Invalid CuboidAnimationPlan (${detail}).`);
   }
   return result.data;
 }
@@ -239,6 +267,104 @@ export function compileTexturedBlockbenchModel(
     text,
     sha256: createHash("sha256").update(text, "utf8").digest("hex"),
     texture,
+  });
+}
+
+export function compileAnimatedTexturedBlockbenchModel(
+  modelInput: unknown,
+  texturePlanInput: unknown,
+  animationPlanInput: unknown,
+): CompiledAnimatedTexturedBlockbenchModel {
+  const model = parseModel(modelInput);
+  const animationPlan = parseAnimationPlan(animationPlanInput);
+  if (animationPlan.modelId !== model.id) {
+    throw new TypeError(`Animation plan modelId ${animationPlan.modelId} does not match model ${model.id}.`);
+  }
+
+  const boneIds = new Set(model.bones.map(({ id }) => id));
+  for (const clip of animationPlan.clips) {
+    for (const track of clip.tracks) {
+      if (!boneIds.has(track.boneId)) {
+        throw new TypeError(`Animation ${clip.id} targets missing bone ${track.boneId}.`);
+      }
+    }
+  }
+
+  const compiled = compileTexturedBlockbenchModel(model, texturePlanInput);
+  const document = JSON.parse(compiled.text) as { animations?: unknown[] };
+  const boneUuids = new Map(model.bones.map((bone) => [
+    bone.id,
+    deterministicUuid(model.id, "bone", bone.id),
+  ]));
+  let trackCount = 0;
+  let keyframeCount = 0;
+
+  document.animations = animationPlan.clips.map((clip) => {
+    const animators: Record<string, {
+      name: string;
+      type: "bone";
+      keyframes: Array<{
+        channel: "position" | "rotation";
+        data_points: Array<{ x: number; y: number; z: number }>;
+        uuid: string;
+        time: number;
+        color: -1;
+        interpolation: "linear" | "catmullrom";
+      }>;
+    }> = {};
+
+    for (const track of clip.tracks) {
+      const boneUuid = boneUuids.get(track.boneId);
+      if (boneUuid === undefined) throw new Error("Validated animation bone index became inconsistent.");
+      const animator = animators[boneUuid] ?? {
+        name: track.boneId,
+        type: "bone" as const,
+        keyframes: [],
+      };
+      const keyframes = track.keyframes.map((keyframe, index) => ({
+        channel: track.channel,
+        data_points: [{ x: keyframe.value[0], y: keyframe.value[1], z: keyframe.value[2] }],
+        uuid: deterministicUuid(
+          model.id,
+          "keyframe",
+          `${clip.id}:${track.boneId}:${track.channel}:${index}`,
+        ),
+        time: keyframe.time,
+        color: -1 as const,
+        interpolation: keyframe.interpolation,
+      }));
+      animator.keyframes.push(...keyframes);
+      animators[boneUuid] = animator;
+      trackCount += 1;
+      keyframeCount += keyframes.length;
+    }
+
+    return {
+      uuid: deterministicUuid(model.id, "animation", clip.id),
+      name: clip.name,
+      loop: clip.loop,
+      override: false,
+      length: clip.length,
+      snapping: clip.snapping,
+      selected: false,
+      anim_time_update: "",
+      blend_weight: "",
+      start_delay: "",
+      loop_delay: "",
+      animators,
+    };
+  });
+
+  const text = `${JSON.stringify(document, null, 2)}\n`;
+  return Object.freeze({
+    ...compiled,
+    text,
+    sha256: createHash("sha256").update(text, "utf8").digest("hex"),
+    animationMetrics: Object.freeze({
+      clips: animationPlan.clips.length,
+      tracks: trackCount,
+      keyframes: keyframeCount,
+    }),
   });
 }
 

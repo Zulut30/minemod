@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import {
   compileBlockbenchModel,
+  compileAnimatedTexturedBlockbenchModel,
   compileInventoryIcon,
   compileTexturedBlockbenchModel,
   renderCuboidTextureAtlas,
@@ -146,6 +147,43 @@ assert.deepEqual(fungalInfected.metrics, { bones: 10, cubes: 28, triangles: 336 
 assert.equal(fungalInfected.texture.colorCount >= 16, true);
 assert.equal(fungalInfected.sha256, "55a656fc7847977a59509dddc926f41adc682087a8b7b92c754d81a41330e50d");
 assert.equal(fungalInfected.texture.sha256, "3a5d5c93ab6e58a7b00efa6fd44d03ea777ab1c308b8f54fe3acb92ab1dd7053");
+
+const animatedFungalInfected = compileAnimatedTexturedBlockbenchModel(
+  fixture("fungal-infected.model.json"),
+  fixture("fungal-infected.texture.json"),
+  fixture("fungal-infected.animation.json"),
+);
+assert.deepEqual(animatedFungalInfected.animationMetrics, { clips: 3, tracks: 22, keyframes: 110 });
+assert.equal(animatedFungalInfected.sha256, "b32c26939c8919a8db263592704d67f624b0b4b1608cd974ad7ede5173fea8dc");
+const animatedProject = JSON.parse(animatedFungalInfected.text) as {
+  animations: Array<{
+    name: string;
+    animators: Record<string, { name: string; keyframes: Array<{ channel: string; time: number }> }>;
+  }>;
+};
+assert.deepEqual(animatedProject.animations.map(({ name }) => name), [
+  "animation.mcdev.fungal_infected.walk",
+  "animation.mcdev.fungal_infected.climb_block",
+  "animation.mcdev.fungal_infected.attack",
+]);
+const testAnimator = Object.values(animatedProject.animations[0]?.animators ?? {})[0];
+assert.equal(testAnimator?.name, "root");
+assert.deepEqual(testAnimator?.keyframes.map(({ channel, time }) => ({ channel, time })), [
+  { channel: "position", time: 0 },
+  { channel: "position", time: 0.25 },
+  { channel: "position", time: 0.5 },
+  { channel: "position", time: 0.75 },
+  { channel: "position", time: 1 },
+]);
+assert.equal(animatedFungalInfected.text.includes("/home/"), false);
+assert.throws(
+  () => compileAnimatedTexturedBlockbenchModel(
+    fixture("fungal-infected.model.json"),
+    fixture("fungal-infected.texture.json"),
+    { ...(fixture("fungal-infected.animation.json") as object), modelId: "mcdev:wrong" },
+  ),
+  /modelId/u,
+);
 
 assert.throws(
   () => compileBlockbenchModel({ ...(golem as object), command: "execute" }),
