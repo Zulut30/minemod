@@ -179,6 +179,14 @@ for (const pattern of ["scales", "mottled", "gradient"] as const) {
     assignments: [{ ...validTexturePlan.assignments[0]!, pattern }],
   }).success, true, `${pattern} is a supported organic texture pattern`);
 }
+assert.equal(CuboidTexturePlanSchema.safeParse({
+  ...validTexturePlan,
+  assignments: [{ ...validTexturePlan.assignments[0]!, detailScale: 4 }],
+}).success, true, "texture detail scale is bounded and optional");
+assert.equal(CuboidTexturePlanSchema.safeParse({
+  ...validTexturePlan,
+  assignments: [{ ...validTexturePlan.assignments[0]!, detailScale: 5 }],
+}).success, false, "texture detail scale rejects unbounded frequency");
 assert.equal(CuboidTexturePlanJsonSchema.additionalProperties, false);
 assert.equal(CUBOID_TEXTURE_LIMITS.maxMaterials, 16);
 assert.equal(CuboidTexturePlanSchema.safeParse({ ...validTexturePlan, command: "paint" }).success, false);

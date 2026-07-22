@@ -250,6 +250,7 @@ const TextureAssignmentSchema = z.strictObject({
     "mottled",
     "gradient",
   ]),
+  detailScale: z.number().int().min(1).max(4).optional(),
   seed: z.number().int().min(0).max(4_294_967_295),
 });
 

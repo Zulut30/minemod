@@ -393,3 +393,14 @@ export {
   type ArticulatedQualityThresholds,
   type ModelQualityDiagnostic,
 } from "./model-quality.ts";
+export {
+  createBilateralBonePair,
+  mirrorOriginAcrossX,
+  mirrorRotationAcrossX,
+  type BilateralBonePairOptions,
+} from "./symmetry.ts";
+export {
+  analyzeTexturePlanQuality,
+  type TextureQualityReport,
+  type TextureQualityThresholds,
+} from "./texture-quality.ts";

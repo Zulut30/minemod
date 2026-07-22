@@ -4,10 +4,12 @@ import { fileURLToPath } from "node:url";
 import type { CuboidModelSpec } from "@mcdev/assets-contracts";
 import {
   analyzeArticulatedModelQuality,
+  analyzeTexturePlanQuality,
   compileBlockbenchModel,
   compileAnimatedTexturedBlockbenchModel,
   compileInventoryIcon,
   compileTexturedBlockbenchModel,
+  createBilateralBonePair,
   createDragonArchetype,
   createDragonTexturePlan,
   materializeArticulatedModel,
@@ -73,26 +75,48 @@ assert.throws(
   /cannot fit cube/u,
 );
 
+const [leftDetail, rightDetail] = createBilateralBonePair({
+  id: "detail",
+  parents: "root",
+  leftPivotOffset: [3, 2, 1],
+  leftRotation: [10, 20, 30],
+  cubes: [{
+    id: "plate",
+    originOffset: [1, -2, -3],
+    size: [3, 4, 5],
+    rotation: [5, 15, 25],
+    inflate: 0,
+    mirror: false,
+  }],
+});
+assert.deepEqual(rightDetail.pivotOffset, [-3, 2, 1]);
+assert.deepEqual(rightDetail.rotation, [10, -20, -30]);
+assert.deepEqual(rightDetail.cubes[0]?.originOffset, [-4, -2, -3]);
+assert.deepEqual(rightDetail.cubes[0]?.rotation, [5, -15, -25]);
+assert.equal(leftDetail.cubes[0]?.id, "left_detail_plate");
+assert.equal(rightDetail.cubes[0]?.id, "right_detail_plate");
+
 const dragonPlan = createDragonArchetype({
   id: "mcdev:ancient_verdant_dragon",
   name: "Ancient Verdant Dragon",
 });
 const dragon = materializeArticulatedModel(dragonPlan);
 assert.deepEqual(dragon.packing, {
-  rectangles: 88,
-  occupiedPixels: 47_052,
+  rectangles: 100,
+  occupiedPixels: 50_560,
   usedWidth: 255,
-  usedHeight: 253,
+  usedHeight: 255,
   atlasPixels: 65_536,
-  utilization: 0.71795654296875,
+  utilization: 0.771484375,
 });
 assertNoUvOverlap(dragon.model);
 const dragonQuality = analyzeArticulatedModelQuality(dragon.model, {
-  minBones: 40,
-  minCubes: 70,
+  minBones: 44,
+  minCubes: 90,
   minHierarchyDepth: 7,
   minScaleBands: 6,
   symmetryTolerance: 0.001,
+  minDetailCubeRatio: 0.3,
   requiredBones: ["head", "jaw", "left_wing_shoulder", "right_wing_shoulder", "tail_tip"],
 });
 assert.equal(dragonQuality.passes, true);
@@ -102,8 +126,17 @@ assert.deepEqual({
   depth: dragonQuality.hierarchyDepth,
   scaleBands: dragonQuality.scaleBands,
   bilateralPairs: dragonQuality.bilateralPairs,
+  detailCubeRatio: dragonQuality.detailCubeRatio,
   span: dragonQuality.bounds.span,
-}, { bones: 44, cubes: 88, depth: 10, scaleBands: 11, bilateralPairs: 14, span: [150, 52, 148] });
+}, {
+  bones: 48,
+  cubes: 100,
+  depth: 10,
+  scaleBands: 12,
+  bilateralPairs: 16,
+  detailCubeRatio: 0.78,
+  span: [150, 52, 148],
+});
 const asymmetricDragon = structuredClone(dragon.model);
 const rightWing = asymmetricDragon.bones.find(({ id }) => id === "right_wing_shoulder");
 if (rightWing === undefined) throw new Error("Dragon fixture lost right_wing_shoulder.");
@@ -116,12 +149,43 @@ assert.equal(analyzeArticulatedModelQuality(asymmetricDragon, {
   symmetryTolerance: 0.001,
   requiredBones: ["head", "jaw"],
 }).diagnostics.some(({ id }) => id === "ART_ANATOMY_SYMMETRY_DRIFT"), true);
-const compiledDragon = compileTexturedBlockbenchModel(dragon.model, createDragonTexturePlan(dragonPlan));
-assert.deepEqual(compiledDragon.metrics, { bones: 44, cubes: 88, triangles: 1_056 });
+const dragonTexturePlan = createDragonTexturePlan(dragonPlan);
+const compiledDragon = compileTexturedBlockbenchModel(dragon.model, dragonTexturePlan);
+const dragonTextureQuality = analyzeTexturePlanQuality(dragon.model, dragonTexturePlan, {
+  minShadowLuminanceDelta: 0.02,
+  minHighlightLuminanceDelta: 0.03,
+  minAccentRgbDistance: 0.05,
+});
+assert.equal(dragonTextureQuality.passes, true);
+assert.deepEqual({
+  materials: dragonTextureQuality.materialCount,
+  assignments: dragonTextureQuality.assignmentCount,
+  bilateralPairs: dragonTextureQuality.texturedBilateralPairs,
+}, { materials: 6, assignments: 100, bilateralPairs: 34 });
+const flatPalettePlan = structuredClone(dragonTexturePlan);
+const flatHide = flatPalettePlan.materials.find(({ id }) => id === "hide");
+if (flatHide === undefined) throw new Error("Dragon fixture lost hide material.");
+flatHide.colors.highlight = flatHide.colors.base;
+assert.equal(analyzeTexturePlanQuality(dragon.model, flatPalettePlan, {
+  minShadowLuminanceDelta: 0.02,
+  minHighlightLuminanceDelta: 0.03,
+  minAccentRgbDistance: 0.05,
+}).diagnostics.some(({ id }) => id === "ART_PALETTE_HIGHLIGHT_CONTRAST_LOW"), true);
+const asymmetricTexturePlan = structuredClone(dragonTexturePlan);
+const rightWingTexture = asymmetricTexturePlan.assignments.find(({ cubeId }) =>
+  cubeId === "right_wing_shoulder_membrane");
+if (rightWingTexture === undefined) throw new Error("Dragon fixture lost right wing texture assignment.");
+rightWingTexture.seed += 1;
+assert.equal(analyzeTexturePlanQuality(dragon.model, asymmetricTexturePlan, {
+  minShadowLuminanceDelta: 0.02,
+  minHighlightLuminanceDelta: 0.03,
+  minAccentRgbDistance: 0.05,
+}).diagnostics.some(({ id }) => id === "ART_TEXTURE_SYMMETRY_DRIFT"), true);
+assert.deepEqual(compiledDragon.metrics, { bones: 48, cubes: 100, triangles: 1_200 });
 assert.equal(compiledDragon.texture.colorCount >= 20, true);
-assert.equal(compiledDragon.texture.opaquePixels, 47_052);
-assert.equal(compiledDragon.sha256, "8c5f2b512d30fc15a320dd9b6d22700addb9603a13cbf7d90dd4735788d143ea");
-assert.equal(compiledDragon.texture.sha256, "2772ec26b6a4fa9f64dd251644807307a2dd70a7d5f92f3380d15e81aee2499f");
+assert.equal(compiledDragon.texture.opaquePixels, 50_560);
+assert.equal(compiledDragon.sha256, "71d48bbf150f2bbefdc7a8059d5795ab5952ed444293c0b82f7810a408612374");
+assert.equal(compiledDragon.texture.sha256, "7fe46d9f9bbd5d81169a4a1661c85aa951a7351fed7edf3efbae0ec3bd2fcc68");
 
 const galleon = materializeArticulatedModel(fixture("merchant-galleon.plan.json"));
 assert.deepEqual(galleon.packing, {

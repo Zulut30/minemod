@@ -94,23 +94,26 @@ function colorForPixel(
   width: number,
   height: number,
   seed: number,
+  detailScale: number,
 ): Rgba {
   const [base, shadow, highlight, accent] = colors;
+  const detailX = x * detailScale;
+  const detailY = y * detailScale;
   if (x === 0 || y === 0) return highlight;
   if (x === width - 1 || y === height - 1) return shadow;
   if (pattern === "striped" && (x + y + seed) % 7 < 2) return accent;
   if (pattern === "panel" && (x === 2 || y === 2 || x === width - 3 || y === height - 3)) return shadow;
   if (pattern === "riveted" && ((x === 1 || x === width - 2) && (y === 1 || y === height - 2))) return accent;
   if (pattern === "scales") {
-    const row = Math.floor(y / 4);
-    const staggeredX = x + (row % 2) * 3 + seed;
+    const row = Math.floor(detailY / 4);
+    const staggeredX = detailX + (row % 2) * 3 + seed;
     const scaleX = staggeredX % 6;
-    if (y % 4 === 3 && scaleX > 0 && scaleX < 5) return shadow;
-    if (scaleX === 0 && y % 4 === 0) return highlight;
-    if (staggeredX % 12 === 6 && y % 4 === 1) return accent;
+    if (detailY % 4 === 3 && scaleX > 0 && scaleX < 5) return shadow;
+    if (scaleX === 0 && detailY % 4 === 0) return highlight;
+    if (staggeredX % 12 === 6 && detailY % 4 === 1) return accent;
   }
   if (pattern === "mottled") {
-    const patch = (Math.floor(x / 3) * 19 + Math.floor(y / 3) * 37 + seed) % 11;
+    const patch = (Math.floor(detailX / 3) * 19 + Math.floor(detailY / 3) * 37 + seed) % 11;
     if (patch === 0 || patch === 1) return shadow;
     if (patch === 5) return accent;
     if (patch === 8) return highlight;
@@ -119,9 +122,9 @@ function colorForPixel(
     const vertical = height <= 2 ? 0.5 : y / (height - 1);
     if (vertical < 0.22) return highlight;
     if (vertical > 0.78) return shadow;
-    if ((x * 13 + y * 7 + seed) % 31 === 0) return accent;
+    if ((detailX * 13 + detailY * 7 + seed) % 31 === 0) return accent;
   }
-  if (pattern !== "solid" && (x * 17 + y * 31 + seed) % 29 === 0) return highlight;
+  if (pattern !== "solid" && (detailX * 17 + detailY * 31 + seed) % 29 === 0) return highlight;
   return base;
 }
 
@@ -156,7 +159,8 @@ export function renderCuboidTextureAtlas(modelInput: unknown, planInput: unknown
     ] as const;
     for (let y = 0; y < boxHeight; y += 1) {
       for (let x = 0; x < boxWidth; x += 1) {
-        const color = colorForPixel(assignment.pattern, colors, x, y, boxWidth, boxHeight, assignment.seed);
+        const color = colorForPixel(assignment.pattern, colors, x, y, boxWidth, boxHeight, assignment.seed,
+          assignment.detailScale ?? 1);
         const offset = ((cube.uv[1] + y) * model.texture.width + cube.uv[0] + x) * 4;
         pixels.set(color, offset);
       }

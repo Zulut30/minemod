@@ -9,6 +9,7 @@ export interface ArticulatedQualityThresholds {
   readonly minScaleBands: number;
   readonly symmetryTolerance: number;
   readonly requiredBones: readonly string[];
+  readonly minDetailCubeRatio?: number;
 }
 
 export interface ModelQualityDiagnostic {
@@ -24,6 +25,7 @@ export interface ArticulatedModelQualityReport {
   readonly hierarchyDepth: number;
   readonly scaleBands: number;
   readonly bilateralPairs: number;
+  readonly detailCubeRatio: number;
   readonly bounds: { readonly min: Vector3; readonly max: Vector3; readonly span: Vector3 };
   readonly diagnostics: readonly ModelQualityDiagnostic[];
 }
@@ -63,6 +65,10 @@ export function analyzeArticulatedModelQuality(
   const cubes = model.bones.flatMap(({ cubes: boneCubes }) => boneCubes);
   const depth = hierarchyDepth(model);
   const volumeBands = new Set(cubes.map(({ size }) => Math.floor(Math.log2(size[0] * size[1] * size[2]))));
+  const volumes = cubes.map(({ size }) => size[0] * size[1] * size[2]);
+  const largestVolume = Math.max(...volumes, 0);
+  const detailCubeRatio = cubes.length === 0 ? 0 :
+    volumes.filter((volume) => volume <= largestVolume * 0.05).length / cubes.length;
 
   if (model.bones.length < thresholds.minBones) {
     diagnostics.push({ id: "ART_ANATOMY_BONE_COUNT_LOW", severity: "error",
@@ -80,6 +86,10 @@ export function analyzeArticulatedModelQuality(
     diagnostics.push({ id: "ART_DETAIL_SCALE_BANDS_LOW", severity: "warning",
       message: `Expected ${thresholds.minScaleBands} visible size bands, received ${volumeBands.size}.` });
   }
+  if (detailCubeRatio < (thresholds.minDetailCubeRatio ?? 0)) {
+    diagnostics.push({ id: "ART_DETAIL_DENSITY_LOW", severity: "warning",
+      message: `Small-detail ratio ${detailCubeRatio.toFixed(3)} is below ${thresholds.minDetailCubeRatio?.toFixed(3)}.` });
+  }
   for (const required of thresholds.requiredBones) {
     if (!bones.has(required)) diagnostics.push({ id: "ART_ANATOMY_REQUIRED_BONE_MISSING", severity: "error",
       message: `Required animation bone ${required} is missing.` });
@@ -95,16 +105,31 @@ export function analyzeArticulatedModelQuality(
       continue;
     }
     bilateralPairs += 1;
+    const expectedParent = left.parent?.startsWith("left_") ? `right_${left.parent.slice(5)}` : left.parent;
     const pivotsMirror = approximatelyEqual(left.pivot[0], -right.pivot[0], thresholds.symmetryTolerance) &&
       approximatelyEqual(left.pivot[1], right.pivot[1], thresholds.symmetryTolerance) &&
       approximatelyEqual(left.pivot[2], right.pivot[2], thresholds.symmetryTolerance);
+    const rotationsMirror = approximatelyEqual(left.rotation[0], right.rotation[0], thresholds.symmetryTolerance) &&
+      approximatelyEqual(left.rotation[1], -right.rotation[1], thresholds.symmetryTolerance) &&
+      approximatelyEqual(left.rotation[2], -right.rotation[2], thresholds.symmetryTolerance);
     const cubesMirror = left.cubes.length === right.cubes.length && left.cubes.every((leftCube, index) => {
       const rightCube = right.cubes[index];
-      return rightCube !== undefined && leftCube.size.every((value, axis) =>
-        approximatelyEqual(value, rightCube.size[axis] ?? Number.NaN, thresholds.symmetryTolerance));
+      const expectedId = `right_${leftCube.id.slice(5)}`;
+      return rightCube !== undefined && rightCube.id === expectedId &&
+        leftCube.size.every((value, axis) =>
+          approximatelyEqual(value, rightCube.size[axis] ?? Number.NaN, thresholds.symmetryTolerance)) &&
+        approximatelyEqual(-leftCube.origin[0] - leftCube.size[0], rightCube.origin[0], thresholds.symmetryTolerance) &&
+        approximatelyEqual(leftCube.origin[1], rightCube.origin[1], thresholds.symmetryTolerance) &&
+        approximatelyEqual(leftCube.origin[2], rightCube.origin[2], thresholds.symmetryTolerance) &&
+        approximatelyEqual(leftCube.rotation[0], rightCube.rotation[0], thresholds.symmetryTolerance) &&
+        approximatelyEqual(leftCube.rotation[1], -rightCube.rotation[1], thresholds.symmetryTolerance) &&
+        approximatelyEqual(leftCube.rotation[2], -rightCube.rotation[2], thresholds.symmetryTolerance) &&
+        leftCube.mirror !== rightCube.mirror;
     });
-    if (!pivotsMirror || !cubesMirror) diagnostics.push({ id: "ART_ANATOMY_SYMMETRY_DRIFT", severity: "error",
+    if (right.parent !== expectedParent || !pivotsMirror || !rotationsMirror || !cubesMirror) {
+      diagnostics.push({ id: "ART_ANATOMY_SYMMETRY_DRIFT", severity: "error",
       message: `Bilateral pair ${left.id}/${counterpartId} differs beyond tolerance ${thresholds.symmetryTolerance}.` });
+    }
   }
 
   const min: [number, number, number] = [Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY];
@@ -127,6 +152,7 @@ export function analyzeArticulatedModelQuality(
     hierarchyDepth: depth,
     scaleBands: volumeBands.size,
     bilateralPairs,
+    detailCubeRatio,
     bounds: Object.freeze({ min: Object.freeze(min), max: Object.freeze(max), span: Object.freeze(span) }),
     diagnostics: Object.freeze(diagnostics),
   });

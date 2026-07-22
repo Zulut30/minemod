@@ -4,6 +4,7 @@ import {
   type ArticulatedModelPlan,
   type CuboidTexturePlan,
 } from "@mcdev/assets-contracts";
+import { createBilateralBonePair } from "./symmetry.ts";
 
 type Vector3 = [number, number, number];
 type Bone = ArticulatedModelPlan["bones"][number];
@@ -12,6 +13,16 @@ type Cube = Bone["cubes"][number];
 export interface DragonArchetypeOptions {
   readonly id: string;
   readonly name: string;
+}
+
+function symmetricSeed(id: string): number {
+  const canonical = id.replace(/^(?:left|right)_/u, "side_");
+  let hash = 2_166_136_261;
+  for (let index = 0; index < canonical.length; index += 1) {
+    hash ^= canonical.charCodeAt(index);
+    hash = Math.imul(hash, 16_777_619);
+  }
+  return hash >>> 0;
 }
 
 function cube(
@@ -33,10 +44,6 @@ function bone(
   return { id, parent, pivotOffset, rotation, cubes: [...cubes] };
 }
 
-function mirrorRotation([x, y, z]: Vector3): Vector3 {
-  return [x, -y, -z];
-}
-
 function bilateralPair(
   id: string,
   parents: string | readonly [string, string],
@@ -44,22 +51,7 @@ function bilateralPair(
   cubes: readonly Cube[],
   leftRotation: Vector3 = [0, 0, 0],
 ): readonly [Bone, Bone] {
-  const [leftParent, rightParent] = typeof parents === "string" ? [parents, parents] : parents;
-  const leftId = `left_${id}`;
-  const rightId = `right_${id}`;
-  const leftCubes = cubes.map((part) => ({ ...part, id: `${leftId}_${part.id}` }));
-  const rightCubes = cubes.map((part) => ({
-    ...part,
-    id: `${rightId}_${part.id}`,
-    originOffset: [-part.originOffset[0] - part.size[0], part.originOffset[1], part.originOffset[2]] as Vector3,
-    rotation: mirrorRotation(part.rotation),
-    mirror: true,
-  }));
-  return [
-    bone(leftId, leftParent, leftPivotOffset, leftCubes, leftRotation),
-    bone(rightId, rightParent, [-leftPivotOffset[0], leftPivotOffset[1], leftPivotOffset[2]], rightCubes,
-      mirrorRotation(leftRotation)),
-  ];
+  return createBilateralBonePair({ id, parents, leftPivotOffset, cubes, leftRotation });
 }
 
 /**
@@ -103,6 +95,8 @@ export function createDragonArchetype(options: DragonArchetypeOptions): Articula
       cube("brow", [-7, 2, -9], [14, 3, 5]),
       cube("left_eye", [6, 0, -8], [1, 2, 2]),
       cube("right_eye", [-7, 0, -8], [1, 2, 2]),
+      cube("left_nostril", [3, 0, -16], [1, 1, 1]),
+      cube("right_nostril", [-4, 0, -16], [1, 1, 1]),
       cube("head_spine", [-2, 4, -2], [4, 7, 7], [0, 0, 45]),
     ], [-2, 0, 0]),
     bone("jaw", "head", [0, -3, -9], [
@@ -138,14 +132,17 @@ export function createDragonArchetype(options: DragonArchetypeOptions): Articula
     ...bilateralPair("wing_shoulder", "chest", [11, 5, -4], [
       cube("arm", [0, -2, -2], [18, 5, 5]),
       cube("membrane", [2, -1, -14], [16, 1, 14]),
+      cube("vein", [4, 0, -13], [2, 2, 13]),
     ], [0, -18, 12]),
     ...bilateralPair("wing_elbow", ["left_wing_shoulder", "right_wing_shoulder"], [16, 0, 0], [
       cube("arm", [0, -2, -2], [20, 4, 4]),
       cube("membrane", [0, -1, -17], [20, 1, 17]),
+      cube("vein", [6, 0, -16], [2, 2, 15]),
     ], [0, -12, 6]),
     ...bilateralPair("wing_wrist", ["left_wing_elbow", "right_wing_elbow"], [18, 0, 0], [
       cube("arm", [0, -1, -1], [16, 3, 3]),
       cube("membrane", [0, -1, -14], [16, 1, 14]),
+      cube("vein", [5, 0, -13], [2, 2, 12]),
     ], [0, -10, 4]),
     ...bilateralPair("wing_finger_1", ["left_wing_wrist", "right_wing_wrist"], [12, 0, 0], [
       cube("finger", [0, -1, -1], [18, 2, 2]),
@@ -187,6 +184,12 @@ export function createDragonArchetype(options: DragonArchetypeOptions): Articula
     ...bilateralPair("horn_tip", ["left_horn_base", "right_horn_base"], [0, 1, 7], [
       cube("horn", [-1, 0, 0], [1, 2, 5]),
     ], [-20, 0, -8]),
+    ...bilateralPair("cheek_spike", "head", [6, 0, -3], [
+      cube("spike", [0, -1, -1], [5, 2, 2]),
+    ], [0, -25, -10]),
+    ...bilateralPair("tail_fin", "tail_4", [3, 1, 5], [
+      cube("fin", [0, -1, -4], [7, 1, 8]),
+    ], [0, 5, 15]),
   );
 
   const parsed = ArticulatedModelPlanSchema.safeParse({
@@ -204,26 +207,30 @@ export function createDragonArchetype(options: DragonArchetypeOptions): Articula
 }
 
 export function createDragonTexturePlan(plan: ArticulatedModelPlan): CuboidTexturePlan {
-  const assignments = plan.bones.flatMap(({ cubes }) => cubes.map(({ id }, index) => {
+  const assignments = plan.bones.flatMap(({ cubes }) => cubes.map(({ id }) => {
     let materialId = "hide";
     let pattern: CuboidTexturePlan["assignments"][number]["pattern"] = "scales";
-    if (id.includes("membrane")) {
+    let detailScale = 2;
+    if (id.includes("membrane") || id.includes("tail_fin")) {
       materialId = "membrane";
       pattern = "gradient";
+      detailScale = 1;
     } else if (id.includes("eye")) {
       materialId = "eye";
       pattern = "solid";
+      detailScale = 1;
     } else if (id.includes("horn") || id.includes("claw") || id.includes("fang")) {
       materialId = "bone";
       pattern = "gradient";
+      detailScale = 1;
     } else if (id.includes("belly") || id.includes("plate") || id.includes("jaw")) {
       materialId = "underbelly";
       pattern = "mottled";
-    } else if (id.includes("spine")) {
+    } else if (id.includes("spine") || id.includes("spike") || id.includes("vein") || id.includes("nostril")) {
       materialId = "spine";
       pattern = "gradient";
     }
-    return { cubeId: id, materialId, pattern, seed: 10_000 + index * 97 };
+    return { cubeId: id, materialId, pattern, detailScale, seed: symmetricSeed(id) };
   }));
   const parsed = CuboidTexturePlanSchema.safeParse({
     schemaVersion: 0,

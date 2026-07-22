@@ -6,12 +6,14 @@
 
 ## Реализовано
 
-- 44 семантически названные кости и 88 cuboid-деталей;
+- 48 семантически названных костей и 100 cuboid-деталей;
 - отдельные pivots для четырёх сегментов шеи, челюсти, шести сегментов крыла с каждой стороны, четырёх лап, рогов и семи сегментов хвоста;
-- детерминированное зеркалирование левой анатомии в правую с отражением pivot, rotations, cube origins и UV mirror flag;
+- общий `createBilateralBonePair` для детерминированного зеркалирования левой анатомии в правую с отражением parent, pivot, rotations, cube origins, IDs и UV mirror flag;
 - 256×256 atlas с padding без UV overlap;
-- органические texture patterns `scales`, `mottled` и `gradient` для кожи, брюха, перепонок, рогов и шипов;
-- structural preflight: минимальные budgets, hierarchy depth, scale bands, обязательные animation bones, bilateral symmetry и bounds;
+- органические texture patterns `scales`, `mottled` и `gradient` с bounded `detailScale` для кожи, брюха, перепонок, рогов и шипов;
+- мелкие детали: ноздри, щёчные шипы, прожилки перепонок и хвостовые плавники;
+- structural preflight: минимальные budgets, hierarchy depth, scale bands, detail ratio, обязательные animation bones, полная bilateral symmetry и bounds;
+- texture preflight: одинаковые material/pattern/detailScale/seed у парных деталей и luminance/separation checks для palette roles;
 - byte-stable golden hashes для `.bbmodel` и embedded PNG.
 
 ## Границы
