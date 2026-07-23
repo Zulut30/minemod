@@ -299,15 +299,16 @@ const ConfigOptionBase = {
   description: boundedBmpString(1, 240).optional(),
   restartRequired: z.boolean(),
 };
+const JavaInt = z.number().int().min(-2_147_483_648).max(2_147_483_647);
 const ConfigOptionSchema = z.discriminatedUnion("type", [
   z.strictObject({ ...ConfigOptionBase, type: z.literal("boolean"), default: z.boolean() }),
   z.strictObject({
     ...ConfigOptionBase,
     type: z.literal("integer"),
-    default: z.number().int(),
-    minimum: z.number().int(),
-    maximum: z.number().int(),
-    step: z.number().int().positive(),
+    default: JavaInt,
+    minimum: JavaInt,
+    maximum: JavaInt,
+    step: z.number().int().positive().max(2_147_483_647),
   }),
   z.strictObject({
     ...ConfigOptionBase,

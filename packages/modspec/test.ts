@@ -91,6 +91,12 @@ const emptyIntegerRangeOption = emptyIntegerRange.integrations.yacl!.categories[
 assert.ok(emptyIntegerRangeOption?.type === "integer");
 emptyIntegerRangeOption.minimum = emptyIntegerRangeOption.maximum;
 assert.equal(ModSpecV1Schema.safeParse(emptyIntegerRange).success, false);
+const overflowingInteger = structuredClone(configuredFabric);
+const overflowingIntegerOption = overflowingInteger.integrations.yacl!.categories[0]!.options
+  .find((option) => option.type === "integer");
+assert.ok(overflowingIntegerOption?.type === "integer");
+overflowingIntegerOption.maximum = 2_147_483_648;
+assert.equal(ModSpecV1Schema.safeParse(overflowingInteger).success, false);
 const duplicateConfigOption = structuredClone(configuredFabric);
 duplicateConfigOption.integrations.yacl!.categories[0]!.options[2]!.id = "spawn_limit";
 assert.equal(ModSpecV1Schema.safeParse(duplicateConfigOption).success, false);
