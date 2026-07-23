@@ -35,6 +35,81 @@ async function expectCompilerError(
   assert.fail(`expected ${code}`);
 }
 
+function fabricEquipmentFixture() {
+  const equipment = fabricBasicContentFixture();
+  equipment.gameplay.materials = [{
+    id: "infectedfrontier:blue_steel",
+    repairIngredient: "infectedfrontier:blue_ingot",
+    durability: 1_024,
+    miningSpeed: 9,
+    attackDamageBonus: 4,
+    miningLevel: 3,
+    enchantmentValue: 18,
+    armor: {
+      durabilityMultiplier: 32,
+      defense: { helmet: 3, chestplate: 8, leggings: 6, boots: 3 },
+      toughness: 2,
+      knockbackResistance: 0.1,
+    },
+  }];
+  equipment.gameplay.items.push(
+    {
+      id: "infectedfrontier:blue_steel_sword",
+      references: [],
+      maxStackSize: 1,
+      kind: "sword",
+      material: "infectedfrontier:blue_steel",
+      attackDamage: 4,
+      attackSpeed: -2.4,
+    },
+    {
+      id: "infectedfrontier:blue_steel_pickaxe",
+      references: [],
+      maxStackSize: 1,
+      kind: "pickaxe",
+      material: "infectedfrontier:blue_steel",
+      attackDamage: 1,
+      attackSpeed: -2.8,
+    },
+    {
+      id: "infectedfrontier:blue_steel_axe",
+      references: [],
+      maxStackSize: 1,
+      kind: "axe",
+      material: "infectedfrontier:blue_steel",
+      attackDamage: 6,
+      attackSpeed: -3,
+    },
+    {
+      id: "infectedfrontier:blue_steel_shovel",
+      references: [],
+      maxStackSize: 1,
+      kind: "shovel",
+      material: "infectedfrontier:blue_steel",
+      attackDamage: 2,
+      attackSpeed: -3,
+    },
+    {
+      id: "infectedfrontier:blue_steel_hoe",
+      references: [],
+      maxStackSize: 1,
+      kind: "hoe",
+      material: "infectedfrontier:blue_steel",
+      attackDamage: 0,
+      attackSpeed: 0,
+    },
+    {
+      id: "infectedfrontier:blue_steel_chestplate",
+      references: [],
+      maxStackSize: 1,
+      kind: "armor",
+      material: "infectedfrontier:blue_steel",
+      armorSlot: "chestplate",
+    },
+  );
+  return equipment;
+}
+
 const expectedPaths = [
   ".gitignore",
   "build.gradle",
@@ -203,6 +278,56 @@ assert.equal(
   (await compileFabricPhase1(JSON.stringify(reorderedShapedKey))).plan.planId,
   compiledShapedRecipe.plan.planId,
   "shaped recipe key declaration order must not affect generated content",
+);
+
+const equipment = fabricEquipmentFixture();
+const compiledEquipment = await compileFabricPhase1(JSON.stringify(equipment));
+const equipmentSource = textOutput(
+  compiledEquipment,
+  "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedContent.java",
+);
+assert.match(equipmentSource, /private static final Tier MATERIAL_BLUE_USTEEL = new Tier\(\)/u);
+assert.match(equipmentSource, /getUses\(\) \{ return 1024; \}/u);
+assert.match(equipmentSource, /getLevel\(\) \{ return 3; \}/u);
+assert.match(equipmentSource, /private static final ArmorMaterial ARMOR_MATERIAL_BLUE_USTEEL/u);
+assert.match(equipmentSource, /case CHESTPLATE -> 512;/u);
+assert.match(equipmentSource, /case CHESTPLATE -> 8;/u);
+assert.match(equipmentSource, /new SwordItem\(MATERIAL_BLUE_USTEEL, 4,/u);
+assert.match(equipmentSource, /new PickaxeItem\(MATERIAL_BLUE_USTEEL, 1,[\s\S]*\) \{\}/u);
+assert.match(equipmentSource, /new AxeItem\(MATERIAL_BLUE_USTEEL, 6,[\s\S]*\) \{\}/u);
+assert.match(equipmentSource, /new ShovelItem\(MATERIAL_BLUE_USTEEL, 2,/u);
+assert.match(equipmentSource, /new HoeItem\(MATERIAL_BLUE_USTEEL, 0,[\s\S]*\) \{\}/u);
+assert.match(
+  equipmentSource,
+  /new ArmorItem\(ARMOR_MATERIAL_BLUE_USTEEL, ArmorItem\.Type\.CHESTPLATE, new Item\.Properties\(\)\)/u,
+);
+assert.match(equipmentSource, /CreativeModeTabs\.TOOLS_AND_UTILITIES/u);
+assert.match(equipmentSource, /CreativeModeTabs\.COMBAT/u);
+assert.equal(
+  JSON.parse(textOutput(
+    compiledEquipment,
+    "src/main/resources/assets/infectedfrontier/models/item/blue_steel_sword.json",
+  )).parent,
+  "minecraft:item/handheld",
+);
+assert.equal(
+  JSON.parse(textOutput(
+    compiledEquipment,
+    "src/main/resources/assets/infectedfrontier/models/item/blue_steel_chestplate.json",
+  )).parent,
+  "minecraft:item/generated",
+);
+for (const layer of [1, 2]) {
+  assert.ok(compiledEquipment.outputs.some(({ file }) =>
+    file.path === `src/main/resources/assets/infectedfrontier/textures/models/armor/blue_steel_layer_${layer}.png`));
+}
+assert.deepEqual(
+  JSON.parse(textOutput(compiledEquipment, "src/main/resources/data/minecraft/tags/items/swords.json")),
+  { values: ["infectedfrontier:blue_steel_sword"] },
+);
+assert.deepEqual(
+  JSON.parse(textOutput(compiledEquipment, "src/main/resources/data/minecraft/tags/items/trimmable_armor.json")),
+  { values: ["infectedfrontier:blue_steel_chestplate"] },
 );
 
 const reorderedRoot = {
@@ -453,6 +578,33 @@ await expectCompilerError(
   "SPEC_UNSUPPORTED",
   "/gameplay/recipes/0/key/0/item",
 );
+const missingEquipmentMaterial = fabricEquipmentFixture();
+const equipmentSword = missingEquipmentMaterial.gameplay.items.find(({ id }) => id.endsWith("_sword"));
+assert.ok(equipmentSword !== undefined && "material" in equipmentSword);
+equipmentSword.material = "infectedfrontier:missing_material";
+await expectCompilerError(
+  JSON.stringify(missingEquipmentMaterial),
+  "SPEC_UNSUPPORTED",
+  `/gameplay/items/${missingEquipmentMaterial.gameplay.items.indexOf(equipmentSword)}/material`,
+);
+const armorWithoutProperties = fabricEquipmentFixture();
+armorWithoutProperties.gameplay.materials[0]!.armor = undefined;
+const armorIndex = armorWithoutProperties.gameplay.items.findIndex(({ kind }) => kind === "armor");
+await expectCompilerError(
+  JSON.stringify(armorWithoutProperties),
+  "SPEC_UNSUPPORTED",
+  `/gameplay/items/${armorIndex}/material`,
+);
+const unknownRepairIngredient = fabricEquipmentFixture();
+unknownRepairIngredient.gameplay.materials[0]!.repairIngredient = "othermod:blue_ingot";
+await expectCompilerError(
+  JSON.stringify(unknownRepairIngredient),
+  "SPEC_UNSUPPORTED",
+  "/gameplay/materials/0/repairIngredient",
+);
+const foreignMaterial = fabricEquipmentFixture();
+foreignMaterial.gameplay.materials[0]!.id = "othermod:blue_steel";
+await expectCompilerError(JSON.stringify(foreignMaterial), "SPEC_UNSUPPORTED", "/gameplay/materials/0/id");
 const customSerializer = fabricBasicContentFixture();
 customSerializer.gameplay.recipes[0]!.serializer = "infectedfrontier:custom";
 await expectCompilerError(JSON.stringify(customSerializer), "SPEC_UNSUPPORTED", "/gameplay/recipes/0/serializer");

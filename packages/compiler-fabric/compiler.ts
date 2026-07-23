@@ -108,13 +108,18 @@ interface ResourceLocationParts {
   readonly path: string;
 }
 
+type GameplayItem = ModSpecV1["gameplay"]["items"][number];
+type GameplayMaterial = ModSpecV1["gameplay"]["materials"][number];
+
 interface NormalizedContent {
+  readonly materials: readonly ModSpecV1["gameplay"]["materials"][number][];
   readonly items: readonly ModSpecV1["gameplay"]["items"][number][];
   readonly blocks: readonly ModSpecV1["gameplay"]["blocks"][number][];
   readonly recipes: readonly ModSpecV1["gameplay"]["recipes"][number][];
   readonly itemParts: ReadonlyMap<string, ResourceLocationParts>;
   readonly blockParts: ReadonlyMap<string, ResourceLocationParts>;
   readonly recipeParts: ReadonlyMap<string, ResourceLocationParts>;
+  readonly materialParts: ReadonlyMap<string, ResourceLocationParts>;
   readonly blockByItem: ReadonlyMap<string, ModSpecV1["gameplay"]["blocks"][number]>;
   readonly libraries: readonly ResolvedFabricLibrary[];
 }
@@ -210,6 +215,49 @@ function basicContentPreflight(spec: ModSpecV1): NormalizedContent {
     itemParts.set(item.id, parts);
   });
 
+  const materialParts = new Map<string, ResourceLocationParts>();
+  spec.gameplay.materials.forEach((material, index) => {
+    const parts = parseResourceLocation(material.id);
+    if (parts.namespace !== spec.project.modId) {
+      pushUnsupported(
+        errors,
+        `/gameplay/materials/${index}/id`,
+        "Fabric phase 1 material namespaces must equal project.modId.",
+      );
+    }
+    if (materialParts.has(material.id)) {
+      pushUnsupported(errors, `/gameplay/materials/${index}/id`, "Fabric phase 1 material ids must be unique.");
+    }
+    const repairParts = parseResourceLocation(material.repairIngredient);
+    if (repairParts.namespace !== "minecraft" && !itemParts.has(material.repairIngredient)) {
+      pushUnsupported(
+        errors,
+        `/gameplay/materials/${index}/repairIngredient`,
+        "A material repair ingredient must be a vanilla item or declared gameplay item.",
+      );
+    }
+    materialParts.set(material.id, parts);
+  });
+  spec.gameplay.items.forEach((item, index) => {
+    if (!("material" in item)) return;
+    const material = spec.gameplay.materials.find(({ id }) => id === item.material);
+    if (material === undefined) {
+      pushUnsupported(
+        errors,
+        `/gameplay/items/${index}/material`,
+        "Equipment items must reference a declared gameplay material.",
+      );
+      return;
+    }
+    if (item.kind === "armor" && material.armor === undefined) {
+      pushUnsupported(
+        errors,
+        `/gameplay/items/${index}/material`,
+        "Armor items require a material with armor properties.",
+      );
+    }
+  });
+
   const blockParts = new Map<string, ResourceLocationParts>();
   const blockByItem = new Map<string, ModSpecV1["gameplay"]["blocks"][number]>();
   spec.gameplay.blocks.forEach((block, index) => {
@@ -226,6 +274,14 @@ function basicContentPreflight(spec: ModSpecV1): NormalizedContent {
     }
     if (!itemParts.has(block.item)) {
       pushUnsupported(errors, `/gameplay/blocks/${index}/item`, "Every Fabric phase 1 block item must be declared in gameplay.items.");
+    }
+    const blockItem = spec.gameplay.items.find(({ id }) => id === block.item);
+    if (blockItem !== undefined && blockItem.kind !== undefined && blockItem.kind !== "basic") {
+      pushUnsupported(
+        errors,
+        `/gameplay/blocks/${index}/item`,
+        "A block item cannot also be a tool, weapon, or armor item.",
+      );
     }
     if (blockByItem.has(block.item)) {
       pushUnsupported(errors, `/gameplay/blocks/${index}/item`, "A gameplay item can back at most one Fabric phase 1 block.");
@@ -309,12 +365,14 @@ function basicContentPreflight(spec: ModSpecV1): NormalizedContent {
 
   if (errors.length > 0) throw new FabricCompilerError("SPEC_UNSUPPORTED", errors);
   return Object.freeze({
+    materials: Object.freeze([...spec.gameplay.materials].sort((left, right) => compareAscii(left.id, right.id))),
     items: Object.freeze([...spec.gameplay.items].sort((left, right) => compareAscii(left.id, right.id))),
     blocks: Object.freeze([...spec.gameplay.blocks].sort((left, right) => compareAscii(left.id, right.id))),
     recipes: Object.freeze([...spec.gameplay.recipes].sort((left, right) => compareAscii(left.id, right.id))),
     itemParts,
     blockParts,
     recipeParts,
+    materialParts,
     blockByItem,
     libraries: libraryResolution.valid ? libraryResolution.libraries : Object.freeze([]),
   });
@@ -510,7 +568,102 @@ function float32Bits(value: number): string {
   return view.getUint32(0, false).toString(16).toUpperCase().padStart(8, "0");
 }
 
+function repairIngredientSource(id: string): string {
+  const parts = parseResourceLocation(id);
+  return `Ingredient.of(BuiltInRegistries.ITEM.get(new ResourceLocation(` +
+    `${javaString(parts.namespace)}, ${javaString(parts.path)})))`;
+}
+
+function toolMaterialSource(material: GameplayMaterial, parts: ResourceLocationParts): string {
+  const constant = javaConstantPath(parts.path);
+  return `    private static final Tier MATERIAL_${constant} = new Tier() {
+        @Override public int getUses() { return ${material.durability}; }
+        @Override public float getSpeed() { return Float.intBitsToFloat(0x${float32Bits(material.miningSpeed)}); }
+        @Override public float getAttackDamageBonus() {
+            return Float.intBitsToFloat(0x${float32Bits(material.attackDamageBonus)});
+        }
+        @Override public int getLevel() { return ${material.miningLevel}; }
+        @Override public int getEnchantmentValue() { return ${material.enchantmentValue}; }
+        @Override public Ingredient getRepairIngredient() {
+            return ${repairIngredientSource(material.repairIngredient)};
+        }
+    };`;
+}
+
+function armorMaterialSource(material: GameplayMaterial, parts: ResourceLocationParts): string | undefined {
+  if (material.armor === undefined) return undefined;
+  const constant = javaConstantPath(parts.path);
+  const { armor } = material;
+  return `    private static final ArmorMaterial ARMOR_MATERIAL_${constant} = new ArmorMaterial() {
+        @Override public int getDurabilityForType(ArmorItem.Type type) {
+            return switch (type) {
+                case HELMET -> ${11 * armor.durabilityMultiplier};
+                case CHESTPLATE -> ${16 * armor.durabilityMultiplier};
+                case LEGGINGS -> ${15 * armor.durabilityMultiplier};
+                case BOOTS -> ${13 * armor.durabilityMultiplier};
+            };
+        }
+        @Override public int getDefenseForType(ArmorItem.Type type) {
+            return switch (type) {
+                case HELMET -> ${armor.defense.helmet};
+                case CHESTPLATE -> ${armor.defense.chestplate};
+                case LEGGINGS -> ${armor.defense.leggings};
+                case BOOTS -> ${armor.defense.boots};
+            };
+        }
+        @Override public int getEnchantmentValue() { return ${material.enchantmentValue}; }
+        @Override public SoundEvent getEquipSound() { return SoundEvents.ARMOR_EQUIP_IRON; }
+        @Override public Ingredient getRepairIngredient() {
+            return ${repairIngredientSource(material.repairIngredient)};
+        }
+        @Override public String getName() { return ${javaString(material.id)}; }
+        @Override public float getToughness() {
+            return Float.intBitsToFloat(0x${float32Bits(armor.toughness)});
+        }
+        @Override public float getKnockbackResistance() {
+            return Float.intBitsToFloat(0x${float32Bits(armor.knockbackResistance)});
+        }
+    };`;
+}
+
+function itemConstructorSource(item: GameplayItem, content: NormalizedContent): string {
+  const block = content.blockByItem.get(item.id);
+  if (block !== undefined) {
+    const blockParts = content.blockParts.get(block.id);
+    if (blockParts === undefined) {
+      throw fabricCompilerError("INTERNAL_ERROR", "Block-item normalization failed safely.");
+    }
+    return `new BlockItem(BLOCK_${javaConstantPath(blockParts.path)}, ` +
+      `new Item.Properties().stacksTo(${item.maxStackSize}))`;
+  }
+  if (!("material" in item)) {
+    return `new Item(new Item.Properties().stacksTo(${item.maxStackSize}))`;
+  }
+  const materialParts = content.materialParts.get(item.material);
+  if (materialParts === undefined) {
+    throw fabricCompilerError("INTERNAL_ERROR", "Equipment material normalization failed safely.");
+  }
+  const material = `MATERIAL_${javaConstantPath(materialParts.path)}`;
+  if (item.kind === "armor") {
+    return `new ArmorItem(ARMOR_MATERIAL_${javaConstantPath(materialParts.path)}, ` +
+      `ArmorItem.Type.${item.armorSlot.toUpperCase()}, new Item.Properties())`;
+  }
+  const speed = `Float.intBitsToFloat(0x${float32Bits(item.attackSpeed)})`;
+  if (item.kind === "sword") {
+    return `new SwordItem(${material}, ${item.attackDamage}, ${speed}, new Item.Properties())`;
+  }
+  const className = `${item.kind[0]?.toUpperCase() ?? ""}${item.kind.slice(1)}Item`;
+  const anonymousBody = item.kind === "pickaxe" || item.kind === "axe" || item.kind === "hoe" ? " {}" : "";
+  return `new ${className}(${material}, ${item.attackDamage}, ${speed}, new Item.Properties())${anonymousBody}`;
+}
+
 function generatedContentSource(modId: string, content: NormalizedContent): string {
+  const materialLines = content.materials.flatMap((material) => {
+    const parts = content.materialParts.get(material.id);
+    if (parts === undefined) throw fabricCompilerError("INTERNAL_ERROR", "Material normalization failed safely.");
+    return [toolMaterialSource(material, parts), armorMaterialSource(material, parts)]
+      .filter((entry): entry is string => entry !== undefined);
+  });
   const blockLines = content.blocks.map((block) => {
     const parts = content.blockParts.get(block.id);
     if (parts === undefined) throw fabricCompilerError("INTERNAL_ERROR", "Block normalization failed safely.");
@@ -521,24 +674,14 @@ function generatedContentSource(modId: string, content: NormalizedContent): stri
   const itemLines = content.items.map((item) => {
     const parts = content.itemParts.get(item.id);
     if (parts === undefined) throw fabricCompilerError("INTERNAL_ERROR", "Item normalization failed safely.");
-    const block = content.blockByItem.get(item.id);
-    const constructor = block === undefined
-      ? `new Item(new Item.Properties().stacksTo(${item.maxStackSize}))`
-      : (() => {
-          const blockParts = content.blockParts.get(block.id);
-          if (blockParts === undefined) {
-            throw fabricCompilerError("INTERNAL_ERROR", "Block-item normalization failed safely.");
-          }
-          return `new BlockItem(BLOCK_${javaConstantPath(blockParts.path)}, ` +
-            `new Item.Properties().stacksTo(${item.maxStackSize}))`;
-        })();
+    const constructor = itemConstructorSource(item, content);
     return `    public static final Item ITEM_${javaConstantPath(parts.path)} = registerItem(\n` +
       `            ${javaString(parts.path)}, ${constructor});`;
   });
-  const declarations = [...blockLines, ...itemLines];
+  const declarations = [...materialLines, ...blockLines, ...itemLines];
   const declarationSection = declarations.length === 0 ? "" : `${declarations.join("\n\n")}\n\n`;
   const ingredientEntries = content.items
-    .filter((item) => !content.blockByItem.has(item.id))
+    .filter((item) => !content.blockByItem.has(item.id) && (item.kind === undefined || item.kind === "basic"))
     .map((item) => {
       const parts = content.itemParts.get(item.id);
       if (parts === undefined) throw fabricCompilerError("INTERNAL_ERROR", "Creative item normalization failed safely.");
@@ -549,6 +692,20 @@ function generatedContentSource(modId: string, content: NormalizedContent): stri
     if (itemParts === undefined) throw fabricCompilerError("INTERNAL_ERROR", "Creative block normalization failed safely.");
     return `            entries.accept(ITEM_${javaConstantPath(itemParts.path)});`;
   });
+  const toolEntries = content.items
+    .filter((item) => item.kind === "pickaxe" || item.kind === "axe" || item.kind === "shovel" || item.kind === "hoe")
+    .map((item) => {
+      const parts = content.itemParts.get(item.id);
+      if (parts === undefined) throw fabricCompilerError("INTERNAL_ERROR", "Creative tool normalization failed safely.");
+      return `            entries.accept(ITEM_${javaConstantPath(parts.path)});`;
+    });
+  const combatEntries = content.items
+    .filter((item) => item.kind === "sword" || item.kind === "armor")
+    .map((item) => {
+      const parts = content.itemParts.get(item.id);
+      if (parts === undefined) throw fabricCompilerError("INTERNAL_ERROR", "Creative combat normalization failed safely.");
+      return `            entries.accept(ITEM_${javaConstantPath(parts.path)});`;
+    });
   const creativeRegistrations = [
     ingredientEntries.length === 0 ? "" :
       `        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.INGREDIENTS).register(entries -> {\n` +
@@ -556,6 +713,12 @@ function generatedContentSource(modId: string, content: NormalizedContent): stri
     buildingEntries.length === 0 ? "" :
       `        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.BUILDING_BLOCKS).register(entries -> {\n` +
       `${buildingEntries.join("\n")}\n        });`,
+    toolEntries.length === 0 ? "" :
+      `        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(entries -> {\n` +
+      `${toolEntries.join("\n")}\n        });`,
+    combatEntries.length === 0 ? "" :
+      `        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COMBAT).register(entries -> {\n` +
+      `${combatEntries.join("\n")}\n        });`,
   ].filter((entry) => entry.length > 0).join("\n");
   const creativeRegistrationBody = creativeRegistrations.length === 0
     ? ""
@@ -565,9 +728,20 @@ function generatedContentSource(modId: string, content: NormalizedContent): stri
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.PickaxeItem;
+import net.minecraft.world.item.ShovelItem;
+import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
@@ -872,7 +1046,13 @@ public final class GeneratedClient implements ClientModInitializer {
     inputs.push(jsonInput(
       `${resourceRoot}/assets/${parts.namespace}/models/item/${parts.path}.json`,
       block === undefined
-        ? { parent: "minecraft:item/generated", textures: { layer0: `${modId}:mcdev/placeholder` } }
+        ? {
+            parent: item.kind !== undefined &&
+              ["sword", "pickaxe", "axe", "shovel", "hoe"].includes(item.kind)
+              ? "minecraft:item/handheld"
+              : "minecraft:item/generated",
+            textures: { layer0: `${modId}:mcdev/placeholder` },
+          }
         : { parent: `${modId}:block/${blockParts?.path}` },
     ));
     language[`item.${parts.namespace}.${parts.path.replaceAll("/", ".")}`] = titleFromPath(parts.path);
@@ -950,12 +1130,37 @@ public final class GeneratedClient implements ClientModInitializer {
     ));
   }
 
+  const equipmentTags = [
+    ["swords", "sword"],
+    ["pickaxes", "pickaxe"],
+    ["axes", "axe"],
+    ["shovels", "shovel"],
+    ["hoes", "hoe"],
+    ["trimmable_armor", "armor"],
+  ] as const;
+  for (const [tag, kind] of equipmentTags) {
+    const values = content.items.filter((item) => item.kind === kind).map(({ id }) => id);
+    if (values.length > 0) {
+      inputs.push(jsonInput(`${resourceRoot}/data/minecraft/tags/items/${tag}.json`, { values }));
+    }
+  }
+
   inputs.push(jsonInput(`${resourceRoot}/assets/${modId}/lang/en_us.json`, language));
   if (content.items.length > 0 || content.blocks.length > 0) {
     inputs.push(input(
       `${resourceRoot}/assets/${modId}/textures/mcdev/placeholder.png`,
       Buffer.from(PLACEHOLDER_PNG_BASE64, "base64"),
     ));
+  }
+  for (const material of content.materials.filter(({ armor }) => armor !== undefined)) {
+    const parts = content.materialParts.get(material.id);
+    if (parts === undefined) throw fabricCompilerError("INTERNAL_ERROR", "Armor material normalization failed safely.");
+    for (const layer of [1, 2]) {
+      inputs.push(input(
+        `${resourceRoot}/assets/${parts.namespace}/textures/models/armor/${parts.path}_layer_${layer}.png`,
+        Buffer.from(PLACEHOLDER_PNG_BASE64, "base64"),
+      ));
+    }
   }
   return inputs;
 }
@@ -1120,6 +1325,7 @@ export function compileVerifiedFabricPhase1(
     ...spec,
     gameplay: {
       ...spec.gameplay,
+      materials: [...content.materials],
       items: [...content.items],
       blocks: [...content.blocks],
       recipes: content.recipes.map((recipe) => recipe.type === "shaped" && recipe.key !== undefined

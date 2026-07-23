@@ -51,18 +51,88 @@ try {
       ],
     }],
   };
+  fixture.gameplay.materials = [{
+    id: "infectedfrontier:blue_steel",
+    repairIngredient: "infectedfrontier:blue_ingot",
+    durability: 1_024,
+    miningSpeed: 9,
+    attackDamageBonus: 4,
+    miningLevel: 3,
+    enchantmentValue: 18,
+    armor: {
+      durabilityMultiplier: 32,
+      defense: { helmet: 3, chestplate: 8, leggings: 6, boots: 3 },
+      toughness: 2,
+      knockbackResistance: 0.1,
+    },
+  }];
+  fixture.gameplay.items.push(
+    {
+      id: "infectedfrontier:blue_steel_sword",
+      references: [],
+      maxStackSize: 1,
+      kind: "sword",
+      material: "infectedfrontier:blue_steel",
+      attackDamage: 4,
+      attackSpeed: -2.4,
+    },
+    {
+      id: "infectedfrontier:blue_steel_pickaxe",
+      references: [],
+      maxStackSize: 1,
+      kind: "pickaxe",
+      material: "infectedfrontier:blue_steel",
+      attackDamage: 1,
+      attackSpeed: -2.8,
+    },
+    {
+      id: "infectedfrontier:blue_steel_axe",
+      references: [],
+      maxStackSize: 1,
+      kind: "axe",
+      material: "infectedfrontier:blue_steel",
+      attackDamage: 6,
+      attackSpeed: -3,
+    },
+    {
+      id: "infectedfrontier:blue_steel_shovel",
+      references: [],
+      maxStackSize: 1,
+      kind: "shovel",
+      material: "infectedfrontier:blue_steel",
+      attackDamage: 2,
+      attackSpeed: -3,
+    },
+    {
+      id: "infectedfrontier:blue_steel_hoe",
+      references: [],
+      maxStackSize: 1,
+      kind: "hoe",
+      material: "infectedfrontier:blue_steel",
+      attackDamage: 0,
+      attackSpeed: 0,
+    },
+    {
+      id: "infectedfrontier:blue_steel_chestplate",
+      references: [],
+      maxStackSize: 1,
+      kind: "armor",
+      material: "infectedfrontier:blue_steel",
+      armorSlot: "chestplate",
+    },
+  );
   fixture.gameplay.recipes.push({
-    id: "infectedfrontier:blue_ingot_pattern",
+    id: "infectedfrontier:blue_steel_sword",
     references: [],
     type: "shaped",
     ingredients: [],
-    pattern: ["XX", " S"],
+    pattern: ["X", "X", "S"],
     key: [
-      { symbol: "X", item: "infectedfrontier:blue_ore_item" },
+      { symbol: "X", item: "infectedfrontier:blue_ingot" },
       { symbol: "S", item: "minecraft:stick" },
     ],
-    result: "infectedfrontier:blue_ingot",
-    resultCount: 2,
+    result: "infectedfrontier:blue_steel_sword",
+    resultCount: 1,
   });
   const compiled = await compileFabricPhase1(JSON.stringify(fixture));
   for (const { file } of compiled.outputs) {
@@ -112,8 +182,13 @@ try {
   );
   assert.match(
     jarList.stdout,
-    /data\/infectedfrontier\/recipes\/blue_ingot_pattern\.json/u,
+    /data\/infectedfrontier\/recipes\/blue_steel_sword\.json/u,
   );
+  assert.match(jarList.stdout, /assets\/infectedfrontier\/models\/item\/blue_steel_sword\.json/u);
+  assert.match(jarList.stdout, /assets\/infectedfrontier\/textures\/models\/armor\/blue_steel_layer_1\.png/u);
+  assert.match(jarList.stdout, /assets\/infectedfrontier\/textures\/models\/armor\/blue_steel_layer_2\.png/u);
+  assert.match(jarList.stdout, /data\/minecraft\/tags\/items\/swords\.json/u);
+  assert.match(jarList.stdout, /data\/minecraft\/tags\/items\/trimmable_armor\.json/u);
 
   const runDirectory = join(workspace, "run");
   await mkdir(runDirectory, { recursive: true });
