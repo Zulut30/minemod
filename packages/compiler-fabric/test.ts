@@ -251,6 +251,29 @@ assert.deepEqual(
     "item.infectedfrontier.blue_ore_item": "Blue Ore Item",
   },
 );
+const yaclOnly = fabricBasicContentFixture();
+yaclOnly.dependencies.required = ["yet_another_config_lib_v3"];
+const compiledYaclOnly = await compileFabricPhase1(JSON.stringify(yaclOnly));
+assert.ok(compiledYaclOnly.outputs.some(({ file }) => file.path.endsWith("/GeneratedConfig.java")));
+assert.equal(
+  (JSON.parse(textOutput(compiledYaclOnly, "src/main/resources/fabric.mod.json")) as {
+    entrypoints: Record<string, string[]>;
+  }).entrypoints.modmenu,
+  undefined,
+);
+const modMenuOnly = fabricBasicContentFixture();
+modMenuOnly.dependencies.optional = ["modmenu"];
+const compiledModMenuOnly = await compileFabricPhase1(JSON.stringify(modMenuOnly));
+assert.equal(
+  compiledModMenuOnly.outputs.some(({ file }) => file.path.endsWith("/GeneratedConfig.java")),
+  false,
+);
+assert.equal(
+  (JSON.parse(textOutput(compiledModMenuOnly, "src/main/resources/fabric.mod.json")) as {
+    entrypoints: Record<string, string[]>;
+  }).entrypoints.modmenu,
+  undefined,
+);
 const unknownLibrary = fabricBasicContentFixture();
 unknownLibrary.dependencies.required = ["unknown_library"];
 await expectCompilerError(JSON.stringify(unknownLibrary), "SPEC_UNSUPPORTED", "/dependencies/required/0");
