@@ -19,6 +19,7 @@ MineMod подключает сторонние библиотеки через 
 - [YACL project](https://modrinth.com/mod/yacl)
 - [Mod Menu developer API](https://modrinth.com/mod/modmenu#developers)
 - [Fabric dependency metadata](https://docs.fabricmc.net/develop/loader/fabric-mod-json#dependency-resolution)
+- [Fabric ServerPlayConnectionEvents](https://maven.fabricmc.net/docs/fabric-api-0.92.11+1.20.1/net/fabricmc/fabric/api/networking/v1/ServerPlayConnectionEvents.html)
 
 ## Выбор библиотек в ModSpec
 
@@ -65,7 +66,8 @@ MineMod подключает сторонние библиотеки через 
               "type": "string",
               "default": "Stay alert",
               "maxLength": 64,
-              "restartRequired": false
+              "binding": "player_join_message",
+              "restartRequired": true
             }
           ]
         }
@@ -90,6 +92,12 @@ Generated screen всегда содержит рабочую настройку
 
 Идентификаторы категорий и options проверяются на уникальность, числовые значения ограничены диапазоном Java `int`, defaults обязаны попадать в объявленные границы, а размер всей схемы ограничен. Пользовательская `integrations.yacl` требует одновременно required YACL и optional Mod Menu: без них компилятор останавливается с диагностикой вместо создания недоступного UI.
 
+### Server-authoritative gameplay binding
+
+String option может объявить `"binding": "player_join_message"`. Тогда compiler создаёт server-safe `GeneratedConfiguredBehavior`, регистрирует `ServerPlayConnectionEvents.JOIN` и отправляет игроку значение через `Component.literal`. Пустая строка отключает сообщение; строка не интерпретируется как команда или translation format.
+
+Binding разрешён только один раз и требует `restartRequired: true`. На dedicated server используется его собственный `config/<mod-id>.json5`; изменение локального файла через Mod Menu у подключённого игрока не меняет конфигурацию удалённого сервера.
+
 ## Закрытые правила
 
 - Mod Menu нельзя объявить обязательным через текущий catalog.
@@ -109,7 +117,7 @@ Generated screen всегда содержит рабочую настройку
 
 Планируемые capability-профили:
 
-- привязка config options к generated gameplay, client/server sync и operator permissions;
+- дополнительные gameplay bindings, server-to-client sync и operator permissions;
 - GeckoLib для runtime-моделей и анимаций;
 - Cardinal Components API для persistent/synced state;
 - Trinkets для дополнительных equipment slots;

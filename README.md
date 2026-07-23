@@ -24,6 +24,7 @@
 - параметрический архетип большого дракона и structural/texture preflight;
 - доверенный каталог интеграций Fabric-библиотек.
 - сохраняемая JSON5-конфигурация с generated boolean/integer/string controls, YACL-экран и кнопка Mod Menu.
+- server-authoritative `player_join_message` binding через Fabric networking lifecycle event.
 
 ```text
 approved ModSpec
@@ -124,7 +125,7 @@ docs/                  ADR, планы, аудиты и quality rubric
 
 ## Ближайшие этапы
 
-1. Связь generated config options с параметрами gameplay, client/server sync и permissions.
+1. Новые gameplay bindings, server-to-client sync и operator-only configuration flow.
 2. Каталог GeckoLib, Cardinal Components, Trinkets, EMI и Jade.
 3. Fabric GameTests и отдельные hosted client/server gates.
 4. AI texture provider без placeholder assets.
