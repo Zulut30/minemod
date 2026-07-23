@@ -238,6 +238,10 @@ assert.match(generatedModMenu, /implements ModMenuApi/u);
 assert.match(generatedModMenu, /YetAnotherConfigLib\.create\(GeneratedConfig\.HANDLER/u);
 assert.match(generatedModMenu, /BooleanControllerBuilder::create/u);
 assert.match(generatedModMenu, /OptionFlag\.GAME_RESTART/u);
+assert.equal(
+  compiledLibraries.outputs.some(({ file }) => file.path.endsWith("/GeneratedConfiguredBehavior.java")),
+  false,
+);
 assert.deepEqual(
   JSON.parse(textOutput(compiledLibraries, "src/main/resources/assets/infectedfrontier/lang/en_us.json")),
   {
