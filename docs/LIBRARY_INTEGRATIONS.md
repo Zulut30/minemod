@@ -41,7 +41,12 @@ MineMod подключает сторонние библиотеки через 
 - exact `modImplementation` coordinates в `build.gradle`;
 - YACL version constraint в `fabric.mod.json.depends`;
 - Mod Menu в `fabric.mod.json.suggests`;
+- `modmenu` entrypoint, если выбраны обе библиотеки;
+- `GeneratedConfig` с JSON5 serializer и загрузкой при старте;
+- `GeneratedModMenuIntegration` с настоящим YACL screen;
 - checksum metadata для исходных и транзитивных артефактов.
+
+Текущий generated screen содержит рабочую настройку `showGeneratedContentInCreativeTabs`. Она сохраняется в `config/<mod-id>.json5`, управляет добавлением generated items/blocks в стандартные creative tabs и требует перезапуска игры после изменения. Если выбран только YACL, файловая конфигурация генерируется без Mod Menu entrypoint. Если выбран только Mod Menu, компилятор не создаёт классы конфигурации, которые ссылались бы на отсутствующий YACL.
 
 ## Закрытые правила
 
@@ -62,7 +67,7 @@ MineMod подключает сторонние библиотеки через 
 
 Планируемые capability-профили:
 
-- YACL config schema + generated screen + Mod Menu entrypoint;
+- расширяемая ModSpec-схема для boolean/integer/string options, ranges и categories;
 - GeckoLib для runtime-моделей и анимаций;
 - Cardinal Components API для persistent/synced state;
 - Trinkets для дополнительных equipment slots;

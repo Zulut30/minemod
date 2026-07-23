@@ -23,6 +23,7 @@
 - cuboid-модели, pixel texture atlases, rig и editable Blockbench 5 `.bbmodel`;
 - параметрический архетип большого дракона и structural/texture preflight;
 - доверенный каталог интеграций Fabric-библиотек.
+- сохраняемая JSON5-конфигурация, YACL-экран и кнопка настроек в Mod Menu.
 
 ```text
 approved ModSpec
@@ -40,8 +41,8 @@ artifact index ←── verified JAR ←── fixed Gradle runner ←── ne
 |---|---:|---|
 | Fabric Loader | `0.19.3` | обязательная платформа |
 | Fabric API | `0.92.11+1.20.1` | обязательная базовая API |
-| YACL | `3.5.0+1.20.1-fabric` | обязательна только когда выбрана в `dependencies.required` |
-| Mod Menu | `7.2.2` | всегда optional; записывается в `suggests` |
+| YACL | `3.5.0+1.20.1-fabric` | сохраняет JSON5 и создаёт типизированный экран настройки |
+| Mod Menu | `7.2.2` | optional; открывает generated YACL screen из списка модов |
 
 Версии, Maven repositories, licenses и допустимая обязательность берутся только из закрытого каталога. Произвольные coordinates и repositories из пользовательского запроса не принимаются. YACL 3.5.0 выбран после реальной проверки с текущим Loom 1.6.12; YACL 3.6.x требует обновления проверенного Loom baseline.
 
@@ -123,7 +124,7 @@ docs/                  ADR, планы, аудиты и quality rubric
 
 ## Ближайшие этапы
 
-1. Генерация настоящего YACL config screen и кнопки Mod Menu.
+1. ModSpec-схема для нескольких boolean, integer и string config options.
 2. Каталог GeckoLib, Cardinal Components, Trinkets, EMI и Jade.
 3. Fabric GameTests и отдельные hosted client/server gates.
 4. AI texture provider без placeholder assets.
