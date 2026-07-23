@@ -135,6 +135,22 @@ const ArmorItemV1Schema = ItemSchema.extend({
 
 const ItemV1Schema = z.union([BasicItemV1Schema, ToolItemV1Schema, ArmorItemV1Schema]);
 
+const EquipmentColorSchema = z.string().regex(/^#[0-9a-f]{6}$/u);
+const EquipmentPaletteSchema = z.strictObject({
+  base: EquipmentColorSchema,
+  shadow: EquipmentColorSchema,
+  highlight: EquipmentColorSchema,
+  accent: EquipmentColorSchema,
+  handle: EquipmentColorSchema,
+});
+
+function equipmentColorLuminance(value: string): number {
+  const red = Number.parseInt(value.slice(1, 3), 16);
+  const green = Number.parseInt(value.slice(3, 5), 16);
+  const blue = Number.parseInt(value.slice(5, 7), 16);
+  return red * 0.2126 + green * 0.7152 + blue * 0.0722;
+}
+
 const MaterialV1Schema = z.strictObject({
   id: ResourceLocation,
   repairIngredient: ResourceLocation,
@@ -154,6 +170,23 @@ const MaterialV1Schema = z.strictObject({
     toughness: z.number().min(0).max(20),
     knockbackResistance: z.number().min(0).max(1),
   }).optional(),
+  palette: EquipmentPaletteSchema.optional(),
+}).superRefine((material, context) => {
+  if (material.palette === undefined) return;
+  const colors = Object.values(material.palette);
+  if (new Set(colors).size !== colors.length) {
+    context.addIssue({ code: "custom", path: ["palette"], message: "Equipment palette colors must be unique." });
+  }
+  const shadow = equipmentColorLuminance(material.palette.shadow);
+  const base = equipmentColorLuminance(material.palette.base);
+  const highlight = equipmentColorLuminance(material.palette.highlight);
+  if (base - shadow < 24 || highlight - base < 24) {
+    context.addIssue({
+      code: "custom",
+      path: ["palette"],
+      message: "Equipment palette requires visible shadow/base/highlight value separation.",
+    });
+  }
 });
 
 const BlockSchema = z.strictObject({

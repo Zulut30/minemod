@@ -190,6 +190,13 @@ equipmentSpec.gameplay.materials = [{
     toughness: 2,
     knockbackResistance: 0.1,
   },
+  palette: {
+    base: "#477aa5",
+    shadow: "#1b3347",
+    highlight: "#bad9ef",
+    accent: "#d4a72c",
+    handle: "#60401f",
+  },
 }];
 equipmentSpec.gameplay.items = [
   { id: "infectedfrontier:blue_ingot", references: [], maxStackSize: 64 },
@@ -221,6 +228,16 @@ assert.equal(ModSpecV1Schema.safeParse(invalidMiningLevel).success, false);
 const invalidArmorResistance = structuredClone(equipmentSpec);
 invalidArmorResistance.gameplay.materials[0]!.armor!.knockbackResistance = 1.1;
 assert.equal(ModSpecV1Schema.safeParse(invalidArmorResistance).success, false);
+const flatEquipmentPalette = structuredClone(equipmentSpec);
+flatEquipmentPalette.gameplay.materials[0]!.palette!.highlight = "#527fa7";
+assert.equal(ModSpecV1Schema.safeParse(flatEquipmentPalette).success, false);
+const duplicateEquipmentPalette = structuredClone(equipmentSpec);
+duplicateEquipmentPalette.gameplay.materials[0]!.palette!.accent =
+  duplicateEquipmentPalette.gameplay.materials[0]!.palette!.base;
+assert.equal(ModSpecV1Schema.safeParse(duplicateEquipmentPalette).success, false);
+const uppercaseEquipmentPalette = structuredClone(equipmentSpec);
+uppercaseEquipmentPalette.gameplay.materials[0]!.palette!.base = "#477AA5";
+assert.equal(ModSpecV1Schema.safeParse(uppercaseEquipmentPalette).success, false);
 
 const resourceLocationPattern = new RegExp(RESOURCE_LOCATION_PATTERN);
 assert.equal(resourceLocationPattern.test("tidecaller:a/b.c"), true);
