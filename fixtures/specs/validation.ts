@@ -82,6 +82,7 @@ export const validFabricV1Fixture: ModSpecV1 = {
   },
   target: { minecraft: "1.20.1", loader: "fabric", java: 17 },
   gameplay: {
+    materials: [],
     items: [],
     blocks: [],
     entities: [{

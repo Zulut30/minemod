@@ -175,6 +175,53 @@ const paddedPattern = structuredClone(shapedRecipe);
 paddedPattern.gameplay.recipes[0]!.pattern = [" X", " X", " S"];
 assert.equal(ModSpecV1Schema.safeParse(paddedPattern).success, false);
 
+const equipmentSpec = structuredClone(validFabricV1Fixture);
+equipmentSpec.gameplay.materials = [{
+  id: "infectedfrontier:blue_steel",
+  repairIngredient: "infectedfrontier:blue_ingot",
+  durability: 1_024,
+  miningSpeed: 9,
+  attackDamageBonus: 4,
+  miningLevel: 3,
+  enchantmentValue: 18,
+  armor: {
+    durabilityMultiplier: 32,
+    defense: { helmet: 3, chestplate: 8, leggings: 6, boots: 3 },
+    toughness: 2,
+    knockbackResistance: 0.1,
+  },
+}];
+equipmentSpec.gameplay.items = [
+  { id: "infectedfrontier:blue_ingot", references: [], maxStackSize: 64 },
+  {
+    id: "infectedfrontier:blue_steel_sword",
+    references: [],
+    maxStackSize: 1,
+    kind: "sword",
+    material: "infectedfrontier:blue_steel",
+    attackDamage: 4,
+    attackSpeed: -2.4,
+  },
+  {
+    id: "infectedfrontier:blue_steel_chestplate",
+    references: [],
+    maxStackSize: 1,
+    kind: "armor",
+    material: "infectedfrontier:blue_steel",
+    armorSlot: "chestplate",
+  },
+];
+assert.equal(ModSpecV1Schema.safeParse(equipmentSpec).success, true);
+const stackableSword = structuredClone(equipmentSpec);
+stackableSword.gameplay.items[1]!.maxStackSize = 2;
+assert.equal(ModSpecV1Schema.safeParse(stackableSword).success, false);
+const invalidMiningLevel = structuredClone(equipmentSpec);
+invalidMiningLevel.gameplay.materials[0]!.miningLevel = 5;
+assert.equal(ModSpecV1Schema.safeParse(invalidMiningLevel).success, false);
+const invalidArmorResistance = structuredClone(equipmentSpec);
+invalidArmorResistance.gameplay.materials[0]!.armor!.knockbackResistance = 1.1;
+assert.equal(ModSpecV1Schema.safeParse(invalidArmorResistance).success, false);
+
 const resourceLocationPattern = new RegExp(RESOURCE_LOCATION_PATTERN);
 assert.equal(resourceLocationPattern.test("tidecaller:a/b.c"), true);
 for (const invalid of [

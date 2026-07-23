@@ -6,6 +6,7 @@ export const ARTSPEC_SCHEMA_ID = "https://mcdev.local/schemas/artspec-v0.json";
 export const SPEC_COLLECTION_LIMITS = Object.freeze({
   projectProvenance: 16,
   gameplayItems: 64,
+  gameplayMaterials: 16,
   gameplayBlocks: 32,
   gameplayEntities: 32,
   gameplayRecipes: 64,
@@ -104,6 +105,55 @@ const ItemSchema = z.strictObject({
   id: ResourceLocation,
   references: ReferencesSchema,
   maxStackSize: z.number().int().min(1).max(99),
+});
+
+const BasicItemV1Schema = ItemSchema.extend({
+  kind: z.literal("basic").optional(),
+});
+
+const ToolItemKindSchema = z.enum(["sword", "pickaxe", "axe", "shovel", "hoe"]);
+const ToolItemV1Schema = ItemSchema.extend({
+  kind: ToolItemKindSchema,
+  material: ResourceLocation,
+  attackDamage: z.number().int().min(0).max(64),
+  attackSpeed: z.number().min(-4).max(4),
+}).superRefine((item, context) => {
+  if (item.maxStackSize !== 1) {
+    context.addIssue({ code: "custom", path: ["maxStackSize"], message: "Tools and weapons must have maxStackSize 1." });
+  }
+});
+
+const ArmorItemV1Schema = ItemSchema.extend({
+  kind: z.literal("armor"),
+  material: ResourceLocation,
+  armorSlot: z.enum(["helmet", "chestplate", "leggings", "boots"]),
+}).superRefine((item, context) => {
+  if (item.maxStackSize !== 1) {
+    context.addIssue({ code: "custom", path: ["maxStackSize"], message: "Armor must have maxStackSize 1." });
+  }
+});
+
+const ItemV1Schema = z.union([BasicItemV1Schema, ToolItemV1Schema, ArmorItemV1Schema]);
+
+const MaterialV1Schema = z.strictObject({
+  id: ResourceLocation,
+  repairIngredient: ResourceLocation,
+  durability: z.number().int().min(1).max(65_535),
+  miningSpeed: z.number().positive().max(64),
+  attackDamageBonus: z.number().min(0).max(64),
+  miningLevel: z.number().int().min(0).max(4),
+  enchantmentValue: z.number().int().min(0).max(64),
+  armor: z.strictObject({
+    durabilityMultiplier: z.number().int().min(1).max(128),
+    defense: z.strictObject({
+      helmet: z.number().int().min(0).max(30),
+      chestplate: z.number().int().min(0).max(30),
+      leggings: z.number().int().min(0).max(30),
+      boots: z.number().int().min(0).max(30),
+    }),
+    toughness: z.number().min(0).max(20),
+    knockbackResistance: z.number().min(0).max(1),
+  }).optional(),
 });
 
 const BlockSchema = z.strictObject({
@@ -465,6 +515,8 @@ export const ModSpecSchema = z.strictObject({
 });
 
 const ModSpecV1GameplaySchema = ModSpecSchema.shape.gameplay.extend({
+  items: z.array(ItemV1Schema).max(SPEC_COLLECTION_LIMITS.gameplayItems),
+  materials: z.array(MaterialV1Schema).max(SPEC_COLLECTION_LIMITS.gameplayMaterials).default([]),
   entities: z.array(EntityV1Schema).max(SPEC_COLLECTION_LIMITS.gameplayEntities),
   structures: z.array(StructureSpecSchema).max(SPEC_COLLECTION_LIMITS.gameplayStructures),
   screens: z.array(ScreenV1Schema).max(SPEC_COLLECTION_LIMITS.gameplayScreens),
