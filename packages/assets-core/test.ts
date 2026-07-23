@@ -17,9 +17,11 @@ import {
   createClockworkStampArchetype,
   createClockworkStampTexturePlan,
   createClockworkStampAnimationPlan,
+  deriveEquipmentPalette,
   materializeArticulatedModel,
   renderCropStageTexture,
   renderCuboidTextureAtlas,
+  renderToolInventoryIcon,
 } from "./index.ts";
 
 function fixture(name: string): unknown {
@@ -480,6 +482,15 @@ assert.deepEqual(JSON.parse(deathScytheIcon.itemModelText), {
 });
 assert.equal(deathScytheIcon.texture.sha256, "149d8fbd69b0421e239f5b44be805ec79bd5af082905367c6e15e7f7863adbd9");
 assert.equal(deathScytheIcon.itemModelSha256, "2f93ae9cacc20023500dfc4f4997e067416b5f6733f7de184a1f220ed64bed45");
+
+const derivedBlueSteelPalette = deriveEquipmentPalette("mcdev:blue_steel");
+assert.deepEqual(deriveEquipmentPalette("mcdev:blue_steel"), derivedBlueSteelPalette);
+assert.notDeepEqual(deriveEquipmentPalette("mcdev:blue_steel"), deriveEquipmentPalette("mcdev:death_iron"));
+const toolIcons = ["sword", "pickaxe", "axe", "shovel", "hoe"].map((kind) =>
+  renderToolInventoryIcon("mcdev:blue_steel", kind as "sword" | "pickaxe" | "axe" | "shovel" | "hoe"));
+assert.equal(toolIcons.every(({ width, height }) => width === 16 && height === 16), true);
+assert.equal(toolIcons.every(({ opaquePixels, colorCount }) => opaquePixels >= 25 && colorCount >= 4), true);
+assert.equal(new Set(toolIcons.map(({ sha256 }) => sha256)).size, toolIcons.length);
 
 const fungalInfected = compileTexturedBlockbenchModel(
   fixture("fungal-infected.model.json"),

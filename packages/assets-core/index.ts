@@ -421,3 +421,9 @@ export {
   type MechanismVisualState,
 } from "./mechanism-texture.ts";
 export { createClockworkStampAnimationPlan } from "./mechanism-animation.ts";
+export {
+  deriveEquipmentPalette,
+  renderToolInventoryIcon,
+  type EquipmentPalette,
+  type ToolVisualKind,
+} from "./equipment-texture.ts";
