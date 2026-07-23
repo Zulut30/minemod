@@ -65,6 +65,13 @@ try {
       toughness: 2,
       knockbackResistance: 0.1,
     },
+    palette: {
+      base: "#477aa5",
+      shadow: "#1b3347",
+      highlight: "#bad9ef",
+      accent: "#d4a72c",
+      handle: "#60401f",
+    },
   }];
   fixture.gameplay.items.push(
     {
@@ -185,6 +192,9 @@ try {
     /data\/infectedfrontier\/recipes\/blue_steel_sword\.json/u,
   );
   assert.match(jarList.stdout, /assets\/infectedfrontier\/models\/item\/blue_steel_sword\.json/u);
+  assert.match(jarList.stdout, /assets\/infectedfrontier\/textures\/item\/blue_steel_sword\.png/u);
+  assert.match(jarList.stdout, /assets\/infectedfrontier\/textures\/item\/blue_steel_pickaxe\.png/u);
+  assert.match(jarList.stdout, /assets\/infectedfrontier\/textures\/item\/blue_steel_chestplate\.png/u);
   assert.match(jarList.stdout, /assets\/infectedfrontier\/textures\/models\/armor\/blue_steel_layer_1\.png/u);
   assert.match(jarList.stdout, /assets\/infectedfrontier\/textures\/models\/armor\/blue_steel_layer_2\.png/u);
   assert.match(jarList.stdout, /data\/minecraft\/tags\/items\/swords\.json/u);

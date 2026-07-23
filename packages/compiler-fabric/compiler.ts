@@ -9,6 +9,13 @@ import {
   type GeneratedFileInput,
 } from "@mcdev/codegen-core";
 import {
+  deriveEquipmentPalette,
+  renderArmorInventoryIcon,
+  renderToolInventoryIcon,
+  renderWearableArmorLayers,
+  type EquipmentPalette,
+} from "@mcdev/assets-core";
+import {
   BUILTIN_FABRIC_1_20_1,
   type VerifiedCompatibilityPack,
 } from "@mcdev/compatibility-packs";
@@ -1043,6 +1050,8 @@ public final class GeneratedClient implements ClientModInitializer {
     if (block !== undefined && blockParts === undefined) {
       throw fabricCompilerError("INTERNAL_ERROR", "Block-item resource normalization failed safely.");
     }
+    const equipment = "material" in item;
+    const itemTexture = equipment ? `${modId}:item/${parts.path}` : `${modId}:mcdev/placeholder`;
     inputs.push(jsonInput(
       `${resourceRoot}/assets/${parts.namespace}/models/item/${parts.path}.json`,
       block === undefined
@@ -1051,10 +1060,24 @@ public final class GeneratedClient implements ClientModInitializer {
               ["sword", "pickaxe", "axe", "shovel", "hoe"].includes(item.kind)
               ? "minecraft:item/handheld"
               : "minecraft:item/generated",
-            textures: { layer0: `${modId}:mcdev/placeholder` },
+            textures: { layer0: itemTexture },
           }
         : { parent: `${modId}:block/${blockParts?.path}` },
     ));
+    if (equipment) {
+      const material = content.materials.find(({ id }) => id === item.material);
+      if (material === undefined) {
+        throw fabricCompilerError("INTERNAL_ERROR", "Equipment texture material normalization failed safely.");
+      }
+      const palette: EquipmentPalette = material.palette ?? deriveEquipmentPalette(material.id);
+      const texture = item.kind === "armor"
+        ? renderArmorInventoryIcon(item.id, item.armorSlot, palette)
+        : renderToolInventoryIcon(item.id, item.kind, palette);
+      inputs.push(input(
+        `${resourceRoot}/assets/${parts.namespace}/textures/item/${parts.path}.png`,
+        texture.bytes,
+      ));
+    }
     language[`item.${parts.namespace}.${parts.path.replaceAll("/", ".")}`] = titleFromPath(parts.path);
   }
 
@@ -1146,7 +1169,7 @@ public final class GeneratedClient implements ClientModInitializer {
   }
 
   inputs.push(jsonInput(`${resourceRoot}/assets/${modId}/lang/en_us.json`, language));
-  if (content.items.length > 0 || content.blocks.length > 0) {
+  if (content.items.some((item) => !("material" in item)) || content.blocks.length > 0) {
     inputs.push(input(
       `${resourceRoot}/assets/${modId}/textures/mcdev/placeholder.png`,
       Buffer.from(PLACEHOLDER_PNG_BASE64, "base64"),
@@ -1155,10 +1178,12 @@ public final class GeneratedClient implements ClientModInitializer {
   for (const material of content.materials.filter(({ armor }) => armor !== undefined)) {
     const parts = content.materialParts.get(material.id);
     if (parts === undefined) throw fabricCompilerError("INTERNAL_ERROR", "Armor material normalization failed safely.");
-    for (const layer of [1, 2]) {
+    const palette: EquipmentPalette = material.palette ?? deriveEquipmentPalette(material.id);
+    const layers = renderWearableArmorLayers(material.id, palette);
+    for (const layer of [1, 2] as const) {
       inputs.push(input(
         `${resourceRoot}/assets/${parts.namespace}/textures/models/armor/${parts.path}_layer_${layer}.png`,
-        Buffer.from(PLACEHOLDER_PNG_BASE64, "base64"),
+        layers[layer - 1]!.bytes,
       ));
     }
   }
@@ -1297,7 +1322,7 @@ function buildPlan(
     pack: packRef,
     nodes,
     warnings: Object.freeze(
-      spec.gameplay.items.length > 0 || spec.gameplay.blocks.length > 0
+      spec.gameplay.items.some((item) => !("material" in item)) || spec.gameplay.blocks.length > 0
         ? ["PLACEHOLDER_ASSETS_USED" as const]
         : [],
     ),

@@ -12,6 +12,7 @@
     "test:build": "node --experimental-strip-types build-test.ts"
   },
   "dependencies": {
+    "@mcdev/assets-core": "workspace:*",
     "@mcdev/codegen-core": "workspace:*",
     "@mcdev/compatibility-packs": "workspace:*",
     "@mcdev/contracts": "workspace:*",

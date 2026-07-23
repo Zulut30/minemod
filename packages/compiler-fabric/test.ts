@@ -16,6 +16,18 @@ function textOutput(result: CompiledFabricProject, path: string): string {
   return decoder.decode(output.file.bytes);
 }
 
+function bytesOutput(result: CompiledFabricProject, path: string): Uint8Array {
+  const output = result.outputs.find(({ file }) => file.path === path);
+  assert.ok(output !== undefined, `missing generated output ${path}`);
+  return output.file.bytes;
+}
+
+function pngDimensions(bytes: Uint8Array): readonly [number, number] {
+  assert.deepEqual([...bytes.slice(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
+  const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+  return [view.getUint32(16, false), view.getUint32(20, false)];
+}
+
 async function expectCompilerError(
   payload: string,
   code: FabricCompilerError["code"],
@@ -50,6 +62,13 @@ function fabricEquipmentFixture() {
       defense: { helmet: 3, chestplate: 8, leggings: 6, boots: 3 },
       toughness: 2,
       knockbackResistance: 0.1,
+    },
+    palette: {
+      base: "#477aa5",
+      shadow: "#1b3347",
+      highlight: "#bad9ef",
+      accent: "#d4a72c",
+      handle: "#60401f",
     },
   }];
   equipment.gameplay.items.push(
@@ -321,6 +340,40 @@ for (const layer of [1, 2]) {
   assert.ok(compiledEquipment.outputs.some(({ file }) =>
     file.path === `src/main/resources/assets/infectedfrontier/textures/models/armor/blue_steel_layer_${layer}.png`));
 }
+const equipmentTexturePaths = [
+  "blue_steel_sword",
+  "blue_steel_pickaxe",
+  "blue_steel_axe",
+  "blue_steel_shovel",
+  "blue_steel_hoe",
+  "blue_steel_chestplate",
+].map((name) => `src/main/resources/assets/infectedfrontier/textures/item/${name}.png`);
+const equipmentTextures = equipmentTexturePaths.map((path) => bytesOutput(compiledEquipment, path));
+assert.equal(equipmentTextures.every((bytes) => pngDimensions(bytes).join("x") === "16x16"), true);
+assert.equal(new Set(equipmentTextures.map((bytes) => Buffer.from(bytes).toString("base64"))).size,
+  equipmentTextures.length);
+const armorLayer1 = bytesOutput(
+  compiledEquipment,
+  "src/main/resources/assets/infectedfrontier/textures/models/armor/blue_steel_layer_1.png",
+);
+const armorLayer2 = bytesOutput(
+  compiledEquipment,
+  "src/main/resources/assets/infectedfrontier/textures/models/armor/blue_steel_layer_2.png",
+);
+assert.deepEqual(pngDimensions(armorLayer1), [64, 32]);
+assert.deepEqual(pngDimensions(armorLayer2), [64, 32]);
+assert.notDeepEqual(armorLayer1, armorLayer2);
+const equipmentOnly = fabricEquipmentFixture();
+equipmentOnly.gameplay.blocks = [];
+equipmentOnly.gameplay.recipes = [];
+equipmentOnly.gameplay.items = equipmentOnly.gameplay.items.filter((item) => "material" in item);
+equipmentOnly.gameplay.materials[0]!.repairIngredient = "minecraft:iron_ingot";
+const compiledEquipmentOnly = await compileFabricPhase1(JSON.stringify(equipmentOnly));
+assert.deepEqual(compiledEquipmentOnly.plan.warnings, []);
+assert.equal(
+  compiledEquipmentOnly.outputs.some(({ file }) => file.path.endsWith("/textures/mcdev/placeholder.png")),
+  false,
+);
 assert.deepEqual(
   JSON.parse(textOutput(compiledEquipment, "src/main/resources/data/minecraft/tags/items/swords.json")),
   { values: ["infectedfrontier:blue_steel_sword"] },

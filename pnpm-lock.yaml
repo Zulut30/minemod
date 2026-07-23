@@ -123,6 +123,9 @@ importers:
 
   packages/compiler-fabric:
     dependencies:
+      '@mcdev/assets-core':
+        specifier: workspace:*
+        version: link:../assets-core
       '@mcdev/codegen-core':
         specifier: workspace:*
         version: link:../codegen-core
