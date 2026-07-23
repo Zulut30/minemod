@@ -315,6 +315,7 @@ const ConfigOptionSchema = z.discriminatedUnion("type", [
     type: z.literal("string"),
     default: boundedBmpString(0, 256),
     maxLength: z.number().int().min(1).max(256),
+    binding: z.enum(["player_join_message"]).optional(),
   }),
 ]);
 export const YaclIntegrationSchema = z.strictObject({
@@ -327,6 +328,7 @@ export const YaclIntegrationSchema = z.strictObject({
 }).superRefine(({ categories }, context) => {
   const categoryIds = new Set<string>();
   const optionIds = new Set<string>();
+  const bindings = new Set<string>();
   categories.forEach((category, categoryIndex) => {
     if (categoryIds.has(category.id)) {
       context.addIssue({ code: "custom", path: ["categories", categoryIndex, "id"], message: "Category ids must be unique." });
@@ -344,6 +346,19 @@ export const YaclIntegrationSchema = z.strictObject({
       }
       if (option.type === "string" && option.default.length > option.maxLength) {
         context.addIssue({ code: "custom", path: [...path, "default"], message: "String defaults must fit maxLength." });
+      }
+      if (option.type === "string" && option.binding !== undefined) {
+        if (bindings.has(option.binding)) {
+          context.addIssue({ code: "custom", path: [...path, "binding"], message: "Config bindings must be unique." });
+        }
+        bindings.add(option.binding);
+        if (!option.restartRequired) {
+          context.addIssue({
+            code: "custom",
+            path: [...path, "restartRequired"],
+            message: "Server-authoritative bindings must require restart.",
+          });
+        }
       }
     });
   });

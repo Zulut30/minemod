@@ -106,6 +106,30 @@ const invalidStringOption = invalidStringConfig.integrations.yacl!.categories[0]
 assert.ok(invalidStringOption?.type === "string");
 invalidStringOption.maxLength = 4;
 assert.equal(ModSpecV1Schema.safeParse(invalidStringConfig).success, false);
+const boundServerConfig = structuredClone(configuredFabric);
+const boundServerOption = boundServerConfig.integrations.yacl!.categories[0]!.options
+  .find((option) => option.type === "string");
+assert.ok(boundServerOption?.type === "string");
+boundServerOption.binding = "player_join_message";
+boundServerOption.restartRequired = true;
+assert.equal(ModSpecV1Schema.safeParse(boundServerConfig).success, true);
+const unsafeLiveServerConfig = structuredClone(boundServerConfig);
+const unsafeLiveServerOption = unsafeLiveServerConfig.integrations.yacl!.categories[0]!.options
+  .find((option) => option.type === "string");
+assert.ok(unsafeLiveServerOption?.type === "string");
+unsafeLiveServerOption.restartRequired = false;
+assert.equal(ModSpecV1Schema.safeParse(unsafeLiveServerConfig).success, false);
+const duplicateBinding = structuredClone(boundServerConfig);
+duplicateBinding.integrations.yacl!.categories[0]!.options.push({
+  id: "second_join_message",
+  name: "Second join message",
+  type: "string",
+  default: "Welcome",
+  maxLength: 64,
+  binding: "player_join_message",
+  restartRequired: true,
+});
+assert.equal(ModSpecV1Schema.safeParse(duplicateBinding).success, false);
 const v1Integrations = jsonSchemaProperty(ModSpecV1JsonSchema, "integrations", "ModSpecV1");
 assert.ok(Object.hasOwn(asJsonObject(v1Integrations.properties, "ModSpecV1.integrations.properties"), "yacl"));
 
