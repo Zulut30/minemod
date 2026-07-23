@@ -15,7 +15,7 @@
 - строгая локальная проверка `ModSpec v1` без исполнения кода из промпта;
 - генерация Fabric 1.20.1 проекта с разделёнными main/client source sets;
 - items, blocks, creative entries, loot, blockstates и модели;
-- shapeless и smelting recipes, локализация `en_us`;
+- shaped 1×1–3×3, shapeless и smelting recipes, включая ванильные ингредиенты и количество результата;
 - транзакционное создание нового workspace без молчаливой перезаписи файлов;
 - закрытая Gradle policy с Temurin 17, checksum-проверками и фиксированными tasks;
 - получение готового remapped JAR и индекса артефактов;
@@ -48,6 +48,26 @@ artifact index ←── verified JAR ←── fixed Gradle runner ←── ne
 Версии, Maven repositories, licenses и допустимая обязательность берутся только из закрытого каталога. Произвольные coordinates и repositories из пользовательского запроса не принимаются. YACL 3.5.0 выбран после реальной проверки с текущим Loom 1.6.12; YACL 3.6.x требует обновления проверенного Loom baseline.
 
 Подробности и пример ModSpec: [Library integrations](docs/LIBRARY_INTEGRATIONS.md).
+
+## Пример shaped-рецепта
+
+```json
+{
+  "id": "infectedfrontier:blue_steel_sword",
+  "references": [],
+  "type": "shaped",
+  "ingredients": [],
+  "pattern": ["X", "X", "S"],
+  "key": [
+    { "symbol": "X", "item": "infectedfrontier:blue_steel_ingot" },
+    { "symbol": "S", "item": "minecraft:stick" }
+  ],
+  "result": "infectedfrontier:blue_steel_sword",
+  "resultCount": 1
+}
+```
+
+Компилятор проверяет прямоугольную форму, границы 1×1–3×3, уникальность символов, точное соответствие `pattern` и `key`, ссылки на generated items и диапазон результата 1–64.
 
 ## Быстрый старт для разработчика
 
@@ -125,7 +145,7 @@ docs/                  ADR, планы, аудиты и quality rubric
 
 ## Ближайшие этапы
 
-1. Новые gameplay bindings, server-to-client sync и operator-only configuration flow.
+1. Типизированные материалы, оружие, инструменты и броня поверх shaped-рецептов.
 2. Каталог GeckoLib, Cardinal Components, Trinkets, EMI и Jade.
 3. Fabric GameTests и отдельные hosted client/server gates.
 4. AI texture provider без placeholder assets.
