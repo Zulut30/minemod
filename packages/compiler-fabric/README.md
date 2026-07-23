@@ -9,7 +9,7 @@ Phase 1 currently generates:
 - creative-tab entries;
 - built-in shapeless crafting and smelting recipes;
 - item models, block models, blockstates, self-drop loot tables and `en_us` localization;
-- trusted YACL JSON5 configuration and an optional Mod Menu configuration entrypoint;
+- trusted YACL JSON5 configuration with ModSpec-driven boolean, integer slider and string controls;
 - a closed deterministic BuildPlan using `fabric-1.20.1-phase1-v1`.
 
 Until authored textures are connected, generated basic content uses a deterministic placeholder PNG and reports `PLACEHOLDER_ASSETS_USED`. Shaped/custom recipes cannot be represented safely by the current ModSpec recipe fields and fail closed with a precise `SPEC_UNSUPPORTED` diagnostic. Tags, entities, structures, gameplay screens, unsupported integrations and authored assets also fail closed; they are not silently omitted.

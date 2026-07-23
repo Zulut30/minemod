@@ -31,6 +31,46 @@ MineMod подключает сторонние библиотеки через 
     "optional": [
       "modmenu"
     ]
+  },
+  "integrations": {
+    "jei": "off",
+    "jade": "off",
+    "yacl": {
+      "categories": [
+        {
+          "id": "gameplay",
+          "name": "Gameplay",
+          "description": "Gameplay tuning.",
+          "options": [
+            {
+              "id": "enable_special_attacks",
+              "name": "Special attacks",
+              "type": "boolean",
+              "default": true,
+              "restartRequired": false
+            },
+            {
+              "id": "spawn_limit",
+              "name": "Spawn limit",
+              "type": "integer",
+              "default": 8,
+              "minimum": 1,
+              "maximum": 32,
+              "step": 1,
+              "restartRequired": true
+            },
+            {
+              "id": "welcome_message",
+              "name": "Welcome message",
+              "type": "string",
+              "default": "Stay alert",
+              "maxLength": 64,
+              "restartRequired": false
+            }
+          ]
+        }
+      ]
+    }
   }
 }
 ```
@@ -46,7 +86,9 @@ MineMod подключает сторонние библиотеки через 
 - `GeneratedModMenuIntegration` с настоящим YACL screen;
 - checksum metadata для исходных и транзитивных артефактов.
 
-Текущий generated screen содержит рабочую настройку `showGeneratedContentInCreativeTabs`. Она сохраняется в `config/<mod-id>.json5`, управляет добавлением generated items/blocks в стандартные creative tabs и требует перезапуска игры после изменения. Если выбран только YACL, файловая конфигурация генерируется без Mod Menu entrypoint. Если выбран только Mod Menu, компилятор не создаёт классы конфигурации, которые ссылались бы на отсутствующий YACL.
+Generated screen всегда содержит рабочую настройку `showGeneratedContentInCreativeTabs`, а `integrations.yacl.categories` добавляет собственные категории и boolean/integer/string options. Integer options получают bounded slider, string options ограничиваются `maxLength`, а `restartRequired` подключает стандартное предупреждение YACL о перезапуске. Все значения сохраняются в `config/<mod-id>.json5`.
+
+Идентификаторы категорий и options проверяются на уникальность, числовые значения ограничены диапазоном Java `int`, defaults обязаны попадать в объявленные границы, а размер всей схемы ограничен. Пользовательская `integrations.yacl` требует одновременно required YACL и optional Mod Menu: без них компилятор останавливается с диагностикой вместо создания недоступного UI.
 
 ## Закрытые правила
 
@@ -67,7 +109,7 @@ MineMod подключает сторонние библиотеки через 
 
 Планируемые capability-профили:
 
-- расширяемая ModSpec-схема для boolean/integer/string options, ranges и categories;
+- привязка config options к generated gameplay, client/server sync и operator permissions;
 - GeckoLib для runtime-моделей и анимаций;
 - Cardinal Components API для persistent/synced state;
 - Trinkets для дополнительных equipment slots;
