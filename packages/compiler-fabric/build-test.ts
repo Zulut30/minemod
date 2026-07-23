@@ -45,7 +45,20 @@ try {
   assert.equal(build.signal, null, build.stderr);
   assert.equal(build.status, 0, `${build.stdout}\n${build.stderr}`);
   const artifacts = await readdir(join(workspace, "build", "libs"));
-  assert.ok(artifacts.some((name) => name === "infectedfrontier-0.1.0.jar"));
+  const artifact = artifacts.find((name) => name === "infectedfrontier-0.1.0.jar");
+  assert.ok(artifact !== undefined);
+  const jarList = spawnSync(join(javaHome, "bin", "jar"), ["tf", join(workspace, "build", "libs", artifact)], {
+    cwd: workspace,
+    encoding: "utf8",
+    maxBuffer: 2 * 1024 * 1024,
+    timeout: 30_000,
+  });
+  assert.equal(jarList.status, 0, jarList.stderr);
+  assert.match(jarList.stdout, /dev\/mcdev\/generated\/m_infectedfrontier\/GeneratedConfig\.class/u);
+  assert.match(
+    jarList.stdout,
+    /dev\/mcdev\/generated\/m_infectedfrontier\/client\/GeneratedModMenuIntegration\.class/u,
+  );
 } finally {
   await rm(workspace, { recursive: true, force: true });
 }
