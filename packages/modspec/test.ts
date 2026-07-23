@@ -43,6 +43,60 @@ assert.equal(ModSpecV1JsonSchema.additionalProperties, false);
 assert.equal((ModSpecV1JsonSchema.properties as Record<string, Record<string, unknown>>).schemaVersion?.const, 1);
 assert.equal(artProperties.schemaVersion?.const, 0);
 
+const configuredFabric = structuredClone(validFabricV1Fixture);
+configuredFabric.integrations.yacl = {
+  categories: [{
+    id: "gameplay",
+    name: "Gameplay",
+    description: "Generated gameplay settings.",
+    options: [
+      {
+        id: "enable_special_attacks",
+        name: "Special attacks",
+        type: "boolean",
+        default: true,
+        restartRequired: false,
+      },
+      {
+        id: "spawn_limit",
+        name: "Spawn limit",
+        type: "integer",
+        default: 8,
+        minimum: 1,
+        maximum: 32,
+        step: 1,
+        restartRequired: true,
+      },
+      {
+        id: "welcome_message",
+        name: "Welcome message",
+        type: "string",
+        default: "Stay alert",
+        maxLength: 64,
+        restartRequired: false,
+      },
+    ],
+  }],
+};
+assert.equal(ModSpecV1Schema.safeParse(configuredFabric).success, true);
+const invalidIntegerConfig = structuredClone(configuredFabric);
+const invalidIntegerOption = invalidIntegerConfig.integrations.yacl!.categories[0]!.options
+  .find((option) => option.type === "integer");
+assert.ok(invalidIntegerOption?.type === "integer");
+invalidIntegerOption.default = 33;
+assert.equal(ModSpecV1Schema.safeParse(invalidIntegerConfig).success, false);
+const duplicateConfigOption = structuredClone(configuredFabric);
+duplicateConfigOption.integrations.yacl!.categories[0]!.options[2]!.id = "spawn_limit";
+assert.equal(ModSpecV1Schema.safeParse(duplicateConfigOption).success, false);
+const invalidStringConfig = structuredClone(configuredFabric);
+const invalidStringOption = invalidStringConfig.integrations.yacl!.categories[0]!.options
+  .find((option) => option.type === "string");
+assert.ok(invalidStringOption?.type === "string");
+invalidStringOption.maxLength = 4;
+assert.equal(ModSpecV1Schema.safeParse(invalidStringConfig).success, false);
+const v1Integrations = jsonSchemaProperty(ModSpecV1JsonSchema, "integrations", "ModSpecV1");
+assert.ok(Object.hasOwn(asJsonObject(v1Integrations.properties, "ModSpecV1.integrations.properties"), "yacl"));
+
 const invalidStateMachine = structuredClone(validFabricV1Fixture);
 invalidStateMachine.gameplay.entities[0]!.behavior.stateMachine.states = [];
 assert.equal(ModSpecV1Schema.safeParse(invalidStateMachine).success, false);

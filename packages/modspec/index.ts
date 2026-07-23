@@ -22,6 +22,8 @@ export const SPEC_COLLECTION_LIMITS = Object.freeze({
   screenSlots: 64,
   screenFields: 32,
   screenActions: 32,
+  configCategories: 8,
+  configOptionsPerCategory: 16,
   resourceReferences: 16,
   assetModels: 64,
   assetTextures: 64,
@@ -291,6 +293,61 @@ const JadeIntegrationSchema = z.union([
   }),
 ]);
 
+const ConfigOptionBase = {
+  id: LocalId,
+  name: boundedBmpString(1, 80),
+  description: boundedBmpString(1, 240).optional(),
+  restartRequired: z.boolean(),
+};
+const ConfigOptionSchema = z.discriminatedUnion("type", [
+  z.strictObject({ ...ConfigOptionBase, type: z.literal("boolean"), default: z.boolean() }),
+  z.strictObject({
+    ...ConfigOptionBase,
+    type: z.literal("integer"),
+    default: z.number().int(),
+    minimum: z.number().int(),
+    maximum: z.number().int(),
+    step: z.number().int().positive(),
+  }),
+  z.strictObject({
+    ...ConfigOptionBase,
+    type: z.literal("string"),
+    default: boundedBmpString(0, 256),
+    maxLength: z.number().int().min(1).max(256),
+  }),
+]);
+export const YaclIntegrationSchema = z.strictObject({
+  categories: z.array(z.strictObject({
+    id: LocalId,
+    name: boundedBmpString(1, 80),
+    description: boundedBmpString(1, 240).optional(),
+    options: z.array(ConfigOptionSchema).min(1).max(SPEC_COLLECTION_LIMITS.configOptionsPerCategory),
+  })).min(1).max(SPEC_COLLECTION_LIMITS.configCategories),
+}).superRefine(({ categories }, context) => {
+  const categoryIds = new Set<string>();
+  const optionIds = new Set<string>();
+  categories.forEach((category, categoryIndex) => {
+    if (categoryIds.has(category.id)) {
+      context.addIssue({ code: "custom", path: ["categories", categoryIndex, "id"], message: "Category ids must be unique." });
+    }
+    categoryIds.add(category.id);
+    category.options.forEach((option, optionIndex) => {
+      const path = ["categories", categoryIndex, "options", optionIndex] as const;
+      if (optionIds.has(option.id)) {
+        context.addIssue({ code: "custom", path: [...path, "id"], message: "Config option ids must be globally unique." });
+      }
+      optionIds.add(option.id);
+      if (option.type === "integer" &&
+        (option.minimum > option.maximum || option.default < option.minimum || option.default > option.maximum)) {
+        context.addIssue({ code: "custom", path: [...path, "default"], message: "Integer defaults must be inside an ordered range." });
+      }
+      if (option.type === "string" && option.default.length > option.maxLength) {
+        context.addIssue({ code: "custom", path: [...path, "default"], message: "String defaults must fit maxLength." });
+      }
+    });
+  });
+});
+
 const GameTestSchema = z.strictObject({
   id: ResourceLocation,
   references: ReferencesSchema,
@@ -348,10 +405,14 @@ const ModSpecV1GameplaySchema = ModSpecSchema.shape.gameplay.extend({
   structures: z.array(StructureSpecSchema).max(SPEC_COLLECTION_LIMITS.gameplayStructures),
   screens: z.array(ScreenV1Schema).max(SPEC_COLLECTION_LIMITS.gameplayScreens),
 });
+const ModSpecV1IntegrationsSchema = ModSpecSchema.shape.integrations.extend({
+  yacl: YaclIntegrationSchema.optional(),
+});
 
 export const ModSpecV1Schema = ModSpecSchema.extend({
   schemaVersion: z.literal(1),
   gameplay: ModSpecV1GameplaySchema,
+  integrations: ModSpecV1IntegrationsSchema,
 });
 
 export const AnyModSpecSchema = z.discriminatedUnion("schemaVersion", [ModSpecSchema, ModSpecV1Schema]);
