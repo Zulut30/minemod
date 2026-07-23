@@ -423,7 +423,11 @@ export {
 export { createClockworkStampAnimationPlan } from "./mechanism-animation.ts";
 export {
   deriveEquipmentPalette,
+  renderArmorInventoryIcon,
   renderToolInventoryIcon,
+  renderWearableArmorLayers,
+  type ArmorVisualKind,
   type EquipmentPalette,
+  type RenderedEquipmentTexture,
   type ToolVisualKind,
 } from "./equipment-texture.ts";

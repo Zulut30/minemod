@@ -21,7 +21,9 @@ import {
   materializeArticulatedModel,
   renderCropStageTexture,
   renderCuboidTextureAtlas,
+  renderArmorInventoryIcon,
   renderToolInventoryIcon,
+  renderWearableArmorLayers,
 } from "./index.ts";
 
 function fixture(name: string): unknown {
@@ -491,6 +493,20 @@ const toolIcons = ["sword", "pickaxe", "axe", "shovel", "hoe"].map((kind) =>
 assert.equal(toolIcons.every(({ width, height }) => width === 16 && height === 16), true);
 assert.equal(toolIcons.every(({ opaquePixels, colorCount }) => opaquePixels >= 25 && colorCount >= 4), true);
 assert.equal(new Set(toolIcons.map(({ sha256 }) => sha256)).size, toolIcons.length);
+const armorIcons = ["helmet", "chestplate", "leggings", "boots"].map((kind) =>
+  renderArmorInventoryIcon("mcdev:blue_steel", kind as "helmet" | "chestplate" | "leggings" | "boots"));
+assert.equal(armorIcons.every(({ width, height }) => width === 16 && height === 16), true);
+assert.equal(armorIcons.every(({ opaquePixels, colorCount }) => opaquePixels >= 30 && colorCount >= 4), true);
+assert.equal(new Set(armorIcons.map(({ sha256 }) => sha256)).size, armorIcons.length);
+const blueSteelArmorLayers = renderWearableArmorLayers("mcdev:blue_steel");
+assert.equal(blueSteelArmorLayers.every(({ width, height }) => width === 64 && height === 32), true);
+assert.equal(blueSteelArmorLayers.every(({ opaquePixels, colorCount }) =>
+  opaquePixels === 2_048 && colorCount === 4), true);
+assert.notEqual(blueSteelArmorLayers[0].sha256, blueSteelArmorLayers[1].sha256);
+assert.deepEqual(
+  renderWearableArmorLayers("mcdev:blue_steel").map(({ sha256 }) => sha256),
+  blueSteelArmorLayers.map(({ sha256 }) => sha256),
+);
 
 const fungalInfected = compileTexturedBlockbenchModel(
   fixture("fungal-infected.model.json"),
