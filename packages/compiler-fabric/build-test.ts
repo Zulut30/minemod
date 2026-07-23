@@ -17,6 +17,39 @@ try {
   const fixture = fabricBasicContentFixture();
   fixture.dependencies.required = ["yet_another_config_lib_v3"];
   fixture.dependencies.optional = ["modmenu"];
+  fixture.integrations.yacl = {
+    categories: [{
+      id: "gameplay",
+      name: "Gameplay",
+      options: [
+        {
+          id: "enable_special_attacks",
+          name: "Special attacks",
+          type: "boolean",
+          default: true,
+          restartRequired: false,
+        },
+        {
+          id: "spawn_limit",
+          name: "Spawn limit",
+          type: "integer",
+          default: 8,
+          minimum: 1,
+          maximum: 32,
+          step: 1,
+          restartRequired: true,
+        },
+        {
+          id: "welcome_message",
+          name: "Welcome message",
+          type: "string",
+          default: "Stay alert",
+          maxLength: 64,
+          restartRequired: false,
+        },
+      ],
+    }],
+  };
   const compiled = await compileFabricPhase1(JSON.stringify(fixture));
   for (const { file } of compiled.outputs) {
     const destination = join(workspace, file.path);

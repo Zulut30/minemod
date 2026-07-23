@@ -649,7 +649,54 @@ ${stringLimiter}
 `;
 }
 
-function generatedModMenuSource(modId: string): string {
+function generatedModMenuSource(
+  modId: string,
+  configuration: ModSpecV1["integrations"]["yacl"],
+): string {
+  const customCategoryCalls = configuration?.categories.map((category) => {
+    const categoryKey = `config.${modId}.category.custom.${category.id}`;
+    const tooltip = category.description === undefined
+      ? ""
+      : `\n                                .tooltip(Component.translatable("${categoryKey}.description"))`;
+    const options = category.options.map((option) => {
+      const field = `option_${option.id}`;
+      const optionKey = `config.${modId}.option.custom.${option.id}`;
+      const description = option.description === undefined
+        ? ""
+        : `\n                                        .description(OptionDescription.of(Component.translatable(` +
+          `\n                                                "${optionKey}.description")))`;
+      const restart = option.restartRequired ? "\n                                        .flag(OptionFlag.GAME_RESTART)" : "";
+      if (option.type === "boolean") {
+        return `\n                                .option(Option.<Boolean>createBuilder()` +
+          `\n                                        .name(Component.translatable("${optionKey}"))${description}` +
+          `\n                                        .binding(defaults.${field}, () -> config.${field},` +
+          `\n                                                value -> config.${field} = value)` +
+          `\n                                        .controller(BooleanControllerBuilder::create)${restart}` +
+          `\n                                        .build())`;
+      }
+      if (option.type === "integer") {
+        return `\n                                .option(Option.<Integer>createBuilder()` +
+          `\n                                        .name(Component.translatable("${optionKey}"))${description}` +
+          `\n                                        .binding(defaults.${field}, () -> config.${field},` +
+          `\n                                                value -> config.${field} = value)` +
+          `\n                                        .controller(controller -> IntegerSliderControllerBuilder` +
+          `\n                                                .create(controller)` +
+          `\n                                                .range(${option.minimum}, ${option.maximum})` +
+          `\n                                                .step(${option.step}))${restart}` +
+          `\n                                        .build())`;
+      }
+      return `\n                                .option(Option.<String>createBuilder()` +
+        `\n                                        .name(Component.translatable("${optionKey}"))${description}` +
+        `\n                                        .binding(defaults.${field}, () -> config.${field},` +
+        `\n                                                value -> config.${field} = GeneratedConfig.limitString(` +
+        `\n                                                        value, ${option.maxLength}))` +
+        `\n                                        .controller(StringControllerBuilder::create)${restart}` +
+        `\n                                        .build())`;
+    }).join("");
+    return `\n                        .category(ConfigCategory.createBuilder()` +
+      `\n                                .name(Component.translatable("${categoryKey}"))${tooltip}${options}` +
+      `\n                                .build())`;
+  }).join("") ?? "";
   return `package dev.mcdev.generated.m_${modId}.client;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
@@ -660,6 +707,8 @@ import dev.isxander.yacl3.api.OptionDescription;
 import dev.isxander.yacl3.api.OptionFlag;
 import dev.isxander.yacl3.api.YetAnotherConfigLib;
 import dev.isxander.yacl3.api.controller.BooleanControllerBuilder;
+import dev.isxander.yacl3.api.controller.IntegerSliderControllerBuilder;
+import dev.isxander.yacl3.api.controller.StringControllerBuilder;
 import dev.mcdev.generated.m_${modId}.GeneratedConfig;
 import net.minecraft.network.chat.Component;
 
@@ -681,7 +730,7 @@ public final class GeneratedModMenuIntegration implements ModMenuApi {
                                         .controller(BooleanControllerBuilder::create)
                                         .flag(OptionFlag.GAME_RESTART)
                                         .build())
-                                .build()))
+                                .build())${customCategoryCalls})
                 .generateScreen(parent);
     }
 }
@@ -738,13 +787,23 @@ public final class GeneratedClient implements ClientModInitializer {
   if (hasYacl && hasModMenu) {
     inputs.push(input(
       `src/client/java/${pathRoot}/client/GeneratedModMenuIntegration.java`,
-      utf8FileBytes(generatedModMenuSource(modId)),
+      utf8FileBytes(generatedModMenuSource(modId, spec.integrations.yacl)),
     ));
     language[`config.${modId}.title`] = `${spec.project.name} Configuration`;
     language[`config.${modId}.category.general`] = "General";
     language[`config.${modId}.show_generated_content`] = "Show Generated Content";
     language[`config.${modId}.show_generated_content.description`] =
       "Show generated items and blocks in their default creative tabs after restarting the game.";
+    for (const category of spec.integrations.yacl?.categories ?? []) {
+      const categoryKey = `config.${modId}.category.custom.${category.id}`;
+      language[categoryKey] = category.name;
+      if (category.description !== undefined) language[`${categoryKey}.description`] = category.description;
+      for (const option of category.options) {
+        const optionKey = `config.${modId}.option.custom.${option.id}`;
+        language[optionKey] = option.name;
+        if (option.description !== undefined) language[`${optionKey}.description`] = option.description;
+      }
+    }
   }
 
   for (const item of content.items) {

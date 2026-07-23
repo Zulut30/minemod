@@ -279,9 +279,11 @@ configuredWithoutLibraries.integrations.yacl = {
   categories: [{
     id: "gameplay",
     name: "Gameplay",
+    description: "Gameplay tuning.",
     options: [{
       id: "enable_special_attacks",
       name: "Special attacks",
+      description: "Allow special attacks.",
       type: "boolean",
       default: true,
       restartRequired: false,
@@ -343,6 +345,32 @@ assert.match(
   ),
   /GeneratedConfig\.normalize\(\);/u,
 );
+const configuredScreen = textOutput(
+  compiledConfiguredLibraries,
+  "src/client/java/dev/mcdev/generated/m_infectedfrontier/client/GeneratedModMenuIntegration.java",
+);
+assert.match(configuredScreen, /category\.custom\.gameplay/u);
+assert.match(configuredScreen, /Option\.<Boolean>createBuilder\(\)/u);
+assert.match(configuredScreen, /Option\.<Integer>createBuilder\(\)/u);
+assert.match(configuredScreen, /IntegerSliderControllerBuilder[\s\S]*\.range\(1, 32\)[\s\S]*\.step\(1\)/u);
+assert.match(configuredScreen, /Option\.<String>createBuilder\(\)/u);
+assert.match(configuredScreen, /StringControllerBuilder::create/u);
+assert.match(configuredScreen, /GeneratedConfig\.limitString\([\s\S]*value, 64\)/u);
+const configuredLanguage = JSON.parse(textOutput(
+  compiledConfiguredLibraries,
+  "src/main/resources/assets/infectedfrontier/lang/en_us.json",
+)) as Record<string, string>;
+assert.equal(configuredLanguage["config.infectedfrontier.category.custom.gameplay"], "Gameplay");
+assert.equal(
+  configuredLanguage["config.infectedfrontier.category.custom.gameplay.description"],
+  "Gameplay tuning.",
+);
+assert.equal(
+  configuredLanguage["config.infectedfrontier.option.custom.enable_special_attacks.description"],
+  "Allow special attacks.",
+);
+assert.equal(configuredLanguage["config.infectedfrontier.option.custom.spawn_limit"], "Spawn limit");
+assert.equal(configuredLanguage["config.infectedfrontier.option.custom.welcome_message"], "Welcome message");
 const unknownLibrary = fabricBasicContentFixture();
 unknownLibrary.dependencies.required = ["unknown_library"];
 await expectCompilerError(JSON.stringify(unknownLibrary), "SPEC_UNSUPPORTED", "/dependencies/required/0");
