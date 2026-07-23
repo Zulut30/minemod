@@ -142,6 +142,39 @@ const unsafeAction = structuredClone(validFabricV1Fixture) as unknown as {
 unsafeAction.gameplay.screens[0]!.actions[0]!.validation.requireOpenMenu = false;
 assert.equal(ModSpecV1Schema.safeParse(unsafeAction).success, false);
 
+const shapedRecipe = structuredClone(validFabricV1Fixture);
+shapedRecipe.gameplay.recipes = [{
+  id: "infectedfrontier:blue_steel_sword",
+  references: [],
+  type: "shaped",
+  ingredients: [],
+  pattern: ["X", "X", "S"],
+  key: [
+    { symbol: "X", item: "infectedfrontier:blue_ingot" },
+    { symbol: "S", item: "minecraft:stick" },
+  ],
+  result: "infectedfrontier:blue_steel_sword",
+  resultCount: 1,
+}];
+assert.equal(ModSpecV1Schema.safeParse(shapedRecipe).success, true);
+const unevenPattern = structuredClone(shapedRecipe);
+unevenPattern.gameplay.recipes[0]!.pattern = ["XX", "S"];
+assert.equal(ModSpecV1Schema.safeParse(unevenPattern).success, false);
+const missingPatternKey = structuredClone(shapedRecipe);
+missingPatternKey.gameplay.recipes[0]!.key = [
+  { symbol: "X", item: "infectedfrontier:blue_ingot" },
+];
+assert.equal(ModSpecV1Schema.safeParse(missingPatternKey).success, false);
+const duplicatePatternKey = structuredClone(shapedRecipe);
+duplicatePatternKey.gameplay.recipes[0]!.key!.push({
+  symbol: "X",
+  item: "infectedfrontier:blue_ingot",
+});
+assert.equal(ModSpecV1Schema.safeParse(duplicatePatternKey).success, false);
+const paddedPattern = structuredClone(shapedRecipe);
+paddedPattern.gameplay.recipes[0]!.pattern = [" X", " X", " S"];
+assert.equal(ModSpecV1Schema.safeParse(paddedPattern).success, false);
+
 const resourceLocationPattern = new RegExp(RESOURCE_LOCATION_PATTERN);
 assert.equal(resourceLocationPattern.test("tidecaller:a/b.c"), true);
 for (const invalid of [

@@ -136,6 +136,54 @@ const RecipeSchema = z.strictObject({
   result: ResourceLocation,
 });
 
+const RecipeV1Schema = RecipeSchema.extend({
+  pattern: z.array(z.string().min(1).max(3).regex(/^[A-Z ]+$/)).min(1).max(3).optional(),
+  key: z.array(z.strictObject({
+    symbol: z.string().length(1).regex(/^[A-Z]$/),
+    item: ResourceLocation,
+  })).min(1).max(9).optional(),
+  resultCount: z.number().int().min(1).max(64).optional(),
+}).superRefine((recipe, context) => {
+  if (recipe.type !== "shaped") {
+    if (recipe.pattern !== undefined) {
+      context.addIssue({ code: "custom", path: ["pattern"], message: "Only shaped recipes may define a pattern." });
+    }
+    if (recipe.key !== undefined) {
+      context.addIssue({ code: "custom", path: ["key"], message: "Only shaped recipes may define a key." });
+    }
+    if (recipe.type === "smelting" && recipe.resultCount !== undefined) {
+      context.addIssue({ code: "custom", path: ["resultCount"], message: "Smelting output count is fixed in 1.20.1." });
+    }
+    return;
+  }
+  if (recipe.pattern === undefined || recipe.key === undefined) {
+    context.addIssue({ code: "custom", path: ["pattern"], message: "Shaped recipes require pattern and key." });
+    return;
+  }
+  if (recipe.ingredients.length > 0) {
+    context.addIssue({ code: "custom", path: ["ingredients"], message: "Shaped recipes express ingredients through key." });
+  }
+  const width = recipe.pattern[0]?.length ?? 0;
+  if (recipe.pattern.some((row) => row.length !== width)) {
+    context.addIssue({ code: "custom", path: ["pattern"], message: "Shaped recipe rows must have equal width." });
+  }
+  if (recipe.pattern[0]?.trim().length === 0 || recipe.pattern.at(-1)?.trim().length === 0 ||
+    recipe.pattern.every((row) => row.startsWith(" ")) || recipe.pattern.every((row) => row.endsWith(" "))) {
+    context.addIssue({ code: "custom", path: ["pattern"], message: "Shaped recipe patterns must be tightly bounded." });
+  }
+  const symbols = new Set(recipe.pattern.join("").replaceAll(" ", ""));
+  const declared = new Set<string>();
+  recipe.key.forEach(({ symbol }, index) => {
+    if (declared.has(symbol)) {
+      context.addIssue({ code: "custom", path: ["key", index, "symbol"], message: "Recipe key symbols must be unique." });
+    }
+    declared.add(symbol);
+  });
+  if (symbols.size !== declared.size || [...symbols].some((symbol) => !declared.has(symbol))) {
+    context.addIssue({ code: "custom", path: ["key"], message: "Recipe key must define exactly the symbols used by pattern." });
+  }
+});
+
 const SummoningSchema = z.strictObject({
   id: ResourceLocation,
   references: ReferencesSchema,
@@ -420,6 +468,7 @@ const ModSpecV1GameplaySchema = ModSpecSchema.shape.gameplay.extend({
   entities: z.array(EntityV1Schema).max(SPEC_COLLECTION_LIMITS.gameplayEntities),
   structures: z.array(StructureSpecSchema).max(SPEC_COLLECTION_LIMITS.gameplayStructures),
   screens: z.array(ScreenV1Schema).max(SPEC_COLLECTION_LIMITS.gameplayScreens),
+  recipes: z.array(RecipeV1Schema).max(SPEC_COLLECTION_LIMITS.gameplayRecipes),
 });
 const ModSpecV1IntegrationsSchema = ModSpecSchema.shape.integrations.extend({
   yacl: YaclIntegrationSchema.optional(),
