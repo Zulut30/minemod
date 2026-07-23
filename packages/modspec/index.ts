@@ -143,6 +143,10 @@ const EquipmentPaletteSchema = z.strictObject({
   accent: EquipmentColorSchema,
   handle: EquipmentColorSchema,
 });
+const EquipmentVisualProfileSchema = z.strictObject({
+  silhouette: z.enum(["balanced", "heavy", "ornate"]),
+  motif: z.enum(["clean", "riveted", "runed", "organic"]),
+});
 
 function equipmentColorLuminance(value: string): number {
   const red = Number.parseInt(value.slice(1, 3), 16);
@@ -171,6 +175,7 @@ const MaterialV1Schema = z.strictObject({
     knockbackResistance: z.number().min(0).max(1),
   }).optional(),
   palette: EquipmentPaletteSchema.optional(),
+  visualProfile: EquipmentVisualProfileSchema.optional(),
 }).superRefine((material, context) => {
   if (material.palette === undefined) return;
   const colors = Object.values(material.palette);

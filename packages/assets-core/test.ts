@@ -68,6 +68,19 @@ assert.deepEqual(mechanismReferenceReport.candidateRules, [
   { id: "reuse_directional_geometry_with_rotation", projectSupport: 2, promotable: true },
 ]);
 
+const equipmentReferenceReport = analyzeReferenceCatalog([
+  referenceFixture("mythic-metals-equipment-1.20.1.json"),
+  referenceFixture("simply-swords-archetypes-1.20.1.json"),
+  referenceFixture("soulslike-weaponry-states-1.20.1.json"),
+], "weapon");
+assert.equal(equipmentReferenceReport.readyForRulePromotion, true);
+assert.deepEqual(equipmentReferenceReport.candidateRules, [
+  { id: "constrain_accents_to_identity_zones", projectSupport: 3, promotable: true },
+  { id: "preserve_archetype_readability", projectSupport: 3, promotable: true },
+  { id: "separate_material_identity_from_silhouette", projectSupport: 2, promotable: true },
+  { id: "support_visual_state_variants", projectSupport: 1, promotable: false },
+]);
+
 const clockworkStampPlan = createClockworkStampArchetype({
   id: "mcdev:clockwork_stamp",
   name: "Clockwork Stamp",
@@ -493,6 +506,16 @@ const toolIcons = ["sword", "pickaxe", "axe", "shovel", "hoe"].map((kind) =>
 assert.equal(toolIcons.every(({ width, height }) => width === 16 && height === 16), true);
 assert.equal(toolIcons.every(({ opaquePixels, colorCount }) => opaquePixels >= 25 && colorCount >= 4), true);
 assert.equal(new Set(toolIcons.map(({ sha256 }) => sha256)).size, toolIcons.length);
+const swordProfiles = [
+  { silhouette: "balanced", motif: "clean" },
+  { silhouette: "heavy", motif: "riveted" },
+  { silhouette: "ornate", motif: "runed" },
+  { silhouette: "ornate", motif: "organic" },
+] as const;
+const profiledSwords = swordProfiles.map((profile) =>
+  renderToolInventoryIcon("mcdev:blue_steel", "sword", derivedBlueSteelPalette, profile));
+assert.equal(new Set(profiledSwords.map(({ sha256 }) => sha256)).size, swordProfiles.length);
+assert.equal(profiledSwords.every(({ opaquePixels, colorCount }) => opaquePixels >= 25 && colorCount >= 4), true);
 const armorIcons = ["helmet", "chestplate", "leggings", "boots"].map((kind) =>
   renderArmorInventoryIcon("mcdev:blue_steel", kind as "helmet" | "chestplate" | "leggings" | "boots"));
 assert.equal(armorIcons.every(({ width, height }) => width === 16 && height === 16), true);
@@ -505,6 +528,14 @@ assert.equal(blueSteelArmorLayers.every(({ opaquePixels, colorCount }) =>
 assert.notEqual(blueSteelArmorLayers[0].sha256, blueSteelArmorLayers[1].sha256);
 assert.deepEqual(
   renderWearableArmorLayers("mcdev:blue_steel").map(({ sha256 }) => sha256),
+  blueSteelArmorLayers.map(({ sha256 }) => sha256),
+);
+const runedHeavyArmorLayers = renderWearableArmorLayers("mcdev:blue_steel", derivedBlueSteelPalette, {
+  silhouette: "heavy",
+  motif: "runed",
+});
+assert.notDeepEqual(
+  runedHeavyArmorLayers.map(({ sha256 }) => sha256),
   blueSteelArmorLayers.map(({ sha256 }) => sha256),
 );
 

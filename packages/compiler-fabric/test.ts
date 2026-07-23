@@ -70,6 +70,10 @@ function fabricEquipmentFixture() {
       accent: "#d4a72c",
       handle: "#60401f",
     },
+    visualProfile: {
+      silhouette: "ornate",
+      motif: "runed",
+    },
   }];
   equipment.gameplay.items.push(
     {

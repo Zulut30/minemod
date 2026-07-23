@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 0,
+  "kind": "reference-study",
+  "id": "soulslike_weaponry_states_1_20_1",
+  "analysisMode": "source-inspection",
+  "source": {
+    "project": "Marium's Soulslike Weaponry",
+    "homepage": "https://github.com/mariumbacchus/Soulslike-Weaponry",
+    "repository": "https://github.com/mariumbacchus/Soulslike-Weaponry",
+    "revision": "cb211fbb063a3c9f789b679deedc36dc83c77f0c",
+    "minecraftVersion": "1.20.1",
+    "loaders": ["fabric"],
+    "codeLicense": {
+      "spdx": "CC0-1.0",
+      "status": "verified",
+      "evidenceUrl": "https://github.com/mariumbacchus/Soulslike-Weaponry/blob/cb211fbb063a3c9f789b679deedc36dc83c77f0c/LICENSE"
+    },
+    "assetLicense": {
+      "spdx": "CC0-1.0",
+      "status": "verified",
+      "evidenceUrl": "https://github.com/mariumbacchus/Soulslike-Weaponry/blob/cb211fbb063a3c9f789b679deedc36dc83c77f0c/LICENSE"
+    },
+    "reviewedAt": "2026-07-23"
+  },
+  "subject": { "id": "large_weapon_states", "assetClass": "weapon" },
+  "evidence": [
+    {
+      "kind": "model",
+      "sourcePath": "src/main/resources/assets/soulsweapons/models/item/bluemoon_greatsword_charged.json",
+      "observation": "A separate charged item model gives the weapon a bounded visual state without changing its persistent identity."
+    },
+    {
+      "kind": "texture",
+      "sourcePath": "src/main/resources/resourcepacks/2d_weapons/assets/soulsweapons/textures/item/darkin_scythe.png",
+      "observation": "The tall sprite sheet keeps the hooked blade and long shaft readable across frames while localized details change."
+    }
+  ],
+  "observations": [
+    {
+      "dimension": "gameplay-state",
+      "statement": "Named model and texture variants make charged, thrown, or transformed states explicit resource contracts."
+    },
+    {
+      "dimension": "silhouette",
+      "statement": "Large weapon identity survives animation when the primary blade-to-handle mass relationship stays stable."
+    },
+    {
+      "dimension": "texture",
+      "statement": "Bright state accents are most readable when concentrated around the blade or energy-bearing functional region."
+    }
+  ],
+  "derivedRules": [
+    {
+      "id": "preserve_archetype_readability",
+      "appliesTo": ["weapon"],
+      "statement": "Validate that the outer contour and functional zones identify the equipment archetype at native inventory scale.",
+      "validation": "human-review"
+    },
+    {
+      "id": "constrain_accents_to_identity_zones",
+      "appliesTo": ["weapon", "armor"],
+      "statement": "Confine accent colors to guards, edges, fasteners, or motifs instead of replacing the dominant material ramp.",
+      "validation": "human-review"
+    },
+    {
+      "id": "support_visual_state_variants",
+      "appliesTo": ["weapon"],
+      "statement": "Represent gameplay-relevant equipment states with explicit bounded model or texture variants.",
+      "validation": "in-game"
+    }
+  ],
+  "reusePolicy": {
+    "geometry": "forbidden",
+    "textures": "forbidden",
+    "distinctiveDesign": "forbidden",
+    "implementation": "abstract-rules-only"
+  }
+}

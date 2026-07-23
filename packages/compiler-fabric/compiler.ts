@@ -1071,8 +1071,8 @@ public final class GeneratedClient implements ClientModInitializer {
       }
       const palette: EquipmentPalette = material.palette ?? deriveEquipmentPalette(material.id);
       const texture = item.kind === "armor"
-        ? renderArmorInventoryIcon(item.id, item.armorSlot, palette)
-        : renderToolInventoryIcon(item.id, item.kind, palette);
+        ? renderArmorInventoryIcon(item.id, item.armorSlot, palette, material.visualProfile)
+        : renderToolInventoryIcon(item.id, item.kind, palette, material.visualProfile);
       inputs.push(input(
         `${resourceRoot}/assets/${parts.namespace}/textures/item/${parts.path}.png`,
         texture.bytes,
@@ -1179,7 +1179,7 @@ public final class GeneratedClient implements ClientModInitializer {
     const parts = content.materialParts.get(material.id);
     if (parts === undefined) throw fabricCompilerError("INTERNAL_ERROR", "Armor material normalization failed safely.");
     const palette: EquipmentPalette = material.palette ?? deriveEquipmentPalette(material.id);
-    const layers = renderWearableArmorLayers(material.id, palette);
+    const layers = renderWearableArmorLayers(material.id, palette, material.visualProfile);
     for (const layer of [1, 2] as const) {
       inputs.push(input(
         `${resourceRoot}/assets/${parts.namespace}/textures/models/armor/${parts.path}_layer_${layer}.png`,

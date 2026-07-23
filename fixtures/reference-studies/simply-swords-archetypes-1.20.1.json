@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 0,
+  "kind": "reference-study",
+  "id": "simply_swords_archetypes_1_20_1",
+  "analysisMode": "visual-only",
+  "source": {
+    "project": "Simply Swords",
+    "homepage": "https://github.com/Sweenus/SimplySwords",
+    "repository": "https://github.com/Sweenus/SimplySwords",
+    "revision": "e6ee1db59c6a84778e29b77bd16bd95334574ae7",
+    "minecraftVersion": "1.20.1",
+    "loaders": ["fabric", "forge"],
+    "codeLicense": {
+      "spdx": "LicenseRef-Timefall-1.2",
+      "status": "verified",
+      "evidenceUrl": "https://github.com/Sweenus/SimplySwords/blob/e6ee1db59c6a84778e29b77bd16bd95334574ae7/LICENSE"
+    },
+    "assetLicense": {
+      "spdx": "LicenseRef-Timefall-1.2",
+      "status": "verified",
+      "evidenceUrl": "https://github.com/Sweenus/SimplySwords/blob/e6ee1db59c6a84778e29b77bd16bd95334574ae7/LICENSE"
+    },
+    "reviewedAt": "2026-07-23"
+  },
+  "subject": { "id": "diamond_weapon_archetypes", "assetClass": "weapon" },
+  "evidence": [
+    {
+      "kind": "texture",
+      "sourcePath": "common/src/main/resources/assets/simplyswords/textures/item/diamond_claymore.png",
+      "observation": "The claymore uses a long, broad blade and compact crossguard, creating a heavy contour while retaining the diamond material colors."
+    },
+    {
+      "kind": "texture",
+      "sourcePath": "common/src/main/resources/assets/simplyswords/textures/item/diamond_rapier.png",
+      "observation": "The rapier uses the same material family with a narrow blade and curved guard, producing a distinct light silhouette."
+    }
+  ],
+  "observations": [
+    {
+      "dimension": "silhouette",
+      "statement": "Width distribution, blade length, and guard mass distinguish weapon families before surface decoration is considered."
+    },
+    {
+      "dimension": "material",
+      "statement": "Stable material hues remain recognizable across strongly different weapon proportions."
+    },
+    {
+      "dimension": "texture",
+      "statement": "Small highlight runs reinforce the weapon axis; darker outlines separate thin shapes from the inventory background."
+    }
+  ],
+  "derivedRules": [
+    {
+      "id": "preserve_archetype_readability",
+      "appliesTo": ["weapon"],
+      "statement": "Validate that the outer contour and functional zones identify the equipment archetype at native inventory scale.",
+      "validation": "human-review"
+    },
+    {
+      "id": "separate_material_identity_from_silhouette",
+      "appliesTo": ["weapon", "armor"],
+      "statement": "Treat palette and silhouette as independent controls so one material can support a coherent equipment family.",
+      "validation": "automated"
+    },
+    {
+      "id": "constrain_accents_to_identity_zones",
+      "appliesTo": ["weapon", "armor"],
+      "statement": "Confine accent colors to guards, edges, fasteners, or motifs instead of replacing the dominant material ramp.",
+      "validation": "human-review"
+    }
+  ],
+  "reusePolicy": {
+    "geometry": "forbidden",
+    "textures": "forbidden",
+    "distinctiveDesign": "forbidden",
+    "implementation": "abstract-rules-only"
+  }
+}

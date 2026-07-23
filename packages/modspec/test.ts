@@ -197,6 +197,10 @@ equipmentSpec.gameplay.materials = [{
     accent: "#d4a72c",
     handle: "#60401f",
   },
+  visualProfile: {
+    silhouette: "ornate",
+    motif: "runed",
+  },
 }];
 equipmentSpec.gameplay.items = [
   { id: "infectedfrontier:blue_ingot", references: [], maxStackSize: 64 },
@@ -238,6 +242,9 @@ assert.equal(ModSpecV1Schema.safeParse(duplicateEquipmentPalette).success, false
 const uppercaseEquipmentPalette = structuredClone(equipmentSpec);
 uppercaseEquipmentPalette.gameplay.materials[0]!.palette!.base = "#477AA5";
 assert.equal(ModSpecV1Schema.safeParse(uppercaseEquipmentPalette).success, false);
+const invalidEquipmentProfile = structuredClone(equipmentSpec);
+(invalidEquipmentProfile.gameplay.materials[0]!.visualProfile as { motif: string }).motif = "copied_texture";
+assert.equal(ModSpecV1Schema.safeParse(invalidEquipmentProfile).success, false);
 
 const resourceLocationPattern = new RegExp(RESOURCE_LOCATION_PATTERN);
 assert.equal(resourceLocationPattern.test("tidecaller:a/b.c"), true);

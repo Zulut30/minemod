@@ -5,6 +5,18 @@ import { encodeRgbaPng } from "./texture.ts";
 
 export type ToolVisualKind = "sword" | "pickaxe" | "axe" | "shovel" | "hoe";
 export type ArmorVisualKind = "helmet" | "chestplate" | "leggings" | "boots";
+export type EquipmentSilhouette = "balanced" | "heavy" | "ornate";
+export type EquipmentMotif = "clean" | "riveted" | "runed" | "organic";
+
+export interface EquipmentVisualProfile {
+  readonly silhouette: EquipmentSilhouette;
+  readonly motif: EquipmentMotif;
+}
+
+export const DEFAULT_EQUIPMENT_VISUAL_PROFILE: EquipmentVisualProfile = Object.freeze({
+  silhouette: "balanced",
+  motif: "clean",
+});
 
 export interface EquipmentPalette {
   readonly base: string;
@@ -48,7 +60,9 @@ const line = (from: [number, number], to: [number, number],
 const rectangle = (origin: [number, number], size: [number, number],
   colorId: string): Primitive => ({ type: "rectangle", origin, size, colorId });
 
-function toolPrimitives(kind: ToolVisualKind): Primitive[] {
+function toolPrimitives(kind: ToolVisualKind, silhouette: EquipmentSilhouette): Primitive[] {
+  const headThickness = 4;
+  const bladeThickness = silhouette === "ornate" ? 3 : 4;
   const handle = [
     line([2, 14], [9, 7], 3, "shadow"),
     line([2, 14], [9, 7], 2, "handle"),
@@ -56,49 +70,85 @@ function toolPrimitives(kind: ToolVisualKind): Primitive[] {
     rectangle([1, 13], [3, 3], "accent"),
   ];
   if (kind === "sword") return [
-    line([5, 11], [13, 3], 4, "shadow"), line([5, 11], [13, 3], 2, "base"),
+    line([5, 11], [13, 3], bladeThickness, "shadow"), line([5, 11], [13, 3], silhouette === "heavy" ? 3 : 2, "base"),
     line([7, 9], [13, 3], 1, "highlight"), line([3, 10], [7, 14], 2, "accent"), ...handle.slice(0, 2),
+    ...(silhouette === "ornate" ? [rectangle([12, 2], [2, 2], "accent")] : []),
   ];
   if (kind === "pickaxe") return [
-    ...handle, line([6, 5], [14, 5], 4, "shadow"), line([6, 5], [14, 5], 2, "base"),
+    ...handle, line([6, 5], [14, 5], headThickness, "shadow"), line([6, 5], [14, 5], silhouette === "heavy" ? 3 : 2, "base"),
     line([7, 4], [13, 4], 1, "highlight"), rectangle([13, 5], [2, 2], "accent"),
+    ...(silhouette === "ornate" ? [rectangle([5, 3], [2, 2], "accent")] : []),
   ];
   if (kind === "axe") return [
-    ...handle, rectangle([8, 3], [6, 6], "shadow"), rectangle([9, 3], [5, 4], "base"),
+    ...handle, rectangle([silhouette === "heavy" ? 7 : 8, 3], [silhouette === "heavy" ? 7 : 6, silhouette === "heavy" ? 7 : 6], "shadow"),
+    rectangle([9, 3], [5, silhouette === "heavy" ? 5 : 4], "base"),
     rectangle([10, 3], [4, 1], "highlight"), rectangle([12, 7], [2, 2], "accent"),
+    ...(silhouette === "ornate" ? [rectangle([8, 7], [2, 2], "accent")] : []),
   ];
   if (kind === "shovel") return [
-    ...handle, rectangle([9, 2], [5, 6], "shadow"), rectangle([10, 2], [3, 5], "base"),
+    ...handle, rectangle([silhouette === "heavy" ? 8 : 9, 2], [silhouette === "heavy" ? 6 : 5, silhouette === "heavy" ? 7 : 6], "shadow"),
+    rectangle([10, 2], [silhouette === "heavy" ? 4 : 3, silhouette === "heavy" ? 6 : 5], "base"),
     rectangle([10, 2], [3, 1], "highlight"), rectangle([10, 6], [3, 2], "accent"),
+    ...(silhouette === "ornate" ? [rectangle([9, 7], [2, 2], "accent")] : []),
   ];
-  return [...handle, line([7, 5], [14, 5], 4, "shadow"), line([8, 5], [14, 5], 2, "base"),
-    rectangle([13, 5], [2, 3], "accent")];
+  return [...handle, line([7, 5], [14, 5], headThickness, "shadow"),
+    line([8, 5], [14, 5], silhouette === "heavy" ? 3 : 2, "base"),
+    rectangle([13, 5], [2, 3], "accent"),
+    ...(silhouette === "ornate" ? [rectangle([7, 3], [2, 2], "accent")] : [])];
 }
 
-function armorPrimitives(kind: ArmorVisualKind): Primitive[] {
+function equipmentMotifPrimitives(kind: ToolVisualKind | ArmorVisualKind, motif: EquipmentMotif): Primitive[] {
+  if (motif === "clean") return [];
+  if (motif === "riveted") {
+    return kind === "chestplate" || kind === "leggings"
+      ? [rectangle([5, 6], [1, 1], "accent"), rectangle([10, 6], [1, 1], "accent")]
+      : [rectangle([8, 7], [1, 1], "accent"), rectangle([10, 5], [1, 1], "accent")];
+  }
+  if (motif === "runed") {
+    return [line([6, 9], [9, 6], 1, "accent"), rectangle([8, 7], [1, 1], "highlight")];
+  }
+  return [
+    rectangle([7, 8], [1, 2], "accent"),
+    rectangle([8, 7], [1, 2], "accent"),
+    rectangle([9, 6], [1, 2], "highlight"),
+  ];
+}
+
+function armorPrimitives(kind: ArmorVisualKind, silhouette: EquipmentSilhouette): Primitive[] {
+  const heavy = silhouette === "heavy";
+  const ornate = silhouette === "ornate";
   if (kind === "helmet") return [
     rectangle([4, 3], [8, 2], "shadow"), rectangle([3, 5], [3, 7], "shadow"),
     rectangle([10, 5], [3, 7], "shadow"), rectangle([5, 4], [6, 2], "base"),
     rectangle([4, 6], [2, 5], "base"), rectangle([10, 6], [2, 5], "base"),
     rectangle([5, 4], [5, 1], "highlight"), rectangle([4, 10], [2, 2], "accent"),
+    ...(heavy ? [rectangle([2, 5], [2, 7], "shadow"), rectangle([12, 5], [2, 7], "shadow")] : []),
+    ...(ornate ? [rectangle([7, 1], [2, 3], "accent")] : []),
   ];
   if (kind === "chestplate") return [
     rectangle([2, 3], [4, 4], "shadow"), rectangle([10, 3], [4, 4], "shadow"),
     rectangle([4, 4], [8, 10], "shadow"), rectangle([5, 4], [6, 9], "base"),
     rectangle([3, 4], [2, 2], "base"), rectangle([11, 4], [2, 2], "base"),
-    rectangle([6, 5], [4, 1], "highlight"), rectangle([7, 7], [2, 5], "accent"),
+    rectangle([6, 5], [4, 1], "highlight"), rectangle([7, 7], [2, 2], "accent"),
+    rectangle([7, 9], [1, 3], "shadow"),
+    ...(heavy ? [rectangle([1, 3], [3, 4], "shadow"), rectangle([12, 3], [3, 4], "shadow")] : []),
+    ...(ornate ? [rectangle([3, 12], [10, 2], "accent")] : []),
   ];
   if (kind === "leggings") return [
     rectangle([3, 3], [10, 4], "shadow"), rectangle([4, 4], [8, 3], "base"),
     rectangle([3, 7], [4, 7], "shadow"), rectangle([9, 7], [4, 7], "shadow"),
     rectangle([4, 7], [2, 6], "base"), rectangle([10, 7], [2, 6], "base"),
     rectangle([4, 4], [8, 1], "highlight"), rectangle([7, 4], [2, 3], "accent"),
+    ...(heavy ? [rectangle([2, 7], [2, 7], "shadow"), rectangle([12, 7], [2, 7], "shadow")] : []),
+    ...(ornate ? [rectangle([3, 6], [10, 2], "accent")] : []),
   ];
   return [
     rectangle([2, 8], [5, 6], "shadow"), rectangle([9, 8], [5, 6], "shadow"),
     rectangle([3, 8], [3, 5], "base"), rectangle([10, 8], [3, 5], "base"),
     rectangle([3, 8], [3, 1], "highlight"), rectangle([10, 8], [3, 1], "highlight"),
     rectangle([2, 12], [5, 2], "accent"), rectangle([9, 12], [5, 2], "accent"),
+    ...(heavy ? [rectangle([1, 11], [6, 3], "shadow"), rectangle([9, 11], [6, 3], "shadow")] : []),
+    ...(ornate ? [rectangle([4, 7], [1, 2], "accent"), rectangle([11, 7], [1, 2], "accent")] : []),
   ];
 }
 
@@ -106,6 +156,7 @@ export function renderToolInventoryIcon(
   materialId: string,
   kind: ToolVisualKind,
   palette: EquipmentPalette = deriveEquipmentPalette(materialId),
+  profile: EquipmentVisualProfile = DEFAULT_EQUIPMENT_VISUAL_PROFILE,
 ): RenderedPixelIcon {
   return compileInventoryIcon({
     schemaVersion: 0,
@@ -113,7 +164,7 @@ export function renderToolInventoryIcon(
     id: `${materialId.split(":")[0]}:item/${materialId.split(":")[1]}_${kind}`,
     size: 16,
     palette: Object.entries(palette).map(([id, color]) => ({ id, color })),
-    primitives: toolPrimitives(kind),
+    primitives: [...toolPrimitives(kind, profile.silhouette), ...equipmentMotifPrimitives(kind, profile.motif)],
   }).texture;
 }
 
@@ -121,6 +172,7 @@ export function renderArmorInventoryIcon(
   materialId: string,
   kind: ArmorVisualKind,
   palette: EquipmentPalette = deriveEquipmentPalette(materialId),
+  profile: EquipmentVisualProfile = DEFAULT_EQUIPMENT_VISUAL_PROFILE,
 ): RenderedPixelIcon {
   return compileInventoryIcon({
     schemaVersion: 0,
@@ -128,7 +180,7 @@ export function renderArmorInventoryIcon(
     id: `${materialId.split(":")[0]}:item/${materialId.split(":")[1]}_${kind}`,
     size: 16,
     palette: Object.entries(palette).map(([id, color]) => ({ id, color })),
-    primitives: armorPrimitives(kind),
+    primitives: [...armorPrimitives(kind, profile.silhouette), ...equipmentMotifPrimitives(kind, profile.motif)],
   }).texture;
 }
 
@@ -138,7 +190,11 @@ function parseColor(value: string): readonly [number, number, number, 255] {
     Number.parseInt(value.slice(5, 7), 16), 255];
 }
 
-function renderArmorLayer(palette: EquipmentPalette, layer: 1 | 2): RenderedEquipmentTexture {
+function renderArmorLayer(
+  palette: EquipmentPalette,
+  layer: 1 | 2,
+  profile: EquipmentVisualProfile,
+): RenderedEquipmentTexture {
   const colors = {
     base: parseColor(palette.base),
     shadow: parseColor(palette.shadow),
@@ -153,10 +209,17 @@ function renderArmorLayer(palette: EquipmentPalette, layer: 1 | 2): RenderedEqui
     for (let x = 0; x < width; x += 1) {
       const localX = (x + layer * 2) % 8;
       const localY = (y + layer) % 8;
-      const color = localX === 7 || localY === 7 ? colors.shadow
-        : localX === 0 || localY === 0 ? colors.highlight
-          : (localX === 2 && localY === 2) || (x + y + layer * 5) % 23 === 0 ? colors.accent
-            : colors.base;
+      const motifAccent = profile.motif === "riveted"
+        ? localX === 2 && localY === 2
+        : profile.motif === "runed"
+          ? (localX === localY || localX + localY === 7) && (x + y) % 3 === 0
+          : profile.motif === "organic"
+            ? (x * 3 + y * 5 + layer) % 29 < 2
+            : (x + y + layer * 5) % 23 === 0;
+      const edgeWidth = profile.silhouette === "heavy" ? 2 : 1;
+      const color = localX >= 8 - edgeWidth || localY >= 8 - edgeWidth ? colors.shadow
+        : localX < 1 || localY < 1 ? colors.highlight
+          : motifAccent ? colors.accent : colors.base;
       pixels.set(color, (y * width + x) * 4);
       used.add((color[0] << 16) | (color[1] << 8) | color[2]);
     }
@@ -176,6 +239,7 @@ function renderArmorLayer(palette: EquipmentPalette, layer: 1 | 2): RenderedEqui
 export function renderWearableArmorLayers(
   materialId: string,
   palette: EquipmentPalette = deriveEquipmentPalette(materialId),
+  profile: EquipmentVisualProfile = DEFAULT_EQUIPMENT_VISUAL_PROFILE,
 ): readonly [RenderedEquipmentTexture, RenderedEquipmentTexture] {
-  return Object.freeze([renderArmorLayer(palette, 1), renderArmorLayer(palette, 2)]);
+  return Object.freeze([renderArmorLayer(palette, 1, profile), renderArmorLayer(palette, 2, profile)]);
 }

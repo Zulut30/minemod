@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 0,
+  "kind": "reference-study",
+  "id": "mythic_metals_equipment_1_20_1",
+  "analysisMode": "visual-only",
+  "source": {
+    "project": "Mythic Metals",
+    "homepage": "https://github.com/Noaaan/MythicMetals",
+    "repository": "https://github.com/Noaaan/MythicMetals",
+    "revision": "2118186af2d5d418d2d41b91a4583ade6a1c39f6",
+    "minecraftVersion": "1.20.1",
+    "loaders": ["fabric"],
+    "codeLicense": {
+      "spdx": "MIT",
+      "status": "verified",
+      "evidenceUrl": "https://github.com/Noaaan/MythicMetals/blob/2118186af2d5d418d2d41b91a4583ade6a1c39f6/LICENSE"
+    },
+    "assetLicense": {
+      "spdx": "LicenseRef-All-Rights-Reserved",
+      "status": "unknown",
+      "evidenceUrl": "https://github.com/Noaaan/MythicMetals/blob/2118186af2d5d418d2d41b91a4583ade6a1c39f6/README.md"
+    },
+    "reviewedAt": "2026-07-23"
+  },
+  "subject": { "id": "material_equipment_families", "assetClass": "weapon" },
+  "evidence": [
+    {
+      "kind": "texture",
+      "sourcePath": "src/main/resources/assets/mythicmetals/textures/item/tools/mythril_sword.png",
+      "observation": "The 16 px sword remains readable through a continuous diagonal blade, compact guard, separated grip, and a limited value ramp."
+    },
+    {
+      "kind": "texture",
+      "sourcePath": "src/main/resources/assets/mythicmetals/textures/item/armor/mythril_chestplate.png",
+      "observation": "The matching armor reuses material hues while reserving its broadest dark values for the outer silhouette and plate separation."
+    }
+  ],
+  "observations": [
+    {
+      "dimension": "silhouette",
+      "statement": "At inventory scale, continuous tool contours and separated functional parts carry more identity than isolated decorative pixels."
+    },
+    {
+      "dimension": "material",
+      "statement": "A shared palette can identify one material across weapon and armor shapes without forcing those shapes to match."
+    },
+    {
+      "dimension": "texture",
+      "statement": "Highlights follow blade or plate direction, while accent pixels stay sparse enough to preserve the base material."
+    }
+  ],
+  "derivedRules": [
+    {
+      "id": "preserve_archetype_readability",
+      "appliesTo": ["weapon", "armor"],
+      "statement": "Validate that the outer contour and functional zones identify the equipment archetype at native inventory scale.",
+      "validation": "human-review"
+    },
+    {
+      "id": "separate_material_identity_from_silhouette",
+      "appliesTo": ["weapon", "armor"],
+      "statement": "Treat palette and silhouette as independent controls so one material can support a coherent equipment family.",
+      "validation": "automated"
+    },
+    {
+      "id": "constrain_accents_to_identity_zones",
+      "appliesTo": ["weapon", "armor"],
+      "statement": "Confine accent colors to guards, edges, fasteners, or motifs instead of replacing the dominant material ramp.",
+      "validation": "human-review"
+    }
+  ],
+  "reusePolicy": {
+    "geometry": "forbidden",
+    "textures": "forbidden",
+    "distinctiveDesign": "forbidden",
+    "implementation": "abstract-rules-only"
+  }
+}
