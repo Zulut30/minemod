@@ -95,6 +95,10 @@ artifact index ←── verified JAR ←── fixed Gradle runner ←── ne
       "highlight": "#bad9ef",
       "accent": "#d4a72c",
       "handle": "#60401f"
+    },
+    "visualProfile": {
+      "silhouette": "ornate",
+      "motif": "runed"
     }
   }],
   "items": [{
@@ -109,7 +113,9 @@ artifact index ←── verified JAR ←── fixed Gradle runner ←── ne
 }
 ```
 
-Поддерживаются `sword`, `pickaxe`, `axe`, `shovel`, `hoe` и `armor` со слотами `helmet`, `chestplate`, `leggings`, `boots`. Генератор создаёт Java-классы предметов, разные 16×16 pixel-art силуэты, handheld-модели, creative-tab entries, vanilla item tags и два 64×32 wearable-атласа. Палитра optional: без неё цвета детерминированно выводятся из ID материала; явная палитра проверяется на уникальность и читаемый value contrast.
+Поддерживаются `sword`, `pickaxe`, `axe`, `shovel`, `hoe` и `armor` со слотами `helmet`, `chestplate`, `leggings`, `boots`. Генератор создаёт Java-классы предметов, разные 16×16 pixel-art силуэты, handheld-модели, creative-tab entries, vanilla item tags и два 64×32 wearable-атласа. Палитра optional: без неё цвета детерминированно выводятся из ID материала; явная палитра проверяется на уникальность и читаемый value contrast. Optional `visualProfile` независимо задаёт семейство формы (`balanced`, `heavy`, `ornate`) и мотив (`clean`, `riveted`, `runed`, `organic`). Старые спецификации получают `balanced/clean`.
+
+В `fixtures/reference-studies` лежат version-pinned исследования открытых модов. Они хранят источники и лицензии, требуют минимум три независимых проекта для продвижения общих правил и всегда запрещают копировать чужую геометрию, текстуры или характерный дизайн.
 
 ## Быстрый старт для разработчика
 
