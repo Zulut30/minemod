@@ -16,6 +16,7 @@
 - генерация Fabric 1.20.1 проекта с разделёнными main/client source sets;
 - items, blocks, creative entries, loot, blockstates и модели;
 - типизированные материалы, мечи, кирки, топоры, лопаты, мотыги и четыре слота брони;
+- детерминированные pixel-art иконки экипировки и два 64×32 wearable-слоя брони;
 - shaped 1×1–3×3, shapeless и smelting recipes, включая ванильные ингредиенты и количество результата;
 - транзакционное создание нового workspace без молчаливой перезаписи файлов;
 - закрытая Gradle policy с Temurin 17, checksum-проверками и фиксированными tasks;
@@ -87,6 +88,13 @@ artifact index ←── verified JAR ←── fixed Gradle runner ←── ne
       "defense": { "helmet": 3, "chestplate": 8, "leggings": 6, "boots": 3 },
       "toughness": 2,
       "knockbackResistance": 0.1
+    },
+    "palette": {
+      "base": "#477aa5",
+      "shadow": "#1b3347",
+      "highlight": "#bad9ef",
+      "accent": "#d4a72c",
+      "handle": "#60401f"
     }
   }],
   "items": [{
@@ -101,7 +109,7 @@ artifact index ←── verified JAR ←── fixed Gradle runner ←── ne
 }
 ```
 
-Поддерживаются `sword`, `pickaxe`, `axe`, `shovel`, `hoe` и `armor` со слотами `helmet`, `chestplate`, `leggings`, `boots`. Генератор создаёт Java-классы предметов, handheld-модели, creative-tab entries и vanilla item tags для зачарований, sweeping-логики и armor trims.
+Поддерживаются `sword`, `pickaxe`, `axe`, `shovel`, `hoe` и `armor` со слотами `helmet`, `chestplate`, `leggings`, `boots`. Генератор создаёт Java-классы предметов, разные 16×16 pixel-art силуэты, handheld-модели, creative-tab entries, vanilla item tags и два 64×32 wearable-атласа. Палитра optional: без неё цвета детерминированно выводятся из ID материала; явная палитра проверяется на уникальность и читаемый value contrast.
 
 ## Быстрый старт для разработчика
 
@@ -179,7 +187,7 @@ docs/                  ADR, планы, аудиты и quality rubric
 
 ## Ближайшие этапы
 
-1. Authored текстуры, уникальные inventory-модели и wearable-текстуры для generated экипировки.
+1. Reference-driven мотивы, варианты силуэтов и human visual review для generated экипировки.
 2. Каталог GeckoLib, Cardinal Components, Trinkets, EMI и Jade.
 3. Fabric GameTests и отдельные hosted client/server gates.
 4. AI texture provider без placeholder assets.
