@@ -525,6 +525,9 @@ function generatedContentSource(modId: string, content: NormalizedContent): stri
       `        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.BUILDING_BLOCKS).register(entries -> {\n` +
       `${buildingEntries.join("\n")}\n        });`,
   ].filter((entry) => entry.length > 0).join("\n");
+  const creativeRegistrationBody = creativeRegistrations.length === 0
+    ? ""
+    : `        if (!showGeneratedContentInCreativeTabs) return;\n${creativeRegistrations}`;
   return `package dev.mcdev.generated.m_${modId};
 
 import net.minecraft.core.Registry;
@@ -541,7 +544,11 @@ public final class GeneratedContent {
 ${declarationSection}    private GeneratedContent() {}
 
     public static void register() {
-${creativeRegistrations}
+        register(true);
+    }
+
+    public static void register(boolean showGeneratedContentInCreativeTabs) {
+${creativeRegistrationBody}
     }
 
     private static Block registerBlock(String path, Block block) {
@@ -570,10 +577,83 @@ function jsonInput(path: string, value: unknown): GeneratedFileInput {
   return input(path, canonicalJsonFileBytes(value));
 }
 
+function generatedConfigSource(modId: string): string {
+  return `package dev.mcdev.generated.m_${modId};
+
+import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
+import dev.isxander.yacl3.config.v2.api.SerialEntry;
+import dev.isxander.yacl3.config.v2.api.serializer.GsonConfigSerializerBuilder;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.resources.ResourceLocation;
+
+public final class GeneratedConfig {
+    public static final ConfigClassHandler<GeneratedConfig> HANDLER =
+            ConfigClassHandler.createBuilder(GeneratedConfig.class)
+                    .id(new ResourceLocation(GeneratedMod.MOD_ID, "config"))
+                    .serializer(config -> GsonConfigSerializerBuilder.create(config)
+                            .setPath(FabricLoader.getInstance().getConfigDir()
+                                    .resolve(GeneratedMod.MOD_ID + ".json5"))
+                            .setJson5(true)
+                            .build())
+                    .build();
+
+    @SerialEntry(comment = "Show generated items and blocks in their default creative tabs.")
+    public boolean showGeneratedContentInCreativeTabs = true;
+
+    public GeneratedConfig() {}
+}
+`;
+}
+
+function generatedModMenuSource(modId: string): string {
+  return `package dev.mcdev.generated.m_${modId}.client;
+
+import com.terraformersmc.modmenu.api.ConfigScreenFactory;
+import com.terraformersmc.modmenu.api.ModMenuApi;
+import dev.isxander.yacl3.api.ConfigCategory;
+import dev.isxander.yacl3.api.Option;
+import dev.isxander.yacl3.api.OptionDescription;
+import dev.isxander.yacl3.api.OptionFlag;
+import dev.isxander.yacl3.api.YetAnotherConfigLib;
+import dev.isxander.yacl3.api.controller.BooleanControllerBuilder;
+import dev.mcdev.generated.m_${modId}.GeneratedConfig;
+import net.minecraft.network.chat.Component;
+
+public final class GeneratedModMenuIntegration implements ModMenuApi {
+    @Override
+    public ConfigScreenFactory<?> getModConfigScreenFactory() {
+        return parent -> YetAnotherConfigLib.create(GeneratedConfig.HANDLER, (defaults, config, builder) ->
+                builder.title(Component.translatable("config.${modId}.title"))
+                        .category(ConfigCategory.createBuilder()
+                                .name(Component.translatable("config.${modId}.category.general"))
+                                .option(Option.<Boolean>createBuilder()
+                                        .name(Component.translatable(
+                                                "config.${modId}.show_generated_content"))
+                                        .description(OptionDescription.of(Component.translatable(
+                                                "config.${modId}.show_generated_content.description")))
+                                        .binding(defaults.showGeneratedContentInCreativeTabs,
+                                                () -> config.showGeneratedContentInCreativeTabs,
+                                                value -> config.showGeneratedContentInCreativeTabs = value)
+                                        .controller(BooleanControllerBuilder::create)
+                                        .flag(OptionFlag.GAME_RESTART)
+                                        .build())
+                                .build()))
+                .generateScreen(parent);
+    }
+}
+`;
+}
+
 function contentInputs(spec: ModSpecV1, content: NormalizedContent): readonly GeneratedFileInput[] {
   const modId = spec.project.modId;
   const packageRoot = `dev.mcdev.generated.m_${modId}`;
   const pathRoot = `dev/mcdev/generated/m_${modId}`;
+  const hasYacl = content.libraries.some(({ id }) => id === "yet_another_config_lib_v3");
+  const hasModMenu = content.libraries.some(({ id }) => id === "modmenu");
+  const initializeContent = hasYacl
+    ? `        GeneratedConfig.HANDLER.load();\n` +
+      `        GeneratedContent.register(GeneratedConfig.HANDLER.instance().showGeneratedContentInCreativeTabs);`
+    : "        GeneratedContent.register();";
   const mainSource = `package ${packageRoot};
 
 import net.fabricmc.api.ModInitializer;
@@ -583,7 +663,7 @@ public final class GeneratedMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        GeneratedContent.register();
+${initializeContent}
     }
 }
 `;
@@ -604,6 +684,23 @@ public final class GeneratedClient implements ClientModInitializer {
     input(`src/client/java/${pathRoot}/client/GeneratedClient.java`, utf8FileBytes(clientSource)),
   ];
   const language: Record<string, string> = {};
+  if (hasYacl) {
+    inputs.push(input(
+      `src/main/java/${pathRoot}/GeneratedConfig.java`,
+      utf8FileBytes(generatedConfigSource(modId)),
+    ));
+  }
+  if (hasYacl && hasModMenu) {
+    inputs.push(input(
+      `src/client/java/${pathRoot}/client/GeneratedModMenuIntegration.java`,
+      utf8FileBytes(generatedModMenuSource(modId)),
+    ));
+    language[`config.${modId}.title`] = `${spec.project.name} Configuration`;
+    language[`config.${modId}.category.general`] = "General";
+    language[`config.${modId}.show_generated_content`] = "Show Generated Content";
+    language[`config.${modId}.show_generated_content.description`] =
+      "Show generated items and blocks in their default creative tabs after restarting the game.";
+  }
 
   for (const item of content.items) {
     const parts = content.itemParts.get(item.id);

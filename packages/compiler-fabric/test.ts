@@ -215,6 +215,42 @@ assert.equal(libraryMetadata.suggests.modmenu, "*");
 assert.deepEqual(libraryMetadata.entrypoints.modmenu, [
   "dev.mcdev.generated.m_infectedfrontier.client.GeneratedModMenuIntegration",
 ]);
+const generatedConfig = textOutput(
+  compiledLibraries,
+  "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedConfig.java",
+);
+assert.match(generatedConfig, /ConfigClassHandler\.createBuilder\(GeneratedConfig\.class\)/u);
+assert.match(generatedConfig, /resolve\(GeneratedMod\.MOD_ID \+ "\.json5"\)/u);
+assert.match(generatedConfig, /showGeneratedContentInCreativeTabs = true/u);
+assert.match(
+  textOutput(compiledLibraries, "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedMod.java"),
+  /GeneratedConfig\.HANDLER\.load\(\);[\s\S]*GeneratedContent\.register\(\s*GeneratedConfig\.HANDLER\.instance\(\)\.showGeneratedContentInCreativeTabs\);/u,
+);
+assert.match(
+  textOutput(compiledLibraries, "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedContent.java"),
+  /register\(boolean showGeneratedContentInCreativeTabs\)[\s\S]*if \(!showGeneratedContentInCreativeTabs\) return;/u,
+);
+const generatedModMenu = textOutput(
+  compiledLibraries,
+  "src/client/java/dev/mcdev/generated/m_infectedfrontier/client/GeneratedModMenuIntegration.java",
+);
+assert.match(generatedModMenu, /implements ModMenuApi/u);
+assert.match(generatedModMenu, /YetAnotherConfigLib\.create\(GeneratedConfig\.HANDLER/u);
+assert.match(generatedModMenu, /BooleanControllerBuilder::create/u);
+assert.match(generatedModMenu, /OptionFlag\.GAME_RESTART/u);
+assert.deepEqual(
+  JSON.parse(textOutput(compiledLibraries, "src/main/resources/assets/infectedfrontier/lang/en_us.json")),
+  {
+    "block.infectedfrontier.blue_ore": "Blue Ore",
+    "config.infectedfrontier.category.general": "General",
+    "config.infectedfrontier.show_generated_content": "Show Generated Content",
+    "config.infectedfrontier.show_generated_content.description":
+      "Show generated items and blocks in their default creative tabs after restarting the game.",
+    "config.infectedfrontier.title": "Infected \"Frontier\" Configuration",
+    "item.infectedfrontier.blue_ingot": "Blue Ingot",
+    "item.infectedfrontier.blue_ore_item": "Blue Ore Item",
+  },
+);
 const unknownLibrary = fabricBasicContentFixture();
 unknownLibrary.dependencies.required = ["unknown_library"];
 await expectCompilerError(JSON.stringify(unknownLibrary), "SPEC_UNSUPPORTED", "/dependencies/required/0");

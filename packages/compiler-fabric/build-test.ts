@@ -14,7 +14,10 @@ if (javaHome === undefined || gradleHome === undefined) {
 
 const workspace = await mkdtemp(join(tmpdir(), "mcdev-fabric-basic-content-"));
 try {
-  const compiled = await compileFabricPhase1(JSON.stringify(fabricBasicContentFixture()));
+  const fixture = fabricBasicContentFixture();
+  fixture.dependencies.required = ["yet_another_config_lib_v3"];
+  fixture.dependencies.optional = ["modmenu"];
+  const compiled = await compileFabricPhase1(JSON.stringify(fixture));
   for (const { file } of compiled.outputs) {
     const destination = join(workspace, file.path);
     await mkdir(dirname(destination), { recursive: true });
