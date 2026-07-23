@@ -322,7 +322,8 @@ configuredLibraries.integrations.yacl!.categories[0]!.options.push(
     type: "string",
     default: "Stay\u2028alert",
     maxLength: 64,
-    restartRequired: false,
+    binding: "player_join_message",
+    restartRequired: true,
   },
 );
 const compiledConfiguredLibraries = await compileFabricPhase1(JSON.stringify(configuredLibraries));
@@ -371,6 +372,20 @@ assert.equal(
 );
 assert.equal(configuredLanguage["config.infectedfrontier.option.custom.spawn_limit"], "Spawn limit");
 assert.equal(configuredLanguage["config.infectedfrontier.option.custom.welcome_message"], "Welcome message");
+const configuredBehavior = textOutput(
+  compiledConfiguredLibraries,
+  "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedConfiguredBehavior.java",
+);
+assert.match(configuredBehavior, /ServerPlayConnectionEvents\.JOIN\.register/u);
+assert.match(configuredBehavior, /GeneratedConfig\.HANDLER\.instance\(\)\.option_welcome_message/u);
+assert.match(configuredBehavior, /handler\.player\.sendSystemMessage\(Component\.literal\(message\)\)/u);
+assert.match(
+  textOutput(
+    compiledConfiguredLibraries,
+    "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedMod.java",
+  ),
+  /GeneratedConfiguredBehavior\.register\(\);/u,
+);
 const unknownLibrary = fabricBasicContentFixture();
 unknownLibrary.dependencies.required = ["unknown_library"];
 await expectCompilerError(JSON.stringify(unknownLibrary), "SPEC_UNSUPPORTED", "/dependencies/required/0");

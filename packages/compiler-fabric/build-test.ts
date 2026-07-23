@@ -45,7 +45,8 @@ try {
           type: "string",
           default: "Stay alert",
           maxLength: 64,
-          restartRequired: false,
+          binding: "player_join_message",
+          restartRequired: true,
         },
       ],
     }],
@@ -88,6 +89,10 @@ try {
   });
   assert.equal(jarList.status, 0, jarList.stderr);
   assert.match(jarList.stdout, /dev\/mcdev\/generated\/m_infectedfrontier\/GeneratedConfig\.class/u);
+  assert.match(
+    jarList.stdout,
+    /dev\/mcdev\/generated\/m_infectedfrontier\/GeneratedConfiguredBehavior\.class/u,
+  );
   assert.match(
     jarList.stdout,
     /dev\/mcdev\/generated\/m_infectedfrontier\/client\/GeneratedModMenuIntegration\.class/u,

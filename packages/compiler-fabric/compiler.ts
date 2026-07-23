@@ -737,16 +737,44 @@ public final class GeneratedModMenuIntegration implements ModMenuApi {
 `;
 }
 
+function generatedConfiguredBehaviorSource(modId: string, optionId: string): string {
+  return `package dev.mcdev.generated.m_${modId};
+
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+import net.minecraft.network.chat.Component;
+
+public final class GeneratedConfiguredBehavior {
+    private GeneratedConfiguredBehavior() {}
+
+    public static void register() {
+        ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
+            String message = GeneratedConfig.HANDLER.instance().option_${optionId};
+            if (message != null && !message.isBlank()) {
+                handler.player.sendSystemMessage(Component.literal(message));
+            }
+        });
+    }
+}
+`;
+}
+
 function contentInputs(spec: ModSpecV1, content: NormalizedContent): readonly GeneratedFileInput[] {
   const modId = spec.project.modId;
   const packageRoot = `dev.mcdev.generated.m_${modId}`;
   const pathRoot = `dev/mcdev/generated/m_${modId}`;
   const hasYacl = content.libraries.some(({ id }) => id === "yet_another_config_lib_v3");
   const hasModMenu = content.libraries.some(({ id }) => id === "modmenu");
+  const joinMessageOption = spec.integrations.yacl?.categories
+    .flatMap(({ options }) => options)
+    .find((option) => option.type === "string" && option.binding === "player_join_message");
+  const configuredBehavior = joinMessageOption === undefined
+    ? ""
+    : "\n        GeneratedConfiguredBehavior.register();";
   const initializeContent = hasYacl
     ? `        GeneratedConfig.HANDLER.load();\n` +
       `        GeneratedConfig.normalize();\n` +
-      `        GeneratedContent.register(GeneratedConfig.HANDLER.instance().showGeneratedContentInCreativeTabs);`
+      `        GeneratedContent.register(GeneratedConfig.HANDLER.instance().showGeneratedContentInCreativeTabs);` +
+      configuredBehavior
     : "        GeneratedContent.register();";
   const mainSource = `package ${packageRoot};
 
@@ -782,6 +810,12 @@ public final class GeneratedClient implements ClientModInitializer {
     inputs.push(input(
       `src/main/java/${pathRoot}/GeneratedConfig.java`,
       utf8FileBytes(generatedConfigSource(modId, spec.integrations.yacl)),
+    ));
+  }
+  if (joinMessageOption !== undefined) {
+    inputs.push(input(
+      `src/main/java/${pathRoot}/GeneratedConfiguredBehavior.java`,
+      utf8FileBytes(generatedConfiguredBehaviorSource(modId, joinMessageOption.id)),
     ));
   }
   if (hasYacl && hasModMenu) {
