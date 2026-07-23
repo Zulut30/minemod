@@ -205,9 +205,16 @@ assert.match(libraryBuild, /dev\.isxander:yet-another-config-lib:3\.5\.0\+1\.20\
 const libraryMetadata = JSON.parse(textOutput(
   compiledLibraries,
   "src/main/resources/fabric.mod.json",
-)) as { depends: Record<string, string>; suggests: Record<string, string> };
+)) as {
+  depends: Record<string, string>;
+  suggests: Record<string, string>;
+  entrypoints: Record<string, string[]>;
+};
 assert.equal(libraryMetadata.depends.yet_another_config_lib_v3, ">=3.5.0+1.20.1-fabric");
 assert.equal(libraryMetadata.suggests.modmenu, "*");
+assert.deepEqual(libraryMetadata.entrypoints.modmenu, [
+  "dev.mcdev.generated.m_infectedfrontier.client.GeneratedModMenuIntegration",
+]);
 const unknownLibrary = fabricBasicContentFixture();
 unknownLibrary.dependencies.required = ["unknown_library"];
 await expectCompilerError(JSON.stringify(unknownLibrary), "SPEC_UNSUPPORTED", "/dependencies/required/0");

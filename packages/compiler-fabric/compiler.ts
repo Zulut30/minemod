@@ -340,6 +340,7 @@ function jsonFragment(value: string): string {
 function fabricMetadataWithLibraries(
   source: string,
   libraries: readonly ResolvedFabricLibrary[],
+  modId: string,
 ): Uint8Array {
   if (libraries.length === 0) return utf8FileBytes(source);
   let metadata: Record<string, unknown>;
@@ -360,6 +361,18 @@ function fabricMetadataWithLibraries(
   }
   metadata.depends = depends;
   if (Object.keys(suggests).length > 0) metadata.suggests = suggests;
+  const hasYacl = libraries.some(({ id }) => id === "yet_another_config_lib_v3");
+  const hasModMenu = libraries.some(({ id }) => id === "modmenu");
+  if (hasYacl && hasModMenu) {
+    const entrypoints = metadata.entrypoints;
+    if (typeof entrypoints !== "object" || entrypoints === null || Array.isArray(entrypoints)) {
+      throw fabricCompilerError("PACK_INTEGRITY_FAILED", "The reviewed Fabric metadata entrypoint block is invalid.");
+    }
+    metadata.entrypoints = {
+      ...entrypoints,
+      modmenu: [`dev.mcdev.generated.m_${modId}.client.GeneratedModMenuIntegration`],
+    };
+  }
   return canonicalJsonFileBytes(metadata);
 }
 
@@ -411,7 +424,7 @@ function renderTemplate(
     return utf8FileBytes(`${rendered.trimEnd()}\n${renderFabric1201GradleLibraries(required, optional)}`);
   }
   if (path === "templates/fabric.mod.json.tpl") {
-    return fabricMetadataWithLibraries(rendered, libraries);
+    return fabricMetadataWithLibraries(rendered, libraries, spec.project.modId);
   }
   return utf8FileBytes(rendered);
 }
