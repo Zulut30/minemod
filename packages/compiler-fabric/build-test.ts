@@ -51,6 +51,19 @@ try {
       ],
     }],
   };
+  fixture.gameplay.recipes.push({
+    id: "infectedfrontier:blue_ingot_pattern",
+    references: [],
+    type: "shaped",
+    ingredients: [],
+    pattern: ["XX", " S"],
+    key: [
+      { symbol: "X", item: "infectedfrontier:blue_ore_item" },
+      { symbol: "S", item: "minecraft:stick" },
+    ],
+    result: "infectedfrontier:blue_ingot",
+    resultCount: 2,
+  });
   const compiled = await compileFabricPhase1(JSON.stringify(fixture));
   for (const { file } of compiled.outputs) {
     const destination = join(workspace, file.path);
@@ -96,6 +109,44 @@ try {
   assert.match(
     jarList.stdout,
     /dev\/mcdev\/generated\/m_infectedfrontier\/client\/GeneratedModMenuIntegration\.class/u,
+  );
+  assert.match(
+    jarList.stdout,
+    /data\/infectedfrontier\/recipes\/blue_ingot_pattern\.json/u,
+  );
+
+  const runDirectory = join(workspace, "run");
+  await mkdir(runDirectory, { recursive: true });
+  await writeFile(join(runDirectory, "eula.txt"), "eula=true\n");
+  await writeFile(
+    join(runDirectory, "server.properties"),
+    "online-mode=false\nserver-port=0\nlevel-name=mcdev-recipe-smoke\n",
+  );
+  const server = spawnSync(
+    join(workspace, "gradlew"),
+    ["--offline", "--no-daemon", "--dependency-verification", "strict", "runServer"],
+    {
+      cwd: workspace,
+      encoding: "utf8",
+      env: {
+        ...process.env,
+        JAVA_HOME: javaHome,
+        MCDEV_JAVA17_HOME: javaHome,
+        GRADLE_USER_HOME: gradleHome,
+      },
+      input: "stop\n",
+      maxBuffer: 16 * 1024 * 1024,
+      timeout: 3 * 60 * 1_000,
+    },
+  );
+  const serverOutput = `${server.stdout}\n${server.stderr}`;
+  assert.equal(server.error, undefined, serverOutput);
+  assert.equal(server.signal, null, serverOutput);
+  assert.equal(server.status, 0, serverOutput);
+  assert.match(serverOutput, /Done \([\d.]+s\)!/u);
+  assert.doesNotMatch(
+    serverOutput,
+    /Parsing error loading recipe|Couldn't parse data file|Unknown item/u,
   );
 } finally {
   await rm(workspace, { recursive: true, force: true });

@@ -165,6 +165,46 @@ assert.deepEqual(
   },
 );
 
+const shapedRecipe = fabricBasicContentFixture();
+shapedRecipe.gameplay.recipes = [{
+  id: "infectedfrontier:blue_ingot_pattern",
+  references: [],
+  type: "shaped",
+  ingredients: [],
+  pattern: ["XX", " S"],
+  key: [
+    { symbol: "X", item: "infectedfrontier:blue_ore_item" },
+    { symbol: "S", item: "minecraft:stick" },
+  ],
+  result: "infectedfrontier:blue_ingot",
+  resultCount: 2,
+}];
+const compiledShapedRecipe = await compileFabricPhase1(JSON.stringify(shapedRecipe));
+assert.deepEqual(
+  JSON.parse(textOutput(
+    compiledShapedRecipe,
+    "src/main/resources/data/infectedfrontier/recipes/blue_ingot_pattern.json",
+  )),
+  {
+    category: "misc",
+    key: {
+      S: { item: "minecraft:stick" },
+      X: { item: "infectedfrontier:blue_ore_item" },
+    },
+    pattern: ["XX", " S"],
+    result: { count: 2, item: "infectedfrontier:blue_ingot" },
+    show_notification: true,
+    type: "minecraft:crafting_shaped",
+  },
+);
+const reorderedShapedKey = structuredClone(shapedRecipe);
+reorderedShapedKey.gameplay.recipes[0]!.key?.reverse();
+assert.equal(
+  (await compileFabricPhase1(JSON.stringify(reorderedShapedKey))).plan.planId,
+  compiledShapedRecipe.plan.planId,
+  "shaped recipe key declaration order must not affect generated content",
+);
+
 const reorderedRoot = {
   packaging: fixture.packaging,
   tests: fixture.tests,
@@ -406,9 +446,13 @@ await expectCompilerError(JSON.stringify(foreignNamespace), "SPEC_UNSUPPORTED", 
 const referencedItem = fabricBasicContentFixture();
 referencedItem.gameplay.items[0]!.references = ["infectedfrontier:blue_ore_item"];
 await expectCompilerError(JSON.stringify(referencedItem), "SPEC_UNSUPPORTED", "/gameplay/items/0/references");
-const shapedRecipe = fabricBasicContentFixture();
-shapedRecipe.gameplay.recipes[0]!.type = "shaped";
-await expectCompilerError(JSON.stringify(shapedRecipe), "SPEC_UNSUPPORTED", "/gameplay/recipes/0/type");
+const unknownShapedIngredient = structuredClone(shapedRecipe);
+unknownShapedIngredient.gameplay.recipes[0]!.key![0]!.item = "othermod:blue_ore";
+await expectCompilerError(
+  JSON.stringify(unknownShapedIngredient),
+  "SPEC_UNSUPPORTED",
+  "/gameplay/recipes/0/key/0/item",
+);
 const customSerializer = fabricBasicContentFixture();
 customSerializer.gameplay.recipes[0]!.serializer = "infectedfrontier:custom";
 await expectCompilerError(JSON.stringify(customSerializer), "SPEC_UNSUPPORTED", "/gameplay/recipes/0/serializer");

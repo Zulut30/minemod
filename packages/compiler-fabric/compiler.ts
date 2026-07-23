@@ -246,7 +246,7 @@ function basicContentPreflight(spec: ModSpecV1): NormalizedContent {
     if (recipe.serializer !== undefined) {
       pushUnsupported(errors, `/gameplay/recipes/${index}/serializer`, "Fabric phase 1 recipes use only built-in serializers.");
     }
-    if (recipe.type === "shaped" || recipe.type === "custom") {
+    if (recipe.type === "custom") {
       pushUnsupported(
         errors,
         `/gameplay/recipes/${index}/type`,
@@ -268,14 +268,35 @@ function basicContentPreflight(spec: ModSpecV1): NormalizedContent {
       );
     }
     recipe.ingredients.forEach((ingredient, ingredientIndex) => {
-      if (!itemParts.has(ingredient)) {
+      const ingredientParts = parseResourceLocation(ingredient);
+      if (ingredientParts.namespace !== "minecraft" && !itemParts.has(ingredient)) {
         pushUnsupported(
           errors,
           `/gameplay/recipes/${index}/ingredients/${ingredientIndex}`,
-          "Fabric phase 1 recipe ingredients must be declared gameplay items.",
+          "Fabric phase 1 recipe ingredients must be vanilla items or declared gameplay items.",
         );
       }
     });
+    if (recipe.type === "shaped") {
+      if (recipe.pattern === undefined || recipe.key === undefined) {
+        pushUnsupported(
+          errors,
+          `/gameplay/recipes/${index}`,
+          "A shaped recipe requires the validated pattern and key contract.",
+        );
+      } else {
+        recipe.key.forEach((entry, keyIndex) => {
+          const ingredientParts = parseResourceLocation(entry.item);
+          if (ingredientParts.namespace !== "minecraft" && !itemParts.has(entry.item)) {
+            pushUnsupported(
+              errors,
+              `/gameplay/recipes/${index}/key/${keyIndex}/item`,
+              "Fabric phase 1 shaped recipe keys must use vanilla items or declared gameplay items.",
+            );
+          }
+        });
+      }
+    }
     if (!itemParts.has(recipe.result)) {
       pushUnsupported(
         errors,
@@ -886,21 +907,43 @@ public final class GeneratedClient implements ClientModInitializer {
   for (const recipe of content.recipes) {
     const parts = content.recipeParts.get(recipe.id);
     if (parts === undefined) throw fabricCompilerError("INTERNAL_ERROR", "Recipe normalization failed safely.");
-    const value = recipe.type === "shapeless"
-      ? {
-          type: "minecraft:crafting_shapeless",
-          category: "misc",
-          ingredients: recipe.ingredients.map((item) => ({ item })),
-          result: { item: recipe.result },
-        }
-      : {
-          type: "minecraft:smelting",
-          category: "misc",
-          cookingtime: 200,
-          experience: 0,
-          ingredient: { item: recipe.ingredients[0] },
-          result: recipe.result,
-        };
+    const result = recipe.resultCount === undefined || recipe.resultCount === 1
+      ? { item: recipe.result }
+      : { item: recipe.result, count: recipe.resultCount };
+    let value: unknown;
+    if (recipe.type === "shaped") {
+      if (recipe.pattern === undefined || recipe.key === undefined) {
+        throw fabricCompilerError("INTERNAL_ERROR", "Validated shaped recipe data is missing.");
+      }
+      value = {
+        type: "minecraft:crafting_shaped",
+        category: "misc",
+        key: Object.fromEntries(
+          [...recipe.key]
+            .sort((left, right) => compareAscii(left.symbol, right.symbol))
+            .map(({ symbol, item }) => [symbol, { item }]),
+        ),
+        pattern: recipe.pattern,
+        result,
+        show_notification: true,
+      };
+    } else if (recipe.type === "shapeless") {
+      value = {
+        type: "minecraft:crafting_shapeless",
+        category: "misc",
+        ingredients: recipe.ingredients.map((item) => ({ item })),
+        result,
+      };
+    } else {
+      value = {
+        type: "minecraft:smelting",
+        category: "misc",
+        cookingtime: 200,
+        experience: 0,
+        ingredient: { item: recipe.ingredients[0] },
+        result: recipe.result,
+      };
+    }
     inputs.push(jsonInput(
       `${resourceRoot}/data/${parts.namespace}/recipes/${parts.path}.json`,
       value,
@@ -1079,7 +1122,12 @@ export function compileVerifiedFabricPhase1(
       ...spec.gameplay,
       items: [...content.items],
       blocks: [...content.blocks],
-      recipes: [...content.recipes],
+      recipes: content.recipes.map((recipe) => recipe.type === "shaped" && recipe.key !== undefined
+        ? {
+            ...recipe,
+            key: [...recipe.key].sort((left, right) => compareAscii(left.symbol, right.symbol)),
+          }
+        : recipe),
     },
     dependencies: {
       required: content.libraries.filter(({ relation }) => relation === "required").map(({ id }) => id),
