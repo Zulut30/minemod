@@ -463,7 +463,9 @@ function projectInputs(
 }
 
 function javaString(value: string): string {
-  return JSON.stringify(value);
+  return JSON.stringify(value)
+    .replaceAll("\u2028", "\\u2028")
+    .replaceAll("\u2029", "\\u2029");
 }
 
 function javaConstantPath(path: string): string {
@@ -586,7 +588,35 @@ function jsonInput(path: string, value: unknown): GeneratedFileInput {
   return input(path, canonicalJsonFileBytes(value));
 }
 
-function generatedConfigSource(modId: string): string {
+function generatedConfigSource(
+  modId: string,
+  configuration: ModSpecV1["integrations"]["yacl"],
+): string {
+  const options = configuration?.categories.flatMap(({ options }) => options) ?? [];
+  const customFields = options.map((option) => {
+    const field = `option_${option.id}`;
+    const annotation = `    @SerialEntry(value = ${javaString(option.id)}, comment = ` +
+      `${javaString(option.description ?? option.name)})\n`;
+    if (option.type === "boolean") return `${annotation}    public boolean ${field} = ${option.default};`;
+    if (option.type === "integer") return `${annotation}    public int ${field} = ${option.default};`;
+    return `${annotation}    public String ${field} = ${javaString(option.default)};`;
+  });
+  const normalization = options.flatMap((option) => {
+    const field = `config.option_${option.id}`;
+    if (option.type === "integer") {
+      return [`        ${field} = Math.max(${option.minimum}, Math.min(${option.maximum}, ${field}));`];
+    }
+    if (option.type === "string") return [`        ${field} = limitString(${field}, ${option.maxLength});`];
+    return [];
+  });
+  const customFieldSection = customFields.length === 0 ? "" : `\n${customFields.join("\n\n")}\n`;
+  const normalizationSection = normalization.length === 0 ? "" : `${normalization.join("\n")}\n`;
+  const stringLimiter = options.some(({ type }) => type === "string")
+    ? `\n    public static String limitString(String value, int maxLength) {\n` +
+      `        if (value == null) return "";\n` +
+      `        return value.length() <= maxLength ? value : value.substring(0, maxLength);\n` +
+      `    }\n`
+    : "";
   return `package dev.mcdev.generated.m_${modId};
 
 import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
@@ -608,6 +638,11 @@ public final class GeneratedConfig {
 
     @SerialEntry(comment = "Show generated items and blocks in their default creative tabs.")
     public boolean showGeneratedContentInCreativeTabs = true;
+${customFieldSection}
+    public static void normalize() {
+        GeneratedConfig config = HANDLER.instance();
+${normalizationSection}    }
+${stringLimiter}
 
     public GeneratedConfig() {}
 }
@@ -661,6 +696,7 @@ function contentInputs(spec: ModSpecV1, content: NormalizedContent): readonly Ge
   const hasModMenu = content.libraries.some(({ id }) => id === "modmenu");
   const initializeContent = hasYacl
     ? `        GeneratedConfig.HANDLER.load();\n` +
+      `        GeneratedConfig.normalize();\n` +
       `        GeneratedContent.register(GeneratedConfig.HANDLER.instance().showGeneratedContentInCreativeTabs);`
     : "        GeneratedContent.register();";
   const mainSource = `package ${packageRoot};
@@ -696,7 +732,7 @@ public final class GeneratedClient implements ClientModInitializer {
   if (hasYacl) {
     inputs.push(input(
       `src/main/java/${pathRoot}/GeneratedConfig.java`,
-      utf8FileBytes(generatedConfigSource(modId)),
+      utf8FileBytes(generatedConfigSource(modId, spec.integrations.yacl)),
     ));
   }
   if (hasYacl && hasModMenu) {

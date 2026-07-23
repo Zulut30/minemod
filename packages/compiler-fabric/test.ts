@@ -300,6 +300,49 @@ await expectCompilerError(
   "SPEC_UNSUPPORTED",
   "/integrations/yacl",
 );
+const configuredLibraries = structuredClone(configuredWithoutLibraries);
+configuredLibraries.dependencies.required = ["yet_another_config_lib_v3"];
+configuredLibraries.dependencies.optional = ["modmenu"];
+configuredLibraries.integrations.yacl!.categories[0]!.options.push(
+  {
+    id: "spawn_limit",
+    name: "Spawn limit",
+    type: "integer",
+    default: 8,
+    minimum: 1,
+    maximum: 32,
+    step: 1,
+    restartRequired: true,
+  },
+  {
+    id: "welcome_message",
+    name: "Welcome message",
+    type: "string",
+    default: "Stay\u2028alert",
+    maxLength: 64,
+    restartRequired: false,
+  },
+);
+const compiledConfiguredLibraries = await compileFabricPhase1(JSON.stringify(configuredLibraries));
+const configuredSource = textOutput(
+  compiledConfiguredLibraries,
+  "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedConfig.java",
+);
+assert.match(configuredSource, /public boolean option_enable_special_attacks = true;/u);
+assert.match(configuredSource, /public int option_spawn_limit = 8;/u);
+assert.match(configuredSource, /public String option_welcome_message = "Stay\\u2028alert";/u);
+assert.match(
+  configuredSource,
+  /config\.option_spawn_limit = Math\.max\(1, Math\.min\(32, config\.option_spawn_limit\)\);/u,
+);
+assert.match(configuredSource, /config\.option_welcome_message = limitString\(config\.option_welcome_message, 64\);/u);
+assert.match(
+  textOutput(
+    compiledConfiguredLibraries,
+    "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedMod.java",
+  ),
+  /GeneratedConfig\.normalize\(\);/u,
+);
 const unknownLibrary = fabricBasicContentFixture();
 unknownLibrary.dependencies.required = ["unknown_library"];
 await expectCompilerError(JSON.stringify(unknownLibrary), "SPEC_UNSUPPORTED", "/dependencies/required/0");
