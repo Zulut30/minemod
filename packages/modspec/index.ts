@@ -338,7 +338,7 @@ export const YaclIntegrationSchema = z.strictObject({
       }
       optionIds.add(option.id);
       if (option.type === "integer" &&
-        (option.minimum > option.maximum || option.default < option.minimum || option.default > option.maximum)) {
+        (option.minimum >= option.maximum || option.default < option.minimum || option.default > option.maximum)) {
         context.addIssue({ code: "custom", path: [...path, "default"], message: "Integer defaults must be inside an ordered range." });
       }
       if (option.type === "string" && option.default.length > option.maxLength) {

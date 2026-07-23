@@ -188,6 +188,15 @@ function basicContentPreflight(spec: ModSpecV1): NormalizedContent {
       pushUnsupported(errors, entry.path, entry.message);
     }
   }
+  if (spec.integrations.yacl !== undefined && libraryResolution.valid) {
+    const selected = new Set(libraryResolution.libraries.map(({ id }) => id));
+    if (!selected.has("yet_another_config_lib_v3")) {
+      pushUnsupported(errors, "/integrations/yacl", "A generated YACL configuration requires YACL as a required dependency.");
+    }
+    if (!selected.has("modmenu")) {
+      pushUnsupported(errors, "/integrations/yacl", "A generated YACL configuration requires Mod Menu as an optional dependency.");
+    }
+  }
 
   const itemParts = new Map<string, ResourceLocationParts>();
   spec.gameplay.items.forEach((item, index) => {

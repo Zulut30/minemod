@@ -274,6 +274,32 @@ assert.equal(
   }).entrypoints.modmenu,
   undefined,
 );
+const configuredWithoutLibraries = fabricBasicContentFixture();
+configuredWithoutLibraries.integrations.yacl = {
+  categories: [{
+    id: "gameplay",
+    name: "Gameplay",
+    options: [{
+      id: "enable_special_attacks",
+      name: "Special attacks",
+      type: "boolean",
+      default: true,
+      restartRequired: false,
+    }],
+  }],
+};
+await expectCompilerError(
+  JSON.stringify(configuredWithoutLibraries),
+  "SPEC_UNSUPPORTED",
+  "/integrations/yacl",
+);
+const configuredWithoutModMenu = structuredClone(configuredWithoutLibraries);
+configuredWithoutModMenu.dependencies.required = ["yet_another_config_lib_v3"];
+await expectCompilerError(
+  JSON.stringify(configuredWithoutModMenu),
+  "SPEC_UNSUPPORTED",
+  "/integrations/yacl",
+);
 const unknownLibrary = fabricBasicContentFixture();
 unknownLibrary.dependencies.required = ["unknown_library"];
 await expectCompilerError(JSON.stringify(unknownLibrary), "SPEC_UNSUPPORTED", "/dependencies/required/0");
