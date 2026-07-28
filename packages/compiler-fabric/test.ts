@@ -313,7 +313,7 @@ taggedRecipes.gameplay.recipes = [
     pattern: ["II", " S"],
     key: [
       { symbol: "I", tag: "c:ingots/iron" },
-      { symbol: "S", item: "minecraft:stick" },
+      { symbol: "S", item: "infectedfrontier:blue_ore_item" },
     ],
     result: "infectedfrontier:blue_ingot",
   },
@@ -321,7 +321,7 @@ taggedRecipes.gameplay.recipes = [
     id: "infectedfrontier:tagged_mix",
     references: [],
     type: "shapeless",
-    ingredients: [{ tag: "c:gems/diamond" }, "minecraft:stick"],
+    ingredients: [{ tag: "c:gems/diamond" }, "infectedfrontier:blue_ore_item"],
     result: "infectedfrontier:blue_ingot",
   },
   {
@@ -340,7 +340,7 @@ assert.deepEqual(
   )).key,
   {
     I: { tag: "c:ingots/iron" },
-    S: { item: "minecraft:stick" },
+    S: { item: "infectedfrontier:blue_ore_item" },
   },
 );
 assert.deepEqual(
@@ -348,7 +348,7 @@ assert.deepEqual(
     compiledTaggedRecipes,
     "src/main/resources/data/infectedfrontier/recipes/tagged_mix.json",
   )).ingredients,
-  [{ tag: "c:gems/diamond" }, { item: "minecraft:stick" }],
+  [{ tag: "c:gems/diamond" }, { item: "infectedfrontier:blue_ore_item" }],
 );
 assert.deepEqual(
   JSON.parse(textOutput(
