@@ -331,6 +331,7 @@ function basicContentPreflight(spec: ModSpecV1): NormalizedContent {
       );
     }
     recipe.ingredients.forEach((ingredient, ingredientIndex) => {
+      if (typeof ingredient !== "string") return;
       const ingredientParts = parseResourceLocation(ingredient);
       if (ingredientParts.namespace !== "minecraft" && !itemParts.has(ingredient)) {
         pushUnsupported(
@@ -349,6 +350,7 @@ function basicContentPreflight(spec: ModSpecV1): NormalizedContent {
         );
       } else {
         recipe.key.forEach((entry, keyIndex) => {
+          if (!("item" in entry)) return;
           const ingredientParts = parseResourceLocation(entry.item);
           if (ingredientParts.namespace !== "minecraft" && !itemParts.has(entry.item)) {
             pushUnsupported(
@@ -1124,7 +1126,10 @@ public final class GeneratedClient implements ClientModInitializer {
         key: Object.fromEntries(
           [...recipe.key]
             .sort((left, right) => compareAscii(left.symbol, right.symbol))
-            .map(({ symbol, item }) => [symbol, { item }]),
+            .map((entry) => [
+              entry.symbol,
+              "item" in entry ? { item: entry.item } : { tag: entry.tag },
+            ]),
         ),
         pattern: recipe.pattern,
         result,
@@ -1134,16 +1139,23 @@ public final class GeneratedClient implements ClientModInitializer {
       value = {
         type: "minecraft:crafting_shapeless",
         category: "misc",
-        ingredients: recipe.ingredients.map((item) => ({ item })),
+        ingredients: recipe.ingredients.map((ingredient) =>
+          typeof ingredient === "string" ? { item: ingredient } : { tag: ingredient.tag }),
         result,
       };
     } else {
+      const ingredient = recipe.ingredients[0];
+      if (ingredient === undefined) {
+        throw fabricCompilerError("INTERNAL_ERROR", "Validated smelting recipe data is missing.");
+      }
       value = {
         type: "minecraft:smelting",
         category: "misc",
         cookingtime: 200,
         experience: 0,
-        ingredient: { item: recipe.ingredients[0] },
+        ingredient: typeof ingredient === "string"
+          ? { item: ingredient }
+          : { tag: ingredient.tag },
         result: recipe.result,
       };
     }

@@ -157,6 +157,21 @@ shapedRecipe.gameplay.recipes = [{
   resultCount: 1,
 }];
 assert.equal(ModSpecV1Schema.safeParse(shapedRecipe).success, true);
+const taggedShapedRecipe = structuredClone(shapedRecipe);
+taggedShapedRecipe.gameplay.recipes[0]!.key = [
+  { symbol: "X", tag: "c:ingots/iron" },
+  { symbol: "S", item: "minecraft:stick" },
+];
+assert.equal(ModSpecV1Schema.safeParse(taggedShapedRecipe).success, true);
+const ambiguousIngredient = structuredClone(taggedShapedRecipe) as unknown as {
+  gameplay: { recipes: Array<{ key: Array<Record<string, string>> }> };
+};
+ambiguousIngredient.gameplay.recipes[0]!.key[0] = {
+  symbol: "X",
+  item: "minecraft:iron_ingot",
+  tag: "c:ingots/iron",
+};
+assert.equal(ModSpecV1Schema.safeParse(ambiguousIngredient).success, false);
 const unevenPattern = structuredClone(shapedRecipe);
 unevenPattern.gameplay.recipes[0]!.pattern = ["XX", "S"];
 assert.equal(ModSpecV1Schema.safeParse(unevenPattern).success, false);

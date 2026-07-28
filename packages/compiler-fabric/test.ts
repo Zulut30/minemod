@@ -303,6 +303,61 @@ assert.equal(
   "shaped recipe key declaration order must not affect generated content",
 );
 
+const taggedRecipes = fabricBasicContentFixture();
+taggedRecipes.gameplay.recipes = [
+  {
+    id: "infectedfrontier:tagged_pattern",
+    references: [],
+    type: "shaped",
+    ingredients: [],
+    pattern: ["II", " S"],
+    key: [
+      { symbol: "I", tag: "c:ingots/iron" },
+      { symbol: "S", item: "minecraft:stick" },
+    ],
+    result: "infectedfrontier:blue_ingot",
+  },
+  {
+    id: "infectedfrontier:tagged_mix",
+    references: [],
+    type: "shapeless",
+    ingredients: [{ tag: "c:gems/diamond" }, "minecraft:stick"],
+    result: "infectedfrontier:blue_ingot",
+  },
+  {
+    id: "infectedfrontier:tagged_smelt",
+    references: [],
+    type: "smelting",
+    ingredients: [{ tag: "c:raw_materials/iron" }],
+    result: "infectedfrontier:blue_ingot",
+  },
+];
+const compiledTaggedRecipes = await compileFabricPhase1(JSON.stringify(taggedRecipes));
+assert.deepEqual(
+  JSON.parse(textOutput(
+    compiledTaggedRecipes,
+    "src/main/resources/data/infectedfrontier/recipes/tagged_pattern.json",
+  )).key,
+  {
+    I: { tag: "c:ingots/iron" },
+    S: { item: "minecraft:stick" },
+  },
+);
+assert.deepEqual(
+  JSON.parse(textOutput(
+    compiledTaggedRecipes,
+    "src/main/resources/data/infectedfrontier/recipes/tagged_mix.json",
+  )).ingredients,
+  [{ tag: "c:gems/diamond" }, { item: "minecraft:stick" }],
+);
+assert.deepEqual(
+  JSON.parse(textOutput(
+    compiledTaggedRecipes,
+    "src/main/resources/data/infectedfrontier/recipes/tagged_smelt.json",
+  )).ingredient,
+  { tag: "c:raw_materials/iron" },
+);
+
 const equipment = fabricEquipmentFixture();
 const compiledEquipment = await compileFabricPhase1(JSON.stringify(equipment));
 const equipmentSource = textOutput(
@@ -629,7 +684,9 @@ const referencedItem = fabricBasicContentFixture();
 referencedItem.gameplay.items[0]!.references = ["infectedfrontier:blue_ore_item"];
 await expectCompilerError(JSON.stringify(referencedItem), "SPEC_UNSUPPORTED", "/gameplay/items/0/references");
 const unknownShapedIngredient = structuredClone(shapedRecipe);
-unknownShapedIngredient.gameplay.recipes[0]!.key![0]!.item = "othermod:blue_ore";
+const unknownShapedEntry = unknownShapedIngredient.gameplay.recipes[0]!.key![0]!;
+assert.ok("item" in unknownShapedEntry);
+unknownShapedEntry.item = "othermod:blue_ore";
 await expectCompilerError(
   JSON.stringify(unknownShapedIngredient),
   "SPEC_UNSUPPORTED",

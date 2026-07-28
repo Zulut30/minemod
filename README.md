@@ -17,7 +17,7 @@
 - items, blocks, creative entries, loot, blockstates и модели;
 - типизированные материалы, мечи, кирки, топоры, лопаты, мотыги и четыре слота брони;
 - детерминированные pixel-art иконки экипировки и два 64×32 wearable-слоя брони;
-- shaped 1×1–3×3, shapeless и smelting recipes, включая ванильные ингредиенты и количество результата;
+- shaped 1×1–3×3, shapeless и smelting recipes, включая item/tag ингредиенты и количество результата;
 - транзакционное создание нового workspace без молчаливой перезаписи файлов;
 - закрытая Gradle policy с Temurin 17, checksum-проверками и фиксированными tasks;
 - получение готового remapped JAR и индекса артефактов;
