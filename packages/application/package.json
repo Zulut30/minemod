@@ -12,6 +12,7 @@
     "@mcdev/artifacts": "workspace:*",
     "@mcdev/build-runner": "workspace:*",
     "@mcdev/compiler-fabric": "workspace:*",
+    "@mcdev/compiler-neoforge": "workspace:*",
     "@mcdev/contracts": "workspace:*",
     "@mcdev/workspace": "workspace:*"
   }

@@ -15,6 +15,7 @@ import {
   createMcpServer,
   MAX_MCP_STDIO_FRAME_BYTES,
   MCP_FABRIC_BUILD_TOOL_NAME,
+  MCP_NEOFORGE_BUILD_TOOL_NAME,
   MCP_SERVER_NAME,
   MCP_SERVER_VERSION,
   MCP_VALIDATE_TOOL_NAME,
@@ -142,6 +143,9 @@ async function testLinkedInMemoryProtocol(): Promise<void> {
   let buildCalls = 0;
   let buildConfig: unknown;
   let buildRequest: unknown;
+  let neoForgeBuildCalls = 0;
+  let neoForgeBuildConfig: unknown;
+  let neoForgeBuildRequest: unknown;
   const server = createMcpServer(function validateForMcpTest(payload, kind) {
     assert.equal(arguments.length, 2, "MCP must pass only payload and kind to loader-neutral validation");
     handlerCalls += 1;
@@ -162,6 +166,28 @@ async function testLinkedInMemoryProtocol(): Promise<void> {
               packId: "fabric-1.20.1-java-17",
               revision: 2,
               treeSha256: "2".repeat(64),
+            },
+            entries: [],
+          },
+        };
+      },
+    };
+  }, (config) => {
+    neoForgeBuildConfig = config;
+    return {
+      build: async (request) => {
+        neoForgeBuildCalls += 1;
+        neoForgeBuildRequest = request;
+        return {
+          planId: "3".repeat(64),
+          workspaceStatus: "created",
+          artifacts: {
+            contract: "mcdev.artifact-index/v1",
+            planId: "3".repeat(64),
+            pack: {
+              packId: "neoforge-26.1.2-java-25",
+              revision: 1,
+              treeSha256: "4".repeat(64),
             },
             entries: [],
           },
@@ -189,8 +215,8 @@ async function testLinkedInMemoryProtocol(): Promise<void> {
     const listResult = await client.listTools();
     assert.deepEqual(
       listResult.tools.map(({ name }) => name),
-      [MCP_VALIDATE_TOOL_NAME, MCP_FABRIC_BUILD_TOOL_NAME],
-      "tools/list must expose only the validator and approved Fabric builder",
+      [MCP_VALIDATE_TOOL_NAME, MCP_NEOFORGE_BUILD_TOOL_NAME, MCP_FABRIC_BUILD_TOOL_NAME],
+      "tools/list must expose only the validator and approved platform builders",
     );
     const validateTool = listResult.tools.find(({ name }) => name === MCP_VALIDATE_TOOL_NAME);
     const linkedInputSchema = asObject(validateTool?.inputSchema, "linked tool input schema");
@@ -253,6 +279,56 @@ async function testLinkedInMemoryProtocol(): Promise<void> {
     }), "unapproved Fabric build result");
     assert.equal(unapprovedBuild.isError, true);
     assert.equal(buildCalls, 1, "unapproved MCP builds must stop before the application factory");
+
+    const neoForgeBuildCall = await client.callTool({
+      name: MCP_NEOFORGE_BUILD_TOOL_NAME,
+      arguments: {
+        approved: true,
+        artifactCacheRoot: "/fixed/cache",
+        java21Home: "/fixed/jdk-21",
+        java25Home: "/fixed/jdk-25",
+        payload: JSON.stringify(validModFixture),
+        workspaceRoot: "/approved/neoforge-workspace",
+      },
+    });
+    const neoForgeBuildContent = asObject(neoForgeBuildCall, "NeoForge build tool result").content;
+    assert.ok(Array.isArray(neoForgeBuildContent));
+    const neoForgeBuildText = neoForgeBuildContent
+      .map((entry) => asObject(entry, "NeoForge build content"))
+      .find((entry) => entry.type === "text")?.text;
+    assert.ok(typeof neoForgeBuildText === "string");
+    assert.equal(
+      asObject(JSON.parse(neoForgeBuildText) as unknown, "NeoForge build result").workspaceStatus,
+      "created",
+    );
+    assert.deepEqual(neoForgeBuildConfig, {
+      artifactCacheRoot: "/fixed/cache",
+      java21Home: "/fixed/jdk-21",
+      java25Home: "/fixed/jdk-25",
+    });
+    assert.deepEqual(neoForgeBuildRequest, {
+      payload: JSON.stringify(validModFixture),
+      workspaceRoot: "/approved/neoforge-workspace",
+    });
+    assert.equal(neoForgeBuildCalls, 1);
+
+    const unapprovedNeoForgeBuild = asObject(await client.callTool({
+      name: MCP_NEOFORGE_BUILD_TOOL_NAME,
+      arguments: {
+        approved: false,
+        artifactCacheRoot: "/fixed/cache",
+        java21Home: "/fixed/jdk-21",
+        java25Home: "/fixed/jdk-25",
+        payload: JSON.stringify(validModFixture),
+        workspaceRoot: "/approved/neoforge-workspace",
+      },
+    }), "unapproved NeoForge build result");
+    assert.equal(unapprovedNeoForgeBuild.isError, true);
+    assert.equal(
+      neoForgeBuildCalls,
+      1,
+      "unapproved NeoForge MCP builds must stop before the application factory",
+    );
 
     const fabricFixture = {
       ...validModFixture,
@@ -401,6 +477,7 @@ async function testStdioStdoutPurity(): Promise<void> {
     assert.ok(Array.isArray(tools));
     assert.deepEqual(tools.map((tool) => asObject(tool, "tool").name), [
       MCP_VALIDATE_TOOL_NAME,
+      MCP_NEOFORGE_BUILD_TOOL_NAME,
       MCP_FABRIC_BUILD_TOOL_NAME,
     ]);
     const rawValidateTool = tools.map((tool) => asObject(tool, "tool"))
@@ -824,17 +901,23 @@ function testWorkspaceRuntimeContract(): void {
     "Corepack hex digest and registry SRI must identify the same tarball",
   );
 
-  const corepack = resolve(dirname(process.execPath), process.platform === "win32" ? "corepack.cmd" : "corepack");
+  const corepack = process.platform === "win32"
+    ? process.execPath
+    : resolve(dirname(process.execPath), "corepack");
+  const corepackArguments = [
+    ...(process.platform === "win32"
+      ? [resolve(dirname(process.execPath), "node_modules/corepack/dist/corepack.js")]
+      : []),
+    "pnpm",
+    "--config.node-version=22.22.2",
+    "install",
+    "--frozen-lockfile",
+    "--offline",
+    "--ignore-scripts",
+  ];
   const negative = spawnSync(
     corepack,
-    [
-      "pnpm",
-      "--config.node-version=22.22.2",
-      "install",
-      "--frozen-lockfile",
-      "--offline",
-      "--ignore-scripts",
-    ],
+    corepackArguments,
     { cwd: workspaceRoot, encoding: "utf8", maxBuffer: 1024 * 1024 },
   );
   assert.equal(negative.error, undefined);

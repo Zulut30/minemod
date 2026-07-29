@@ -327,6 +327,7 @@ jobs:
         working-directory: fixtures/fabric-26.2-empty
         run: >-
           ./gradlew --project-cache-dir "$GRADLE_PROJECT_CACHE_DIR"
+          -Dorg.gradle.dependency.verification.console=verbose
           --dependency-verification strict clean build
       - name: Upload Fabric server GameTest report
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2

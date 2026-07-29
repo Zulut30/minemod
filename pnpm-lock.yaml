@@ -72,6 +72,9 @@ importers:
       '@mcdev/compiler-fabric':
         specifier: workspace:*
         version: link:../compiler-fabric
+      '@mcdev/compiler-neoforge':
+        specifier: workspace:*
+        version: link:../compiler-neoforge
       '@mcdev/contracts':
         specifier: workspace:*
         version: link:../contracts

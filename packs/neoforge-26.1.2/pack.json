@@ -44,7 +44,7 @@
     "dependencyInventory": "../../docs/provenance/neoforge-26.1.2-inventory.json"
   },
   "knownIssues": [
-    "The full GitHub Actions workflow has not yet run; current runtime evidence is local only.",
+    "Hosted Phase 0 evidence is tied to exact reviewed commits; every later control-plane change requires fresh CI evidence.",
     "The GitHub-hosted ubuntu-24.04 runner label is mutable even though every referenced Action is commit-pinned.",
     "The client job installs xvfb, xauth, and x11-xkb-utils from the mutable Ubuntu package repository.",
     "NeoForge 26.1.2.83 and ModDevGradle 2.0.142 exist, but are outside the official MDK tuple selected for this baseline."

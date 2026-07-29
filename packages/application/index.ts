@@ -2,14 +2,21 @@ import { isProxy } from "node:util/types";
 import { createArtifactIndex, type ArtifactSource } from "@mcdev/artifacts";
 import {
   createFabricPhase1BuildRunner,
+  createNeoForgePhase1BuildRunner,
   type BuildRunnerResult,
+  type BuildRunnerConfig,
   type FabricBuildRunnerConfig,
   type FabricPhase1BuildRunner,
+  type NeoForgePhase1BuildRunner,
 } from "@mcdev/build-runner";
 import {
   compileFabricPhase1,
   type CompiledFabricProject,
 } from "@mcdev/compiler-fabric";
+import {
+  compileNeoForgePhase1,
+  type CompiledNeoForgeProject,
+} from "@mcdev/compiler-neoforge";
 import {
   isPlainJsonObject,
   type ArtifactIndex,
@@ -50,6 +57,35 @@ export const DEFAULT_FABRIC_APPLICATION_DEPENDENCIES: FabricApplicationDependenc
   indexArtifacts: createArtifactIndex,
 });
 
+export interface NeoForgeBuildRequest {
+  readonly payload: string;
+  readonly workspaceRoot: string;
+}
+
+export interface NeoForgeBuildResult {
+  readonly planId: string;
+  readonly workspaceStatus: WorkspaceApplyResult["status"];
+  readonly artifacts: ArtifactIndex;
+}
+
+export interface NeoForgeApplication {
+  build(request: NeoForgeBuildRequest): Promise<NeoForgeBuildResult>;
+}
+
+export interface NeoForgeApplicationDependencies {
+  readonly compile: (payload: string) => Promise<CompiledNeoForgeProject>;
+  readonly applyWorkspace: (input: WorkspaceApplyInput) => Promise<WorkspaceApplyResult>;
+  readonly createRunner: (config: BuildRunnerConfig) => NeoForgePhase1BuildRunner;
+  readonly indexArtifacts: typeof createArtifactIndex;
+}
+
+export const DEFAULT_NEOFORGE_APPLICATION_DEPENDENCIES: NeoForgeApplicationDependencies = Object.freeze({
+  compile: compileNeoForgePhase1,
+  applyWorkspace: applyWorkspacePlan,
+  createRunner: createNeoForgePhase1BuildRunner,
+  indexArtifacts: createArtifactIndex,
+});
+
 function closedStringObject(value: unknown, keys: readonly string[]): Record<string, string> | undefined {
   if (isProxy(value) || !isPlainJsonObject(value)) return undefined;
   const ownKeys = Reflect.ownKeys(value);
@@ -69,7 +105,7 @@ function closedStringObject(value: unknown, keys: readonly string[]): Record<str
 }
 
 function buildArtifactSources(
-  compiled: CompiledFabricProject,
+  compiled: CompiledFabricProject | CompiledNeoForgeProject,
   build: BuildRunnerResult,
 ): readonly ArtifactSource[] {
   const generated: ArtifactSource[] = compiled.outputs.map(({ artifactKind, file }) => ({
@@ -92,7 +128,7 @@ function buildArtifactSources(
 function workspaceInput(
   workspaceRoot: string,
   plan: BuildPlan,
-  compiled: CompiledFabricProject,
+  compiled: CompiledFabricProject | CompiledNeoForgeProject,
 ): WorkspaceApplyInput {
   return {
     workspaceRoot,
@@ -119,6 +155,40 @@ export function createFabricApplication(
     build: async (requestValue: FabricBuildRequest): Promise<FabricBuildResult> => {
       const request = closedStringObject(requestValue, ["payload", "workspaceRoot"]);
       if (request === undefined) throw new TypeError("Fabric build request must use the closed data shape.");
+      const payload = request.payload ?? "";
+      const workspaceRoot = request.workspaceRoot ?? "";
+      const compiled = await dependencies.compile(payload);
+      const applied = await dependencies.applyWorkspace(workspaceInput(workspaceRoot, compiled.plan, compiled));
+      const built = await runner.run({ workspaceRoot, plan: compiled.plan, manifest: applied.manifest });
+      const artifacts = dependencies.indexArtifacts({
+        planId: compiled.plan.planId,
+        pack: compiled.plan.pack,
+        sources: buildArtifactSources(compiled, built),
+      });
+      return Object.freeze({
+        planId: compiled.plan.planId,
+        workspaceStatus: applied.status,
+        artifacts,
+      });
+    },
+  });
+}
+
+export function createNeoForgeApplication(
+  configValue: BuildRunnerConfig,
+  dependencies: NeoForgeApplicationDependencies = DEFAULT_NEOFORGE_APPLICATION_DEPENDENCIES,
+): NeoForgeApplication {
+  const config = closedStringObject(configValue, ["java21Home", "java25Home", "artifactCacheRoot"]);
+  if (config === undefined) throw new TypeError("NeoForge application configuration must use the closed data shape.");
+  const runner = dependencies.createRunner({
+    java21Home: config.java21Home ?? "",
+    java25Home: config.java25Home ?? "",
+    artifactCacheRoot: config.artifactCacheRoot ?? "",
+  });
+  return Object.freeze({
+    build: async (requestValue: NeoForgeBuildRequest): Promise<NeoForgeBuildResult> => {
+      const request = closedStringObject(requestValue, ["payload", "workspaceRoot"]);
+      if (request === undefined) throw new TypeError("NeoForge build request must use the closed data shape.");
       const payload = request.payload ?? "";
       const workspaceRoot = request.workspaceRoot ?? "";
       const compiled = await dependencies.compile(payload);
