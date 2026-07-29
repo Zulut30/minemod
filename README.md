@@ -1,27 +1,37 @@
 # MineMod
 
-[![Minecraft](https://img.shields.io/badge/Minecraft-1.20.1-62B47A?logo=minecraft)](https://www.minecraft.net/)
-[![Fabric](https://img.shields.io/badge/Loader-Fabric-dbbf8a)](https://fabricmc.net/)
-[![Java](https://img.shields.io/badge/Java-17-E76F00?logo=openjdk)](https://adoptium.net/)
+[![Minecraft](https://img.shields.io/badge/Minecraft-26.1.2-62B47A?logo=minecraft)](https://www.minecraft.net/)
+[![NeoForge](https://img.shields.io/badge/Loader-NeoForge-d7742f)](https://neoforged.net/)
+[![Java](https://img.shields.io/badge/Java-25-E76F00?logo=openjdk)](https://adoptium.net/)
 [![License](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE)
-[![Status](https://img.shields.io/badge/status-experimental-orange)](docs/FABRIC_FIRST_MVP_PLAN.md)
+[![Status](https://img.shields.io/badge/status-Phase%200-orange)](docs/RESEARCH_AND_MVP_PLAN.md)
 
-**Agent-native конструктор модов для Fabric 1.20.1.** MineMod принимает строгий `ModSpec`, генерирует читаемый Java-код и ресурсы, создаёт новый Fabric workspace и собирает проверенный JAR через CLI или MCP.
+**Agent-native конструктор Minecraft-модов.** Первый production target — NeoForge 26.1.2 на Java 25. MineMod принимает строгий `ModSpec`, строит закрытый `BuildPlan`, генерирует читаемый Java-код и ресурсы, создаёт новый workspace и запускает фиксированную build policy через CLI или MCP.
 
-> Проект находится в активной разработке. Базовый путь `ModSpec → Fabric project → JAR` работает, но свободный prompt-to-production-mod, полноценные игровые сущности и runtime-анимации ещё не завершены.
+> Проект находится в Phase 0 и ещё не является production-ready. Проверен узкий NeoForge-путь для базовых items/blocks; генерация полноценных сущностей, UI, анимаций, JEI/Jade adapters и release packaging остаётся незавершённой.
 
-## Что уже работает
+## Текущий NeoForge-срез
 
-- строгая локальная проверка `ModSpec v1` без исполнения кода из промпта;
+- строгая локальная проверка bounded `ModSpec` без исполнения кода из промпта;
+- exact baseline NeoForge `26.1.2.80`, Minecraft `26.1.2`, Java `25.0.3+9` и ModDevGradle `2.0.141`;
+- детерминированная генерация NeoForge workspace, базовых items/blocks и ресурсов;
+- транзакционное create-only применение плана без молчаливой перезаписи файлов;
+- фиксированный Linux x64 Gradle runner с checksum-проверками и Java 21/25 toolchains;
+- индекс generated и build-артефактов;
+- отдельные `neoforge build` adapters для CLI и подтверждаемого MCP tool;
+- инфраструктурный GameTest, dedicated-server и headless-client smoke baseline.
+
+JEI и Jade остаются optional dependencies и пока не включены в обязательный generated runtime.
+
+## Экспериментальный Fabric compatibility pack
+
 - генерация Fabric 1.20.1 проекта с разделёнными main/client source sets;
 - items, blocks, creative entries, loot, blockstates и модели;
 - типизированные материалы, мечи, кирки, топоры, лопаты, мотыги и четыре слота брони;
 - детерминированные pixel-art иконки экипировки и два 64×32 wearable-слоя брони;
-- shaped 1×1–3×3, shapeless и smelting recipes, включая ванильные ингредиенты и количество результата;
-- транзакционное создание нового workspace без молчаливой перезаписи файлов;
+- shaped 1×1–3×3, shapeless и smelting recipes, включая item/tag ингредиенты и количество результата;
 - закрытая Gradle policy с Temurin 17, checksum-проверками и фиксированными tasks;
 - получение готового remapped JAR и индекса артефактов;
-- одинаковый application service для CLI и подтверждаемого MCP tool;
 - cuboid-модели, pixel texture atlases, rig и editable Blockbench 5 `.bbmodel`;
 - параметрический архетип большого дракона и structural/texture preflight;
 - доверенный каталог интеграций Fabric-библиотек.
@@ -123,7 +133,9 @@ artifact index ←── verified JAR ←── fixed Gradle runner ←── ne
 
 - Node.js `24.11.0`;
 - pnpm `11.8.0` через Corepack;
-- Eclipse Temurin `17.0.19+10` для Fabric 1.20.1 builds.
+- Eclipse Temurin `25.0.3+9`;
+- Eclipse Temurin `21.0.11+10` как auxiliary toolchain ModDevGradle;
+- Linux x64 для фиксированного build runner Phase 0.
 
 ```bash
 corepack pnpm install
@@ -137,7 +149,7 @@ pnpm lint
 ```bash
 pnpm --filter @mcdev/cli start -- \
   spec validate \
-  --profile fabric-1.20.1-java-17 \
+  --profile neoforge-26.1.2-java-25 \
   '<modspec-json>'
 ```
 
@@ -145,9 +157,10 @@ pnpm --filter @mcdev/cli start -- \
 
 ```bash
 pnpm --filter @mcdev/cli start -- \
-  fabric build \
+  neoforge build \
   --workspace /absolute/path/to/existing-empty-directory \
-  --java17-home /absolute/path/to/temurin-17.0.19+10 \
+  --java21-home /absolute/path/to/temurin-21.0.11+10 \
+  --java25-home /absolute/path/to/temurin-25.0.3+9 \
   --artifact-cache /absolute/path/to/mcdev-cache \
   '<modspec-json>'
 ```
@@ -155,6 +168,7 @@ pnpm --filter @mcdev/cli start -- \
 MCP-сервер публикует:
 
 - `mcdev_spec_validate` — безопасная локальная проверка;
+- `mcdev_neoforge_build` — подтверждаемая сборка NeoForge 26.1.2 с literal-полем `approved: true`;
 - `mcdev_fabric_build` — сборка только с literal-полем `approved: true`.
 
 ```bash
@@ -169,6 +183,7 @@ apps/
   mcp-server/          MCP stdio server
 packages/
   application/         общий build workflow
+  compiler-neoforge/   NeoForge 26.1.2 backend
   compiler-fabric/     Fabric 1.20.1 backend
   library-catalog/     доверенные сторонние библиотеки
   assets-core/         модели, текстуры, rig и quality checks
@@ -176,7 +191,8 @@ packages/
   compatibility-packs/ проверка exact runtime packs
   modspec/             схемы ModSpec и ArtSpec
 packs/
-  fabric-1.20.1/       production-target compatibility pack
+  neoforge-26.1.2/     первый production-target compatibility pack
+  fabric-*/             отдельные compatibility packs
 fixtures/              воспроизводимые тестовые проекты и ассеты
 docs/                  ADR, планы, аудиты и quality rubric
 ```
@@ -193,20 +209,20 @@ docs/                  ADR, планы, аудиты и quality rubric
 
 ## Ближайшие этапы
 
-1. Reference-driven мотивы, варианты силуэтов и human visual review для generated экипировки.
-2. Каталог GeckoLib, Cardinal Components, Trinkets, EMI и Jade.
-3. Fabric GameTests и отдельные hosted client/server gates.
-4. AI texture provider без placeholder assets.
-5. Gameplay entities, AI, структуры и проверенный runtime animation export.
-6. Полный plan/review/apply workflow с progress и cancel/resume.
+1. Расширить NeoForge compiler типизированными рецептами и GameTests generated content.
+2. Добавить NeoForge entities/UI только через bounded ModSpec contracts.
+3. Ввести технический и визуальный quality gate для моделей и текстур.
+4. Добавить GeckoLib, JEI и Jade через проверенный каталог, сохраняя JEI/Jade optional.
+5. Реализовать отдельную `package`-операцию без автоматического `publish`.
+6. Завершить plan/review/apply workflow с progress и cancel/resume.
 
-Актуальные критерии приёмки находятся в [Fabric-first MVP plan](docs/FABRIC_FIRST_MVP_PLAN.md), а долгосрочное направление — в [Production roadmap](docs/PRODUCTION_ROADMAP.md).
+Актуальные критерии и границы находятся в [Research and MVP plan](docs/RESEARCH_AND_MVP_PLAN.md), а долгосрочное направление — в [Production roadmap](docs/PRODUCTION_ROADMAP.md).
 
 ## Документация
 
-- [Fabric-first MVP plan](docs/FABRIC_FIRST_MVP_PLAN.md)
+- [Research и MVP plan](docs/RESEARCH_AND_MVP_PLAN.md)
+- [Исторический Fabric-first plan](docs/FABRIC_FIRST_MVP_PLAN.md)
 - [Library integrations](docs/LIBRARY_INTEGRATIONS.md)
-- [Research и исходный MVP plan](docs/RESEARCH_AND_MVP_PLAN.md)
 - [Архитектурные решения](docs/decisions/)
 - [Аудиты baseline и modeling foundation](docs/audit/)
 - [Art Quality Rubric](docs/quality/art-quality-rubric-v0.md)

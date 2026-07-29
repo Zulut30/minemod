@@ -224,12 +224,24 @@ const RecipeSchema = z.strictObject({
   result: ResourceLocation,
 });
 
+const RecipeIngredientV1Schema = z.union([
+  ResourceLocation,
+  z.strictObject({ tag: ResourceLocation }),
+]);
+
 const RecipeV1Schema = RecipeSchema.extend({
+  ingredients: z.array(RecipeIngredientV1Schema).max(SPEC_COLLECTION_LIMITS.resourceReferences),
   pattern: z.array(z.string().min(1).max(3).regex(/^[A-Z ]+$/)).min(1).max(3).optional(),
-  key: z.array(z.strictObject({
-    symbol: z.string().length(1).regex(/^[A-Z]$/),
-    item: ResourceLocation,
-  })).min(1).max(9).optional(),
+  key: z.array(z.union([
+    z.strictObject({
+      symbol: z.string().length(1).regex(/^[A-Z]$/),
+      item: ResourceLocation,
+    }),
+    z.strictObject({
+      symbol: z.string().length(1).regex(/^[A-Z]$/),
+      tag: ResourceLocation,
+    }),
+  ])).min(1).max(9).optional(),
   resultCount: z.number().int().min(1).max(64).optional(),
 }).superRefine((recipe, context) => {
   if (recipe.type !== "shaped") {

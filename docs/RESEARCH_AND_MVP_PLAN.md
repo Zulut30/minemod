@@ -4,7 +4,7 @@
 
 Дата исследования: 20 июля 2026 года.
 
-> **Актуализация от 21 июля 2026:** выбор NeoForge первым target заменён решением [ADR-0003](decisions/0003-fabric-first-mvp.md). Текущий исполнимый план — [Fabric-first MVP plan](FABRIC_FIRST_MVP_PLAN.md). Остальные исследования, product boundaries и asset-quality требования этого документа сохраняют силу.
+> **Актуализация от 29 июля 2026:** [ADR-0005](decisions/0005-neoforge-first-production-target.md) возвращает NeoForge 26.1.2/Java 25 как первый production target. Fabric, Forge и Paper остаются отдельными compatibility packs; исторический [ADR-0003](decisions/0003-fabric-first-mvp.md) больше не определяет текущий production target.
 
 Цель продукта: дать Codex, Claude Code и другим агентам единый набор безопасных инструментов, который превращает продуктовый промпт в качественный, протестированный и упакованный Minecraft-мод — вместе с кодом, интерфейсом, моделями, текстурами, анимациями, интеграциями и release-артефактами.
 

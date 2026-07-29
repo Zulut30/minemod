@@ -26,8 +26,9 @@ Baseline следует официальной рекомендации Fabric �
 - `distributionSha256Sum` проверяет Gradle distribution;
 - Gradle toolchain auto-detect и auto-download отключены, разрешён только `MCDEV_JAVA25_HOME`;
 - verification metadata fixture содержит 183 компонента, 411 artifact records и 411 SHA-256; self-contained runtime template pack остаётся на 174/393, поскольку JUnit test harness относится к fixture;
+- два exact trust-исключения ограничены локально создаваемой Loom split-парой `net.minecraft:minecraft-common-043a8b3edf:26.2` и `net.minecraft:minecraft-clientOnly-043a8b3edf:26.2` с точными именами JAR. Два независимых hosted run одного commit дали для common JAR разные SHA-256 `281669b9e421adf108642a034dd4337151b3dc61d6a4e76b9304b4dcfee24d1d` и `e377cdcef45b36418742055c9a30812036810bee46066af0d366433a842144f6`; после его exact-исключения тот же build дошёл до идентичной ошибки на локальном clientOnly JAR. Все скачиваемые JAR/POM/module inputs остаются под strict checksum verification; regex и более широкие trusted-artifacts запрещены CI;
 - wildcard trusted artifacts, SHA-1 и MD5 отсутствуют;
-- runtime pack проверяется manifest file hashes, exact tree entry count и tree SHA-256 `a734a1c56878bb62f08928e008d2e3a59fa7ecdfa6afe125526a3e53a2a48c52`;
+- runtime pack проверяется manifest file hashes, exact tree entry count и tree SHA-256 `4f81ea899d8c33468e64f7b707d1e116afac73fdbcc760f6172cb776cf6c3f74`;
 - tamper-test доказывает отказ при изменении Fabric `gradle.properties`.
 
 Полная классификация лицензий всех transitive компонентов ещё не завершена, поэтому pack остаётся candidate, а release redistribution блокируется. Прямые зависимости и точные upstream commits зафиксированы в [Fabric dependency provenance](../provenance/fabric-26.2-dependencies.json).

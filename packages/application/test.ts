@@ -8,13 +8,18 @@ import type {
   BuildRunnerResult,
   BuildRunnerRunInput,
   FabricPhase1BuildRunner,
+  NeoForgePhase1BuildRunner,
 } from "@mcdev/build-runner";
 import { compileFabricPhase1, type CompiledFabricProject } from "@mcdev/compiler-fabric";
+import { compileNeoForgePhase1, type CompiledNeoForgeProject } from "@mcdev/compiler-neoforge";
 import { applyWorkspacePlan } from "@mcdev/workspace";
 import { fabricBasicContentFixture } from "../../fixtures/specs/fabric-basic-content.ts";
+import { validModFixture } from "../../fixtures/specs/validation.ts";
 import {
   createFabricApplication,
+  createNeoForgeApplication,
   type FabricApplicationDependencies,
+  type NeoForgeApplicationDependencies,
 } from "./index.ts";
 
 const jarBytes = Buffer.from("fabric application jar", "utf8");
@@ -34,6 +39,69 @@ function dependencies(overrides: Partial<FabricApplicationDependencies> = {}): F
         );
         const entry = Object.freeze({
           path: "build/libs/infectedfrontier-0.1.0.jar" as const,
+          mode: 420 as const,
+          size: jarBytes.byteLength,
+          sha256: jarSha256,
+          kind: "build-output" as const,
+          provenance: "build" as const,
+        });
+        return Object.freeze({
+          nodeId: "gradle-clean-build" as const,
+          outputs: Object.freeze({
+            entries: Object.freeze([entry]),
+            readFile: (path: unknown): Uint8Array => {
+              assert.equal(path, entry.path);
+              return new Uint8Array(jarBytes);
+            },
+          }),
+        });
+      },
+    }),
+    indexArtifacts: createArtifactIndex,
+    ...overrides,
+  };
+}
+
+function neoForgeFixture() {
+  return {
+    ...validModFixture,
+    gameplay: {
+      items: [{ id: "tidecaller:shell", references: [], maxStackSize: 64 }],
+      blocks: [],
+      entities: [],
+      recipes: [],
+      summoning: [],
+      screens: [],
+    },
+    assets: {
+      ...validModFixture.assets,
+      models: [],
+      textures: [],
+      animations: [],
+    },
+    dependencies: { required: [], optional: [] },
+    integrations: { jei: "off", jade: "off" },
+    tests: { gameTests: [] },
+    packaging: { includeSources: false, publish: false },
+  } as const;
+}
+
+function neoForgeDependencies(
+  overrides: Partial<NeoForgeApplicationDependencies> = {},
+): NeoForgeApplicationDependencies {
+  return {
+    compile: compileNeoForgePhase1,
+    applyWorkspace: applyWorkspacePlan,
+    createRunner: (): NeoForgePhase1BuildRunner => Object.freeze({
+      run: async ({ workspaceRoot, plan, manifest }: BuildRunnerRunInput): Promise<BuildRunnerResult> => {
+        assert.equal(manifest.planId, plan.planId);
+        assert.equal(
+          await readFile(join(workspaceRoot, "src/main/resources/META-INF/neoforge.mods.toml"), "utf8")
+            .then((text) => text.includes("tidecaller")),
+          true,
+        );
+        const entry = Object.freeze({
+          path: "build/libs/tidecaller-0.1.0.jar" as const,
           mode: 420 as const,
           size: jarBytes.byteLength,
           sha256: jarSha256,
@@ -97,6 +165,57 @@ try {
   });
 } finally {
   await rm(root, { recursive: true, force: true });
+}
+
+const neoForgeRoot = await mkdtemp(join(tmpdir(), "mcdev-neoforge-application-"));
+try {
+  let compiled: CompiledNeoForgeProject | undefined;
+  const app = createNeoForgeApplication({
+    java21Home: "/fixed/jdk-21",
+    java25Home: "/fixed/jdk-25",
+    artifactCacheRoot: "/fixed/artifact-cache",
+  }, neoForgeDependencies({
+    compile: async (payload) => {
+      compiled = await compileNeoForgePhase1(payload);
+      return compiled;
+    },
+  }));
+  const result = await app.build({
+    payload: JSON.stringify(neoForgeFixture()),
+    workspaceRoot: neoForgeRoot,
+  });
+  assert.ok(compiled !== undefined);
+  assert.equal(result.planId, compiled.plan.planId);
+  assert.equal(result.workspaceStatus, "created");
+  assert.equal(Object.isFrozen(result), true);
+  assert.equal(result.artifacts.entries.length, compiled.outputs.length + 1);
+  assert.ok(result.artifacts.entries.some(({ path }) =>
+    path === "src/main/resources/META-INF/neoforge.mods.toml"));
+  assert.ok(result.artifacts.entries.some(({ path }) =>
+    path === "build/libs/tidecaller-0.1.0.jar"));
+} finally {
+  await rm(neoForgeRoot, { recursive: true, force: true });
+}
+
+{
+  const app = createNeoForgeApplication({
+    java21Home: "/fixed/jdk-21",
+    java25Home: "/fixed/jdk-25",
+    artifactCacheRoot: "/fixed/artifact-cache",
+  }, neoForgeDependencies());
+  let getterCalls = 0;
+  const hostile = Object.defineProperty({ payload: "{}" }, "workspaceRoot", {
+    enumerable: true,
+    get(): string {
+      getterCalls += 1;
+      return "/must/not/read";
+    },
+  });
+  await assert.rejects(
+    app.build(hostile as unknown as Parameters<typeof app.build>[0]),
+    TypeError,
+  );
+  assert.equal(getterCalls, 0);
 }
 
 {
