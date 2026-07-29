@@ -320,32 +320,23 @@ jobs:
           set -euo pipefail
           metadata=fixtures/fabric-26.2-empty/gradle/verification-metadata.xml
           fabric_expected_artifact_count=411
+          fabric_local_loom_trust='<trust group="net.minecraft" name="minecraft-common-043a8b3edf" version="26.2" file="minecraft-common-043a8b3edf-26.2.jar"'
           test "$(grep -c '<artifact name=' "$metadata")" -eq "$fabric_expected_artifact_count"
           test "$(grep -c '<sha256 value=' "$metadata")" -eq "$fabric_expected_artifact_count"
-          ! grep -Eq '<trusted-artifacts|<sha1|<md5' "$metadata"
+          test "$(grep -c '<trusted-artifacts>' "$metadata")" -eq 1
+          test "$(grep -c '<trust ' "$metadata")" -eq 1
+          test "$(grep -Fc "$fabric_local_loom_trust" "$metadata")" -eq 1
+          ! grep -Eq '<sha1|<md5|regex=' "$metadata"
+          runtime_metadata=packs/fabric-26.2/runtime/templates/gradle/verification-metadata.xml
+          test "$(grep -c '<trusted-artifacts>' "$runtime_metadata")" -eq 1
+          test "$(grep -c '<trust ' "$runtime_metadata")" -eq 1
+          test "$(grep -Fc "$fabric_local_loom_trust" "$runtime_metadata")" -eq 1
+          ! grep -Eq '<sha1|<md5|regex=' "$runtime_metadata"
       - name: Clean-build Fabric and run server GameTests
         working-directory: fixtures/fabric-26.2-empty
         run: >-
           ./gradlew --project-cache-dir "$GRADLE_PROJECT_CACHE_DIR"
-          -Dorg.gradle.dependency.verification.console=verbose
           --dependency-verification strict clean build
-      - name: Report generated Fabric Minecraft checksum on failure
-        if: failure()
-        shell: bash
-        run: |
-          set -euo pipefail
-          mapfile -t generated_jars < <(
-            find \
-              "$GRADLE_USER_HOME" \
-              "$GRADLE_PROJECT_CACHE_DIR" \
-              fixtures/fabric-26.2-empty/.gradle \
-              -type f -name 'minecraft-common-*.jar' -print |
-              sort
-          )
-          test "${#generated_jars[@]}" -gt 0
-          for generated_jar in "${generated_jars[@]}"; do
-            sha256sum "$generated_jar"
-          done
       - name: Upload Fabric server GameTest report
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
