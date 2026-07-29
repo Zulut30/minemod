@@ -4,6 +4,7 @@
       <verify-metadata>true</verify-metadata>
       <verify-signatures>false</verify-signatures>
       <trusted-artifacts>
+         <trust group="net.minecraft" name="minecraft-clientOnly-043a8b3edf" version="26.2" file="minecraft-clientOnly-043a8b3edf-26.2.jar" reason="Fabric Loom generates this local artifact nondeterministically; all downloaded inputs remain checksum-verified."/>
          <trust group="net.minecraft" name="minecraft-common-043a8b3edf" version="26.2" file="minecraft-common-043a8b3edf-26.2.jar" reason="Fabric Loom generates this local artifact nondeterministically; all downloaded inputs remain checksum-verified."/>
       </trusted-artifacts>
    </configuration>

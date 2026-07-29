@@ -40,8 +40,8 @@
     {
       "path": "templates/gradle/verification-metadata.xml",
       "mode": 420,
-      "size": 99793,
-      "sha256": "83ffb48a2bb26827c6ecc730ab43a314b2ac1cf7f9fcfd0730842f3abbf29c28",
+      "size": 100056,
+      "sha256": "0ca86d7a85a6546b03d41de79c39545fc3593d710fba2730fb8394a921d08783",
       "role": "template"
     },
     {

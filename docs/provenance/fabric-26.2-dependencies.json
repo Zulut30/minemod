@@ -6,13 +6,13 @@
   "dependencyInventory": {
     "verificationMetadata": {
       "path": "../../fixtures/fabric-26.2-empty/gradle/verification-metadata.xml",
-      "sha256": "f1d95b29ec3f25f8949f6e30ff1ea216663ff45fa891f05c31ab2c6d94fe2a68"
+      "sha256": "d3081a10c7fbd37487d04041b9c64bd5da1bab56cfd3fce1a26bf7dc73433e87"
     },
     "componentCount": 183,
     "artifactReferenceCount": 411,
     "artifactSha256Count": 411,
     "weakHashCount": 0,
-    "trustedExactArtifactCount": 1,
+    "trustedExactArtifactCount": 2,
     "trustedWildcardCount": 0,
     "transitiveLicenseReviewComplete": false,
     "redistributionBlockedUntilLicenseReview": true
@@ -24,7 +24,7 @@
       "source": "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json",
       "license": "Mojang EULA",
       "redistributed": false,
-      "checksumStatus": "downloaded inputs are pinned; the exact locally generated Loom common JAR is trusted by full GAV and filename"
+      "checksumStatus": "downloaded inputs are pinned; the exact locally generated Loom common/client split JARs are trusted by full GAV and filename"
     },
     {
       "name": "Fabric Loom",

@@ -79,7 +79,7 @@ export const BUILTIN_FABRIC_26_2: BuiltinCompatibilityPackRegistration<
   packId: "fabric-26.2-java-25",
   revision: 1,
   treeEntries: 15,
-  treeSha256: "14bc037fac1bfa14840ecafe46a7fc0266086a2231adcc0ee0478c72251052db",
+  treeSha256: "4f81ea899d8c33468e64f7b707d1e116afac73fdbcc760f6172cb776cf6c3f74",
   trust: "builtin-reviewed",
   releaseStatus: "candidate",
 });
