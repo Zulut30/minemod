@@ -329,6 +329,23 @@ jobs:
           ./gradlew --project-cache-dir "$GRADLE_PROJECT_CACHE_DIR"
           -Dorg.gradle.dependency.verification.console=verbose
           --dependency-verification strict clean build
+      - name: Report generated Fabric Minecraft checksum on failure
+        if: failure()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t generated_jars < <(
+            find \
+              "$GRADLE_USER_HOME" \
+              "$GRADLE_PROJECT_CACHE_DIR" \
+              fixtures/fabric-26.2-empty/.gradle \
+              -type f -name 'minecraft-common-*.jar' -print |
+              sort
+          )
+          test "${#generated_jars[@]}" -gt 0
+          for generated_jar in "${generated_jars[@]}"; do
+            sha256sum "$generated_jar"
+          done
       - name: Upload Fabric server GameTest report
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
