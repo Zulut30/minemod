@@ -133,6 +133,8 @@ pnpm typecheck
 pnpm lint
 ```
 
+`pnpm test` выполняет полный suite на Linux x64 и явно отказывает на другой ОС: он проверяет реальные POSIX file modes и Linux-only build runner. Для Windows используйте `corepack pnpm test:portable`, `corepack pnpm typecheck:all` и `corepack pnpm lint`; packaged Studio проверяется отдельным Windows E2E. Успешный portable suite не подтверждает build/GameTests/dedicated server. [Матрица проверок ОС](docs/production/OS_VERIFICATION.md).
+
 Проверка спецификации:
 
 ```bash
