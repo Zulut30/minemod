@@ -76,6 +76,8 @@ try {
   assert.ok(compiled !== undefined);
   assert.equal(result.planId, compiled.plan.planId);
   assert.equal(result.workspaceStatus, "created");
+  assert.deepEqual(result.warnings, compiled.plan.warnings);
+  assert.equal(Object.isFrozen(result.warnings), true);
   assert.equal(Object.isFrozen(result), true);
   assert.equal(result.artifacts.entries.length, compiled.outputs.length + 1);
   assert.deepEqual(result.artifacts.entries.at(-1), {

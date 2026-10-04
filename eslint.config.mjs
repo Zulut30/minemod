@@ -6,10 +6,10 @@ import tseslint from "typescript-eslint";
 
 export default defineConfig(
   {
-    ignores: ["**/node_modules/**", "**/dist/**", "**/build/**", "**/coverage/**"],
+    ignores: ["**/node_modules/**", "**/dist/**", "**/build/**", "**/coverage/**", "output/**"],
   },
   {
-    files: ["**/*.{js,mjs,ts}"],
+    files: ["**/*.{js,mjs,ts,tsx}"],
     extends: [js.configs.recommended, tseslint.configs.recommended],
   },
 );

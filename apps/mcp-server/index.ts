@@ -4,7 +4,7 @@ import { Transform, type TransformCallback } from "node:stream";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
-import { createFabricApplication } from "@mcdev/application";
+import { compileItemAssetPayload, createFabricApplication, itemAssetDiagnostic, MAX_ITEM_ASSET_PAYLOAD_BYTES } from "@mcdev/application";
 import { isDomainErrorCode } from "@mcdev/contracts";
 import {
   MAX_INLINE_SPEC_BYTES,
@@ -15,6 +15,7 @@ export const MCP_SERVER_NAME = "@mcdev/mcp-server";
 export const MCP_SERVER_VERSION = "0.0.0-phase.0";
 export const MCP_VALIDATE_TOOL_NAME = "mcdev_spec_validate";
 export const MCP_FABRIC_BUILD_TOOL_NAME = "mcdev_fabric_build";
+export const MCP_ITEM_ASSET_TOOL_NAME = "mcdev_asset_compile_item";
 // A payload can expand by up to 6x when control characters are escaped in the
 // outer JSON-RPC string. Two MiB admits that worst case plus a bounded envelope.
 export const MAX_MCP_STDIO_FRAME_BYTES = 2 * 1024 * 1024;
@@ -181,12 +182,26 @@ export function createMcpServer(
   server.registerTool(
     MCP_VALIDATE_TOOL_NAME,
     {
-      description: "Validate one bounded inline ModSpec v0 or ArtSpec v0 locally with loader-neutral validation.",
+      description: "Validate one bounded inline ModSpec v0/v1 or ArtSpec v0 locally with loader-neutral validation.",
       inputSchema: McpValidateInputSchema,
     },
     ({ kind, payload }) => {
       const result = validate(payload, kind);
       return { content: [{ type: "text" as const, text: JSON.stringify(result) }] };
+    },
+  );
+  server.registerTool(
+    MCP_ITEM_ASSET_TOOL_NAME,
+    {
+      description: "Compile a bounded Minecraft 1.20.1 held-item asset into native model JSON, pixel atlas PNG and editable Blockbench data for visual review.",
+      inputSchema: z.strictObject({ payload: z.string().max(MAX_ITEM_ASSET_PAYLOAD_BYTES) }),
+    },
+    ({ payload }) => {
+      try {
+        return { content: [{ type: "text" as const, text: JSON.stringify(compileItemAssetPayload(payload)) }] };
+      } catch (error) {
+        return { isError: true, content: [{ type: "text" as const, text: JSON.stringify(itemAssetDiagnostic(error)) }] };
+      }
     },
   );
   server.registerTool(

@@ -12,6 +12,7 @@
     "strict": true,
     "target": "ES2022"
   },
+  "exclude": ["apps/model-editor/**"],
   "include": [
     "apps/**/*.ts",
     "fixtures/**/*.ts",

@@ -1,0 +1,4036 @@
+{
+  "schemaVersion": 0,
+  "kind": "minecraft-item-asset",
+  "model": {
+    "schemaVersion": 0,
+    "kind": "cuboid-model",
+    "id": "mcdev:aurora_longsword_v2",
+    "name": "Северное сияние · версия 2",
+    "modelType": "held-item",
+    "texture": {
+      "width": 256,
+      "height": 256
+    },
+    "bones": [
+      {
+        "id": "weapon",
+        "parent": null,
+        "pivot": [
+          8,
+          9,
+          8
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "cubes": [
+          {
+            "id": "grip",
+            "origin": [
+              7.375,
+              3.8,
+              7.375
+            ],
+            "size": [
+              1.25,
+              4.7,
+              1.25
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "grip_upper_collar",
+            "origin": [
+              7.25,
+              8.15,
+              7.25
+            ],
+            "size": [
+              1.5,
+              0.45,
+              1.5
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "grip_lower_collar",
+            "origin": [
+              7.25,
+              3.65,
+              7.25
+            ],
+            "size": [
+              1.5,
+              0.45,
+              1.5
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "pommel",
+            "origin": [
+              7.3,
+              2.3,
+              7.3
+            ],
+            "size": [
+              1.4,
+              1.4,
+              1.4
+            ],
+            "pivot": [
+              8,
+              3,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              45
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "pommel_inset_front",
+            "origin": [
+              7.6,
+              2.6,
+              7.14
+            ],
+            "size": [
+              0.8,
+              0.8,
+              0.2
+            ],
+            "pivot": [
+              8,
+              3,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              45
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "pommel_inset_back",
+            "origin": [
+              7.6,
+              2.6,
+              8.66
+            ],
+            "size": [
+              0.8,
+              0.8,
+              0.2
+            ],
+            "pivot": [
+              8,
+              3,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              45
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "guard_center",
+            "origin": [
+              6.7,
+              8.55,
+              7.325
+            ],
+            "size": [
+              2.6,
+              0.85,
+              1.35
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "guard_left",
+            "origin": [
+              3.8,
+              8.55,
+              7.55
+            ],
+            "size": [
+              3.5,
+              0.65,
+              0.9
+            ],
+            "pivot": [
+              7.3,
+              8.9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              22.5
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "guard_right",
+            "origin": [
+              8.7,
+              8.55,
+              7.55
+            ],
+            "size": [
+              3.5,
+              0.65,
+              0.9
+            ],
+            "pivot": [
+              8.7,
+              8.9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              -22.5
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "guard_tip_left",
+            "origin": [
+              3.45,
+              7.55,
+              7.55
+            ],
+            "size": [
+              0.8,
+              0.55,
+              0.9
+            ],
+            "pivot": [
+              3.85,
+              7.825,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              22.5
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "guard_tip_right",
+            "origin": [
+              11.75,
+              7.55,
+              7.55
+            ],
+            "size": [
+              0.8,
+              0.55,
+              0.9
+            ],
+            "pivot": [
+              12.15,
+              7.825,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              -22.5
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "gem_frame_front",
+            "origin": [
+              7.36,
+              8.4,
+              7.05
+            ],
+            "size": [
+              1.28,
+              1.28,
+              0.25
+            ],
+            "pivot": [
+              8,
+              9.04,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              45
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "gem_frame_back",
+            "origin": [
+              7.36,
+              8.4,
+              8.7
+            ],
+            "size": [
+              1.28,
+              1.28,
+              0.25
+            ],
+            "pivot": [
+              8,
+              9.04,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              45
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "gem_front",
+            "origin": [
+              7.56,
+              8.6,
+              6.95
+            ],
+            "size": [
+              0.88,
+              0.88,
+              0.18
+            ],
+            "pivot": [
+              8,
+              9.04,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              45
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "gem_back",
+            "origin": [
+              7.56,
+              8.6,
+              8.87
+            ],
+            "size": [
+              0.88,
+              0.88,
+              0.18
+            ],
+            "pivot": [
+              8,
+              9.04,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              45
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "blade_ricasso",
+            "origin": [
+              6.4,
+              9.4,
+              7.7
+            ],
+            "size": [
+              3.2,
+              1.1,
+              0.6
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "blade_fuller",
+            "origin": [
+              7,
+              10.5,
+              7.75
+            ],
+            "size": [
+              2,
+              12.5,
+              0.5
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "blade_edge_left",
+            "origin": [
+              6.45,
+              10.5,
+              7.83
+            ],
+            "size": [
+              0.55,
+              12.5,
+              0.34
+            ],
+            "pivot": [
+              6.725,
+              16.75,
+              8
+            ],
+            "rotation": [
+              0,
+              -22.5,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "blade_edge_right",
+            "origin": [
+              9,
+              10.5,
+              7.83
+            ],
+            "size": [
+              0.55,
+              12.5,
+              0.34
+            ],
+            "pivot": [
+              9.275,
+              16.75,
+              8
+            ],
+            "rotation": [
+              0,
+              22.5,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip_core_0",
+            "origin": [
+              6.8,
+              23,
+              7.75
+            ],
+            "size": [
+              2.4,
+              0.5,
+              0.5
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip_left_0",
+            "origin": [
+              6.5,
+              23,
+              7.875
+            ],
+            "size": [
+              0.3,
+              0.5,
+              0.25
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip_right_0",
+            "origin": [
+              9.2,
+              23,
+              7.875
+            ],
+            "size": [
+              0.3,
+              0.5,
+              0.25
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip_core_1",
+            "origin": [
+              6.8625,
+              23.5,
+              7.75
+            ],
+            "size": [
+              2.275,
+              0.5,
+              0.5
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip_left_1",
+            "origin": [
+              6.5625,
+              23.5,
+              7.875
+            ],
+            "size": [
+              0.3,
+              0.5,
+              0.25
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip_right_1",
+            "origin": [
+              9.1375,
+              23.5,
+              7.875
+            ],
+            "size": [
+              0.3,
+              0.5,
+              0.25
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip_core_2",
+            "origin": [
+              6.925,
+              24,
+              7.75
+            ],
+            "size": [
+              2.15,
+              0.5,
+              0.5
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip_left_2",
+            "origin": [
+              6.625,
+              24,
+              7.875
+            ],
+            "size": [
+              0.3,
+              0.5,
+              0.25
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip_right_2",
+            "origin": [
+              9.075,
+              24,
+              7.875
+            ],
+            "size": [
+              0.3,
+              0.5,
+              0.25
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip_core_3",
+            "origin": [
+              7.05,
+              24.5,
+              7.75
+            ],
+            "size": [
+              1.9,
+              0.5,
+              0.5
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip_left_3",
+            "origin": [
+              6.75,
+              24.5,
+              7.875
+            ],
+            "size": [
+              0.3,
+              0.5,
+              0.25
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip_right_3",
+            "origin": [
+              8.95,
+              24.5,
+              7.875
+            ],
+            "size": [
+              0.3,
+              0.5,
+              0.25
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip_core_4",
+            "origin": [
+              7.175,
+              25,
+              7.75
+            ],
+            "size": [
+              1.65,
+              0.5,
+              0.5
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip_left_4",
+            "origin": [
+              6.875,
+              25,
+              7.875
+            ],
+            "size": [
+              0.3,
+              0.5,
+              0.25
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip_right_4",
+            "origin": [
+              8.825,
+              25,
+              7.875
+            ],
+            "size": [
+              0.3,
+              0.5,
+              0.25
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip_core_5",
+            "origin": [
+              7.3,
+              25.5,
+              7.75
+            ],
+            "size": [
+              1.4,
+              0.5,
+              0.5
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip_left_5",
+            "origin": [
+              7,
+              25.5,
+              7.875
+            ],
+            "size": [
+              0.3,
+              0.5,
+              0.25
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip_right_5",
+            "origin": [
+              8.7,
+              25.5,
+              7.875
+            ],
+            "size": [
+              0.3,
+              0.5,
+              0.25
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip_core_6",
+            "origin": [
+              7.425,
+              26,
+              7.75
+            ],
+            "size": [
+              1.15,
+              0.5,
+              0.5
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip_left_6",
+            "origin": [
+              7.125,
+              26,
+              7.875
+            ],
+            "size": [
+              0.3,
+              0.5,
+              0.25
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip_right_6",
+            "origin": [
+              8.575,
+              26,
+              7.875
+            ],
+            "size": [
+              0.3,
+              0.5,
+              0.25
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip_core_7",
+            "origin": [
+              7.55,
+              26.5,
+              7.75
+            ],
+            "size": [
+              0.9,
+              0.5,
+              0.5
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip_left_7",
+            "origin": [
+              7.25,
+              26.5,
+              7.875
+            ],
+            "size": [
+              0.3,
+              0.5,
+              0.25
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip_right_7",
+            "origin": [
+              8.45,
+              26.5,
+              7.875
+            ],
+            "size": [
+              0.3,
+              0.5,
+              0.25
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip_core_8",
+            "origin": [
+              7.675,
+              27,
+              7.75
+            ],
+            "size": [
+              0.65,
+              0.5,
+              0.5
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip_left_8",
+            "origin": [
+              7.375,
+              27,
+              7.875
+            ],
+            "size": [
+              0.3,
+              0.5,
+              0.25
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip_right_8",
+            "origin": [
+              8.325,
+              27,
+              7.875
+            ],
+            "size": [
+              0.3,
+              0.5,
+              0.25
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip_core_9",
+            "origin": [
+              7.8,
+              27.5,
+              7.75
+            ],
+            "size": [
+              0.4,
+              0.5,
+              0.5
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip_left_9",
+            "origin": [
+              7.5,
+              27.5,
+              7.875
+            ],
+            "size": [
+              0.3,
+              0.5,
+              0.25
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip_right_9",
+            "origin": [
+              8.2,
+              27.5,
+              7.875
+            ],
+            "size": [
+              0.3,
+              0.5,
+              0.25
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip_10",
+            "origin": [
+              7.625,
+              28,
+              7.875
+            ],
+            "size": [
+              0.75,
+              0.5,
+              0.25
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip_11",
+            "origin": [
+              7.75,
+              28.5,
+              7.875
+            ],
+            "size": [
+              0.5,
+              0.5,
+              0.25
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip_12",
+            "origin": [
+              7.875,
+              29,
+              7.875
+            ],
+            "size": [
+              0.25,
+              0.5,
+              0.25
+            ],
+            "pivot": [
+              8,
+              9,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              0,
+              0
+            ],
+            "inflate": 0,
+            "mirror": false
+          }
+        ]
+      }
+    ]
+  },
+  "texturePlan": {
+    "schemaVersion": 0,
+    "kind": "item-pixel-texture-plan",
+    "modelId": "mcdev:aurora_longsword_v2",
+    "palette": [
+      {
+        "symbol": "0",
+        "color": "#162f3c"
+      },
+      {
+        "symbol": "1",
+        "color": "#294955"
+      },
+      {
+        "symbol": "2",
+        "color": "#3d6570"
+      },
+      {
+        "symbol": "3",
+        "color": "#5b8790"
+      },
+      {
+        "symbol": "4",
+        "color": "#7ea6ac"
+      },
+      {
+        "symbol": "5",
+        "color": "#aac6c6"
+      },
+      {
+        "symbol": "6",
+        "color": "#d4e2dc"
+      },
+      {
+        "symbol": "7",
+        "color": "#f0f3e7"
+      },
+      {
+        "symbol": "8",
+        "color": "#44302a"
+      },
+      {
+        "symbol": "9",
+        "color": "#75513a"
+      },
+      {
+        "symbol": "a",
+        "color": "#a27a47"
+      },
+      {
+        "symbol": "b",
+        "color": "#c69b5f"
+      },
+      {
+        "symbol": "c",
+        "color": "#dfbf82"
+      },
+      {
+        "symbol": "d",
+        "color": "#f3dfaa"
+      },
+      {
+        "symbol": "e",
+        "color": "#17232c"
+      },
+      {
+        "symbol": "f",
+        "color": "#293743"
+      },
+      {
+        "symbol": "g",
+        "color": "#43515b"
+      },
+      {
+        "symbol": "h",
+        "color": "#64717a"
+      },
+      {
+        "symbol": "i",
+        "color": "#154d5f"
+      },
+      {
+        "symbol": "j",
+        "color": "#267d8a"
+      },
+      {
+        "symbol": "k",
+        "color": "#53b9ba"
+      },
+      {
+        "symbol": "l",
+        "color": "#92e1d3"
+      },
+      {
+        "symbol": "m",
+        "color": "#d8fff0"
+      },
+      {
+        "symbol": "n",
+        "color": "#906657"
+      }
+    ],
+    "rows": [
+      "................................................................................................................................................................................................................................................................",
+      ".eeeggff.eeeggff.eeeggff.eeeggff.eeeggff.eeeggff.dddddddd.dddddddd.dddddddd.dddddddd.dddddddd.dddddddd.dddddddd.dddddddd.dddddddd.dddddddd.dddddddd.dddddddd.dddddddd.dddddddd.dddddddd.dddddddd.dddddddd.dddddddd.442366.442366.555.555.552222.552222.442366...",
+      ".eeeggff.eeeggff.eeeggff.eeeggff.eeeggff.eeeggff.dddddddd.dddddddd.dddddddd.dddddddd.dddddddd.dddddddd.dddddddd.dddddddd.dddddddd.dddddddd.dddddddd.dddddddd.dddddddd.dddddddd.dddddddd.dddddddd.dddddddd.dddddddd.442366.442366.555.555.552222.552222.442366...",
+      ".gggffff.gggffff.gggffff.gggffff.gggffff.gggffff.99999999.99999999.99999999.99999999.ccccccaa.ccccccaa.99999999.99999999.99999999.99999999.ccccccaa.ccccccaa.ccccccaa.ccccccaa.ccccccaa.ccccccaa.ccccccaa.ccccccaa.442366.442366.555.555.552222.552222.442366...",
+      ".nnfffff.nnfffff.nnfffff.nnfffff.nnfffff.nnfffff.99999999.99999999.99999999.99999999.ccbbbaaa.ccbbbaaa.99999999.99999999.99999999.99999999.ccbbbaaa.ccbbbaaa.ccbbbaaa.ccbbbaaa.ccbbbaaa.ccbbbaaa.ccbbbaaa.ccbbbaaa.442366.442366.555.555...............442366...",
+      ".fffffee.fffffee.fffffee.fffffee.fffffee.fffffee.....................................ccbbbaaa.ccbbbaaa.....................................ccbbbaaa.ccbbbaaa.ccbbbaaa.ccbbbaaa.ccbbbaaa.ccbbbaaa.ccbbbaaa.ccbbbaaa.442366.442366.555.555...............442366...",
+      ".fffeegg.fffeegg.fffeegg.fffeegg.fffeegg.fffeegg.....................................ccbbbaaa.ccbbbaaa.....................................ccbbbaaa.ccbbbaaa.ccbbbaaa.ccbbbaaa.ccbbbaaa.ccbbbaaa.ccbbbaaa.ccbbbaaa.442366.442366.555.555...............442366...",
+      ".eeeggff.eeeggff.eeeggff.eeeggff.fffeegg.fffeegg.....................................99999999.99999999.....................................99999999.99999999.99999999.99999999.99999999.99999999.99999999.99999999..............................................",
+      ".gggffff.gggffff.gggffff.gggffff.....................................................99999999.99999999.....................................99999999.99999999.99999999.99999999.99999999.99999999.99999999.99999999..............................................",
+      ".fffffff.fffffff.fffffff.fffffff................................................................................................................................................................................................................................",
+      ".nnfffee.nnfffee.nnfffee.nnfffee................................................................................................................................................................................................................................",
+      ".fffeegg.fffeegg.fffeegg.fffeegg................................................................................................................................................................................................................................",
+      ".eeeggff.eeeggff.eeeggff.eeeggff................................................................................................................................................................................................................................",
+      ".gggffff.gggffff.gggffff.gggffff................................................................................................................................................................................................................................",
+      ".fffffff.fffffff.fffffff.fffffff................................................................................................................................................................................................................................",
+      ".fffffee.fffffee.fffffee.fffffee................................................................................................................................................................................................................................",
+      ".nnfeegg.nnfeegg.nnfeegg.nnfeegg................................................................................................................................................................................................................................",
+      ".eeeggff.eeeggff.eeeggff.eeeggff................................................................................................................................................................................................................................",
+      ".gggffff.gggffff.gggffff.gggffff................................................................................................................................................................................................................................",
+      ".fffffff.fffffff.fffffff.fffffff................................................................................................................................................................................................................................",
+      ".fffffee.fffffee.fffffee.fffffee................................................................................................................................................................................................................................",
+      ".fffffee.fffffee.fffffee.fffffee................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      ".442366.555.555.552222.552222.ddddddddddddd.ddddddddddddd.dddddddd.dddddddd.ddddddddddddd.ddddddddddddd.dddddddddddddddd.dddddddddddddddd.dddddd.dddddd.dddddddddddddddd.dddddddddddddddd.dddddddddddddddd.dddddddddddddddd.dddddd.dddddd.dddddddddddddddd......",
+      ".442366.555.555.552222.552222.ddddddddddddd.ddddddddddddd.dddddddd.dddddddd.ddddddddddddd.ddddddddddddd.dddddddddddddddd.dddddddddddddddd.dddddd.dddddd.dddddddddddddddd.dddddddddddddddd.dddddddddddddddd.dddddddddddddddd.dddddd.dddddd.dddddddddddddddd......",
+      ".442366.555.555.552222.552222.ccbbbbbbaaaaa.ccbbbbbbaaaaa.ccbbbaaa.ccbbbaaa.cccccccccccaa.cccccccccccaa.ccbbbbbbbbaaaaaa.ccbbbbbbbbaaaaaa.ccbbaa.ccbbaa.ccbbbbbbbbaaaaaa.ccbbbbbbbbaaaaaa.ccbbbbbbbbaaaaaa.ccbbbbbbbbaaaaaa.ccbbaa.ccbbaa.ccbbbbbbbbaaaaaa......",
+      ".442366.555.555...............ccbbbbbbaaaaa.ccbbbbbbaaaaa.ccbbbaaa.ccbbbaaa.ccbbbbbbaaaaa.ccbbbbbbaaaaa.9999999999999999.9999999999999999.999999.999999.ccbbbbbbbbaaaaaa.ccbbbbbbbbaaaaaa.9999999999999999.9999999999999999.999999.999999.ccbbbbbbbbaaaaaa......",
+      ".442366.555.555...............9999999999999.9999999999999.99999999.99999999.ccbbbbbbaaaaa.ccbbbbbbaaaaa.9999999999999999.9999999999999999.999999.999999.9999999999999999.9999999999999999.9999999999999999.9999999999999999.999999.999999.9999999999999999......",
+      ".442366.555.555...............9999999999999.9999999999999.99999999.99999999.ccbbbbbbaaaaa.ccbbbbbbaaaaa.................................................9999999999999999.9999999999999999.................................................9999999999999999......",
+      "............................................................................9999999999999.9999999999999.........................................................................................................................................................",
+      "............................................................................9999999999999.9999999999999.........................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      ".dddddddddddddddd.442366.442366.552222.552222.552222.552222.442366.442366.552222.552222.552222.552222.dddddddd.dddddddd.ddd.ddd.dddddddd.dddddddd.dddddddd.dddddddd.ddd.ddd.dddddddd.dddddddd.mmllll.mmllll.mmm.mmm.mmlljj.mmlljj.mmllll.mmllll.mmm.mmm.mmlljj..",
+      ".dddddddddddddddd.442366.442366.552222.552222.552222.552222.442366.442366.552222.552222.552222.552222.dddddddd.dddddddd.ddd.ddd.dddddddd.dddddddd.dddddddd.dddddddd.ddd.ddd.dddddddd.dddddddd.mmllll.mmllll.mmm.mmm.mmlljj.mmlljj.mmllll.mmllll.mmm.mmm.mmlljj..",
+      ".ccbbbbbbbbaaaaaa.442366.442366.552222.552222.552222.552222.442366.442366.552222.552222.552222.552222.ccccccaa.ccccccaa.ccc.ccc.dddddddd.dddddddd.ccccccaa.ccccccaa.ccc.ccc.dddddddd.dddddddd.mmlljj.mmlljj.mmm.mmm.mmlljj.mmlljj.mmlljj.mmlljj.mmm.mmm.mmlljj..",
+      ".ccbbbbbbbbaaaaaa.442366.442366.552222.552222.552222.552222.442366.442366.552222.552222.552222.552222.ccbbbaaa.ccbbbaaa.ccc.ccc...................ccbbbaaa.ccbbbaaa.ccc.ccc...................lllkjj.lllkjj.lll.lll...............lllkjj.lllkjj.lll.lll.........",
+      ".9999999999999999.442366.442366.552222.552222.552222.552222.442366.442366.552222.552222.552222.552222.ccbbbaaa.ccbbbaaa.ccc.ccc...................ccbbbaaa.ccbbbaaa.ccc.ccc...................llkkjj.llkkjj.kkk.kkk...............llkkjj.llkkjj.kkk.kkk.........",
+      ".9999999999999999.............................552222.552222.............................552222.552222.ccbbbaaa.ccbbbaaa.ccc.ccc...................ccbbbaaa.ccbbbaaa.ccc.ccc...................llkkjj.llkkjj.kkk.kkk...............llkkjj.llkkjj.kkk.kkk.........",
+      "......................................................................................................99999999.99999999.999.999...................99999999.99999999.999.999.....................................................................................",
+      "......................................................................................................99999999.99999999.999.999...................99999999.99999999.999.999.....................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      ".mmlljj.666433222334666.666433222334666.55222.55222.552222222222222.552222222222222.6643003466.6643003466.5522.5522.5522222222.5522222222.77644.77644.7744.7744.77644.77644.77644.77644.7744.7744.77644.77644.664332234466.664332234466.5522.5522.552222222222..",
+      ".mmlljj.666433222334666.666433222334666.55222.55222.552222222222222.552222222222222.6643003466.6643003466.5522.5522.5522222222.5522222222.77644.77644.7744.7744.77644.77644.77644.77644.7744.7744.77644.77644.664332234466.664332234466.5522.5522.552222222222..",
+      ".mmlljj.666433222334666.666433222334666.55222.55222.552222222222222.552222222222222.6643003466.6643003466.5522.5522.5522222222.5522222222.77644.77644.7744.7744.77644.77644.77644.77644.7744.7744.77644.77644.664332234466.664332234466.5522.5522.552222222222..",
+      "........666433222334666.666433222334666.55222.55222.552222222222222.552222222222222.6643003466.6643003466.5522.5522.5522222222.5522222222.77644.77644.7744.7744.77644.77644.77644.77644.7744.7744.77644.77644.664332234466.664332234466.5522.5522.552222222222..",
+      "........666433222334666.666433222334666.55222.55222.552222222222222.552222222222222.6643003466.6643003466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "........666433222334666.666433222334666.55222.55222.................................6643003466.6643003466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "........666433222334666.666433222334666.55222.55222.................................6643003466.6643003466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................6643003466.6643003466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................6643003466.6643003466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................6643003466.6643003466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................6643003466.6643003466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................6655005566.6655005566.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................6643003466.6643003466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................6643003466.6643003466.5522.5522.......................77633.77633.7733.7733.............77633.77633.7733.7733...............................................................",
+      "....................................................................................6643003466.6643003466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................6643003466.6643003466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................66430k3466.66430k3466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................6643lk3466.6643lk3466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................6643lk3466.6643lk3466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................66430kj466.66430kj466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................66430k3466.66430k3466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................6643003466.6643003466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................66430k3466.66430k3466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................66430k3466.66430k3466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................6643lk3466.6643lk3466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................6643lk3466.6643lk3466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................66430kj466.66430kj466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................6643003466.6643003466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................66430k3466.66430k3466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................66430k3466.66430k3466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................66430k3466.66430k3466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................66430kj466.66430kj466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................6643lk3466.6643lk3466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................66430k3466.66430k3466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................6643003466.6643003466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................6643003466.6643003466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................6643003466.6643003466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................6643003466.6643003466.5522.5522.......................77633.77633.7733.7733.............77633.77633.7733.7733...............................................................",
+      "....................................................................................6643003466.6643003466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................6643003466.6643003466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................6643003466.6643003466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................6643003466.6643003466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................6643003466.6643003466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................6643003466.6643003466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................6643003466.6643003466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................6643003466.6643003466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................6643003466.6643003466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................6643003466.6643003466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................6643003466.6643003466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................6643003466.6643003466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................6643003466.6643003466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "....................................................................................6643003466.6643003466.5522.5522.......................77644.77644.7744.7744.............77644.77644.7744.7744...............................................................",
+      "................................................................................................................................................................................................................................................................",
+      ".552222222222.7744.7744.555.555.7744.7744.7744.7744.555.555.7744.7744.664332234466.664332234466.5522.5522.552222222222.552222222222.7744.7744.555.555.7744.7744.7744.7744.555.555.7744.7744.66432223466.66432223466.5522.5522.55222222222.55222222222.7744.7744.",
+      ".552222222222.7744.7744.555.555.7744.7744.7744.7744.555.555.7744.7744.664332234466.664332234466.5522.5522.552222222222.552222222222.7744.7744.555.555.7744.7744.7744.7744.555.555.7744.7744.66432223466.66432223466.5522.5522.55222222222.55222222222.7744.7744.",
+      ".552222222222.7744.7744.555.555.7744.7744.7744.7744.555.555.7744.7744.664332234466.664332234466.5522.5522.552222222222.552222222222.7744.7744.555.555.7744.7744.7744.7744.555.555.7744.7744.66432223466.66432223466.5522.5522.55222222222.55222222222.7744.7744.",
+      ".552222222222.7744.7744.555.555...........7744.7744.555.555...........664332234466.664332234466.5522.5522.552222222222.552222222222.7744.7744.555.555...........7744.7744.555.555...........66432223466.66432223466.5522.5522.55222222222.55222222222.7744.7744.",
+      "................................................................................................................................................................................................................................................................",
+      ".555.555.7744.7744.7744.7744.555.555.7744.7744.6643223466.6643223466.5522.5522.5522222222.5522222222.7744.7744.555.555.7744.7744.7744.7744.555.555.7744.7744.664323466.664323466.5522.5522.552222222.552222222.7744.7744.555.555.7744.7744.7744.7744.555.555....",
+      ".555.555.7744.7744.7744.7744.555.555.7744.7744.6643223466.6643223466.5522.5522.5522222222.5522222222.7744.7744.555.555.7744.7744.7744.7744.555.555.7744.7744.664323466.664323466.5522.5522.552222222.552222222.7744.7744.555.555.7744.7744.7744.7744.555.555....",
+      ".555.555.7744.7744.7744.7744.555.555.7744.7744.6643223466.6643223466.5522.5522.5522222222.5522222222.7744.7744.555.555.7744.7744.7744.7744.555.555.7744.7744.664323466.664323466.5522.5522.552222222.552222222.7744.7744.555.555.7744.7744.7744.7744.555.555....",
+      ".555.555...........7744.7744.555.555...........6643223466.6643223466.5522.5522.5522222222.5522222222.7744.7744.555.555...........7744.7744.555.555...........664323466.664323466.5522.5522.552222222.552222222.7744.7744.555.555...........7744.7744.555.555....",
+      "................................................................................................................................................................................................................................................................",
+      ".7744.7744.66322466.66322466.5522.5522.55222222.55222222.7744.7744.555.555.7744.7744.7744.7744.555.555.7744.7744.6632366.6632366.5522.5522.5522222.5522222.7744.7744.555.555.7744.7744.7744.7744.555.555.7744.7744.442366.442366.5522.5522.552222.552222.7744...",
+      ".7744.7744.66322466.66322466.5522.5522.55222222.55222222.7744.7744.555.555.7744.7744.7744.7744.555.555.7744.7744.6632366.6632366.5522.5522.5522222.5522222.7744.7744.555.555.7744.7744.7744.7744.555.555.7744.7744.442366.442366.5522.5522.552222.552222.7744...",
+      ".7744.7744.66322466.66322466.5522.5522.55222222.55222222.7744.7744.555.555.7744.7744.7744.7744.555.555.7744.7744.6632366.6632366.5522.5522.5522222.5522222.7744.7744.555.555.7744.7744.7744.7744.555.555.7744.7744.442366.442366.5522.5522.552222.552222.7744...",
+      "...........66322466.66322466.5522.5522.55222222.55222222.7744.7744.555.555...........7744.7744.555.555...........6632366.6632366.5522.5522.5522222.5522222.7744.7744.555.555...........7744.7744.555.555...........442366.442366.5522.5522.552222.552222.7744...",
+      "................................................................................................................................................................................................................................................................",
+      ".7744.555.555.7744.7744.7744.7744.555.555.7744.7744.44244.44244.5522.5522.55222.55222.7744.7744.555.555.7744.7744.7744.7744.555.555.7744.7744.3344.3344.5522.5522.5522.5522.7744.7744.555.555.7744.7744.7744.7744.555.555.7744.7744.77644.77644.555.555.77644...",
+      ".7744.555.555.7744.7744.7744.7744.555.555.7744.7744.44244.44244.5522.5522.55222.55222.7744.7744.555.555.7744.7744.7744.7744.555.555.7744.7744.3344.3344.5522.5522.5522.5522.7744.7744.555.555.7744.7744.7744.7744.555.555.7744.7744.77644.77644.555.555.77644...",
+      ".7744.555.555.7744.7744.7744.7744.555.555.7744.7744.44244.44244.5522.5522.55222.55222.7744.7744.555.555.7744.7744.7744.7744.555.555.7744.7744.3344.3344.5522.5522.5522.5522.7744.7744.555.555.7744.7744.7744.7744.555.555.7744.7744.77644.77644.555.555.77644...",
+      ".7744.555.555...........7744.7744.555.555...........44244.44244.5522.5522.55222.55222.7744.7744.555.555...........7744.7744.555.555...........3344.3344.5522.5522.5522.5522.7744.7744.555.555...........7744.7744.555.555...........77644.77644.555.555.........",
+      "................................................................................................................................................................................................................................................................",
+      ".77644.7744.7744.555.555.7744.7744.666.666.555.555.555.555......................................................................................................................................................................................................",
+      ".77644.7744.7744.555.555.7744.7744.666.666.555.555.555.555......................................................................................................................................................................................................",
+      ".77644.7744.7744.555.555.7744.7744.666.666.555.555.555.555......................................................................................................................................................................................................",
+      ".......7744.7744.555.555...........666.666.555.555..............................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................",
+      "................................................................................................................................................................................................................................................................"
+    ],
+    "faces": [
+      {
+        "cubeId": "grip",
+        "uv": {
+          "north": [
+            2,
+            2,
+            7,
+            21
+          ],
+          "south": [
+            10,
+            2,
+            15,
+            21
+          ],
+          "east": [
+            18,
+            2,
+            23,
+            21
+          ],
+          "west": [
+            26,
+            2,
+            31,
+            21
+          ],
+          "up": [
+            34,
+            2,
+            39,
+            7
+          ],
+          "down": [
+            42,
+            2,
+            47,
+            7
+          ]
+        }
+      },
+      {
+        "cubeId": "grip_upper_collar",
+        "uv": {
+          "north": [
+            50,
+            2,
+            56,
+            4
+          ],
+          "south": [
+            59,
+            2,
+            65,
+            4
+          ],
+          "east": [
+            68,
+            2,
+            74,
+            4
+          ],
+          "west": [
+            77,
+            2,
+            83,
+            4
+          ],
+          "up": [
+            86,
+            2,
+            92,
+            8
+          ],
+          "down": [
+            95,
+            2,
+            101,
+            8
+          ]
+        }
+      },
+      {
+        "cubeId": "grip_lower_collar",
+        "uv": {
+          "north": [
+            104,
+            2,
+            110,
+            4
+          ],
+          "south": [
+            113,
+            2,
+            119,
+            4
+          ],
+          "east": [
+            122,
+            2,
+            128,
+            4
+          ],
+          "west": [
+            131,
+            2,
+            137,
+            4
+          ],
+          "up": [
+            140,
+            2,
+            146,
+            8
+          ],
+          "down": [
+            149,
+            2,
+            155,
+            8
+          ]
+        }
+      },
+      {
+        "cubeId": "pommel",
+        "uv": {
+          "north": [
+            158,
+            2,
+            164,
+            8
+          ],
+          "south": [
+            167,
+            2,
+            173,
+            8
+          ],
+          "east": [
+            176,
+            2,
+            182,
+            8
+          ],
+          "west": [
+            185,
+            2,
+            191,
+            8
+          ],
+          "up": [
+            194,
+            2,
+            200,
+            8
+          ],
+          "down": [
+            203,
+            2,
+            209,
+            8
+          ]
+        }
+      },
+      {
+        "cubeId": "pommel_inset_front",
+        "uv": {
+          "north": [
+            212,
+            2,
+            216,
+            6
+          ],
+          "south": [
+            219,
+            2,
+            223,
+            6
+          ],
+          "east": [
+            226,
+            2,
+            227,
+            6
+          ],
+          "west": [
+            230,
+            2,
+            231,
+            6
+          ],
+          "up": [
+            234,
+            2,
+            238,
+            3
+          ],
+          "down": [
+            241,
+            2,
+            245,
+            3
+          ]
+        }
+      },
+      {
+        "cubeId": "pommel_inset_back",
+        "uv": {
+          "north": [
+            248,
+            2,
+            252,
+            6
+          ],
+          "south": [
+            2,
+            24,
+            6,
+            28
+          ],
+          "east": [
+            9,
+            24,
+            10,
+            28
+          ],
+          "west": [
+            13,
+            24,
+            14,
+            28
+          ],
+          "up": [
+            17,
+            24,
+            21,
+            25
+          ],
+          "down": [
+            24,
+            24,
+            28,
+            25
+          ]
+        }
+      },
+      {
+        "cubeId": "guard_center",
+        "uv": {
+          "north": [
+            31,
+            24,
+            42,
+            28
+          ],
+          "south": [
+            45,
+            24,
+            56,
+            28
+          ],
+          "east": [
+            59,
+            24,
+            65,
+            28
+          ],
+          "west": [
+            68,
+            24,
+            74,
+            28
+          ],
+          "up": [
+            77,
+            24,
+            88,
+            30
+          ],
+          "down": [
+            91,
+            24,
+            102,
+            30
+          ]
+        }
+      },
+      {
+        "cubeId": "guard_left",
+        "uv": {
+          "north": [
+            105,
+            24,
+            119,
+            27
+          ],
+          "south": [
+            122,
+            24,
+            136,
+            27
+          ],
+          "east": [
+            139,
+            24,
+            143,
+            27
+          ],
+          "west": [
+            146,
+            24,
+            150,
+            27
+          ],
+          "up": [
+            153,
+            24,
+            167,
+            28
+          ],
+          "down": [
+            170,
+            24,
+            184,
+            28
+          ]
+        }
+      },
+      {
+        "cubeId": "guard_right",
+        "uv": {
+          "north": [
+            187,
+            24,
+            201,
+            27
+          ],
+          "south": [
+            204,
+            24,
+            218,
+            27
+          ],
+          "east": [
+            221,
+            24,
+            225,
+            27
+          ],
+          "west": [
+            228,
+            24,
+            232,
+            27
+          ],
+          "up": [
+            235,
+            24,
+            249,
+            28
+          ],
+          "down": [
+            2,
+            33,
+            16,
+            37
+          ]
+        }
+      },
+      {
+        "cubeId": "guard_tip_left",
+        "uv": {
+          "north": [
+            19,
+            33,
+            23,
+            36
+          ],
+          "south": [
+            26,
+            33,
+            30,
+            36
+          ],
+          "east": [
+            33,
+            33,
+            37,
+            36
+          ],
+          "west": [
+            40,
+            33,
+            44,
+            36
+          ],
+          "up": [
+            47,
+            33,
+            51,
+            37
+          ],
+          "down": [
+            54,
+            33,
+            58,
+            37
+          ]
+        }
+      },
+      {
+        "cubeId": "guard_tip_right",
+        "uv": {
+          "north": [
+            61,
+            33,
+            65,
+            36
+          ],
+          "south": [
+            68,
+            33,
+            72,
+            36
+          ],
+          "east": [
+            75,
+            33,
+            79,
+            36
+          ],
+          "west": [
+            82,
+            33,
+            86,
+            36
+          ],
+          "up": [
+            89,
+            33,
+            93,
+            37
+          ],
+          "down": [
+            96,
+            33,
+            100,
+            37
+          ]
+        }
+      },
+      {
+        "cubeId": "gem_frame_front",
+        "uv": {
+          "north": [
+            103,
+            33,
+            109,
+            39
+          ],
+          "south": [
+            112,
+            33,
+            118,
+            39
+          ],
+          "east": [
+            121,
+            33,
+            122,
+            39
+          ],
+          "west": [
+            125,
+            33,
+            126,
+            39
+          ],
+          "up": [
+            129,
+            33,
+            135,
+            34
+          ],
+          "down": [
+            138,
+            33,
+            144,
+            34
+          ]
+        }
+      },
+      {
+        "cubeId": "gem_frame_back",
+        "uv": {
+          "north": [
+            147,
+            33,
+            153,
+            39
+          ],
+          "south": [
+            156,
+            33,
+            162,
+            39
+          ],
+          "east": [
+            165,
+            33,
+            166,
+            39
+          ],
+          "west": [
+            169,
+            33,
+            170,
+            39
+          ],
+          "up": [
+            173,
+            33,
+            179,
+            34
+          ],
+          "down": [
+            182,
+            33,
+            188,
+            34
+          ]
+        }
+      },
+      {
+        "cubeId": "gem_front",
+        "uv": {
+          "north": [
+            191,
+            33,
+            195,
+            37
+          ],
+          "south": [
+            198,
+            33,
+            202,
+            37
+          ],
+          "east": [
+            205,
+            33,
+            206,
+            37
+          ],
+          "west": [
+            209,
+            33,
+            210,
+            37
+          ],
+          "up": [
+            213,
+            33,
+            217,
+            34
+          ],
+          "down": [
+            220,
+            33,
+            224,
+            34
+          ]
+        }
+      },
+      {
+        "cubeId": "gem_back",
+        "uv": {
+          "north": [
+            227,
+            33,
+            231,
+            37
+          ],
+          "south": [
+            234,
+            33,
+            238,
+            37
+          ],
+          "east": [
+            241,
+            33,
+            242,
+            37
+          ],
+          "west": [
+            245,
+            33,
+            246,
+            37
+          ],
+          "up": [
+            249,
+            33,
+            253,
+            34
+          ],
+          "down": [
+            2,
+            42,
+            6,
+            43
+          ]
+        }
+      },
+      {
+        "cubeId": "blade_ricasso",
+        "uv": {
+          "north": [
+            9,
+            42,
+            22,
+            47
+          ],
+          "south": [
+            25,
+            42,
+            38,
+            47
+          ],
+          "east": [
+            41,
+            42,
+            44,
+            47
+          ],
+          "west": [
+            47,
+            42,
+            50,
+            47
+          ],
+          "up": [
+            53,
+            42,
+            66,
+            45
+          ],
+          "down": [
+            69,
+            42,
+            82,
+            45
+          ]
+        }
+      },
+      {
+        "cubeId": "blade_fuller",
+        "uv": {
+          "north": [
+            85,
+            42,
+            93,
+            92
+          ],
+          "south": [
+            96,
+            42,
+            104,
+            92
+          ],
+          "east": [
+            107,
+            42,
+            109,
+            92
+          ],
+          "west": [
+            112,
+            42,
+            114,
+            92
+          ],
+          "up": [
+            117,
+            42,
+            125,
+            44
+          ],
+          "down": [
+            128,
+            42,
+            136,
+            44
+          ]
+        }
+      },
+      {
+        "cubeId": "blade_edge_left",
+        "uv": {
+          "north": [
+            139,
+            42,
+            142,
+            92
+          ],
+          "south": [
+            145,
+            42,
+            148,
+            92
+          ],
+          "east": [
+            151,
+            42,
+            153,
+            92
+          ],
+          "west": [
+            156,
+            42,
+            158,
+            92
+          ],
+          "up": [
+            161,
+            42,
+            164,
+            44
+          ],
+          "down": [
+            167,
+            42,
+            170,
+            44
+          ]
+        }
+      },
+      {
+        "cubeId": "blade_edge_right",
+        "uv": {
+          "north": [
+            173,
+            42,
+            176,
+            92
+          ],
+          "south": [
+            179,
+            42,
+            182,
+            92
+          ],
+          "east": [
+            185,
+            42,
+            187,
+            92
+          ],
+          "west": [
+            190,
+            42,
+            192,
+            92
+          ],
+          "up": [
+            195,
+            42,
+            198,
+            44
+          ],
+          "down": [
+            201,
+            42,
+            204,
+            44
+          ]
+        }
+      },
+      {
+        "cubeId": "tip_core_0",
+        "uv": {
+          "north": [
+            207,
+            42,
+            217,
+            44
+          ],
+          "south": [
+            220,
+            42,
+            230,
+            44
+          ],
+          "east": [
+            233,
+            42,
+            235,
+            44
+          ],
+          "west": [
+            238,
+            42,
+            240,
+            44
+          ],
+          "up": [
+            243,
+            42,
+            253,
+            44
+          ],
+          "down": [
+            2,
+            95,
+            12,
+            97
+          ]
+        }
+      },
+      {
+        "cubeId": "tip_left_0",
+        "uv": {
+          "north": [
+            15,
+            95,
+            17,
+            97
+          ],
+          "south": [
+            20,
+            95,
+            22,
+            97
+          ],
+          "east": [
+            25,
+            95,
+            26,
+            97
+          ],
+          "west": [
+            29,
+            95,
+            30,
+            97
+          ],
+          "up": [
+            33,
+            95,
+            35,
+            96
+          ],
+          "down": [
+            38,
+            95,
+            40,
+            96
+          ]
+        }
+      },
+      {
+        "cubeId": "tip_right_0",
+        "uv": {
+          "north": [
+            43,
+            95,
+            45,
+            97
+          ],
+          "south": [
+            48,
+            95,
+            50,
+            97
+          ],
+          "east": [
+            53,
+            95,
+            54,
+            97
+          ],
+          "west": [
+            57,
+            95,
+            58,
+            97
+          ],
+          "up": [
+            61,
+            95,
+            63,
+            96
+          ],
+          "down": [
+            66,
+            95,
+            68,
+            96
+          ]
+        }
+      },
+      {
+        "cubeId": "tip_core_1",
+        "uv": {
+          "north": [
+            71,
+            95,
+            81,
+            97
+          ],
+          "south": [
+            84,
+            95,
+            94,
+            97
+          ],
+          "east": [
+            97,
+            95,
+            99,
+            97
+          ],
+          "west": [
+            102,
+            95,
+            104,
+            97
+          ],
+          "up": [
+            107,
+            95,
+            117,
+            97
+          ],
+          "down": [
+            120,
+            95,
+            130,
+            97
+          ]
+        }
+      },
+      {
+        "cubeId": "tip_left_1",
+        "uv": {
+          "north": [
+            133,
+            95,
+            135,
+            97
+          ],
+          "south": [
+            138,
+            95,
+            140,
+            97
+          ],
+          "east": [
+            143,
+            95,
+            144,
+            97
+          ],
+          "west": [
+            147,
+            95,
+            148,
+            97
+          ],
+          "up": [
+            151,
+            95,
+            153,
+            96
+          ],
+          "down": [
+            156,
+            95,
+            158,
+            96
+          ]
+        }
+      },
+      {
+        "cubeId": "tip_right_1",
+        "uv": {
+          "north": [
+            161,
+            95,
+            163,
+            97
+          ],
+          "south": [
+            166,
+            95,
+            168,
+            97
+          ],
+          "east": [
+            171,
+            95,
+            172,
+            97
+          ],
+          "west": [
+            175,
+            95,
+            176,
+            97
+          ],
+          "up": [
+            179,
+            95,
+            181,
+            96
+          ],
+          "down": [
+            184,
+            95,
+            186,
+            96
+          ]
+        }
+      },
+      {
+        "cubeId": "tip_core_2",
+        "uv": {
+          "north": [
+            189,
+            95,
+            198,
+            97
+          ],
+          "south": [
+            201,
+            95,
+            210,
+            97
+          ],
+          "east": [
+            213,
+            95,
+            215,
+            97
+          ],
+          "west": [
+            218,
+            95,
+            220,
+            97
+          ],
+          "up": [
+            223,
+            95,
+            232,
+            97
+          ],
+          "down": [
+            235,
+            95,
+            244,
+            97
+          ]
+        }
+      },
+      {
+        "cubeId": "tip_left_2",
+        "uv": {
+          "north": [
+            247,
+            95,
+            249,
+            97
+          ],
+          "south": [
+            252,
+            95,
+            254,
+            97
+          ],
+          "east": [
+            2,
+            100,
+            3,
+            102
+          ],
+          "west": [
+            6,
+            100,
+            7,
+            102
+          ],
+          "up": [
+            10,
+            100,
+            12,
+            101
+          ],
+          "down": [
+            15,
+            100,
+            17,
+            101
+          ]
+        }
+      },
+      {
+        "cubeId": "tip_right_2",
+        "uv": {
+          "north": [
+            20,
+            100,
+            22,
+            102
+          ],
+          "south": [
+            25,
+            100,
+            27,
+            102
+          ],
+          "east": [
+            30,
+            100,
+            31,
+            102
+          ],
+          "west": [
+            34,
+            100,
+            35,
+            102
+          ],
+          "up": [
+            38,
+            100,
+            40,
+            101
+          ],
+          "down": [
+            43,
+            100,
+            45,
+            101
+          ]
+        }
+      },
+      {
+        "cubeId": "tip_core_3",
+        "uv": {
+          "north": [
+            48,
+            100,
+            56,
+            102
+          ],
+          "south": [
+            59,
+            100,
+            67,
+            102
+          ],
+          "east": [
+            70,
+            100,
+            72,
+            102
+          ],
+          "west": [
+            75,
+            100,
+            77,
+            102
+          ],
+          "up": [
+            80,
+            100,
+            88,
+            102
+          ],
+          "down": [
+            91,
+            100,
+            99,
+            102
+          ]
+        }
+      },
+      {
+        "cubeId": "tip_left_3",
+        "uv": {
+          "north": [
+            102,
+            100,
+            104,
+            102
+          ],
+          "south": [
+            107,
+            100,
+            109,
+            102
+          ],
+          "east": [
+            112,
+            100,
+            113,
+            102
+          ],
+          "west": [
+            116,
+            100,
+            117,
+            102
+          ],
+          "up": [
+            120,
+            100,
+            122,
+            101
+          ],
+          "down": [
+            125,
+            100,
+            127,
+            101
+          ]
+        }
+      },
+      {
+        "cubeId": "tip_right_3",
+        "uv": {
+          "north": [
+            130,
+            100,
+            132,
+            102
+          ],
+          "south": [
+            135,
+            100,
+            137,
+            102
+          ],
+          "east": [
+            140,
+            100,
+            141,
+            102
+          ],
+          "west": [
+            144,
+            100,
+            145,
+            102
+          ],
+          "up": [
+            148,
+            100,
+            150,
+            101
+          ],
+          "down": [
+            153,
+            100,
+            155,
+            101
+          ]
+        }
+      },
+      {
+        "cubeId": "tip_core_4",
+        "uv": {
+          "north": [
+            158,
+            100,
+            165,
+            102
+          ],
+          "south": [
+            168,
+            100,
+            175,
+            102
+          ],
+          "east": [
+            178,
+            100,
+            180,
+            102
+          ],
+          "west": [
+            183,
+            100,
+            185,
+            102
+          ],
+          "up": [
+            188,
+            100,
+            195,
+            102
+          ],
+          "down": [
+            198,
+            100,
+            205,
+            102
+          ]
+        }
+      },
+      {
+        "cubeId": "tip_left_4",
+        "uv": {
+          "north": [
+            208,
+            100,
+            210,
+            102
+          ],
+          "south": [
+            213,
+            100,
+            215,
+            102
+          ],
+          "east": [
+            218,
+            100,
+            219,
+            102
+          ],
+          "west": [
+            222,
+            100,
+            223,
+            102
+          ],
+          "up": [
+            226,
+            100,
+            228,
+            101
+          ],
+          "down": [
+            231,
+            100,
+            233,
+            101
+          ]
+        }
+      },
+      {
+        "cubeId": "tip_right_4",
+        "uv": {
+          "north": [
+            236,
+            100,
+            238,
+            102
+          ],
+          "south": [
+            241,
+            100,
+            243,
+            102
+          ],
+          "east": [
+            246,
+            100,
+            247,
+            102
+          ],
+          "west": [
+            250,
+            100,
+            251,
+            102
+          ],
+          "up": [
+            2,
+            105,
+            4,
+            106
+          ],
+          "down": [
+            7,
+            105,
+            9,
+            106
+          ]
+        }
+      },
+      {
+        "cubeId": "tip_core_5",
+        "uv": {
+          "north": [
+            12,
+            105,
+            18,
+            107
+          ],
+          "south": [
+            21,
+            105,
+            27,
+            107
+          ],
+          "east": [
+            30,
+            105,
+            32,
+            107
+          ],
+          "west": [
+            35,
+            105,
+            37,
+            107
+          ],
+          "up": [
+            40,
+            105,
+            46,
+            107
+          ],
+          "down": [
+            49,
+            105,
+            55,
+            107
+          ]
+        }
+      },
+      {
+        "cubeId": "tip_left_5",
+        "uv": {
+          "north": [
+            58,
+            105,
+            60,
+            107
+          ],
+          "south": [
+            63,
+            105,
+            65,
+            107
+          ],
+          "east": [
+            68,
+            105,
+            69,
+            107
+          ],
+          "west": [
+            72,
+            105,
+            73,
+            107
+          ],
+          "up": [
+            76,
+            105,
+            78,
+            106
+          ],
+          "down": [
+            81,
+            105,
+            83,
+            106
+          ]
+        }
+      },
+      {
+        "cubeId": "tip_right_5",
+        "uv": {
+          "north": [
+            86,
+            105,
+            88,
+            107
+          ],
+          "south": [
+            91,
+            105,
+            93,
+            107
+          ],
+          "east": [
+            96,
+            105,
+            97,
+            107
+          ],
+          "west": [
+            100,
+            105,
+            101,
+            107
+          ],
+          "up": [
+            104,
+            105,
+            106,
+            106
+          ],
+          "down": [
+            109,
+            105,
+            111,
+            106
+          ]
+        }
+      },
+      {
+        "cubeId": "tip_core_6",
+        "uv": {
+          "north": [
+            114,
+            105,
+            119,
+            107
+          ],
+          "south": [
+            122,
+            105,
+            127,
+            107
+          ],
+          "east": [
+            130,
+            105,
+            132,
+            107
+          ],
+          "west": [
+            135,
+            105,
+            137,
+            107
+          ],
+          "up": [
+            140,
+            105,
+            145,
+            107
+          ],
+          "down": [
+            148,
+            105,
+            153,
+            107
+          ]
+        }
+      },
+      {
+        "cubeId": "tip_left_6",
+        "uv": {
+          "north": [
+            156,
+            105,
+            158,
+            107
+          ],
+          "south": [
+            161,
+            105,
+            163,
+            107
+          ],
+          "east": [
+            166,
+            105,
+            167,
+            107
+          ],
+          "west": [
+            170,
+            105,
+            171,
+            107
+          ],
+          "up": [
+            174,
+            105,
+            176,
+            106
+          ],
+          "down": [
+            179,
+            105,
+            181,
+            106
+          ]
+        }
+      },
+      {
+        "cubeId": "tip_right_6",
+        "uv": {
+          "north": [
+            184,
+            105,
+            186,
+            107
+          ],
+          "south": [
+            189,
+            105,
+            191,
+            107
+          ],
+          "east": [
+            194,
+            105,
+            195,
+            107
+          ],
+          "west": [
+            198,
+            105,
+            199,
+            107
+          ],
+          "up": [
+            202,
+            105,
+            204,
+            106
+          ],
+          "down": [
+            207,
+            105,
+            209,
+            106
+          ]
+        }
+      },
+      {
+        "cubeId": "tip_core_7",
+        "uv": {
+          "north": [
+            212,
+            105,
+            216,
+            107
+          ],
+          "south": [
+            219,
+            105,
+            223,
+            107
+          ],
+          "east": [
+            226,
+            105,
+            228,
+            107
+          ],
+          "west": [
+            231,
+            105,
+            233,
+            107
+          ],
+          "up": [
+            236,
+            105,
+            240,
+            107
+          ],
+          "down": [
+            243,
+            105,
+            247,
+            107
+          ]
+        }
+      },
+      {
+        "cubeId": "tip_left_7",
+        "uv": {
+          "north": [
+            250,
+            105,
+            252,
+            107
+          ],
+          "south": [
+            2,
+            110,
+            4,
+            112
+          ],
+          "east": [
+            7,
+            110,
+            8,
+            112
+          ],
+          "west": [
+            11,
+            110,
+            12,
+            112
+          ],
+          "up": [
+            15,
+            110,
+            17,
+            111
+          ],
+          "down": [
+            20,
+            110,
+            22,
+            111
+          ]
+        }
+      },
+      {
+        "cubeId": "tip_right_7",
+        "uv": {
+          "north": [
+            25,
+            110,
+            27,
+            112
+          ],
+          "south": [
+            30,
+            110,
+            32,
+            112
+          ],
+          "east": [
+            35,
+            110,
+            36,
+            112
+          ],
+          "west": [
+            39,
+            110,
+            40,
+            112
+          ],
+          "up": [
+            43,
+            110,
+            45,
+            111
+          ],
+          "down": [
+            48,
+            110,
+            50,
+            111
+          ]
+        }
+      },
+      {
+        "cubeId": "tip_core_8",
+        "uv": {
+          "north": [
+            53,
+            110,
+            56,
+            112
+          ],
+          "south": [
+            59,
+            110,
+            62,
+            112
+          ],
+          "east": [
+            65,
+            110,
+            67,
+            112
+          ],
+          "west": [
+            70,
+            110,
+            72,
+            112
+          ],
+          "up": [
+            75,
+            110,
+            78,
+            112
+          ],
+          "down": [
+            81,
+            110,
+            84,
+            112
+          ]
+        }
+      },
+      {
+        "cubeId": "tip_left_8",
+        "uv": {
+          "north": [
+            87,
+            110,
+            89,
+            112
+          ],
+          "south": [
+            92,
+            110,
+            94,
+            112
+          ],
+          "east": [
+            97,
+            110,
+            98,
+            112
+          ],
+          "west": [
+            101,
+            110,
+            102,
+            112
+          ],
+          "up": [
+            105,
+            110,
+            107,
+            111
+          ],
+          "down": [
+            110,
+            110,
+            112,
+            111
+          ]
+        }
+      },
+      {
+        "cubeId": "tip_right_8",
+        "uv": {
+          "north": [
+            115,
+            110,
+            117,
+            112
+          ],
+          "south": [
+            120,
+            110,
+            122,
+            112
+          ],
+          "east": [
+            125,
+            110,
+            126,
+            112
+          ],
+          "west": [
+            129,
+            110,
+            130,
+            112
+          ],
+          "up": [
+            133,
+            110,
+            135,
+            111
+          ],
+          "down": [
+            138,
+            110,
+            140,
+            111
+          ]
+        }
+      },
+      {
+        "cubeId": "tip_core_9",
+        "uv": {
+          "north": [
+            143,
+            110,
+            145,
+            112
+          ],
+          "south": [
+            148,
+            110,
+            150,
+            112
+          ],
+          "east": [
+            153,
+            110,
+            155,
+            112
+          ],
+          "west": [
+            158,
+            110,
+            160,
+            112
+          ],
+          "up": [
+            163,
+            110,
+            165,
+            112
+          ],
+          "down": [
+            168,
+            110,
+            170,
+            112
+          ]
+        }
+      },
+      {
+        "cubeId": "tip_left_9",
+        "uv": {
+          "north": [
+            173,
+            110,
+            175,
+            112
+          ],
+          "south": [
+            178,
+            110,
+            180,
+            112
+          ],
+          "east": [
+            183,
+            110,
+            184,
+            112
+          ],
+          "west": [
+            187,
+            110,
+            188,
+            112
+          ],
+          "up": [
+            191,
+            110,
+            193,
+            111
+          ],
+          "down": [
+            196,
+            110,
+            198,
+            111
+          ]
+        }
+      },
+      {
+        "cubeId": "tip_right_9",
+        "uv": {
+          "north": [
+            201,
+            110,
+            203,
+            112
+          ],
+          "south": [
+            206,
+            110,
+            208,
+            112
+          ],
+          "east": [
+            211,
+            110,
+            212,
+            112
+          ],
+          "west": [
+            215,
+            110,
+            216,
+            112
+          ],
+          "up": [
+            219,
+            110,
+            221,
+            111
+          ],
+          "down": [
+            224,
+            110,
+            226,
+            111
+          ]
+        }
+      },
+      {
+        "cubeId": "tip_10",
+        "uv": {
+          "north": [
+            229,
+            110,
+            232,
+            112
+          ],
+          "south": [
+            235,
+            110,
+            238,
+            112
+          ],
+          "east": [
+            241,
+            110,
+            242,
+            112
+          ],
+          "west": [
+            245,
+            110,
+            246,
+            112
+          ],
+          "up": [
+            249,
+            110,
+            252,
+            111
+          ],
+          "down": [
+            2,
+            115,
+            5,
+            116
+          ]
+        }
+      },
+      {
+        "cubeId": "tip_11",
+        "uv": {
+          "north": [
+            8,
+            115,
+            10,
+            117
+          ],
+          "south": [
+            13,
+            115,
+            15,
+            117
+          ],
+          "east": [
+            18,
+            115,
+            19,
+            117
+          ],
+          "west": [
+            22,
+            115,
+            23,
+            117
+          ],
+          "up": [
+            26,
+            115,
+            28,
+            116
+          ],
+          "down": [
+            31,
+            115,
+            33,
+            116
+          ]
+        }
+      },
+      {
+        "cubeId": "tip_12",
+        "uv": {
+          "north": [
+            36,
+            115,
+            37,
+            117
+          ],
+          "south": [
+            40,
+            115,
+            41,
+            117
+          ],
+          "east": [
+            44,
+            115,
+            45,
+            117
+          ],
+          "west": [
+            48,
+            115,
+            49,
+            117
+          ],
+          "up": [
+            52,
+            115,
+            53,
+            116
+          ],
+          "down": [
+            56,
+            115,
+            57,
+            116
+          ]
+        }
+      }
+    ]
+  }
+}

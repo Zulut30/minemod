@@ -1,0 +1,1312 @@
+{
+  "schemaVersion": 0,
+  "kind": "minecraft-item-asset",
+  "model": {
+    "schemaVersion": 0,
+    "kind": "cuboid-model",
+    "id": "mcdev:aurora_longsword",
+    "name": "Клинок Северного сияния",
+    "modelType": "held-item",
+    "texture": {
+      "width": 128,
+      "height": 128
+    },
+    "bones": [
+      {
+        "id": "weapon",
+        "parent": null,
+        "pivot": [
+          8,
+          10,
+          8
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "cubes": [
+          {
+            "id": "grip",
+            "origin": [
+              7,
+              3.5,
+              7
+            ],
+            "size": [
+              2,
+              6,
+              2
+            ],
+            "pivot": [
+              8,
+              10,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              1,
+              1
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "grip_band_0",
+            "origin": [
+              6.75,
+              4,
+              6.75
+            ],
+            "size": [
+              2.5,
+              0.5,
+              2.5
+            ],
+            "pivot": [
+              8,
+              10,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              10,
+              1
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "grip_band_1",
+            "origin": [
+              6.75,
+              5.25,
+              6.75
+            ],
+            "size": [
+              2.5,
+              0.5,
+              2.5
+            ],
+            "pivot": [
+              8,
+              10,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              21,
+              1
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "grip_band_2",
+            "origin": [
+              6.75,
+              6.5,
+              6.75
+            ],
+            "size": [
+              2.5,
+              0.5,
+              2.5
+            ],
+            "pivot": [
+              8,
+              10,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              32,
+              1
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "grip_band_3",
+            "origin": [
+              6.75,
+              7.75,
+              6.75
+            ],
+            "size": [
+              2.5,
+              0.5,
+              2.5
+            ],
+            "pivot": [
+              8,
+              10,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              43,
+              1
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "pommel",
+            "origin": [
+              7,
+              2,
+              7
+            ],
+            "size": [
+              2,
+              2,
+              2
+            ],
+            "pivot": [
+              8,
+              3,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              45
+            ],
+            "uv": [
+              54,
+              1
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "pommel_gem_front",
+            "origin": [
+              7.5,
+              2.5,
+              6.5
+            ],
+            "size": [
+              1,
+              1.5,
+              0.5
+            ],
+            "pivot": [
+              8,
+              3.25,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              45
+            ],
+            "uv": [
+              63,
+              1
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "pommel_gem_back",
+            "origin": [
+              7.5,
+              2.5,
+              9
+            ],
+            "size": [
+              1,
+              1.5,
+              0.5
+            ],
+            "pivot": [
+              8,
+              3.25,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              45
+            ],
+            "uv": [
+              67,
+              1
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "guard_center",
+            "origin": [
+              6,
+              9,
+              6.5
+            ],
+            "size": [
+              4,
+              2.5,
+              3.5
+            ],
+            "pivot": [
+              8,
+              10,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              71,
+              1
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "guard_left",
+            "origin": [
+              2.5,
+              9,
+              7
+            ],
+            "size": [
+              4,
+              1,
+              2
+            ],
+            "pivot": [
+              6,
+              10,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              -22.5
+            ],
+            "uv": [
+              87,
+              1
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "guard_right",
+            "origin": [
+              9.5,
+              9,
+              7
+            ],
+            "size": [
+              4,
+              1,
+              2
+            ],
+            "pivot": [
+              10,
+              10,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              22.5
+            ],
+            "uv": [
+              100,
+              1
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "guard_gem_front",
+            "origin": [
+              7.5,
+              9.5,
+              6
+            ],
+            "size": [
+              1,
+              1.5,
+              0.5
+            ],
+            "pivot": [
+              8,
+              10.25,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              45
+            ],
+            "uv": [
+              113,
+              1
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "guard_gem_back",
+            "origin": [
+              7.5,
+              9.5,
+              10
+            ],
+            "size": [
+              1,
+              1.5,
+              0.5
+            ],
+            "pivot": [
+              8,
+              10.25,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              45
+            ],
+            "uv": [
+              117,
+              1
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "blade_shoulder",
+            "origin": [
+              5.5,
+              11.5,
+              7.5
+            ],
+            "size": [
+              5,
+              2,
+              1
+            ],
+            "pivot": [
+              8,
+              10,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              1,
+              10
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "blade",
+            "origin": [
+              6.5,
+              13.5,
+              7.5
+            ],
+            "size": [
+              3,
+              12,
+              1
+            ],
+            "pivot": [
+              8,
+              10,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              14,
+              10
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "edge_left",
+            "origin": [
+              5.5,
+              13.5,
+              7.5
+            ],
+            "size": [
+              1,
+              12,
+              1
+            ],
+            "pivot": [
+              8,
+              10,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              23,
+              10
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "edge_right",
+            "origin": [
+              9.5,
+              13.5,
+              7.5
+            ],
+            "size": [
+              1,
+              12,
+              1
+            ],
+            "pivot": [
+              8,
+              10,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              28,
+              10
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip_neck",
+            "origin": [
+              7,
+              25.5,
+              7.5
+            ],
+            "size": [
+              2,
+              1,
+              1
+            ],
+            "pivot": [
+              8,
+              10,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "uv": [
+              33,
+              10
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "tip",
+            "origin": [
+              7,
+              26,
+              7.5
+            ],
+            "size": [
+              2,
+              2,
+              1
+            ],
+            "pivot": [
+              8,
+              27,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              45
+            ],
+            "uv": [
+              40,
+              10
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "rune_0_front_a",
+            "origin": [
+              7.25,
+              14.5,
+              7
+            ],
+            "size": [
+              0.5,
+              1.5,
+              0.5
+            ],
+            "pivot": [
+              8,
+              15.25,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              22.5
+            ],
+            "uv": [
+              47,
+              10
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "rune_0_front_b",
+            "origin": [
+              8.25,
+              14.5,
+              7
+            ],
+            "size": [
+              0.5,
+              1.5,
+              0.5
+            ],
+            "pivot": [
+              8,
+              15.25,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              -22.5
+            ],
+            "uv": [
+              50,
+              10
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "rune_0_back_a",
+            "origin": [
+              7.25,
+              14.5,
+              8.5
+            ],
+            "size": [
+              0.5,
+              1.5,
+              0.5
+            ],
+            "pivot": [
+              8,
+              15.25,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              22.5
+            ],
+            "uv": [
+              53,
+              10
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "rune_0_back_b",
+            "origin": [
+              8.25,
+              14.5,
+              8.5
+            ],
+            "size": [
+              0.5,
+              1.5,
+              0.5
+            ],
+            "pivot": [
+              8,
+              15.25,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              -22.5
+            ],
+            "uv": [
+              56,
+              10
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "rune_1_front_a",
+            "origin": [
+              7.25,
+              17,
+              7
+            ],
+            "size": [
+              0.5,
+              1.5,
+              0.5
+            ],
+            "pivot": [
+              8,
+              17.75,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              22.5
+            ],
+            "uv": [
+              59,
+              10
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "rune_1_front_b",
+            "origin": [
+              8.25,
+              17,
+              7
+            ],
+            "size": [
+              0.5,
+              1.5,
+              0.5
+            ],
+            "pivot": [
+              8,
+              17.75,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              -22.5
+            ],
+            "uv": [
+              62,
+              10
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "rune_1_back_a",
+            "origin": [
+              7.25,
+              17,
+              8.5
+            ],
+            "size": [
+              0.5,
+              1.5,
+              0.5
+            ],
+            "pivot": [
+              8,
+              17.75,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              22.5
+            ],
+            "uv": [
+              65,
+              10
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "rune_1_back_b",
+            "origin": [
+              8.25,
+              17,
+              8.5
+            ],
+            "size": [
+              0.5,
+              1.5,
+              0.5
+            ],
+            "pivot": [
+              8,
+              17.75,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              -22.5
+            ],
+            "uv": [
+              68,
+              10
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "rune_2_front_a",
+            "origin": [
+              7.25,
+              19.5,
+              7
+            ],
+            "size": [
+              0.5,
+              1.5,
+              0.5
+            ],
+            "pivot": [
+              8,
+              20.25,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              22.5
+            ],
+            "uv": [
+              71,
+              10
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "rune_2_front_b",
+            "origin": [
+              8.25,
+              19.5,
+              7
+            ],
+            "size": [
+              0.5,
+              1.5,
+              0.5
+            ],
+            "pivot": [
+              8,
+              20.25,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              -22.5
+            ],
+            "uv": [
+              74,
+              10
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "rune_2_back_a",
+            "origin": [
+              7.25,
+              19.5,
+              8.5
+            ],
+            "size": [
+              0.5,
+              1.5,
+              0.5
+            ],
+            "pivot": [
+              8,
+              20.25,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              22.5
+            ],
+            "uv": [
+              77,
+              10
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "rune_2_back_b",
+            "origin": [
+              8.25,
+              19.5,
+              8.5
+            ],
+            "size": [
+              0.5,
+              1.5,
+              0.5
+            ],
+            "pivot": [
+              8,
+              20.25,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              -22.5
+            ],
+            "uv": [
+              80,
+              10
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "rune_3_front_a",
+            "origin": [
+              7.25,
+              22,
+              7
+            ],
+            "size": [
+              0.5,
+              1.5,
+              0.5
+            ],
+            "pivot": [
+              8,
+              22.75,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              22.5
+            ],
+            "uv": [
+              83,
+              10
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "rune_3_front_b",
+            "origin": [
+              8.25,
+              22,
+              7
+            ],
+            "size": [
+              0.5,
+              1.5,
+              0.5
+            ],
+            "pivot": [
+              8,
+              22.75,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              -22.5
+            ],
+            "uv": [
+              86,
+              10
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "rune_3_back_a",
+            "origin": [
+              7.25,
+              22,
+              8.5
+            ],
+            "size": [
+              0.5,
+              1.5,
+              0.5
+            ],
+            "pivot": [
+              8,
+              22.75,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              22.5
+            ],
+            "uv": [
+              89,
+              10
+            ],
+            "inflate": 0,
+            "mirror": false
+          },
+          {
+            "id": "rune_3_back_b",
+            "origin": [
+              8.25,
+              22,
+              8.5
+            ],
+            "size": [
+              0.5,
+              1.5,
+              0.5
+            ],
+            "pivot": [
+              8,
+              22.75,
+              8
+            ],
+            "rotation": [
+              0,
+              0,
+              -22.5
+            ],
+            "uv": [
+              92,
+              10
+            ],
+            "inflate": 0,
+            "mirror": false
+          }
+        ]
+      }
+    ]
+  },
+  "texturePlan": {
+    "schemaVersion": 0,
+    "kind": "cuboid-texture-plan",
+    "modelId": "mcdev:aurora_longsword",
+    "materials": [
+      {
+        "id": "steel",
+        "colors": {
+          "base": "#316b87",
+          "shadow": "#163348",
+          "highlight": "#80bccb",
+          "accent": "#51a4bd"
+        }
+      },
+      {
+        "id": "silver",
+        "colors": {
+          "base": "#c0d9e0",
+          "shadow": "#688b99",
+          "highlight": "#f1fbff",
+          "accent": "#a7cad7"
+        }
+      },
+      {
+        "id": "bronze",
+        "colors": {
+          "base": "#bf8b45",
+          "shadow": "#6a4828",
+          "highlight": "#f3cd7d",
+          "accent": "#d8a652"
+        }
+      },
+      {
+        "id": "leather",
+        "colors": {
+          "base": "#342d39",
+          "shadow": "#171a24",
+          "highlight": "#65505a",
+          "accent": "#a87b5d"
+        }
+      },
+      {
+        "id": "rune",
+        "colors": {
+          "base": "#6fe8e6",
+          "shadow": "#339baf",
+          "highlight": "#e5ffff",
+          "accent": "#b0ffff"
+        }
+      }
+    ],
+    "assignments": [
+      {
+        "cubeId": "grip",
+        "materialId": "leather",
+        "pattern": "striped",
+        "seed": 73
+      },
+      {
+        "cubeId": "grip_band_0",
+        "materialId": "bronze",
+        "pattern": "solid",
+        "seed": 73
+      },
+      {
+        "cubeId": "grip_band_1",
+        "materialId": "bronze",
+        "pattern": "solid",
+        "seed": 73
+      },
+      {
+        "cubeId": "grip_band_2",
+        "materialId": "bronze",
+        "pattern": "solid",
+        "seed": 73
+      },
+      {
+        "cubeId": "grip_band_3",
+        "materialId": "bronze",
+        "pattern": "solid",
+        "seed": 73
+      },
+      {
+        "cubeId": "pommel",
+        "materialId": "bronze",
+        "pattern": "solid",
+        "seed": 73
+      },
+      {
+        "cubeId": "pommel_gem_front",
+        "materialId": "rune",
+        "pattern": "solid",
+        "seed": 73
+      },
+      {
+        "cubeId": "pommel_gem_back",
+        "materialId": "rune",
+        "pattern": "solid",
+        "seed": 73
+      },
+      {
+        "cubeId": "guard_center",
+        "materialId": "bronze",
+        "pattern": "solid",
+        "seed": 73
+      },
+      {
+        "cubeId": "guard_left",
+        "materialId": "bronze",
+        "pattern": "solid",
+        "seed": 73
+      },
+      {
+        "cubeId": "guard_right",
+        "materialId": "bronze",
+        "pattern": "solid",
+        "seed": 73
+      },
+      {
+        "cubeId": "guard_gem_front",
+        "materialId": "rune",
+        "pattern": "solid",
+        "seed": 73
+      },
+      {
+        "cubeId": "guard_gem_back",
+        "materialId": "rune",
+        "pattern": "solid",
+        "seed": 73
+      },
+      {
+        "cubeId": "blade_shoulder",
+        "materialId": "steel",
+        "pattern": "gradient",
+        "seed": 73
+      },
+      {
+        "cubeId": "blade",
+        "materialId": "steel",
+        "pattern": "gradient",
+        "seed": 73
+      },
+      {
+        "cubeId": "edge_left",
+        "materialId": "silver",
+        "pattern": "solid",
+        "seed": 73
+      },
+      {
+        "cubeId": "edge_right",
+        "materialId": "silver",
+        "pattern": "solid",
+        "seed": 73
+      },
+      {
+        "cubeId": "tip_neck",
+        "materialId": "silver",
+        "pattern": "solid",
+        "seed": 73
+      },
+      {
+        "cubeId": "tip",
+        "materialId": "silver",
+        "pattern": "solid",
+        "seed": 73
+      },
+      {
+        "cubeId": "rune_0_front_a",
+        "materialId": "rune",
+        "pattern": "solid",
+        "seed": 73
+      },
+      {
+        "cubeId": "rune_0_front_b",
+        "materialId": "rune",
+        "pattern": "solid",
+        "seed": 73
+      },
+      {
+        "cubeId": "rune_0_back_a",
+        "materialId": "rune",
+        "pattern": "solid",
+        "seed": 73
+      },
+      {
+        "cubeId": "rune_0_back_b",
+        "materialId": "rune",
+        "pattern": "solid",
+        "seed": 73
+      },
+      {
+        "cubeId": "rune_1_front_a",
+        "materialId": "rune",
+        "pattern": "solid",
+        "seed": 73
+      },
+      {
+        "cubeId": "rune_1_front_b",
+        "materialId": "rune",
+        "pattern": "solid",
+        "seed": 73
+      },
+      {
+        "cubeId": "rune_1_back_a",
+        "materialId": "rune",
+        "pattern": "solid",
+        "seed": 73
+      },
+      {
+        "cubeId": "rune_1_back_b",
+        "materialId": "rune",
+        "pattern": "solid",
+        "seed": 73
+      },
+      {
+        "cubeId": "rune_2_front_a",
+        "materialId": "rune",
+        "pattern": "solid",
+        "seed": 73
+      },
+      {
+        "cubeId": "rune_2_front_b",
+        "materialId": "rune",
+        "pattern": "solid",
+        "seed": 73
+      },
+      {
+        "cubeId": "rune_2_back_a",
+        "materialId": "rune",
+        "pattern": "solid",
+        "seed": 73
+      },
+      {
+        "cubeId": "rune_2_back_b",
+        "materialId": "rune",
+        "pattern": "solid",
+        "seed": 73
+      },
+      {
+        "cubeId": "rune_3_front_a",
+        "materialId": "rune",
+        "pattern": "solid",
+        "seed": 73
+      },
+      {
+        "cubeId": "rune_3_front_b",
+        "materialId": "rune",
+        "pattern": "solid",
+        "seed": 73
+      },
+      {
+        "cubeId": "rune_3_back_a",
+        "materialId": "rune",
+        "pattern": "solid",
+        "seed": 73
+      },
+      {
+        "cubeId": "rune_3_back_b",
+        "materialId": "rune",
+        "pattern": "solid",
+        "seed": 73
+      }
+    ]
+  }
+}

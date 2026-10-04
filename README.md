@@ -23,6 +23,7 @@
 - получение готового remapped JAR и индекса артефактов;
 - одинаковый application service для CLI и подтверждаемого MCP tool;
 - cuboid-модели, pixel texture atlases, rig и editable Blockbench 5 `.bbmodel`;
+- отдельный экспорт authored 3D-предмета в Minecraft JSON, PNG и `.bbmodel` с локальным интерактивным просмотром;
 - параметрический архетип большого дракона и structural/texture preflight;
 - доверенный каталог интеграций Fabric-библиотек.
 - сохраняемая JSON5-конфигурация с generated boolean/integer/string controls, YACL-экран и кнопка Mod Menu.
@@ -155,11 +156,34 @@ pnpm --filter @mcdev/cli start -- \
 MCP-сервер публикует:
 
 - `mcdev_spec_validate` — безопасная локальная проверка;
+- `mcdev_asset_compile_item` — ограниченный экспорт 3D-предмета для review, без записи файлов и запуска сборки;
 - `mcdev_fabric_build` — сборка только с literal-полем `approved: true`.
+
+Вторая версия оружия с пиксельной покраской и рабочий цикл улучшения кода/моделей: [AI code and 3D workflow](docs/AI_CODE_AND_3D_WORKFLOW.md).
+Для воспроизведения примера на Node.js 24.11.0:
+
+```bash
+node scripts/preview-item.mjs
+```
+
+Откройте `output/item-preview-v2/preview.html` в браузере. Просмотр работает автономно, позволяет вращать модель, менять ракурс и включать каркас. Экспортируемые ресурсы ещё не подключены к `ModSpec → JAR`; загрузка предмета, положение в руке и игровой рендер требуют отдельной проверки. Результат `fabric build` теперь также возвращает предупреждения компилятора в поле `warnings`.
 
 ```bash
 pnpm --filter @mcdev/mcp-server start
 ```
+
+## Локальная мастерская моделей
+
+Путь к production: [100 пунктов с критериями приёмки](docs/PRODUCTION_ROADMAP_100.md). План отдельно определяет готовность редактора, проверку авторских ресурсов в Minecraft и выпуск всего генератора.
+
+Первый Windows-прототип MineMod Studio: 3D-сцена, выбор частей, изменение формы и цвета, undo/redo, собственный проект и отдельный экспорт. [Запуск, проверки и текущие ограничения](docs/MODEL_EDITOR_FIRST_BUILD.md), [план дальнейшей разработки](docs/MODEL_EDITOR_MVP_PLAN.md).
+
+```powershell
+corepack pnpm --filter @mcdev/model-editor build
+corepack pnpm --filter @mcdev/model-editor start
+```
+
+Переносимая версия 0.5.1: точный путь к `MineMod Studio.exe` находится в `output/model-editor/latest-build.json`; каждая сборка создаётся отдельно в `releases/`. Тёмная тема и единый обзор четырёх ракурсов, силуэта и 32/64 px доступны для ручной и агентной работы. Маленькие превью отдельно рендерятся в квадрате и сохраняют масштаб при изменении размера панели. После отказа пользователя от «Полярного стража» созданы три самостоятельных редактируемых дизайна по новому оригинальному концепту; они ожидают художественной оценки. [Переработка оружия](docs/MODEL_EDITOR_WEAPON_REDESIGN.md), [тема и визуальная работа ИИ](docs/MODEL_EDITOR_DARK_AND_REVIEW.md), [варианты](docs/MODEL_EDITOR_VARIANTS.md), [покраска и UV](docs/MODEL_EDITOR_TEXTURES.md), [подключение агента](docs/MODEL_EDITOR_MCP.md). Автоматического image-to-3D в приложении нет; самостоятельная генерация установленными CLI и проверка ресурсов в Minecraft остаются отдельными этапами.
 
 ## Структура репозитория
 
@@ -167,6 +191,7 @@ pnpm --filter @mcdev/mcp-server start
 apps/
   cli/                 CLI adapter
   mcp-server/          MCP stdio server
+  model-editor/        локальная Windows-мастерская моделей
 packages/
   application/         общий build workflow
   compiler-fabric/     Fabric 1.20.1 backend
@@ -210,6 +235,7 @@ docs/                  ADR, планы, аудиты и quality rubric
 - [Архитектурные решения](docs/decisions/)
 - [Аудиты baseline и modeling foundation](docs/audit/)
 - [Art Quality Rubric](docs/quality/art-quality-rubric-v0.md)
+- [Рабочий цикл AI-кода и 3D-моделей](docs/AI_CODE_AND_3D_WORKFLOW.md)
 - [Third-party licensing boundary](THIRD_PARTY_NOTICES.md)
 
 ## Лицензия

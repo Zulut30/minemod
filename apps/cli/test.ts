@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
+import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { validModFixture } from "../../fixtures/specs/validation.ts";
 import { VALIDATION_PROFILE_IDS } from "@mcdev/validation";
@@ -42,6 +43,20 @@ assert.equal(
 assert.equal(await runCli(["publish"], () => undefined, () => undefined), 2);
 assert.equal(await runCli(["--self-test"], () => undefined, () => undefined), 2);
 
+const itemAssetPayload = readFileSync(new URL("../../fixtures/assets/aurora-longsword.item-asset.json", import.meta.url), "utf8");
+output.length = 0;
+assert.equal(await runCli(["asset", "item", itemAssetPayload], (text) => output.push(text)), 0);
+const itemAssetResult = JSON.parse(output.join("")) as { reviewRequired: boolean; files: unknown[] };
+assert.equal(itemAssetResult.reviewRequired, true);
+assert.equal(itemAssetResult.files.length, 3);
+const paintedPayload = readFileSync(new URL("../../fixtures/assets/aurora-longsword-v2.item-asset.json", import.meta.url), "utf8");
+output.length = 0;
+assert.equal(await runCli(["asset", "item", paintedPayload], (text) => output.push(text)), 0);
+assert.equal((JSON.parse(output.join("")) as { elements: number }).elements, 52);
+const itemErrors: string[] = [];
+assert.equal(await runCli(["asset", "item", "{}"], () => undefined, (text) => itemErrors.push(text)), 1);
+assert.match(itemErrors.join(""), /SPEC_UNSUPPORTED/u);
+
 {
   let receivedConfig: unknown;
   let receivedRequest: unknown;
@@ -65,6 +80,7 @@ assert.equal(await runCli(["--self-test"], () => undefined, () => undefined), 2)
           return {
             planId: "1".repeat(64),
             workspaceStatus: "created",
+            warnings: ["PLACEHOLDER_ASSETS_USED"],
             artifacts: {
               contract: "mcdev.artifact-index/v1",
               planId: "1".repeat(64),
@@ -90,6 +106,7 @@ assert.equal(await runCli(["--self-test"], () => undefined, () => undefined), 2)
     payload: JSON.stringify(validModFixture),
   });
   assert.match(output.join(""), /"workspaceStatus": "created"/u);
+  assert.match(output.join(""), /PLACEHOLDER_ASSETS_USED/u);
 }
 
 {

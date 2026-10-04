@@ -13,3 +13,6 @@ overrides:
 saveExact: true
 sharedWorkspaceLockfile: true
 verifyDepsBeforeRun: false
+
+allowBuilds:
+  esbuild: true

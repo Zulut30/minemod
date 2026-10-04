@@ -6,9 +6,11 @@
   "type": "module",
   "exports": "./index.ts",
   "scripts": {
-    "test": "node --experimental-strip-types test.ts"
+    "test": "node --experimental-strip-types item-assets.test.ts && node --experimental-strip-types test.ts",
+    "test:assets": "node --experimental-strip-types item-assets.test.ts"
   },
   "dependencies": {
+    "@mcdev/assets-core": "workspace:*",
     "@mcdev/artifacts": "workspace:*",
     "@mcdev/build-runner": "workspace:*",
     "@mcdev/compiler-fabric": "workspace:*",

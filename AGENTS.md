@@ -6,7 +6,7 @@
 
 ## Текущая стадия
 
-Проект находится в Phase 0. Не описывайте запланированные возможности как уже реализованные.
+Проект находится в активной экспериментальной разработке. Различайте реализованную генерацию, локальные проверки и подтверждённую работу в игре. Не описывайте запланированные возможности как уже реализованные.
 
 ## Источник истины
 
@@ -14,12 +14,16 @@
 
 - README.md;
 - docs/RESEARCH_AND_MVP_PLAN.md.
+- docs/decisions/0004-fabric-1.20.1-production-baseline.md;
+- docs/FABRIC_FIRST_MVP_PLAN.md.
+
+Исходный research plan содержит исторические решения. При конфликте baseline следуйте ADR-0004 и текущему Fabric-first plan.
 
 ## Базовые решения MVP
 
-- первый production target: NeoForge 26.1.2;
-- Java 25;
-- Fabric, Forge и Paper реализуются отдельными compatibility packs;
+- первый production target: Fabric 1.20.1;
+- Java 17;
+- другие платформы реализуются отдельными compatibility packs;
 - единый контракт между платформами — ModSpec, а не общий Java-код любой ценой;
 - модели и текстуры проходят технический и визуальный quality gate;
 - JEI и Jade остаются optional dependencies;
@@ -34,3 +38,5 @@
 - Не давайте агенту generic shell или arbitrary Blender/Blockbench eval через MCP.
 - Все generated network payloads должны иметь limits и server-side validation.
 - После появления кода проверяйте clean build, GameTests и dedicated-server запуск.
+- Для authored 3D-предметов следуйте docs/AI_CODE_AND_3D_WORKFLOW.md: сначала экспорт и снимки нескольких ракурсов, затем проверка в игре. Число кубов и корректный JSON не подтверждают художественное качество.
+- Не добавляйте игровые модели в JAR через неподтверждённую подмену файлов или изменение trusted pack. Экспортируемый asset bundle требует отдельного review и интеграции.

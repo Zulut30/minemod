@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { spawn, spawnSync, type ChildProcessWithoutNullStreams } from "node:child_process";
 import { once } from "node:events";
-import { readFileSync } from "node:fs";
+import { readFileSync, realpathSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { createInterface } from "node:readline";
 import { fileURLToPath } from "node:url";
@@ -15,6 +15,7 @@ import {
   createMcpServer,
   MAX_MCP_STDIO_FRAME_BYTES,
   MCP_FABRIC_BUILD_TOOL_NAME,
+  MCP_ITEM_ASSET_TOOL_NAME,
   MCP_SERVER_NAME,
   MCP_SERVER_VERSION,
   MCP_VALIDATE_TOOL_NAME,
@@ -155,6 +156,7 @@ async function testLinkedInMemoryProtocol(): Promise<void> {
         return {
           planId: "1".repeat(64),
           workspaceStatus: "created",
+          warnings: ["PLACEHOLDER_ASSETS_USED"],
           artifacts: {
             contract: "mcdev.artifact-index/v1",
             planId: "1".repeat(64),
@@ -189,8 +191,8 @@ async function testLinkedInMemoryProtocol(): Promise<void> {
     const listResult = await client.listTools();
     assert.deepEqual(
       listResult.tools.map(({ name }) => name),
-      [MCP_VALIDATE_TOOL_NAME, MCP_FABRIC_BUILD_TOOL_NAME],
-      "tools/list must expose only the validator and approved Fabric builder",
+      [MCP_VALIDATE_TOOL_NAME, MCP_ITEM_ASSET_TOOL_NAME, MCP_FABRIC_BUILD_TOOL_NAME],
+      "tools/list must expose validation, bounded asset export and approved Fabric build",
     );
     const validateTool = listResult.tools.find(({ name }) => name === MCP_VALIDATE_TOOL_NAME);
     const linkedInputSchema = asObject(validateTool?.inputSchema, "linked tool input schema");
@@ -218,6 +220,25 @@ async function testLinkedInMemoryProtocol(): Promise<void> {
     assert.equal(validation.kind, "mod");
     assert.equal(handlerCalls, 1);
 
+    const itemPayload = readFileSync(new URL("../../fixtures/assets/aurora-longsword.item-asset.json", import.meta.url), "utf8");
+    const itemCall = await client.callTool({ name: MCP_ITEM_ASSET_TOOL_NAME, arguments: { payload: itemPayload } });
+    assert.notEqual(itemCall.isError, true);
+    const itemContent = itemCall.content as { type: string; text: string }[];
+    const itemBundle = asObject(JSON.parse(itemContent[0]!.text) as unknown, "item asset bundle");
+    assert.equal(itemBundle.reviewRequired, true);
+    assert.equal(itemBundle.elements, 35);
+    const paintedPayload = readFileSync(new URL("../../fixtures/assets/aurora-longsword-v2.item-asset.json", import.meta.url), "utf8");
+    const paintedCall = await client.callTool({ name: MCP_ITEM_ASSET_TOOL_NAME, arguments: { payload: paintedPayload } });
+    assert.notEqual(paintedCall.isError, true);
+    const paintedContent = paintedCall.content as { type: string; text: string }[];
+    const paintedBundle = asObject(JSON.parse(paintedContent[0]!.text) as unknown, "painted item bundle");
+    assert.equal(paintedBundle.elements, 52);
+    assert.equal(buildCalls, 0, "data-only asset export must not invoke the build runner");
+    const invalidItem = await client.callTool({ name: MCP_ITEM_ASSET_TOOL_NAME, arguments: { payload: "{}" } });
+    assert.equal(invalidItem.isError, true);
+    const openItemArguments = await client.callTool({ name: MCP_ITEM_ASSET_TOOL_NAME, arguments: { payload: itemPayload, script: "unsafe" } });
+    assert.equal(openItemArguments.isError, true);
+
     const buildCall = await client.callTool({
       name: MCP_FABRIC_BUILD_TOOL_NAME,
       arguments: {
@@ -234,6 +255,7 @@ async function testLinkedInMemoryProtocol(): Promise<void> {
       .find((entry) => entry.type === "text")?.text;
     assert.ok(typeof buildText === "string");
     assert.equal(asObject(JSON.parse(buildText) as unknown, "Fabric build result").workspaceStatus, "created");
+    assert.match(buildText, /PLACEHOLDER_ASSETS_USED/u);
     assert.deepEqual(buildConfig, { artifactCacheRoot: "/fixed/cache", java17Home: "/fixed/jdk-17" });
     assert.deepEqual(buildRequest, {
       payload: JSON.stringify(validModFixture),
@@ -401,6 +423,7 @@ async function testStdioStdoutPurity(): Promise<void> {
     assert.ok(Array.isArray(tools));
     assert.deepEqual(tools.map((tool) => asObject(tool, "tool").name), [
       MCP_VALIDATE_TOOL_NAME,
+      MCP_ITEM_ASSET_TOOL_NAME,
       MCP_FABRIC_BUILD_TOOL_NAME,
     ]);
     const rawValidateTool = tools.map((tool) => asObject(tool, "tool"))
@@ -825,9 +848,14 @@ function testWorkspaceRuntimeContract(): void {
   );
 
   const corepack = resolve(dirname(process.execPath), process.platform === "win32" ? "corepack.cmd" : "corepack");
+  // На Windows .cmd нельзя запускать напрямую через spawnSync без shell.
+  const corepackEntrypoint = process.platform === "win32"
+    ? resolve(dirname(process.execPath), "node_modules/corepack/dist/corepack.js")
+    : realpathSync(corepack);
   const negative = spawnSync(
-    corepack,
+    process.execPath,
     [
+      corepackEntrypoint,
       "pnpm",
       "--config.node-version=22.22.2",
       "install",

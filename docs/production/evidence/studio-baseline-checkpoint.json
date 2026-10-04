@@ -1,0 +1,240 @@
+{
+  "schemaVersion": 1,
+  "kind": "studio-source-checkpoint",
+  "verifiedAtUtc": "2026-10-04T15:12:31.2277893Z",
+  "sourceRevisionBeforeCheckpoint": "5ac78e228ecb6db66332c38a1d6acd6c696a78d1",
+  "scope": "Current desktop source baseline; no Minecraft runtime or human art acceptance",
+  "version": "0.5.1",
+  "package": {
+    "path": "output/model-editor/releases/0.5.1/3cd6db46/MineMod Studio-win32-x64",
+    "exeSha256": "5b883934c8c8598a55488bbd8811b6ffc9ec498c7dfc91df2c461068281b3dd2",
+    "asarSha256": "797b354a4df5b6887e45c928fbfbd008feab4ed34725555ae2251191a46e722a"
+  },
+  "packagedReport": {
+    "path": "output/playwright/studio-packaged-1b2debd1/report.json",
+    "sha256": "772a9342b4d93d256e272996c48d75affa68909f8bdda3f25156f816d5fe622a",
+    "status": "PASS",
+    "hidden": true,
+    "security": {
+      "sandbox": true,
+      "contextIsolation": true,
+      "nodeIntegration": false
+    }
+  },
+  "checks": [
+    {
+      "log": "output/verification/roadmap-010-lint.log",
+      "kind": "lint",
+      "status": "PASS"
+    },
+    {
+      "log": "output/verification/roadmap-004-typecheck.log",
+      "kind": "typecheck-all",
+      "status": "PASS"
+    },
+    {
+      "log": "output/verification/roadmap-004-portable-tests.log",
+      "kind": "portable-tests",
+      "status": "PASS"
+    },
+    {
+      "log": "output/verification/roadmap-004-http-mcp.log",
+      "kind": "http-mcp",
+      "status": "PASS"
+    },
+    {
+      "log": "output/verification/roadmap-baseline-package.log",
+      "kind": "clean-desktop-build-package",
+      "status": "PASS"
+    },
+    {
+      "log": "output/verification/roadmap-baseline-packaged.log",
+      "kind": "packaged-desktop-e2e",
+      "status": "PASS"
+    }
+  ],
+  "knownPlatformFailure": {
+    "kind": "compiler-fabric-unit-on-Windows",
+    "code": "PACK_INTEGRITY_FAILED",
+    "log": "output/verification/roadmap-007-capability-tests.log",
+    "productionTargetLinuxCheck": "pending"
+  },
+  "sourceInventory": [
+    {
+      "path": "apps/model-editor/main/index.ts",
+      "sha256": "422438cca01837b2398b5c623df1a6c9da417c63f6c469a5e591ada17800b753"
+    },
+    {
+      "path": "apps/model-editor/package.json",
+      "sha256": "93403d220f7abb3e54935d009187dee4552b045814de4fa3be00fc24a88d2b46"
+    },
+    {
+      "path": "apps/model-editor/preload/index.ts",
+      "sha256": "c73ecc561f94fefa7b27b940b9f1d2beff51598b019fab67ef0b6c896d8d84d5"
+    },
+    {
+      "path": "apps/model-editor/renderer/App.tsx",
+      "sha256": "69910ef7336256db246fa5cd87a4dc56999498d60270c0c061bdd521cc019105"
+    },
+    {
+      "path": "apps/model-editor/renderer/CaptureApp.tsx",
+      "sha256": "18a253fd40fb61c9501d4c0def43672641d8e9718bf11f07ed95990e80c877b6"
+    },
+    {
+      "path": "apps/model-editor/renderer/ConnectionPanel.tsx",
+      "sha256": "99f6f9ce979d2b6065beceee69e4eccbcbf9212a21121f1ac4c5a537bd990a93"
+    },
+    {
+      "path": "apps/model-editor/renderer/index.html",
+      "sha256": "18dfc4abf09fc35714b459f8e60c402c19298834837ff982c4683afcdc5a969f"
+    },
+    {
+      "path": "apps/model-editor/renderer/main.tsx",
+      "sha256": "dfcdac4bc0db0b0709ca6b3ab1e2373ad175dd0c94ce0682ba3357530d7d5096"
+    },
+    {
+      "path": "apps/model-editor/renderer/ReviewBoard.tsx",
+      "sha256": "bfe1441a3e9b111907f96fed035666620ec1a2d702f949e5c86c30145ea74eb0"
+    },
+    {
+      "path": "apps/model-editor/renderer/store.ts",
+      "sha256": "042da28e545956387b1607518e84493195496b98dd41bb6815a009b2717d6d9d"
+    },
+    {
+      "path": "apps/model-editor/renderer/style.css",
+      "sha256": "1743171a4ad507f403ea95d5fa13990f94f07e789892d4676d0741ceaee0de07"
+    },
+    {
+      "path": "apps/model-editor/renderer/TextureEditor.tsx",
+      "sha256": "7c2140e54a7f4f12fe47325ec4c9274eaaceca16436b8d29df8e2c02fa9c25a6"
+    },
+    {
+      "path": "apps/model-editor/renderer/VariantsPanel.tsx",
+      "sha256": "4e64837e4e5ab545a59ec7219a0da34e58d5dd21e1bd63c800fdca9a2f813646"
+    },
+    {
+      "path": "apps/model-editor/renderer/Viewport.tsx",
+      "sha256": "3f5fec30b3f44a7d6fc5474a9402c8d9c5e49317cec40e4bd0435881b892a228"
+    },
+    {
+      "path": "apps/model-editor/scripts/build.mjs",
+      "sha256": "d4fb49ccd4d44814520a50781bd9302c6aaf406f57bc80551e8541cee12b8357"
+    },
+    {
+      "path": "apps/model-editor/scripts/check-editing-desktop.mjs",
+      "sha256": "fbb2d60348814f266eb370ae3805bc4db2d99b46d09008e11445d2e5fb2bfef7"
+    },
+    {
+      "path": "apps/model-editor/scripts/check-installed-clients.mjs",
+      "sha256": "f64485cd849f6ae8bd42e10ff89113bd4bb3ddbdf1d722a9692cc1b5c9d00d4d"
+    },
+    {
+      "path": "apps/model-editor/scripts/check-mcp-desktop.mjs",
+      "sha256": "126ceb49e66363533b5703b5e4713cafe9688a907e7bf295cb051acf6d633d65"
+    },
+    {
+      "path": "apps/model-editor/scripts/check-polish-desktop.mjs",
+      "sha256": "8008f0a51ba07989324ab211b9c274cd8657cae14e7e1e57b6e3de432951f414"
+    },
+    {
+      "path": "apps/model-editor/scripts/check-review-desktop.mjs",
+      "sha256": "025cb602d32c7ec7894e0d08bad2ffaa51a8e13b7105757b61cb5eea40297a11"
+    },
+    {
+      "path": "apps/model-editor/scripts/check-texture-desktop.mjs",
+      "sha256": "d0e8cee1fc14f54cd3d5711cea2171225d858f41bcb3c8e406d5c3250f1060c7"
+    },
+    {
+      "path": "apps/model-editor/scripts/check-variants-desktop.mjs",
+      "sha256": "8105bfab181ca18c4232e80b4793077aa9d523870ca20659a60bde3b41ffc077"
+    },
+    {
+      "path": "apps/model-editor/scripts/create-design-study.mjs",
+      "sha256": "f76626928bc5af1c5855615c840a2f92a551262c905be879f4822a435eff8a75"
+    },
+    {
+      "path": "apps/model-editor/scripts/create-weapon-directions.mjs",
+      "sha256": "92431747e5a034bdf83222199330e0984b91f8bfc1dff258db0a139b59647959"
+    },
+    {
+      "path": "apps/model-editor/scripts/package.mjs",
+      "sha256": "28aa9ee4af2974cf0f65f10b296e9629de017e36e2a3487b52c06786020cd586"
+    },
+    {
+      "path": "apps/model-editor/scripts/packaged-path.mjs",
+      "sha256": "0c2135c785ce48a5d9b5fdf65c516aa16853f8865b01538613c9e3f05835abee"
+    },
+    {
+      "path": "apps/model-editor/scripts/quality-study-commands.mjs",
+      "sha256": "3290ee0abfb2664047aa1cdf87b836860000f2abffdd62e35f5e7fb458f12bfa"
+    },
+    {
+      "path": "apps/model-editor/scripts/test-desktop.mjs",
+      "sha256": "5a7904dc8e4951b9e954c9cb633f04a97335b53c37b26e1d86c17cf148a844c6"
+    },
+    {
+      "path": "apps/model-editor/scripts/test.mjs",
+      "sha256": "d8f39d5925c3077137536463e355bd868ab88aaeef209f75153434a1390939d2"
+    },
+    {
+      "path": "apps/model-editor/shared/bridge.ts",
+      "sha256": "9efbe09900c08ca001461c1581e892ed7ce830fbc6e307f06e1db4ef2c0f482a"
+    },
+    {
+      "path": "apps/model-editor/third-party/react-three-fiber-9.8.1.LICENSE",
+      "sha256": "9c35b5de7b7493a707fffe4eb23bd2f7f449153c1911f7c6eefb4e591fd5349a"
+    },
+    {
+      "path": "apps/model-editor/tsconfig.host.json",
+      "sha256": "bd418ad1aab839e1e4891a5202b169fb958fe76d705995f220a88324d3df87d5"
+    },
+    {
+      "path": "apps/model-editor/tsconfig.renderer.json",
+      "sha256": "dcbc93bad1e4e5c52fa5b7665f5f82cd52ebec4815e1d52d32eb72cf94da2fcc"
+    },
+    {
+      "path": "apps/model-editor/worker/index.ts",
+      "sha256": "7a612417d99bede171b4587b2f9f1c3eddc56aacadaa503cc3fe43b1fe6493d8"
+    },
+    {
+      "path": "apps/model-editor/worker/mcp.test.ts",
+      "sha256": "8d662118861259085e5c73d5677764414ec6b548491995f6dd9fc8c8a5935c1b"
+    },
+    {
+      "path": "apps/model-editor/worker/mcp.ts",
+      "sha256": "2631ff3195fb5d9979c9572637f787f19905ae9abbed886e072aeb48e6de945a"
+    },
+    {
+      "path": "apps/model-editor/worker/persistence.ts",
+      "sha256": "667e2a9269e3f540206e82574f85d9ce77ce50a2494ea84354d92c9cbdc1d7cd"
+    },
+    {
+      "path": "packages/editor-core/errors.ts",
+      "sha256": "a164615b18a13a1168dfb7abda408682f974d3e411669b47a87bde930aae6295"
+    },
+    {
+      "path": "packages/editor-core/index.ts",
+      "sha256": "ee80ec27d2ac94810e3919b98edfa38cff20de840f24c0a2e9f8594c301e35c2"
+    },
+    {
+      "path": "packages/editor-core/package.json",
+      "sha256": "faf92905bd5ed267484a846424035aeb4f5263f7e26da22199911c6ef1e65568"
+    },
+    {
+      "path": "packages/editor-core/test.ts",
+      "sha256": "c2aa38f5133808da1eb7df0fe63899ce0fda7cf3eca6a3f53e5d80cac69fc728"
+    },
+    {
+      "path": "packages/editor-core/texture.test.ts",
+      "sha256": "bc6b9e7bde573a9ddfe5def21a937f209c2858421ff30a3cbda456fdfe6f1c5a"
+    },
+    {
+      "path": "packages/editor-core/texture.ts",
+      "sha256": "e84813a97886908eda27bd810b5e370b4587c7551b0dd668bfd108607cd4e1ba"
+    },
+    {
+      "path": "packages/editor-core/variants.test.ts",
+      "sha256": "7bc853f8be5e632348475dad7678de0cee586205d0529e607a42671e14450321"
+    }
+  ]
+}

@@ -1,4 +1,7 @@
 import { createHash } from "node:crypto";
+import { compileMinecraftItemModel } from "./minecraft-item.ts";
+import { assemblePaintedMinecraftItem, type PaintedMinecraftItemAssets } from "./painted-item.ts";
+export { compileMinecraftItemModel, MinecraftItemModelError, type CompiledMinecraftItemModel } from "./minecraft-item.ts";
 import {
   CuboidAnimationPlanSchema,
   CuboidModelSpecSchema,
@@ -268,6 +271,56 @@ export function compileTexturedBlockbenchModel(
     sha256: createHash("sha256").update(text, "utf8").digest("hex"),
     texture,
   });
+}
+
+/** Для тонких деталей item-модели сохраняем точные UV каждой грани, без округления box UV в редакторе. */
+export function compileMinecraftItemBlockbenchModel(
+  modelInput: unknown,
+  texturePlanInput: unknown,
+): CompiledTexturedBlockbenchModel {
+  const native = compileMinecraftItemModel(modelInput);
+  const compiled = compileTexturedBlockbenchModel(modelInput, texturePlanInput);
+  type Faces = Record<string, { readonly uv: readonly number[]; readonly texture: string }>;
+  const geometry = JSON.parse(native.text) as {
+    elements: { name: string; faces: Faces }[];
+    display: unknown;
+  };
+  const facesByName = new Map(geometry.elements.map(({ name, faces }) => [name, faces]));
+  const document = JSON.parse(compiled.text) as {
+    meta: { model_format: string; box_uv: boolean };
+    elements: { name: string; box_uv: boolean; faces?: Record<string, { uv: number[]; texture: number }> }[];
+    textures: { folder: string; particle: boolean }[];
+    display?: unknown;
+    front_gui_light?: boolean;
+    ambientocclusion?: boolean;
+  };
+  document.meta.model_format = "java_block";
+  document.meta.box_uv = false;
+  document.display = geometry.display;
+  document.front_gui_light = true;
+  document.ambientocclusion = false;
+  const textureFolder = native.textureId.slice(native.textureId.indexOf(":") + 1, native.textureId.lastIndexOf("/"));
+  for (const texture of document.textures) {
+    texture.folder = textureFolder;
+    texture.particle = true;
+  }
+  for (const element of document.elements) {
+    const faces = facesByName.get(element.name);
+    if (faces === undefined) throw new Error("Native and editable item geometry differ.");
+    element.box_uv = false;
+    element.faces = Object.fromEntries(Object.entries(faces).map(([name, face]) => [name, {
+      uv: face.uv.map((coordinate, axis) => coordinate * (axis % 2 === 0 ? compiled.texture.width : compiled.texture.height) / 16),
+      texture: 0,
+    }]));
+  }
+  const text = `${JSON.stringify(document, null, 2)}\n`;
+  return Object.freeze({ ...compiled, text, sha256: createHash("sha256").update(text).digest("hex") });
+}
+
+export function compilePaintedMinecraftItemAssets(modelInput: unknown, textureInput: unknown): PaintedMinecraftItemAssets {
+  const model = parseModel(modelInput);
+  const name = `${model.id.split(":")[1]?.split("/").at(-1)}.png`;
+  return assemblePaintedMinecraftItem(model, textureInput, compileBlockbenchModel(model), deterministicUuid(model.id, "texture", name));
 }
 
 export function compileAnimatedTexturedBlockbenchModel(

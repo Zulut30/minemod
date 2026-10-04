@@ -14,6 +14,7 @@ import {
   isPlainJsonObject,
   type ArtifactIndex,
   type BuildPlan,
+  type BuildPlanWarning,
 } from "@mcdev/contracts";
 import {
   applyWorkspacePlan,
@@ -30,6 +31,7 @@ export interface FabricBuildResult {
   readonly planId: string;
   readonly workspaceStatus: WorkspaceApplyResult["status"];
   readonly artifacts: ArtifactIndex;
+  readonly warnings: readonly BuildPlanWarning[];
 }
 
 export interface FabricApplication {
@@ -133,7 +135,10 @@ export function createFabricApplication(
         planId: compiled.plan.planId,
         workspaceStatus: applied.status,
         artifacts,
+        warnings: Object.freeze([...compiled.plan.warnings]),
       });
     },
   });
 }
+
+export { compileItemAssetPayload, itemAssetDiagnostic, MAX_ITEM_ASSET_PAYLOAD_BYTES, type ItemAssetBundle } from "./item-assets.ts";
