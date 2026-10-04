@@ -103,7 +103,29 @@
   "limits": [
     "Physical power loss/directory fsync not verified",
     "Disk full and multiple independent writers not verified",
-    "New revision hosted CI not yet run; this evidence is local Windows",
     "User Studio was not stopped or replaced"
-  ]
+  ],
+  "hostedFollowup": {
+    "sourceRevision": "e2ada7a59a791dc56cd7d696a3f5032dfdba9fa8",
+    "runId": 37218400675,
+    "workflowConclusion": "failure",
+    "jobs": [
+      {
+        "name": "control-plane",
+        "id": 111483553931,
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37218400675/job/111483553931",
+        "status": "PASS",
+        "logSha256": "32d65ac934ac4b2984bf7349d6f8496f7af484601138ea7ac1ddcb2d850c951b"
+      },
+      {
+        "name": "studio-windows",
+        "id": 111483553897,
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37218400675/job/111483553897",
+        "status": "PASS",
+        "logSha256": "c1387ebf51c545278380e031a89df0edde9e6d58144014a844c4d2ea47a577cd"
+      }
+    ],
+    "scope": "Exact committed crash tests on Linux and Windows; Windows packaged E2E also passed",
+    "otherFailure": "Legacy Fabric 26.2 regression remains failed"
+  }
 }
