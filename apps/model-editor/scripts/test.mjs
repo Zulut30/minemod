@@ -1,4 +1,5 @@
 import process from "node:process";
+await import("./camera.test.ts");
 await import("../worker/mcp.test.ts");
 if (process.platform !== "win32") {
   process.stdout.write(

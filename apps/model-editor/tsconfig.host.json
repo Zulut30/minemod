@@ -1,6 +1,6 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": { "types": ["node"], "lib": ["ES2022", "DOM"], "skipLibCheck": true },
-  "include": ["main/**/*.ts", "preload/**/*.ts", "worker/**/*.ts", "shared/**/*.ts"],
+  "include": ["main/**/*.ts", "preload/**/*.ts", "worker/**/*.ts", "shared/**/*.ts", "scripts/camera.test.ts"],
   "exclude": []
 }

@@ -197,6 +197,8 @@ Studio 0.7.0 вводит [проверяемую миграцию EditorProject
 
 Studio 0.8.0 добавляет [привязку к сетке и числовой центр вращения](docs/production/GEOMETRY_EDITING.md) для held-item. Те же ограниченные команды `snap`/`pivot` доступны агенту через preview/apply; работают locks, CAS и undo/redo. Export сохраняет исходные UV/PNG и native item rotation. Новый пакет создаётся отдельно; игровые модели по-прежнему требуют review и проверки в Minecraft.
 
+Studio 0.9.0 добавляет [восемь ракурсов и проверяемое кадрирование](docs/production/MODEL_CAMERAS.md): fit учитывает pivot, поворот и inflate; source/working сравниваются в одном масштабе. Снимки через MCP сохраняют фактическую ручную камеру. Быстрый `studio_model_review` остаётся обзором четырёх видов; дополнительные стороны доступны через `studio_view_capture` и меню редактора.
+
 ```text
 apps/
   cli/                 CLI adapter

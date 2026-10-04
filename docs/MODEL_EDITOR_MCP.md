@@ -2,6 +2,8 @@
 
 Дополнение Studio 0.8.0: [точные геометрические правки](production/GEOMETRY_EDITING.md) добавляют в schema `pivot` и `snap` без новых shell/eval возможностей. Документ ниже сохраняет исторический scope 0.5; текущий target редактора остаётся held-item, игровой импорт не добавлен.
 
+Дополнение Studio 0.9.0: [camera protocol](production/MODEL_CAMERAS.md) расширяет `studio_view_capture.view` до front/back/left/right/top/bottom/perspective/rear-perspective и совместимого `side = right`. Все виды ортографические. Fit и comparison учитывают поворот/pivot/inflate, а screenshots не меняют реальный orbit/pan/zoom пользователя. `studio_model_review` продолжает давать четыре быстрых вида; остальные снимаются отдельно.
+
 Обновлено 4 октября 2026 года. Windows x64. MCP adapter и [чтение/сравнение вариантов](MODEL_EDITOR_VARIANTS.md) реализованы; полный пользовательский сценарий с самостоятельной генерацией установленными Codex и Claude Code ещё не принят. Это не игровой release.
 
 ## Подключение

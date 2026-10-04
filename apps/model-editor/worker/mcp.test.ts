@@ -16,6 +16,7 @@ import { compileItemAssetPayload } from "../../../packages/application/item-asse
 import { verifyAssetBundleV1 } from "../../../packages/application/asset-bundles.ts";
 import { assetRequest } from "@mcdev/editor-core";
 import { startEditorMcp } from "./mcp.ts";
+import { VIEWS, type View } from "../shared/bridge.ts";
 let session = new EditorSession(
   projectFromAsset(
     JSON.parse(
@@ -32,6 +33,7 @@ let session = new EditorSession(
 );
 let queue: Promise<unknown> = Promise.resolve();
 let captureLayout: string | undefined;
+let captureView: View | undefined;
 let captureData =
   "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4z8DwHwAFgAI/ScLbtAAAAABJRU5ErkJggg==";
 const editor = await startEditorMcp({
@@ -40,6 +42,7 @@ const editor = await startEditorMcp({
   preview: (m) => session.preview(m),
   apply: async (m) => session.apply(m, "agent"),
   capture: async (_state, _view, options) => {
+    captureView = _view;
     captureLayout = options?.layout;
     return captureData;
   },
@@ -430,6 +433,13 @@ try {
   assert.equal(snapshotCapture.data.variantId, variantId);
   assert.equal(snapshotCapture.data.silhouette, true);
   const beforeReview = session.state();
+  for (const view of VIEWS) {
+    const result = await call(0, "studio_view_capture", { ...variantRef, view });
+    assert.equal(result.error, undefined);
+    assert.equal(captureView, view);
+    assert.deepEqual(session.state(), beforeReview);
+  }
+  assert.equal((await clients[0]!.callTool({ name: "studio_view_capture", arguments: { ...variantRef, view: "arbitrary-camera-eval" } })).isError, true);
   const review = await call(0, "studio_model_review", {
     ...variantRef,
     variantId,

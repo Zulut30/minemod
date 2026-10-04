@@ -10,6 +10,7 @@ import type {
   HostRequest,
   HostResponse,
   ConnectionInfo,
+  View,
 } from "../shared/bridge.ts";
 interface StudioUi {
   state: EditorState | null;
@@ -20,7 +21,7 @@ interface StudioUi {
   error: string;
   warning: string;
   fileName: string;
-  view: "perspective" | "front" | "side" | "back";
+  view: View;
   grid: boolean;
   gridStep: 0 | GridStep;
   wire: boolean;

@@ -1,5 +1,6 @@
 import type { EditorState, EditorProject, Mutation } from "@mcdev/editor-core";
-export type View = "perspective" | "front" | "side" | "back";
+export const VIEWS = ["perspective", "front", "side", "back", "left", "right", "top", "bottom", "rear-perspective"] as const;
+export type View = typeof VIEWS[number];
 export interface ConnectionInfo {
   enabled: boolean;
   url?: string;

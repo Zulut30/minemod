@@ -452,6 +452,15 @@ select {
   border-radius: 5px;
   color: var(--muted);
 }
+.view-tabs select {
+  max-width: 112px;
+  min-width: 0;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  font-size: 10px;
+  padding: 4px;
+}
 .view-tabs button.active {
   color: var(--muted);
   background: var(--surface-raised);

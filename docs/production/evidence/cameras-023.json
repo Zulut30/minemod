@@ -1,0 +1,681 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 23,
+  "status": "PASS",
+  "scope": "Eight orthographic views plus side alias; rotated/inflated/pivot-aware common fit, actual manual orbit/pan preservation and equal-scale source/candidate comparison in packaged Studio",
+  "verifiedAtUtc": "2026-10-04T19:50:13.389234+00:00",
+  "sourceParentRevision": "0e1880144dc3ec0cf89eb8e0915405726693d6fd",
+  "sourceHashes": [
+    {
+      "path": "apps/model-editor/package.json",
+      "bytes": 1254,
+      "sha256": "36672b823acae7ccfe1e115e8490074a1c180a82804e3fa57f5545b5c45bf588"
+    },
+    {
+      "path": "apps/model-editor/shared/bridge.ts",
+      "bytes": 1499,
+      "sha256": "18750e2179b869fd29fe1ace60f7f4245f70f5c9ede6cf013c3f7c42eb7480a1"
+    },
+    {
+      "path": "apps/model-editor/renderer/camera.ts",
+      "bytes": 2411,
+      "sha256": "6fd67771c1482f08a3ce1f731955a538318d437c70c6022fbc68cb5bf55ccb61"
+    },
+    {
+      "path": "apps/model-editor/renderer/Viewport.tsx",
+      "bytes": 13565,
+      "sha256": "fdde5d60190fda4fc0eed6675b014b38858f77cfb6ad40a56401f23381f51959"
+    },
+    {
+      "path": "apps/model-editor/renderer/App.tsx",
+      "bytes": 32641,
+      "sha256": "ac4c2b8c8187718a9a605e84c2e571d1453e25943ee536359351852e33b61912"
+    },
+    {
+      "path": "apps/model-editor/renderer/store.ts",
+      "bytes": 4896,
+      "sha256": "3dccb8d60b14be347bb4942854bb2d6d5bfbc7d192781047d36d16eb63b20d77"
+    },
+    {
+      "path": "apps/model-editor/renderer/style.css",
+      "bytes": 29067,
+      "sha256": "7dede576f41e3d99d151017dc4e76a740b7cb9a66ebf5358129558a2857fa911"
+    },
+    {
+      "path": "apps/model-editor/worker/mcp.ts",
+      "bytes": 26413,
+      "sha256": "ea38d1840cd68eea5ca41fd3e4570e75a18e15d4424fc822422987d84770e568"
+    },
+    {
+      "path": "apps/model-editor/worker/mcp.test.ts",
+      "bytes": 15243,
+      "sha256": "f94c3b44fa83a2cd4ce45aeba628bdf71c6520ddc0e94f13450e249e920f29fe"
+    },
+    {
+      "path": "apps/model-editor/scripts/camera.test.ts",
+      "bytes": 3604,
+      "sha256": "5a85ab8c788e5453c9467fb46edcc8c9140033c07c6e907835eb60cb04cd6c8e"
+    },
+    {
+      "path": "apps/model-editor/scripts/check-camera-desktop.mjs",
+      "bytes": 8798,
+      "sha256": "8c0d06dc056f1ab552218bd543062d84d52638644ed747ebd66f41ee923fbc8b"
+    },
+    {
+      "path": "apps/model-editor/scripts/test-desktop.mjs",
+      "bytes": 16537,
+      "sha256": "50a002d8fe4d69d50691271a2343f4097bd914d44fef2d473a18ad107248cde8"
+    },
+    {
+      "path": "apps/model-editor/scripts/test.mjs",
+      "bytes": 492,
+      "sha256": "ca3d34874db848b526e27a1b9ac46c2454660896868dee9b58ef48dc34309ad7"
+    },
+    {
+      "path": "apps/model-editor/tsconfig.host.json",
+      "bytes": 260,
+      "sha256": "b7ecb83eca34e2070c8dc14c8f41283b3819a4d68b702af7d3391d2087571f4b"
+    }
+  ],
+  "toolchain": {
+    "node": "24.11.0",
+    "pnpm": "11.8.0",
+    "studio": "0.9.0",
+    "three": "0.186.1"
+  },
+  "tests": {
+    "projectedCorners": 31968,
+    "pureCamera": "PASS",
+    "httpMcpPresets": "PASS",
+    "typecheck": "PASS",
+    "lint": "PASS",
+    "portable": "PASS",
+    "packagedFocusedCamera": "PASS",
+    "fullPackagedSuite": "PASS"
+  },
+  "logs": [
+    {
+      "path": "output/verification/roadmap-023-camera.log",
+      "bytes": 184,
+      "sha256": "417389a5977abfec3ee3984cbb177840005702f91e6042e59efe4fe8d021cc29"
+    },
+    {
+      "path": "output/verification/roadmap-023-mcp.log",
+      "bytes": 207,
+      "sha256": "ce600a29360c371575566860a7c94c33766d03e9a2ba5f6249e976ae6338a777"
+    },
+    {
+      "path": "output/verification/roadmap-023-typecheck.log",
+      "bytes": 176,
+      "sha256": "fe0327fb3a908a7cea6b4e5ef62bbaa7903d4f4149a209170e6249f0dd5c8190"
+    },
+    {
+      "path": "output/verification/roadmap-023-lint.log",
+      "bytes": 29,
+      "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+    },
+    {
+      "path": "output/verification/roadmap-023-portable.log",
+      "bytes": 3123,
+      "sha256": "80f907f85241e56a81bf01d88f3fda88fceff5da025674dd0886e94b7919adfe"
+    },
+    {
+      "path": "output/verification/roadmap-023-package.log",
+      "bytes": 786,
+      "sha256": "dca0a32621a93357a0c8dbce6f0a7f4ced88ebfbe930baa5baefeccfe3cd0e78"
+    },
+    {
+      "path": "output/verification/roadmap-023-focused-e2e.log",
+      "bytes": 118,
+      "sha256": "2e70fe8edec1d805aa4507d7b55aeae4553c8051cadbf150a969b01c59b2ef1d"
+    },
+    {
+      "path": "output/verification/roadmap-023-packaged-e2e.log",
+      "bytes": 156,
+      "sha256": "cf1e2c9950137216405baaec799732c52f2552a57260ded699fa1b89d195b113"
+    }
+  ],
+  "fullReport": {
+    "path": "output/playwright/studio-packaged-bb0b29d5/report.json",
+    "bytes": 21012,
+    "sha256": "5906633bec13d24242999d57011c1dcede4bfc1ec8f2ebb0609aa3ad0222af0c"
+  },
+  "focusedReport": {
+    "path": "output/playwright/camera-023-4b07d52c/report.json",
+    "bytes": 10784,
+    "sha256": "1deb7bc619ce4ad1ba59d50ba795f8808ee1e2e5ab3af5f461de59821d3a7e7e"
+  },
+  "cameraChecks": {
+    "status": "PASS",
+    "hidden": true,
+    "actualOrbitPanPreserved": true,
+    "fitRestoresCamera": true,
+    "publicCapturePresets": 9,
+    "eightViewsPlusLegacyAlias": true,
+    "modelPixelsVerified": true,
+    "images": [
+      {
+        "view": "perspective",
+        "bytes": 137589,
+        "sha256": "d2a5c80d32b09e64fab467633655d0b3463cbf4c558082bb2379343182e680cc",
+        "pixels": {
+          "bright": 25230,
+          "colors": 161
+        },
+        "camera": {
+          "view": "perspective",
+          "position": [
+            49.778637429367485,
+            26.199684610511284,
+            49.77863742936749
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ],
+          "quaternion": [
+            -0.08072209971422681,
+            0.3812199243302096,
+            0.03343618848486608,
+            0.9203463115648369
+          ],
+          "zoom": 23.61514322800363,
+          "target": [
+            7.999999999999999,
+            15.755025253169414,
+            7.999999999999999
+          ],
+          "near": 0.1,
+          "far": 500
+        }
+      },
+      {
+        "view": "front",
+        "bytes": 35328,
+        "sha256": "6d878cee8d3ec715c6c4574372c9540f3ced90d445aa0c81d99aad2f47418058",
+        "pixels": {
+          "bright": 31427,
+          "colors": 145
+        },
+        "camera": {
+          "view": "front",
+          "position": [
+            7.999999999999999,
+            15.755025253169418,
+            68
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ],
+          "quaternion": [
+            -2.960594732333751e-17,
+            0,
+            0,
+            1
+          ],
+          "zoom": 23.61514322800363,
+          "target": [
+            7.999999999999999,
+            15.755025253169414,
+            7.999999999999999
+          ],
+          "near": 0.1,
+          "far": 500
+        }
+      },
+      {
+        "view": "side",
+        "bytes": 14437,
+        "sha256": "5a24d8102df2a0c8ecbb34e3b4490989171ead35cca36ea54d04b02418846496",
+        "pixels": {
+          "bright": 7857,
+          "colors": 126
+        },
+        "camera": {
+          "view": "side",
+          "position": [
+            68,
+            15.755025253169418,
+            8.000000000000004
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ],
+          "quaternion": [
+            -2.0934566115783664e-17,
+            0.7071067811865475,
+            2.0934566115783664e-17,
+            0.7071067811865476
+          ],
+          "zoom": 23.61514322800363,
+          "target": [
+            7.999999999999999,
+            15.755025253169414,
+            7.999999999999999
+          ],
+          "near": 0.1,
+          "far": 500
+        }
+      },
+      {
+        "view": "back",
+        "bytes": 33671,
+        "sha256": "1615931871538c46ce88214caf832f5a593ba6c580207ba31ee971887af9301b",
+        "pixels": {
+          "bright": 25658,
+          "colors": 82
+        },
+        "camera": {
+          "view": "back",
+          "position": [
+            8.000000000000007,
+            15.755025253169418,
+            -52
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ],
+          "quaternion": [
+            -1.9721522630525296e-33,
+            1,
+            2.960594732333751e-17,
+            6.661338147750939e-17
+          ],
+          "zoom": 23.61514322800363,
+          "target": [
+            7.999999999999999,
+            15.755025253169414,
+            7.999999999999999
+          ],
+          "near": 0.1,
+          "far": 500
+        }
+      },
+      {
+        "view": "left",
+        "bytes": 13977,
+        "sha256": "81440286688d9b5ba4af3a2abf97d1ab27e976ddf6100fb67fff5aa4a8eb723c",
+        "pixels": {
+          "bright": 8027,
+          "colors": 95
+        },
+        "camera": {
+          "view": "left",
+          "position": [
+            -52,
+            15.755025253169418,
+            8.000000000000004
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ],
+          "quaternion": [
+            -2.0934566115783664e-17,
+            -0.7071067811865475,
+            -2.0934566115783664e-17,
+            0.7071067811865476
+          ],
+          "zoom": 23.61514322800363,
+          "target": [
+            7.999999999999999,
+            15.755025253169414,
+            7.999999999999999
+          ],
+          "near": 0.1,
+          "far": 500
+        }
+      },
+      {
+        "view": "right",
+        "bytes": 14437,
+        "sha256": "5a24d8102df2a0c8ecbb34e3b4490989171ead35cca36ea54d04b02418846496",
+        "pixels": {
+          "bright": 7857,
+          "colors": 126
+        },
+        "camera": {
+          "view": "right",
+          "position": [
+            68,
+            15.755025253169418,
+            8.000000000000004
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ],
+          "quaternion": [
+            -2.0934566115783664e-17,
+            0.7071067811865475,
+            2.0934566115783664e-17,
+            0.7071067811865476
+          ],
+          "zoom": 23.61514322800363,
+          "target": [
+            7.999999999999999,
+            15.755025253169414,
+            7.999999999999999
+          ],
+          "near": 0.1,
+          "far": 500
+        }
+      },
+      {
+        "view": "top",
+        "bytes": 32414,
+        "sha256": "13d8243038d8ec16c6d3e9557812118dc9b92807082a9f4dcbb92aef2265ef31",
+        "pixels": {
+          "bright": 4421,
+          "colors": 118
+        },
+        "camera": {
+          "view": "top",
+          "position": [
+            7.999999999999999,
+            75.7550252531694,
+            8.000000000000007
+          ],
+          "up": [
+            0,
+            0,
+            -1
+          ],
+          "quaternion": [
+            -0.7071067811865475,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "zoom": 23.61514322800363,
+          "target": [
+            7.999999999999999,
+            15.755025253169414,
+            7.999999999999999
+          ],
+          "near": 0.1,
+          "far": 500
+        }
+      },
+      {
+        "view": "bottom",
+        "bytes": 33814,
+        "sha256": "1634ec6903f6bfb0805c551e1fbd3ce5a575ecfe3a3c5940e0177a560a0de468",
+        "pixels": {
+          "bright": 4226,
+          "colors": 77
+        },
+        "camera": {
+          "view": "bottom",
+          "position": [
+            7.999999999999999,
+            -44.244974746830565,
+            7.999999999999999
+          ],
+          "up": [
+            0,
+            0,
+            1
+          ],
+          "quaternion": [
+            0.7071067811865475,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "zoom": 23.61514322800363,
+          "target": [
+            7.999999999999999,
+            15.755025253169414,
+            7.999999999999999
+          ],
+          "near": 0.1,
+          "far": 500
+        }
+      },
+      {
+        "view": "rear-perspective",
+        "bytes": 136531,
+        "sha256": "c1ba8c636c05b7560ecfc7dc1c805faca730ad60cc6daefb36ed267f9286462a",
+        "pixels": {
+          "bright": 20390,
+          "colors": 101
+        },
+        "camera": {
+          "view": "rear-perspective",
+          "position": [
+            -33.77863742936749,
+            26.199684610511284,
+            -33.778637429367485
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ],
+          "quaternion": [
+            0.03343618848486608,
+            0.920346311564837,
+            0.08072209971422681,
+            -0.3812199243302097
+          ],
+          "zoom": 23.61514322800363,
+          "target": [
+            7.999999999999999,
+            15.755025253169414,
+            7.999999999999999
+          ],
+          "near": 0.1,
+          "far": 500
+        }
+      }
+    ],
+    "sharedZoomAndTarget": true,
+    "sameActualComparisonCamera": true,
+    "compared": [
+      {
+        "view": "front",
+        "sourceSha256": "081d5190d79d55e782cbd6783ebae795bc1897737e68062f73712abb67a89206",
+        "workingSha256": "4eacedb52ebfa79f9926fb51b9efc7a47b43eb1be2bc97dded709eae5ab4e065",
+        "camera": {
+          "view": "front",
+          "position": [
+            11.767387953251129,
+            15.755025253169418,
+            72.5545322975669
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ],
+          "quaternion": [
+            -2.7517151409479e-17,
+            0,
+            0,
+            1
+          ],
+          "zoom": 21.27611161575169,
+          "target": [
+            11.767387953251129,
+            15.755025253169414,
+            8
+          ],
+          "near": 0.1,
+          "far": 500
+        }
+      },
+      {
+        "view": "top",
+        "sourceSha256": "bc3e5ef3ab4dedeac81fc064f346a8573c747fc04aacbe79aa7623ef227d8408",
+        "workingSha256": "afaa0382490f3a95936a1bdacb7c698fa2a43f3d0d4adb063aff3eab8be6ade7",
+        "camera": {
+          "view": "top",
+          "position": [
+            11.767387953251129,
+            80.30955755073629,
+            8
+          ],
+          "up": [
+            0,
+            0,
+            -1
+          ],
+          "quaternion": [
+            -0.7071067811865475,
+            0,
+            0,
+            0.7071067811865476
+          ],
+          "zoom": 21.27611161575169,
+          "target": [
+            11.767387953251129,
+            15.755025253169414,
+            8
+          ],
+          "near": 0.1,
+          "far": 500
+        }
+      },
+      {
+        "view": "rear-perspective",
+        "sourceSha256": "1f1fe8a727959f3e12d99b07b6729afae797e64fecba8e3c5d7a4c85b5f25856",
+        "workingSha256": "76f1300ee02cd4e07c08094d1d471b6afea1edaa487f0febacc5b7f8c55e58a6",
+        "camera": {
+          "view": "rear-perspective",
+          "position": [
+            -33.18261870145621,
+            26.992526916846256,
+            -36.95000665470733
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ],
+          "quaternion": [
+            0.03343618848486612,
+            0.920346311564837,
+            0.08072209971422686,
+            -0.3812199243302097
+          ],
+          "zoom": 21.27611161575169,
+          "target": [
+            11.767387953251129,
+            15.755025253169414,
+            8
+          ],
+          "near": 0.1,
+          "far": 500
+        }
+      }
+    ],
+    "compactToolbar": true
+  },
+  "screenshots": [
+    {
+      "path": "output/playwright/studio-packaged-bb0b29d5/camera/back.png",
+      "bytes": 33671,
+      "sha256": "1615931871538c46ce88214caf832f5a593ba6c580207ba31ee971887af9301b"
+    },
+    {
+      "path": "output/playwright/studio-packaged-bb0b29d5/camera/bottom.png",
+      "bytes": 33814,
+      "sha256": "1634ec6903f6bfb0805c551e1fbd3ce5a575ecfe3a3c5940e0177a560a0de468"
+    },
+    {
+      "path": "output/playwright/studio-packaged-bb0b29d5/camera/front.png",
+      "bytes": 35328,
+      "sha256": "6d878cee8d3ec715c6c4574372c9540f3ced90d445aa0c81d99aad2f47418058"
+    },
+    {
+      "path": "output/playwright/studio-packaged-bb0b29d5/camera/left.png",
+      "bytes": 13977,
+      "sha256": "81440286688d9b5ba4af3a2abf97d1ab27e976ddf6100fb67fff5aa4a8eb723c"
+    },
+    {
+      "path": "output/playwright/studio-packaged-bb0b29d5/camera/perspective.png",
+      "bytes": 137589,
+      "sha256": "d2a5c80d32b09e64fab467633655d0b3463cbf4c558082bb2379343182e680cc"
+    },
+    {
+      "path": "output/playwright/studio-packaged-bb0b29d5/camera/rear-perspective.png",
+      "bytes": 136531,
+      "sha256": "c1ba8c636c05b7560ecfc7dc1c805faca730ad60cc6daefb36ed267f9286462a"
+    },
+    {
+      "path": "output/playwright/studio-packaged-bb0b29d5/camera/right.png",
+      "bytes": 14437,
+      "sha256": "5a24d8102df2a0c8ecbb34e3b4490989171ead35cca36ea54d04b02418846496"
+    },
+    {
+      "path": "output/playwright/studio-packaged-bb0b29d5/camera/side.png",
+      "bytes": 14437,
+      "sha256": "5a24d8102df2a0c8ecbb34e3b4490989171ead35cca36ea54d04b02418846496"
+    },
+    {
+      "path": "output/playwright/studio-packaged-bb0b29d5/camera/source-front.png",
+      "bytes": 31747,
+      "sha256": "081d5190d79d55e782cbd6783ebae795bc1897737e68062f73712abb67a89206"
+    },
+    {
+      "path": "output/playwright/studio-packaged-bb0b29d5/camera/source-rear-perspective.png",
+      "bytes": 35956,
+      "sha256": "1f1fe8a727959f3e12d99b07b6729afae797e64fecba8e3c5d7a4c85b5f25856"
+    },
+    {
+      "path": "output/playwright/studio-packaged-bb0b29d5/camera/source-top.png",
+      "bytes": 9462,
+      "sha256": "bc3e5ef3ab4dedeac81fc064f346a8573c747fc04aacbe79aa7623ef227d8408"
+    },
+    {
+      "path": "output/playwright/studio-packaged-bb0b29d5/camera/top.png",
+      "bytes": 32414,
+      "sha256": "13d8243038d8ec16c6d3e9557812118dc9b92807082a9f4dcbb92aef2265ef31"
+    },
+    {
+      "path": "output/playwright/studio-packaged-bb0b29d5/camera/working-front.png",
+      "bytes": 35062,
+      "sha256": "4eacedb52ebfa79f9926fb51b9efc7a47b43eb1be2bc97dded709eae5ab4e065"
+    },
+    {
+      "path": "output/playwright/studio-packaged-bb0b29d5/camera/working-rear-perspective.png",
+      "bytes": 41549,
+      "sha256": "76f1300ee02cd4e07c08094d1d471b6afea1edaa487f0febacc5b7f8c55e58a6"
+    },
+    {
+      "path": "output/playwright/studio-packaged-bb0b29d5/camera/working-top.png",
+      "bytes": 10468,
+      "sha256": "afaa0382490f3a95936a1bdacb7c698fa2a43f3d0d4adb063aff3eab8be6ade7"
+    }
+  ],
+  "package": {
+    "executable": {
+      "path": "output/model-editor/releases/0.9.0/cd65eeee/MineMod Studio-win32-x64/MineMod Studio.exe",
+      "bytes": 245726208,
+      "sha256": "4818ff152349e40d49681f8fe77324326fca977ed9c00441ff835db20a7c51a4"
+    },
+    "appAsar": {
+      "path": "output/model-editor/releases/0.9.0/cd65eeee/MineMod Studio-win32-x64/resources/app.asar",
+      "bytes": 3509216,
+      "sha256": "d3f8c23e3d8d4b936c004e7c34d8e389c1506705f4bb4894cf05f49f8c432af7"
+    }
+  },
+  "hostedCurrentSource": "pending after commit",
+  "artisticApproval": "not-granted",
+  "minecraftAssetRendering": "not-verified by editor previews",
+  "quickModelReview": "Four views retained; extra views provided by individual capture and manual menu.",
+  "newDependencies": false,
+  "projectSchemaVersion": 2,
+  "gamePackBaselineChanged": false,
+  "remainingRegressionFailure": "Existing Fabric 26.2 derived Minecraft common JAR checksum mismatch; no checksum bypass."
+}

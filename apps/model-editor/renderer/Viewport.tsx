@@ -4,7 +4,6 @@ import { Canvas, useThree, useFrame } from "@react-three/fiber";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import * as THREE from "three";
 import {
-  bounds,
   cubes,
   FACE_NAMES,
   type Cube,
@@ -12,54 +11,15 @@ import {
 } from "@mcdev/editor-core";
 import { useStudio } from "./store.ts";
 import type { View } from "../shared/bridge.ts";
+import { frameCubes, cameraSettings, viewUp, type CameraFrame } from "./camera.ts";
+export { comparisonFrame } from "./camera.ts";
 
 export interface ReviewRender {
-  framing: { center: [number, number, number]; extent: number };
+  framing: CameraFrame;
   silhouette: boolean;
   view?: View;
   onThumbnail?: (png: string) => void;
 }
-export function comparisonFrame(
-  projects: EditorProject[],
-): ReviewRender["framing"] {
-  const box = new THREE.Box3();
-  for (const project of projects)
-    for (const cube of cubes(project)) {
-      const rotation = new THREE.Euler(
-        ...(cube.rotation.map((v) => (v * Math.PI) / 180) as [
-          number,
-          number,
-          number,
-        ]),
-      );
-      for (const x of [0, 1])
-        for (const y of [0, 1])
-          for (const z of [0, 1]) {
-            const point = new THREE.Vector3(
-              ...(cube.origin.map(
-                (v, a) =>
-                  v +
-                  ([x, y, z][a] ? cube.size[a]! + cube.inflate : -cube.inflate),
-              ) as [number, number, number]),
-            );
-            point
-              .sub(new THREE.Vector3(...cube.pivot))
-              .applyEuler(rotation)
-              .add(new THREE.Vector3(...cube.pivot));
-            box.expandByPoint(point);
-          }
-    }
-  if (box.isEmpty()) return { center: [8, 8, 8], extent: 16 };
-  return {
-    center: box.getCenter(new THREE.Vector3()).toArray() as [
-      number,
-      number,
-      number,
-    ],
-    extent: Math.max(4, ...box.getSize(new THREE.Vector3()).toArray()),
-  };
-}
-
 const quads = {
   north: [3, 2, 1, 0],
   south: [6, 7, 4, 5],
@@ -220,50 +180,41 @@ function Camera({
     ? cubes(project).filter((c) => selection.includes(c.id))
     : [];
   const selectionKey = focus ? JSON.stringify(selection) : "";
-  const modelBounds = bounds(chosen.length ? chosen : cubes(project));
-  const center =
-    review?.framing.center ??
-    (modelBounds.min.map((v, a) => v + modelBounds.size[a]! / 2) as [
-      number,
-      number,
-      number,
-    ]);
-  const extent = review?.framing.extent ?? Math.max(4, ...modelBounds.size);
+  const framing = review?.framing ?? frameCubes(chosen.length ? chosen : cubes(project));
+  const settings = cameraSettings(framing, view, size.width, size.height);
+  const recordCamera = (orbit: OrbitControls | null) => {
+    const ortho = camera as THREE.OrthographicCamera;
+    gl.domElement.dataset.camera = JSON.stringify({ view, position: camera.position.toArray(),
+      up: camera.up.toArray(), quaternion: camera.quaternion.toArray(), zoom: ortho.zoom,
+      target: orbit?.target.toArray() ?? framing.center, near: ortho.near, far: ortho.far });
+  };
   useEffect(() => {
+    // OrbitControls сохраняет camera.up в конструкторе: новый ракурс создаёт новый control.
+    camera.up.set(...viewUp(view));
     const orbit = new OrbitControls(camera, gl.domElement);
     controls.current = orbit;
     orbit.enableDamping = false;
     orbit.enabled = !review;
-    orbit.minZoom = 4;
-    orbit.maxZoom = 120;
-    orbit.addEventListener("change", () => invalidate());
+    orbit.minZoom = 0.001;
+    orbit.maxZoom = 512;
+    orbit.addEventListener("change", () => { recordCamera(orbit); invalidate(); });
     return () => {
       orbit.dispose();
       controls.current = null;
     };
-  }, [camera, gl, invalidate, !!review]);
+  }, [camera, gl, invalidate, !!review, view]);
   useEffect(() => {
-    const [x, y, z] = center;
-    camera.position.set(
-      x + (view === "side" ? 60 : view === "perspective" ? 36 : 0),
-      y + (view === "perspective" ? 8 : 0),
-      z + (view === "back" ? -60 : view === "side" ? 0 : 60),
-    );
+    camera.position.set(...settings.position);
+    camera.up.set(...settings.up);
     const ortho = camera as THREE.OrthographicCamera;
-    ortho.zoom = Math.min(
-      size.height / (extent * 1.28),
-      size.width / (extent * 0.72),
-    );
-    controls.current?.target.set(x, y, z);
-    camera.lookAt(x, y, z);
+    ortho.zoom = settings.zoom;
+    ortho.near = settings.near;
+    ortho.far = settings.far;
+    controls.current?.target.set(...framing.center);
+    camera.lookAt(...framing.center);
     camera.updateProjectionMatrix();
     controls.current?.update();
-    gl.domElement.dataset.camera = JSON.stringify({
-      view,
-      position: camera.position.toArray(),
-      zoom: ortho.zoom,
-      target: center,
-    });
+    recordCamera(controls.current);
     invalidate();
     // Перестройка геометрии не сбрасывает ручной orbit; смена проекта и ракурса сбрасывает.
   }, [
@@ -402,7 +353,7 @@ function ReviewThumbnail({
         const thumbnailCamera = (camera as THREE.OrthographicCamera).clone();
         thumbnailCamera.left = thumbnailCamera.bottom = -32;
         thumbnailCamera.right = thumbnailCamera.top = 32;
-        thumbnailCamera.zoom = 64 / (review.framing.extent * 1.28);
+        thumbnailCamera.zoom = cameraSettings(review.framing, view, 64, 64).zoom;
         thumbnailCamera.updateProjectionMatrix();
         const target = new THREE.WebGLRenderTarget(64, 64);
         target.texture.colorSpace = THREE.SRGBColorSpace;

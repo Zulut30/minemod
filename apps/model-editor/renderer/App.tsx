@@ -7,6 +7,7 @@ import type { ReactNode, ComponentProps } from "react";
 import { bounds, cubes, snapToGrid, type GridStep, type EditorProject, type EditorCommand } from "@mcdev/editor-core";
 import { useStudio, saveProject } from "./store.ts";
 import { Viewport, drawAtlas } from "./Viewport.tsx";
+import type { View } from "../shared/bridge.ts";
 
 function Icon({ name, size = 18 }: { name: string; size?: number }) {
   const paths: Record<string, string> = {
@@ -692,8 +693,20 @@ export function App() {
                       {label}
                     </button>
                   ))}
+                  <select aria-label="Дополнительный ракурс"
+                    value={["left", "right", "top", "bottom", "rear-perspective"].includes(ui.view) ? ui.view : ""}
+                    onChange={(event) => useStudio.setState({ view: event.target.value as View, frame: ui.frame + 1 })}>
+                    <option value="" disabled>Ещё ракурсы</option>
+                    <option value="left">Слева</option><option value="right">Справа</option>
+                    <option value="top">Сверху</option><option value="bottom">Снизу</option>
+                    <option value="rear-perspective">3D сзади</option>
+                  </select>
                 </div>
                 <div className="viewport-options">
+                  <button data-testid="fit-model" title="Показать всю модель"
+                    onClick={() => useStudio.setState({ frame: ui.frame + 1 })}>
+                    <Icon name="eye" size={16} />
+                  </button>
                   <button
                     title="Сетка"
                     className={ui.grid ? "active" : ""}
