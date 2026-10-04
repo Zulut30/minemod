@@ -102,5 +102,59 @@
     "Non-npm binary/toolchain advisory review",
     "Full security and production acceptance"
   ],
-  "userStudio": "not stopped or replaced"
+  "userStudio": "not stopped or replaced",
+  "hostedFollowup": {
+    "runId": 37220639469,
+    "sourceRevision": "077982ebb798cce74bc89c9731cfcc4d379abec5",
+    "workflowConclusion": "failure",
+    "jobs": [
+      {
+        "conclusion": "success",
+        "databaseId": 111490091446,
+        "name": "studio-windows",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37220639469/job/111490091446"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 111490091533,
+        "name": "neoforge",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37220639469/job/111490091533"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 111490091556,
+        "name": "Fabric 1.20.1 / Java 17 production target",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37220639469/job/111490091556"
+      },
+      {
+        "conclusion": "failure",
+        "databaseId": 111490091580,
+        "name": "fabric",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37220639469/job/111490091580"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 111490091597,
+        "name": "control-plane",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37220639469/job/111490091597"
+      },
+      {
+        "conclusion": "skipped",
+        "databaseId": 111490226621,
+        "name": "fabric-client",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37220639469/job/111490226621"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 111490703891,
+        "name": "client-smoke",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37220639469/job/111490703891"
+      }
+    ],
+    "report": {
+      "path": "output/verification/roadmap-088-hosted.json",
+      "sha256": "3362221acb1c731837aeba5cba0d119d64983172150c6c2b28714ce282cc2e5a"
+    },
+    "scope": "Updated npm graph passed Windows packaged Studio, Linux full suite and Fabric 1.20.1 clean build/GameTests/dedicated server/headless client. Legacy Fabric 26.2 still failed; supply-chain point 088 remains PARTIAL."
+  }
 }
