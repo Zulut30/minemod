@@ -185,7 +185,50 @@
     }
   },
   "localFullSuite": "Initial full run found and reproduced capture snapshot race; superseded partial rebuild run was deliberately stopped after numeric draft changed. Final package passed focused editing and geometry checks; complete suite will run in hosted Windows CI. No full-suite PASS claimed for initial/partial run.",
-  "hostedCurrentSource": "pending after commit",
+  "hostedCurrentSource": {
+    "status": "PASS",
+    "sourceRevision": "bb6db3910e4ceea38953be66c0c4989a421b657d",
+    "runUrl": "https://github.com/Zulut30/minemod/actions/runs/37228157984",
+    "windowsFullPackagedJobId": 111512022441,
+    "linuxControlPlaneJobId": 111512022379,
+    "productionCleanBuildGameTestServerJobId": 111512022349,
+    "clientSmokeJobId": 111512645256,
+    "neoForgeRegressionJobId": 111512022233,
+    "fullPackagedSuite": "PASS",
+    "report": {
+      "path": "output/ci/37228157984-windows/output/playwright/studio-packaged-19d17cf6/report.json",
+      "sha256": "bf0095db82d49c40519cd65d664b0e98f490aaa7da8ebc01397c3cc752b490ae"
+    },
+    "geometry": {
+      "status": "PASS",
+      "hidden": true,
+      "gridNumericFields": true,
+      "mixedPivotEscape": true,
+      "exactPivotDecimal": true,
+      "nativeRotationExport": true,
+      "pngUnchanged": true,
+      "humanUndoRedo": 6,
+      "publicMcpPivotSnap": true,
+      "stalePivotInputRejected": true,
+      "beforeFrontSha256": "08e3c90a890a55f138b0bdec1eb68c013b5f704206f0ef634483ed348a8296e8",
+      "changedFrontSha256": "7842e0650520bdfa67b9ffdeff42ba269209a913a7457f4d9bc37fbc29a8bc41",
+      "afterUndoFrontSha256": "08e3c90a890a55f138b0bdec1eb68c013b5f704206f0ef634483ed348a8296e8"
+    },
+    "screenshots": [
+      {
+        "path": "output/ci/37228157984-windows/output/playwright/studio-packaged-19d17cf6/geometry/before-front.png",
+        "bytes": 24296,
+        "sha256": "08e3c90a890a55f138b0bdec1eb68c013b5f704206f0ef634483ed348a8296e8"
+      },
+      {
+        "path": "output/ci/37228157984-windows/output/playwright/studio-packaged-19d17cf6/geometry/after-undo-front.png",
+        "bytes": 24296,
+        "sha256": "08e3c90a890a55f138b0bdec1eb68c013b5f704206f0ef634483ed348a8296e8"
+      }
+    ],
+    "workflowConclusion": "failure",
+    "remainingFailure": "Existing Fabric 26.2 derived JAR checksum mismatch; no checksum bypass."
+  },
   "artisticApproval": "not-granted",
   "newModelInMinecraft": "not-verified; exports continue reviewRequired=true",
   "unchangedGameBaseline": "Fabric 1.20.1 / Java 17; GameTests and server for this source require CI",
