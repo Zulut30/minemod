@@ -670,7 +670,536 @@
       "sha256": "d3f8c23e3d8d4b936c004e7c34d8e389c1506705f4bb4894cf05f49f8c432af7"
     }
   },
-  "hostedCurrentSource": "pending after commit",
+  "hostedCurrentSource": {
+    "runId": 37229770014,
+    "runUrl": "https://github.com/Zulut30/minemod/actions/runs/37229770014",
+    "sourceRevision": "66f85c94422ac7f717be938e7abdb2fc23bcb509",
+    "windowsJobId": 111516805911,
+    "linuxControlPlaneJobId": 111516806005,
+    "productionCleanBuildGameTestServerJobId": 111516805720,
+    "clientSmokeJobId": 111517381219,
+    "neoForgeRegressionJobId": 111516805980,
+    "fullPackagedSuite": "PASS",
+    "report": {
+      "path": "output/ci/37229770014-windows/output/playwright/studio-packaged-f0dba7c7/report.json",
+      "sha256": "e35cbe8c870ecff5421c008ab3e29f6feb83ab97df7ee6a0d74c3eb28aef723a"
+    },
+    "camera": {
+      "status": "PASS",
+      "hidden": true,
+      "actualOrbitPanPreserved": true,
+      "fitRestoresCamera": true,
+      "publicCapturePresets": 9,
+      "eightViewsPlusLegacyAlias": true,
+      "modelPixelsVerified": true,
+      "images": [
+        {
+          "view": "perspective",
+          "bytes": 86560,
+          "sha256": "0406e3c7b21a8c0ef0c1d8657b1620459457797ff09f8b5eb37ff3e79e2a0ee1",
+          "pixels": {
+            "bright": 23693,
+            "colors": 167
+          },
+          "camera": {
+            "view": "perspective",
+            "position": [
+              49.778637429367485,
+              26.199684610511284,
+              49.77863742936749
+            ],
+            "up": [
+              0,
+              1,
+              0
+            ],
+            "quaternion": [
+              -0.08072209971422681,
+              0.3812199243302096,
+              0.03343618848486608,
+              0.9203463115648369
+            ],
+            "zoom": 22.35192529664687,
+            "target": [
+              7.999999999999999,
+              15.755025253169414,
+              7.999999999999999
+            ],
+            "near": 0.1,
+            "far": 500
+          }
+        },
+        {
+          "view": "front",
+          "bytes": 25365,
+          "sha256": "8be53ecb2b628a1a562ca410ad871c34e8efed968b5fed12feb1b5462b95bd5a",
+          "pixels": {
+            "bright": 29748,
+            "colors": 142
+          },
+          "camera": {
+            "view": "front",
+            "position": [
+              7.999999999999999,
+              15.755025253169418,
+              68
+            ],
+            "up": [
+              0,
+              1,
+              0
+            ],
+            "quaternion": [
+              -2.960594732333751e-17,
+              0,
+              0,
+              1
+            ],
+            "zoom": 22.35192529664687,
+            "target": [
+              7.999999999999999,
+              15.755025253169414,
+              7.999999999999999
+            ],
+            "near": 0.1,
+            "far": 500
+          }
+        },
+        {
+          "view": "side",
+          "bytes": 9157,
+          "sha256": "c12b882cf6a8c2a9052b135deffd0cfab0192f66bd6d632bc727427f68b816ae",
+          "pixels": {
+            "bright": 7568,
+            "colors": 101
+          },
+          "camera": {
+            "view": "side",
+            "position": [
+              68,
+              15.755025253169418,
+              8.000000000000004
+            ],
+            "up": [
+              0,
+              1,
+              0
+            ],
+            "quaternion": [
+              -2.0934566115783664e-17,
+              0.7071067811865475,
+              2.0934566115783664e-17,
+              0.7071067811865476
+            ],
+            "zoom": 22.35192529664687,
+            "target": [
+              7.999999999999999,
+              15.755025253169414,
+              7.999999999999999
+            ],
+            "near": 0.1,
+            "far": 500
+          }
+        },
+        {
+          "view": "back",
+          "bytes": 24095,
+          "sha256": "27f6412291cd4b324aa4eeba57eb545822fea9f4eb5047e75dd1b9c8dcea4953",
+          "pixels": {
+            "bright": 23732,
+            "colors": 84
+          },
+          "camera": {
+            "view": "back",
+            "position": [
+              8.000000000000007,
+              15.755025253169418,
+              -52
+            ],
+            "up": [
+              0,
+              1,
+              0
+            ],
+            "quaternion": [
+              -1.9721522630525296e-33,
+              1,
+              2.960594732333751e-17,
+              6.661338147750939e-17
+            ],
+            "zoom": 22.35192529664687,
+            "target": [
+              7.999999999999999,
+              15.755025253169414,
+              7.999999999999999
+            ],
+            "near": 0.1,
+            "far": 500
+          }
+        },
+        {
+          "view": "left",
+          "bytes": 8875,
+          "sha256": "60ee09ffc158be4e397ee7bfb0969defbf43f44950b32b84ff168388e5557725",
+          "pixels": {
+            "bright": 7122,
+            "colors": 70
+          },
+          "camera": {
+            "view": "left",
+            "position": [
+              -52,
+              15.755025253169418,
+              8.000000000000004
+            ],
+            "up": [
+              0,
+              1,
+              0
+            ],
+            "quaternion": [
+              -2.0934566115783664e-17,
+              -0.7071067811865475,
+              -2.0934566115783664e-17,
+              0.7071067811865476
+            ],
+            "zoom": 22.35192529664687,
+            "target": [
+              7.999999999999999,
+              15.755025253169414,
+              7.999999999999999
+            ],
+            "near": 0.1,
+            "far": 500
+          }
+        },
+        {
+          "view": "right",
+          "bytes": 9157,
+          "sha256": "c12b882cf6a8c2a9052b135deffd0cfab0192f66bd6d632bc727427f68b816ae",
+          "pixels": {
+            "bright": 7568,
+            "colors": 101
+          },
+          "camera": {
+            "view": "right",
+            "position": [
+              68,
+              15.755025253169418,
+              8.000000000000004
+            ],
+            "up": [
+              0,
+              1,
+              0
+            ],
+            "quaternion": [
+              -2.0934566115783664e-17,
+              0.7071067811865475,
+              2.0934566115783664e-17,
+              0.7071067811865476
+            ],
+            "zoom": 22.35192529664687,
+            "target": [
+              7.999999999999999,
+              15.755025253169414,
+              7.999999999999999
+            ],
+            "near": 0.1,
+            "far": 500
+          }
+        },
+        {
+          "view": "top",
+          "bytes": 17200,
+          "sha256": "ac975e94f56a590c10c403515aea7a2cb2149715d12cc37e1ca96d222d69c9f4",
+          "pixels": {
+            "bright": 4316,
+            "colors": 98
+          },
+          "camera": {
+            "view": "top",
+            "position": [
+              7.999999999999999,
+              75.7550252531694,
+              8.000000000000007
+            ],
+            "up": [
+              0,
+              0,
+              -1
+            ],
+            "quaternion": [
+              -0.7071067811865475,
+              0,
+              0,
+              0.7071067811865476
+            ],
+            "zoom": 22.35192529664687,
+            "target": [
+              7.999999999999999,
+              15.755025253169414,
+              7.999999999999999
+            ],
+            "near": 0.1,
+            "far": 500
+          }
+        },
+        {
+          "view": "bottom",
+          "bytes": 17445,
+          "sha256": "4eae607cc51e5499ee67d7bf384dcc2300b1190b67d43191d4ba34e1e343f462",
+          "pixels": {
+            "bright": 4012,
+            "colors": 62
+          },
+          "camera": {
+            "view": "bottom",
+            "position": [
+              7.999999999999999,
+              -44.244974746830565,
+              7.999999999999999
+            ],
+            "up": [
+              0,
+              0,
+              1
+            ],
+            "quaternion": [
+              0.7071067811865475,
+              0,
+              0,
+              0.7071067811865476
+            ],
+            "zoom": 22.35192529664687,
+            "target": [
+              7.999999999999999,
+              15.755025253169414,
+              7.999999999999999
+            ],
+            "near": 0.1,
+            "far": 500
+          }
+        },
+        {
+          "view": "rear-perspective",
+          "bytes": 85656,
+          "sha256": "88dbd21e633fd0f9a809d40ee8f5050532128820334a782c3d05bbd3b8c71a32",
+          "pixels": {
+            "bright": 18597,
+            "colors": 107
+          },
+          "camera": {
+            "view": "rear-perspective",
+            "position": [
+              -33.77863742936749,
+              26.199684610511284,
+              -33.778637429367485
+            ],
+            "up": [
+              0,
+              1,
+              0
+            ],
+            "quaternion": [
+              0.03343618848486608,
+              0.920346311564837,
+              0.08072209971422681,
+              -0.3812199243302097
+            ],
+            "zoom": 22.35192529664687,
+            "target": [
+              7.999999999999999,
+              15.755025253169414,
+              7.999999999999999
+            ],
+            "near": 0.1,
+            "far": 500
+          }
+        }
+      ],
+      "sharedZoomAndTarget": true,
+      "sameActualComparisonCamera": true,
+      "compared": [
+        {
+          "view": "front",
+          "sourceSha256": "dfc06f9a48e4ed546ce9254fa6be6c53d4778b2bcc4a4417b71b27f64bef065f",
+          "workingSha256": "1067455a05aa99b9e39ad118120a11cc81f730b0cfc35a0304a593039c538a22",
+          "camera": {
+            "view": "front",
+            "position": [
+              11.767387953251129,
+              15.755025253169418,
+              72.5545322975669
+            ],
+            "up": [
+              0,
+              1,
+              0
+            ],
+            "quaternion": [
+              -2.7517151409479e-17,
+              0,
+              0,
+              1
+            ],
+            "zoom": 20.13801283552941,
+            "target": [
+              11.767387953251129,
+              15.755025253169414,
+              8
+            ],
+            "near": 0.1,
+            "far": 500
+          }
+        },
+        {
+          "view": "top",
+          "sourceSha256": "7a47bfac43610f7d9381679752b22210403271b2d0767556483644b18263e4d2",
+          "workingSha256": "145a5cbc4d53000b7af9a649430fb77368e5cfc4f974159909166383c0e37ac5",
+          "camera": {
+            "view": "top",
+            "position": [
+              11.767387953251129,
+              80.30955755073629,
+              8
+            ],
+            "up": [
+              0,
+              0,
+              -1
+            ],
+            "quaternion": [
+              -0.7071067811865475,
+              0,
+              0,
+              0.7071067811865476
+            ],
+            "zoom": 20.13801283552941,
+            "target": [
+              11.767387953251129,
+              15.755025253169414,
+              8
+            ],
+            "near": 0.1,
+            "far": 500
+          }
+        },
+        {
+          "view": "rear-perspective",
+          "sourceSha256": "5a013b328e75a3b2c2a0d9890e51c4ab9b3bd8c64080ab2a170da16a88f474f6",
+          "workingSha256": "c2e00f27ddb82cac0f82b95dca3f5c9c91f5e989fb8e49fad9b9c8746fab6ecd",
+          "camera": {
+            "view": "rear-perspective",
+            "position": [
+              -33.18261870145621,
+              26.992526916846256,
+              -36.95000665470733
+            ],
+            "up": [
+              0,
+              1,
+              0
+            ],
+            "quaternion": [
+              0.03343618848486612,
+              0.920346311564837,
+              0.08072209971422686,
+              -0.3812199243302097
+            ],
+            "zoom": 20.13801283552941,
+            "target": [
+              11.767387953251129,
+              15.755025253169414,
+              8
+            ],
+            "near": 0.1,
+            "far": 500
+          }
+        }
+      ],
+      "compactToolbar": true
+    },
+    "screenshots": [
+      {
+        "path": "output/ci/37229770014-windows/output/playwright/studio-packaged-f0dba7c7/camera/back.png",
+        "bytes": 24095,
+        "sha256": "27f6412291cd4b324aa4eeba57eb545822fea9f4eb5047e75dd1b9c8dcea4953"
+      },
+      {
+        "path": "output/ci/37229770014-windows/output/playwright/studio-packaged-f0dba7c7/camera/bottom.png",
+        "bytes": 17445,
+        "sha256": "4eae607cc51e5499ee67d7bf384dcc2300b1190b67d43191d4ba34e1e343f462"
+      },
+      {
+        "path": "output/ci/37229770014-windows/output/playwright/studio-packaged-f0dba7c7/camera/front.png",
+        "bytes": 25365,
+        "sha256": "8be53ecb2b628a1a562ca410ad871c34e8efed968b5fed12feb1b5462b95bd5a"
+      },
+      {
+        "path": "output/ci/37229770014-windows/output/playwright/studio-packaged-f0dba7c7/camera/left.png",
+        "bytes": 8875,
+        "sha256": "60ee09ffc158be4e397ee7bfb0969defbf43f44950b32b84ff168388e5557725"
+      },
+      {
+        "path": "output/ci/37229770014-windows/output/playwright/studio-packaged-f0dba7c7/camera/perspective.png",
+        "bytes": 86560,
+        "sha256": "0406e3c7b21a8c0ef0c1d8657b1620459457797ff09f8b5eb37ff3e79e2a0ee1"
+      },
+      {
+        "path": "output/ci/37229770014-windows/output/playwright/studio-packaged-f0dba7c7/camera/rear-perspective.png",
+        "bytes": 85656,
+        "sha256": "88dbd21e633fd0f9a809d40ee8f5050532128820334a782c3d05bbd3b8c71a32"
+      },
+      {
+        "path": "output/ci/37229770014-windows/output/playwright/studio-packaged-f0dba7c7/camera/right.png",
+        "bytes": 9157,
+        "sha256": "c12b882cf6a8c2a9052b135deffd0cfab0192f66bd6d632bc727427f68b816ae"
+      },
+      {
+        "path": "output/ci/37229770014-windows/output/playwright/studio-packaged-f0dba7c7/camera/side.png",
+        "bytes": 9157,
+        "sha256": "c12b882cf6a8c2a9052b135deffd0cfab0192f66bd6d632bc727427f68b816ae"
+      },
+      {
+        "path": "output/ci/37229770014-windows/output/playwright/studio-packaged-f0dba7c7/camera/source-front.png",
+        "bytes": 23939,
+        "sha256": "dfc06f9a48e4ed546ce9254fa6be6c53d4778b2bcc4a4417b71b27f64bef065f"
+      },
+      {
+        "path": "output/ci/37229770014-windows/output/playwright/studio-packaged-f0dba7c7/camera/source-rear-perspective.png",
+        "bytes": 28352,
+        "sha256": "5a013b328e75a3b2c2a0d9890e51c4ab9b3bd8c64080ab2a170da16a88f474f6"
+      },
+      {
+        "path": "output/ci/37229770014-windows/output/playwright/studio-packaged-f0dba7c7/camera/source-top.png",
+        "bytes": 7406,
+        "sha256": "7a47bfac43610f7d9381679752b22210403271b2d0767556483644b18263e4d2"
+      },
+      {
+        "path": "output/ci/37229770014-windows/output/playwright/studio-packaged-f0dba7c7/camera/top.png",
+        "bytes": 17200,
+        "sha256": "ac975e94f56a590c10c403515aea7a2cb2149715d12cc37e1ca96d222d69c9f4"
+      },
+      {
+        "path": "output/ci/37229770014-windows/output/playwright/studio-packaged-f0dba7c7/camera/working-front.png",
+        "bytes": 26201,
+        "sha256": "1067455a05aa99b9e39ad118120a11cc81f730b0cfc35a0304a593039c538a22"
+      },
+      {
+        "path": "output/ci/37229770014-windows/output/playwright/studio-packaged-f0dba7c7/camera/working-rear-perspective.png",
+        "bytes": 32772,
+        "sha256": "c2e00f27ddb82cac0f82b95dca3f5c9c91f5e989fb8e49fad9b9c8746fab6ecd"
+      },
+      {
+        "path": "output/ci/37229770014-windows/output/playwright/studio-packaged-f0dba7c7/camera/working-top.png",
+        "bytes": 7812,
+        "sha256": "145a5cbc4d53000b7af9a649430fb77368e5cfc4f974159909166383c0e37ac5"
+      }
+    ],
+    "workflowConclusion": "failure",
+    "remainingFailure": "Existing Fabric 26.2 derived JAR checksum mismatch; no checksum bypass."
+  },
   "artisticApproval": "not-granted",
   "minecraftAssetRendering": "not-verified by editor previews",
   "quickModelReview": "Four views retained; extra views provided by individual capture and manual menu.",
