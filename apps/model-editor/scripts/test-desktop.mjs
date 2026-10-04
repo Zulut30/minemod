@@ -22,6 +22,7 @@ import { checkMigrationsDesktop } from "./check-migrations-desktop.mjs";
 import { checkHistoryDesktop } from "./check-history-desktop.mjs";
 import { checkGeometryDesktop } from "./check-geometry-desktop.mjs";
 import { checkCameraDesktop } from "./check-camera-desktop.mjs";
+import { checkDiscoveryDesktop } from "./check-discovery-desktop.mjs";
 
 const appDir = resolve(dirname(fileURLToPath(import.meta.url)), ".."),
   repo = resolve(appDir, "../..");
@@ -390,6 +391,7 @@ try {
   const history = await checkHistoryDesktop(options, output);
   const geometry = await checkGeometryDesktop(options, output);
   const camera = await checkCameraDesktop(options, output);
+  const discovery = await checkDiscoveryDesktop(options, output);
   await writeFile(
     join(output, "report.json"),
     JSON.stringify(
@@ -409,6 +411,7 @@ try {
         history,
         geometry,
         camera,
+        discovery,
         checks: [
           "real texture render",
           "resize",

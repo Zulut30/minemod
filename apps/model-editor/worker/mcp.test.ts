@@ -465,6 +465,8 @@ try {
       true,
     );
   captureData = "x".repeat(2_097_152);
+  const oversizedCapture = await call(0, "studio_view_capture", variantRef);
+  assert.equal((oversizedCapture.data.error as { code: string }).code, "OUTPUT_LIMIT");
   const oversizedReview = await call(0, "studio_model_review", variantRef);
   assert.equal(
     (oversizedReview.data.error as { code: string }).code,

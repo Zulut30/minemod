@@ -1,7 +1,7 @@
 {
   "name": "@mcdev/model-editor",
   "productName": "MineMod Studio",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "private": true,
   "type": "module",
   "license": "Apache-2.0",
@@ -14,7 +14,8 @@
     "test": "node scripts/test.mjs",
     "test:desktop": "node scripts/test-desktop.mjs",
     "test:mcp": "node --experimental-strip-types worker/mcp.test.ts",
-    "test:camera": "node --experimental-strip-types scripts/camera.test.ts"
+    "test:camera": "node --experimental-strip-types scripts/camera.test.ts",
+    "test:discovery": "node --experimental-strip-types worker/discovery.test.ts"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "1.29.0",

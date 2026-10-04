@@ -13,13 +13,16 @@ import {
   cubes,
   assetRequest,
   MAX_COMMAND_BYTES,
-  MAX_STROKE_POINTS,
   type EditorState,
   type Mutation,
   type EditorProject,
 } from "@mcdev/editor-core";
 import { VIEWS, type View } from "../shared/bridge.ts";
 import { compileItemAssetBundleV1 } from "../../../packages/application/asset-bundles.ts";
+import {
+  AgentMutationSchema, CONTRACT_URI, SCENE_URI, HUMAN_COMMANDS, STUDIO_LIMITS,
+  contract, sceneReference, recovery, type ToolDefinition,
+} from "./discovery.ts";
 
 export interface McpEditor {
   inspect: () => EditorState;
@@ -47,12 +50,16 @@ const refSchema = z.strictObject({
   projectId: z.uuid(),
   expectedRevision: z.number().int().min(0),
 });
-const MAX_RESPONSE_BYTES = 2_097_152;
+const MAX_RESPONSE_BYTES = STUDIO_LIMITS.responseBytes;
 function json(value: unknown) {
   const text = JSON.stringify(value);
   if (Buffer.byteLength(text) > MAX_RESPONSE_BYTES)
     throw new EditorError("OUTPUT_LIMIT", "Результат превышает лимит ответа.");
   return { content: [{ type: "text" as const, text }] };
+}
+function toolError(code: string, message: string, details?: unknown): CallToolResult {
+  const error = { code, message, recovery: recovery(code), ...(details ? { details } : {}) };
+  return { ...json({ error }), structuredContent: { error }, isError: true };
 }
 function reference(state: EditorState, args: z.infer<typeof refSchema>): void {
   if (state.project.projectId !== args.projectId)
@@ -78,6 +85,7 @@ export async function startEditorMcp(
   const token = randomBytes(32).toString("hex");
   let enabled = true;
   const proposals = new Map<string, Proposal>();
+  const definitions = new Map<string, ToolDefinition>();
   const prune = () => {
     for (const [id, proposal] of proposals)
       if (proposal.expires <= Date.now()) proposals.delete(id);
@@ -90,6 +98,7 @@ export async function startEditorMcp(
       },
       {
         instructions:
+          `Сначала tools/list и resources/list: актуальные schemas и ограничения доступны в ${CONTRACT_URI}, текущие IDs/revision в ${SCENE_URI}. Не придумывайте имена инструментов или кубов. Ошибка содержит code и recovery; исправьте причину, не повторяйте запрос автоматически. ` +
           "Для создания качественной модели используйте studio_model_review до правок и после каждого крупного этапа: обзор содержит четыре ракурса, силуэт и 32/64 px. Сначала сформулируйте 2-3 конкретных видимых недостатка и адресный план; меняйте пропорции отдельных деталей и рисунок нужных UV-граней, а не только общий масштаб и цвет. Сначала читаемый силуэт, затем различимые материалы и крупный акцент, затем мелкие детали. На 32 px декоративные руны не должны превращаться в шум. Сравните повторный обзор с предыдущим; если проблема осталась, исправьте именно её. Не выдумывайте визуальные оценки без просмотра изображения. Обзор не является игровым инвентарём или автоматическим художественным score. " +
           "Перед художественной правкой прочитайте project.design.brief и список вариантов. studio_variant_inspect читает исходник без изменения сцены. studio_view_capture с variantId снимает сохранённый вариант, compareToVariantId снимает рабочую модель с тем же общим кадрированием; сравнивайте одну сторону и масштаб. silhouette помогает оценить форму отдельно от покраски. Сделайте адресную правку, проверьте front/back/left/right/top/bottom/perspective/rear-perspective и исправьте конкретный видимый недостаток. side — совместимое имя right. studio_model_review остаётся быстрым обзором четырёх видов. Сохранённые варианты и задание меняет только пользователь; не пытайтесь их удалять или подменять. " +
           "Локальная сцена MineMod. Сначала studio_project_inspect и studio_selection_get. Для изменения: studio_changes_preview с projectId, expectedRevision и UUID key; затем studio_changes_apply с proposalId. Покраска: paint задаёт целочисленные points (до 4096), size 1..8, color #RRGGBB или null для ластика, cubeIds и необязательную face; fill заливает связную область одного цвета от seed. uv переносит грань одного cubeId в rect вместе с рисунком; нужен отступ 1 пиксель от других UV. Общие пиксели других поверхностей защищены, палитра до 32 цветов. Не изменяйте закреплённые части. Ручные изменения могут сделать предложение устаревшим. После применения посмотрите studio_view_capture с нескольких сторон. Техническая проверка и снимок не доказывают художественное качество или работу в Minecraft. Сохранение, смена проекта и интеграция в JAR выполняются пользователем в редакторе.",
@@ -102,11 +111,13 @@ export async function startEditorMcp(
       readOnly: boolean,
       operation: (args: z.infer<S>) => Promise<CallToolResult> | CallToolResult,
     ) => {
+      definitions.set(name, { name, description, schema, readOnly });
       mcp.registerTool(
         name,
         {
           description,
           inputSchema: schema as z.ZodObject,
+          _meta: { "studio/schemaId": `${CONTRACT_URI}#${name}` },
           annotations: {
             readOnlyHint: readOnly,
             destructiveHint: !readOnly,
@@ -115,7 +126,7 @@ export async function startEditorMcp(
         },
         async (args): Promise<CallToolResult> => {
           try {
-            return await editor.enqueue(() => {
+            const result = await editor.enqueue(() => {
               if (!enabled)
                 throw new EditorError(
                   "DISCONNECTED",
@@ -123,20 +134,13 @@ export async function startEditorMcp(
                 );
               return operation(args as z.infer<S>);
             });
+            if (Buffer.byteLength(JSON.stringify(result)) > MAX_RESPONSE_BYTES)
+              throw new EditorError("OUTPUT_LIMIT", "Результат превышает лимит ответа.");
+            return result;
           } catch (error) {
-            return {
-              ...json({
-                error:
-                  error instanceof EditorError
-                    ? { code: error.code, message: error.message }
-                    : {
-                        code: "STUDIO_ERROR",
-                        message:
-                          "Операция не выполнена; прочитайте актуальную сцену.",
-                      },
-              }),
-              isError: true,
-            };
+            return error instanceof EditorError
+              ? toolError(error.code, error.message)
+              : toolError("STUDIO_ERROR", "Операция не выполнена; прочитайте актуальную сцену.");
           }
         },
       );
@@ -168,19 +172,8 @@ export async function startEditorMcp(
                 }
               : {}),
           },
-          limits: {
-            cubes: 256,
-            commands: 32,
-            strokePoints: MAX_STROKE_POINTS,
-            brushSize: 8,
-            paletteColors: 32,
-            uvPadding: 1,
-            requestBytes: MAX_COMMAND_BYTES,
-            proposals: 64,
-            proposalTtlSeconds: 300,
-            captureWidth: 1024,
-            captureHeight: 768,
-          },
+          limits: STUDIO_LIMITS,
+          discovery: { contracts: CONTRACT_URI, scene: SCENE_URI },
         });
       },
     );
@@ -226,7 +219,7 @@ export async function startEditorMcp(
     tool(
       "studio_changes_preview",
       "Атомарно проверить пакет команд, включая pivot, snap, paint, fill и uv, без изменения сцены. pivot меняет одну координату центра вращения; snap переносит начало выделения на сетку без изменения формы. rotate заменяет прежний поворот: одна ось, 0/±22.5/±45 градусов. Вернуть diff и proposalId. Проверяются история, закрепления, общие UV и лимиты.",
-      MutationSchema,
+      AgentMutationSchema,
       true,
       (mutation) => {
         const before = editor.inspect(),
@@ -478,6 +471,16 @@ export async function startEditorMcp(
         });
       },
     );
+    for (const [name, uri, description, read] of [
+      ["studio-contracts-v1", CONTRACT_URI, "Фактические schemas десяти инструментов, операции, лимиты, profile и recovery.", () => contract(definitions)],
+      ["studio-scene-v1", SCENE_URI, "Текущие IDs, revision, закрепления и выделение. Не изменяет сцену.", () => sceneReference(editor.inspect(), editor.selection())],
+    ] as const) mcp.registerResource(name, uri, { description, mimeType: "application/json" }, async () =>
+      editor.enqueue(() => {
+        if (!enabled) throw new EditorError("DISCONNECTED", "Подключение выключено пользователем.");
+        const result = json(read());
+        return { contents: [{ uri, mimeType: "application/json", text: result.content[0]!.text }] };
+      }),
+    );
     return mcp;
   }
   let url = "",
@@ -556,6 +559,39 @@ export async function startEditorMcp(
       }
       if (Array.isArray(body)) return reject(400);
       mcp = makeServer();
+      // Проверяем известный wire request до SDK: его Zod error может содержать входные значения.
+      // Возвращаем bounded пути/коды ошибок без payload; SDK по-прежнему проверяет допустимые вызовы.
+      if (typeof body === "object" && body !== null && "method" in body && body.method === "tools/call" &&
+          "jsonrpc" in body && body.jsonrpc === "2.0" && "id" in body &&
+          (typeof body.id === "string" || typeof body.id === "number")) {
+        const params = "params" in body && typeof body.params === "object" && body.params !== null ? body.params : {};
+        const name = "name" in params && typeof params.name === "string" ? params.name : "";
+        const args = "arguments" in params ? params.arguments : {};
+        const definition = definitions.get(name);
+        let failure: CallToolResult | undefined;
+        if (!definition) failure = toolError("UNKNOWN_TOOL", "Такого инструмента нет в Studio.", { availableTools: [...definitions.keys()] });
+        else {
+          const parsed = definition.schema.safeParse(args ?? {});
+          if (!parsed.success) {
+            const legacy = name === "studio_changes_preview" ? MutationSchema.safeParse(args) : undefined;
+            const denied = legacy?.success ? legacy.data.commands.find((c) => HUMAN_COMMANDS.includes(c.type)) : undefined;
+            failure = denied
+              ? toolError(denied.type === "lock" ? "LOCKED" : "HUMAN_ONLY", "Операция доступна только пользователю в редакторе.")
+              : toolError("INVALID_ARGUMENTS", "Параметры не соответствуют опубликованной схеме инструмента.", {
+                schemaId: `${CONTRACT_URI}#${name}`,
+                issues: parsed.error.issues.slice(0, 8).map((i) => ({
+                  path: i.path.map((p) => String(p).slice(0, 64)).join(".").slice(0, 128), code: i.code,
+                })),
+                truncated: parsed.error.issues.length > 8,
+              });
+          }
+        }
+        if (failure) {
+          res.writeHead(200, { "Content-Type": "application/json", "Cache-Control": "no-store" });
+          res.end(JSON.stringify({ jsonrpc: "2.0", id: body.id, result: failure }));
+          return;
+        }
+      }
       transport = new StreamableHTTPServerTransport({
         enableJsonResponse: true,
       });

@@ -1,0 +1,191 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 33,
+  "status": "PARTIAL",
+  "scope": "Actual MCP tool schemas, current IDs and revision, closed agent commands and bounded actionable errors in Studio 0.10.0",
+  "verifiedAtUtc": "2026-10-04T20:15:15.938427+00:00",
+  "sourceParentRevision": "5c9bc5da1373cf143e74c0b9c3b98dd1bdde6bf0",
+  "sourceHashes": [
+    {
+      "path": "apps/model-editor/package.json",
+      "bytes": 1337,
+      "sha256": "a6802b9db274c29d56d17bc17ff2fb596d4abf6b97a329b13f7c15a27c9213e3"
+    },
+    {
+      "path": "apps/model-editor/worker/mcp.ts",
+      "bytes": 30476,
+      "sha256": "077080b8bb5b61b271ee1dc324f62e669a8cf7e2989eac475d2130f8637ef512"
+    },
+    {
+      "path": "apps/model-editor/worker/mcp.test.ts",
+      "bytes": 15408,
+      "sha256": "bf19c114bb82e02a0d00dc48a9c015d66c299bad758e35433564fd94af001661"
+    },
+    {
+      "path": "apps/model-editor/worker/discovery.ts",
+      "bytes": 9552,
+      "sha256": "a25851e188e43c1b5926503db9bbcb134bf288239cde3bd2fc662bb4f44fda53"
+    },
+    {
+      "path": "apps/model-editor/worker/discovery.test.ts",
+      "bytes": 8988,
+      "sha256": "209cff2d91c7357376606009de54ef063ca8188d9ed7543822721989b329b87c"
+    },
+    {
+      "path": "apps/model-editor/scripts/check-discovery-desktop.mjs",
+      "bytes": 6620,
+      "sha256": "45461e70730135dd4f0a27bc00ebd4753212999c265a25d84d703053c84e994d"
+    },
+    {
+      "path": "apps/model-editor/scripts/test-desktop.mjs",
+      "bytes": 16693,
+      "sha256": "3bf73369c24218640a247fcef1f50d82a5e5d419120e954c2f56d7bfeb5c45e9"
+    },
+    {
+      "path": "apps/model-editor/scripts/test.mjs",
+      "bytes": 537,
+      "sha256": "33cc49163226fb85a9f124ef00602f079536f7806df9f31f4649739160cb970c"
+    }
+  ],
+  "fixedDependencies": {
+    "node": "24.11.0",
+    "pnpm": "11.8.0",
+    "sdk": "1.29.0",
+    "zod": "4.4.2",
+    "electron": "44.5.1"
+  },
+  "checks": {
+    "httpDiscovery": "PASS",
+    "httpMcp": "PASS",
+    "typecheck": "PASS",
+    "lint": "PASS",
+    "portable": "PASS",
+    "focusedPackagedDiscovery": "PASS",
+    "fullPackagedSuite": "pending",
+    "productionCI": "pending"
+  },
+  "logs": [
+    {
+      "path": "output/verification/roadmap-033-discovery.log",
+      "bytes": 203,
+      "sha256": "a8a7fda7aed1426020f3caa5d1d22f036754524f8906a1f3f78035671b9171ac"
+    },
+    {
+      "path": "output/verification/roadmap-033-mcp.log",
+      "bytes": 207,
+      "sha256": "ce600a29360c371575566860a7c94c33766d03e9a2ba5f6249e976ae6338a777"
+    },
+    {
+      "path": "output/verification/roadmap-033-typecheck.log",
+      "bytes": 176,
+      "sha256": "fe0327fb3a908a7cea6b4e5ef62bbaa7903d4f4149a209170e6249f0dd5c8190"
+    },
+    {
+      "path": "output/verification/roadmap-033-lint.log",
+      "bytes": 29,
+      "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+    },
+    {
+      "path": "output/verification/roadmap-033-portable.log",
+      "bytes": 3123,
+      "sha256": "80f907f85241e56a81bf01d88f3fda88fceff5da025674dd0886e94b7919adfe"
+    },
+    {
+      "path": "output/verification/roadmap-033-package.log",
+      "bytes": 787,
+      "sha256": "58337d39307965289efb357fdd3a5d3557202123619104b7cdf1b086575b1e15"
+    },
+    {
+      "path": "output/verification/roadmap-033-focused-e2e.log",
+      "bytes": 283,
+      "sha256": "b429756ff33939f1da08c4e83c50ea483b843abf2c88d0f8ea346cba9965f395"
+    }
+  ],
+  "focusedReport": {
+    "path": "output/playwright/discovery-033-62edd760/report.json",
+    "bytes": 820,
+    "sha256": "8271d0bc4a068ab9ab838313d53f9808200928ee7d32c2896c3cad8222d3c2c5"
+  },
+  "focusedResult": {
+    "status": "PASS",
+    "packaged": true,
+    "executablePath": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.10.0\\ec0cc2a6\\MineMod Studio-win32-x64\\MineMod Studio.exe",
+    "hidden": true,
+    "discovery": {
+      "status": "PASS",
+      "hidden": true,
+      "toolCount": 10,
+      "publishedSchemasMatchSDK": true,
+      "contractDigest": "0e80fa96698cb090662f2351e366eee4ad797fe7ada3f94a4f8d09222b1ad400",
+      "dynamicIdsAndRevision": true,
+      "unknownToolRecovery": true,
+      "invalidInputWithoutPayloadEcho": true,
+      "rejectedCallsAtomic": true,
+      "actualHumanCasConflict": true,
+      "repairedPreviewApply": true,
+      "actualPng": {
+        "bytes": 34810,
+        "sha256": "d8d40b37fa4a711477308aa4afb8c8d567596cc9b4a800fb865d5510dfcbeb34"
+      },
+      "independentModelTurn": false
+    }
+  },
+  "discoveryFiles": [
+    {
+      "path": "output/playwright/discovery-033-62edd760/discovery/contract.json",
+      "bytes": 40932,
+      "sha256": "5bb7d8ed4c7d5e970404fad83ce4859bae3f9a44e402b8588c0ba227a8c5d1f3"
+    },
+    {
+      "path": "output/playwright/discovery-033-62edd760/discovery/scene.json",
+      "bytes": 4711,
+      "sha256": "0a64e235703d1145cff52b6ee10503281fb2d414efc562d309ce82718eb4157d"
+    },
+    {
+      "path": "output/playwright/discovery-033-62edd760/discovery/report.json",
+      "bytes": 543,
+      "sha256": "456b4f01bc0423fddcfc1cdfe10d77417439d0febb959382dd849cf90905501d"
+    },
+    {
+      "path": "output/playwright/discovery-033-62edd760/discovery/after-repaired-call.png",
+      "bytes": 34810,
+      "sha256": "d8d40b37fa4a711477308aa4afb8c8d567596cc9b4a800fb865d5510dfcbeb34"
+    }
+  ],
+  "package": {
+    "executable": {
+      "path": "output/model-editor/releases/0.10.0/ec0cc2a6/MineMod Studio-win32-x64/MineMod Studio.exe",
+      "bytes": 245726208,
+      "sha256": "1caefb13f3689fcb9c3c109c16cff02924953b5b18cce37d22b249a20127f62c"
+    },
+    "appAsar": {
+      "path": "output/model-editor/releases/0.10.0/ec0cc2a6/MineMod Studio-win32-x64/resources/app.asar",
+      "bytes": 3530825,
+      "sha256": "0998e638f5833958b280634927c772ba913b423ad3a7ce221aee734c2bfbc58a"
+    }
+  },
+  "previousRun": {
+    "reportDirectory": "output/playwright/studio-packaged-df9b5457",
+    "packageDirectory": "output/model-editor/releases/0.10.0/f574d89f",
+    "status": "FAIL",
+    "reason": "New desktop test used connection.enabled instead of actual connection.action=start; corrected test now passes focused on replacement package. Initial package also superseded by whole-tool response byte guard.",
+    "log": {
+      "path": "output/verification/roadmap-033-packaged-e2e-initial-failed.log",
+      "bytes": 621,
+      "sha256": "946367aba6e0f48f4bc4780444efc69783c69543a9a3ef8c99533cdb90ca50e1"
+    }
+  },
+  "publishedTools": 10,
+  "resources": [
+    "studio://contracts/v1",
+    "studio://scene/v1"
+  ],
+  "rejectedHttpCases": 16,
+  "artisticApproval": "not-granted",
+  "newAssetMinecraftRendering": "not-verified",
+  "independentInstalledClientModelTurns": "not-verified; separate points 031 and 032",
+  "newDependencies": false,
+  "projectSchemaVersion": 2,
+  "gamePackBaselineChanged": false,
+  "remainingRegressionFailure": "Existing Fabric 26.2 derived JAR checksum mismatch; no checksum bypass."
+}

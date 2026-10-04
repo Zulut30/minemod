@@ -1,5 +1,7 @@
 # MineMod Studio 0.5.0: подключение к общей сцене
 
+Дополнение Studio 0.10.0: [agent discovery](production/AGENT_DISCOVERY.md) публикует schemas и текущие IDs через два фиксированных MCP resources. Неверные вызовы получают bounded code/recovery без отражения исходного payload; десять имён инструментов сохранены. Ручные операции исключены из агентной mutation schema. Это проверка интерфейса, а самостоятельные model turns Codex/Claude Code остаются отдельной приёмкой.
+
 Дополнение Studio 0.8.0: [точные геометрические правки](production/GEOMETRY_EDITING.md) добавляют в schema `pivot` и `snap` без новых shell/eval возможностей. Документ ниже сохраняет исторический scope 0.5; текущий target редактора остаётся held-item, игровой импорт не добавлен.
 
 Дополнение Studio 0.9.0: [camera protocol](production/MODEL_CAMERAS.md) расширяет `studio_view_capture.view` до front/back/left/right/top/bottom/perspective/rear-perspective и совместимого `side = right`. Все виды ортографические. Fit и comparison учитывают поворот/pivot/inflate, а screenshots не меняют реальный orbit/pan/zoom пользователя. `studio_model_review` продолжает давать четыре быстрых вида; остальные снимаются отдельно.
