@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "kind": "mcdev-production-control-briefs",
+  "target": { "minecraft": "1.20.1", "loader": "fabric", "java": 17 },
+  "style": "Выразительный Minecraft: пиксельная текстура, ясный силуэт и согласованные материалы.",
+  "referencePolicy": "Оригинальные брифы; не копировать geometry, textures или trademark чужого мода.",
+  "briefs": [
+    {
+      "id": "polar-cleaver",
+      "assetClass": "weapon",
+      "requiredCapability": "authored-held-item",
+      "prompt": "Создай короткий односторонний ледяной топор: широкая светлая кромка, тёмный обух, гранёный кристалл у основания и короткая асимметричная гарда. Силуэт должен читаться в 32 px. Рукоять выглядит пригодной для хвата; крепление головы видно сбоку. Сначала три разных blockout, затем текстура выбранного направления.",
+      "materials": ["steel", "ice-crystal", "dark-leather"],
+      "palette": ["#172333", "#304b63", "#628fa5", "#b8e5ed", "#e9f8ed", "#665040"],
+      "budget": { "maxCubes": 64, "maxBones": 8, "maxAtlasDimension": 128, "maxPaletteColors": 24 },
+      "requiredCaptures": ["eight-neutral-views", "silhouette-32-64", "gui", "first-person", "third-person", "ground", "day-night"],
+      "acceptance": ["Тип топора узнаваем без текстуры", "Голова и рукоять соединены намеренно", "Край читается на обеих сторонах", "Пиксельная фактура не скрывает форму"],
+      "repairTask": "Сделай лезвие массивнее, сохранив кристалл, рисунок рукояти и закреплённую гарду.",
+      "reject": ["Перекраска одного меча вместо разных силуэтов", "Плоская необработанная обратная сторона", "Плавающий кристалл", "Микрорунный шум вместо крупного акцента"]
+    },
+    {
+      "id": "polar-armor",
+      "assetClass": "armor",
+      "requiredCapability": "reviewed-wearable-armor",
+      "prompt": "Создай согласованный комплект северной брони: тёмное основание, светлые металлические грани и один кристальный акцент на нагруднике. Четыре слота должны принадлежать одному набору; шлем сохраняет читаемое лицо. Покажи inventory icons и вид комплекта на игроке. Объёмные дополнения разрешены только через реально поддержанный wearable renderer.",
+      "materials": ["steel", "dark-leather", "ice-crystal"],
+      "palette": ["#172333", "#304b63", "#628fa5", "#b8e5ed", "#e9f8ed", "#665040"],
+      "budget": { "maxCubes": 96, "maxBones": 24, "maxAtlasDimension": 128, "maxPaletteColors": 24 },
+      "requiredCaptures": ["four-slot-icons", "player-front-back-sides", "walk-poses", "day-night", "enchanted-glint"],
+      "acceptance": ["Четыре слота выглядят одним комплектом", "Иконки читаются в inventory", "Слои не показывают неверные UV на игроке", "Неподдержанный wearable profile отклонён явно"],
+      "repairTask": "Уменьши яркость нагрудника, сохранив светлые грани и рисунок остальных слотов.",
+      "reject": ["Held-item экспорт выдан за wearable armor", "Неравномерный масштаб пикселя", "Глитч в движении игрока", "Набор держится только на одном общем цвете"]
+    },
+    {
+      "id": "copper-masonry",
+      "assetClass": "building-block",
+      "requiredCapability": "reviewed-block-textures",
+      "prompt": "Создай строительный блок из крупного серого камня с медными креплениями. Верх и низ имеют собственный рисунок, боковые грани согласованы. В стене 3×3 соединения выглядят намеренно; текстура остаётся спокойной и читается рядом с обычными Minecraft-блоками.",
+      "materials": ["stone", "copper"],
+      "palette": ["#263334", "#506266", "#8b9996", "#674735", "#af7851", "#d6b08a"],
+      "budget": { "maxCubes": 1, "maxBones": 1, "maxAtlasDimension": 32, "maxPaletteColors": 16 },
+      "requiredCaptures": ["all-six-faces", "wall-3x3", "placed-day-night", "near-mid-distance"],
+      "acceptance": ["Нет placeholder", "Верх/низ/стороны экспортированы правильно", "Нет случайного seam в стене", "Placement и drop соответствуют спецификации"],
+      "repairTask": "Сделай медные крепления спокойнее, не меняя рисунок камня и тайловые соединения.",
+      "reject": ["Один рисунок случайно повернут на всех гранях", "Чужие texels на краях", "Резкая сетка повторения без художественного намерения", "Missing texture в игре"]
+    },
+    {
+      "id": "tide-altar",
+      "assetClass": "decorative-prop",
+      "requiredCapability": "authored-block-model",
+      "prompt": "Создай медно-коралловый алтарь Tidecaller: широкое каменное основание, медная чаша и три заметных коралловых выступа. Передняя сторона узнаваема; предмет не выглядит плоским сзади. Габариты и collision должны подходить размещению в одном блоке. Состояние ритуала должно отличаться ясным акцентом.",
+      "materials": ["stone", "copper", "coral"],
+      "palette": ["#263334", "#506266", "#8b9996", "#674735", "#af7851", "#d6b08a", "#ac5361", "#edaaa1"],
+      "budget": { "maxCubes": 64, "maxBones": 8, "maxAtlasDimension": 128, "maxPaletteColors": 24 },
+      "requiredCaptures": ["eight-neutral-views", "uv-sheet", "four-placement-directions", "active-inactive", "placed-day-night"],
+      "acceptance": ["Основание, чаша и коралл имеют разную роль", "Обратная сторона закончена", "Ориентация и collision проверены", "Визуальное состояние соответствует серверному"],
+      "repairTask": "Сделай чашу шире, сохранив положение коралла и рисунок основания.",
+      "reject": ["Украшения закрывают главное действие", "Задняя сторона пустая", "Свечение существует только в редакторе", "Необоснованный выход за block bounds"]
+    },
+    {
+      "id": "tidecaller-crab",
+      "assetClass": "creature",
+      "requiredCapability": "owned-animated-companion",
+      "prompt": "Создай дружелюбного медно-кораллового краба-компаньона Tidecaller: широкий панцирь, две разные по размеру клешни, короткие устойчивые ноги и один коралловый акцент. Дай semantic rig и idle/move/action. Движение ног согласовано с перемещением; action отражает подтверждённое серверное событие.",
+      "materials": ["copper-shell", "coral", "dark-joints"],
+      "palette": ["#253232", "#674735", "#af7851", "#d6b08a", "#ac5361", "#edaaa1"],
+      "budget": { "maxCubes": 128, "maxBones": 32, "maxAtlasDimension": 128, "maxPaletteColors": 24 },
+      "requiredCaptures": ["eight-neutral-views", "rig-sheet", "idle-move-action", "near-mid-distance", "day-night", "gameplay-timing"],
+      "acceptance": ["Краб узнаваем по силуэту", "Клешни выглядят частью тела", "Нет случайного skating/jitter", "Владелец и состояние сохраняются после restart"],
+      "repairTask": "Сделай большую клешню выразительнее, сохранив rig, цвета панциря и согласованный walk cycle.",
+      "reject": ["Ноги пересекают тело в основном цикле", "Клешни плавают отдельно", "Client animation выдаёт неподтверждённое gameplay событие", "Несовместимый runtime выдан за готовый"]
+    }
+  ]
+}
