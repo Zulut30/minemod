@@ -17,6 +17,7 @@ export type { TextureCommand, PixelPoint } from "./texture.ts";
 import {
   CuboidModelSpecSchema,
   ItemPixelTexturePlanSchema,
+  CUBOID_MODEL_LIMITS,
 } from "@mcdev/assets-contracts";
 
 export const MAX_PROJECT_BYTES = 1_048_576;
@@ -96,6 +97,15 @@ const paintColor = z
   .string()
   .regex(/^#[0-9a-fA-F]{6}$/u)
   .nullable();
+export const GridStepSchema = z.union([z.literal(0.125), z.literal(0.25), z.literal(0.5), z.literal(1)]);
+export type GridStep = z.infer<typeof GridStepSchema>;
+/** Половина шага округляется от нуля; отрицательные координаты симметричны. */
+export function snapToGrid(value: number, step: GridStep): number {
+  if (!Number.isFinite(value) || !GridStepSchema.safeParse(step).success)
+    fail("INVALID_GRID", "Нужны конечная координата и шаг 0.125, 0.25, 0.5 или 1.");
+  const rounded = Math.round(Math.abs(value) / step) * step;
+  return rounded === 0 ? 0 : Math.sign(value) * rounded;
+}
 export const CommandSchema = z.discriminatedUnion("type", [
   z.strictObject({
     type: z.literal("transform"),
@@ -112,6 +122,13 @@ export const CommandSchema = z.discriminatedUnion("type", [
     cubeIds: targets,
     color: z.string().regex(/^#[0-9a-fA-F]{6}$/u),
   }),
+  z.strictObject({
+    type: z.literal("pivot"),
+    cubeIds: targets,
+    axis: z.enum(["x", "y", "z"]),
+    value: z.number().finite().min(-CUBOID_MODEL_LIMITS.maxCoordinateMagnitude).max(CUBOID_MODEL_LIMITS.maxCoordinateMagnitude),
+  }),
+  z.strictObject({ type: z.literal("snap"), cubeIds: targets, step: GridStepSchema }),
   z.strictObject({
     type: z.literal("rotate"),
     cubeIds: targets,
@@ -642,6 +659,21 @@ function applyCommand(
         c.rotation[{ x: 0, y: 1, z: 2 }[command.axis]] = command.angle;
       }
       break;
+    case "pivot":
+      for (const c of selected)
+        c.pivot[{ x: 0, y: 1, z: 2 }[command.axis]] = command.value;
+      break;
+    case "snap": {
+      // Двигаем выделение целиком: форма, интервалы и рисунок сохраняются.
+      const { min } = bounds(selected);
+      const delta = min.map((v) => snapToGrid(v, command.step) - v);
+      for (const c of selected)
+        for (const a of [0, 1, 2] as const) {
+          c.origin[a] += delta[a]!;
+          c.pivot[a] += delta[a]!;
+        }
+      break;
+    }
     case "recolor":
       recolor(p, ids, command.color);
       break;
@@ -719,6 +751,8 @@ const labels: Record<EditorCommand["type"], string> = {
   transform: "Изменение формы",
   recolor: "Смена цвета",
   rotate: "Поворот",
+  pivot: "Центр вращения",
+  snap: "Привязка к сетке",
   add: "Новый куб",
   delete: "Удаление",
   duplicate: "Копия куба",

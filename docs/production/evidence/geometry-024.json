@@ -1,0 +1,193 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 24,
+  "status": "PASS",
+  "scope": "Precise held-item editing through actual GUI and bounded public MCP; grid, pivots, native rotation, atomic undo/redo, unchanged PNG/UV, stale input and capture snapshot synchronization",
+  "verifiedAtUtc": "2026-10-04T19:24:47.164054+00:00",
+  "sourceParentRevision": "9af28966d3ff4e2811fd2bbda27ca63085bc57f0",
+  "sourceHashes": [
+    {
+      "path": "packages/editor-core/index.ts",
+      "bytes": 32785,
+      "sha256": "6556457a494e45ab339c7e93eb56c73b7c8474df8c60d450567f485b5d55d022"
+    },
+    {
+      "path": "packages/editor-core/geometry.test.ts",
+      "bytes": 7003,
+      "sha256": "fb4b5fd613b767e9e50de28adfbb0fba1743d038dbe53f221f1721e78da280fa"
+    },
+    {
+      "path": "packages/editor-core/package.json",
+      "bytes": 645,
+      "sha256": "d657bc3c18310f81bb40f445ca359a70f7b092d41f541dccf95dc3d89c557c46"
+    },
+    {
+      "path": "apps/model-editor/package.json",
+      "bytes": 1177,
+      "sha256": "4bc31f998872e522d692c261ec6569a93e8c1ca787a4ba241e81ab15a45fd2a1"
+    },
+    {
+      "path": "apps/model-editor/renderer/App.tsx",
+      "bytes": 31631,
+      "sha256": "310c590489132d866fbf80ad2ef23d37c1daa960174f382d032e4d4c04868304"
+    },
+    {
+      "path": "apps/model-editor/renderer/Viewport.tsx",
+      "bytes": 14513,
+      "sha256": "0721c3557b14c3c8cd1b844b536cfa0cdc44f4191f47192b263ccd0e312b1a30"
+    },
+    {
+      "path": "apps/model-editor/renderer/store.ts",
+      "bytes": 4925,
+      "sha256": "9ce6a2151774702b9af4ee13cc96f2f4c1fa7bd8ae45aeb20f5cd17b54b6288a"
+    },
+    {
+      "path": "apps/model-editor/renderer/style.css",
+      "bytes": 28880,
+      "sha256": "a55505f43b0bb8cdd9e2496f90592aec5816673a3fdc91d7acacf7c8d44038ef"
+    },
+    {
+      "path": "apps/model-editor/worker/mcp.ts",
+      "bytes": 26137,
+      "sha256": "a42f6bb771d2ef4b98a2ce575660a7060a0fa261e4d3fe6de5e4d96664aa728f"
+    },
+    {
+      "path": "apps/model-editor/scripts/check-geometry-desktop.mjs",
+      "bytes": 9158,
+      "sha256": "3df4964ca7a1a8f305bd3d95ba980f1e148858cd6e8067364a39d00211e80055"
+    },
+    {
+      "path": "apps/model-editor/scripts/test-desktop.mjs",
+      "bytes": 16396,
+      "sha256": "5bfed3b52567d69938d77b6cd86372a84dea90f4eefec7e756554d675a9269a1"
+    }
+  ],
+  "toolchain": {
+    "node": "24.11.0",
+    "pnpm": "11.8.0",
+    "studio": "0.8.0"
+  },
+  "tests": {
+    "geometryCore": "PASS",
+    "portable": "PASS",
+    "httpMcp": "PASS",
+    "typecheck": "PASS",
+    "lint": "PASS",
+    "packagedEditingAndGeometry": "PASS",
+    "coreRejectedInputs": 22
+  },
+  "logs": [
+    {
+      "path": "output/verification/roadmap-024-geometry.log",
+      "bytes": 108,
+      "sha256": "4ca81ad666f15f2fba0b45d32b806d46301f1244ab0a31185695a8013ea7facb"
+    },
+    {
+      "path": "output/verification/roadmap-024-portable.log",
+      "bytes": 3123,
+      "sha256": "80f907f85241e56a81bf01d88f3fda88fceff5da025674dd0886e94b7919adfe"
+    },
+    {
+      "path": "output/verification/roadmap-024-mcp.log",
+      "bytes": 207,
+      "sha256": "ce600a29360c371575566860a7c94c33766d03e9a2ba5f6249e976ae6338a777"
+    },
+    {
+      "path": "output/verification/roadmap-024-typecheck.log",
+      "bytes": 176,
+      "sha256": "fe0327fb3a908a7cea6b4e5ef62bbaa7903d4f4149a209170e6249f0dd5c8190"
+    },
+    {
+      "path": "output/verification/roadmap-024-lint.log",
+      "bytes": 29,
+      "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+    },
+    {
+      "path": "output/verification/roadmap-024-package.log",
+      "bytes": 786,
+      "sha256": "e687d20264fee4707e524d490ba91eb179f99caaaa7f76ad5838879e4c660dc2"
+    },
+    {
+      "path": "output/verification/roadmap-024-focused-e2e.log",
+      "bytes": 120,
+      "sha256": "b618e899b12c40ccb4ff9a14c10eec5db3e8154659112f5102223e0327fafacc"
+    }
+  ],
+  "report": {
+    "path": "output/playwright/geometry-024-a74b8288/report.json",
+    "bytes": 1368,
+    "sha256": "6355df5168e3d08d5ebacb2ed8cae2f4fc9c64b50897cd1e88059fd89423e7b4"
+  },
+  "checks": {
+    "status": "PASS",
+    "packaged": true,
+    "version": "0.8.0",
+    "executablePath": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.8.0\\a2c654c9\\MineMod Studio-win32-x64\\MineMod Studio.exe",
+    "editing": {
+      "status": "PASS",
+      "hidden": true,
+      "checks": [
+        "invalid Ctrl+S preserves error and skips save",
+        "mouse save commits focused value",
+        "invalid Save As preserves files",
+        "undo to saved content is clean",
+        "redo restores dirty state",
+        "mouse Save As commits value and preserves original",
+        "late same-revision state ignored",
+        "agent update rejects focused stale value and save",
+        "late old project ignored",
+        "undo to checkpoint closes without a save dialog"
+      ]
+    },
+    "geometry": {
+      "status": "PASS",
+      "hidden": true,
+      "gridNumericFields": true,
+      "mixedPivotEscape": true,
+      "exactPivotDecimal": true,
+      "nativeRotationExport": true,
+      "pngUnchanged": true,
+      "humanUndoRedo": 6,
+      "publicMcpPivotSnap": true,
+      "stalePivotInputRejected": true,
+      "beforeFrontSha256": "bdf132bdebfd118351ba6665ca413d20df5c2f31f616449a36df8d73f2c96ba4",
+      "changedFrontSha256": "89ee30acebc83429a0f4e5192f0fd53180f5652ae9300806734ef5a4a804f43f",
+      "afterUndoFrontSha256": "bdf132bdebfd118351ba6665ca413d20df5c2f31f616449a36df8d73f2c96ba4"
+    }
+  },
+  "screenshots": [
+    {
+      "path": "output/playwright/geometry-024-a74b8288/geometry/before-front.png",
+      "bytes": 33003,
+      "sha256": "bdf132bdebfd118351ba6665ca413d20df5c2f31f616449a36df8d73f2c96ba4"
+    },
+    {
+      "path": "output/playwright/geometry-024-a74b8288/geometry/pivot-rotation-front.png",
+      "bytes": 34374,
+      "sha256": "89ee30acebc83429a0f4e5192f0fd53180f5652ae9300806734ef5a4a804f43f"
+    },
+    {
+      "path": "output/playwright/geometry-024-a74b8288/geometry/after-undo-front.png",
+      "bytes": 33003,
+      "sha256": "bdf132bdebfd118351ba6665ca413d20df5c2f31f616449a36df8d73f2c96ba4"
+    }
+  ],
+  "package": {
+    "executable": {
+      "path": "output/model-editor/releases/0.8.0/a2c654c9/MineMod Studio-win32-x64/MineMod Studio.exe",
+      "bytes": 245726208,
+      "sha256": "85a0d741fd6f968d5321d45daa4d016d66d14b015be9ec3f7d4c90474123bba1"
+    },
+    "appAsar": {
+      "path": "output/model-editor/releases/0.8.0/a2c654c9/MineMod Studio-win32-x64/resources/app.asar",
+      "bytes": 3507020,
+      "sha256": "b7e2d4f24d5d655d9caf6ed053cb8d557a1638eb439b0094d0dfd8eacea4d8e6"
+    }
+  },
+  "localFullSuite": "Initial full run found and reproduced capture snapshot race; superseded partial rebuild run was deliberately stopped after numeric draft changed. Final package passed focused editing and geometry checks; complete suite will run in hosted Windows CI. No full-suite PASS claimed for initial/partial run.",
+  "hostedCurrentSource": "pending after commit",
+  "artisticApproval": "not-granted",
+  "newModelInMinecraft": "not-verified; exports continue reviewRequired=true",
+  "unchangedGameBaseline": "Fabric 1.20.1 / Java 17; GameTests and server for this source require CI",
+  "remainingRegressionFailure": "Existing Fabric 26.2 derived Minecraft common JAR checksum mismatch; no checksum bypass."
+}

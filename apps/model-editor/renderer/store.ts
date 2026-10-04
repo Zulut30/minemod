@@ -4,6 +4,7 @@ import {
   type EditorCommand,
   type EditorState,
   type EditorProject,
+  type GridStep,
 } from "@mcdev/editor-core";
 import type {
   HostRequest,
@@ -21,6 +22,7 @@ interface StudioUi {
   fileName: string;
   view: "perspective" | "front" | "side" | "back";
   grid: boolean;
+  gridStep: 0 | GridStep;
   wire: boolean;
   frame: number;
   mode: "model" | "texture" | "variants" | "review";
@@ -51,6 +53,7 @@ export const useStudio = create<StudioUi>((set, get) => ({
   fileName: "",
   view: "perspective",
   grid: true,
+  gridStep: 0,
   wire: false,
   frame: 0,
   mode: "model",

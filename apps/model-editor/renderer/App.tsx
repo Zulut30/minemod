@@ -3,8 +3,8 @@ import { ConnectionPanel } from "./ConnectionPanel.tsx";
 import { TextureEditor } from "./TextureEditor.tsx";
 import { VariantsPanel } from "./VariantsPanel.tsx";
 import { ReviewBoard } from "./ReviewBoard.tsx";
-import type { ReactNode } from "react";
-import { bounds, cubes, type EditorProject } from "@mcdev/editor-core";
+import type { ReactNode, ComponentProps } from "react";
+import { bounds, cubes, snapToGrid, type GridStep, type EditorProject, type EditorCommand } from "@mcdev/editor-core";
 import { useStudio, saveProject } from "./store.ts";
 import { Viewport, drawAtlas } from "./Viewport.tsx";
 
@@ -113,12 +113,22 @@ function Atlas({ project }: { project: EditorProject }) {
     </div>
   );
 }
+function GeometryNumber({ value, onFocus, onBlur, ...input }: Omit<ComponentProps<"input">, "value" | "defaultValue" | "onChange"> & { value: string | number }) {
+  const [editing, setEditing] = useState(false), [draft, setDraft] = useState("");
+  return <input {...input} value={editing ? draft : value}
+    onChange={(event) => setDraft(event.currentTarget.value)}
+    onFocus={(event) => { setDraft(event.currentTarget.value); setEditing(true); onFocus?.(event); }}
+    onBlur={(event) => { setEditing(false); onBlur?.(event); }} />;
+}
 function Inspector({ project }: { project: EditorProject }) {
   const selection = useStudio((s) => s.selection),
     busy = useStudio((s) => s.busy),
+    gridStep = useStudio((s) => s.gridStep),
     command = useStudio((s) => s.command);
   const selected = cubes(project).filter((c) => selection.includes(c.id)),
     box = bounds(selected);
+  const values = { ...box, pivot: selected[0]?.pivot ?? [0, 0, 0] };
+  const mixedPivot = [0, 1, 2].map((a) => selected.some((c) => c.pivot[a] !== values.pivot[a]));
   const part = project.parts.find(
     (p) =>
       p.cubeIds.length === selection.length &&
@@ -150,22 +160,38 @@ function Inspector({ project }: { project: EditorProject }) {
       </div>
       <div className="inspector-section">
         <h3>Форма</h3>
-        {(["min", "size"] as const).map((property) => (
+        <div className="geometry-grid">
+          <label>Привязка к сетке
+            <select aria-label="Шаг привязки" value={gridStep}
+              onChange={(e) => useStudio.setState({ gridStep: Number(e.target.value) as 0 | GridStep })}>
+              <option value={0}>Свободно</option>
+              {[0.125, 0.25, 0.5, 1].map((step) => <option key={step} value={step}>{step} ед.</option>)}
+            </select>
+          </label>
+          <button data-testid="snap-selection" disabled={!selected.length || !gridStep || busy}
+            title="Перенести начало выделения на сетку; сохранить размеры и расстояния"
+            onClick={() => { if (gridStep) void command({ type: "snap", cubeIds: selection, step: gridStep }); }}>
+            Выровнять положение
+          </button>
+        </div>
+        {(["min", "size", "pivot"] as const).map((property) => (
           <div className="vector-group" key={property}>
-            <label>{property === "min" ? "Положение" : "Размер"}</label>
+            <label>{property === "min" ? "Положение" : property === "size" ? "Размер" : "Центр вращения"}</label>
             <div className="vector-row">
               {([0, 1, 2] as const).map((a) => (
                 <label key={a} className="axis-field">
                   <span>{["X", "Y", "Z"][a]}</span>
-                  <input
-                    key={`${property}-${a}-${selection.join(",")}-${box[property][a]}`}
-                    aria-label={`${property === "min" ? "Положение" : "Размер"} ${["X", "Y", "Z"][a]}`}
+                  <GeometryNumber
+                    key={`${project.projectId}-${property}-${a}-${selection.join(",")}`}
+                    aria-label={`${property === "min" ? "Положение" : property === "size" ? "Размер" : "Центр вращения"} ${["X", "Y", "Z"][a]}`}
                     type="number"
-                    step="0.25"
-                    defaultValue={Number(box[property][a].toFixed(3))}
+                    step={gridStep || "any"}
+                    placeholder={property === "pivot" ? "Разные" : undefined}
+                    value={property === "pivot" && mixedPivot[a] ? "" : values[property][a]!}
                     disabled={!selected.length || busy}
                     onFocus={(event) => {
                       event.currentTarget.dataset.commitError = "";
+                      event.currentTarget.dataset.cancelEdit = "";
                       const state = useStudio.getState().state!;
                       event.currentTarget.dataset.projectId =
                         state.project.projectId;
@@ -175,9 +201,8 @@ function Inspector({ project }: { project: EditorProject }) {
                     }}
                     onKeyDown={(event) => {
                       if (event.key === "Escape") {
-                        event.currentTarget.value = String(
-                          Number(box[property][a].toFixed(3)),
-                        );
+                        event.currentTarget.dataset.cancelEdit = "true";
+                        event.currentTarget.value = property === "pivot" && mixedPivot[a] ? "" : String(values[property][a]);
                         event.currentTarget.blur();
                       } else if (event.key === "Enter")
                         event.currentTarget.blur();
@@ -185,15 +210,15 @@ function Inspector({ project }: { project: EditorProject }) {
                     onBlur={(event) => {
                       const input = event.currentTarget;
                       input.dataset.commitError = "";
+                      if (input.dataset.cancelEdit) { input.dataset.cancelEdit = ""; return; }
                       const text = input.value.trim();
-                      const next = Number(text);
-                      event.currentTarget.value = String(
-                        Number(box[property][a].toFixed(3)),
-                      );
+                      const entered = Number(text);
+                      const next = Number.isFinite(entered) && gridStep ? snapToGrid(entered, gridStep) : entered;
+                      event.currentTarget.value = property === "pivot" && mixedPivot[a] ? "" : String(values[property][a]);
                       if (
                         !text ||
                         !Number.isFinite(next) ||
-                        next === Number(box[property][a].toFixed(3))
+                        (next === values[property][a] && (property !== "pivot" || selected.every((c) => c.pivot[a] === next)))
                       )
                         return;
                       const state = useStudio.getState().state!;
@@ -212,21 +237,17 @@ function Inspector({ project }: { project: EditorProject }) {
                         scale: [number, number, number] = [1, 1, 1];
                       if (property === "min")
                         translation[a] = next - box.min[a];
-                      else scale[a] = next / box.size[a];
+                      else if (property === "size") scale[a] = next / box.size[a];
+                      const change: EditorCommand = property === "pivot"
+                        ? { type: "pivot", cubeIds: selection, axis: ["x", "y", "z"][a] as "x" | "y" | "z", value: next }
+                        : { type: "transform", cubeIds: selection, translation, scale };
                       void useStudio.getState().request({
                         kind: "apply",
                         mutation: {
                           projectId: state.project.projectId,
                           expectedRevision: state.revision,
                           key: crypto.randomUUID(),
-                          commands: [
-                            {
-                              type: "transform",
-                              cubeIds: selection,
-                              translation,
-                              scale,
-                            },
-                          ],
+                          commands: [change],
                         },
                       });
                     }}
@@ -236,6 +257,7 @@ function Inspector({ project }: { project: EditorProject }) {
             </div>
           </div>
         ))}
+        <p className="hint">Размер задаёт габариты выделения до поворота. Ввод центра вращения задаёт общую координату выбранным кубам; «Разные» означает несколько центров. Для повёрнутого куба новый центр меняет его видимое положение.</p>
         <div className="rotation-row">
           <select
             aria-label="Ось вращения"
@@ -257,6 +279,7 @@ function Inspector({ project }: { project: EditorProject }) {
           </select>
           <button
             title="Применить поворот"
+            data-testid="apply-rotation"
             disabled={!selected.length || busy}
             onClick={() => {
               void command({
@@ -270,7 +293,7 @@ function Inspector({ project }: { project: EditorProject }) {
             ↻
           </button>
         </div>
-        <p className="hint">Единицы Minecraft · допустимые координаты −16…32</p>
+        <p className="hint">Minecraft 1.20.1: геометрия −16…32 с учётом inflate; центр вращения −128…128. Один поворот куба: 0°, ±22.5° или ±45° по одной оси. Новый поворот заменяет прежний.</p>
       </div>
       <div className="inspector-section">
         <h3>Цвет выбранной части</h3>

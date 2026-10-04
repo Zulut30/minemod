@@ -20,6 +20,7 @@ import { packagedPath } from "./packaged-path.mjs";
 import { verifyAssetBundleV1 } from "../../../packages/application/asset-bundles.ts";
 import { checkMigrationsDesktop } from "./check-migrations-desktop.mjs";
 import { checkHistoryDesktop } from "./check-history-desktop.mjs";
+import { checkGeometryDesktop } from "./check-geometry-desktop.mjs";
 
 const appDir = resolve(dirname(fileURLToPath(import.meta.url)), ".."),
   repo = resolve(appDir, "../..");
@@ -386,6 +387,7 @@ try {
   const review = await checkReviewDesktop(options, output);
   const migrations = await checkMigrationsDesktop(options, output);
   const history = await checkHistoryDesktop(options, output);
+  const geometry = await checkGeometryDesktop(options, output);
   await writeFile(
     join(output, "report.json"),
     JSON.stringify(
@@ -403,6 +405,7 @@ try {
         review,
         migrations,
         history,
+        geometry,
         checks: [
           "real texture render",
           "resize",

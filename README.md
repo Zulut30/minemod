@@ -195,6 +195,8 @@ Studio 0.6.0 добавляет [asset bundle v1](docs/production/ASSET_BUNDLE_V
 
 Studio 0.7.0 вводит [проверяемую миграцию EditorProject v1 → v2](docs/production/PROJECT_MIGRATIONS.md). IDs, рисунок и варианты сохраняются; перед заменой v1 остаётся отдельная точная original copy. Неизвестная версия primary/backup блокирует перезапись. Файлы v2 следует редактировать в Studio 0.7.0 с новым reader; старые binaries не обновляются автоматически.
 
+Studio 0.8.0 добавляет [привязку к сетке и числовой центр вращения](docs/production/GEOMETRY_EDITING.md) для held-item. Те же ограниченные команды `snap`/`pivot` доступны агенту через preview/apply; работают locks, CAS и undo/redo. Export сохраняет исходные UV/PNG и native item rotation. Новый пакет создаётся отдельно; игровые модели по-прежнему требуют review и проверки в Minecraft.
+
 ```text
 apps/
   cli/                 CLI adapter

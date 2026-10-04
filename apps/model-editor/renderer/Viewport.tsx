@@ -201,9 +201,11 @@ function ItemCube({
 function Camera({
   project,
   review,
+  captureId,
 }: {
   project: EditorProject;
   review?: ReviewRender;
+  captureId?: string;
 }) {
   const { camera, gl, invalidate, size } = useThree(),
     sharedView = useStudio((s) => s.view),
@@ -276,6 +278,8 @@ function Camera({
     size.width,
     size.height,
     review?.framing,
+    // Новый job может прийти после обновления shared frame; кадрируем его фактический snapshot.
+    captureId,
   ]);
   return null;
 }
@@ -328,7 +332,7 @@ function Scene({
   );
   return (
     <>
-      <Camera project={project} {...(review ? { review } : {})} />
+      <Camera project={project} {...(review ? { review } : {})} {...(captureId ? { captureId } : {})} />
       {review?.onThumbnail && (
         <ReviewThumbnail project={project} review={review} />
       )}
