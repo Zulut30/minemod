@@ -109,7 +109,7 @@
 
 ## Этап 7. Путь от модели до работающего мода
 
-61. [ ] **Оформить версионированный asset bundle.** Связать editable source, runtime files, target, namespaces, hashes и ModSpec references. Приёмка: контракт отвергает отсутствующие ресурсы и неверные типы ассетов.
+61. [x] **Оформить версионированный asset bundle.** Связать editable source, runtime files, target, namespaces, hashes и ModSpec references. Приёмка: контракт отвергает отсутствующие ресурсы и неверные типы ассетов. Evidence: [формат и границы v1](production/ASSET_BUNDLE_V1.md), [contract/integrity, HTTP MCP, CLI и packaged E2E](production/evidence/asset-bundle-061.json); коммит `roadmap(061)`. Exporter реализован для held-item; остальные классы пока имеют manifest contract. Spec digest binding, human approval и JAR-интеграция остаются отдельными gates.
 62. [ ] **Добавить явную интеграцию reviewed bundle.** Импортировать принятый набор через application/compiler pipeline. Приёмка: никакой скрытой подмены JAR или изменения trusted pack ради добавления модели.
 63. [ ] **Добавить настоящий target для авторских блоков.** Расширить редактор и validators для Minecraft block geometry и её ограничений. Приёмка: декоративный блок редактируется, экспортируется и загружается как block, а не held-item.
 64. [ ] **Довести генерацию ресурсов без заглушек.** Компилятор выпускает согласованные item/block models, textures, blockstates, loot и localization. Приёмка: placeholder или missing texture блокирует production-bundle.

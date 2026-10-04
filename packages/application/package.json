@@ -6,11 +6,13 @@
   "type": "module",
   "exports": "./index.ts",
   "scripts": {
-    "test": "node --experimental-strip-types item-assets.test.ts && node --experimental-strip-types test.ts",
-    "test:assets": "node --experimental-strip-types item-assets.test.ts"
+    "test": "node --experimental-strip-types item-assets.test.ts && node --experimental-strip-types asset-bundles.test.ts && node --experimental-strip-types test.ts",
+    "test:assets": "node --experimental-strip-types item-assets.test.ts && node --experimental-strip-types asset-bundles.test.ts"
   },
   "dependencies": {
     "@mcdev/assets-core": "workspace:*",
+    "@mcdev/assets-contracts": "workspace:*",
+    "@mcdev/codegen-core": "workspace:*",
     "@mcdev/artifacts": "workspace:*",
     "@mcdev/build-runner": "workspace:*",
     "@mcdev/compiler-fabric": "workspace:*",

@@ -11,6 +11,7 @@ import {
   EditorError,
   MutationSchema,
   cubes,
+  assetRequest,
   MAX_COMMAND_BYTES,
   MAX_STROKE_POINTS,
   type EditorState,
@@ -18,6 +19,7 @@ import {
   type EditorProject,
 } from "@mcdev/editor-core";
 import type { View } from "../shared/bridge.ts";
+import { compileItemAssetBundleV1 } from "../../../packages/application/asset-bundles.ts";
 
 export interface McpEditor {
   inspect: () => EditorState;
@@ -461,15 +463,17 @@ export async function startEditorMcp(
     );
     tool(
       "studio_asset_export",
-      "Получить Minecraft JSON, PNG и bbmodel для review как ограниченный bundle. Не записывает файлы, не меняет trusted pack, не собирает JAR.",
-      refSchema,
+      "Получить Minecraft JSON, PNG и bbmodel для review. format=bundle-v1 также включает source, manifest и hashes; по умолчанию legacy. Не записывает файлы, не меняет trusted pack, не собирает JAR.",
+      refSchema.extend({ format: z.enum(["legacy", "bundle-v1"]).default("legacy") }),
       true,
       (args) => {
         const state = editor.inspect();
         reference(state, args);
         return json({
           ...summary(state),
-          bundle: editor.export(),
+          bundle: args.format === "bundle-v1"
+            ? compileItemAssetBundleV1(JSON.stringify(assetRequest(state.project)))
+            : editor.export(),
           integration: "requires-separate-review",
         });
       },

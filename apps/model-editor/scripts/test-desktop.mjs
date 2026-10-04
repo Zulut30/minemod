@@ -17,6 +17,7 @@ import { checkEditingDesktop } from "./check-editing-desktop.mjs";
 import { checkVariantsDesktop } from "./check-variants-desktop.mjs";
 import { checkReviewDesktop } from "./check-review-desktop.mjs";
 import { packagedPath } from "./packaged-path.mjs";
+import { verifyAssetBundleV1 } from "../../../packages/application/asset-bundles.ts";
 
 const appDir = resolve(dirname(fileURLToPath(import.meta.url)), ".."),
   repo = resolve(appDir, "../..");
@@ -291,6 +292,20 @@ try {
     await readFile(join(output, bundleDir, "bundle.json"), "utf8"),
   );
   assert.equal(bundle.files.length, 3);
+  const versionedBundle = verifyAssetBundleV1(JSON.parse(
+    await readFile(join(output, bundleDir, "asset-bundle.v1.json"), "utf8"),
+  ));
+  assert.equal(versionedBundle.files.length, 4);
+  for (const file of versionedBundle.files) {
+    const bytes = await readFile(join(output, bundleDir, file.path));
+    const descriptor = versionedBundle.manifest.files.find((d) => d.path === file.path);
+    assert.equal(bytes.length, descriptor.bytes);
+    assert.equal(createHash("sha256").update(bytes).digest("hex"), descriptor.sha256);
+    assert.deepEqual(bytes, Buffer.from(file.content, file.encoding));
+  }
+  const exportedSource = JSON.parse(versionedBundle.files[3].content);
+  assert.deepEqual(exportedSource.model, painted.project.model);
+  assert.deepEqual(exportedSource.texturePlan, painted.project.texturePlan);
   for (const file of bundle.files)
     assert.equal(
       createHash("sha256")
@@ -392,6 +407,7 @@ try {
           "add cube",
           "reopen",
           "export hashes",
+          "asset bundle v1 manifest/source/runtime integrity",
           "decoded exported RGBA",
           "compact window controls",
           "IPC bounds",

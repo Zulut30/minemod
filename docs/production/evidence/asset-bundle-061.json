@@ -1,0 +1,240 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 61,
+  "status": "PASS",
+  "scope": "Bundle v1 contract, deterministic held-item exporter, data integrity; CLI/real HTTP MCP/hidden Windows packaged Studio",
+  "verifiedAtUtc": "2026-10-04T18:05:43.567393+00:00",
+  "sourceParentRevision": "d2474a1b1f0a8228bee68da611001571c75c92eb",
+  "sourceHashes": [
+    {
+      "path": "packages/assets-contracts/asset-bundle.ts",
+      "bytes": 8232,
+      "sha256": "c1ce9c71ad67095bd0278003341e8ff7a8186d74f70c7f2e76365da88390df83"
+    },
+    {
+      "path": "packages/assets-contracts/asset-bundle.test.ts",
+      "bytes": 5480,
+      "sha256": "eb172cac2273e055248e71b4deb7bb74729a43460370a4137d76ed76b095c752"
+    },
+    {
+      "path": "packages/assets-contracts/index.ts",
+      "bytes": 18472,
+      "sha256": "062aa6faf66c83d3b5263d8d800b5bf524221c0dd5bcb37e9b02fc2db02a4565"
+    },
+    {
+      "path": "packages/application/asset-bundles.ts",
+      "bytes": 4711,
+      "sha256": "c703b5cfac9ca83b682e1e83606801c59ad68b46238dc74ae77cf428c7ed7173"
+    },
+    {
+      "path": "packages/application/bundle-png.ts",
+      "bytes": 2584,
+      "sha256": "8a1ae123dcf6a2f6b0b915ce2d953de2ab3a78e74ad874c3bf26c5e1cfc0a3c1"
+    },
+    {
+      "path": "packages/application/asset-bundles.test.ts",
+      "bytes": 6899,
+      "sha256": "48634ca3e4741dcd46c25188a8fc45b0b1f6a07a6fb6539020a160c1a138c7d7"
+    },
+    {
+      "path": "packages/application/index.ts",
+      "bytes": 5382,
+      "sha256": "f5f692a4a0cf47464a3859a97d1da2adc73e5b1ba8ab13a5f4bc0b9819d67f2e"
+    },
+    {
+      "path": "packages/application/package.json",
+      "bytes": 832,
+      "sha256": "f28126f29146d683f3c063d427fe1abde358a516d94be0996a0f48184cd42b92"
+    },
+    {
+      "path": "packages/assets-contracts/package.json",
+      "bytes": 519,
+      "sha256": "602eeeb858de054d79b9b7a9fffdd6dc69bc85bd6fa5e452621fead682851c62"
+    },
+    {
+      "path": "apps/cli/index.ts",
+      "bytes": 4309,
+      "sha256": "0960f769f00b6f63c068784204d4b7eab434d35fad7081cd8b0506327bbb181b"
+    },
+    {
+      "path": "apps/cli/test.ts",
+      "bytes": 6596,
+      "sha256": "0066de883ac693cc62c944a4ca1daf648c9ae197a0225e81c91cd06d7558018b"
+    },
+    {
+      "path": "apps/model-editor/worker/index.ts",
+      "bytes": 11183,
+      "sha256": "bc2f3d975b8bef9851300350f6228649586d2df65e5266d02c3bb19fdf2d80c7"
+    },
+    {
+      "path": "apps/model-editor/worker/mcp.ts",
+      "bytes": 25890,
+      "sha256": "17c298609acdb3c1c24ef68dfba79f8f825eb1b2c2690d1dae5a7bafe46c1591"
+    },
+    {
+      "path": "apps/model-editor/worker/mcp.test.ts",
+      "bytes": 14724,
+      "sha256": "2dcb71f774195794116deb535e300495b1ece536055b89f9578b39adfb0e0e5d"
+    },
+    {
+      "path": "apps/model-editor/scripts/test-desktop.mjs",
+      "bytes": 15938,
+      "sha256": "8aa1d4d26fca58a11f2ff9742b17d6a57ca888aca911477f1402b4191e84605c"
+    },
+    {
+      "path": "apps/model-editor/scripts/check-mcp-desktop.mjs",
+      "bytes": 14097,
+      "sha256": "c46316e9282f79b2ef55db9b753b59c7ac63be592453d9929c14865a4f81fcc6"
+    },
+    {
+      "path": "apps/model-editor/package.json",
+      "bytes": 1177,
+      "sha256": "5b6cac2c9e37ba0d6f858268c9bbf85c56a7d566cb8f1ac9d526b6184b495bb0"
+    },
+    {
+      "path": "package.json",
+      "bytes": 1201,
+      "sha256": "1667cd290de07743ae2c9a6a9d4baa3499c0131aef1e967d7e6773a37dc9ddec"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "bytes": 95944,
+      "sha256": "e955ab8e82d8bb87128cf10f0f95b67c217fb1bf31eb7f2321823e66b03195c2"
+    }
+  ],
+  "toolchain": {
+    "node": "24.11.0",
+    "pnpm": "11.8.0",
+    "studio": "0.6.0"
+  },
+  "tests": {
+    "contractClasses": [
+      "held-item",
+      "block",
+      "armor",
+      "animated-entity"
+    ],
+    "rejectedManifests": 83,
+    "rejectedIntegrityPayloads": 30,
+    "typecheck": "PASS",
+    "lint": "PASS",
+    "portable": "PASS",
+    "realHttpMcp": "PASS",
+    "cleanPackage": "PASS",
+    "hiddenPackagedE2E": "PASS"
+  },
+  "logs": [
+    {
+      "path": "output/verification/roadmap-061-lock-update.log",
+      "bytes": 420,
+      "sha256": "9fe2066225c58bc698030f7a09c6733cd5ca44cf83dce098e642c5a9ba160085"
+    },
+    {
+      "path": "output/verification/roadmap-061-frozen-install.log",
+      "bytes": 206,
+      "sha256": "b2fb1e93efd62c9324090d9cc87b86c86d2884994d077de3edafa7c4733b229f"
+    },
+    {
+      "path": "output/verification/roadmap-061-typecheck.log",
+      "bytes": 176,
+      "sha256": "fe0327fb3a908a7cea6b4e5ef62bbaa7903d4f4149a209170e6249f0dd5c8190"
+    },
+    {
+      "path": "output/verification/roadmap-061-lint.log",
+      "bytes": 29,
+      "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+    },
+    {
+      "path": "output/verification/roadmap-061-portable.log",
+      "bytes": 2541,
+      "sha256": "8ba8e8364effb78f855ee5338b4887e8b1ea9000778895368a229294d109b783"
+    },
+    {
+      "path": "output/verification/roadmap-061-http-mcp.log",
+      "bytes": 207,
+      "sha256": "ce600a29360c371575566860a7c94c33766d03e9a2ba5f6249e976ae6338a777"
+    },
+    {
+      "path": "output/verification/roadmap-061-package.log",
+      "bytes": 786,
+      "sha256": "8c20ec248073c00882fee65955839068828e5de2a503b0fa741680f5891132a0"
+    },
+    {
+      "path": "output/verification/roadmap-061-packaged-e2e.log",
+      "bytes": 202,
+      "sha256": "cca9660445ad7cc30bcc9fe041c65eb19e883ec0e39941bbb6f04658f2b4979d"
+    }
+  ],
+  "package": {
+    "executable": {
+      "path": "output/model-editor/releases/0.6.0/88cbdadb/MineMod Studio-win32-x64/MineMod Studio.exe",
+      "bytes": 245726208,
+      "sha256": "4efd8b2ae87a3f11ae6b9b03f50f0d38484811337516f8b5e0756e4c84d54fdc"
+    },
+    "appAsar": {
+      "path": "output/model-editor/releases/0.6.0/88cbdadb/MineMod Studio-win32-x64/resources/app.asar",
+      "bytes": 3490586,
+      "sha256": "d99d8b90613120a6f795b936f30ffd6dd697412a100f82b9e82b824a208f33d7"
+    }
+  },
+  "desktopReport": {
+    "path": "output/playwright/studio-packaged-3ea1f128/report.json",
+    "bytes": 8521,
+    "sha256": "4abd0c6756b482f87c51ffbfd0794e120cf462e0fd94478cea47bea6a68a28da"
+  },
+  "exportedBundle": {
+    "path": "output/playwright/studio-packaged-3ea1f128/item-e90a9e1d-f03e-4b22-9f42-84a42a369e59/asset-bundle.v1.json",
+    "bytes": 255153,
+    "sha256": "4dc1936b11b0748f1b099fb166e7f45467e91cdd22459c818fc304a0f93c7f38"
+  },
+  "exportedManifestSha256": "d29dd2b39bc01feb7b0022037794dfcf7e52ad45e2514bcf38a4de343831e986",
+  "exportedFiles": [
+    {
+      "path": "output/playwright/studio-packaged-3ea1f128/item-e90a9e1d-f03e-4b22-9f42-84a42a369e59/assets/mcdev/models/item/aurora_longsword_v2.json",
+      "bytes": 64782,
+      "sha256": "a95ec8593c8af67bb7de9c25e35395832b744ef5d01915fe3bf3b388124adba9"
+    },
+    {
+      "path": "output/playwright/studio-packaged-3ea1f128/item-e90a9e1d-f03e-4b22-9f42-84a42a369e59/assets/mcdev/textures/item/aurora_longsword_v2.png",
+      "bytes": 1789,
+      "sha256": "645a9d756183f26cb022395b96500ece50c77f57651429c85fc361b6ee1e54d6"
+    },
+    {
+      "path": "output/playwright/studio-packaged-3ea1f128/item-e90a9e1d-f03e-4b22-9f42-84a42a369e59/editable/mcdev/aurora_longsword_v2.bbmodel",
+      "bytes": 82714,
+      "sha256": "7bb1ad7ca233dd339515037e6bcdff3c47a0fbfaef619afec62e2d2e34520196"
+    },
+    {
+      "path": "output/playwright/studio-packaged-3ea1f128/item-e90a9e1d-f03e-4b22-9f42-84a42a369e59/source/mcdev/aurora_longsword_v2.item-asset.json",
+      "bytes": 84178,
+      "sha256": "4f42d05c77f60159b63c329634e086a72f393b5e4f416dda5376927ccd314ba4"
+    }
+  ],
+  "newExternalDependencies": [],
+  "newInternalDependencies": [
+    {
+      "name": "@mcdev/assets-contracts",
+      "version": "workspace:*",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "@mcdev/codegen-core",
+      "version": "workspace:*",
+      "license": "Apache-2.0"
+    }
+  ],
+  "limits": {
+    "assets": 16,
+    "files": 64,
+    "decodedFileBytes": 2097152,
+    "decodedTotalBytes": 4194304,
+    "payloadBytes": 8388608,
+    "mcpResponseBytes": 2097152
+  },
+  "boundModSpec": false,
+  "boundArtSpec": false,
+  "humanArtApproval": "not-granted",
+  "bundleMinecraftRuntime": "not-verified",
+  "jarIntegration": "not-implemented",
+  "otherClassExporters": "manifest contract only; no runtime generation proof"
+}

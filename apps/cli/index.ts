@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { pathToFileURL } from "node:url";
-import { compileItemAssetPayload, createFabricApplication, itemAssetDiagnostic } from "@mcdev/application";
+import { compileItemAssetPayload, compileItemAssetBundleV1, verifyAssetBundlePayloadV1, createFabricApplication, itemAssetDiagnostic } from "@mcdev/application";
 import { isDomainErrorCode } from "@mcdev/contracts";
 import {
   MAX_INLINE_SPEC_BYTES,
@@ -16,6 +16,8 @@ Usage:
   mcdev version
   mcdev spec validate <inline-json>
   mcdev asset item <inline-json>
+  mcdev asset bundle <inline-item-json>
+  mcdev asset verify <inline-bundle-v1-json>
   mcdev spec validate --profile ${VALIDATION_PROFILE_IDS[0]} <inline-json>
   mcdev fabric build --workspace <path> --java17-home <path> --artifact-cache <path> <inline-json>
 
@@ -56,9 +58,11 @@ export async function runCli(
     writeOut(`${JSON.stringify(result, null, 2)}\n`);
     return result.valid ? 0 : 1;
   }
-  if (args.length === 3 && args[0] === "asset" && args[1] === "item") {
+  if (args.length === 3 && args[0] === "asset" && ["item", "bundle", "verify"].includes(args[1] ?? "")) {
     try {
-      writeOut(`${JSON.stringify(compileItemAssetPayload(args[2] ?? ""), null, 2)}\n`);
+      const operation = args[1] === "bundle" ? compileItemAssetBundleV1 :
+        args[1] === "verify" ? verifyAssetBundlePayloadV1 : compileItemAssetPayload;
+      writeOut(`${JSON.stringify(operation(args[2] ?? ""), null, 2)}\n`);
       return 0;
     } catch (error) {
       writeError(`${JSON.stringify(itemAssetDiagnostic(error))}\n`);

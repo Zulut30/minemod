@@ -9,6 +9,7 @@ import { Buffer } from "node:buffer";
 import process from "node:process";
 import { URL } from "node:url";
 import { checkInstalledClients } from "./check-installed-clients.mjs";
+import { verifyAssetBundleV1 } from "../../../packages/application/asset-bundles.ts";
 
 async function snapshotPixels(page, base64) {
   return page.evaluate(async (data) => {
@@ -335,6 +336,13 @@ export async function checkMcpDesktop(application, page, output) {
       (await result("studio_asset_export", ref)).data.bundle.files.length,
       3,
     );
+    const versionedBundle = verifyAssetBundleV1(
+      (await result("studio_asset_export", { ...ref, format: "bundle-v1" })).data.bundle,
+    );
+    assert.equal(versionedBundle.manifest.reviewRequired, true);
+    assert.equal(versionedBundle.files.length, 4);
+    assert.deepEqual(JSON.parse(versionedBundle.files[3].content).model, state2.project.model);
+    assert.deepEqual((await inspect()).project, state2.project);
     const installedClients = process.argv.includes("--check-installed-clients")
       ? await checkInstalledClients({ url, token }, output)
       : { status: "not-run" };
@@ -364,6 +372,7 @@ export async function checkMcpDesktop(application, page, output) {
         snapshots: paintSnapshots,
       },
       cliModelSessions: "not-run",
+      assetBundleV1: { status: "PASS", manifestSha256: versionedBundle.manifestSha256, files: versionedBundle.files.length },
       installedClients,
     };
   } finally {

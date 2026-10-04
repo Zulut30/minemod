@@ -128,12 +128,18 @@ importers:
       '@mcdev/artifacts':
         specifier: workspace:*
         version: link:../artifacts
+      '@mcdev/assets-contracts':
+        specifier: workspace:*
+        version: link:../assets-contracts
       '@mcdev/assets-core':
         specifier: workspace:*
         version: link:../assets-core
       '@mcdev/build-runner':
         specifier: workspace:*
         version: link:../build-runner
+      '@mcdev/codegen-core':
+        specifier: workspace:*
+        version: link:../codegen-core
       '@mcdev/compiler-fabric':
         specifier: workspace:*
         version: link:../compiler-fabric

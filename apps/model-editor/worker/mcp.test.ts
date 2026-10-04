@@ -13,6 +13,7 @@ import {
   type EditorCommand,
 } from "@mcdev/editor-core";
 import { compileItemAssetPayload } from "../../../packages/application/item-assets.ts";
+import { verifyAssetBundleV1 } from "../../../packages/application/asset-bundles.ts";
 import { assetRequest } from "@mcdev/editor-core";
 import { startEditorMcp } from "./mcp.ts";
 let session = new EditorSession(
@@ -236,6 +237,14 @@ try {
   );
   const exported = await call(0, "studio_asset_export", ref);
   assert.equal((exported.data.bundle as { files: unknown[] }).files.length, 3);
+  const beforeExport = session.state();
+  const exportedV1 = await call(0, "studio_asset_export", { ...ref, format: "bundle-v1" });
+  const verified = verifyAssetBundleV1(exportedV1.data.bundle);
+  assert.equal(verified.files.length, 4);
+  assert.equal(verified.manifest.reviewRequired, true);
+  assert.deepEqual(JSON.parse(verified.files[3]!.content), assetRequest(beforeExport.project));
+  assert.deepEqual(session.state(), beforeExport, "Export must leave project and revision unchanged.");
+  assert.equal((await clients[0]!.callTool({ name: "studio_asset_export", arguments: { ...ref, format: "future" } })).isError, true);
   const captured = await clients[0]!.callTool({
     name: "studio_view_capture",
     arguments: { ...ref, view: "front" },

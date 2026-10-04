@@ -4,14 +4,14 @@ Roadmap 015. Desktop и игровой build runner имеют разные ок
 
 | Область | Windows x64 | Linux x64 |
 |---|---|---|
-| Assets contracts/core, editor core, CLI и stdio MCP | `corepack pnpm test:portable` | Тот же набор входит в полный suite |
+| Assets contracts/core, editor core, CLI, stdio MCP и application asset suites | `corepack pnpm test:portable` | Тот же набор входит в полный suite |
 | TypeScript и lint | `corepack pnpm typecheck:all`, `corepack pnpm lint` | Те же команды в `control-plane` |
 | Полный recursive suite | Явный отказ `FULL_TEST_SUITE_REQUIRES_LINUX_X64`; это не PASS и не skipped build | `corepack pnpm test`; pack modes, compiler, workspace transaction и runner guards проверяются без ослабления |
 | Распространяемый Studio | Windows package и скрытые MCP/editor E2E в отдельном user data | Поддержка desktop distribution не заявляется |
 | Fabric 1.20.1 JAR и Minecraft | Native Windows runner не поддержан; WSL/remote — отдельное Linux-окружение, если доступно | Отдельный `fabric-production`: locked Java 17, strict clean build, GameTests, client/server |
 | Fabric 26.2 и NeoForge regression | Не относятся к Windows portable PASS | Отдельные существующие CI jobs; текущий Fabric 26.2 failure остаётся blocker |
 
-`test:portable` является закрытым списком пяти проверенных packages. Он не автоматически расширяется на пакеты с POSIX assumptions. Система не запускает Linux suite на Windows с отключёнными permission/hash assertions. Native Windows JAR build и новый desktop target требуют отдельного плана и доказательств.
+`test:portable` является закрытым списком пяти проверенных packages и отдельного `application test:assets`. Полный `application test` с POSIX filesystem assumptions в portable-команду не включён. Список не автоматически расширяется на пакеты с POSIX assumptions. Система не запускает Linux suite на Windows с отключёнными permission/hash assertions. Native Windows JAR build и новый desktop target требуют отдельного плана и доказательств.
 
 ## Проверенный результат
 

@@ -56,6 +56,19 @@ assert.equal((JSON.parse(output.join("")) as { elements: number }).elements, 52)
 const itemErrors: string[] = [];
 assert.equal(await runCli(["asset", "item", "{}"], () => undefined, (text) => itemErrors.push(text)), 1);
 assert.match(itemErrors.join(""), /SPEC_UNSUPPORTED/u);
+output.length = 0;
+assert.equal(await runCli(["asset", "bundle", paintedPayload], (text) => output.push(text)), 0);
+const versionedText = output.join(""), versioned = JSON.parse(versionedText) as { manifest: { reviewRequired: boolean }; files: unknown[] };
+assert.equal(versioned.manifest.reviewRequired, true);
+assert.equal(versioned.files.length, 4);
+output.length = 0;
+assert.equal(await runCli(["asset", "verify", versionedText], (text) => output.push(text)), 0);
+assert.deepEqual(JSON.parse(output.join("")), versioned);
+for (const operation of ["bundle", "verify"]) {
+  const errors: string[] = [];
+  assert.equal(await runCli(["asset", operation, "{}"], () => undefined, (text) => errors.push(text)), 1);
+  assert.match(errors.join(""), /SPEC_UNSUPPORTED/u);
+}
 
 {
   let receivedConfig: unknown;

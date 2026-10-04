@@ -191,6 +191,8 @@ corepack pnpm --filter @mcdev/model-editor start
 
 Patch Studio 0.5.2 обновляет проверенные npm-зависимости: audit нового lock показывает 0 advisories, clean package и скрытый E2E прошли. [Изменения и границы security evidence](docs/production/DEPENDENCY_AUDIT.md). Пакет создаётся в отдельном каталоге, рабочее приложение пользователя не заменяется автоматически.
 
+Studio 0.6.0 добавляет [asset bundle v1](docs/production/ASSET_BUNDLE_V1.md): экспортируемый предмет связан с исходником, bbmodel, runtime files, target, namespaces и точными hashes. MCP получает v1 по `format: "bundle-v1"`; CLI поддерживает `asset bundle` и `asset verify`. Legacy export сохранён. Манифест всегда требует отдельного review; JAR-интеграция и художественная/игровая приёмка этим изменением не подтверждаются.
+
 ```text
 apps/
   cli/                 CLI adapter

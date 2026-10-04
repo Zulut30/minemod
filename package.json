@@ -14,7 +14,7 @@
     "typecheck": "tsc --project tsconfig.json",
     "typecheck:all": "corepack pnpm typecheck && corepack pnpm --filter @mcdev/model-editor typecheck",
     "test": "node scripts/check-full-test-platform.mjs && corepack pnpm --config.verify-deps-before-run=false -r --if-present test",
-    "test:portable": "corepack pnpm --filter @mcdev/assets-contracts --filter @mcdev/assets-core --filter @mcdev/editor-core --filter @mcdev/cli --filter @mcdev/mcp-server -r test",
+    "test:portable": "corepack pnpm --filter @mcdev/assets-contracts --filter @mcdev/assets-core --filter @mcdev/editor-core --filter @mcdev/cli --filter @mcdev/mcp-server -r test && corepack pnpm --filter @mcdev/application test:assets",
     "build": "corepack pnpm --config.verify-deps-before-run=false typecheck"
   },
   "devDependencies": {

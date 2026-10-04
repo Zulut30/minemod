@@ -14,6 +14,7 @@ import {
   type EditorProject,
 } from "@mcdev/editor-core";
 import { compileItemAssetPayload } from "../../../packages/application/item-assets.ts";
+import { compileItemAssetBundleV1 } from "../../../packages/application/asset-bundles.ts";
 import { readProject, writeProject, renameWithRetry } from "./persistence.ts";
 import type { HostResponse, View } from "../shared/bridge.ts";
 import { startEditorMcp } from "./mcp.ts";
@@ -225,11 +226,14 @@ async function run(request: ServiceRequest): Promise<HostResponse> {
     note = "Проект открыт.";
   } else if (request.kind === "export") {
     const exported = bundle();
+    const versionedBundle = compileItemAssetBundleV1(
+      JSON.stringify(assetRequest(session.state().project)),
+    );
     const destination = join(request.path!, `item-${randomUUID()}`),
       stage = destination + ".pending";
     await mkdir(stage, { recursive: true });
     try {
-      for (const file of exported.files) {
+      for (const file of versionedBundle.files) {
         const target = resolve(stage, file.path);
         if (!target.startsWith(resolve(stage) + sep))
           throw new EditorError(
@@ -242,6 +246,10 @@ async function run(request: ServiceRequest): Promise<HostResponse> {
       await writeFile(
         join(stage, "bundle.json"),
         JSON.stringify(exported, null, 2) + "\n",
+      );
+      await writeFile(
+        join(stage, "asset-bundle.v1.json"),
+        JSON.stringify(versionedBundle, null, 2) + "\n",
       );
       await writeProject(
         join(stage, "source.mmeditor.json"),

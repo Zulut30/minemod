@@ -4,6 +4,7 @@ export * from "./reference-study.ts";
 export * from "./implementation-study.ts";
 export * from "./crop-asset-plan.ts";
 export * from "./item-pixel-texture.ts";
+export * from "./asset-bundle.ts";
 
 export const CUBOID_MODEL_SPEC_SCHEMA_ID = "https://mcdev.local/schemas/cuboid-model-spec-v0.json";
 export const MODEL_RESOURCE_LOCATION_PATTERN =
