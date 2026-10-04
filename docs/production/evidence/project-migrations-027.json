@@ -151,5 +151,89 @@
   "otherFilesystems": "not-verified; no overwrite if hard-link creation fails",
   "independentConcurrentWriters": "not-verified",
   "minecraftAssetOrArtChange": false,
-  "hostedNewMigrationSource": "pending after commit"
+  "hostedNewMigrationSource": "PASS for Windows packaged and Linux full scopes",
+  "hostedFollowup": {
+    "sourceRevision": "909038cd09569de35423d5c331082ba65a2cdb23",
+    "runId": 37225094381,
+    "jobs": [
+      {
+        "conclusion": "success",
+        "databaseId": 111503064962,
+        "name": "control-plane",
+        "status": "completed",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37225094381/job/111503064962"
+      },
+      {
+        "conclusion": "failure",
+        "databaseId": 111503065081,
+        "name": "fabric",
+        "status": "completed",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37225094381/job/111503065081"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 111503065105,
+        "name": "studio-windows",
+        "status": "completed",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37225094381/job/111503065105"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 111503065107,
+        "name": "neoforge",
+        "status": "completed",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37225094381/job/111503065107"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 111503065108,
+        "name": "Fabric 1.20.1 / Java 17 production target",
+        "status": "completed",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37225094381/job/111503065108"
+      },
+      {
+        "conclusion": "skipped",
+        "databaseId": 111503198075,
+        "name": "fabric-client",
+        "status": "completed",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37225094381/job/111503198075"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 111503665026,
+        "name": "client-smoke",
+        "status": "completed",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37225094381/job/111503665026"
+      }
+    ],
+    "workflowConclusion": "failure",
+    "summarySha256": "9edc5ae1a390fa556cced4611ea58043bb8666e5850d9f187a672d9b9b0b2cf2",
+    "windowsReport": {
+      "path": "output/ci/37225094381-windows/output/playwright/studio-packaged-18e0c277/report.json",
+      "sha256": "b52b0270682676a484bd52440630fcdb297eca4cebbd60102c1b3709cb589e10"
+    },
+    "migrationChecks": {
+      "status": "PASS",
+      "hidden": true,
+      "sourceVersion": 1,
+      "targetVersion": 2,
+      "originalSourceSha256": "340fa7518183db4439664112d9fbf77e688cce8a88058c70be1af3f01087d835",
+      "originalSourceBytes": 485502,
+      "checks": [
+        "real v1 recovery keeps IDs/pixels/UV/variants",
+        "startup read leaves source bytes intact",
+        "autosave keeps permanent exact original and rotating backup",
+        "manual open/save migration",
+        "future open/save refuse without changing file or active project",
+        "future primary bypasses old fallback",
+        "future backup-only blocks autosave",
+        "future backup with current primary blocks autosave",
+        "future variant blocks autosave",
+        "persistent visible recovery warning"
+      ]
+    },
+    "linuxScope": "Full recursive suite including actual migration hard links, original bytes, killed pre-replace child and future file guards. POSIX smoke-process guards passed again.",
+    "productionScope": "Strict clean build, infrastructure GameTests, dedicated server/headless client and generated equipment/config fixture passed. Editor migration changes no gameplay/model assets.",
+    "openRegression": "Legacy Fabric 26.2 derived JAR verification failed; overall workflow remains failure."
+  }
 }
