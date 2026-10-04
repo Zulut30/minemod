@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 88,
+  "status": "PARTIAL",
+  "npmRemediationStatus": "PASS",
+  "sourceParentRevision": "e68041e545642cc47ae33a7da2032b3fc652971c",
+  "sourceHashes": [
+    {
+      "path": "pnpm-workspace.yaml",
+      "bytes": 426,
+      "sha256": "7552210d73cb2c8bc0a425e17e5c940166fefeee47fd359e2fbe5b6701b847fc"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "bytes": 95740,
+      "sha256": "7f7725f2dea48b5d4f48747b1540ee409fd287ac598ff89a314006809602b349"
+    },
+    {
+      "path": "apps/model-editor/package.json",
+      "bytes": 1177,
+      "sha256": "5a2234ad86fc78aaeeca3e12fb65bb8147b4ee6ef50dc847faf1b7b5aebe6c15"
+    }
+  ],
+  "studioVersion": "0.5.2",
+  "verifiedAtUtc": "2026-10-04T17:28:40.037295+00:00",
+  "beforeAdvisories": 32,
+  "afterMetadata": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0
+    },
+    "dependencies": 111,
+    "devDependencies": 192,
+    "optionalDependencies": 54,
+    "totalDependencies": 303
+  },
+  "reviewedDependencies": "../provenance/npm-security-update-20261004.json",
+  "logs": [
+    {
+      "path": "output/verification/roadmap-088-lock-update.log",
+      "bytes": 419,
+      "sha256": "34e4f422c170e059b4c13932d2354e7baf64115dea51cea237911d909f6e9c13"
+    },
+    {
+      "path": "output/verification/roadmap-088-frozen-install.log",
+      "bytes": 454,
+      "sha256": "65d2403996fdfdc2b5a93be9caea53a8390b859242e17895a706647ccbefcc41"
+    },
+    {
+      "path": "output/verification/roadmap-088-typecheck.log",
+      "bytes": 176,
+      "sha256": "fe0327fb3a908a7cea6b4e5ef62bbaa7903d4f4149a209170e6249f0dd5c8190"
+    },
+    {
+      "path": "output/verification/roadmap-088-lint.log",
+      "bytes": 29,
+      "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+    },
+    {
+      "path": "output/verification/roadmap-088-portable.log",
+      "bytes": 2059,
+      "sha256": "31e2d1d1d8a8cf17af7b41d56172fafac7e2ea861d9581b10347b67a30458145"
+    },
+    {
+      "path": "output/verification/roadmap-088-http-mcp.log",
+      "bytes": 207,
+      "sha256": "ce600a29360c371575566860a7c94c33766d03e9a2ba5f6249e976ae6338a777"
+    },
+    {
+      "path": "output/verification/roadmap-088-package.log",
+      "bytes": 786,
+      "sha256": "de9248907cfb2db2ccf7b062fc28d662b7144cba8d95eb00cebc4677f5fa8bff"
+    },
+    {
+      "path": "output/verification/roadmap-088-packaged-e2e.log",
+      "bytes": 156,
+      "sha256": "c417170490caa87fd6a72f0e042c8dde9ec4b6484b9ef57f243fde047d788949"
+    }
+  ],
+  "audit": {
+    "path": "output/verification/roadmap-088-npm-audit-after.json",
+    "bytes": 281,
+    "sha256": "5203a8f0184647f5c98d3dbc4cd4103f4f641010b46185735b602e3ac13f3ec5"
+  },
+  "packagedReport": {
+    "path": "output/playwright/studio-packaged-e9de29ea/report.json",
+    "bytes": 8301,
+    "sha256": "a5a8a4b9179ce8b73163ebbd87a820cdccf15fe12b06a8a092bf879db65d2e69"
+  },
+  "packageAsar": {
+    "path": "C:/Users/zulut/Documents/minecraft-mods-ai/output/model-editor/releases/0.5.2/fa0e8617/MineMod Studio-win32-x64/resources/app.asar",
+    "bytes": 3448164,
+    "sha256": "1f9f7ed0116bbd80e679beef61dd6083bb2ccde699c6b0a1404a722d1fe72c08"
+  },
+  "pending": [
+    "Hosted CI for exact source",
+    "Gradle/runtime transitive license classification",
+    "Cache/derivation attestation",
+    "Non-npm binary/toolchain advisory review",
+    "Full security and production acceptance"
+  ],
+  "userStudio": "not stopped or replaced"
+}

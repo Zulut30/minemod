@@ -189,6 +189,8 @@ corepack pnpm --filter @mcdev/model-editor start
 
 ## Структура репозитория
 
+Patch Studio 0.5.2 обновляет проверенные npm-зависимости: audit нового lock показывает 0 advisories, clean package и скрытый E2E прошли. [Изменения и границы security evidence](docs/production/DEPENDENCY_AUDIT.md). Пакет создаётся в отдельном каталоге, рабочее приложение пользователя не заменяется автоматически.
+
 ```text
 apps/
   cli/                 CLI adapter

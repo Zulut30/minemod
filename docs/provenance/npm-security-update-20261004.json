@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "reviewedAtUtc": "2026-10-04T17:28:39.957081+00:00",
+  "reason": "Six advisory fixes plus required qs side-channel update",
+  "entries": [
+    {
+      "name": "brace-expansion",
+      "before": "5.0.7",
+      "after": "5.0.12",
+      "source": {
+        "url": "git+https://github.com/juliangruber/brace-expansion.git",
+        "type": "git"
+      },
+      "registryMetadataUrl": "https://registry.npmjs.org/brace-expansion/5.0.12",
+      "tarballUrl": "https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.12.tgz",
+      "integrity": "sha512-YovQ3rzhaLMIrDjNDMkNS01tea93qhEhG5xy8f6+R0l+dw3Ki+5sCoIoI942iuLZTHWogWktgwVDhU09iNEimQ==",
+      "tarballSha256": "ef8448ec78f20b692f04fa6d01f39b5ab34c66404bea3429f5a39c6c9e0be8b4",
+      "engines": {
+        "node": "20 || >=22"
+      },
+      "license": {
+        "path": "package/LICENSE",
+        "sha256": "9c63a23124d68cd30cd316a94a1a0bca34f032786df6df69fc4b5f136bac8d2e",
+        "declared": "MIT",
+        "preview": "MIT License\n\nCopyright Julian Gruber <julian@juliangruber.com>\n\nTypeScript port Copyright Isaac Z. Schlueter <i@izs.me>\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and a"
+      }
+    },
+    {
+      "name": "fast-uri",
+      "before": "3.1.3",
+      "after": "3.1.8",
+      "source": {
+        "url": "git+https://github.com/fastify/fast-uri.git",
+        "type": "git"
+      },
+      "registryMetadataUrl": "https://registry.npmjs.org/fast-uri/3.1.8",
+      "tarballUrl": "https://registry.npmjs.org/fast-uri/-/fast-uri-3.1.8.tgz",
+      "integrity": "sha512-GZMtZUTNRpOVIECoXwLNZS5xUGE+mVNbTB8h/7Rwh2TFWcBQiPzTgyZi05BF9UMZKkLJv8XBRJTlU7zg8+ZfMg==",
+      "tarballSha256": "86be033b406a7737c0521edc8fe3e15c7ac0cb6b5e509478cc9539a2efaa086c",
+      "engines": null,
+      "license": {
+        "path": "package/LICENSE",
+        "sha256": "b010b0dfdfdb23d7396e03b82cd4621fc9bb8f95d6b0aea70b9c24e12074c786",
+        "declared": "BSD-3-Clause",
+        "preview": "Copyright (c) 2011-2021, Gary Court until https://github.com/garycourt/uri-js/commit/a1acf730b4bba3f1097c9f52e7d9d3aba8cdcaae\nCopyright (c) 2021-present The Fastify team <https://github.com/fastify/fastify#team>\nAll righ"
+      }
+    },
+    {
+      "name": "hono",
+      "before": "4.12.25",
+      "after": "4.13.7",
+      "source": {
+        "url": "git+https://github.com/honojs/hono.git",
+        "type": "git"
+      },
+      "registryMetadataUrl": "https://registry.npmjs.org/hono/4.13.7",
+      "tarballUrl": "https://registry.npmjs.org/hono/-/hono-4.13.7.tgz",
+      "integrity": "sha512-c8/gF9ac8Y78/agExVocyLevgR+JlpNB444Py0FSX8pJoPdYUfUzRcXtYEYGwt6l19qIlVZPN5Mfsw9jFShmQQ==",
+      "tarballSha256": "f65df37793984664c02158c11575ebaf922bc50ef2de36dfa96f311519c5e95d",
+      "engines": {
+        "node": ">=16.9.0"
+      },
+      "license": {
+        "path": "package/LICENSE",
+        "sha256": "a6ab98e5c77b9070c443eaff2ff81034a6f8cc05a7524d5098eb0f24defa0115",
+        "declared": "MIT",
+        "preview": "MIT License\n\nCopyright (c) 2021 - present, Yusuke Wada and Hono contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Softwar"
+      }
+    },
+    {
+      "name": "@hono/node-server",
+      "before": "1.19.14",
+      "after": "1.19.15",
+      "source": {
+        "url": "git+https://github.com/honojs/node-server.git",
+        "type": "git"
+      },
+      "registryMetadataUrl": "https://registry.npmjs.org/%40hono%2Fnode-server/1.19.15",
+      "tarballUrl": "https://registry.npmjs.org/@hono/node-server/-/node-server-1.19.15.tgz",
+      "integrity": "sha512-Za2ai6TLdKjUvnur+eenO6nuYYipVAEhyCAdaV8IRvmU9kK8crOZUSYvIXn72E4f8fJqyAbpcJuTsYYmZp9Deg==",
+      "tarballSha256": "741691f02bd95559d0ba4973b52bb8a7e81239dcfc61108b11d9bee17bc4389f",
+      "engines": {
+        "node": ">=18.14.1"
+      },
+      "license": {
+        "path": "package/LICENSE",
+        "sha256": "6895190430d809c4c57a7582ecc2f99acbc2ea39a5dfad20262a41d5b3e91733",
+        "declared": "MIT",
+        "preview": "MIT License\n\nCopyright (c) 2022 - present, Yusuke Wada and Hono contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Softwar"
+      }
+    },
+    {
+      "name": "ip-address",
+      "before": "10.1.0",
+      "after": "10.7.1",
+      "source": {
+        "url": "git+https://github.com/beaugunderson/ip-address.git",
+        "type": "git"
+      },
+      "registryMetadataUrl": "https://registry.npmjs.org/ip-address/10.7.1",
+      "tarballUrl": "https://registry.npmjs.org/ip-address/-/ip-address-10.7.1.tgz",
+      "integrity": "sha512-4OUAqU9Z1i3vCnS05hzGiFnEMDpQ+62pAD/MVQOp83fYyNC8GleCqaS0QikQBmcWCrKFiUs/B8ztRRiYOAXuCA==",
+      "tarballSha256": "7f99ac7abda701afe1fd1e36de462236fb4d1eb8c595d7ae0267bba7d8ee55f8",
+      "engines": {
+        "node": ">= 12"
+      },
+      "license": {
+        "path": "package/LICENSE",
+        "sha256": "f8d791359a50cbcac82c29cb7b0b1b889b28be76fdd35b8ee33f0f7c8704702a",
+        "declared": "MIT",
+        "preview": "Copyright (C) 2011 by Beau Gunderson\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without res"
+      }
+    },
+    {
+      "name": "qs",
+      "before": "6.15.2",
+      "after": "6.16.0",
+      "source": {
+        "url": "git+https://github.com/ljharb/qs.git",
+        "type": "git"
+      },
+      "registryMetadataUrl": "https://registry.npmjs.org/qs/6.16.0",
+      "tarballUrl": "https://registry.npmjs.org/qs/-/qs-6.16.0.tgz",
+      "integrity": "sha512-h6fhOIaRrID2CbEY2fqs+7t+UXZo+MLAnU5gRIq85uFtdiUPCdsApMlHhXogKVM4HM2DVbIjGNTTYH2OcmP1vA==",
+      "tarballSha256": "f7a1bfc96c3a0c1172f1f3ef3c280f5ce8054841922e715f0d686da62d7beba4",
+      "engines": {
+        "node": ">=0.6"
+      },
+      "license": {
+        "path": "package/LICENSE.md",
+        "sha256": "e7dc37bf662d7f786efcb46c545615e70c1daf458a38385521c63cf6607cdfe1",
+        "declared": "BSD-3-Clause",
+        "preview": "BSD 3-Clause License\n\nCopyright (c) 2014, Nathan LaFreniere and other [contributors](https://github.com/ljharb/qs/graphs/contributors)\nAll rights reserved.\n\nRedistribution and use in source and binary forms, with or with"
+      }
+    },
+    {
+      "name": "side-channel",
+      "before": "1.1.0",
+      "after": "1.1.1",
+      "source": {
+        "url": "git+https://github.com/ljharb/side-channel.git",
+        "type": "git"
+      },
+      "registryMetadataUrl": "https://registry.npmjs.org/side-channel/1.1.1",
+      "tarballUrl": "https://registry.npmjs.org/side-channel/-/side-channel-1.1.1.tgz",
+      "integrity": "sha512-6x6dK6zJdpTzF4sQeNYxwtvBzf6Eg4GtlesS94HOvTudUeyK2WXAaIfmDgsyslYrRBeFIlsi54AYsFGUuhmvrQ==",
+      "tarballSha256": "e6edbc8f203901612a3cd938f940ed520333923986d5427b95c87aa1882e7bd5",
+      "engines": {
+        "node": ">= 0.4"
+      },
+      "license": {
+        "path": "package/LICENSE",
+        "sha256": "cfc3f455254c0af0655cc3ff46a41ed644b67599f6043346169d285bf2b3cf3b",
+        "declared": "MIT",
+        "preview": "MIT License\n\nCopyright (c) 2019 Jordan Harband\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software w"
+      }
+    }
+  ]
+}
