@@ -13,6 +13,13 @@ if (javaHome === undefined || gradleHome === undefined) {
 }
 
 const workspace = await mkdtemp(join(tmpdir(), "mcdev-fabric-basic-content-"));
+const reportDirectory = process.env.MCDEV_FABRIC_TEST_REPORT_DIR;
+async function retainLog(name: string, stdout: string, stderr: string): Promise<void> {
+  if (reportDirectory !== undefined) {
+    await mkdir(reportDirectory, { recursive: true });
+    await writeFile(join(reportDirectory, name), `${stdout}\n${stderr}`);
+  }
+}
 try {
   const fixture = fabricBasicContentFixture();
   fixture.dependencies.required = ["yet_another_config_lib_v3"];
@@ -149,6 +156,30 @@ try {
     await chmod(destination, file.mode);
   }
 
+  // Только операторский CI bootstrap. Public build runner остаётся strict/offline.
+  if (process.env.MCDEV_FABRIC_TEST_BOOTSTRAP === "1") {
+    const bootstrap = spawnSync(
+      join(workspace, "gradlew"),
+      ["--no-daemon", "--dependency-verification", "strict", "build"],
+      {
+        cwd: workspace,
+        encoding: "utf8",
+        env: {
+          ...process.env,
+          JAVA_HOME: javaHome,
+          MCDEV_JAVA17_HOME: javaHome,
+          GRADLE_USER_HOME: gradleHome,
+        },
+        maxBuffer: 8 * 1024 * 1024,
+        timeout: 10 * 60 * 1_000,
+      },
+    );
+    await retainLog("bootstrap.log", bootstrap.stdout ?? "", bootstrap.stderr ?? "");
+    assert.equal(bootstrap.error, undefined, bootstrap.stderr);
+    assert.equal(bootstrap.signal, null, bootstrap.stderr);
+    assert.equal(bootstrap.status, 0, `${bootstrap.stdout}\n${bootstrap.stderr}`);
+  }
+
   const build = spawnSync(
     join(workspace, "gradlew"),
     ["--offline", "--no-daemon", "--dependency-verification", "strict", "clean", "build"],
@@ -165,6 +196,7 @@ try {
       timeout: 10 * 60 * 1_000,
     },
   );
+  await retainLog("clean-build.log", build.stdout ?? "", build.stderr ?? "");
   assert.equal(build.error, undefined, build.stderr);
   assert.equal(build.signal, null, build.stderr);
   assert.equal(build.status, 0, `${build.stdout}\n${build.stderr}`);
@@ -225,6 +257,7 @@ try {
     },
   );
   const serverOutput = `${server.stdout}\n${server.stderr}`;
+  await retainLog("dedicated-server.log", server.stdout ?? "", server.stderr ?? "");
   assert.equal(server.error, undefined, serverOutput);
   assert.equal(server.signal, null, serverOutput);
   assert.equal(server.status, 0, serverOutput);

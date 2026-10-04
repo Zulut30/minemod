@@ -12,6 +12,9 @@
     ],
     "client": [
       "dev.mcdev.fixture.fabriclegacy.client.FabricLegacyClient"
+    ],
+    "fabric-gametest": [
+      "dev.mcdev.fixture.fabriclegacy.FabricLegacyGameTests"
     ]
   },
   "depends": {

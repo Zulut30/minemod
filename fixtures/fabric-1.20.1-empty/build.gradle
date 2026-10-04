@@ -24,6 +24,13 @@ loom {
             runDir 'run/server'
             property 'log4j2.configurationFile', phase0SmokeLog4jConfig.asFile.absolutePath
         }
+        gameTest {
+            inherit server
+            runDir 'run/gametest'
+            property 'fabric-api.gametest', 'true'
+            property 'fabric-api.gametest.report-file',
+                layout.buildDirectory.file('reports/gametest/production.xml').get().asFile.absolutePath
+        }
     }
 
     mods {

@@ -83,6 +83,101 @@ jobs:
           if-no-files-found: warn
           retention-days: 7
 
+  fabric-production:
+    name: Fabric 1.20.1 / Java 17 production target
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      PHASE0_SMOKE_TARGET: fabric-1.20.1
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version: 24.11.0
+      - name: Install frozen dependencies
+        run: corepack pnpm install --frozen-lockfile
+      - name: Verify production bootstrap inputs
+        run: |
+          set -euo pipefail
+          mkdir -p output/ci/fabric-production
+          python3 scripts/verify-fabric-production-inputs.py \
+            > output/ci/fabric-production/inputs.json
+          cat output/ci/fabric-production/inputs.json
+      - name: Download checksum-pinned Java 17
+        id: java17
+        run: |
+          set -euo pipefail
+          lock=packs/fabric-1.20.1/runtime/versions.lock.json
+          url=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["javaToolchains"]["primary"]["linuxX64ArchiveUrl"])' "$lock")
+          digest=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["javaToolchains"]["primary"]["linuxX64ArchiveSha256"])' "$lock")
+          curl --fail --location --proto '=https' --tlsv1.2 --retry 2 \
+            --max-time 300 --max-filesize 536870912 \
+            --output "$RUNNER_TEMP/java17.tar.gz" "$url"
+          printf '%s  %s\n' "$digest" "$RUNNER_TEMP/java17.tar.gz" | sha256sum --check
+      - name: Install exact locked Java 17 archive
+        uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
+        with:
+          distribution: jdkfile
+          java-version: 17.0.19+10
+          jdkFile: ${{ runner.temp }}/java17.tar.gz
+          architecture: x64
+      - name: Record and verify production Java toolchain
+        run: |
+          set -euo pipefail
+          canonical_java_home=$(realpath -- "$JAVA_HOME")
+          runtime_version=$("$JAVA_HOME/bin/java" -XshowSettings:properties -version 2>&1 |
+            awk -F' = ' '/^[[:space:]]*java\.runtime\.version = / { print $2; exit }')
+          test "$runtime_version" = '17.0.19+10'
+          printf 'MCDEV_JAVA17_HOME=%s\n' "$canonical_java_home" >> "$GITHUB_ENV"
+          printf 'MCDEV_FABRIC_TEST_JAVA_HOME=%s\n' "$canonical_java_home" >> "$GITHUB_ENV"
+          printf 'GRADLE_USER_HOME=%s/fixtures/fabric-1.20.1-empty/run/gradle-home\n' "$GITHUB_WORKSPACE" >> "$GITHUB_ENV"
+          printf 'MCDEV_FABRIC_TEST_GRADLE_HOME=%s/fixtures/fabric-1.20.1-empty/run/gradle-home\n' "$GITHUB_WORKSPACE" >> "$GITHUB_ENV"
+          printf 'GRADLE_PROJECT_CACHE_DIR=%s/fixtures/fabric-1.20.1-empty/run/project-cache\n' "$GITHUB_WORKSPACE" >> "$GITHUB_ENV"
+          printf '%s\n' "$runtime_version" > output/ci/fabric-production/java-runtime.txt
+      - name: Bootstrap and clean-build production fixture with strict verification
+        working-directory: fixtures/fabric-1.20.1-empty
+        run: |
+          set -euo pipefail
+          ./gradlew --project-cache-dir "$GRADLE_PROJECT_CACHE_DIR" \
+            --no-daemon --dependency-verification strict clean build
+          ./gradlew --project-cache-dir "$GRADLE_PROJECT_CACHE_DIR" \
+            --offline --no-daemon --dependency-verification strict clean build
+      - name: Run production server GameTests
+        working-directory: fixtures/fabric-1.20.1-empty
+        run: |
+          set -euo pipefail
+          mkdir -p run/gametest
+          printf 'eula=true\n' > run/gametest/eula.txt
+          ./gradlew --project-cache-dir "$GRADLE_PROJECT_CACHE_DIR" \
+            --offline --no-daemon --dependency-verification strict runGameTest
+      - name: Verify nonempty production GameTest report
+        run: python3 scripts/verify-fabric-gametest-report.py fixtures/fabric-1.20.1-empty/build/reports/gametest/production.xml
+      - name: Smoke-test production dedicated server
+        run: ./scripts/smoke-dedicated-server.sh
+      - name: Smoke-test production headless client
+        run: ./scripts/smoke-client-ci.sh
+      - name: Clean-build generated equipment/config fixture and run dedicated server
+        env:
+          MCDEV_FABRIC_TEST_BOOTSTRAP: '1'
+          MCDEV_FABRIC_TEST_REPORT_DIR: ${{ github.workspace }}/output/ci/fabric-production/generated
+        run: corepack pnpm --filter @mcdev/compiler-fabric test:build
+      - name: Upload production-target evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: fabric-1.20.1-java17-evidence
+          path: |
+            output/ci/fabric-production/**
+            fixtures/fabric-1.20.1-empty/build/reports/gametest/production.xml
+            fixtures/fabric-1.20.1-empty/run/server/phase0-console.log
+            fixtures/fabric-1.20.1-empty/run/client/phase0-console.log
+          if-no-files-found: error
+          retention-days: 14
+
   neoforge:
     runs-on: ubuntu-24.04
     timeout-minutes: 30
