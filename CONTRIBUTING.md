@@ -46,3 +46,7 @@ pnpm lint
 - команды проверки;
 - runtime evidence;
 - известные ограничения и безопасный rollback.
+
+## Review контрактов и доказательства
+
+Для минимальных диффов, миграций, новых dependencies и разделения technical/art/game acceptance следуйте [политике изменений](docs/production/CHANGE_POLICY.md). GitHub использует [PR template](.github/pull_request_template.md); [обязательные проверки main](docs/production/MERGE_CHECKS.md) не заменяют человеческую оценку ассетов.

@@ -229,6 +229,7 @@ docs/                  ADR, планы, аудиты и quality rubric
 
 ## Документация
 
+- [Правила изменений и review](CONTRIBUTING.md)
 - [Fabric-first MVP plan](docs/FABRIC_FIRST_MVP_PLAN.md)
 - [Library integrations](docs/LIBRARY_INTEGRATIONS.md)
 - [Research и исходный MVP plan](docs/RESEARCH_AND_MVP_PLAN.md)
