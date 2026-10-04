@@ -21,6 +21,7 @@ import {
 
 export const MAX_PROJECT_BYTES = 1_048_576;
 export const MAX_COMMAND_BYTES = 262_144;
+export const CURRENT_PROJECT_VERSION = 2;
 const id = z.string().regex(/^[a-z][a-z0-9_]{0,63}$/u);
 const vector = z.tuple([
   z.number().finite(),
@@ -32,7 +33,7 @@ const pixelPlan = z.strictObject({
   faces: z.array(ItemPixelTexturePlanSchema.shape.faces.element).max(256),
 });
 const BaseProjectSchema = z.strictObject({
-  schemaVersion: z.literal(1),
+  schemaVersion: z.literal(CURRENT_PROJECT_VERSION),
   kind: z.literal("mcdev-editor-project"),
   projectId: z.uuid(),
   model: CuboidModelSpecSchema,
@@ -67,6 +68,13 @@ export const ProjectSchema = BaseProjectSchema.extend({
     .optional(),
 });
 export type EditorProject = z.infer<typeof ProjectSchema>;
+const LegacyBaseProjectV1Schema = BaseProjectSchema.extend({ schemaVersion: z.literal(1) });
+const designShape = ProjectSchema.shape.design.unwrap().shape;
+const LegacyProjectV1Schema = LegacyBaseProjectV1Schema.extend({
+  design: z.strictObject({ ...designShape, variants: z.array(
+    designShape.variants.element.extend({ project: LegacyBaseProjectV1Schema }),
+  ).max(MAX_VARIANTS) }).optional(),
+});
 export type Cube = EditorProject["model"]["bones"][number]["cubes"][number];
 export type FaceName =
   keyof EditorProject["texturePlan"]["faces"][number]["uv"];
@@ -282,11 +290,39 @@ export function parseProject(text: string): EditorProject {
   if (new TextEncoder().encode(text).length > MAX_PROJECT_BYTES)
     fail("SIZE_LIMIT", "Файл проекта превышает 1 MiB.");
   try {
-    return validateProject(JSON.parse(text) as unknown);
+    return migrateProject(JSON.parse(text) as unknown);
   } catch (error) {
     if (error instanceof EditorError) throw error;
     return fail("INVALID_JSON", "Не удалось прочитать JSON проекта.");
   }
+}
+/** Единственная миграция v1 -> v2: сохраняет идентичности и asset data, обновляет версии snapshots. */
+export function migrateProject(value: unknown): EditorProject {
+  if (typeof value !== "object" || value === null || Array.isArray(value))
+    return fail("INVALID_PROJECT", "Нужен объект проекта редактора.");
+  const version = (value as { schemaVersion?: unknown }).schemaVersion;
+  if (version === undefined) return fail("INVALID_PROJECT", "В проекте отсутствует schemaVersion.");
+  if (version !== 1 && version !== CURRENT_PROJECT_VERSION)
+    return fail("UNSUPPORTED_PROJECT_VERSION", "Версия проекта не поддерживается. Оригинал сохранён; откройте его совместимой версией Studio.");
+  const design = (value as { design?: unknown }).design;
+  if (typeof design === "object" && design !== null && "variants" in design && Array.isArray(design.variants)) {
+    for (const variant of design.variants) {
+      if (typeof variant !== "object" || variant === null || !("project" in variant)) continue;
+      const snapshot = variant.project as unknown;
+      if (typeof snapshot !== "object" || snapshot === null || !("schemaVersion" in snapshot)) continue;
+      if (snapshot.schemaVersion !== 1 && snapshot.schemaVersion !== CURRENT_PROJECT_VERSION)
+        return fail("UNSUPPORTED_PROJECT_VERSION", "Вариант проекта имеет неподдерживаемую версию. Исходный файл сохранён.");
+    }
+  }
+  if (version === CURRENT_PROJECT_VERSION) return validateProject(value);
+  const legacy = LegacyProjectV1Schema.safeParse(value);
+  if (!legacy.success) return fail("INVALID_PROJECT", "Исходный проект v1 не соответствует согласованному формату.");
+  const p = legacy.data;
+  return validateProject({ ...p, schemaVersion: CURRENT_PROJECT_VERSION,
+    ...(p.design ? { design: { ...p.design, variants: p.design.variants.map((v) => ({
+      ...v, project: { ...v.project, schemaVersion: CURRENT_PROJECT_VERSION },
+    })) } } : {}),
+  });
 }
 export function projectFromAsset(
   value: unknown,
@@ -324,7 +360,7 @@ export function projectFromAsset(
     details: "Детали",
   };
   return validateProject({
-    schemaVersion: 1,
+    schemaVersion: CURRENT_PROJECT_VERSION,
     kind: "mcdev-editor-project",
     projectId,
     model: asset.model,
@@ -339,7 +375,7 @@ export function projectFromAsset(
 }
 export function emptyProject(projectId: string): EditorProject {
   return validateProject({
-    schemaVersion: 1,
+    schemaVersion: CURRENT_PROJECT_VERSION,
     kind: "mcdev-editor-project",
     projectId,
     model: {

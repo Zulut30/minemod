@@ -1,10 +1,11 @@
-import { open, mkdir, rename, rm } from "node:fs/promises";
+import { open, mkdir, rename, rm, link } from "node:fs/promises";
 import { dirname } from "node:path";
 import { Buffer } from "node:buffer";
-import { randomUUID } from "node:crypto";
+import { randomUUID, createHash } from "node:crypto";
 import { setTimeout as delay } from "node:timers/promises";
 import {
   MAX_PROJECT_BYTES,
+  CURRENT_PROJECT_VERSION,
   parseProject,
   type EditorProject,
   EditorError,
@@ -29,7 +30,7 @@ export async function renameWithRetry(
   }
 }
 
-export async function readProject(path: string): Promise<EditorProject> {
+async function readProjectDocument(path: string): Promise<{ bytes: Buffer; project: EditorProject; sourceVersion: 1 | 2 }> {
   const file = await open(path, "r");
   try {
     const metadata = await file.stat();
@@ -56,10 +57,21 @@ export async function readProject(path: string): Promise<EditorProject> {
         "SIZE_LIMIT",
         "Файл проекта превышает лимит размера.",
       );
-    return parseProject(bytes.subarray(0, length).toString("utf8"));
+    const source = bytes.subarray(0, length), text = source.toString("utf8");
+    if (!Buffer.from(text, "utf8").equals(source))
+      throw new EditorError("INVALID_JSON", "Проект требует корректный UTF-8; исходник сохранён.");
+    const project = parseProject(text);
+    return { bytes: source, project, sourceVersion: (JSON.parse(text) as { schemaVersion: 1 | 2 }).schemaVersion };
   } finally {
     await file.close();
   }
+}
+export async function readProject(path: string): Promise<EditorProject> {
+  return (await readProjectDocument(path)).project;
+}
+export async function readProjectWithVersion(path: string): Promise<{ project: EditorProject; sourceVersion: 1 | 2 }> {
+  const { project, sourceVersion } = await readProjectDocument(path);
+  return { project, sourceVersion };
 }
 export async function writeProject(
   path: string,
@@ -67,11 +79,13 @@ export async function writeProject(
 ): Promise<void> {
   const text = JSON.stringify(project, null, 2) + "\n";
   parseProject(text);
+  if (project.schemaVersion !== CURRENT_PROJECT_VERSION)
+    throw new EditorError("UNSUPPORTED_PROJECT_VERSION", "Для сохранения нужен актуальный формат проекта; сначала выполните миграцию.");
   await mkdir(dirname(path), { recursive: true });
   const temp = `${path}.${randomUUID()}.pending`;
   const backupTemp = `${path}.${randomUUID()}.backup.pending`;
   const owned = new Set<string>();
-  async function stage(destination: string, contents: string): Promise<void> {
+  async function stage(destination: string, contents: string | Buffer): Promise<void> {
     const file = await open(destination, "wx", 0o600);
     owned.add(destination);
     try {
@@ -83,19 +97,40 @@ export async function writeProject(
   }
   try {
     await stage(temp, text);
-    let previous: EditorProject | undefined;
+    let previous: Awaited<ReturnType<typeof readProjectDocument>> | undefined;
     try {
-      previous = await readProject(path);
+      previous = await readProjectDocument(path);
     } catch (error) {
       if (
+        (error instanceof EditorError && error.code === "UNSUPPORTED_PROJECT_VERSION") ||
         !(error instanceof EditorError) &&
         (error as NodeJS.ErrnoException).code !== "ENOENT"
       )
         throw error;
     }
+    // Даже backup неизвестной версии нельзя уничтожать сохранением более старого Studio.
+    try { await readProject(`${path}.bak`); }
+    catch (error) {
+      if ((error instanceof EditorError && error.code === "UNSUPPORTED_PROJECT_VERSION") ||
+        !(error instanceof EditorError) && (error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+    }
     if (previous !== undefined) {
+      if (previous.sourceVersion === 1) {
+        // Отдельный inode: последующие save/backup не меняют original migration source.
+        const sourceHash = createHash("sha256").update(previous.bytes).digest("hex");
+        const original = `${path}.v1-${sourceHash}.original.json`, migrationTemp = `${path}.${randomUUID()}.migration.pending`;
+        await stage(migrationTemp, previous.bytes);
+        try { await link(migrationTemp, original); }
+        catch (error) {
+          if ((error as NodeJS.ErrnoException).code !== "EEXIST") throw error;
+          if (!(await readProjectDocument(original)).bytes.equals(previous.bytes))
+            throw new EditorError("MIGRATION_BACKUP_CONFLICT", "Исходная резервная копия миграции не совпадает. Проект сохранён без изменений.");
+        }
+        await rm(migrationTemp);
+        owned.delete(migrationTemp);
+      }
       // Backup тоже заменяется атомарно: прерванная запись не обнуляет старый .bak.
-      await stage(backupTemp, JSON.stringify(previous, null, 2) + "\n");
+      await stage(backupTemp, previous.bytes);
       await renameWithRetry(backupTemp, `${path}.bak`);
       owned.delete(backupTemp);
     }

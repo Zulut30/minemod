@@ -15,7 +15,7 @@ import {
 } from "@mcdev/editor-core";
 import { compileItemAssetPayload } from "../../../packages/application/item-assets.ts";
 import { compileItemAssetBundleV1 } from "../../../packages/application/asset-bundles.ts";
-import { readProject, writeProject, renameWithRetry } from "./persistence.ts";
+import { readProjectWithVersion, writeProject, renameWithRetry } from "./persistence.ts";
 import type { HostResponse, View } from "../shared/bridge.ts";
 import { startEditorMcp } from "./mcp.ts";
 
@@ -39,6 +39,12 @@ let recoveryPath: string;
 let connection: Awaited<ReturnType<typeof startEditorMcp>> | undefined;
 let selection: string[] = [];
 let recoveryWarning = "";
+let recoveryWritable = true;
+const unsupportedVersion = (error: unknown) => error instanceof EditorError && error.code === "UNSUPPORTED_PROJECT_VERSION";
+function protectRecovery(): void {
+  recoveryWritable = false;
+  recoveryWarning = "Автосохранение остановлено: восстановительный проект имеет неподдерживаемую версию. Оригинал и backup сохранены. Сохраните текущую работу в новый файл.";
+}
 let finalizing = false;
 let stateSequence = 0;
 function versioned(result: HostResponse): HostResponse {
@@ -99,12 +105,14 @@ async function changed(note: string): Promise<void> {
   selection = selection.filter((id) =>
     cubes(session.state().project).some((c) => c.id === id),
   );
-  try {
-    await writeProject(recoveryPath, session.state().project);
-    recoveryWarning = "";
-  } catch {
-    recoveryWarning =
-      "Восстановительная копия недоступна. Сохраните проект вручную.";
+  if (recoveryWritable) {
+    try {
+      await writeProject(recoveryPath, session.state().project);
+      recoveryWarning = "";
+    } catch (error) {
+      if (unsupportedVersion(error)) protectRecovery();
+      else recoveryWarning = "Восстановительная копия недоступна. Сохраните проект вручную.";
+    }
   }
   port!.postMessage({
     event: "state",
@@ -143,19 +151,24 @@ async function run(request: ServiceRequest): Promise<HostResponse> {
     recoveryPath = request.recoveryPath!;
     let project = projectFromAsset(fixture, randomUUID());
     try {
-      project = await readProject(recoveryPath);
-      note = "Восстановлен последний рабочий проект.";
+      const loaded = await readProjectWithVersion(recoveryPath);
+      project = loaded.project;
+      note = loaded.sourceVersion === 1 ? "Восстановлен проект v1. Миграция в v2 выполнена в памяти; перед сохранением будет создана точная копия исходника." : "Восстановлен последний рабочий проект.";
     } catch (error) {
-      try {
-        project = await readProject(`${recoveryPath}.bak`);
-        note = "Восстановлена резервная копия проекта.";
+      if (unsupportedVersion(error)) {
+        protectRecovery();
+        note = "Восстановительный проект требует совместимую версию Studio. Открыт исходный пример.";
+      } else try {
+        const loaded = await readProjectWithVersion(`${recoveryPath}.bak`);
+        project = loaded.project;
+        note = loaded.sourceVersion === 1 ? "Восстановлена резервная копия v1. Миграция в v2 выполнена в памяти; исходник сохранён." : "Восстановлена резервная копия проекта.";
       } catch (backupError) {
+        if (unsupportedVersion(backupError)) protectRecovery();
         if (
           (error as NodeJS.ErrnoException).code !== "ENOENT" ||
           (backupError as NodeJS.ErrnoException).code !== "ENOENT"
         ) {
-          note =
-            "Восстановление недоступно. Открыт исходный пример; ваши файлы сохранены.";
+          note = "Восстановление недоступно. Открыт исходный пример; ваши файлы сохранены.";
         }
       }
     }
@@ -219,11 +232,11 @@ async function run(request: ServiceRequest): Promise<HostResponse> {
     session.markSaved();
     note = "Проект сохранён.";
   } else if (request.kind === "open") {
-    const project = await readProject(request.path!);
+    const loaded = await readProjectWithVersion(request.path!);
     selection = [];
-    session = new EditorSession(project);
+    session = new EditorSession(loaded.project);
     session.markSaved();
-    note = "Проект открыт.";
+    note = loaded.sourceVersion === 1 ? "Проект v1 открыт в формате v2. Исходник не изменён; при сохранении будет оставлена отдельная оригинальная копия." : "Проект открыт.";
   } else if (request.kind === "export") {
     const exported = bundle();
     const versionedBundle = compileItemAssetBundleV1(

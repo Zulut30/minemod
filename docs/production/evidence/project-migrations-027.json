@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 27,
+  "status": "PASS",
+  "scope": "EditorProject v1 -> v2 data preservation, original source retention, process-crash retry and future-file guards; Windows hidden packaged Studio 0.7.0",
+  "verifiedAtUtc": "2026-10-04T18:34:52.554407+00:00",
+  "sourceParentRevision": "526e5b1ad9833deaf98a08f286b0197f8feeab7b",
+  "sourceHashes": [
+    {
+      "path": "packages/editor-core/index.ts",
+      "bytes": 31101,
+      "sha256": "14baefe176b95185398f0ef43be0e032c2de7235d0582d5fdb61034b4bd7be1a"
+    },
+    {
+      "path": "packages/editor-core/migrations.test.ts",
+      "bytes": 8312,
+      "sha256": "28fa2257712e39fe85c4378bf9bd0eaafc749224dd12f4376d5fde760fba6fa8"
+    },
+    {
+      "path": "packages/editor-core/package.json",
+      "bytes": 532,
+      "sha256": "aec79085684fdd2c8a6780b078b4ed91459ca410e4490365c6194fc73619e15e"
+    },
+    {
+      "path": "apps/model-editor/worker/index.ts",
+      "bytes": 12889,
+      "sha256": "d741e7713a33c986615383e92b78a9acab6acd09c142716a6e6c29bcc8311826"
+    },
+    {
+      "path": "apps/model-editor/worker/persistence.ts",
+      "bytes": 6265,
+      "sha256": "6dd1efbf2d13f434c43996375441ae9d88a92e96f95b48e42ddbc7d1f4a8897f"
+    },
+    {
+      "path": "apps/model-editor/scripts/check-migrations-desktop.mjs",
+      "bytes": 7658,
+      "sha256": "1ce016d8d064993f10e2fa3cd67775f637f4583aff53570fd2061436077942e1"
+    },
+    {
+      "path": "apps/model-editor/scripts/test-desktop.mjs",
+      "bytes": 16099,
+      "sha256": "ca0a29586f39ed235915960e42d8871421fedea5ce126191e9c7a248af6422be"
+    },
+    {
+      "path": "apps/model-editor/package.json",
+      "bytes": 1177,
+      "sha256": "e5dcad207df78381df2b4981d112a48749d43a9e9ec5ebe23b78f9a8ff9e5104"
+    },
+    {
+      "path": "fixtures/editor-projects/v1-painted-variants.mmeditor.json",
+      "bytes": 473101,
+      "sha256": "4a29c072255ba7a4fe9d8ebf5aaef5ef196979c79f7987889f89a3840d38aef8"
+    }
+  ],
+  "toolchain": {
+    "node": "24.11.0",
+    "pnpm": "11.8.0",
+    "studio": "0.7.0",
+    "filesystem": "Windows NTFS"
+  },
+  "tests": {
+    "typecheck": "PASS",
+    "lint": "PASS",
+    "portable": "PASS",
+    "realHttpMcp": "PASS",
+    "cleanPackage": "PASS",
+    "hiddenPackagedE2E": "PASS",
+    "killedBeforeV1Replacement": "PASS",
+    "migrationCopyCollision": "PASS",
+    "futurePrimaryBackupAndVariant": "PASS",
+    "exactCRLFBackupAndPermanentOriginal": "PASS"
+  },
+  "logs": [
+    {
+      "path": "output/verification/roadmap-027-typecheck.log",
+      "bytes": 176,
+      "sha256": "fe0327fb3a908a7cea6b4e5ef62bbaa7903d4f4149a209170e6249f0dd5c8190"
+    },
+    {
+      "path": "output/verification/roadmap-027-lint.log",
+      "bytes": 29,
+      "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+    },
+    {
+      "path": "output/verification/roadmap-027-portable.log",
+      "bytes": 2742,
+      "sha256": "134161b9d69c1ec8e319ff7cf3e3c6946008a78850180d431d1f0c247de35f08"
+    },
+    {
+      "path": "output/verification/roadmap-027-http-mcp.log",
+      "bytes": 207,
+      "sha256": "ce600a29360c371575566860a7c94c33766d03e9a2ba5f6249e976ae6338a777"
+    },
+    {
+      "path": "output/verification/roadmap-027-package.log",
+      "bytes": 786,
+      "sha256": "4f6dd39122cf3a048d1e1c256bed8e6464cdb76184ec35662ea8b04e9763d3b4"
+    },
+    {
+      "path": "output/verification/roadmap-027-packaged-e2e.log",
+      "bytes": 202,
+      "sha256": "d017a1cb29632d9e6d7de0b05f097b9fab8e0b5d2a5aae7cecec6ae443362c90"
+    }
+  ],
+  "fixtureProvenance": "project-migration-fixture-027.json",
+  "desktopReport": {
+    "path": "output/playwright/studio-packaged-2261ec9f/report.json",
+    "bytes": 9303,
+    "sha256": "3dd87057ec88e8cab5ce58764cc65cb36f81e2d2ebe1803aa4e494d6958b6ceb"
+  },
+  "migrationReport": {
+    "path": "output/playwright/studio-packaged-2261ec9f/migrations/report.json",
+    "bytes": 727,
+    "sha256": "62395129e7fdc52397553ce869322a6b20b990adf38b3d8a242a62f44e1c177b"
+  },
+  "migrationChecks": {
+    "status": "PASS",
+    "hidden": true,
+    "sourceVersion": 1,
+    "targetVersion": 2,
+    "originalSourceSha256": "340fa7518183db4439664112d9fbf77e688cce8a88058c70be1af3f01087d835",
+    "originalSourceBytes": 485502,
+    "checks": [
+      "real v1 recovery keeps IDs/pixels/UV/variants",
+      "startup read leaves source bytes intact",
+      "autosave keeps permanent exact original and rotating backup",
+      "manual open/save migration",
+      "future open/save refuse without changing file or active project",
+      "future primary bypasses old fallback",
+      "future backup-only blocks autosave",
+      "future backup with current primary blocks autosave",
+      "future variant blocks autosave",
+      "persistent visible recovery warning"
+    ]
+  },
+  "package": {
+    "executable": {
+      "path": "output/model-editor/releases/0.7.0/ebc8e8d7/MineMod Studio-win32-x64/MineMod Studio.exe",
+      "bytes": 245726208,
+      "sha256": "d06436109ca1dc14bfff35117b672045d09d7b9623391f35cf60cfc0ee574282"
+    },
+    "appAsar": {
+      "path": "output/model-editor/releases/0.7.0/ebc8e8d7/MineMod Studio-win32-x64/resources/app.asar",
+      "bytes": 3500961,
+      "sha256": "3ba603461127e608b9dbb27377cd61604859ddad49ebcd9fc668dae4c9cd194b"
+    }
+  },
+  "newDependencies": [],
+  "olderBinariesUpdated": false,
+  "powerLossDirectoryFsync": "not-verified",
+  "otherFilesystems": "not-verified; no overwrite if hard-link creation fails",
+  "independentConcurrentWriters": "not-verified",
+  "minecraftAssetOrArtChange": false,
+  "hostedNewMigrationSource": "pending after commit"
+}

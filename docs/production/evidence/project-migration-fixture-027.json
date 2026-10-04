@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 27,
+  "kind": "editor-migration-fixture-provenance",
+  "fixture": "fixtures/editor-projects/v1-painted-variants.mmeditor.json",
+  "bytes": 473101,
+  "sha256": "4a29c072255ba7a4fe9d8ebf5aaef5ef196979c79f7987889f89a3840d38aef8",
+  "sourceVersion": 1,
+  "variantCount": 2,
+  "sourceApplication": "MineMod Studio 0.6.0 packaged Windows x64",
+  "sourcePackagedE2E": {
+    "path": "output/playwright/studio-packaged-3ea1f128/report.json",
+    "sha256": "4abd0c6756b482f87c51ffbfd0794e120cf462e0fd94478cea47bea6a68a28da",
+    "status": "PASS"
+  },
+  "sourceFile": "output/playwright/studio-packaged-3ea1f128/variants/варианты меча.mmeditor.json",
+  "derivation": "Exact byte copy of real packaged E2E saved project; no synthesized schema version or altered assets.",
+  "sourceCodeRevision": "325de656317a62bad8994bc1ee0ee0fa4a5fbc04",
+  "artisticApproval": "not-granted",
+  "externalAssets": [],
+  "license": "Apache-2.0 (repository-authored data)"
+}

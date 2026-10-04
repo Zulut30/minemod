@@ -193,6 +193,8 @@ Patch Studio 0.5.2 обновляет проверенные npm-зависим�
 
 Studio 0.6.0 добавляет [asset bundle v1](docs/production/ASSET_BUNDLE_V1.md): экспортируемый предмет связан с исходником, bbmodel, runtime files, target, namespaces и точными hashes. MCP получает v1 по `format: "bundle-v1"`; CLI поддерживает `asset bundle` и `asset verify`. Legacy export сохранён. Манифест всегда требует отдельного review; JAR-интеграция и художественная/игровая приёмка этим изменением не подтверждаются.
 
+Studio 0.7.0 вводит [проверяемую миграцию EditorProject v1 → v2](docs/production/PROJECT_MIGRATIONS.md). IDs, рисунок и варианты сохраняются; перед заменой v1 остаётся отдельная точная original copy. Неизвестная версия primary/backup блокирует перезапись. Файлы v2 следует редактировать в Studio 0.7.0 с новым reader; старые binaries не обновляются автоматически.
+
 ```text
 apps/
   cli/                 CLI adapter
