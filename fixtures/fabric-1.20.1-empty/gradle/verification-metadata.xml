@@ -6,6 +6,10 @@
       <trusted-artifacts>
          <trust group="loom" name="mappings" version="layered+hash.2198" file="mappings-layered+hash.2198.jar" reason="Generated locally by pinned Fabric Loom from checksum-verified mapping inputs; ZIP bytes are nondeterministic"/>
          <trust group="^loom_mappings_1_20_1_layered_hash_2198_v2[.]net[.]fabricmc[.]fabric-api$" regex="true" reason="Generated locally by pinned Fabric Loom from checksum-verified Fabric API inputs; remapped ZIP bytes are workspace-dependent"/>
+         <trust group="net.minecraft" name="minecraft-common-3d2c7816d3" version="1.20.1-loom.mappings.1_20_1.layered+hash.2198-v2" file="minecraft-common-3d2c7816d3-1.20.1-loom.mappings.1_20_1.layered+hash.2198-v2.jar" reason="Generated locally by pinned Loom from locked Mojang inputs; revision 5 derived artifact policy"/>
+         <trust group="net.minecraft" name="minecraft-common-b7a764897f" version="1.20.1-loom.mappings.1_20_1.layered+hash.2198-v2" file="minecraft-common-b7a764897f-1.20.1-loom.mappings.1_20_1.layered+hash.2198-v2.jar" reason="Generated locally by pinned Loom from locked Mojang inputs; revision 5 derived artifact policy"/>
+         <trust group="net.minecraft" name="minecraft-clientOnly-3d2c7816d3" version="1.20.1-loom.mappings.1_20_1.layered+hash.2198-v2" file="minecraft-clientOnly-3d2c7816d3-1.20.1-loom.mappings.1_20_1.layered+hash.2198-v2.jar" reason="Generated locally by pinned Loom from locked Mojang inputs; revision 5 derived artifact policy"/>
+         <trust group="net.minecraft" name="minecraft-clientOnly-b7a764897f" version="1.20.1-loom.mappings.1_20_1.layered+hash.2198-v2" file="minecraft-clientOnly-b7a764897f-1.20.1-loom.mappings.1_20_1.layered+hash.2198-v2.jar" reason="Generated locally by pinned Loom from locked Mojang inputs; revision 5 derived artifact policy"/>
       </trusted-artifacts>
    </configuration>
    <components>

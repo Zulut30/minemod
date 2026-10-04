@@ -56,8 +56,22 @@ assert len(reviewed) == lock["verification"]["artifacts"]
 assert len(artifacts) == 562, "Fixture verification metadata changed without review"
 for coordinate, digest in artifacts.items():
     assert reviewed.get(coordinate) == digest, coordinate
+def trust_rules(path):
+    document = ET.parse(path).getroot()
+    return {
+        frozenset((key, value) for key, value in entry.attrib.items() if key != "reason")
+        for entry in document.findall("./d:configuration/d:trusted-artifacts/d:trust", namespace)
+    }
+
+
+reviewed_rules = trust_rules(runtime / "templates/gradle/verification-metadata.xml")
+fixture_rules = trust_rules(fixture / "gradle/verification-metadata.xml")
+local_rules = {rule for rule in reviewed_rules if ("group", "net.minecraft") in rule}
+assert len(local_rules) == 4 and local_rules <= fixture_rules
+assert fixture_rules <= reviewed_rules, "Fixture expanded the reviewed trust scope"
 checked["gradle/verification-metadata.xml"] = sha256(fixture / "gradle/verification-metadata.xml")
 print(json.dumps({
     "status": "PASS", "tuple": expected, "lockSha256": sha256(lock_path),
     "reviewedBootstrap": checked, "verifiedArtifacts": len(artifacts),
+    "exactLocalMinecraftRules": len(local_rules),
 }, indent=2))
