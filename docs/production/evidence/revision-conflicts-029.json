@@ -53,5 +53,14 @@
   ],
   "installedCodexClaudeModelSession": "not-run",
   "automaticConflictMerge": "not-implemented",
-  "newHostedE2E": "pending; local proof is exact current script"
+  "hostedFollowup": {
+    "sourceRevision": "6c2fa4085fadf76da8095b43d2cbdba33059f60d",
+    "runId": 37219185836,
+    "jobId": 111485907030,
+    "url": "https://github.com/Zulut30/minemod/actions/runs/37219185836/job/111485907030",
+    "status": "PASS",
+    "reportSha256": "a786dd806ae77e8416525bdeb656622736edbceac5f3c6d8ea51b47967ef062e",
+    "scope": "Windows packaged E2E with stale proposal preservation and agent undo restoring newer human edit",
+    "wholeWorkflow": "failure: separate legacy Fabric 26.2 regression"
+  }
 }
