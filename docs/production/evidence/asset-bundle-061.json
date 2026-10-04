@@ -236,5 +236,67 @@
   "humanArtApproval": "not-granted",
   "bundleMinecraftRuntime": "not-verified",
   "jarIntegration": "not-implemented",
-  "otherClassExporters": "manifest contract only; no runtime generation proof"
+  "otherClassExporters": "manifest contract only; no runtime generation proof",
+  "hostedFollowup": {
+    "sourceRevision": "325de656317a62bad8994bc1ee0ee0fa4a5fbc04",
+    "runId": 37223039459,
+    "workflowConclusion": "failure",
+    "jobs": [
+      {
+        "conclusion": "failure",
+        "databaseId": 111497087284,
+        "name": "fabric",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37223039459/job/111497087284"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 111497087393,
+        "name": "Fabric 1.20.1 / Java 17 production target",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37223039459/job/111497087393"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 111497087449,
+        "name": "studio-windows",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37223039459/job/111497087449"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 111497087455,
+        "name": "control-plane",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37223039459/job/111497087455"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 111497087460,
+        "name": "neoforge",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37223039459/job/111497087460"
+      },
+      {
+        "conclusion": "skipped",
+        "databaseId": 111497246542,
+        "name": "fabric-client",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37223039459/job/111497246542"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 111497579803,
+        "name": "client-smoke",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37223039459/job/111497579803"
+      }
+    ],
+    "status": "PASS for bundle/studio/production scopes",
+    "summarySha256": "427cd0b398e3e91271ab4aa7927f243fd7b812a9d477ba42e1fd3d81b7960e49",
+    "windowsReport": {
+      "path": "output/ci/37223039459-windows/output/playwright/studio-packaged-599632dd/report.json",
+      "sha256": "3771897dfb3bfd92b79b741a52858ebc644dcf524d176ce3740bf63af55046c5"
+    },
+    "mcp": {
+      "status": "PASS",
+      "manifestSha256": "d29dd2b39bc01feb7b0022037794dfcf7e52ad45e2514bcf38a4de343831e986",
+      "files": 4
+    },
+    "productionScope": "Strict clean build, infrastructure GameTests, dedicated server, headless client and generated equipment/config fixture. New bundle is not imported into JAR.",
+    "openRegression": "Legacy Fabric 26.2 failed; overall workflow is not PASS."
+  }
 }
