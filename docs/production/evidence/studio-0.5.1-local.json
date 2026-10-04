@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 1,
+  "verifiedAtUtc": "2026-10-04T14:41:03.1412895Z",
+  "verificationKind": "archived-packaged-report-and-current-artifact-hash-verification",
+  "scope": "Windows desktop only; no new CLI model session, artistic approval or Minecraft runtime test",
+  "sourceRevisionBeforeGoal": "e64fee06d38d88c01cef306519aa552d59e59975",
+  "workspaceWasDirty": true,
+  "version": "0.5.1",
+  "environment": {
+    "os": "Microsoft Windows 11 Pro",
+    "version": "10.0.26200",
+    "build": "26200",
+    "architecture": "x64"
+  },
+  "artifacts": {
+    "exe": {
+      "path": "output/model-editor/releases/0.5.1/a704eec1/MineMod Studio-win32-x64/MineMod Studio.exe",
+      "sha256": "53f8719608d443b904f55f0e44bc958c3a75cfad34a264be806ba5e5e2b8a8e1"
+    },
+    "asar": {
+      "path": "output/model-editor/releases/0.5.1/a704eec1/MineMod Studio-win32-x64/resources/app.asar",
+      "sha256": "5baa942ae5144c8beb35a0256633859d71532e1cf2f07f2db6012dd8b6214245"
+    }
+  },
+  "archivedReport": {
+    "path": "output/playwright/studio-packaged-3fb8ead4/report.json",
+    "sha256": "4f6a88c9b18b4eaa32f4d28ff2a47dbb17ad68616c78f97d889b5585b3fc7819",
+    "status": "PASS",
+    "packaged": true,
+    "hidden": true,
+    "security": {
+      "sandbox": true,
+      "contextIsolation": true,
+      "nodeIntegration": false
+    }
+  },
+  "releaseGates": {
+    "artisticAcceptance": "pending",
+    "cliModelSessions": "not-run-for-this-version",
+    "minecraftRuntime": "not-verified-for-authored-assets",
+    "hostedWindowsCI": "pending",
+    "hostedFabric1201CI": "pending"
+  }
+}
