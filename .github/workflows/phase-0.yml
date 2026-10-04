@@ -156,6 +156,8 @@ jobs:
           mkdir -p run/gametest
           printf 'eula=true\n' > run/gametest/eula.txt
           ./gradlew --project-cache-dir "$GRADLE_PROJECT_CACHE_DIR" \
+            --no-daemon --dependency-verification strict runGameTest
+          ./gradlew --project-cache-dir "$GRADLE_PROJECT_CACHE_DIR" \
             --offline --no-daemon --dependency-verification strict runGameTest
       - name: Verify nonempty production GameTest report
         run: python3 scripts/verify-fabric-gametest-report.py fixtures/fabric-1.20.1-empty/build/reports/gametest/production.xml
