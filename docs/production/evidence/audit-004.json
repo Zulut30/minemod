@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 4,
+  "verifiedAtUtc": "2026-10-04T14:49:03.7191597Z",
+  "sourceRevision": "da0acc9abe19a20fa0ba5d9f4df5569a9776ecbd",
+  "workspaceWasDirty": true,
+  "scope": "Fresh Windows lint, typecheck, portable package tests and HTTP MCP; no fresh Minecraft/hosted CI/packaged E2E",
+  "toolchain": {
+    "node": "24.11.0",
+    "pnpm": "11.8.0"
+  },
+  "checks": [
+    {
+      "command": "corepack pnpm typecheck:all",
+      "exitCode": 0
+    },
+    {
+      "command": "corepack pnpm lint",
+      "exitCode": 0
+    },
+    {
+      "command": "corepack pnpm --filter @mcdev/assets-contracts --filter @mcdev/assets-core --filter @mcdev/editor-core --filter @mcdev/cli --filter @mcdev/mcp-server -r test",
+      "exitCode": 0
+    },
+    {
+      "command": "corepack pnpm --filter @mcdev/model-editor test:mcp",
+      "exitCode": 0
+    }
+  ],
+  "logs": [
+    {
+      "path": "output/verification/roadmap-004-typecheck.log",
+      "sha256": "fe0327fb3a908a7cea6b4e5ef62bbaa7903d4f4149a209170e6249f0dd5c8190"
+    },
+    {
+      "path": "output/verification/roadmap-004-lint.log",
+      "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+    },
+    {
+      "path": "output/verification/roadmap-004-portable-tests.log",
+      "sha256": "0ccdecd036fefd8cebcafbea2517f40d2a26ab94d641d46df39b464221efc950"
+    },
+    {
+      "path": "output/verification/roadmap-004-http-mcp.log",
+      "sha256": "ce600a29360c371575566860a7c94c33766d03e9a2ba5f6249e976ae6338a777"
+    }
+  ],
+  "sources": [
+    {
+      "path": "packages/modspec/index.ts",
+      "sha256": "875fabf34f1810deb79fa36aa0050b38a40bad47706d2af4d12bcd34576766de"
+    },
+    {
+      "path": "packages/compiler-fabric/compiler.ts",
+      "sha256": "d478f558f590b78775fb23c4b7d138b7280e9df2e4957143fcfe447257a481c2"
+    },
+    {
+      "path": "packages/editor-core/index.ts",
+      "sha256": "ee80ec27d2ac94810e3919b98edfa38cff20de840f24c0a2e9f8594c301e35c2"
+    },
+    {
+      "path": "packages/editor-core/texture.ts",
+      "sha256": "e84813a97886908eda27bd810b5e370b4587c7551b0dd668bfd108607cd4e1ba"
+    },
+    {
+      "path": "apps/model-editor/worker/mcp.ts",
+      "sha256": "2631ff3195fb5d9979c9572637f787f19905ae9abbed886e072aeb48e6de945a"
+    },
+    {
+      "path": "apps/model-editor/worker/persistence.ts",
+      "sha256": "667e2a9269e3f540206e82574f85d9ce77ce50a2494ea84354d92c9cbdc1d7cd"
+    },
+    {
+      "path": "apps/model-editor/renderer/Viewport.tsx",
+      "sha256": "3f5fec30b3f44a7d6fc5474a9402c8d9c5e49317cec40e4bd0435881b892a228"
+    },
+    {
+      "path": "apps/model-editor/renderer/ReviewBoard.tsx",
+      "sha256": "bfe1441a3e9b111907f96fed035666620ec1a2d702f949e5c86c30145ea74eb0"
+    },
+    {
+      "path": "packages/build-runner/internal.ts",
+      "sha256": "fb3d3a7bac972a1455ef195b7175d248366ed39ea0d38936d62da6422c4f3429"
+    },
+    {
+      "path": "packs/fabric-1.20.1/pack.json",
+      "sha256": "fb00ea4f4d534efb23326af5d83368c0ad6c418f6ac97519bd8909e641801e60"
+    },
+    {
+      "path": ".github/workflows/phase-0.yml",
+      "sha256": "66e218c4b65f3a5295f258d67145b5cd6d56675e8d772c17e95b63262a77ed4d"
+    }
+  ],
+  "wslProbe": {
+    "status": "unavailable",
+    "diagnostic": "REGDB_E_CLASSNOTREG"
+  }
+}
