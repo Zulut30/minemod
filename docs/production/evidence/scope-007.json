@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 7,
+  "verifiedAtUtc": "2026-10-04T15:28:07.0472982Z",
+  "hosted": {
+    "runId": 37212446261,
+    "jobId": 111466199830,
+    "url": "https://github.com/Zulut30/minemod/actions/runs/37212446261/job/111466199830",
+    "sourceRevision": "0b04d68aaff4c8a8eb1851da49ff225027553923",
+    "jobName": "control-plane",
+    "jobConclusion": "success",
+    "overallWorkflowConclusion": "failure",
+    "scope": "Linux workspace unit tests, lint/typecheck and desktop bundles; excludes failed Java runtime jobs and art acceptance",
+    "log": {
+      "path": "output/verification/roadmap-linux-control-plane.log",
+      "sha256": "8f955908b849ccf3389006ab0547b887a598c0790cd67d286b077a5112b62b6a"
+    }
+  },
+  "local": {
+    "scope": "Windows portable packages and HTTP MCP",
+    "evidence": "audit-004.json",
+    "status": "PASS"
+  },
+  "productionGate": "not-closed"
+}
