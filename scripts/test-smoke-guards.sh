@@ -178,7 +178,9 @@ assert workflow.index('name: Prepare verified headless client runtime') < workfl
 assert workflow.count('PHASE0_SMOKE_TARGET: fabric\n') == 2
 assert workflow.count(
     'uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2'
-) == 4
+) == 5
+assert 'name: fabric-26.2-verification-failure' in workflow
+assert 'path: fixtures/fabric-26.2-empty/build/reports/dependency-verification/**' in workflow
 assert 'fabric-api.gametest.report-file' in fabric_build
 assert 'fixtures/fabric-26.2-empty/build/run/gameTest/gametest-report.xml' in workflow
 assert 'fixtures/fabric-26.2-empty/build/run/clientGameTest/screenshots/*.png' in workflow
