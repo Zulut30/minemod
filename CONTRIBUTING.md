@@ -13,6 +13,8 @@ pnpm typecheck
 pnpm lint
 ```
 
+Полный `pnpm test` требует Linux x64 и настоящих POSIX permissions. На Windows запускайте `corepack pnpm test:portable`; typecheck/lint и скрытый packaged Studio E2E имеют отдельные scopes. [Матрица ОС и проверенные результаты](docs/production/OS_VERIFICATION.md).
+
 ## Правила изменений
 
 - один логический change на commit;

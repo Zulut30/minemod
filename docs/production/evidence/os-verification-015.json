@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 15,
+  "status": "PASS",
+  "verifiedAtUtc": "2026-10-04T17:09:22.359507+00:00",
+  "scope": "Explicit test-platform separation: Windows portable/rejection and fresh hosted Linux full suite",
+  "sourceRevision": "6c2fa4085fadf76da8095b43d2cbdba33059f60d",
+  "sourceHashes": [
+    {
+      "path": "package.json",
+      "sha256": "ec1d228761681be609dd2159fdfc6643098cdf97422465f6fdd1f217d07322e5",
+      "bytes": 1144
+    },
+    {
+      "path": "scripts/check-full-test-platform.mjs",
+      "sha256": "f6481dc226b06a201df7d6a5b776e3cf2970e8dde46c918d8cbf9d2c3f531db9",
+      "bytes": 655
+    }
+  ],
+  "windows": {
+    "platform": "win32",
+    "architecture": "x64",
+    "node": "24.11.0",
+    "fullSuite": {
+      "status": "EXPECTED_REJECTION",
+      "exitCode": 1,
+      "diagnostic": "FULL_TEST_SUITE_REQUIRES_LINUX_X64",
+      "log": {
+        "path": "output/verification/roadmap-015-windows-full-rejection.log",
+        "sha256": "f20c01e2ccd9cdf38acdc721507c78f253c3197e3eee1b14a81c80b5a54b7e4a",
+        "bytes": 415
+      }
+    },
+    "portableSuite": {
+      "status": "PASS",
+      "command": "corepack pnpm test:portable",
+      "log": {
+        "path": "output/verification/roadmap-015-portable.log",
+        "sha256": "31e2d1d1d8a8cf17af7b41d56172fafac7e2ea861d9581b10347b67a30458145",
+        "bytes": 2059
+      }
+    },
+    "lint": {
+      "status": "PASS",
+      "log": {
+        "path": "output/verification/roadmap-015-lint.log",
+        "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40",
+        "bytes": 29
+      }
+    }
+  },
+  "linux": {
+    "platform": "linux",
+    "architecture": "x64",
+    "jobId": 111485907679,
+    "runId": 37219185836,
+    "url": "https://github.com/Zulut30/minemod/actions/runs/37219185836/job/111485907679",
+    "status": "PASS",
+    "includes": [
+      "platform preflight",
+      "full recursive test suite",
+      "real POSIX pack/workspace/runner assertions",
+      "process-crash persistence tests",
+      "lint/typecheck/core and desktop bundle builds"
+    ],
+    "log": {
+      "path": "output/verification/roadmap-015-linux-hosted.log",
+      "sha256": "d4f608a1c0009252a8b867342ea43bc8bf5d9969267807a31032aad7d9f6470c",
+      "bytes": 25636
+    }
+  },
+  "separateGameEvidence": "fabric-production-013.json",
+  "limits": [
+    "Native Windows build runner not supported",
+    "Linux desktop distribution not accepted",
+    "Legacy Fabric 26.2 regression still failed; whole workflow is not PASS",
+    "New Windows hosted E2E still in progress at evidence creation"
+  ]
+}

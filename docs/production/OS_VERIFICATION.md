@@ -15,8 +15,8 @@ Roadmap 015. Desktop и игровой build runner имеют разные ок
 
 ## Проверенный результат
 
-Новый wrapper на Windows явно отказал полному suite; все пять packages прошли `test:portable`, включая реальные killed-process autosave tests. Packaged Windows proof: [026](evidence/autosave-026.json), hosted packaged baseline: [016](evidence/windows-packaged-016.json). На Linux весь прежний suite и новые crash tests прошли `control-plane` source `e2ada7a59a791dc56cd7d696a3f5032dfdba9fa8` в run `37218400675`.
+Новый wrapper на Windows явно отказал полному suite; все пять packages прошли `test:portable`, включая реальные killed-process autosave tests. Packaged Windows proof: [026](evidence/autosave-026.json), hosted packaged baseline: [016](evidence/windows-packaged-016.json). На Linux новый entrypoint и полный suite прошли `control-plane` source `6c2fa4085fadf76da8095b43d2cbdba33059f60d` в run `37219185836`, job `111485907679`.
 
-Изменение entrypoint с новой platform diagnostic ещё требует hosted проверки точной новой revision. Пока пункт 015 открыт. Evidence будет дополнено после такого run; успешный более старый checkout не подменяет проверку нового entrypoint.
+[Evidence](evidence/os-verification-015.json) содержит exact source и log hashes: на Windows получен явный отказ полного suite и PASS portable suite, на Linux проверен новый entrypoint и настоящие permission/hash assertions. Пункт 015 закрыт для указанной матрицы; native Windows runner не добавлен. Остальные игровые и artistic gates сохраняют собственные статусы.
 
 Platform-specific claims в bug report должны содержать `process.platform`, архитектуру, версии Node/pnpm и конкретную команду. В отчёте отдельно показывать portable/package/game scopes. Инструкция setup в README и CONTRIBUTING не является обещанием, что каждый test/build работает на каждой ОС.
