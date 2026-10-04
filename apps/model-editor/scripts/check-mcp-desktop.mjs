@@ -1,4 +1,4 @@
-/* global window, document, fetch */
+/* global window, document, fetch, Image */
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
 import assert from "node:assert/strict";
@@ -9,6 +9,47 @@ import { Buffer } from "node:buffer";
 import process from "node:process";
 import { URL } from "node:url";
 import { checkInstalledClients } from "./check-installed-clients.mjs";
+
+async function snapshotPixels(page, base64) {
+  return page.evaluate(async (data) => {
+    const image = new Image();
+    image.src = `data:image/png;base64,${data}`;
+    await image.decode();
+    const canvas = document.createElement("canvas");
+    canvas.width = image.naturalWidth;
+    canvas.height = image.naturalHeight;
+    const context = canvas.getContext("2d");
+    context.drawImage(image, 0, 0);
+    const { width, height } = canvas;
+    const pixels = context.getImageData(0, 0, width, height).data;
+    const background = pixels.slice((32 * width + 32) * 4, (32 * width + 32) * 4 + 3);
+    const rows = new Set(), columns = new Set(), colors = new Set();
+    let foreground = 0;
+    // Центральная область фиксированного fixture исключает подписи и линию пола.
+    for (let y = 64; y < height - 64; y++) {
+      for (let x = width / 4; x < width * 3 / 4; x++) {
+        const offset = (y * width + x) * 4;
+        if (pixels[offset + 3] < 250) continue;
+        const rgb = pixels.slice(offset, offset + 3);
+        if (rgb.every((channel, i) => Math.abs(channel - background[i]) <= 24)) continue;
+        foreground++;
+        rows.add(y);
+        columns.add(x);
+        colors.add([...rgb].map((channel) => channel >> 4).join(","));
+      }
+    }
+    return { foreground, rows: rows.size, columns: columns.size, colors: colors.size };
+  }, base64);
+}
+
+function assertModelPixels(pixels, view) {
+  assert(
+    pixels.foreground > 1_000 && pixels.rows > 300 &&
+      pixels.columns > 8 && pixels.colors >= 6,
+    `Snapshot ${view} must contain the textured fixture: ${JSON.stringify(pixels)}`,
+  );
+}
+
 export async function checkMcpDesktop(application, page, output) {
   await page.getByTestId("agent-settings").click();
   await page.getByTestId("agent-toggle").click();
@@ -111,6 +152,17 @@ export async function checkMcpDesktop(application, page, output) {
       .locator(".selection-heading strong")
       .textContent();
     const images = [];
+    const blank = await page.evaluate(() => {
+      const canvas = document.createElement("canvas");
+      canvas.width = 1024;
+      canvas.height = 768;
+      const context = canvas.getContext("2d");
+      context.fillStyle = "#10151c";
+      context.fillRect(0, 0, canvas.width, canvas.height);
+      return canvas.toDataURL().split(",")[1];
+    });
+    const blankPixels = await snapshotPixels(page, blank);
+    assert.throws(() => assertModelPixels(blankPixels, "blank render"));
     for (const view of ["perspective", "front", "side", "back"]) {
       const captured = await result("studio_view_capture", {
         projectId: base.project.projectId,
@@ -126,15 +178,13 @@ export async function checkMcpDesktop(application, page, output) {
         captured.response.content.find((c) => c.type === "image").data,
         "base64",
       );
+      await writeFile(join(output, `mcp-${view}.png`), png);
       assert.equal(png.readUInt32BE(16), 1024);
       assert.equal(png.readUInt32BE(20), 768);
-      assert(
-        png.length > 10_000,
-        "Actual snapshot must contain rendered geometry",
-      );
+      const pixels = await snapshotPixels(page, png.toString("base64"));
+      assertModelPixels(pixels, view);
       const sha256 = createHash("sha256").update(png).digest("hex");
-      images.push({ view, sha256, bytes: png.length });
-      await writeFile(join(output, `mcp-${view}.png`), png);
+      images.push({ view, sha256, bytes: png.length, pixels });
     }
     assert(
       new Set(images.map((i) => i.sha256)).size >= 3,
