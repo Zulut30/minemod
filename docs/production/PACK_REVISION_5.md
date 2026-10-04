@@ -1,6 +1,6 @@
 # Fabric pack revision 5: локальные Loom derivatives
 
-Дата: 4 октября 2026. Candidate; runtime и security acceptance пока открыты.
+Дата: 4 октября 2026. Candidate; hosted build/GameTests/client/server прошли, security acceptance остаётся открытой.
 
 Revision 4 устранила missing checksums скачиваемых Maven containers, но fresh hosted [run 37215901547](https://github.com/Zulut30/minemod/actions/runs/37215901547) отказался принять `net.minecraft:minecraft-common-b7a764897f:1.20.1-loom.mappings.1_20_1.layered+hash.2198-v2`: exact ZIP SHA отличается от прежнего local-cache SHA. Это не опубликованный Minecraft artifact: [pinned Loom source](https://github.com/FabricMC/fabric-loom/blob/c4d36fac4ea7ccd1ef9526aa138139a154c8f581/src/main/java/net/fabricmc/loom/configuration/providers/minecraft/mapped/AbstractMappedMinecraftProvider.java) создаёт named JAR локально через TinyRemapper и сохраняет его в `LoomLocalMinecraft`. Побайтное равенство с прежним cache не подтверждено.
 
@@ -18,3 +18,5 @@ Raw client/server JAR и обе Mojang mapping tables получили fixed SHA
 | Existing mapping/remapped-mod rules | 3 | 3 |
 
 Revision 3 и 4 остаются неизменными; snapshot regression проверяет обе по прежним digests/modes. Новый plan имеет revision 5, поэтому прежние plans/cache approvals не превращаются в новые по имени. Миграция требует нового workspace/plan, повторного strict build и runtime evidence. Rollback — предыдущий compiler/runner checkout с его собственной revision и проверками. Immutable generator отвергает overwrite; public MCP не может расширять список trusted artifacts.
+
+Hosted runtime proof: [source 26567c9 / job 111480850198](https://github.com/Zulut30/minemod/actions/runs/37217477326/job/111480850198), [evidence](evidence/fabric-production-013.json). Проверены strict online bootstrap/offline clean build, два инфраструктурных GameTest, client/server smoke, generated equipment/config build и server lifecycle. Это не проверка cache provenance, gameplay matrix или визуального качества. Candidate не переводится в production этим результатом.

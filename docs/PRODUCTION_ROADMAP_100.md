@@ -8,7 +8,7 @@
 
 План подчиняется [ADR-0004](decisions/0004-fabric-1.20.1-production-baseline.md) и [Fabric-first MVP plan](FABRIC_FIRST_MVP_PLAN.md). Основной игровой target — Fabric 1.20.1 / Java 17. Приложение развивается на существующем Electron/TypeScript-стеке; первый desktop-релиз ориентирован на проверенную Windows x64. Другие ОС и загрузчики требуют отдельных проверок и не получают обещания готовности автоматически.
 
-По текущему коду и локальному отчёту `output/verification/STUDIO_BUILD.json`:
+Исходный снимок при составлении плана, до выполнения пунктов; локальный отчёт `output/verification/STUDIO_BUILD.json`. Новые результаты перечислены у закрытых пунктов:
 
 - Studio 0.5.1 имеет тёмную тему, редактирование геометрии, покраску/UV, варианты, историю, MCP, экспорт и обзор модели с нескольких сторон. Локальная сборка и проверки упакованного редактора прошли.
 - Три новых дизайна оружия остаются художественными черновиками. Их качество ещё не принято пользователем; успешные технические проверки не заменяют эту оценку.
@@ -46,7 +46,7 @@
 
 11. [ ] **Проверить точный toolchain.** Сверить поддерживаемость, источники, лицензии и hashes Node/pnpm/Electron, Java и Fabric-зависимостей. Приёмка: установка использует lockfiles, изменения оформлены отдельной revision.
 12. [ ] **Сделать старт из clean checkout воспроизводимым.** Проверить окончания строк, executable bits, bootstrap и отсутствие зависимости от `output/`. Приёмка: чистая машина получает заявленные сборки по инструкции.
-13. [ ] **Добавить обязательный CI для Fabric 1.20.1 / Java 17.** Проверять generated fixture, strict dependency verification, clean build и runtime suites. Приёмка: hosted CI сохраняет отчёты именно production-target.
+13. [x] **Добавить обязательный CI для Fabric 1.20.1 / Java 17.** Проверять generated fixture, strict dependency verification, clean build и runtime suites. Приёмка: hosted CI сохраняет отчёты именно production-target. Evidence: [hosted 1.20.1 proof](production/evidence/fabric-production-013.json), [CI scope](production/CI_BASELINE.md), [required main check](production/MERGE_CHECKS.md); коммит `roadmap(013)`. Старый Fabric 26.2 regression и cache provenance остаются открытыми.
 14. [x] **Сделать проверки TypeScript обязательными.** Включить lint/typecheck и полезные unit/integration-тесты контрактов, компилятора и редактора. Приёмка: сломанная схема или транзакция не проходит merge-проверку. Evidence: [действующая защита main](production/MERGE_CHECKS.md), [API readback](production/evidence/merge-checks-014.json); коммит `roadmap(014)`. Старый Fabric 26.2 failed и блокирует merge.
 15. [ ] **Устранить неоднозначность поддержки ОС.** Исправить portable-ошибки, а Linux-only runner проверять на Linux без ослабления защиты. Приёмка: Windows не получает ложный общий PASS за пропущенный build.
 16. [x] **Подтвердить Windows CI на упакованном Studio.** Запускать существующие MCP/editor E2E в скрытых окнах и сохранять screenshots/logs. Приёмка: проверен распространяемый пакет, а не только dev-сборка. Evidence: [hosted packaged E2E, source hash и PNG](production/evidence/windows-packaged-016.json), [успешный Windows job](https://github.com/Zulut30/minemod/actions/runs/37214772795/job/111472943144); коммит `roadmap(016)`. Игровые jobs этого run остаются failed, общий PASS не заявляется.

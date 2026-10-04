@@ -1,0 +1,202 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 13,
+  "status": "PASS",
+  "scope": "Hosted Fabric 1.20.1 / Java 17 build, infrastructure GameTests, client/server startup and generated compile/server lifecycle",
+  "sourceRevision": "26567c9be3f0ec2bf2067e4562bf04f09253a1dc",
+  "verifiedAtUtc": "2026-10-04T16:50:58.315195+00:00",
+  "ci": {
+    "runId": 37217477326,
+    "jobId": 111480850198,
+    "url": "https://github.com/Zulut30/minemod/actions/runs/37217477326/job/111480850198",
+    "jobConclusion": "success",
+    "workflowConclusion": "failure",
+    "steps": [
+      {
+        "name": "Set up job",
+        "conclusion": "success"
+      },
+      {
+        "name": "Check out repository",
+        "conclusion": "success"
+      },
+      {
+        "name": "Set up Node.js",
+        "conclusion": "success"
+      },
+      {
+        "name": "Install frozen dependencies",
+        "conclusion": "success"
+      },
+      {
+        "name": "Verify production bootstrap inputs",
+        "conclusion": "success"
+      },
+      {
+        "name": "Download checksum-pinned Java 17",
+        "conclusion": "success"
+      },
+      {
+        "name": "Install exact locked Java 17 archive",
+        "conclusion": "success"
+      },
+      {
+        "name": "Verify locked raw Minecraft and mapping inputs",
+        "conclusion": "success"
+      },
+      {
+        "name": "Record and verify production Java toolchain",
+        "conclusion": "success"
+      },
+      {
+        "name": "Bootstrap and clean-build production fixture with strict verification",
+        "conclusion": "success"
+      },
+      {
+        "name": "Run production server GameTests",
+        "conclusion": "success"
+      },
+      {
+        "name": "Verify nonempty production GameTest report",
+        "conclusion": "success"
+      },
+      {
+        "name": "Smoke-test production dedicated server",
+        "conclusion": "success"
+      },
+      {
+        "name": "Smoke-test production headless client",
+        "conclusion": "success"
+      },
+      {
+        "name": "Clean-build generated equipment/config fixture and run dedicated server",
+        "conclusion": "success"
+      },
+      {
+        "name": "Upload production-target evidence",
+        "conclusion": "success"
+      },
+      {
+        "name": "Post Install exact locked Java 17 archive",
+        "conclusion": "success"
+      },
+      {
+        "name": "Post Set up Node.js",
+        "conclusion": "success"
+      },
+      {
+        "name": "Post Check out repository",
+        "conclusion": "success"
+      },
+      {
+        "name": "Complete job",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "artifact": {
+    "id": 11308629131,
+    "zipSha256": "e9ef79b80e7441756ecd7585ade4412bea269c1f1b8fa6ff8d23af85909abef7",
+    "url": "https://github.com/Zulut30/minemod/actions/runs/37217477326/artifacts/11308629131",
+    "files": [
+      {
+        "path": "fixtures/fabric-1.20.1-empty/build/reports/gametest/production.xml",
+        "bytes": 405,
+        "sha256": "ffcacff6ca1f13f6637b41517645e7966672f15f26289cbb21f86a2c2a21f313"
+      },
+      {
+        "path": "fixtures/fabric-1.20.1-empty/run/client/phase0-console.log",
+        "bytes": 83660,
+        "sha256": "5f937774e57db391968619bea92eb9dedc0e324903fee4e4df29a43ac74a01b2"
+      },
+      {
+        "path": "fixtures/fabric-1.20.1-empty/run/server/phase0-console.log",
+        "bytes": 10859,
+        "sha256": "f7ec801c129817eeadc324bdc56d6246abd4e8079efcbdc38740cfb7c0af06bd"
+      },
+      {
+        "path": "output/ci/fabric-production/generated/bootstrap.log",
+        "bytes": 912,
+        "sha256": "8880217713408ad6c47511a74682a194cfa9e7e95f7379e8bdf3e56ae276263c"
+      },
+      {
+        "path": "output/ci/fabric-production/generated/clean-build.log",
+        "bytes": 852,
+        "sha256": "c4657c8953ba83d7320b08ed0617ffb2a9cbd1357fc80a557be4cc326f791ca2"
+      },
+      {
+        "path": "output/ci/fabric-production/generated/dedicated-server.log",
+        "bytes": 8795,
+        "sha256": "50bfb8f3c3a6f071fc3e653df1a985e7fdb67e6aa34aa472738be66d4fe57f19"
+      },
+      {
+        "path": "output/ci/fabric-production/inputs.json",
+        "bytes": 884,
+        "sha256": "9ee967c1efa32b52ab1128b35c3afbf4e28427b7eab1d6a82842656a816e8f02"
+      },
+      {
+        "path": "output/ci/fabric-production/java-runtime.txt",
+        "bytes": 11,
+        "sha256": "45bd9b7f0cea7614ce6b182dc229b11772c1a65c4bc0ca78b005fa341840537f"
+      },
+      {
+        "path": "output/ci/fabric-production/mojang-inputs.json",
+        "bytes": 662,
+        "sha256": "deb61bd663def15c5d5663e29486e80015ff61a10a0dff01594e0a06f0c5b711"
+      }
+    ]
+  },
+  "inputs": {
+    "status": "PASS",
+    "tuple": {
+      "minecraft": "1.20.1",
+      "fabricLoader": "0.19.3",
+      "fabricApi": "0.92.11+1.20.1",
+      "fabricLoom": "1.6.12",
+      "gradle": "8.7",
+      "java": "17.0.19+10"
+    },
+    "lockSha256": "37ffd06483f6ae7c25adce4ac63dc4a692c43b8b24778ff6f5e96bfef254c7ca",
+    "reviewedBootstrap": {
+      "gradlew": "edeebb8b7ddcd62dc39d85846bf93bc016da6a644bf7489fad47c3d6c02ad0ad",
+      "gradlew.bat": "cbf5d8eb5d36bfe4d19cef74da88f0cb45361bcb8a6fa185220ce05e6e4ae524",
+      "gradle/wrapper/gradle-wrapper.jar": "cb0da6751c2b753a16ac168bb354870ebb1e162e9083f116729cec9c781156b8",
+      "gradle/wrapper/gradle-wrapper.properties": "6573ff94809ecafc91d9cf817662adf6175df7032ec3ebf53e7da476c2702270",
+      "gradle/verification-metadata.xml": "23e779878f167d16b340042f82507369068d14b699f2945ef26004fd8dca9330"
+    },
+    "verifiedArtifacts": 562,
+    "exactLocalMinecraftRules": 4
+  },
+  "javaRuntime": "17.0.19+10",
+  "pack": {
+    "revision": 5,
+    "treeSha256": "dae2523ebfccd6c9215438643b0586605de24e6db876862fc55ef4010e124099",
+    "cacheAttestation": "pending",
+    "exactLocalMinecraftExceptions": 4
+  },
+  "gameTests": {
+    "status": "PASS",
+    "cases": [
+      {
+        "classname": "fabric-gametest-api-v1:empty",
+        "name": "fabriclegacygametests.fixtureloadedonpinnedserver",
+        "time": "0.045"
+      },
+      {
+        "classname": "fabric-gametest-api-v1:empty",
+        "name": "fabriclegacygametests.directionalblockstatesurvivestick",
+        "time": "0.03"
+      }
+    ],
+    "scope": "Infrastructure target identity and directional block state across ticks; generated gameplay not accepted"
+  },
+  "mainRequiredCheck": "Fabric 1.20.1 / Java 17 production target",
+  "otherGates": {
+    "legacyFabric26_2": "failed",
+    "generatedGameplay": "pending",
+    "multiplayer": "pending",
+    "artisticAcceptance": "pending",
+    "securityAcceptance": "pending",
+    "release": "pending"
+  }
+}

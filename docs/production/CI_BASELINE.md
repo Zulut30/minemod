@@ -16,4 +16,10 @@ Windows job упаковывает Studio и запускает desktop MCP/edit
 
 Jobs запускаются на push/PR; обязательность для merge дополнительно требует repository ruleset/branch protection из roadmap 014. Наличие job не подменяет эту настройку.
 
+## Подтверждённый production run
+
+В [job 111480850198](https://github.com/Zulut30/minemod/actions/runs/37217477326/job/111480850198), source `26567c9be3f0ec2bf2067e4562bf04f09253a1dc`, production target прошёл все описанные шаги. Скачанный XML содержит ровно два успешных testcase, generated clean build выпустил remapped JAR, generated server сохранил мир и завершился успешно. Java runtime — `17.0.19+10`; lock — revision 5. Evidence и hashes девяти artifact files сохранены в [fabric-production-013.json](evidence/fabric-production-013.json).
+
+Этот check теперь [обязателен для main](MERGE_CHECKS.md). Общий workflow остаётся failed из-за отдельного Fabric 26.2 regression. Четыре exact local Loom exceptions и необходимость cache attestation сохраняются; этот run не закрывает security, multiplayer, generated gameplay GameTests или человеческую оценку игровых моделей.
+
 Источники: [Loom run configuration](https://wiki.fabricmc.net/documentation:fabric_loom), [pinned Fabric GameTest API](https://github.com/FabricMC/fabric-api/tree/0.92.11%2B1.20.1/fabric-gametest-api-v1), [setup-java jdkfile](https://github.com/actions/setup-java/blob/v5.2.0/docs/advanced-usage.md#installing-java-from-local-file).
