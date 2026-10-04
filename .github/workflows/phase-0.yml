@@ -111,7 +111,7 @@ jobs:
         id: java17
         run: |
           set -euo pipefail
-          lock=packs/fabric-1.20.1/runtime/versions.lock.json
+          lock=packs/fabric-1.20.1/runtime-r4/versions.lock.json
           url=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["javaToolchains"]["primary"]["linuxX64ArchiveUrl"])' "$lock")
           digest=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["javaToolchains"]["primary"]["linuxX64ArchiveSha256"])' "$lock")
           curl --fail --location --proto '=https' --tlsv1.2 --retry 2 \
@@ -173,6 +173,7 @@ jobs:
           path: |
             output/ci/fabric-production/**
             fixtures/fabric-1.20.1-empty/build/reports/gametest/production.xml
+            fixtures/fabric-1.20.1-empty/build/reports/dependency-verification/**
             fixtures/fabric-1.20.1-empty/run/server/phase0-console.log
             fixtures/fabric-1.20.1-empty/run/client/phase0-console.log
           if-no-files-found: error

@@ -15,6 +15,7 @@ import {
 } from "@mcdev/contracts";
 import {
   BUILTIN_FABRIC_1_20_1,
+  BUILTIN_FABRIC_1_20_1_R3,
   BUILTIN_FABRIC_1_20_1_SELECTOR,
   BUILTIN_FABRIC_26_2,
   BUILTIN_FABRIC_26_2_SELECTOR,
@@ -447,6 +448,22 @@ assert.deepEqual(BUILTIN_FABRIC_1_20_1_SELECTOR, {
 assert.equal(selectBuiltinCompatibilityPack(BUILTIN_FABRIC_1_20_1_SELECTOR), BUILTIN_FABRIC_1_20_1);
 assert.equal(BUILTIN_FABRIC_1_20_1.trust, "builtin-reviewed");
 assert.equal(BUILTIN_FABRIC_1_20_1.releaseStatus, "candidate");
+const preservedR3Snapshot = await readBuiltinCompatibilityPackSnapshot(BUILTIN_FABRIC_1_20_1_R3);
+const preservedR3 = verifyCompatibilityPackSnapshot(
+  preservedR3Snapshot,
+  {
+    packId: BUILTIN_FABRIC_1_20_1_R3.packId,
+    revision: 3,
+    selector: BUILTIN_FABRIC_1_20_1_R3.target,
+    treeSha256: "e1a4c9b16670980edfd162301f56e042ff03fcaaad4deaebb288a1828f0bca37",
+  },
+);
+assert.equal(preservedR3.manifest.revision, 3, "Previous revision bytes and modes must remain unchanged");
+assert.notEqual(BUILTIN_FABRIC_1_20_1.treeSha256, preservedR3.ref.treeSha256);
+assert.throws(() => verifyCompatibilityPackSnapshot(
+  preservedR3Snapshot,
+  { ...preservedR3.ref, revision: 4, selector: BUILTIN_FABRIC_1_20_1.target },
+));
 const loadedFabricJava17 = await loadBuiltinCompatibilityPack(BUILTIN_FABRIC_1_20_1_SELECTOR);
 assert.deepEqual(loadedFabricJava17.ref, {
   packId: BUILTIN_FABRIC_1_20_1.packId,

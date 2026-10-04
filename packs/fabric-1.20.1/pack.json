@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "fabric-1.20.1",
   "displayName": "Fabric 1.20.1",
-  "status": "experimental-local-runtime-pass",
+  "status": "experimental-revision4-runtime-pending",
   "productionTarget": true,
   "productLicense": "Apache-2.0",
   "contract": "ModSpec",
@@ -23,25 +23,27 @@
     "locationEnvironmentVariables": [
       "MCDEV_JAVA17_HOME"
     ],
-    "sourceAndChecksums": "runtime/versions.lock.json"
+    "sourceAndChecksums": "runtime-r4/versions.lock.json"
   },
   "capabilities": {
-    "cleanBuild": "local-pass",
-    "dedicatedServerSmoke": "local-pass",
-    "headlessClientSmoke": "local-pass",
-    "dependencyVerification": "strict-local-pass",
-    "trustedLibraryResolution": "modmenu-yacl-local-pass",
+    "cleanBuild": "revision4-pending",
+    "dedicatedServerSmoke": "revision4-pending",
+    "headlessClientSmoke": "revision4-pending",
+    "dependencyVerification": "revision4-pending",
+    "trustedLibraryResolution": "revision4-pending",
     "gameTestServer": "pending",
     "clientGameTest": "pending",
     "hostedCi": "pending"
   },
   "artifacts": {
-    "runtimeManifest": "runtime/manifest.json",
-    "versionLock": "runtime/versions.lock.json",
+    "runtimeManifest": "runtime-r4/manifest.json",
+    "versionLock": "runtime-r4/versions.lock.json",
+    "preservedRevision3Manifest": "runtime/manifest.json",
+    "migrationReport": "../../docs/production/PACK_REVISION_4.md",
     "fixture": "../../fixtures/fabric-1.20.1-empty"
   },
   "knownIssues": [
-    "Clean build and client/server smoke checks pass locally; GameTests and hosted gates remain pending.",
+    "Revision 3 local cache passed, but a clean hosted bootstrap found unrecorded public Maven JAR containers. Revision 4 adds reviewed checksums; its runtime gates remain pending.",
     "Full transitive dependency license classification is not complete."
   ]
 }

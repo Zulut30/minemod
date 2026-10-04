@@ -53,7 +53,7 @@ assert.equal(typeof createFabricPhase1BuildRunner, "function");
 assert.equal(new BuildRunnerError("BUILD_FAILED", "Build failed.").code, "BUILD_FAILED");
 
 const runtimePackRoot = fileURLToPath(new URL("../../packs/neoforge-26.1.2/runtime/", import.meta.url));
-const fabricRuntimePackRoot = fileURLToPath(new URL("../../packs/fabric-1.20.1/runtime/", import.meta.url));
+const fabricRuntimePackRoot = fileURLToPath(new URL("../../packs/fabric-1.20.1/runtime-r4/", import.meta.url));
 const sha = (bytes: Uint8Array): string => createHash("sha256").update(bytes).digest("hex");
 
 interface TestFixture {

@@ -7,7 +7,7 @@ import re
 import xml.etree.ElementTree as ET
 
 root = Path(__file__).resolve().parent.parent
-runtime = root / "packs/fabric-1.20.1/runtime"
+runtime = root / "packs/fabric-1.20.1/runtime-r4"
 fixture = root / "fixtures/fabric-1.20.1-empty"
 lock_path = runtime / "versions.lock.json"
 lock = json.loads(lock_path.read_text(encoding="utf-8"))
@@ -44,16 +44,16 @@ def verified_artifacts(path):
     for component in metadata.findall("./d:components/d:component", namespace):
         for artifact in component.findall("d:artifact", namespace):
             checksum = artifact.findall("d:sha256", namespace)
-            assert len(checksum) == 1 and re.fullmatch("[a-f0-9]{64}", checksum[0].attrib["value"])
+            assert 1 <= len(checksum) <= 2 and all(re.fullmatch("[a-f0-9]{64}", entry.attrib["value"]) for entry in checksum)
             key = tuple(component.attrib[field] for field in ("group", "name", "version")) + (artifact.attrib["name"],)
-            artifacts[key] = checksum[0].attrib["value"]
+            artifacts[key] = frozenset(entry.attrib["value"] for entry in checksum)
     return artifacts
 
 
 reviewed = verified_artifacts(runtime / "templates/gradle/verification-metadata.xml")
 artifacts = verified_artifacts(fixture / "gradle/verification-metadata.xml")
 assert len(reviewed) == lock["verification"]["artifacts"]
-assert artifacts, "Empty fixture verification metadata"
+assert len(artifacts) == 562, "Fixture verification metadata changed without review"
 for coordinate, digest in artifacts.items():
     assert reviewed.get(coordinate) == digest, coordinate
 checked["gradle/verification-metadata.xml"] = sha256(fixture / "gradle/verification-metadata.xml")

@@ -41,7 +41,7 @@ export interface BuiltinCompatibilityPackRegistration<
   readonly selector: Selector;
   readonly target: Target;
   readonly packId: PackId;
-  readonly revision: 1 | 2 | 3;
+  readonly revision: 1 | 2 | 3 | 4;
   readonly treeEntries: 15 | 16;
   readonly treeSha256: string;
   readonly trust: "builtin-reviewed";
@@ -84,7 +84,7 @@ export const BUILTIN_FABRIC_26_2: BuiltinCompatibilityPackRegistration<
   releaseStatus: "candidate",
 });
 
-export const BUILTIN_FABRIC_1_20_1: BuiltinCompatibilityPackRegistration<
+export const BUILTIN_FABRIC_1_20_1_R3: BuiltinCompatibilityPackRegistration<
   FabricCompatibilitySelectorV3,
   FabricCompatibilityPackTargetV3,
   "fabric-1.20.1-java-17"
@@ -100,6 +100,16 @@ export const BUILTIN_FABRIC_1_20_1: BuiltinCompatibilityPackRegistration<
   treeSha256: "e1a4c9b16670980edfd162301f56e042ff03fcaaad4deaebb288a1828f0bca37",
   trust: "builtin-reviewed",
   releaseStatus: "candidate",
+});
+
+export const BUILTIN_FABRIC_1_20_1: BuiltinCompatibilityPackRegistration<
+  FabricCompatibilitySelectorV3,
+  FabricCompatibilityPackTargetV3,
+  "fabric-1.20.1-java-17"
+> = Object.freeze({
+  ...BUILTIN_FABRIC_1_20_1_R3,
+  revision: 4,
+  treeSha256: "5665fbc60365bf22639292c0b5e8ee46c7853c52e20e744be88a2c3fbaaf2282",
 });
 
 const BUILTIN_PACKS = Object.freeze([

@@ -4,7 +4,7 @@ Roadmap 012/013/016: реализация проверок не означает
 
 Job `fabric-production` в `phase-0.yml` использует Ubuntu 24.04, Node 24.11.0 и Java 17.0.19+10 из archive, URL и SHA-256 которого берутся из reviewed lock. `setup-java` устанавливает проверенный локальный archive в режиме `jdkfile`; runtime identity сверяется после установки. Это не автоматическое обновление trusted pack.
 
-Проверка входов сравнивает wrapper bytes с trusted runtime и checksums fixture dependencies с reviewed metadata. Empty fixture имеет 562 artifacts, compiler runtime — 654 из-за дополнительного библиотечного профиля. Все используемые fixture checksums должны принадлежать reviewed набору.
+Проверка входов сравнивает wrapper bytes с trusted runtime revision 4 и checksums fixture dependencies с reviewed metadata. Empty fixture имеет 562 artifacts, compiler runtime — 654 из-за дополнительного библиотечного профиля. Для 51 JAR добавлен второй exact SHA-256 с отдельным [container/source audit](../provenance/fabric-1.20.1-container-review-r4.json). Все используемые fixture checksums должны принадлежать reviewed набору; wildcard для скачанных JAR не добавлен.
 
 В чистом checkout первая фиксированная Gradle-команда загружает dependencies со strict verification. Следующий clean build использует `--offline`. Два server GameTests подтверждают correct target, доступность harness и сохранение directional state после ticks. Dedicated server/client smoke используют существующую изоляцию, readiness nonce, закрытие только собственных процессов и ограниченные console logs.
 
