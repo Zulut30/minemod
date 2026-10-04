@@ -128,5 +128,49 @@
   "historyPersistence": "Session only; undo stack is not saved between launches",
   "artisticApproval": "not-granted",
   "minecraftRendering": "not-verified by editor history tests",
-  "hostedNewHistoryChecks": "pending after commit"
+  "hostedNewHistoryChecks": {
+    "status": "PASS",
+    "sourceRevision": "c3d1141c185102b890530009673b4962c3f58d18",
+    "runUrl": "https://github.com/Zulut30/minemod/actions/runs/37226055544",
+    "windowsJobId": 111505873173,
+    "linuxControlPlaneJobId": 111505873196,
+    "productionJava17JobId": 111505873047,
+    "clientSmokeJobId": 111506480455,
+    "neoForgeRegressionJobId": 111505873180,
+    "report": {
+      "path": "output/ci/37226055544-windows/output/playwright/studio-packaged-009bfe58/report.json",
+      "sha256": "3dc018a65c50202d059deb0d30b3ec04a45374d0063aa6cdcd80676c50cb2358"
+    },
+    "history": {
+      "status": "PASS",
+      "hidden": true,
+      "mixedOperations": 17,
+      "undoCount": 17,
+      "redoCount": 17,
+      "exactFileHashes": true,
+      "initialFrontSha256": "c4e9ecda978e3bfa40a4cd952ca07a17b98425a6f151e2f3a540e98c1d0fd3ea",
+      "afterUndoFrontSha256": "c4e9ecda978e3bfa40a4cd952ca07a17b98425a6f151e2f3a540e98c1d0fd3ea",
+      "checks": [
+        "real human IPC mutations",
+        "UI undo/redo buttons",
+        "entire project at every step",
+        "MCP bundle file hashes at every step",
+        "actual front render after full undo"
+      ]
+    },
+    "screenshots": [
+      {
+        "path": "output/ci/37226055544-windows/output/playwright/studio-packaged-009bfe58/history/before-front.png",
+        "sha256": "c4e9ecda978e3bfa40a4cd952ca07a17b98425a6f151e2f3a540e98c1d0fd3ea",
+        "bytes": 24311
+      },
+      {
+        "path": "output/ci/37226055544-windows/output/playwright/studio-packaged-009bfe58/history/after-undo-front.png",
+        "sha256": "c4e9ecda978e3bfa40a4cd952ca07a17b98425a6f151e2f3a540e98c1d0fd3ea",
+        "bytes": 24311
+      }
+    ],
+    "workflowConclusion": "failure",
+    "remainingFailure": "Existing Fabric 26.2 strict dependency verification derived Minecraft common JAR checksum mismatch; no checksum bypass."
+  }
 }
