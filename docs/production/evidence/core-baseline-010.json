@@ -1,0 +1,408 @@
+{
+  "schemaVersion": 1,
+  "kind": "mcdev-editor-baseline",
+  "roadmapPoint": 10,
+  "status": "PARTIAL",
+  "measuredAt": "2026-10-04T15:08:37.209Z",
+  "sourceRevision": "4e100f5304a9f6da36ccf27cea859785049de9c9",
+  "workspaceWasDirty": true,
+  "sourceInputs": [
+    {
+      "path": "scripts/measure-editor-baseline.mjs",
+      "sha256": "b7efc51eb62854d39289587ca8595bb6c9a330d244a05333ddb2393194145bf4"
+    },
+    {
+      "path": "packages/editor-core/index.ts",
+      "sha256": "ee80ec27d2ac94810e3919b98edfa38cff20de840f24c0a2e9f8594c301e35c2"
+    },
+    {
+      "path": "packages/editor-core/texture.ts",
+      "sha256": "e84813a97886908eda27bd810b5e370b4587c7551b0dd668bfd108607cd4e1ba"
+    },
+    {
+      "path": "packages/application/item-assets.ts",
+      "sha256": "49e2f2a11fbac12d471a69d40b3302286b3298ef4016f85e4ee7bfd94087887c"
+    },
+    {
+      "path": "packages/assets-core/minecraft-item.ts",
+      "sha256": "9eea5f2121d89589ab43d83468a0a9aeecc06397d1d9c6775b0d744731e26593"
+    },
+    {
+      "path": "packages/assets-core/painted-item.ts",
+      "sha256": "3e757e82fae094dd537055c3013fcd36ae1ec7b0140837f26c70b2dc8cdb0fa5"
+    }
+  ],
+  "scope": "Editor core on one fixture; excludes desktop/agent latency, artwork scoring and Minecraft runtime.",
+  "environment": {
+    "node": "v24.11.0",
+    "platform": "win32",
+    "release": "10.0.26200",
+    "architecture": "x64",
+    "cpu": "AMD Ryzen 9 5950X 16-Core Processor            ",
+    "memoryGiB": 31.88233184814453,
+    "gpu": "not-used-by-this-core-measurement"
+  },
+  "policySha256": "e1ccc70fbce700fb6345fff15045d53769e5b3458be084ec33d0df73b744b099",
+  "fixture": {
+    "path": "fixtures/assets/aurora-longsword-v2.item-asset.json",
+    "sha256": "95174e93e9f811f500c7e9ce87f8bad5cc3784e3edae680b6ac9e09b53a23d3c",
+    "cubes": 52,
+    "texture": {
+      "width": 256,
+      "height": 256
+    }
+  },
+  "warmupIterations": 5,
+  "measuredIterations": 30,
+  "measurement": {
+    "mutation": {
+      "count": 30,
+      "p50Ms": 2.3214000000000397,
+      "p95Ms": 4.352300000000014,
+      "maxMs": 4.6159000000000106,
+      "failedSamples": 0,
+      "targetP95Ms": 200,
+      "targetMet": true
+    },
+    "export": {
+      "count": 30,
+      "p50Ms": 11.249899999999968,
+      "p95Ms": 14.472700000000032,
+      "maxMs": 14.87700000000001,
+      "failedSamples": 0,
+      "targetP95Ms": 1500,
+      "targetMet": true
+    }
+  },
+  "firstTechnicalExportMs": 21.003599999999977,
+  "repeatedExportFileHashes": [
+    {
+      "path": "assets/mcdev/models/item/aurora_longsword_v2.json",
+      "sha256": "806acf6dd9534ea0cfbfe582714d2d5244acc2937a754a8b29396189adc438d3"
+    },
+    {
+      "path": "assets/mcdev/textures/item/aurora_longsword_v2.png",
+      "sha256": "da87af636ee08fd8fdd81c36a9f622c360aedb724df1212d7200f1cd86d2a1c1"
+    },
+    {
+      "path": "editable/mcdev/aurora_longsword_v2.bbmodel",
+      "sha256": "dd0d6bf23a3020bb18337a568db03ba3059079e8aa5df2f019097a60a57d9c2e"
+    }
+  ],
+  "samples": {
+    "mutation": [
+      {
+        "iteration": 0,
+        "elapsedMs": 3.2527000000000044,
+        "failed": false
+      },
+      {
+        "iteration": 1,
+        "elapsedMs": 2.297799999999995,
+        "failed": false
+      },
+      {
+        "iteration": 2,
+        "elapsedMs": 2.329599999999971,
+        "failed": false
+      },
+      {
+        "iteration": 3,
+        "elapsedMs": 3.029899999999998,
+        "failed": false
+      },
+      {
+        "iteration": 4,
+        "elapsedMs": 2.98539999999997,
+        "failed": false
+      },
+      {
+        "iteration": 5,
+        "elapsedMs": 4.6159000000000106,
+        "failed": false
+      },
+      {
+        "iteration": 6,
+        "elapsedMs": 2.635400000000004,
+        "failed": false
+      },
+      {
+        "iteration": 7,
+        "elapsedMs": 2.534400000000005,
+        "failed": false
+      },
+      {
+        "iteration": 8,
+        "elapsedMs": 2.777499999999975,
+        "failed": false
+      },
+      {
+        "iteration": 9,
+        "elapsedMs": 2.8530000000000086,
+        "failed": false
+      },
+      {
+        "iteration": 10,
+        "elapsedMs": 4.352300000000014,
+        "failed": false
+      },
+      {
+        "iteration": 11,
+        "elapsedMs": 2.3394000000000688,
+        "failed": false
+      },
+      {
+        "iteration": 12,
+        "elapsedMs": 2.9349999999999454,
+        "failed": false
+      },
+      {
+        "iteration": 13,
+        "elapsedMs": 2.4215000000000373,
+        "failed": false
+      },
+      {
+        "iteration": 14,
+        "elapsedMs": 3.5430999999999813,
+        "failed": false
+      },
+      {
+        "iteration": 15,
+        "elapsedMs": 2.3455999999999904,
+        "failed": false
+      },
+      {
+        "iteration": 16,
+        "elapsedMs": 2.171600000000012,
+        "failed": false
+      },
+      {
+        "iteration": 17,
+        "elapsedMs": 1.8643000000000711,
+        "failed": false
+      },
+      {
+        "iteration": 18,
+        "elapsedMs": 1.8467999999999165,
+        "failed": false
+      },
+      {
+        "iteration": 19,
+        "elapsedMs": 1.828899999999976,
+        "failed": false
+      },
+      {
+        "iteration": 20,
+        "elapsedMs": 1.8652999999999338,
+        "failed": false
+      },
+      {
+        "iteration": 21,
+        "elapsedMs": 2.3214000000000397,
+        "failed": false
+      },
+      {
+        "iteration": 22,
+        "elapsedMs": 2.0130000000000337,
+        "failed": false
+      },
+      {
+        "iteration": 23,
+        "elapsedMs": 2.142500000000041,
+        "failed": false
+      },
+      {
+        "iteration": 24,
+        "elapsedMs": 1.8699000000000296,
+        "failed": false
+      },
+      {
+        "iteration": 25,
+        "elapsedMs": 1.8590000000000373,
+        "failed": false
+      },
+      {
+        "iteration": 26,
+        "elapsedMs": 1.9033000000000584,
+        "failed": false
+      },
+      {
+        "iteration": 27,
+        "elapsedMs": 2.1451999999999316,
+        "failed": false
+      },
+      {
+        "iteration": 28,
+        "elapsedMs": 2.024099999999976,
+        "failed": false
+      },
+      {
+        "iteration": 29,
+        "elapsedMs": 1.8360999999999876,
+        "failed": false
+      }
+    ],
+    "export": [
+      {
+        "iteration": 0,
+        "elapsedMs": 10.143199999999979,
+        "failed": false
+      },
+      {
+        "iteration": 1,
+        "elapsedMs": 11.224100000000021,
+        "failed": false
+      },
+      {
+        "iteration": 2,
+        "elapsedMs": 12.0317,
+        "failed": false
+      },
+      {
+        "iteration": 3,
+        "elapsedMs": 11.19459999999998,
+        "failed": false
+      },
+      {
+        "iteration": 4,
+        "elapsedMs": 10.555099999999982,
+        "failed": false
+      },
+      {
+        "iteration": 5,
+        "elapsedMs": 13.971600000000024,
+        "failed": false
+      },
+      {
+        "iteration": 6,
+        "elapsedMs": 13.850099999999998,
+        "failed": false
+      },
+      {
+        "iteration": 7,
+        "elapsedMs": 14.87700000000001,
+        "failed": false
+      },
+      {
+        "iteration": 8,
+        "elapsedMs": 11.56329999999997,
+        "failed": false
+      },
+      {
+        "iteration": 9,
+        "elapsedMs": 13.272400000000005,
+        "failed": false
+      },
+      {
+        "iteration": 10,
+        "elapsedMs": 11.249899999999968,
+        "failed": false
+      },
+      {
+        "iteration": 11,
+        "elapsedMs": 13.09190000000001,
+        "failed": false
+      },
+      {
+        "iteration": 12,
+        "elapsedMs": 14.472700000000032,
+        "failed": false
+      },
+      {
+        "iteration": 13,
+        "elapsedMs": 12.030500000000075,
+        "failed": false
+      },
+      {
+        "iteration": 14,
+        "elapsedMs": 12.629099999999994,
+        "failed": false
+      },
+      {
+        "iteration": 15,
+        "elapsedMs": 10.303699999999935,
+        "failed": false
+      },
+      {
+        "iteration": 16,
+        "elapsedMs": 9.595299999999952,
+        "failed": false
+      },
+      {
+        "iteration": 17,
+        "elapsedMs": 12.383600000000001,
+        "failed": false
+      },
+      {
+        "iteration": 18,
+        "elapsedMs": 9.584600000000023,
+        "failed": false
+      },
+      {
+        "iteration": 19,
+        "elapsedMs": 12.029300000000035,
+        "failed": false
+      },
+      {
+        "iteration": 20,
+        "elapsedMs": 9.439699999999903,
+        "failed": false
+      },
+      {
+        "iteration": 21,
+        "elapsedMs": 9.54589999999996,
+        "failed": false
+      },
+      {
+        "iteration": 22,
+        "elapsedMs": 13.210199999999986,
+        "failed": false
+      },
+      {
+        "iteration": 23,
+        "elapsedMs": 10.465700000000083,
+        "failed": false
+      },
+      {
+        "iteration": 24,
+        "elapsedMs": 12.599299999999971,
+        "failed": false
+      },
+      {
+        "iteration": 25,
+        "elapsedMs": 9.664100000000076,
+        "failed": false
+      },
+      {
+        "iteration": 26,
+        "elapsedMs": 9.773899999999912,
+        "failed": false
+      },
+      {
+        "iteration": 27,
+        "elapsedMs": 11.075900000000047,
+        "failed": false
+      },
+      {
+        "iteration": 28,
+        "elapsedMs": 9.995500000000106,
+        "failed": false
+      },
+      {
+        "iteration": 29,
+        "elapsedMs": 11.346400000000017,
+        "failed": false
+      }
+    ]
+  },
+  "failures": [],
+  "notMeasured": {
+    "firstUserAcceptedExport": null,
+    "agentSessionSuccessRate": null,
+    "manualRepairCount": null,
+    "humanArtRatings": null,
+    "desktopResponsiveness": null,
+    "maximumSizeInput": null
+  },
+  "completeRoadmapPoint": false
+}
