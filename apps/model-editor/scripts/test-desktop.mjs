@@ -19,6 +19,7 @@ import { checkReviewDesktop } from "./check-review-desktop.mjs";
 import { packagedPath } from "./packaged-path.mjs";
 import { verifyAssetBundleV1 } from "../../../packages/application/asset-bundles.ts";
 import { checkMigrationsDesktop } from "./check-migrations-desktop.mjs";
+import { checkHistoryDesktop } from "./check-history-desktop.mjs";
 
 const appDir = resolve(dirname(fileURLToPath(import.meta.url)), ".."),
   repo = resolve(appDir, "../..");
@@ -384,6 +385,7 @@ try {
   const variants = await checkVariantsDesktop(options, output);
   const review = await checkReviewDesktop(options, output);
   const migrations = await checkMigrationsDesktop(options, output);
+  const history = await checkHistoryDesktop(options, output);
   await writeFile(
     join(output, "report.json"),
     JSON.stringify(
@@ -400,6 +402,7 @@ try {
         variants,
         review,
         migrations,
+        history,
         checks: [
           "real texture render",
           "resize",

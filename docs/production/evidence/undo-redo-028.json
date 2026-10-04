@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 28,
+  "status": "PASS",
+  "scope": "17 mixed supported operations undo/redo exact project and four bundle files; real UI buttons, MCP exports and renderer capture in hidden packaged Studio 0.7.0",
+  "verifiedAtUtc": "2026-10-04T18:51:59.847583+00:00",
+  "sourceParentRevision": "29515d3ca0e0f7fef27de2463f034147c979048c",
+  "sourceHashes": [
+    {
+      "path": "fixtures/editor-projects/history-scenario.ts",
+      "bytes": 1769,
+      "sha256": "cf41d5991a608bf214cc002a614f26eebcb9d2f1129b8cb26b040864b0519cb6"
+    },
+    {
+      "path": "packages/editor-core/history-roundtrip.test.ts",
+      "bytes": 3326,
+      "sha256": "d9e983134884a46b0753c8c292404f43c146524498b4370ec4fd31d2894a049c"
+    },
+    {
+      "path": "packages/editor-core/package.json",
+      "bytes": 593,
+      "sha256": "6f0be03fc79c1390a22e4f05c49b371935f29a45d5d4beab3ca2cdb1c72376f1"
+    },
+    {
+      "path": "apps/model-editor/scripts/check-history-desktop.mjs",
+      "bytes": 5411,
+      "sha256": "6229ff810e76d41ed450a04c72c3a4e1be8f85c3650138537c509351891c8922"
+    },
+    {
+      "path": "apps/model-editor/scripts/test-desktop.mjs",
+      "bytes": 16245,
+      "sha256": "fc42f93ccd380074c275d57c0be0111007eaad7f5a36d8c2c0152a56914097bc"
+    },
+    {
+      "path": "packages/editor-core/index.ts",
+      "bytes": 31101,
+      "sha256": "14baefe176b95185398f0ef43be0e032c2de7235d0582d5fdb61034b4bd7be1a"
+    }
+  ],
+  "toolchain": {
+    "node": "24.11.0",
+    "pnpm": "11.8.0",
+    "studio": "0.7.0"
+  },
+  "tests": {
+    "coreRoundtrip": "PASS",
+    "typecheck": "PASS",
+    "lint": "PASS",
+    "packagedFocusedHistory": "PASS",
+    "newBranchClearsRedo": "PASS",
+    "rejectedRedoLeavesState": "PASS"
+  },
+  "logs": [
+    {
+      "path": "output/verification/roadmap-028-history.log",
+      "bytes": 106,
+      "sha256": "96e57639b073e2400d7d9cad0b98a49e657f64400fb41c47163b2801e6f2afce"
+    },
+    {
+      "path": "output/verification/roadmap-028-typecheck.log",
+      "bytes": 176,
+      "sha256": "fe0327fb3a908a7cea6b4e5ef62bbaa7903d4f4149a209170e6249f0dd5c8190"
+    },
+    {
+      "path": "output/verification/roadmap-028-lint.log",
+      "bytes": 29,
+      "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+    },
+    {
+      "path": "output/verification/roadmap-028-packaged-history.log",
+      "bytes": 131,
+      "sha256": "356ceb8930673f54791c56fe0b5ee69df9aee1ec75e9ac23bf26dcfe9d420037"
+    }
+  ],
+  "report": {
+    "path": "output/playwright/history-028-776a7282/report.json",
+    "bytes": 725,
+    "sha256": "bb923dfabaf066e09b9d263d93a76654fe2f61c1adba9f75ca227096bebdbde7"
+  },
+  "checks": {
+    "packaged": true,
+    "version": "0.7.0",
+    "executablePath": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.7.0\\ebc8e8d7\\MineMod Studio-win32-x64\\MineMod Studio.exe",
+    "status": "PASS",
+    "hidden": true,
+    "mixedOperations": 17,
+    "undoCount": 17,
+    "redoCount": 17,
+    "exactFileHashes": true,
+    "initialFrontSha256": "80aac7cda7c2242c05ae04330ec0edffadab92eb5aff368e0441d4d55ddab183",
+    "afterUndoFrontSha256": "80aac7cda7c2242c05ae04330ec0edffadab92eb5aff368e0441d4d55ddab183",
+    "checks": [
+      "real human IPC mutations",
+      "UI undo/redo buttons",
+      "entire project at every step",
+      "MCP bundle file hashes at every step",
+      "actual front render after full undo"
+    ]
+  },
+  "screenshots": [
+    {
+      "path": "output/playwright/history-028-776a7282/history/before-front.png",
+      "bytes": 33038,
+      "sha256": "80aac7cda7c2242c05ae04330ec0edffadab92eb5aff368e0441d4d55ddab183"
+    },
+    {
+      "path": "output/playwright/history-028-776a7282/history/after-undo-front.png",
+      "bytes": 33038,
+      "sha256": "80aac7cda7c2242c05ae04330ec0edffadab92eb5aff368e0441d4d55ddab183"
+    }
+  ],
+  "package": {
+    "executable": {
+      "path": "output/model-editor/releases/0.7.0/ebc8e8d7/MineMod Studio-win32-x64/MineMod Studio.exe",
+      "bytes": 245726208,
+      "sha256": "d06436109ca1dc14bfff35117b672045d09d7b9623391f35cf60cfc0ee574282"
+    },
+    "appAsar": {
+      "path": "output/model-editor/releases/0.7.0/ebc8e8d7/MineMod Studio-win32-x64/resources/app.asar",
+      "bytes": 3500961,
+      "sha256": "3ba603461127e608b9dbb27377cd61604859ddad49ebcd9fc668dae4c9cd194b"
+    },
+    "fullPriorPackageProof": "project-migrations-027.json",
+    "rebuiltForTestsOnly": false
+  },
+  "runtimeBehaviorChanged": false,
+  "groupingScope": "Existing semantic parts; no new hide/rename/tree commands",
+  "historyPersistence": "Session only; undo stack is not saved between launches",
+  "artisticApproval": "not-granted",
+  "minecraftRendering": "not-verified by editor history tests",
+  "hostedNewHistoryChecks": "pending after commit"
+}
