@@ -476,6 +476,14 @@ jobs:
         run: >-
           ./gradlew --project-cache-dir "$GRADLE_PROJECT_CACHE_DIR"
           --dependency-verification strict clean build
+      - name: Upload Fabric dependency verification diagnostics
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: fabric-26.2-verification-failure
+          path: fixtures/fabric-26.2-empty/build/reports/dependency-verification/**
+          if-no-files-found: warn
+          retention-days: 14
       - name: Upload Fabric server GameTest report
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
