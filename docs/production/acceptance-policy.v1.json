@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "kind": "mcdev-production-acceptance-policy",
+  "target": { "minecraft": "1.20.1", "loader": "fabric", "java": 17 },
+  "art": {
+    "rubricVersion": "0.1.0",
+    "minimumTotal": 85,
+    "categoryMinimums": { "technical": 27, "visual": 24, "inGame": 21, "provenance": 13 },
+    "categoryMaximums": { "technical": 30, "visual": 30, "inGame": 25, "provenance": 15 },
+    "humanApprovalRequired": true,
+    "hardBlockersAllowed": 0,
+    "approvalBinding": ["rubricVersion", "artSpecSha256", "candidateManifestSha256", "scorecardSha256"]
+  },
+  "authoringLimits": {
+    "maxCubes": 256,
+    "maxBones": 64,
+    "maxPaletteColors": 32,
+    "maxAtlasDimension": 256,
+    "maxVariants": 4,
+    "maxProjectBytes": 1048576,
+    "maxMutationBytes": 262144,
+    "maxCommandsPerMutation": 32,
+    "maxMcpJsonResponseBytes": 2097152
+  },
+  "referenceHardware": {
+    "id": "win11-5950x-4060ti-32g",
+    "os": "Windows 11 x64",
+    "processor": "AMD Ryzen 9 5950X",
+    "logicalProcessors": 32,
+    "memoryGiB": 32,
+    "gpu": "NVIDIA GeForce RTX 4060 Ti",
+    "supportMeaning": "Reference measurement machine only; does not establish a minimum hardware requirement."
+  },
+  "performanceTargets": {
+    "warmupIterations": 5,
+    "measuredIterations": 30,
+    "quantile": 0.95,
+    "editorCoreMutationP95Ms": 200,
+    "editorCoreExportP95Ms": 1500,
+    "desktopCaptureP95Ms": 5000,
+    "desktopSaveP95Ms": 1000,
+    "desktopWarmOpenP95Ms": 3000,
+    "desktopFrameP95Ms": 33.4,
+    "desktopProcessGroupPeakMiB": 2048,
+    "gameReferenceScene": "32 companion entities and 64 decorative blocks, at the ArtSpec budgets, in a controlled fixture",
+    "gameFrameP95Ms": 33.4,
+    "serverTickP95Ms": 50,
+    "measurementStatus": "targets-defined-not-yet-proven"
+  },
+  "releaseChecks": [
+    "lint", "typecheck", "portable-unit-integration", "desktop-http-mcp",
+    "packaged-desktop-e2e", "fabric-1201-clean-build", "server-gametests",
+    "fabric-1201-client-harness", "dedicated-server-lifecycle", "multiplayer-authority",
+    "optional-absent-present", "failure-recovery", "art-scorecard-human-approval",
+    "provenance-license-review", "release-bundle-verification", "hosted-ci"
+  ]
+}
