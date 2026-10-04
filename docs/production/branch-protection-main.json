@@ -1,0 +1,40 @@
+{
+  "required_status_checks": {
+    "strict": true,
+    "checks": [
+      {
+        "context": "control-plane",
+        "app_id": 15368
+      },
+      {
+        "context": "studio-windows",
+        "app_id": 15368
+      },
+      {
+        "context": "Fabric 1.20.1 / Java 17 production target",
+        "app_id": 15368
+      },
+      {
+        "context": "fabric",
+        "app_id": 15368
+      },
+      {
+        "context": "fabric-client",
+        "app_id": 15368
+      },
+      {
+        "context": "neoforge",
+        "app_id": 15368
+      },
+      {
+        "context": "client-smoke",
+        "app_id": 15368
+      }
+    ]
+  },
+  "enforce_admins": true,
+  "required_pull_request_reviews": null,
+  "restrictions": null,
+  "allow_force_pushes": false,
+  "allow_deletions": false
+}

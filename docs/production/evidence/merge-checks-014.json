@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 14,
+  "status": "PASS",
+  "verifiedAtUtc": "2026-10-04T16:49:20.716381+00:00",
+  "sourceRevision": "26567c9be3f0ec2bf2067e4562bf04f09253a1dc",
+  "repository": "Zulut30/minemod",
+  "branch": "main",
+  "api": "https://api.github.com/repos/Zulut30/minemod/branches/main/protection",
+  "configurationSha256": "1fa1fe235e3dc253f588b2170a008e0f3fd86a7965be55c197d085b04347d1ca",
+  "readbackSha256": "8188a34b9961c5776cb0087a08ed5f5761ad62265d55b95f34dd57e4adb54af6",
+  "requiredStatusChecks": {
+    "url": "https://api.github.com/repos/Zulut30/minemod/branches/main/protection/required_status_checks",
+    "strict": true,
+    "contexts": [
+      "control-plane",
+      "studio-windows",
+      "Fabric 1.20.1 / Java 17 production target",
+      "fabric",
+      "fabric-client",
+      "neoforge",
+      "client-smoke"
+    ],
+    "contexts_url": "https://api.github.com/repos/Zulut30/minemod/branches/main/protection/required_status_checks/contexts",
+    "checks": [
+      {
+        "context": "control-plane",
+        "app_id": 15368
+      },
+      {
+        "context": "studio-windows",
+        "app_id": 15368
+      },
+      {
+        "context": "Fabric 1.20.1 / Java 17 production target",
+        "app_id": 15368
+      },
+      {
+        "context": "fabric",
+        "app_id": 15368
+      },
+      {
+        "context": "fabric-client",
+        "app_id": 15368
+      },
+      {
+        "context": "neoforge",
+        "app_id": 15368
+      },
+      {
+        "context": "client-smoke",
+        "app_id": 15368
+      }
+    ]
+  },
+  "enforceAdmins": true,
+  "allowForcePushes": false,
+  "allowDeletions": false,
+  "priorProtection": false,
+  "currentRegressionFailure": "fabric (26.2) in run 37217477326; whole workflow failed and merge blocked",
+  "humanArtApproval": null,
+  "releaseApproval": null
+}
