@@ -4,7 +4,7 @@
 
 Этот документ описывает путь от завершённого MVP к поддерживаемому GA-продукту Minecraft AI Mod Studio.
 
-> **Актуализация от 21 июля 2026:** основной MVP и первый GA candidate теперь планируются для Fabric 26.2 согласно [ADR-0003](decisions/0003-fabric-first-mvp.md) и [Fabric-first MVP plan](FABRIC_FIRST_MVP_PLAN.md). Упоминания NeoForge как первичного target ниже являются историческим baseline и будут применяться к сохранённому второму backend, пока соответствующая секция не мигрирована отдельным evidence-backed решением.
+> **Актуализация от 4 октября 2026:** основной MVP и первый production target — Fabric 1.20.1 / Java 17 согласно [ADR-0004](decisions/0004-fabric-1.20.1-production-baseline.md). Операционный backlog — [100 пунктов до production](PRODUCTION_ROADMAP_100.md); изменения packs следуют [compatibility policy](production/COMPATIBILITY_POLICY.md). Упоминания Fabric 26.2 и NeoForge ниже применяются к regression/future backends, а не меняют основной baseline.
 
 Он дополняет:
 
@@ -28,7 +28,7 @@ Roadmap не является status page. Наличие возможности
 6. формируют воспроизводимый release bundle;
 7. не публикуют результат без отдельного явного подтверждения человека.
 
-Первый GA не обязан одновременно обеспечивать parity для Fabric, NeoForge, Forge и Paper. Базовый GA target — production compatibility pack Fabric 26.2 либо его явно утверждённый successor, если к моменту release старый target больше нельзя безопасно поддерживать.
+Первый GA не обязан одновременно обеспечивать parity для Fabric, NeoForge, Forge и Paper. Базовый GA target — production compatibility pack Fabric 1.20.1 / Java 17. Обновление tuple требует отдельной revision и проверок; смена Minecraft target — отдельного решения по ADR.
 
 NeoForge, Forge, multi-loader export и Paper получают отдельные maturity gates. Они не должны задерживать Fabric GA или создавать ложное обещание feature parity.
 
