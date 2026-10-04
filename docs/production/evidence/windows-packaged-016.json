@@ -1,0 +1,293 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 16,
+  "status": "PASS",
+  "scope": "Windows 2022 x64 hosted packaged Studio E2E; game and human art acceptance excluded",
+  "sourceRevision": "9e60cbe80e09b52b537bf329c14bcc6101f9946c",
+  "ci": {
+    "runId": 37214772795,
+    "jobId": 111472943144,
+    "url": "https://github.com/Zulut30/minemod/actions/runs/37214772795/job/111472943144",
+    "jobConclusion": "success",
+    "workflowConclusion": "failure",
+    "otherFailureScope": "Fabric/NeoForge bootstrap gates remain open"
+  },
+  "report": {
+    "path": "output/playwright/studio-packaged-cd463aeb/report.json",
+    "sha256": "247567893e6affbb2ff86ac533d4a193444005877bc397d813c3ff9bfda667e0",
+    "packaged": true,
+    "status": "PASS",
+    "checks": [
+      "real texture render",
+      "resize",
+      "part recolor",
+      "undo/redo",
+      "Cyrillic save",
+      "new project",
+      "add cube",
+      "reopen",
+      "export hashes",
+      "decoded exported RGBA",
+      "compact window controls",
+      "IPC bounds",
+      "restart recovery"
+    ]
+  },
+  "mcp": {
+    "status": "PASS",
+    "transport": "Streamable HTTP",
+    "clients": "MCP SDK",
+    "hiddenCaptureWindows": true,
+    "snapshots": [
+      {
+        "view": "perspective",
+        "sha256": "fc5b07eb88b4f4f8cb09e0579dd74708750217b6d2d8b13445bebec3ba80e469",
+        "bytes": 101157,
+        "pixels": {
+          "foreground": 34341,
+          "rows": 609,
+          "columns": 512,
+          "colors": 218
+        }
+      },
+      {
+        "view": "front",
+        "sha256": "0c9e544045adfb7563d132ae743e8ead99d961785bc120c1dc1a8d00e938eb99",
+        "bytes": 24522,
+        "pixels": {
+          "foreground": 28783,
+          "rows": 591,
+          "columns": 204,
+          "colors": 195
+        }
+      },
+      {
+        "view": "side",
+        "sha256": "df397a94967f1964f921c7707a1579c4a059ac133886aab7daa5fae30feb2f11",
+        "bytes": 9165,
+        "pixels": {
+          "foreground": 8898,
+          "rows": 589,
+          "columns": 44,
+          "colors": 134
+        }
+      },
+      {
+        "view": "back",
+        "sha256": "f3cafe48e8e6ff9bf5e0ef6f9a7a971b0cdb223e22a7df024948b63071ab9254",
+        "bytes": 23117,
+        "pixels": {
+          "foreground": 27914,
+          "rows": 582,
+          "columns": 204,
+          "colors": 124
+        }
+      }
+    ],
+    "painting": {
+      "status": "PASS",
+      "commands": [
+        "paint",
+        "uv"
+      ],
+      "snapshots": [
+        {
+          "view": "perspective",
+          "bytes": 101400,
+          "sha256": "51f156fb85f320438db13068e46086026b386ef57ba7f9ca2365829caf91c976"
+        },
+        {
+          "view": "front",
+          "bytes": 24787,
+          "sha256": "3d85bbbf510f9a455f0995dd300322fa244d015e04656387d32086f935c8d764"
+        },
+        {
+          "view": "side",
+          "bytes": 9200,
+          "sha256": "73d18e849a86411e437f311fdddf42b79a35efb0a284fad91d133cbc4dcaa1dc"
+        },
+        {
+          "view": "back",
+          "bytes": 23441,
+          "sha256": "3f7a26189a0680890591bd3a7fc91e9ef40e66fc0b7cf81cfa90852c7bf010fc"
+        }
+      ]
+    },
+    "cliModelSessions": "not-run",
+    "installedClients": {
+      "status": "not-run"
+    }
+  },
+  "desktopSuites": {
+    "texture": {
+      "status": "PASS",
+      "checks": [
+        "real pointer stroke",
+        "live 3D draft",
+        "one history entry",
+        "exact scope pixels",
+        "undo/redo",
+        "pipette",
+        "eraser alpha",
+        "connected fill",
+        "Escape/pointercancel/lostcapture/blur",
+        "concurrent agent revision",
+        "UV pattern transfer",
+        "UV collision rollback",
+        "project switch cancels stroke"
+      ],
+      "compactWindow": {
+        "uvAccessible": true,
+        "atlasHeight": 116.796875,
+        "bodyOverflow": false,
+        "visible3dHeight": 165.203125
+      }
+    },
+    "polish": {
+      "status": "PASS",
+      "hidden": true,
+      "checks": [
+        "cancel app.quit keeps worker alive",
+        "cancel save on quit",
+        "repeated close has one dialog",
+        "agent change during close prevents exit",
+        "empty position has no mutation",
+        "Ctrl+S commits focused input before saving",
+        "Ctrl+Shift+S preserves original file",
+        "stale open preserves agent changes",
+        "invalid open preserves shared selection",
+        "save before quit",
+        "backup without primary recovers",
+        "corrupt recovery files preserved",
+        "persistent recovery warning and manual save"
+      ]
+    },
+    "editing": {
+      "status": "PASS",
+      "hidden": true,
+      "checks": [
+        "invalid Ctrl+S preserves error and skips save",
+        "mouse save commits focused value",
+        "invalid Save As preserves files",
+        "undo to saved content is clean",
+        "redo restores dirty state",
+        "mouse Save As commits value and preserves original",
+        "late same-revision state ignored",
+        "agent update rejects focused stale value and save",
+        "late old project ignored",
+        "undo to checkpoint closes without a save dialog"
+      ]
+    },
+    "variants": {
+      "status": "PASS",
+      "hidden": true,
+      "checks": [
+        "brief reaches MCP",
+        "independent saved variants",
+        "agent cannot manage variants",
+        "four identical camera presets",
+        "real silhouette and 64px preview",
+        "restore and undo",
+        "stale proposal rejected after restore",
+        "reference captures",
+        "delete and undo",
+        "save and restart recovery"
+      ]
+    },
+    "review": {
+      "status": "PASS",
+      "hidden": true,
+      "checks": [
+        "dark text and active control contrast",
+        "four independent views with common framing",
+        "real alpha silhouette",
+        "native square 64px render and nearest 32px preview",
+        "thumbnail framing independent of panel aspect ratio",
+        "compact review",
+        "bounded MCP review PNG",
+        "read-only scene and manual camera",
+        "project conflict rejected"
+      ],
+      "textContrast": 14.980762409476815,
+      "activeContrast": 8.972271758994312
+    }
+  },
+  "dependencyInventory": {
+    "path": "apps/model-editor/dist/dependency-inventory.json",
+    "sha256": "f6530f5164b9ce91187fc0a2d0c19cf27e735659e1dd8377fd726728a12a05a0"
+  },
+  "screenshots": [
+    {
+      "name": "01-studio.png",
+      "sha256": "47e6cdf897dc12c0bd50ce94fe998a8cd7d3129675f97ccabd85a3a16f7410d0"
+    },
+    {
+      "name": "02-edited.png",
+      "sha256": "fead5888e56b60fe4a5aa9cd9e9593be6173a3bac2e788b028992ed15fced60c"
+    },
+    {
+      "name": "03-new-model.png",
+      "sha256": "d938bd734206c6c3c790953fc025b9e2bf537fa94ea8e1bc043194473d02881c"
+    },
+    {
+      "name": "04-connected.png",
+      "sha256": "fce8b7d7bb84e692096ec5fb0bdcc79fb25cc96cab38015f0652113bb77eed43"
+    },
+    {
+      "name": "05-paint-draft.png",
+      "sha256": "43972447f9544cb1dac77c4136ed427bb37601fb1511f47d7049288f529739ea"
+    },
+    {
+      "name": "06-pixel-workshop.png",
+      "sha256": "5e18943e82abbfd4f7901eecea3e00e4b7a6e7ee8699d89d5527d0be28f44469"
+    },
+    {
+      "name": "07-compact.png",
+      "sha256": "f03939064168d34079df086aa91eff71d4065738bc1c497f0eda7daa19aac943"
+    },
+    {
+      "name": "mcp-back.png",
+      "sha256": "f3cafe48e8e6ff9bf5e0ef6f9a7a971b0cdb223e22a7df024948b63071ab9254"
+    },
+    {
+      "name": "mcp-front.png",
+      "sha256": "0c9e544045adfb7563d132ae743e8ead99d961785bc120c1dc1a8d00e938eb99"
+    },
+    {
+      "name": "mcp-perspective.png",
+      "sha256": "fc5b07eb88b4f4f8cb09e0579dd74708750217b6d2d8b13445bebec3ba80e469"
+    },
+    {
+      "name": "mcp-side.png",
+      "sha256": "df397a94967f1964f921c7707a1579c4a059ac133886aab7daa5fae30feb2f11"
+    },
+    {
+      "name": "paint-back.png",
+      "sha256": "3f7a26189a0680890591bd3a7fc91e9ef40e66fc0b7cf81cfa90852c7bf010fc"
+    },
+    {
+      "name": "paint-front.png",
+      "sha256": "3d85bbbf510f9a455f0995dd300322fa244d015e04656387d32086f935c8d764"
+    },
+    {
+      "name": "paint-perspective.png",
+      "sha256": "51f156fb85f320438db13068e46086026b386ef57ba7f9ca2365829caf91c976"
+    },
+    {
+      "name": "paint-side.png",
+      "sha256": "73d18e849a86411e437f311fdddf42b79a35efb0a284fad91d133cbc4dcaa1dc"
+    },
+    {
+      "name": "view-back.png",
+      "sha256": "a31fa69e26c9ae71af2fef0786e0c755c6ecbcd6b47a84387380eadc43415924"
+    },
+    {
+      "name": "view-front.png",
+      "sha256": "3086452bbb3009f374fe886ea6f893e94bba6125564ae0d322a4baa2702deb7a"
+    },
+    {
+      "name": "view-side.png",
+      "sha256": "ac3dc2ee7aa6723bb50f5669d148a272521f8ff23e20dec2f1ce127d43e58ce0"
+    }
+  ]
+}
