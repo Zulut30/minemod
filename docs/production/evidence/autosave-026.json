@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 26,
+  "status": "PASS",
+  "scope": "Windows x64 process-crash autosave/backup tests and hidden packaged recovery E2E",
+  "verifiedAtUtc": "2026-10-04T16:53:12.799512+00:00",
+  "sourceParentRevision": "1dc1abb7d58d11c21790bb41d1ef4df4d6fdc16d",
+  "sourceHashes": [
+    {
+      "path": "apps/model-editor/worker/persistence.ts",
+      "bytes": 3696,
+      "sha256": "539f74204ec4526ad7bbd1de94b1223c97ae3f8cd2e93a9278a158359221b002"
+    },
+    {
+      "path": "packages/editor-core/package.json",
+      "bytes": 478,
+      "sha256": "09fda0982932d299656e087746de4d8cc022fd0985524dd756a38f0be779ddc5"
+    },
+    {
+      "path": "packages/editor-core/persistence-crash.test.ts",
+      "bytes": 4309,
+      "sha256": "f0dd6e45ea9b4460112e6b4ec14220f789fe3a9225a28378a4c02c7b451179a0"
+    },
+    {
+      "path": "packages/editor-core/persistence-crash-child.mjs",
+      "bytes": 1649,
+      "sha256": "121441ed021b8dcb74b7de658ef1d3852828b37be61b40a8bd4a77ccf9876b67"
+    }
+  ],
+  "toolchain": {
+    "node": "24.11.0",
+    "pnpm": "11.8.0",
+    "studio": "0.5.1"
+  },
+  "package": {
+    "build": "b1f5c174",
+    "asar": {
+      "path": "C:/Users/zulut/Documents/minecraft-mods-ai/output/model-editor/releases/0.5.1/b1f5c174/MineMod Studio-win32-x64/resources/app.asar",
+      "bytes": 3432921,
+      "sha256": "07ee8efa1762f9d4317d19e554850b71210f4b270f3a16da4e0dba384fad1b2c"
+    }
+  },
+  "checks": {
+    "coreCrashTests": "PASS",
+    "typecheckAll": "PASS",
+    "lint": "PASS",
+    "cleanPackage": "PASS",
+    "hiddenPackagedE2E": "PASS"
+  },
+  "crashPhases": [
+    "partial-write",
+    "partial-backup",
+    "before-replace"
+  ],
+  "backupFailure": "directory target; primary preserved and owned stages removed",
+  "logs": [
+    {
+      "path": "output/verification/roadmap-026-crash-tests.log",
+      "bytes": 811,
+      "sha256": "c1c0ee094192b81abc2098144e5dc2764b0afe0c06286fcd48224476089b3b4b"
+    },
+    {
+      "path": "output/verification/roadmap-026-typecheck.log",
+      "bytes": 176,
+      "sha256": "fe0327fb3a908a7cea6b4e5ef62bbaa7903d4f4149a209170e6249f0dd5c8190"
+    },
+    {
+      "path": "output/verification/roadmap-026-lint.log",
+      "bytes": 29,
+      "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+    },
+    {
+      "path": "output/verification/roadmap-026-package.log",
+      "bytes": 786,
+      "sha256": "e0ed799c00687580724456a3afe674c5e867908cfbc6f6c826df30bd98b6e38e"
+    },
+    {
+      "path": "output/verification/roadmap-026-packaged-e2e.log",
+      "bytes": 156,
+      "sha256": "a5245e28f0321511bbefcbf65120546b78f196eae6ae59f2c0ce38324c5b13a0"
+    }
+  ],
+  "packagedReport": {
+    "path": "output/playwright/studio-packaged-b758626c/report.json",
+    "bytes": 8301,
+    "sha256": "daa8c5b4f585464c3d09a53598069df8d5034fcae7261546a96e2d0a2e41f147"
+  },
+  "recoveryChecks": [
+    "cancel app.quit keeps worker alive",
+    "cancel save on quit",
+    "repeated close has one dialog",
+    "agent change during close prevents exit",
+    "empty position has no mutation",
+    "Ctrl+S commits focused input before saving",
+    "Ctrl+Shift+S preserves original file",
+    "stale open preserves agent changes",
+    "invalid open preserves shared selection",
+    "save before quit",
+    "backup without primary recovers",
+    "corrupt recovery files preserved",
+    "persistent recovery warning and manual save"
+  ],
+  "limits": [
+    "Physical power loss/directory fsync not verified",
+    "Disk full and multiple independent writers not verified",
+    "New revision hosted CI not yet run; this evidence is local Windows",
+    "User Studio was not stopped or replaced"
+  ]
+}

@@ -1,4 +1,4 @@
-import { open, mkdir, rename, copyFile, rm } from "node:fs/promises";
+import { open, mkdir, rename, rm } from "node:fs/promises";
 import { dirname } from "node:path";
 import { Buffer } from "node:buffer";
 import { randomUUID } from "node:crypto";
@@ -69,17 +69,23 @@ export async function writeProject(
   parseProject(text);
   await mkdir(dirname(path), { recursive: true });
   const temp = `${path}.${randomUUID()}.pending`;
-  try {
-    const file = await open(temp, "wx", 0o600);
+  const backupTemp = `${path}.${randomUUID()}.backup.pending`;
+  const owned = new Set<string>();
+  async function stage(destination: string, contents: string): Promise<void> {
+    const file = await open(destination, "wx", 0o600);
+    owned.add(destination);
     try {
-      await file.writeFile(text, "utf8");
+      await file.writeFile(contents, "utf8");
       await file.sync();
     } finally {
       await file.close();
     }
+  }
+  try {
+    await stage(temp, text);
+    let previous: EditorProject | undefined;
     try {
-      await readProject(path);
-      await copyFile(path, `${path}.bak`);
+      previous = await readProject(path);
     } catch (error) {
       if (
         !(error instanceof EditorError) &&
@@ -87,9 +93,16 @@ export async function writeProject(
       )
         throw error;
     }
+    if (previous !== undefined) {
+      // Backup тоже заменяется атомарно: прерванная запись не обнуляет старый .bak.
+      await stage(backupTemp, JSON.stringify(previous, null, 2) + "\n");
+      await renameWithRetry(backupTemp, `${path}.bak`);
+      owned.delete(backupTemp);
+    }
     await renameWithRetry(temp, path);
-  } catch (error) {
-    await rm(temp, { force: true }).catch(() => undefined);
-    throw error;
+    owned.delete(temp);
+  } finally {
+    for (const destination of owned)
+      await rm(destination, { force: true }).catch(() => undefined);
   }
 }
