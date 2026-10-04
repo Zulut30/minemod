@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 29,
+  "status": "PASS",
+  "verifiedAtUtc": "2026-10-04T17:05:34.313963+00:00",
+  "sourceParentRevision": "86428141fd0baa1c519462b9e4c6a8f32da5c65b",
+  "scope": "Windows hidden packaged MCP SDK versus trusted human IPC revision conflicts and retries",
+  "sourceHashes": [
+    {
+      "path": "apps/model-editor/scripts/check-mcp-desktop.mjs",
+      "sha256": "c7651dfc5163427cb001c52e2239026e9014019965ea52ca15a3424644130dd2",
+      "bytes": 13462
+    },
+    {
+      "path": "apps/model-editor/worker/mcp.ts",
+      "sha256": "2631ff3195fb5d9979c9572637f787f19905ae9abbed886e072aeb48e6de945a",
+      "bytes": 25521
+    },
+    {
+      "path": "packages/editor-core/index.ts",
+      "sha256": "ee80ec27d2ac94810e3919b98edfa38cff20de840f24c0a2e9f8594c301e35c2",
+      "bytes": 28373
+    }
+  ],
+  "report": {
+    "path": "output/playwright/studio-packaged-1e7ddede/report.json",
+    "sha256": "f4e32a8c7128bf47138cf97bede512b0720d5bbed88124faf1b24b51937c0bb8",
+    "bytes": 8301
+  },
+  "command": "corepack pnpm --filter @mcdev/model-editor exec node scripts/test-desktop.mjs --packaged",
+  "log": {
+    "path": "output/verification/roadmap-029-packaged-e2e.log",
+    "sha256": "ef0864aeb2eca6004546cdb541266b136bdaf54dda93c7f7f6afe2c13833ae4d",
+    "bytes": 156
+  },
+  "package": {
+    "build": "b1f5c174",
+    "asar": {
+      "path": "C:/Users/zulut/Documents/minecraft-mods-ai/output/model-editor/releases/0.5.1/b1f5c174/MineMod Studio-win32-x64/resources/app.asar",
+      "sha256": "07ee8efa1762f9d4317d19e554850b71210f4b270f3a16da4e0dba384fad1b2c",
+      "bytes": 3432921
+    }
+  },
+  "checks": [
+    "Preview leaves active project intact",
+    "Stale apply returns REVISION_CONFLICT",
+    "Manual project and revision unchanged on rejection",
+    "Fresh proposal recalculated from newer manual state",
+    "Apply updates GUI and duplicate retry does not increment revision",
+    "Agent undo restores newer manual edit",
+    "Only human undo restores original",
+    "Human history and locked parts protected"
+  ],
+  "installedCodexClaudeModelSession": "not-run",
+  "automaticConflictMerge": "not-implemented",
+  "newHostedE2E": "pending; local proof is exact current script"
+}

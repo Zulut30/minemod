@@ -117,12 +117,13 @@ export async function checkMcpDesktop(application, page, output) {
     ).data;
     assert.deepEqual(await inspect(), before);
     await applyHuman({ type: "recolor", cubeIds: guard, color: "#77aa99" });
+    const manual = await inspect();
     const rejected = await result("studio_changes_apply", {
       projectId: before.project.projectId,
       proposalId: stale.proposalId,
     });
     assert.equal(rejected.data.error.code, "REVISION_CONFLICT");
-    await applyHuman({ type: "undo" });
+    assert.deepEqual(await inspect(), manual, "Stale proposal must preserve the manual state and revision");
     const base = await inspect();
     const proposed = (
       await result("studio_changes_preview", mutation(base, "#ad7284"))
@@ -231,6 +232,8 @@ export async function checkMcpDesktop(application, page, output) {
       key: randomUUID(),
     });
     await revision(applied.revision + 1);
+    assert.deepEqual((await inspect()).project, manual.project, "Agent undo must restore the newer manual edit");
+    await applyHuman({ type: "undo" });
     assert.deepEqual((await inspect()).project, before.project);
     await applyHuman({ type: "lock", partId: "guard", locked: true });
     const locked = await result(
