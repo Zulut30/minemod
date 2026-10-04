@@ -1,0 +1,19 @@
+# Исходники должны одинаково читаться после checkout на Windows и Linux.
+* text=auto eol=lf
+
+# Reviewed inputs сохраняются побайтно: их hashes не зависят от core.autocrlf.
+packs/** -text
+fixtures/** -text
+docs/provenance/** -text
+apps/model-editor/third-party/** -text
+
+*.png -text
+*.jpg -text
+*.jpeg -text
+*.webp -text
+*.gif -text
+*.jar -text
+*.zip -text
+*.gz -text
+*.exe -text
+*.dll -text
