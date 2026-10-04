@@ -147,8 +147,8 @@ dependencies = json.loads(
 workflow = (root / ".github/workflows/phase-0.yml").read_text()
 fabric_build = (root / "fixtures/fabric-26.2-empty/build.gradle").read_text()
 ci_counts = re.findall(r"^\s*expected_artifact_count=([0-9]+)$", workflow, re.MULTILINE)
-assert workflow.count('canonical_java_home=$(realpath -- "$JAVA_HOME")') == 6
-assert workflow.count('test -d "$canonical_java_home"') == 6
+assert workflow.count('canonical_java_home=$(realpath -- "$JAVA_HOME")') == 7
+assert workflow.count('test -d "$canonical_java_home"') == 7
 assert workflow.count(
     'printf \'PHASE0_JAVA21_HOME=%s\\n\' "$canonical_java_home"'
 ) == 2

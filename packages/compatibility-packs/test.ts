@@ -16,6 +16,7 @@ import {
 import {
   BUILTIN_FABRIC_1_20_1,
   BUILTIN_FABRIC_1_20_1_R3,
+  BUILTIN_FABRIC_1_20_1_R4,
   BUILTIN_FABRIC_1_20_1_SELECTOR,
   BUILTIN_FABRIC_26_2,
   BUILTIN_FABRIC_26_2_SELECTOR,
@@ -460,6 +461,16 @@ const preservedR3 = verifyCompatibilityPackSnapshot(
 );
 assert.equal(preservedR3.manifest.revision, 3, "Previous revision bytes and modes must remain unchanged");
 assert.notEqual(BUILTIN_FABRIC_1_20_1.treeSha256, preservedR3.ref.treeSha256);
+const preservedR4 = verifyCompatibilityPackSnapshot(
+  await readBuiltinCompatibilityPackSnapshot(BUILTIN_FABRIC_1_20_1_R4),
+  {
+    packId: BUILTIN_FABRIC_1_20_1_R4.packId,
+    revision: 4,
+    treeSha256: "5665fbc60365bf22639292c0b5e8ee46c7853c52e20e744be88a2c3fbaaf2282",
+    selector: BUILTIN_FABRIC_1_20_1_R4.target,
+  },
+);
+assert.equal(preservedR4.manifest.revision, 4);
 assert.throws(() => verifyCompatibilityPackSnapshot(
   preservedR3Snapshot,
   { ...preservedR3.ref, revision: 4, selector: BUILTIN_FABRIC_1_20_1.target },
@@ -495,8 +506,13 @@ assert.deepEqual(
     '<trust group="loom" name="mappings" version="layered+hash.2198" file="mappings-layered+hash.2198.jar" reason="Generated locally by pinned Fabric Loom from checksum-verified mapping inputs; ZIP bytes are nondeterministic"/>',
     '<trust group="^loom_mappings_1_20_1_layered_hash_2198_v2[.]net[.]fabricmc[.]fabric-api$" regex="true" reason="Generated locally by pinned Fabric Loom from checksum-verified Fabric API inputs; remapped ZIP bytes are workspace-dependent"/>',
     '<trust group="^loom_mappings_1_20_1_layered_hash_2198_v2[.](?:com[.]terraformersmc|dev[.]isxander|net[.]fabricmc)$" name="^(?:modmenu|yet-another-config-lib|fabric-language-kotlin)$" regex="true" reason="Generated locally by pinned Fabric Loom from checksum-verified trusted-library inputs; remapped ZIP bytes are workspace-dependent"/>',
+    ...["common", "clientOnly"].flatMap((side) => ["3d2c7816d3", "b7a764897f"].map((profile) => {
+      const name = `minecraft-${side}-${profile}`;
+      const version = "1.20.1-loom.mappings.1_20_1.layered+hash.2198-v2";
+      return `<trust group="net.minecraft" name="${name}" version="${version}" file="${name}-${version}.jar" reason="Generated locally by pinned Loom from locked Mojang inputs; revision 5 derived artifact policy"/>`;
+    })),
   ],
-  "Fabric 1.20.1 may trust only exact locally generated mapping and reviewed remapped mod groups",
+  "Fabric 1.20.1 may trust only reviewed mappings/mod groups and four exact locally derived Minecraft artifacts",
 );
 assert.equal(
   fabricJava17VerificationMetadata.includes('<trust group="loom"') &&

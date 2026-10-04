@@ -16,6 +16,7 @@ import {
 import {
   BUILTIN_FABRIC_1_20_1,
   BUILTIN_FABRIC_1_20_1_R3,
+  BUILTIN_FABRIC_1_20_1_R4,
   BUILTIN_FABRIC_26_2,
   BUILTIN_NEOFORGE_26_1_2,
   type BuiltinCompatibilityPackRegistration,
@@ -35,6 +36,9 @@ const BUILTIN_FABRIC_RUNTIME_PACK_ROOT = fileURLToPath(
   new URL("../../../packs/fabric-26.2/runtime/", import.meta.url),
 );
 const BUILTIN_FABRIC_1_20_1_RUNTIME_PACK_ROOT = fileURLToPath(
+  new URL("../../../packs/fabric-1.20.1/runtime-r5/", import.meta.url),
+);
+const BUILTIN_FABRIC_1_20_1_R4_RUNTIME_PACK_ROOT = fileURLToPath(
   new URL("../../../packs/fabric-1.20.1/runtime-r4/", import.meta.url),
 );
 const BUILTIN_FABRIC_1_20_1_R3_RUNTIME_PACK_ROOT = fileURLToPath(
@@ -373,6 +377,7 @@ export async function readCompatibilityPackSnapshotAtRoot(
 function builtinRuntimePackRoot(registration: BuiltinCompatibilityPackRegistration): string {
   if (registration === BUILTIN_FABRIC_1_20_1) return BUILTIN_FABRIC_1_20_1_RUNTIME_PACK_ROOT;
   if (registration === BUILTIN_FABRIC_1_20_1_R3) return BUILTIN_FABRIC_1_20_1_R3_RUNTIME_PACK_ROOT;
+  if (registration === BUILTIN_FABRIC_1_20_1_R4) return BUILTIN_FABRIC_1_20_1_R4_RUNTIME_PACK_ROOT;
   if (registration === BUILTIN_FABRIC_26_2) return BUILTIN_FABRIC_RUNTIME_PACK_ROOT;
   return BUILTIN_NEOFORGE_RUNTIME_PACK_ROOT;
 }

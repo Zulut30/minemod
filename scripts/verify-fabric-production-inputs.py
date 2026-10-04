@@ -7,7 +7,7 @@ import re
 import xml.etree.ElementTree as ET
 
 root = Path(__file__).resolve().parent.parent
-runtime = root / "packs/fabric-1.20.1/runtime-r4"
+runtime = root / "packs/fabric-1.20.1/runtime-r5"
 fixture = root / "fixtures/fabric-1.20.1-empty"
 lock_path = runtime / "versions.lock.json"
 lock = json.loads(lock_path.read_text(encoding="utf-8"))

@@ -111,7 +111,7 @@ jobs:
         id: java17
         run: |
           set -euo pipefail
-          lock=packs/fabric-1.20.1/runtime-r4/versions.lock.json
+          lock=packs/fabric-1.20.1/runtime-r5/versions.lock.json
           url=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["javaToolchains"]["primary"]["linuxX64ArchiveUrl"])' "$lock")
           digest=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["javaToolchains"]["primary"]["linuxX64ArchiveSha256"])' "$lock")
           curl --fail --location --proto '=https' --tlsv1.2 --retry 2 \
@@ -125,12 +125,15 @@ jobs:
           java-version: 17.0.19+10
           jdkFile: ${{ runner.temp }}/java17.tar.gz
           architecture: x64
+      - name: Verify locked raw Minecraft and mapping inputs
+        run: python3 scripts/verify-minecraft-inputs.py > output/ci/fabric-production/mojang-inputs.json
       - name: Record and verify production Java toolchain
         run: |
           set -euo pipefail
           canonical_java_home=$(realpath -- "$JAVA_HOME")
           runtime_version=$("$JAVA_HOME/bin/java" -XshowSettings:properties -version 2>&1 |
             awk -F' = ' '/^[[:space:]]*java\.runtime\.version = / { print $2; exit }')
+          test -d "$canonical_java_home"
           test "$runtime_version" = '17.0.19+10'
           printf 'MCDEV_JAVA17_HOME=%s\n' "$canonical_java_home" >> "$GITHUB_ENV"
           printf 'MCDEV_FABRIC_TEST_JAVA_HOME=%s\n' "$canonical_java_home" >> "$GITHUB_ENV"
