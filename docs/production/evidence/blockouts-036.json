@@ -1,0 +1,2090 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 36,
+  "status": "PARTIAL",
+  "checkedAtUtc": "2026-10-05T16:30:36.303Z",
+  "studioVersion": "0.15.0",
+  "editorProjectVersion": 3,
+  "node": "24.21.0",
+  "sourceHashes": [
+    {
+      "path": "scripts/author-weapon-blockouts.mjs",
+      "bytes": 7747,
+      "sha256": "b094f6d781daefa882bd195c725a1ad57976afac0545058622e29a2dd034fa5a"
+    },
+    {
+      "path": "scripts/verify-blockout-construction.mjs",
+      "bytes": 3875,
+      "sha256": "35de061f3ebc6bb86b2b9ea12a97671395d4801074c2916f45966b4909394501"
+    },
+    {
+      "path": "apps/model-editor/scripts/review-blockout-drafts.mjs",
+      "bytes": 9384,
+      "sha256": "a20e5947d5dd224a4237dde58b1d838a30e6270d959c4bbb27396993e4692898"
+    },
+    {
+      "path": "fixtures/production/weapon-blockouts.v1.json",
+      "bytes": 29866,
+      "sha256": "188b9bc1f38537950382332f865118d8552d9884a5dfcae55804263cf62a1682"
+    },
+    {
+      "path": "fixtures/production/leaf-volume.v1.json",
+      "bytes": 22883,
+      "sha256": "98e0464fb13574bcd8d55ac3e22cbf5f4ccab53eb1e19bfe17247fa034718915"
+    },
+    {
+      "path": "fixtures/production/concepts/weapon-directions-20261005.png",
+      "bytes": 1426740,
+      "sha256": "e4c7daa05f5dd1b8b6e3f27a56b0f2edab85d8dc6dc0a4bbdd28f3dddfc5f6fb"
+    },
+    {
+      "path": "fixtures/production/concepts/weapon-directions-20261005.provenance.json",
+      "bytes": 1317,
+      "sha256": "ec77cf3e0fda235d9e2f7c89ef9126ff2918ce0ec199bbd57c82d57896d717c3"
+    }
+  ],
+  "concept": {
+    "path": "fixtures/production/concepts/weapon-directions-20261005.png",
+    "bytes": 1426740,
+    "sha256": "e4c7daa05f5dd1b8b6e3f27a56b0f2edab85d8dc6dc0a4bbdd28f3dddfc5f6fb",
+    "width": 1536,
+    "height": 1024,
+    "origin": "ai-generated",
+    "review": "direction-only"
+  },
+  "directionChoice": {
+    "by": "human",
+    "choice": "A · Лист",
+    "date": "2026-10-05",
+    "scope": "Direction only; no model approval"
+  },
+  "package": {
+    "path": "output/model-editor/releases/0.15.0/6b8c9d48/MineMod Studio-win32-x64/MineMod Studio.exe",
+    "asarSha256": "4bcc603221061c10caab996003e355e861aef50e47e8f2863769042394d235da",
+    "proof": "Unchanged packaged runtime verified in concepts-035.json; this work does not alter app/core/exporter"
+  },
+  "local": [
+    {
+      "kind": "directions",
+      "authoringReport": "output/model-editor/weapon-blockouts-reproduced-20261005/authoring-report.json",
+      "authoringReportSha256": "e83910de8de2367e5aae5f717e75d38d4d674d81beee9750c14be7ce02d41942",
+      "reviewReport": "output/model-editor/weapon-blockouts-reproduced-20261005/reviews-f0497ca9/report.json",
+      "reviewReportSha256": "4f194409c41375d5db46832d660906578c7ec5584dd2a7571140608a4ce71749",
+      "comparison": "output/model-editor/weapon-blockouts-reproduced-20261005/reviews-f0497ca9/comparison.html",
+      "sources": [
+        {
+          "variant": "a",
+          "variantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+          "referenceVariantId": "cf68c1da-1b9a-480d-9ad8-e6b4bb5f7bdb",
+          "name": "A · Лист",
+          "projectPath": "output/model-editor/weapon-blockouts-reproduced-20261005/a.mmeditor.json",
+          "projectSha256": "fc02f1fd1ee4dd217b757c7e71cb81500689c04586facbd9986cc2819eb65800",
+          "cubes": 33,
+          "geometrySha256": "84a67ce71159eb0bdf0679f545f8d5fad679b7f2d58ee514368e64750ca8a102",
+          "bundleFiles": [
+            {
+              "path": "assets/mcdev/models/item/weapon_blockout.json",
+              "sha256": "f0829180f45042bb6bbbf853774c7c795979d0b69392d033b86aa3d4d5bba5a7"
+            },
+            {
+              "path": "assets/mcdev/textures/item/weapon_blockout.png",
+              "sha256": "a7d9d23bb621eabcb8003da4dbb96be0cda55755c647b63ba6f045a6bcf94ac7"
+            },
+            {
+              "path": "editable/mcdev/weapon_blockout.bbmodel",
+              "sha256": "f665beb3ac0611c76b9946e0a28b36cda503f43fae4baad0b5e8cd9079a76adc"
+            }
+          ],
+          "originalConceptRetained": true,
+          "allNativeFilesMatchHashes": true
+        },
+        {
+          "variant": "b",
+          "variantId": "cf68c1da-1b9a-480d-9ad8-e6b4bb5f7bdb",
+          "referenceVariantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+          "name": "B · Клык",
+          "projectPath": "output/model-editor/weapon-blockouts-reproduced-20261005/b.mmeditor.json",
+          "projectSha256": "94c238894a5edf5bf9870d77ee681e56206a95b8dcedb0a75433b4298cb0dcdf",
+          "cubes": 34,
+          "geometrySha256": "b2546900843b5f89fd66cb1fc5210865cfa88bd853219a42e75f320cc26bcdbd",
+          "bundleFiles": [
+            {
+              "path": "assets/mcdev/models/item/weapon_blockout.json",
+              "sha256": "2255fce4547a916e7aa016a4856aa72b07ddcd5dd127e069cc579b8aa588d26a"
+            },
+            {
+              "path": "assets/mcdev/textures/item/weapon_blockout.png",
+              "sha256": "73a7ece2e157fc35b5c0d465aeff093fe8f99f3baf957e3c18d0ce04b4e8898f"
+            },
+            {
+              "path": "editable/mcdev/weapon_blockout.bbmodel",
+              "sha256": "22b5ebbefa93a0e51fd6ad37cbf6195d55dd91de8c436caf3880f4066991dd28"
+            }
+          ],
+          "originalConceptRetained": true,
+          "allNativeFilesMatchHashes": true
+        },
+        {
+          "variant": "c",
+          "variantId": "7d628e21-30e7-4d52-991d-bb4ddc2aac8f",
+          "referenceVariantId": "cf68c1da-1b9a-480d-9ad8-e6b4bb5f7bdb",
+          "name": "C · Раскол",
+          "projectPath": "output/model-editor/weapon-blockouts-reproduced-20261005/c.mmeditor.json",
+          "projectSha256": "15f801cfc3d29e15a9448a7cfa2f0b5014c50f3720bdd0982d715119ec99a77f",
+          "cubes": 36,
+          "geometrySha256": "fe18271cad425fd284275978113abaa72b96bb58cb6090b10b0662253244747b",
+          "bundleFiles": [
+            {
+              "path": "assets/mcdev/models/item/weapon_blockout.json",
+              "sha256": "0b4314af20f4c15844c7ae3c1e69d28e9d51fe8d410dcacb6fd8631e61dd068a"
+            },
+            {
+              "path": "assets/mcdev/textures/item/weapon_blockout.png",
+              "sha256": "d2d62b64610cbc4af81785d028c266eb4bbee2b3b13d8a7b1c48fab0dbf4ce63"
+            },
+            {
+              "path": "editable/mcdev/weapon_blockout.bbmodel",
+              "sha256": "564233ca6fc215ba580b2ebf0769f8a6ab794a65c7cc9702f487233ece174406"
+            }
+          ],
+          "originalConceptRetained": true,
+          "allNativeFilesMatchHashes": true
+        }
+      ],
+      "captures": [
+        {
+          "path": "output/model-editor/weapon-blockouts-reproduced-20261005/reviews-f0497ca9/a-review.png",
+          "bytes": 61807,
+          "sha256": "882e6dbb176173b4d4f3522aa51760461d72c847de608f4e4cb724b57ec7f12c",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 33,
+            "history": [],
+            "width": 1024,
+            "height": 768,
+            "brief": "{\"schemaVersion\":1,\"kind\":\"mcdev-design-brief\",\"target\":\"fabric-1.20.1-held-item\",\"purpose\":\"Три формы фэнтезийного длинного меча для Minecraft\",\"style\":\"Выразительная геометрия из кубоидов, простые ступени, без мелких украшений\",\"silhouette\":\"Различимые на 32 px массы: симметричный лист, асимметричный клык, раздвоенное острие. Связная рукоять и гарда.\",\"materials\":\"Нейтральный матовый материал; текстуры и украшения после выбора формы\",\"palette\":[\"#aebdcb\"],\"preserve\":[]}",
+            "lockedParts": [],
+            "views": [
+              "front",
+              "side",
+              "back",
+              "perspective"
+            ],
+            "smallPreviews": [
+              32,
+              64
+            ],
+            "silhouette": "front-alpha-mask",
+            "reviewChecklist": [
+              "Спереди: ясный силуэт, один главный акцент; крупные детали читаются на 32 px.",
+              "Сбоку: клинок не исчезает; стыки гарды и рукояти не имеют случайных зазоров.",
+              "Сзади: покраска завершена, материалы и крупные элементы согласованы со передней стороной.",
+              "Три четверти: кромки и объём читаются; UV не растянуты, материалы различимы.",
+              "Назовите видимую проблему, конкретную правку и ожидаемый эффект; повторите обзор после исправления."
+            ],
+            "artisticAcceptance": "requires-human-review",
+            "game": "not-verified"
+          }
+        },
+        {
+          "path": "output/model-editor/weapon-blockouts-reproduced-20261005/reviews-f0497ca9/a-front.png",
+          "bytes": 12188,
+          "sha256": "0c1beeb29bedeec606c1067645da2f2dd4c4f8c51ff2372baa3a5150e0ea4216",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 33,
+            "history": [],
+            "view": "front",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "compareToVariantId": "cf68c1da-1b9a-480d-9ad8-e6b4bb5f7bdb",
+            "silhouette": false,
+            "renderedCubeCount": 33,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/weapon-blockouts-reproduced-20261005/reviews-f0497ca9/a-back.png",
+          "bytes": 11499,
+          "sha256": "32fcb67256959c8f6944ab98a969d931865510890c2bae18e2f2c733696e2549",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 33,
+            "history": [],
+            "view": "back",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "compareToVariantId": "cf68c1da-1b9a-480d-9ad8-e6b4bb5f7bdb",
+            "silhouette": false,
+            "renderedCubeCount": 33,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/weapon-blockouts-reproduced-20261005/reviews-f0497ca9/a-left.png",
+          "bytes": 7989,
+          "sha256": "ef545c6ed10a62d8abefec62c8c4e047e61f941de94cf960d3cc970401743552",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 33,
+            "history": [],
+            "view": "left",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "compareToVariantId": "cf68c1da-1b9a-480d-9ad8-e6b4bb5f7bdb",
+            "silhouette": false,
+            "renderedCubeCount": 33,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/weapon-blockouts-reproduced-20261005/reviews-f0497ca9/a-right.png",
+          "bytes": 8063,
+          "sha256": "ba146cef5835ac9999f510c84129fe6499de421ccb11cf4aa2658a4b86506952",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 33,
+            "history": [],
+            "view": "right",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "compareToVariantId": "cf68c1da-1b9a-480d-9ad8-e6b4bb5f7bdb",
+            "silhouette": false,
+            "renderedCubeCount": 33,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/weapon-blockouts-reproduced-20261005/reviews-f0497ca9/a-top.png",
+          "bytes": 5937,
+          "sha256": "54a396f381778800a999161107322c0ab1da2ec9927800b642e8bcdf4618a71d",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 33,
+            "history": [],
+            "view": "top",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "compareToVariantId": "cf68c1da-1b9a-480d-9ad8-e6b4bb5f7bdb",
+            "silhouette": false,
+            "renderedCubeCount": 33,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/weapon-blockouts-reproduced-20261005/reviews-f0497ca9/a-bottom.png",
+          "bytes": 5844,
+          "sha256": "1c4ab76ca5229daf6afe788c56791e6a9237201547ad3a53447c50f7769440a4",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 33,
+            "history": [],
+            "view": "bottom",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "compareToVariantId": "cf68c1da-1b9a-480d-9ad8-e6b4bb5f7bdb",
+            "silhouette": false,
+            "renderedCubeCount": 33,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/weapon-blockouts-reproduced-20261005/reviews-f0497ca9/a-perspective.png",
+          "bytes": 34742,
+          "sha256": "fa365b7e0622c78a4d796543b1eaf97dcc8effa98b9439b4ac907744ed1f834a",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 33,
+            "history": [],
+            "view": "perspective",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "compareToVariantId": "cf68c1da-1b9a-480d-9ad8-e6b4bb5f7bdb",
+            "silhouette": false,
+            "renderedCubeCount": 33,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/weapon-blockouts-reproduced-20261005/reviews-f0497ca9/a-rear-perspective.png",
+          "bytes": 33510,
+          "sha256": "2d96e367dbde33322d2fc22bfcda7cba146cc61bfadd446da5923b437fa8c584",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 33,
+            "history": [],
+            "view": "rear-perspective",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "compareToVariantId": "cf68c1da-1b9a-480d-9ad8-e6b4bb5f7bdb",
+            "silhouette": false,
+            "renderedCubeCount": 33,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/weapon-blockouts-reproduced-20261005/reviews-f0497ca9/a-silhouette.png",
+          "bytes": 12007,
+          "sha256": "13c74499ac5020278be805eaf87380873c87daf0946d53835d286b9303fe7aa3",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 33,
+            "history": [],
+            "view": "front",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "compareToVariantId": "cf68c1da-1b9a-480d-9ad8-e6b4bb5f7bdb",
+            "silhouette": true,
+            "renderedCubeCount": 33,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/weapon-blockouts-reproduced-20261005/reviews-f0497ca9/b-review.png",
+          "bytes": 61180,
+          "sha256": "6455ac127b4003f84e7ea3fc8c5bc2ac6bd75e0b109f9fd77b64715d12815ed4",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 34,
+            "history": [],
+            "width": 1024,
+            "height": 768,
+            "brief": "{\"schemaVersion\":1,\"kind\":\"mcdev-design-brief\",\"target\":\"fabric-1.20.1-held-item\",\"purpose\":\"Три формы фэнтезийного длинного меча для Minecraft\",\"style\":\"Выразительная геометрия из кубоидов, простые ступени, без мелких украшений\",\"silhouette\":\"Различимые на 32 px массы: симметричный лист, асимметричный клык, раздвоенное острие. Связная рукоять и гарда.\",\"materials\":\"Нейтральный матовый материал; текстуры и украшения после выбора формы\",\"palette\":[\"#aebdcb\"],\"preserve\":[]}",
+            "lockedParts": [],
+            "views": [
+              "front",
+              "side",
+              "back",
+              "perspective"
+            ],
+            "smallPreviews": [
+              32,
+              64
+            ],
+            "silhouette": "front-alpha-mask",
+            "reviewChecklist": [
+              "Спереди: ясный силуэт, один главный акцент; крупные детали читаются на 32 px.",
+              "Сбоку: клинок не исчезает; стыки гарды и рукояти не имеют случайных зазоров.",
+              "Сзади: покраска завершена, материалы и крупные элементы согласованы со передней стороной.",
+              "Три четверти: кромки и объём читаются; UV не растянуты, материалы различимы.",
+              "Назовите видимую проблему, конкретную правку и ожидаемый эффект; повторите обзор после исправления."
+            ],
+            "artisticAcceptance": "requires-human-review",
+            "game": "not-verified"
+          }
+        },
+        {
+          "path": "output/model-editor/weapon-blockouts-reproduced-20261005/reviews-f0497ca9/b-front.png",
+          "bytes": 11272,
+          "sha256": "24b00db969765efbc41739e58ac54ebda9c92278dc071684c66b7216f0dbfb97",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 34,
+            "history": [],
+            "view": "front",
+            "width": 1024,
+            "height": 768,
+            "variantId": "cf68c1da-1b9a-480d-9ad8-e6b4bb5f7bdb",
+            "compareToVariantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "silhouette": false,
+            "renderedCubeCount": 34,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/weapon-blockouts-reproduced-20261005/reviews-f0497ca9/b-back.png",
+          "bytes": 10783,
+          "sha256": "88dafe45e23a28bcdfe1a9c8eef86c27a4a3899202dc54cefcbcf2f6f5e1602b",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 34,
+            "history": [],
+            "view": "back",
+            "width": 1024,
+            "height": 768,
+            "variantId": "cf68c1da-1b9a-480d-9ad8-e6b4bb5f7bdb",
+            "compareToVariantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "silhouette": false,
+            "renderedCubeCount": 34,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/weapon-blockouts-reproduced-20261005/reviews-f0497ca9/b-left.png",
+          "bytes": 8118,
+          "sha256": "77066600c2cede34420beeebffad4c848b84e6f20e68347c0bf91449018b9945",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 34,
+            "history": [],
+            "view": "left",
+            "width": 1024,
+            "height": 768,
+            "variantId": "cf68c1da-1b9a-480d-9ad8-e6b4bb5f7bdb",
+            "compareToVariantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "silhouette": false,
+            "renderedCubeCount": 34,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/weapon-blockouts-reproduced-20261005/reviews-f0497ca9/b-right.png",
+          "bytes": 8194,
+          "sha256": "ea7080e71ddab7ab45ec61c3209dd795305dde87f41fae2c1d2965a836c126cb",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 34,
+            "history": [],
+            "view": "right",
+            "width": 1024,
+            "height": 768,
+            "variantId": "cf68c1da-1b9a-480d-9ad8-e6b4bb5f7bdb",
+            "compareToVariantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "silhouette": false,
+            "renderedCubeCount": 34,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/weapon-blockouts-reproduced-20261005/reviews-f0497ca9/b-top.png",
+          "bytes": 5541,
+          "sha256": "3743bc53a4b711e446019f9824dfdd5e697a78b1dc3be567ef47378e5d7cfae8",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 34,
+            "history": [],
+            "view": "top",
+            "width": 1024,
+            "height": 768,
+            "variantId": "cf68c1da-1b9a-480d-9ad8-e6b4bb5f7bdb",
+            "compareToVariantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "silhouette": false,
+            "renderedCubeCount": 34,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/weapon-blockouts-reproduced-20261005/reviews-f0497ca9/b-bottom.png",
+          "bytes": 5505,
+          "sha256": "a9aef3d5a532e6b95c0f5989a0d2893e3d563a35868b2bef5f576fb0867f60f1",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 34,
+            "history": [],
+            "view": "bottom",
+            "width": 1024,
+            "height": 768,
+            "variantId": "cf68c1da-1b9a-480d-9ad8-e6b4bb5f7bdb",
+            "compareToVariantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "silhouette": false,
+            "renderedCubeCount": 34,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/weapon-blockouts-reproduced-20261005/reviews-f0497ca9/b-perspective.png",
+          "bytes": 35034,
+          "sha256": "8841eb9787033d064f47c02ecf19d954ece4492b2d67e9d33fb3fbf96b2bbb90",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 34,
+            "history": [],
+            "view": "perspective",
+            "width": 1024,
+            "height": 768,
+            "variantId": "cf68c1da-1b9a-480d-9ad8-e6b4bb5f7bdb",
+            "compareToVariantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "silhouette": false,
+            "renderedCubeCount": 34,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/weapon-blockouts-reproduced-20261005/reviews-f0497ca9/b-rear-perspective.png",
+          "bytes": 35816,
+          "sha256": "f7b76d5ca21edf91b4ceb5ccc94f0d64adefda0d8d39a8f7343cf8691c9a004d",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 34,
+            "history": [],
+            "view": "rear-perspective",
+            "width": 1024,
+            "height": 768,
+            "variantId": "cf68c1da-1b9a-480d-9ad8-e6b4bb5f7bdb",
+            "compareToVariantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "silhouette": false,
+            "renderedCubeCount": 34,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/weapon-blockouts-reproduced-20261005/reviews-f0497ca9/b-silhouette.png",
+          "bytes": 11091,
+          "sha256": "90230c4dc27e1669232e6eddad8980df7d3af1875115179331e4d9f5aecaad92",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 34,
+            "history": [],
+            "view": "front",
+            "width": 1024,
+            "height": 768,
+            "variantId": "cf68c1da-1b9a-480d-9ad8-e6b4bb5f7bdb",
+            "compareToVariantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "silhouette": true,
+            "renderedCubeCount": 34,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/weapon-blockouts-reproduced-20261005/reviews-f0497ca9/c-review.png",
+          "bytes": 62445,
+          "sha256": "b97cf214badf98e174813bdcf605d012a5ccddb2812dd958b2d2f4dc93b83e16",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 36,
+            "history": [],
+            "width": 1024,
+            "height": 768,
+            "brief": "{\"schemaVersion\":1,\"kind\":\"mcdev-design-brief\",\"target\":\"fabric-1.20.1-held-item\",\"purpose\":\"Три формы фэнтезийного длинного меча для Minecraft\",\"style\":\"Выразительная геометрия из кубоидов, простые ступени, без мелких украшений\",\"silhouette\":\"Различимые на 32 px массы: симметричный лист, асимметричный клык, раздвоенное острие. Связная рукоять и гарда.\",\"materials\":\"Нейтральный матовый материал; текстуры и украшения после выбора формы\",\"palette\":[\"#aebdcb\"],\"preserve\":[]}",
+            "lockedParts": [],
+            "views": [
+              "front",
+              "side",
+              "back",
+              "perspective"
+            ],
+            "smallPreviews": [
+              32,
+              64
+            ],
+            "silhouette": "front-alpha-mask",
+            "reviewChecklist": [
+              "Спереди: ясный силуэт, один главный акцент; крупные детали читаются на 32 px.",
+              "Сбоку: клинок не исчезает; стыки гарды и рукояти не имеют случайных зазоров.",
+              "Сзади: покраска завершена, материалы и крупные элементы согласованы со передней стороной.",
+              "Три четверти: кромки и объём читаются; UV не растянуты, материалы различимы.",
+              "Назовите видимую проблему, конкретную правку и ожидаемый эффект; повторите обзор после исправления."
+            ],
+            "artisticAcceptance": "requires-human-review",
+            "game": "not-verified"
+          }
+        },
+        {
+          "path": "output/model-editor/weapon-blockouts-reproduced-20261005/reviews-f0497ca9/c-front.png",
+          "bytes": 12605,
+          "sha256": "b5c2844857e37cf50c2bef4a463abedab2a5951a29bf5c8a85807119e16763f2",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 36,
+            "history": [],
+            "view": "front",
+            "width": 1024,
+            "height": 768,
+            "variantId": "7d628e21-30e7-4d52-991d-bb4ddc2aac8f",
+            "compareToVariantId": "cf68c1da-1b9a-480d-9ad8-e6b4bb5f7bdb",
+            "silhouette": false,
+            "renderedCubeCount": 36,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/weapon-blockouts-reproduced-20261005/reviews-f0497ca9/c-back.png",
+          "bytes": 11903,
+          "sha256": "11fb0091f55fffb40dd74c116c339896f7ad5e1b7d4fe3b93b380a2b36f580b7",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 36,
+            "history": [],
+            "view": "back",
+            "width": 1024,
+            "height": 768,
+            "variantId": "7d628e21-30e7-4d52-991d-bb4ddc2aac8f",
+            "compareToVariantId": "cf68c1da-1b9a-480d-9ad8-e6b4bb5f7bdb",
+            "silhouette": false,
+            "renderedCubeCount": 36,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/weapon-blockouts-reproduced-20261005/reviews-f0497ca9/c-left.png",
+          "bytes": 7550,
+          "sha256": "f3d77424f1afbf2d05560dd10f9acbf2f911b961cdd34ec24124573a9cfc10f5",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 36,
+            "history": [],
+            "view": "left",
+            "width": 1024,
+            "height": 768,
+            "variantId": "7d628e21-30e7-4d52-991d-bb4ddc2aac8f",
+            "compareToVariantId": "cf68c1da-1b9a-480d-9ad8-e6b4bb5f7bdb",
+            "silhouette": false,
+            "renderedCubeCount": 36,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/weapon-blockouts-reproduced-20261005/reviews-f0497ca9/c-right.png",
+          "bytes": 7639,
+          "sha256": "a922f115033b6fa965fda0251cb396bcad2331a2453dfbb0769586634f8630dc",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 36,
+            "history": [],
+            "view": "right",
+            "width": 1024,
+            "height": 768,
+            "variantId": "7d628e21-30e7-4d52-991d-bb4ddc2aac8f",
+            "compareToVariantId": "cf68c1da-1b9a-480d-9ad8-e6b4bb5f7bdb",
+            "silhouette": false,
+            "renderedCubeCount": 36,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/weapon-blockouts-reproduced-20261005/reviews-f0497ca9/c-top.png",
+          "bytes": 5968,
+          "sha256": "5e8cce12ec48e31a07d7a39c08844b920182149dcab32c27acf8b0dded85c4bd",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 36,
+            "history": [],
+            "view": "top",
+            "width": 1024,
+            "height": 768,
+            "variantId": "7d628e21-30e7-4d52-991d-bb4ddc2aac8f",
+            "compareToVariantId": "cf68c1da-1b9a-480d-9ad8-e6b4bb5f7bdb",
+            "silhouette": false,
+            "renderedCubeCount": 36,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/weapon-blockouts-reproduced-20261005/reviews-f0497ca9/c-bottom.png",
+          "bytes": 5861,
+          "sha256": "5cefd04b5b1555f45e7917dae18775843c7f812951beb3928a7387e98c166d9f",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 36,
+            "history": [],
+            "view": "bottom",
+            "width": 1024,
+            "height": 768,
+            "variantId": "7d628e21-30e7-4d52-991d-bb4ddc2aac8f",
+            "compareToVariantId": "cf68c1da-1b9a-480d-9ad8-e6b4bb5f7bdb",
+            "silhouette": false,
+            "renderedCubeCount": 36,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/weapon-blockouts-reproduced-20261005/reviews-f0497ca9/c-perspective.png",
+          "bytes": 34478,
+          "sha256": "dde1e3eba0d21d1ad9517183a31d73e98c3638d0665dc6c83676ed2e2c1109f1",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 36,
+            "history": [],
+            "view": "perspective",
+            "width": 1024,
+            "height": 768,
+            "variantId": "7d628e21-30e7-4d52-991d-bb4ddc2aac8f",
+            "compareToVariantId": "cf68c1da-1b9a-480d-9ad8-e6b4bb5f7bdb",
+            "silhouette": false,
+            "renderedCubeCount": 36,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/weapon-blockouts-reproduced-20261005/reviews-f0497ca9/c-rear-perspective.png",
+          "bytes": 33459,
+          "sha256": "2364e72fb51c3165685721e168139ed810128ed1517dca7f6a42fe8663cc8de3",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 36,
+            "history": [],
+            "view": "rear-perspective",
+            "width": 1024,
+            "height": 768,
+            "variantId": "7d628e21-30e7-4d52-991d-bb4ddc2aac8f",
+            "compareToVariantId": "cf68c1da-1b9a-480d-9ad8-e6b4bb5f7bdb",
+            "silhouette": false,
+            "renderedCubeCount": 36,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/weapon-blockouts-reproduced-20261005/reviews-f0497ca9/c-silhouette.png",
+          "bytes": 12448,
+          "sha256": "029caadb5aa8a01e86ed1af90b64cdd6178cd75fcc131719df64e14c24e1c189",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 36,
+            "history": [],
+            "view": "front",
+            "width": 1024,
+            "height": 768,
+            "variantId": "7d628e21-30e7-4d52-991d-bb4ddc2aac8f",
+            "compareToVariantId": "cf68c1da-1b9a-480d-9ad8-e6b4bb5f7bdb",
+            "silhouette": true,
+            "renderedCubeCount": 36,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        }
+      ],
+      "selectionProof": {
+        "status": "PASS",
+        "selectedVariantId": "cf68c1da-1b9a-480d-9ad8-e6b4bb5f7bdb",
+        "projectRestored": true,
+        "revisionBefore": 0,
+        "revisionAfter": 2,
+        "scriptedGuiOnly": true,
+        "humanArtisticApproval": false
+      },
+      "allFramesEqual": true
+    },
+    {
+      "kind": "leaf",
+      "authoringReport": "output/model-editor/leaf-volume-20261005-v3c/authoring-report.json",
+      "authoringReportSha256": "0232a263c94f31b82081b5f9e708277116d9c1b34875273781da52902cead53f",
+      "reviewReport": "output/model-editor/leaf-volume-20261005-v3c/reviews-96a36d05/report.json",
+      "reviewReportSha256": "198bf84a7235d97a21e429d49e0ecc45f1f91c4ad00f22770f9b3c10261a7171",
+      "comparison": "output/model-editor/leaf-volume-20261005-v3c/reviews-96a36d05/comparison.html",
+      "sources": [
+        {
+          "variant": "a",
+          "variantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+          "referenceVariantId": "af9d576e-3c57-430b-a5a4-8459cceefdd4",
+          "name": "Лист · исходный blockout v2",
+          "projectPath": "output/model-editor/leaf-volume-20261005-v3c/a.mmeditor.json",
+          "projectSha256": "6996f1cceb3ac0f1ffed341c0ff109d289a05b608ca4994493b3601bd76c007b",
+          "cubes": 33,
+          "geometrySha256": "84a67ce71159eb0bdf0679f545f8d5fad679b7f2d58ee514368e64750ca8a102",
+          "bundleFiles": [
+            {
+              "path": "assets/mcdev/models/item/weapon_blockout.json",
+              "sha256": "f0829180f45042bb6bbbf853774c7c795979d0b69392d033b86aa3d4d5bba5a7"
+            },
+            {
+              "path": "assets/mcdev/textures/item/weapon_blockout.png",
+              "sha256": "a7d9d23bb621eabcb8003da4dbb96be0cda55755c647b63ba6f045a6bcf94ac7"
+            },
+            {
+              "path": "editable/mcdev/weapon_blockout.bbmodel",
+              "sha256": "c55c61c30aa18046f86e0c5f3ed465ab474aa4fb433f7c422edd6efc6858603c"
+            }
+          ],
+          "originalConceptRetained": true,
+          "allNativeFilesMatchHashes": true
+        },
+        {
+          "variant": "b",
+          "variantId": "af9d576e-3c57-430b-a5a4-8459cceefdd4",
+          "referenceVariantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+          "name": "Лист · объём v3",
+          "projectPath": "output/model-editor/leaf-volume-20261005-v3c/b.mmeditor.json",
+          "projectSha256": "7f0407e6840320b2255c0f59e87ea643ac5644204f04053c4a4c99784d1c76e8",
+          "cubes": 40,
+          "geometrySha256": "bab110c337f34cb41ab53ab9bd0cddc70f95e324dca461558ee306f060e5b1bb",
+          "bundleFiles": [
+            {
+              "path": "assets/mcdev/models/item/weapon_blockout.json",
+              "sha256": "27760b6d59c391dc6e14d9293e4e69a0e2821066e3763d8fed903bf2602adedd"
+            },
+            {
+              "path": "assets/mcdev/textures/item/weapon_blockout.png",
+              "sha256": "adb5a974bf4b7c44d43188e25874dcf7c0b2f2d661cd84bc1aaa36f527db7696"
+            },
+            {
+              "path": "editable/mcdev/weapon_blockout.bbmodel",
+              "sha256": "1bfdc35e94bf5a53e963f74628dc08da4c4da7eeb143ba4ae23a76f687c92470"
+            }
+          ],
+          "originalConceptRetained": true,
+          "allNativeFilesMatchHashes": true
+        }
+      ],
+      "captures": [
+        {
+          "path": "output/model-editor/leaf-volume-20261005-v3c/reviews-96a36d05/a-review.png",
+          "bytes": 61807,
+          "sha256": "882e6dbb176173b4d4f3522aa51760461d72c847de608f4e4cb724b57ec7f12c",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 33,
+            "history": [],
+            "width": 1024,
+            "height": 768,
+            "brief": "{\"schemaVersion\":1,\"kind\":\"mcdev-design-brief\",\"target\":\"fabric-1.20.1-held-item\",\"purpose\":\"Симметричный листовой длинный меч, направление A выбрано пользователем\",\"style\":\"Выразительный Minecraft, спокойные поверхности, ясная конструкция без повторяющихся украшений\",\"silhouette\":\"Широкая листовая масса, острый вытянутый кончик; симметричная гарда с концами к рукояти\",\"materials\":\"Нейтральный материал: тонкий край, более толстый гребень на обеих сторонах. До детализации принять объём.\",\"palette\":[\"#aebdcb\"],\"preserve\":[]}",
+            "lockedParts": [],
+            "views": [
+              "front",
+              "side",
+              "back",
+              "perspective"
+            ],
+            "smallPreviews": [
+              32,
+              64
+            ],
+            "silhouette": "front-alpha-mask",
+            "reviewChecklist": [
+              "Спереди: ясный силуэт, один главный акцент; крупные детали читаются на 32 px.",
+              "Сбоку: клинок не исчезает; стыки гарды и рукояти не имеют случайных зазоров.",
+              "Сзади: покраска завершена, материалы и крупные элементы согласованы со передней стороной.",
+              "Три четверти: кромки и объём читаются; UV не растянуты, материалы различимы.",
+              "Назовите видимую проблему, конкретную правку и ожидаемый эффект; повторите обзор после исправления."
+            ],
+            "artisticAcceptance": "requires-human-review",
+            "game": "not-verified"
+          }
+        },
+        {
+          "path": "output/model-editor/leaf-volume-20261005-v3c/reviews-96a36d05/a-front.png",
+          "bytes": 12419,
+          "sha256": "a0e0688184f11efbaa5e920a259d73c4320446a92e43ca36343a00c4902b6828",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 33,
+            "history": [],
+            "view": "front",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "compareToVariantId": "af9d576e-3c57-430b-a5a4-8459cceefdd4",
+            "silhouette": false,
+            "renderedCubeCount": 33,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/leaf-volume-20261005-v3c/reviews-96a36d05/a-back.png",
+          "bytes": 11891,
+          "sha256": "95ad8cbcf3d0007096cbaa7748f479fbc987a80bd672bb67a5e63a02fc0ed628",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 33,
+            "history": [],
+            "view": "back",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "compareToVariantId": "af9d576e-3c57-430b-a5a4-8459cceefdd4",
+            "silhouette": false,
+            "renderedCubeCount": 33,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/leaf-volume-20261005-v3c/reviews-96a36d05/a-left.png",
+          "bytes": 7832,
+          "sha256": "e21d54fa341e5bc120b279e7be0c7a248b88bacce09f97fd49c9ef296b0a49d7",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 33,
+            "history": [],
+            "view": "left",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "compareToVariantId": "af9d576e-3c57-430b-a5a4-8459cceefdd4",
+            "silhouette": false,
+            "renderedCubeCount": 33,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/leaf-volume-20261005-v3c/reviews-96a36d05/a-right.png",
+          "bytes": 8264,
+          "sha256": "4d63eab86d0ac701f30fc1b00c531657d046b1391ec8a292018f1f01032d4179",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 33,
+            "history": [],
+            "view": "right",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "compareToVariantId": "af9d576e-3c57-430b-a5a4-8459cceefdd4",
+            "silhouette": false,
+            "renderedCubeCount": 33,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/leaf-volume-20261005-v3c/reviews-96a36d05/a-top.png",
+          "bytes": 5863,
+          "sha256": "31eec96903e45daa1e3d32bd8beb3bf3e46476e414b03926b39a12609fcf9e5d",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 33,
+            "history": [],
+            "view": "top",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "compareToVariantId": "af9d576e-3c57-430b-a5a4-8459cceefdd4",
+            "silhouette": false,
+            "renderedCubeCount": 33,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/leaf-volume-20261005-v3c/reviews-96a36d05/a-bottom.png",
+          "bytes": 5869,
+          "sha256": "e674f2b8de0fcb1a415cfec5f10b8d83f0dc1cf511b2a553e05111df500cab1c",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 33,
+            "history": [],
+            "view": "bottom",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "compareToVariantId": "af9d576e-3c57-430b-a5a4-8459cceefdd4",
+            "silhouette": false,
+            "renderedCubeCount": 33,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/leaf-volume-20261005-v3c/reviews-96a36d05/a-perspective.png",
+          "bytes": 34957,
+          "sha256": "7a36bf82fe524c80989d09f6de7260f6691925fe7ca3476e15d5d09719b5a004",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 33,
+            "history": [],
+            "view": "perspective",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "compareToVariantId": "af9d576e-3c57-430b-a5a4-8459cceefdd4",
+            "silhouette": false,
+            "renderedCubeCount": 33,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/leaf-volume-20261005-v3c/reviews-96a36d05/a-rear-perspective.png",
+          "bytes": 33281,
+          "sha256": "2b8e4561d67ef189739ac7f86658cae8b785febf4111ae316463ba16f6ef0e15",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 33,
+            "history": [],
+            "view": "rear-perspective",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "compareToVariantId": "af9d576e-3c57-430b-a5a4-8459cceefdd4",
+            "silhouette": false,
+            "renderedCubeCount": 33,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/leaf-volume-20261005-v3c/reviews-96a36d05/a-silhouette.png",
+          "bytes": 12262,
+          "sha256": "db0a618d6f4f1703a1c1aac21d823322110f69699ace2cb0d213e6823986a449",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 33,
+            "history": [],
+            "view": "front",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "compareToVariantId": "af9d576e-3c57-430b-a5a4-8459cceefdd4",
+            "silhouette": true,
+            "renderedCubeCount": 33,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/leaf-volume-20261005-v3c/reviews-96a36d05/b-review.png",
+          "bytes": 65084,
+          "sha256": "382016bbe556ade801696b3d5782ec9f9f2cc4f238b93feadf6c47f0e2191ba6",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 40,
+            "history": [],
+            "width": 1024,
+            "height": 768,
+            "brief": "{\"schemaVersion\":1,\"kind\":\"mcdev-design-brief\",\"target\":\"fabric-1.20.1-held-item\",\"purpose\":\"Симметричный листовой длинный меч, направление A выбрано пользователем\",\"style\":\"Выразительный Minecraft, спокойные поверхности, ясная конструкция без повторяющихся украшений\",\"silhouette\":\"Широкая листовая масса, острый вытянутый кончик; симметричная гарда с концами к рукояти\",\"materials\":\"Нейтральный материал: тонкий край, более толстый гребень на обеих сторонах. До детализации принять объём.\",\"palette\":[\"#aebdcb\"],\"preserve\":[]}",
+            "lockedParts": [],
+            "views": [
+              "front",
+              "side",
+              "back",
+              "perspective"
+            ],
+            "smallPreviews": [
+              32,
+              64
+            ],
+            "silhouette": "front-alpha-mask",
+            "reviewChecklist": [
+              "Спереди: ясный силуэт, один главный акцент; крупные детали читаются на 32 px.",
+              "Сбоку: клинок не исчезает; стыки гарды и рукояти не имеют случайных зазоров.",
+              "Сзади: покраска завершена, материалы и крупные элементы согласованы со передней стороной.",
+              "Три четверти: кромки и объём читаются; UV не растянуты, материалы различимы.",
+              "Назовите видимую проблему, конкретную правку и ожидаемый эффект; повторите обзор после исправления."
+            ],
+            "artisticAcceptance": "requires-human-review",
+            "game": "not-verified"
+          }
+        },
+        {
+          "path": "output/model-editor/leaf-volume-20261005-v3c/reviews-96a36d05/b-front.png",
+          "bytes": 17120,
+          "sha256": "470a50aacc07553d63548241e58e189469d20d911b90ee4ea4f0aec3df1b72bb",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 40,
+            "history": [],
+            "view": "front",
+            "width": 1024,
+            "height": 768,
+            "variantId": "af9d576e-3c57-430b-a5a4-8459cceefdd4",
+            "compareToVariantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "silhouette": false,
+            "renderedCubeCount": 40,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/leaf-volume-20261005-v3c/reviews-96a36d05/b-back.png",
+          "bytes": 16186,
+          "sha256": "ea5262859ca7f627c00fe63d515736001473871083effd178662180d59503431",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 40,
+            "history": [],
+            "view": "back",
+            "width": 1024,
+            "height": 768,
+            "variantId": "af9d576e-3c57-430b-a5a4-8459cceefdd4",
+            "compareToVariantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "silhouette": false,
+            "renderedCubeCount": 40,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/leaf-volume-20261005-v3c/reviews-96a36d05/b-left.png",
+          "bytes": 8831,
+          "sha256": "dd3556daa132b9ecd64b3e891e5523bd11267442992c517b8b840943ae297c3d",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 40,
+            "history": [],
+            "view": "left",
+            "width": 1024,
+            "height": 768,
+            "variantId": "af9d576e-3c57-430b-a5a4-8459cceefdd4",
+            "compareToVariantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "silhouette": false,
+            "renderedCubeCount": 40,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/leaf-volume-20261005-v3c/reviews-96a36d05/b-right.png",
+          "bytes": 9253,
+          "sha256": "acac78f5f4fbdaf01ee4609fd7ea5354957336335af198b0d236ae5331e509b9",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 40,
+            "history": [],
+            "view": "right",
+            "width": 1024,
+            "height": 768,
+            "variantId": "af9d576e-3c57-430b-a5a4-8459cceefdd4",
+            "compareToVariantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "silhouette": false,
+            "renderedCubeCount": 40,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/leaf-volume-20261005-v3c/reviews-96a36d05/b-top.png",
+          "bytes": 5799,
+          "sha256": "865560d9eccfaccc8900263c5499ab2af772572a84a3ab125b326650e8be0b55",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 40,
+            "history": [],
+            "view": "top",
+            "width": 1024,
+            "height": 768,
+            "variantId": "af9d576e-3c57-430b-a5a4-8459cceefdd4",
+            "compareToVariantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "silhouette": false,
+            "renderedCubeCount": 40,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/leaf-volume-20261005-v3c/reviews-96a36d05/b-bottom.png",
+          "bytes": 5514,
+          "sha256": "d56533a979b2470790d306d72d12212b809481e818ddce616171e8a8144549ba",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 40,
+            "history": [],
+            "view": "bottom",
+            "width": 1024,
+            "height": 768,
+            "variantId": "af9d576e-3c57-430b-a5a4-8459cceefdd4",
+            "compareToVariantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "silhouette": false,
+            "renderedCubeCount": 40,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/leaf-volume-20261005-v3c/reviews-96a36d05/b-perspective.png",
+          "bytes": 27430,
+          "sha256": "f69e20755189aafa4b347d2c41549de66e8bf244a0472eb1382206adcb1a5029",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 40,
+            "history": [],
+            "view": "perspective",
+            "width": 1024,
+            "height": 768,
+            "variantId": "af9d576e-3c57-430b-a5a4-8459cceefdd4",
+            "compareToVariantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "silhouette": false,
+            "renderedCubeCount": 40,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/leaf-volume-20261005-v3c/reviews-96a36d05/b-rear-perspective.png",
+          "bytes": 26238,
+          "sha256": "edf2e8fa6e3c95344c2476b8e5b377d50e00793186cef7b32c1e791f4462f453",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 40,
+            "history": [],
+            "view": "rear-perspective",
+            "width": 1024,
+            "height": 768,
+            "variantId": "af9d576e-3c57-430b-a5a4-8459cceefdd4",
+            "compareToVariantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "silhouette": false,
+            "renderedCubeCount": 40,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/model-editor/leaf-volume-20261005-v3c/reviews-96a36d05/b-silhouette.png",
+          "bytes": 16422,
+          "sha256": "7f4220f58d2b0bbc71805e8b587b656b5c4a47bad3c10fa4e03cc8663319209d",
+          "metadata": {
+            "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+            "revision": 0,
+            "cubeCount": 40,
+            "history": [],
+            "view": "front",
+            "width": 1024,
+            "height": 768,
+            "variantId": "af9d576e-3c57-430b-a5a4-8459cceefdd4",
+            "compareToVariantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+            "silhouette": true,
+            "renderedCubeCount": 40,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        }
+      ],
+      "selectionProof": {
+        "status": "PASS",
+        "selectedVariantId": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+        "projectRestored": true,
+        "revisionBefore": 0,
+        "revisionAfter": 2,
+        "scriptedGuiOnly": true,
+        "humanArtisticApproval": false
+      }
+    }
+  ],
+  "construction": {
+    "positive": {
+      "status": "CONNECTED",
+      "path": "output/model-editor/leaf-volume-20261005-v3c/b.mmeditor.json",
+      "sourceSha256": "7f0407e6840320b2255c0f59e87ea643ac5644204f04053c4a4c99784d1c76e8",
+      "method": "SAT of solid oriented cuboids, face/volume contacts; edge/point contacts excluded; epsilon=1e-6 model units",
+      "cubeCount": 40,
+      "contactCount": 82,
+      "components": [
+        [
+          "blade_edge_00",
+          "blade_edge_01",
+          "blade_edge_02",
+          "blade_edge_03",
+          "blade_edge_04",
+          "blade_edge_05",
+          "blade_edge_06",
+          "blade_edge_07",
+          "blade_edge_08",
+          "blade_edge_09",
+          "blade_edge_10",
+          "blade_edge_11",
+          "blade_edge_12",
+          "blade_edge_13",
+          "blade_edge_14",
+          "blade_edge_15",
+          "blade_edge_16",
+          "blade_edge_17",
+          "blade_ricasso",
+          "blade_ridge_00",
+          "blade_ridge_01",
+          "blade_ridge_02",
+          "blade_ridge_03",
+          "blade_ridge_04",
+          "blade_ridge_05",
+          "blade_ridge_06",
+          "blade_ridge_07",
+          "blade_ridge_08",
+          "blade_ridge_09",
+          "blade_ridge_10",
+          "blade_ridge_11",
+          "blade_ridge_12",
+          "blade_ridge_13",
+          "grip",
+          "guard_core",
+          "guard_left",
+          "guard_right",
+          "lower_collar",
+          "pommel",
+          "upper_collar"
+        ]
+      ],
+      "edges": [
+        [
+          "grip",
+          "pommel"
+        ],
+        [
+          "grip",
+          "lower_collar"
+        ],
+        [
+          "grip",
+          "upper_collar"
+        ],
+        [
+          "grip",
+          "guard_core"
+        ],
+        [
+          "pommel",
+          "lower_collar"
+        ],
+        [
+          "upper_collar",
+          "guard_core"
+        ],
+        [
+          "guard_core",
+          "guard_left"
+        ],
+        [
+          "guard_core",
+          "guard_right"
+        ],
+        [
+          "guard_core",
+          "blade_ricasso"
+        ],
+        [
+          "blade_ricasso",
+          "blade_edge_00"
+        ],
+        [
+          "blade_ricasso",
+          "blade_ridge_00"
+        ],
+        [
+          "blade_edge_00",
+          "blade_ridge_00"
+        ],
+        [
+          "blade_edge_00",
+          "blade_edge_01"
+        ],
+        [
+          "blade_edge_00",
+          "blade_ridge_01"
+        ],
+        [
+          "blade_ridge_00",
+          "blade_edge_01"
+        ],
+        [
+          "blade_ridge_00",
+          "blade_ridge_01"
+        ],
+        [
+          "blade_edge_01",
+          "blade_ridge_01"
+        ],
+        [
+          "blade_edge_01",
+          "blade_edge_02"
+        ],
+        [
+          "blade_edge_01",
+          "blade_ridge_02"
+        ],
+        [
+          "blade_ridge_01",
+          "blade_edge_02"
+        ],
+        [
+          "blade_ridge_01",
+          "blade_ridge_02"
+        ],
+        [
+          "blade_edge_02",
+          "blade_ridge_02"
+        ],
+        [
+          "blade_edge_02",
+          "blade_edge_03"
+        ],
+        [
+          "blade_edge_02",
+          "blade_ridge_03"
+        ],
+        [
+          "blade_ridge_02",
+          "blade_edge_03"
+        ],
+        [
+          "blade_ridge_02",
+          "blade_ridge_03"
+        ],
+        [
+          "blade_edge_03",
+          "blade_ridge_03"
+        ],
+        [
+          "blade_edge_03",
+          "blade_edge_04"
+        ],
+        [
+          "blade_edge_03",
+          "blade_ridge_04"
+        ],
+        [
+          "blade_ridge_03",
+          "blade_edge_04"
+        ],
+        [
+          "blade_ridge_03",
+          "blade_ridge_04"
+        ],
+        [
+          "blade_edge_04",
+          "blade_ridge_04"
+        ],
+        [
+          "blade_edge_04",
+          "blade_edge_05"
+        ],
+        [
+          "blade_edge_04",
+          "blade_ridge_05"
+        ],
+        [
+          "blade_ridge_04",
+          "blade_edge_05"
+        ],
+        [
+          "blade_ridge_04",
+          "blade_ridge_05"
+        ],
+        [
+          "blade_edge_05",
+          "blade_ridge_05"
+        ],
+        [
+          "blade_edge_05",
+          "blade_edge_06"
+        ],
+        [
+          "blade_edge_05",
+          "blade_ridge_06"
+        ],
+        [
+          "blade_ridge_05",
+          "blade_edge_06"
+        ],
+        [
+          "blade_ridge_05",
+          "blade_ridge_06"
+        ],
+        [
+          "blade_edge_06",
+          "blade_ridge_06"
+        ],
+        [
+          "blade_edge_06",
+          "blade_edge_07"
+        ],
+        [
+          "blade_edge_06",
+          "blade_ridge_07"
+        ],
+        [
+          "blade_ridge_06",
+          "blade_edge_07"
+        ],
+        [
+          "blade_ridge_06",
+          "blade_ridge_07"
+        ],
+        [
+          "blade_edge_07",
+          "blade_ridge_07"
+        ],
+        [
+          "blade_edge_07",
+          "blade_edge_08"
+        ],
+        [
+          "blade_edge_07",
+          "blade_ridge_08"
+        ],
+        [
+          "blade_ridge_07",
+          "blade_edge_08"
+        ],
+        [
+          "blade_ridge_07",
+          "blade_ridge_08"
+        ],
+        [
+          "blade_edge_08",
+          "blade_ridge_08"
+        ],
+        [
+          "blade_edge_08",
+          "blade_edge_09"
+        ],
+        [
+          "blade_edge_08",
+          "blade_ridge_09"
+        ],
+        [
+          "blade_ridge_08",
+          "blade_edge_09"
+        ],
+        [
+          "blade_ridge_08",
+          "blade_ridge_09"
+        ],
+        [
+          "blade_edge_09",
+          "blade_ridge_09"
+        ],
+        [
+          "blade_edge_09",
+          "blade_edge_10"
+        ],
+        [
+          "blade_edge_09",
+          "blade_ridge_10"
+        ],
+        [
+          "blade_ridge_09",
+          "blade_edge_10"
+        ],
+        [
+          "blade_ridge_09",
+          "blade_ridge_10"
+        ],
+        [
+          "blade_edge_10",
+          "blade_ridge_10"
+        ],
+        [
+          "blade_edge_10",
+          "blade_edge_11"
+        ],
+        [
+          "blade_edge_10",
+          "blade_ridge_11"
+        ],
+        [
+          "blade_ridge_10",
+          "blade_edge_11"
+        ],
+        [
+          "blade_ridge_10",
+          "blade_ridge_11"
+        ],
+        [
+          "blade_edge_11",
+          "blade_ridge_11"
+        ],
+        [
+          "blade_edge_11",
+          "blade_edge_12"
+        ],
+        [
+          "blade_edge_11",
+          "blade_ridge_12"
+        ],
+        [
+          "blade_ridge_11",
+          "blade_edge_12"
+        ],
+        [
+          "blade_ridge_11",
+          "blade_ridge_12"
+        ],
+        [
+          "blade_edge_12",
+          "blade_ridge_12"
+        ],
+        [
+          "blade_edge_12",
+          "blade_edge_13"
+        ],
+        [
+          "blade_edge_12",
+          "blade_ridge_13"
+        ],
+        [
+          "blade_ridge_12",
+          "blade_edge_13"
+        ],
+        [
+          "blade_ridge_12",
+          "blade_ridge_13"
+        ],
+        [
+          "blade_edge_13",
+          "blade_ridge_13"
+        ],
+        [
+          "blade_edge_13",
+          "blade_edge_14"
+        ],
+        [
+          "blade_ridge_13",
+          "blade_edge_14"
+        ],
+        [
+          "blade_edge_14",
+          "blade_edge_15"
+        ],
+        [
+          "blade_edge_15",
+          "blade_edge_16"
+        ],
+        [
+          "blade_edge_16",
+          "blade_edge_17"
+        ]
+      ],
+      "limits": "Ignores alpha-cut texture holes and semantics of deliberate intersections; not an artistic or game collision approval"
+    },
+    "negativeGap": {
+      "status": "DISCONNECTED",
+      "path": "output/model-editor/leaf-volume-20261005-v3a/b.mmeditor.json",
+      "sourceSha256": "e793b856fccab8eb197828597593704d2be16e8d93a94f38634c2ab83fb888e1",
+      "method": "SAT of solid oriented cuboids, face/volume contacts; edge/point contacts excluded; epsilon=1e-6 model units",
+      "cubeCount": 40,
+      "contactCount": 80,
+      "components": [
+        [
+          "grip",
+          "lower_collar",
+          "pommel",
+          "upper_collar"
+        ],
+        [
+          "blade_edge_00",
+          "blade_edge_01",
+          "blade_edge_02",
+          "blade_edge_03",
+          "blade_edge_04",
+          "blade_edge_05",
+          "blade_edge_06",
+          "blade_edge_07",
+          "blade_edge_08",
+          "blade_edge_09",
+          "blade_edge_10",
+          "blade_edge_11",
+          "blade_edge_12",
+          "blade_edge_13",
+          "blade_edge_14",
+          "blade_edge_15",
+          "blade_edge_16",
+          "blade_edge_17",
+          "blade_ricasso",
+          "blade_ridge_00",
+          "blade_ridge_01",
+          "blade_ridge_02",
+          "blade_ridge_03",
+          "blade_ridge_04",
+          "blade_ridge_05",
+          "blade_ridge_06",
+          "blade_ridge_07",
+          "blade_ridge_08",
+          "blade_ridge_09",
+          "blade_ridge_10",
+          "blade_ridge_11",
+          "blade_ridge_12",
+          "blade_ridge_13",
+          "guard_core",
+          "guard_left",
+          "guard_right"
+        ]
+      ],
+      "edges": [
+        [
+          "grip",
+          "pommel"
+        ],
+        [
+          "grip",
+          "lower_collar"
+        ],
+        [
+          "grip",
+          "upper_collar"
+        ],
+        [
+          "pommel",
+          "lower_collar"
+        ],
+        [
+          "guard_core",
+          "guard_left"
+        ],
+        [
+          "guard_core",
+          "guard_right"
+        ],
+        [
+          "guard_core",
+          "blade_ricasso"
+        ],
+        [
+          "blade_ricasso",
+          "blade_edge_00"
+        ],
+        [
+          "blade_ricasso",
+          "blade_ridge_00"
+        ],
+        [
+          "blade_edge_00",
+          "blade_ridge_00"
+        ],
+        [
+          "blade_edge_00",
+          "blade_edge_01"
+        ],
+        [
+          "blade_edge_00",
+          "blade_ridge_01"
+        ],
+        [
+          "blade_ridge_00",
+          "blade_edge_01"
+        ],
+        [
+          "blade_ridge_00",
+          "blade_ridge_01"
+        ],
+        [
+          "blade_edge_01",
+          "blade_ridge_01"
+        ],
+        [
+          "blade_edge_01",
+          "blade_edge_02"
+        ],
+        [
+          "blade_edge_01",
+          "blade_ridge_02"
+        ],
+        [
+          "blade_ridge_01",
+          "blade_edge_02"
+        ],
+        [
+          "blade_ridge_01",
+          "blade_ridge_02"
+        ],
+        [
+          "blade_edge_02",
+          "blade_ridge_02"
+        ],
+        [
+          "blade_edge_02",
+          "blade_edge_03"
+        ],
+        [
+          "blade_edge_02",
+          "blade_ridge_03"
+        ],
+        [
+          "blade_ridge_02",
+          "blade_edge_03"
+        ],
+        [
+          "blade_ridge_02",
+          "blade_ridge_03"
+        ],
+        [
+          "blade_edge_03",
+          "blade_ridge_03"
+        ],
+        [
+          "blade_edge_03",
+          "blade_edge_04"
+        ],
+        [
+          "blade_edge_03",
+          "blade_ridge_04"
+        ],
+        [
+          "blade_ridge_03",
+          "blade_edge_04"
+        ],
+        [
+          "blade_ridge_03",
+          "blade_ridge_04"
+        ],
+        [
+          "blade_edge_04",
+          "blade_ridge_04"
+        ],
+        [
+          "blade_edge_04",
+          "blade_edge_05"
+        ],
+        [
+          "blade_edge_04",
+          "blade_ridge_05"
+        ],
+        [
+          "blade_ridge_04",
+          "blade_edge_05"
+        ],
+        [
+          "blade_ridge_04",
+          "blade_ridge_05"
+        ],
+        [
+          "blade_edge_05",
+          "blade_ridge_05"
+        ],
+        [
+          "blade_edge_05",
+          "blade_edge_06"
+        ],
+        [
+          "blade_edge_05",
+          "blade_ridge_06"
+        ],
+        [
+          "blade_ridge_05",
+          "blade_edge_06"
+        ],
+        [
+          "blade_ridge_05",
+          "blade_ridge_06"
+        ],
+        [
+          "blade_edge_06",
+          "blade_ridge_06"
+        ],
+        [
+          "blade_edge_06",
+          "blade_edge_07"
+        ],
+        [
+          "blade_edge_06",
+          "blade_ridge_07"
+        ],
+        [
+          "blade_ridge_06",
+          "blade_edge_07"
+        ],
+        [
+          "blade_ridge_06",
+          "blade_ridge_07"
+        ],
+        [
+          "blade_edge_07",
+          "blade_ridge_07"
+        ],
+        [
+          "blade_edge_07",
+          "blade_edge_08"
+        ],
+        [
+          "blade_edge_07",
+          "blade_ridge_08"
+        ],
+        [
+          "blade_ridge_07",
+          "blade_edge_08"
+        ],
+        [
+          "blade_ridge_07",
+          "blade_ridge_08"
+        ],
+        [
+          "blade_edge_08",
+          "blade_ridge_08"
+        ],
+        [
+          "blade_edge_08",
+          "blade_edge_09"
+        ],
+        [
+          "blade_edge_08",
+          "blade_ridge_09"
+        ],
+        [
+          "blade_ridge_08",
+          "blade_edge_09"
+        ],
+        [
+          "blade_ridge_08",
+          "blade_ridge_09"
+        ],
+        [
+          "blade_edge_09",
+          "blade_ridge_09"
+        ],
+        [
+          "blade_edge_09",
+          "blade_edge_10"
+        ],
+        [
+          "blade_edge_09",
+          "blade_ridge_10"
+        ],
+        [
+          "blade_ridge_09",
+          "blade_edge_10"
+        ],
+        [
+          "blade_ridge_09",
+          "blade_ridge_10"
+        ],
+        [
+          "blade_edge_10",
+          "blade_ridge_10"
+        ],
+        [
+          "blade_edge_10",
+          "blade_edge_11"
+        ],
+        [
+          "blade_edge_10",
+          "blade_ridge_11"
+        ],
+        [
+          "blade_ridge_10",
+          "blade_edge_11"
+        ],
+        [
+          "blade_ridge_10",
+          "blade_ridge_11"
+        ],
+        [
+          "blade_edge_11",
+          "blade_ridge_11"
+        ],
+        [
+          "blade_edge_11",
+          "blade_edge_12"
+        ],
+        [
+          "blade_edge_11",
+          "blade_ridge_12"
+        ],
+        [
+          "blade_ridge_11",
+          "blade_edge_12"
+        ],
+        [
+          "blade_ridge_11",
+          "blade_ridge_12"
+        ],
+        [
+          "blade_edge_12",
+          "blade_ridge_12"
+        ],
+        [
+          "blade_edge_12",
+          "blade_edge_13"
+        ],
+        [
+          "blade_edge_12",
+          "blade_ridge_13"
+        ],
+        [
+          "blade_ridge_12",
+          "blade_edge_13"
+        ],
+        [
+          "blade_ridge_12",
+          "blade_ridge_13"
+        ],
+        [
+          "blade_edge_13",
+          "blade_ridge_13"
+        ],
+        [
+          "blade_edge_13",
+          "blade_edge_14"
+        ],
+        [
+          "blade_ridge_13",
+          "blade_edge_14"
+        ],
+        [
+          "blade_edge_14",
+          "blade_edge_15"
+        ],
+        [
+          "blade_edge_15",
+          "blade_edge_16"
+        ],
+        [
+          "blade_edge_16",
+          "blade_edge_17"
+        ]
+      ],
+      "limits": "Ignores alpha-cut texture holes and semantics of deliberate intersections; not an artistic or game collision approval"
+    },
+    "calibrations": [
+      {
+        "name": "face",
+        "expected": "CONNECTED",
+        "actual": "CONNECTED",
+        "exitCode": 0,
+        "path": "output/verification/blockout-construction-calibration/face.mmeditor.json"
+      },
+      {
+        "name": "overlap",
+        "expected": "CONNECTED",
+        "actual": "CONNECTED",
+        "exitCode": 0,
+        "path": "output/verification/blockout-construction-calibration/overlap.mmeditor.json"
+      },
+      {
+        "name": "edge",
+        "expected": "DISCONNECTED",
+        "actual": "DISCONNECTED",
+        "exitCode": 1,
+        "path": "output/verification/blockout-construction-calibration/edge.mmeditor.json"
+      },
+      {
+        "name": "point",
+        "expected": "DISCONNECTED",
+        "actual": "DISCONNECTED",
+        "exitCode": 1,
+        "path": "output/verification/blockout-construction-calibration/point.mmeditor.json"
+      },
+      {
+        "name": "gap",
+        "expected": "DISCONNECTED",
+        "actual": "DISCONNECTED",
+        "exitCode": 1,
+        "path": "output/verification/blockout-construction-calibration/gap.mmeditor.json"
+      }
+    ]
+  },
+  "overwriteProtection": {
+    "status": "PASS",
+    "existingProjectSha256": "7f0407e6840320b2255c0f59e87ea643ac5644204f04053c4a4c99784d1c76e8",
+    "rejectedExitCode": 1
+  },
+  "lint": {
+    "status": "PASS",
+    "log": "output/verification/roadmap-036-source-lint.log"
+  },
+  "boundaries": {
+    "authoring": "Geometry chosen by Codex, executed through editor-core agent commands; not an independent live CLI/MCP generation session",
+    "variantManagement": "Human-owned metadata/checkpoints prepared by local developer workflow; app agent permissions unchanged",
+    "artisticApproval": "NOT_PERFORMED",
+    "textures": "Neutral blockout only; painted texture not accepted",
+    "gameAcceptance": "NOT_RUN",
+    "jarIntegration": "NOT_PERFORMED",
+    "generalAgentVariantWorkflow": "NOT_IMPLEMENTED",
+    "hosted": "No new runtime code; earlier exact-source 035 evidence retained, no fresh hosted claim for these developer helpers",
+    "scope": "Reproducible drafts and local proofs only; point 036 remains unchecked"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "kind": "original-ai-concept-direction",
+  "path": "fixtures/production/concepts/weapon-directions-20261005.png",
+  "width": 1536,
+  "height": 1024,
+  "bytes": 1426740,
+  "sha256": "e4c7daa05f5dd1b8b6e3f27a56b0f2edab85d8dc6dc0a4bbdd28f3dddfc5f6fb",
+  "origin": "ai-generated",
+  "tool": "OpenAI image_gen built-in via imagegen skill",
+  "createdAtUtc": "2026-10-05T15:59:48.307Z",
+  "importedReferences": [],
+  "brief": "Three Minecraft cuboid longsword blockouts: leaf, asymmetric fang, split tip. Neutral material, equal scale, no textures or ornaments.",
+  "review": "direction-only",
+  "artisticApproval": "NOT_PERFORMED",
+  "modelGeneration": "NOT_A_3D_MESH",
+  "critique": {
+    "A": "Strong leaf mass and connected guard; use fewer taper steps in 3D",
+    "B": "Increase body width; current narrow stepped spine risks poor 32px readability",
+    "C": "Keep clear split opening and a connected solid blade base"
+  },
+  "geometryIteration": "v2: gradual shoulders/taper, stronger fork silhouette, original PNG unchanged",
+  "originalOutputPath": "output/model-editor/blockout-20261005-v2/concept-board.png",
+  "promptRetention": "Brief summary retained; the full provider request, model identifier and seed are not recorded in this fixture",
+  "model": "NOT_REPORTED",
+  "seed": null
+}

@@ -1,0 +1,1162 @@
+{
+  "schemaVersion": 1,
+  "kind": "mcdev-authored-blockouts",
+  "projectId": "c3c8fbf1-f34c-4a27-95b1-9b4ae48c019b",
+  "modelId": "mcdev:weapon_blockout",
+  "material": "#aebdcb",
+  "concept": {
+    "path": "concepts/weapon-directions-20261005.png",
+    "sha256": "e4c7daa05f5dd1b8b6e3f27a56b0f2edab85d8dc6dc0a4bbdd28f3dddfc5f6fb",
+    "label": "Лист / Клык / Раскол · направления формы",
+    "role": "concept",
+    "origin": "ai-generated",
+    "attribution": "OpenAI image_gen · собственный brief",
+    "rights": "Оригинальная генерация для проекта; внешние references не использованы. Отдельная проверка прав не выполнялась.",
+    "source": "imagegen skill · 2026-10-05",
+    "note": "A: широкая листовая масса. B: увеличить ширину клинка. C: сохранить открытый раскол и соединённое основание.",
+    "id": "b69455bb-8d7c-41a3-b537-d1cb764a6166",
+    "mime": "image/png",
+    "bytes": 1426740,
+    "width": 1536,
+    "height": 1024,
+    "review": "direction-only"
+  },
+  "brief": {
+    "schemaVersion": 1,
+    "kind": "mcdev-design-brief",
+    "target": "fabric-1.20.1-held-item",
+    "purpose": "Симметричный листовой длинный меч, направление A выбрано пользователем",
+    "style": "Выразительный Minecraft, спокойные поверхности, ясная конструкция без повторяющихся украшений",
+    "silhouette": "Широкая листовая масса, острый вытянутый кончик; симметричная гарда с концами к рукояти",
+    "materials": "Нейтральный материал: тонкий край, более толстый гребень на обеих сторонах. До детализации принять объём.",
+    "palette": [
+      "#aebdcb"
+    ],
+    "preserve": []
+  },
+  "variants": [
+    {
+      "key": "a",
+      "id": "ea057c92-9e8c-4b43-a163-2e3fbaaa1820",
+      "label": "Лист · исходный blockout v2",
+      "note": "Сохранённый нейтральный исходник до выбора направления A; геометрия v2 не переписана.",
+      "shapes": [
+        {
+          "id": "grip",
+          "origin": [
+            7.4,
+            3,
+            7.4
+          ],
+          "size": [
+            1.2,
+            5.5,
+            1.2
+          ]
+        },
+        {
+          "id": "pommel",
+          "origin": [
+            7.1,
+            1.7000000000000002,
+            7.1
+          ],
+          "size": [
+            1.8,
+            1.3,
+            1.8
+          ]
+        },
+        {
+          "id": "collar",
+          "origin": [
+            7.1,
+            8.1,
+            7.1
+          ],
+          "size": [
+            1.8,
+            0.6,
+            1.8
+          ]
+        },
+        {
+          "id": "guard_core",
+          "origin": [
+            6.7,
+            8.5,
+            7.25
+          ],
+          "size": [
+            2.6,
+            1,
+            1.5
+          ]
+        },
+        {
+          "id": "neck",
+          "origin": [
+            7.1,
+            9.5,
+            7.5
+          ],
+          "size": [
+            1.8,
+            2,
+            1
+          ]
+        },
+        {
+          "id": "guard_left",
+          "origin": [
+            4,
+            8.5,
+            7.55
+          ],
+          "size": [
+            2.7,
+            0.8,
+            0.9
+          ]
+        },
+        {
+          "id": "guard_right",
+          "origin": [
+            9.3,
+            8.5,
+            7.55
+          ],
+          "size": [
+            2.7,
+            0.8,
+            0.9
+          ]
+        },
+        {
+          "id": "guard_left_tip",
+          "origin": [
+            4,
+            7.7,
+            7.55
+          ],
+          "size": [
+            0.8,
+            0.8,
+            0.9
+          ]
+        },
+        {
+          "id": "guard_right_tip",
+          "origin": [
+            11.2,
+            7.7,
+            7.55
+          ],
+          "size": [
+            0.8,
+            0.8,
+            0.9
+          ]
+        },
+        {
+          "id": "shoulder_0",
+          "origin": [
+            7,
+            11.5,
+            7.5
+          ],
+          "size": [
+            2,
+            0.5,
+            1
+          ]
+        },
+        {
+          "id": "shoulder_1",
+          "origin": [
+            6.75,
+            12,
+            7.5
+          ],
+          "size": [
+            2.5,
+            0.5,
+            1
+          ]
+        },
+        {
+          "id": "shoulder_2",
+          "origin": [
+            6.5,
+            12.5,
+            7.5
+          ],
+          "size": [
+            3,
+            0.5,
+            1
+          ]
+        },
+        {
+          "id": "shoulder_3",
+          "origin": [
+            6.25,
+            13,
+            7.5
+          ],
+          "size": [
+            3.5,
+            0.5,
+            1
+          ]
+        },
+        {
+          "id": "shoulder_4",
+          "origin": [
+            6,
+            13.5,
+            7.5
+          ],
+          "size": [
+            4,
+            0.5,
+            1
+          ]
+        },
+        {
+          "id": "shoulder_5",
+          "origin": [
+            5.75,
+            14,
+            7.5
+          ],
+          "size": [
+            4.5,
+            0.5,
+            1
+          ]
+        },
+        {
+          "id": "blade_mass",
+          "origin": [
+            5.75,
+            14.5,
+            7.5
+          ],
+          "size": [
+            4.5,
+            5.5,
+            1
+          ]
+        },
+        {
+          "id": "taper_0",
+          "origin": [
+            5.875,
+            20,
+            7.5
+          ],
+          "size": [
+            4.25,
+            0.5,
+            1
+          ]
+        },
+        {
+          "id": "taper_1",
+          "origin": [
+            6,
+            20.5,
+            7.5
+          ],
+          "size": [
+            4,
+            0.5,
+            1
+          ]
+        },
+        {
+          "id": "taper_2",
+          "origin": [
+            6.125,
+            21,
+            7.5
+          ],
+          "size": [
+            3.75,
+            0.5,
+            1
+          ]
+        },
+        {
+          "id": "taper_3",
+          "origin": [
+            6.25,
+            21.5,
+            7.5
+          ],
+          "size": [
+            3.5,
+            0.5,
+            1
+          ]
+        },
+        {
+          "id": "taper_4",
+          "origin": [
+            6.375,
+            22,
+            7.5
+          ],
+          "size": [
+            3.25,
+            0.5,
+            1
+          ]
+        },
+        {
+          "id": "taper_5",
+          "origin": [
+            6.5,
+            22.5,
+            7.5
+          ],
+          "size": [
+            3,
+            0.5,
+            1
+          ]
+        },
+        {
+          "id": "taper_6",
+          "origin": [
+            6.625,
+            23,
+            7.5
+          ],
+          "size": [
+            2.75,
+            0.5,
+            1
+          ]
+        },
+        {
+          "id": "taper_7",
+          "origin": [
+            6.75,
+            23.5,
+            7.5
+          ],
+          "size": [
+            2.5,
+            0.5,
+            1
+          ]
+        },
+        {
+          "id": "taper_8",
+          "origin": [
+            6.875,
+            24,
+            7.5
+          ],
+          "size": [
+            2.25,
+            0.5,
+            1
+          ]
+        },
+        {
+          "id": "taper_9",
+          "origin": [
+            7,
+            24.5,
+            7.5
+          ],
+          "size": [
+            2,
+            0.5,
+            1
+          ]
+        },
+        {
+          "id": "taper_10",
+          "origin": [
+            7.125,
+            25,
+            7.5
+          ],
+          "size": [
+            1.75,
+            0.5,
+            1
+          ]
+        },
+        {
+          "id": "taper_11",
+          "origin": [
+            7.25,
+            25.5,
+            7.5
+          ],
+          "size": [
+            1.5,
+            0.5,
+            1
+          ]
+        },
+        {
+          "id": "taper_12",
+          "origin": [
+            7.375,
+            26,
+            7.5
+          ],
+          "size": [
+            1.25,
+            0.5,
+            1
+          ]
+        },
+        {
+          "id": "taper_13",
+          "origin": [
+            7.5,
+            26.5,
+            7.5
+          ],
+          "size": [
+            1,
+            0.5,
+            1
+          ]
+        },
+        {
+          "id": "taper_14",
+          "origin": [
+            7.625,
+            27,
+            7.5
+          ],
+          "size": [
+            0.75,
+            0.5,
+            1
+          ]
+        },
+        {
+          "id": "taper_15",
+          "origin": [
+            7.75,
+            27.5,
+            7.5
+          ],
+          "size": [
+            0.5,
+            0.5,
+            1
+          ]
+        },
+        {
+          "id": "taper_16",
+          "origin": [
+            7.875,
+            28,
+            7.5
+          ],
+          "size": [
+            0.25,
+            0.5,
+            1
+          ]
+        }
+      ],
+      "groups": [
+        {
+          "id": "handle_group",
+          "label": "Рукоять",
+          "cubeIds": [
+            "grip",
+            "collar"
+          ]
+        },
+        {
+          "id": "pommel_group",
+          "label": "Навершие",
+          "cubeIds": [
+            "pommel"
+          ]
+        },
+        {
+          "id": "guard_group",
+          "label": "Гарда",
+          "cubeIds": [
+            "guard_core",
+            "guard_left",
+            "guard_right",
+            "guard_left_tip",
+            "guard_right_tip"
+          ]
+        },
+        {
+          "id": "blade_group",
+          "label": "Клинок",
+          "cubeIds": [
+            "neck",
+            "shoulder_0",
+            "shoulder_1",
+            "shoulder_2",
+            "shoulder_3",
+            "shoulder_4",
+            "shoulder_5",
+            "blade_mass",
+            "taper_0",
+            "taper_1",
+            "taper_2",
+            "taper_3",
+            "taper_4",
+            "taper_5",
+            "taper_6",
+            "taper_7",
+            "taper_8",
+            "taper_9",
+            "taper_10",
+            "taper_11",
+            "taper_12",
+            "taper_13",
+            "taper_14",
+            "taper_15",
+            "taper_16"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "b",
+      "id": "af9d576e-3c57-430b-a5a4-8459cceefdd4",
+      "label": "Лист · объём v3",
+      "note": "Выбрано направление A. Тонкий край и центральный объём с обеих сторон; гарда наклонена к рукояти. Это черновик, без принятой текстуры.",
+      "shapes": [
+        {
+          "id": "grip",
+          "origin": [
+            7.425,
+            3.25,
+            7.425
+          ],
+          "size": [
+            1.15,
+            5.6,
+            1.15
+          ]
+        },
+        {
+          "id": "pommel",
+          "origin": [
+            7.375,
+            2.05,
+            7.375
+          ],
+          "size": [
+            1.25,
+            1.25,
+            1.25
+          ],
+          "rotation": {
+            "axis": "z",
+            "angle": 45,
+            "pivot": [
+              8,
+              2.675,
+              8
+            ]
+          }
+        },
+        {
+          "id": "lower_collar",
+          "origin": [
+            7.25,
+            3.25,
+            7.25
+          ],
+          "size": [
+            1.5,
+            0.4,
+            1.5
+          ]
+        },
+        {
+          "id": "upper_collar",
+          "origin": [
+            7.25,
+            8.35,
+            7.25
+          ],
+          "size": [
+            1.5,
+            0.5,
+            1.5
+          ]
+        },
+        {
+          "id": "guard_core",
+          "origin": [
+            6.8,
+            8.8,
+            7.2
+          ],
+          "size": [
+            2.4,
+            1,
+            1.6
+          ]
+        },
+        {
+          "id": "guard_left",
+          "origin": [
+            4.1,
+            9,
+            7.5
+          ],
+          "size": [
+            3.1,
+            0.8,
+            1
+          ],
+          "rotation": {
+            "axis": "z",
+            "angle": 22.5,
+            "pivot": [
+              7.2,
+              9.4,
+              8
+            ]
+          }
+        },
+        {
+          "id": "guard_right",
+          "origin": [
+            8.8,
+            9,
+            7.5
+          ],
+          "size": [
+            3.1,
+            0.8,
+            1
+          ],
+          "rotation": {
+            "axis": "z",
+            "angle": -22.5,
+            "pivot": [
+              8.8,
+              9.4,
+              8
+            ]
+          }
+        },
+        {
+          "id": "blade_ricasso",
+          "origin": [
+            7.2,
+            9.8,
+            7.3
+          ],
+          "size": [
+            1.6,
+            1.7,
+            1.4
+          ]
+        },
+        {
+          "id": "blade_edge_00",
+          "origin": [
+            7,
+            11.5,
+            7.8125
+          ],
+          "size": [
+            2,
+            0.75,
+            0.375
+          ]
+        },
+        {
+          "id": "blade_ridge_00",
+          "origin": [
+            7.5625,
+            11.5,
+            7.5625
+          ],
+          "size": [
+            0.875,
+            0.75,
+            0.875
+          ]
+        },
+        {
+          "id": "blade_edge_01",
+          "origin": [
+            6.625,
+            12.25,
+            7.8125
+          ],
+          "size": [
+            2.75,
+            0.75,
+            0.375
+          ]
+        },
+        {
+          "id": "blade_ridge_01",
+          "origin": [
+            7.1875,
+            12.25,
+            7.515625
+          ],
+          "size": [
+            1.625,
+            0.75,
+            0.96875
+          ]
+        },
+        {
+          "id": "blade_edge_02",
+          "origin": [
+            6.25,
+            13,
+            7.8125
+          ],
+          "size": [
+            3.5,
+            0.75,
+            0.375
+          ]
+        },
+        {
+          "id": "blade_ridge_02",
+          "origin": [
+            6.8125,
+            13,
+            7.46875
+          ],
+          "size": [
+            2.375,
+            0.75,
+            1.0625
+          ]
+        },
+        {
+          "id": "blade_edge_03",
+          "origin": [
+            5.875,
+            13.75,
+            7.8125
+          ],
+          "size": [
+            4.25,
+            0.75,
+            0.375
+          ]
+        },
+        {
+          "id": "blade_ridge_03",
+          "origin": [
+            6.4375,
+            13.75,
+            7.421875
+          ],
+          "size": [
+            3.125,
+            0.75,
+            1.15625
+          ]
+        },
+        {
+          "id": "blade_edge_04",
+          "origin": [
+            5.625,
+            14.5,
+            7.8125
+          ],
+          "size": [
+            4.75,
+            3,
+            0.375
+          ]
+        },
+        {
+          "id": "blade_ridge_04",
+          "origin": [
+            6.1875,
+            14.5,
+            7.390625
+          ],
+          "size": [
+            3.625,
+            3,
+            1.21875
+          ]
+        },
+        {
+          "id": "blade_edge_05",
+          "origin": [
+            5.75,
+            17.5,
+            7.8125
+          ],
+          "size": [
+            4.5,
+            0.875,
+            0.375
+          ]
+        },
+        {
+          "id": "blade_ridge_05",
+          "origin": [
+            6.3125,
+            17.5,
+            7.40625
+          ],
+          "size": [
+            3.375,
+            0.875,
+            1.1875
+          ]
+        },
+        {
+          "id": "blade_edge_06",
+          "origin": [
+            5.9375,
+            18.375,
+            7.8125
+          ],
+          "size": [
+            4.125,
+            0.875,
+            0.375
+          ]
+        },
+        {
+          "id": "blade_ridge_06",
+          "origin": [
+            6.5,
+            18.375,
+            7.4296875
+          ],
+          "size": [
+            3,
+            0.875,
+            1.140625
+          ]
+        },
+        {
+          "id": "blade_edge_07",
+          "origin": [
+            6.125,
+            19.25,
+            7.8125
+          ],
+          "size": [
+            3.75,
+            0.875,
+            0.375
+          ]
+        },
+        {
+          "id": "blade_ridge_07",
+          "origin": [
+            6.6875,
+            19.25,
+            7.453125
+          ],
+          "size": [
+            2.625,
+            0.875,
+            1.09375
+          ]
+        },
+        {
+          "id": "blade_edge_08",
+          "origin": [
+            6.3125,
+            20.125,
+            7.8125
+          ],
+          "size": [
+            3.375,
+            0.875,
+            0.375
+          ]
+        },
+        {
+          "id": "blade_ridge_08",
+          "origin": [
+            6.875,
+            20.125,
+            7.4765625
+          ],
+          "size": [
+            2.25,
+            0.875,
+            1.046875
+          ]
+        },
+        {
+          "id": "blade_edge_09",
+          "origin": [
+            6.5,
+            21,
+            7.8125
+          ],
+          "size": [
+            3,
+            0.875,
+            0.375
+          ]
+        },
+        {
+          "id": "blade_ridge_09",
+          "origin": [
+            7.0625,
+            21,
+            7.5
+          ],
+          "size": [
+            1.875,
+            0.875,
+            1
+          ]
+        },
+        {
+          "id": "blade_edge_10",
+          "origin": [
+            6.6875,
+            21.875,
+            7.8125
+          ],
+          "size": [
+            2.625,
+            0.875,
+            0.375
+          ]
+        },
+        {
+          "id": "blade_ridge_10",
+          "origin": [
+            7.25,
+            21.875,
+            7.5234375
+          ],
+          "size": [
+            1.5,
+            0.875,
+            0.953125
+          ]
+        },
+        {
+          "id": "blade_edge_11",
+          "origin": [
+            6.875,
+            22.75,
+            7.8125
+          ],
+          "size": [
+            2.25,
+            0.875,
+            0.375
+          ]
+        },
+        {
+          "id": "blade_ridge_11",
+          "origin": [
+            7.4375,
+            22.75,
+            7.546875
+          ],
+          "size": [
+            1.125,
+            0.875,
+            0.90625
+          ]
+        },
+        {
+          "id": "blade_edge_12",
+          "origin": [
+            7.0625,
+            23.625,
+            7.8125
+          ],
+          "size": [
+            1.875,
+            0.875,
+            0.375
+          ]
+        },
+        {
+          "id": "blade_ridge_12",
+          "origin": [
+            7.625,
+            23.625,
+            7.5703125
+          ],
+          "size": [
+            0.75,
+            0.875,
+            0.859375
+          ]
+        },
+        {
+          "id": "blade_edge_13",
+          "origin": [
+            7.25,
+            24.5,
+            7.8125
+          ],
+          "size": [
+            1.5,
+            0.875,
+            0.375
+          ]
+        },
+        {
+          "id": "blade_ridge_13",
+          "origin": [
+            7.8125,
+            24.5,
+            7.59375
+          ],
+          "size": [
+            0.375,
+            0.875,
+            0.8125
+          ]
+        },
+        {
+          "id": "blade_edge_14",
+          "origin": [
+            7.4375,
+            25.375,
+            7.8125
+          ],
+          "size": [
+            1.125,
+            0.875,
+            0.375
+          ]
+        },
+        {
+          "id": "blade_edge_15",
+          "origin": [
+            7.625,
+            26.25,
+            7.8125
+          ],
+          "size": [
+            0.75,
+            0.875,
+            0.375
+          ]
+        },
+        {
+          "id": "blade_edge_16",
+          "origin": [
+            7.8125,
+            27.125,
+            7.8125
+          ],
+          "size": [
+            0.375,
+            0.875,
+            0.375
+          ]
+        },
+        {
+          "id": "blade_edge_17",
+          "origin": [
+            7.875,
+            28,
+            7.8125
+          ],
+          "size": [
+            0.25,
+            0.5,
+            0.375
+          ]
+        }
+      ],
+      "groups": [
+        {
+          "id": "handle_group",
+          "label": "Рукоять",
+          "cubeIds": [
+            "grip",
+            "lower_collar",
+            "upper_collar"
+          ]
+        },
+        {
+          "id": "pommel_group",
+          "label": "Навершие",
+          "cubeIds": [
+            "pommel"
+          ]
+        },
+        {
+          "id": "guard_group",
+          "label": "Гарда",
+          "cubeIds": [
+            "guard_core",
+            "guard_left",
+            "guard_right"
+          ]
+        },
+        {
+          "id": "blade_group",
+          "label": "Клинок",
+          "cubeIds": [
+            "blade_ricasso",
+            "blade_edge_00",
+            "blade_ridge_00",
+            "blade_edge_01",
+            "blade_ridge_01",
+            "blade_edge_02",
+            "blade_ridge_02",
+            "blade_edge_03",
+            "blade_ridge_03",
+            "blade_edge_04",
+            "blade_ridge_04",
+            "blade_edge_05",
+            "blade_ridge_05",
+            "blade_edge_06",
+            "blade_ridge_06",
+            "blade_edge_07",
+            "blade_ridge_07",
+            "blade_edge_08",
+            "blade_ridge_08",
+            "blade_edge_09",
+            "blade_ridge_09",
+            "blade_edge_10",
+            "blade_ridge_10",
+            "blade_edge_11",
+            "blade_ridge_11",
+            "blade_edge_12",
+            "blade_ridge_12",
+            "blade_edge_13",
+            "blade_ridge_13",
+            "blade_edge_14",
+            "blade_edge_15",
+            "blade_edge_16",
+            "blade_edge_17"
+          ]
+        }
+      ]
+    }
+  ],
+  "directionChoice": {
+    "by": "human",
+    "choice": "A · Лист",
+    "date": "2026-10-05",
+    "approval": "direction-only"
+  }
+}
