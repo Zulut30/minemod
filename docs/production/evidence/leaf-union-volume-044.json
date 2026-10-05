@@ -5,22 +5,28 @@
   "status": "LOCAL_GEOMETRIC_MEASUREMENT",
   "checkedAtUtc": "2026-10-05T21:10:17.494Z",
   "sourceRevisionBeforeScript": "ebedc534e0fdf6a0d28bb1d9c609c2a61b3e188c",
-  "sourceCommit": null,
+  "sourceCommit": "2b8bd6a64548e51805c7989f9644f9d67f4983a3",
   "sourceInputs": [
     {
       "path": "apps/model-editor/scripts/measure-leaf-volume.mjs",
       "bytes": 7936,
-      "sha256": "cbcd430a5239abb5edeb89a939fd8f0528ec6616d6e60c360387b48037b4ab81"
+      "sha256": "cbcd430a5239abb5edeb89a939fd8f0528ec6616d6e60c360387b48037b4ab81",
+      "gitBlobBytes": 7936,
+      "gitBlobSha256": "cbcd430a5239abb5edeb89a939fd8f0528ec6616d6e60c360387b48037b4ab81"
     },
     {
       "path": "packages/editor-core/index.ts",
       "bytes": 41346,
-      "sha256": "abb89587034711388d1291b514492e62eac7ecbe1bbd5f2d12c31e733187f11a"
+      "sha256": "abb89587034711388d1291b514492e62eac7ecbe1bbd5f2d12c31e733187f11a",
+      "gitBlobBytes": 41346,
+      "gitBlobSha256": "abb89587034711388d1291b514492e62eac7ecbe1bbd5f2d12c31e733187f11a"
     },
     {
       "path": "pnpm-lock.yaml",
       "bytes": 95944,
-      "sha256": "e955ab8e82d8bb87128cf10f0f95b67c217fb1bf31eb7f2321823e66b03195c2"
+      "sha256": "e955ab8e82d8bb87128cf10f0f95b67c217fb1bf31eb7f2321823e66b03195c2",
+      "gitBlobBytes": 95944,
+      "gitBlobSha256": "e955ab8e82d8bb87128cf10f0f95b67c217fb1bf31eb7f2321823e66b03195c2"
     }
   ],
   "report": {
@@ -302,5 +308,7 @@
     ],
     "limits": "Convergence observations are not certified error bounds. Ignores texture alpha, material density and physical simulation. No balance target, artistic acceptance or game acceptance is assigned."
   },
-  "boundary": "Readonly fixed Leaf developer study. Equal-density solid union centroid is not physical mass, a balance score, artistic approval, generic class gate or Minecraft/JAR acceptance. No model changes."
+  "boundary": "Readonly fixed Leaf developer study. Equal-density solid union centroid is not physical mass, a balance score, artistic approval, generic class gate or Minecraft/JAR acceptance. No model changes.",
+  "sourceImplementationCommit": "8eccdcf270eafdb38d6309eed9cfb3032034804c",
+  "lineEndings": "Original working tree bytes and canonical sourceCommit Git blobs are both recorded"
 }

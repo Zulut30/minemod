@@ -1,0 +1,317 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 57,
+  "status": "LOCAL_PASS_CI_PENDING",
+  "pointClosed": false,
+  "checkedAtUtc": "2026-10-05T21:17:18.576Z",
+  "sourceBeforeImplementation": "8543c265227c56567e435abc35a81bdd87261dc8",
+  "sourceCommit": "2b8bd6a64548e51805c7989f9644f9d67f4983a3",
+  "sourceInputs": [
+    {
+      "path": "apps/model-editor/package.json",
+      "gitBlobBytes": 2031,
+      "gitBlobSha256": "30c720e4daad7f967d963950253670751bc8c599c858d49d89b522306d762eda",
+      "workingTreeBytes": 2031,
+      "workingTreeSha256": "30c720e4daad7f967d963950253670751bc8c599c858d49d89b522306d762eda"
+    },
+    {
+      "path": "packages/editor-core/index.ts",
+      "gitBlobBytes": 41346,
+      "gitBlobSha256": "abb89587034711388d1291b514492e62eac7ecbe1bbd5f2d12c31e733187f11a",
+      "workingTreeBytes": 41346,
+      "workingTreeSha256": "abb89587034711388d1291b514492e62eac7ecbe1bbd5f2d12c31e733187f11a"
+    },
+    {
+      "path": "packages/editor-core/texture.test.ts",
+      "gitBlobBytes": 14803,
+      "gitBlobSha256": "2892226dac20a88c61f2adc3fb3b0ff950a4140caca74754f2ae0fd796a9d60b",
+      "workingTreeBytes": 14803,
+      "workingTreeSha256": "2892226dac20a88c61f2adc3fb3b0ff950a4140caca74754f2ae0fd796a9d60b"
+    },
+    {
+      "path": "apps/model-editor/renderer/App.tsx",
+      "gitBlobBytes": 36704,
+      "gitBlobSha256": "bb64ceb203900fa41b9e2898e8351573137e36226fc9d5fe774c332b2ac3193a",
+      "workingTreeBytes": 36704,
+      "workingTreeSha256": "bb64ceb203900fa41b9e2898e8351573137e36226fc9d5fe774c332b2ac3193a"
+    },
+    {
+      "path": "apps/model-editor/renderer/style.css",
+      "gitBlobBytes": 34080,
+      "gitBlobSha256": "f634ed9f4285a0920d9679206a1a69a51e0bf2f67dcb310a1d6b6606374e9528",
+      "workingTreeBytes": 34080,
+      "workingTreeSha256": "f634ed9f4285a0920d9679206a1a69a51e0bf2f67dcb310a1d6b6606374e9528"
+    },
+    {
+      "path": "apps/model-editor/worker/mcp.ts",
+      "gitBlobBytes": 45815,
+      "gitBlobSha256": "b4cb8d46ab93fd96c66ee8da89470f29b0f38c0e5e8d9b6149398e847304ee28",
+      "workingTreeBytes": 45815,
+      "workingTreeSha256": "b4cb8d46ab93fd96c66ee8da89470f29b0f38c0e5e8d9b6149398e847304ee28"
+    },
+    {
+      "path": "apps/model-editor/scripts/check-texture-desktop.mjs",
+      "gitBlobBytes": 13151,
+      "gitBlobSha256": "3868809063ffbea3ea9529b4fd248fbfd5593a828e056582ce910044671b9e31",
+      "workingTreeBytes": 13151,
+      "workingTreeSha256": "3868809063ffbea3ea9529b4fd248fbfd5593a828e056582ce910044671b9e31"
+    },
+    {
+      "path": "apps/model-editor/scripts/check-local-recolor-desktop.mjs",
+      "gitBlobBytes": 7602,
+      "gitBlobSha256": "72530050cb9596f574a890ccba866bf3112a6f96bdfc38de1be1ac97340e7439",
+      "workingTreeBytes": 7602,
+      "workingTreeSha256": "72530050cb9596f574a890ccba866bf3112a6f96bdfc38de1be1ac97340e7439"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "gitBlobBytes": 95944,
+      "gitBlobSha256": "e955ab8e82d8bb87128cf10f0f95b67c217fb1bf31eb7f2321823e66b03195c2",
+      "workingTreeBytes": 95944,
+      "workingTreeSha256": "e955ab8e82d8bb87128cf10f0f95b67c217fb1bf31eb7f2321823e66b03195c2"
+    }
+  ],
+  "lineEndings": "Canonical Git blob hashes are bound to sourceCommit; CRLF working bytes separately recorded",
+  "studioVersion": "0.20.0",
+  "package": {
+    "executable": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.20.0\\d7a4131a\\MineMod Studio-win32-x64\\MineMod Studio.exe",
+    "asar": {
+      "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.20.0\\d7a4131a\\MineMod Studio-win32-x64\\resources\\app.asar",
+      "bytes": 3676904,
+      "sha256": "3099a99dabf2c97176ef168c69c76f23569059f59883f6660770cd08a99d1679"
+    }
+  },
+  "local": {
+    "logs": [
+      {
+        "kind": "core-unit",
+        "status": "PASS",
+        "path": "output/verification/local-recolor-057-unit.log",
+        "bytes": 258,
+        "sha256": "40939d0d4c87e9d19ad8b8e4fc88937f93630c51ea2939c6270f0ce4f539eda3"
+      },
+      {
+        "kind": "lint",
+        "status": "PASS",
+        "path": "output/verification/local-recolor-057-lint.log",
+        "bytes": 29,
+        "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+      },
+      {
+        "kind": "typecheck-all",
+        "status": "PASS",
+        "path": "output/verification/local-recolor-057-typecheck.log",
+        "bytes": 176,
+        "sha256": "fe0327fb3a908a7cea6b4e5ef62bbaa7903d4f4149a209170e6249f0dd5c8190"
+      },
+      {
+        "kind": "portable-suite",
+        "status": "PASS",
+        "path": "output/verification/local-recolor-057-portable.log",
+        "bytes": 4378,
+        "sha256": "5a1f27545bea9d552b52e677dcb8595b7a801687627f4133a1f69fedc89c65a1"
+      },
+      {
+        "kind": "http-mcp",
+        "status": "PASS",
+        "path": "output/verification/local-recolor-057-mcp.log",
+        "bytes": 597,
+        "sha256": "903bc6ffa85c6eca4cf021f2c685d09a29ef707d26d735a9faa0d71cca3395cf"
+      },
+      {
+        "kind": "package",
+        "status": "PASS",
+        "path": "output/verification/local-recolor-057-package.log",
+        "bytes": 787,
+        "sha256": "a23b61af5f942735f3b7d511d9db28c0a2c185f9d7904a03b7543c8e2662e65d"
+      },
+      {
+        "kind": "packaged-desktop",
+        "status": "PASS",
+        "path": "output/verification/local-recolor-057-desktop.log",
+        "bytes": 207,
+        "sha256": "cad7cb33aad2b6bb3f6f93941a873b98ff4e9d4025dbf7394ca1c51d900cb077"
+      }
+    ],
+    "report": {
+      "path": "output/playwright/studio-packaged-cb038b35/report.json",
+      "bytes": 95751,
+      "sha256": "06088f4d2085fabff22d97569dbb4b7e22ec184c627eb422ad61bf50dea91143"
+    },
+    "subreports": [
+      {
+        "name": "mcp",
+        "status": "PASS"
+      },
+      {
+        "name": "texture",
+        "status": "PASS"
+      },
+      {
+        "name": "polish",
+        "status": "PASS"
+      },
+      {
+        "name": "editing",
+        "status": "PASS"
+      },
+      {
+        "name": "variants",
+        "status": "PASS"
+      },
+      {
+        "name": "agentBlockouts",
+        "status": "PASS"
+      },
+      {
+        "name": "continuation",
+        "status": "PASS"
+      },
+      {
+        "name": "agentStatus",
+        "status": "PASS"
+      },
+      {
+        "name": "brief",
+        "status": "PASS"
+      },
+      {
+        "name": "concepts",
+        "status": "PASS"
+      },
+      {
+        "name": "parts",
+        "status": "PASS"
+      },
+      {
+        "name": "repair",
+        "status": "PASS"
+      },
+      {
+        "name": "manual",
+        "status": "PASS"
+      },
+      {
+        "name": "accessibility",
+        "status": "PASS"
+      },
+      {
+        "name": "accessibilityStates",
+        "status": "PASS"
+      },
+      {
+        "name": "review",
+        "status": "PASS"
+      },
+      {
+        "name": "migrations",
+        "status": "PASS"
+      },
+      {
+        "name": "history",
+        "status": "PASS"
+      },
+      {
+        "name": "geometry",
+        "status": "PASS"
+      },
+      {
+        "name": "camera",
+        "status": "PASS"
+      },
+      {
+        "name": "discovery",
+        "status": "PASS"
+      }
+    ],
+    "recolor": {
+      "status": "PASS",
+      "preservedColor": "#aa8ccd",
+      "preservedPixels": 184,
+      "changedPixels": 684,
+      "pngSha256": "2d9f9f4ad142a64636b275d347a79cfa2ee688058b5dbffaa69ab082a6e8f8ed",
+      "checks": [
+        "scripted UI action and full undo/redo",
+        "selection isolation",
+        "all-preserved disabled action",
+        "HTTP MCP rejection atomicity",
+        "read-only preview and actual apply",
+        "exported PNG exact RGBA scope/alpha",
+        "agent undo"
+      ],
+      "artisticApproval": "NOT_PERFORMED"
+    },
+    "screenshot": {
+      "path": "output/playwright/studio-packaged-cb038b35/07-preserved-material-color.png",
+      "bytes": 369511,
+      "sha256": "5b7a3a6c67c81d6ac08dee85c0e874d9a08457a0ca1b72443d0572cf2b6c5eb1"
+    },
+    "focused": {
+      "report": {
+        "path": "output/playwright/local-recolor-057-03c9e44d/report.json",
+        "bytes": 763,
+        "sha256": "b92f3b5c7de6f36d4b9ccdecc2a894281eb57a6aa596a0639fc2eb1f63c08d87"
+      },
+      "scope": "first package before additional agent instruction; not final package acceptance"
+    },
+    "failuresPreserved": [
+      {
+        "report": {
+          "path": "output/playwright/studio-packaged-54d29bcc/failure.json",
+          "bytes": 2588,
+          "sha256": "295df9e49672091d299c46cd20f044f0293e1673e2bebee2bbaf86f24153c435"
+        },
+        "cause": "test assumed MCP was already enabled"
+      },
+      {
+        "report": {
+          "path": "output/playwright/studio-packaged-7b3964d0/failure.json",
+          "bytes": 2603,
+          "sha256": "a96b32a0d8f0133251d2e7255af5ee8ede51a2d20df9bd928ed7c95cd10b3d56"
+        },
+        "cause": "test left part selection instead of single UV cube; scenario order corrected"
+      }
+    ]
+  },
+  "expectedRgba": {
+    "base": [
+      128,
+      64,
+      32,
+      255
+    ],
+    "quarterShadow": [
+      32,
+      16,
+      8,
+      255
+    ],
+    "preservedMark": [
+      255,
+      255,
+      0,
+      255
+    ],
+    "transparent": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mcpLightestMaterial": [
+      64,
+      128,
+      32,
+      255
+    ]
+  },
+  "hosted": {
+    "status": "NOT_RUN_FOR_NEW_SOURCE"
+  },
+  "boundaries": [
+    "Exact color preservation within selected cube UV; same RGB cannot distinguish material and decoration",
+    "UI selection preferences are ephemeral; project format remains v3",
+    "No art approval, Leaf acceptance, class exporter or authored JAR/game integration",
+    "Package and publish remain separate; no dependency or lock update"
+  ]
+}
