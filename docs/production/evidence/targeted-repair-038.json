@@ -285,7 +285,9 @@
       "localFixVersion": "0.14.1",
       "localFix": "PASS_NEGATIVE_AND_POSITIVE_PACKAGED",
       "evidence": "capture-layout-023.json",
-      "hostedFix": "PENDING"
+      "hostedFix": "SCOPED_PASS",
+      "hostedFixCommit": "2e8e99a58f3bef9219537d8339f8778e055a2e30",
+      "hostedFixRun": 37331569535
     }
   },
   "retainedDiagnostics": [

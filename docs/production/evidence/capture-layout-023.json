@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "roadmapPoint": 23,
   "kind": "renderer-followup",
-  "status": "PARTIAL",
-  "checkedAtUtc": "2026-10-05T15:11:07.091Z",
+  "status": "PASS",
+  "checkedAtUtc": "2026-10-05T15:39:28.888Z",
   "studioVersion": "0.14.1",
   "node": "24.21.0",
   "scope": "Reserve preview layout before image loading; regression checks returned MCP PNG, not later screenshot",
@@ -383,7 +383,7 @@
     ]
   },
   "boundaries": {
-    "hosted": "PENDING",
+    "hosted": "SCOPED_PASS",
     "artisticAcceptance": "NOT_PERFORMED",
     "authoredGameAcceptance": "NOT_RUN",
     "geometryAndTexture": "UNCHANGED",
@@ -394,5 +394,231 @@
     "path": "output/verification/roadmap-review-frame-lint.log",
     "bytes": 265,
     "sha256": "234285bb6def7c4c10add21a432337be036ad84ae877ee70a7fc3b0a6be7ca53"
+  },
+  "hosted": {
+    "status": "SCOPED_PASS",
+    "sourceCommit": "2e8e99a58f3bef9219537d8339f8778e055a2e30",
+    "runId": 37331569535,
+    "url": "https://github.com/Zulut30/minemod/actions/runs/37331569535",
+    "checkedAtUtc": "2026-10-05T15:39:28.888Z",
+    "jobs": [
+      {
+        "conclusion": "success",
+        "id": 111835685783,
+        "name": "control-plane",
+        "status": "completed",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37331569535/job/111835685783"
+      },
+      {
+        "conclusion": "success",
+        "id": 111835686297,
+        "name": "neoforge",
+        "status": "completed",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37331569535/job/111835686297"
+      },
+      {
+        "conclusion": "success",
+        "id": 111835686331,
+        "name": "studio-windows",
+        "status": "completed",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37331569535/job/111835686331"
+      },
+      {
+        "conclusion": "failure",
+        "id": 111835686440,
+        "name": "fabric",
+        "status": "completed",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37331569535/job/111835686440"
+      },
+      {
+        "conclusion": "success",
+        "id": 111835686529,
+        "name": "Fabric 1.20.1 / Java 17 production target",
+        "status": "completed",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37331569535/job/111835686529"
+      },
+      {
+        "conclusion": "skipped",
+        "id": 111836129380,
+        "name": "fabric-client",
+        "status": "completed",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37331569535/job/111836129380"
+      },
+      {
+        "conclusion": "success",
+        "id": 111837399169,
+        "name": "client-smoke",
+        "status": "completed",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37331569535/job/111837399169"
+      }
+    ],
+    "statusReport": {
+      "path": "output/verification/roadmap-review-frame-hosted-status.json",
+      "bytes": 1396,
+      "sha256": "72239d992f3494412e3e39ccea6f286364d0559ef440bf65e4d15d09e6932f3b"
+    },
+    "artifactMetadata": {
+      "path": "output/verification/roadmap-review-frame-hosted-artifacts.json",
+      "bytes": 2890,
+      "sha256": "8b9e99028c6df3aace01b0c2759eae71c2dbe3ca428ebdc0eaf22de1b120636c"
+    },
+    "artifacts": [
+      {
+        "id": 11355655260,
+        "name": "minemod-studio-windows-evidence",
+        "bytes": 2825366,
+        "digest": "sha256:5c16c9f35d90cd4e63fb8d8e052592668cd34da0b7182e3dd0bca4959183a266"
+      },
+      {
+        "id": 11354088245,
+        "name": "fabric-26.2-verification-failure",
+        "bytes": 102356,
+        "digest": "sha256:cbf21da37052e0ba85f92598429926f7950dee5bcefbf929cc463b522b0a0581"
+      },
+      {
+        "id": 11353929750,
+        "name": "fabric-1.20.1-java17-evidence",
+        "bytes": 50769,
+        "digest": "sha256:977e65ece985b7a866733a4d20ba90122a7fc1cc2f2ce09a5439fd8387ee0a96"
+      },
+      {
+        "id": 11353709204,
+        "name": "control-plane-clean-checkout-evidence",
+        "bytes": 1896,
+        "digest": "sha256:c94b295987884e8202c2999605c9eaf337a3c56df19321a8bbce27d5e32936b4"
+      }
+    ],
+    "windows": {
+      "report": {
+        "path": "output/ci/37331569535-windows\\output\\playwright\\studio-packaged-5df2d05b\\report.json",
+        "bytes": 34535,
+        "sha256": "09c340f2bcad33d92170b491eb48efb9519051ef20f0ffdf1c9f8c24ff73c7f0"
+      },
+      "packagePath": "D:\\a\\minemod\\minemod\\output\\model-editor\\releases\\0.14.1\\e95d2d3b\\MineMod Studio-win32-x64\\MineMod Studio.exe",
+      "subreports": [
+        "mcp",
+        "texture",
+        "polish",
+        "editing",
+        "variants",
+        "brief",
+        "parts",
+        "manual",
+        "accessibility",
+        "accessibilityStates",
+        "review",
+        "migrations",
+        "history",
+        "geometry",
+        "camera",
+        "discovery",
+        "repair"
+      ],
+      "reviewReport": {
+        "path": "output\\ci\\37331569535-windows\\output\\playwright\\studio-packaged-5df2d05b\\review\\report.json",
+        "bytes": 1150,
+        "sha256": "b07f0a7a73382202647a0f1d4322146baecb90e43b66501ea646103722fe25e8"
+      },
+      "returnedPng": {
+        "path": "output\\ci\\37331569535-windows\\output\\playwright\\studio-packaged-5df2d05b\\review\\mcp-review.png",
+        "bytes": 50688,
+        "sha256": "da7e262e6aa5ec1bf7d08a583eadc2e351573230e7dd5cc8fae607038ec14284"
+      },
+      "returnedFrame": [
+        {
+          "view": "front",
+          "painted": 3040,
+          "margins": [
+            213,
+            18,
+            213,
+            20
+          ]
+        },
+        {
+          "view": "side",
+          "painted": 742,
+          "margins": [
+            238,
+            18,
+            238,
+            19
+          ]
+        },
+        {
+          "view": "back",
+          "painted": 2373,
+          "margins": [
+            213,
+            18,
+            213,
+            19
+          ]
+        },
+        {
+          "view": "perspective",
+          "painted": 2358,
+          "margins": [
+            220,
+            20,
+            220,
+            19
+          ]
+        }
+      ],
+      "repairReport": {
+        "path": "output\\ci\\37331569535-windows\\output\\playwright\\studio-packaged-5df2d05b\\repair\\report.json",
+        "bytes": 1910,
+        "sha256": "5b5f645fad294e05d94dc149a288ba300c090909f1ce71082fe5e74fdd0d30db"
+      },
+      "repairCaptures": [
+        {
+          "path": "output\\ci\\37331569535-windows\\output\\playwright\\studio-packaged-5df2d05b\\repair\\before-review.png",
+          "bytes": 50688,
+          "sha256": "da7e262e6aa5ec1bf7d08a583eadc2e351573230e7dd5cc8fae607038ec14284"
+        },
+        {
+          "path": "output\\ci\\37331569535-windows\\output\\playwright\\studio-packaged-5df2d05b\\repair\\after-1-review.png",
+          "bytes": 50553,
+          "sha256": "94db93731dde405e0d1e66d2d08235284ab17fb5dfebad17133fa77486cdee65"
+        },
+        {
+          "path": "output\\ci\\37331569535-windows\\output\\playwright\\studio-packaged-5df2d05b\\repair\\after-2-review.png",
+          "bytes": 50057,
+          "sha256": "28eff53861fa9bf864f4e44aa3791b9386ee7bd29ac1f3600fba721bf6ec4c78"
+        },
+        {
+          "path": "output\\ci\\37331569535-windows\\output\\playwright\\studio-packaged-5df2d05b\\repair\\material-review.png",
+          "bytes": 49988,
+          "sha256": "90bac886b3122399ed7c02551c3e8a16823dc0244a95cba3c528c279c8de204f"
+        },
+        {
+          "path": "output\\ci\\37331569535-windows\\output\\playwright\\studio-packaged-5df2d05b\\repair\\uv-review.png",
+          "bytes": 49988,
+          "sha256": "90bac886b3122399ed7c02551c3e8a16823dc0244a95cba3c528c279c8de204f"
+        }
+      ]
+    },
+    "native": {
+      "report": {
+        "path": "output/ci/37331569535-production/output/ci/fabric-production/generated/operation-evidence.v1.json",
+        "bytes": 9643,
+        "sha256": "3e42770acd9daa1262d7b44f9c93dc75dba6d8e0939b96caf5799ea41536dfd3"
+      },
+      "jar": {
+        "path": "output/ci/37331569535-production/output/ci/fabric-production/generated/build/libs/infectedfrontier-0.1.0.jar",
+        "bytes": 28835,
+        "sha256": "63c8139423e57b925edfa40f030020b23ae2cc21571eaf711c879d58a382cc15"
+      },
+      "independentlyCheckedSourceFiles": 6,
+      "harnessXml": {
+        "path": "output/ci/37331569535-production/fixtures/fabric-1.20.1-empty/build/reports/gametest/production.xml",
+        "bytes": 406,
+        "sha256": "c87d9d55564cef30c6b73ad86eaf160c4db181fe5f8300e31e4774e8dbe060b4"
+      },
+      "harnessTests": 2
+    },
+    "wholeCI": "FAILURE_LEGACY_FABRIC_26_2",
+    "scope": "Returned PNG framing regression only; no artistic or authored game approval"
   }
 }

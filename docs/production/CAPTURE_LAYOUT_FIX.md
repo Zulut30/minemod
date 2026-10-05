@@ -1,6 +1,6 @@
 # Полная модель в возвращённом PNG обзора
 
-Корректирующая проверка roadmap 023/037, Studio 0.14.1. Локальный результат PASS; hosted проверка новой версии пока ожидается. [Evidence](evidence/capture-layout-023.json) сохраняет отрицательный результат старого пакета отдельно от исправленного.
+Корректирующая проверка roadmap 023/037, Studio 0.14.1. Локальный результат PASS. Hosted проверка commit `2e8e99a` завершена: Windows package со всеми 17 подотчётами, control-plane, NeoForge и production Fabric 1.20.1/Java 17 с client smoke прошли. Весь workflow остаётся failure из-за отдельного checksum-сбоя legacy Fabric 26.2. [Evidence](evidence/capture-layout-023.json) сохраняет отрицательный результат старого пакета отдельно от исправленного.
 
 ## Воспроизведение
 
