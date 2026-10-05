@@ -267,7 +267,14 @@
     "auxiliaryClient": {
       "status": "CANCELLED_BEFORE_RUN",
       "steps": 0,
-      "retry": "dispatched; no success claimed"
+      "retry": {
+        "attempt": 2,
+        "id": 111953838583,
+        "status": "completed",
+        "conclusion": "cancelled",
+        "steps": 0,
+        "cause": "NOT_ESTABLISHED"
+      }
     }
   },
   "boundary": "Supplementary 041 contract correction. Baseline technical evidence only; no new art/game acceptance, no global CI PASS. Auxiliary NeoForge client retry is recorded separately when terminal."
