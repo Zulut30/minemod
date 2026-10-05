@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "roadmapPoint": 19,
   "status": "PARTIAL",
-  "verifiedAtUtc": "2026-10-05T09:43:01.753600+00:00",
-  "sourceParentRevision": "ae0ca2db56af1559e1361e870837ba36e5c32e62",
+  "verifiedAtUtc": "2026-10-05T09:47:46.017730+00:00",
+  "sourceParentRevision": "ede9c722b51e163d5e1846d174fd06ed38e8c7a0",
   "scope": "Explicit unknown-version rejection and supported-version catalog derived from parser literals; early material, armor and item-domain repair reference validation; fail-closed Fabric primitive preflight",
   "supportedSpecVersions": {
     "ModSpec": [
@@ -37,8 +37,8 @@
     },
     {
       "path": "packages/compiler-fabric/test.ts",
-      "bytes": 30418,
-      "sha256": "f44b5a185e82fcd599e6c31dc90176850e132042547a3d3c911da6bc14aa9a7b"
+      "bytes": 30937,
+      "sha256": "c7bd8b73dd52a852860975f386082f782010ef91347d9f1db7020e5f1ec3506d"
     },
     {
       "path": "packages/compiler-fabric/spec-preflight.test.ts",
@@ -64,7 +64,8 @@
     "lint": "PASS",
     "portableAssetsEditorCliMcp": "PASS",
     "fullLinuxCompiler": "pending exact-source hosted CI",
-    "generatedBuildAndRuntime": "pending exact-source hosted CI"
+    "generatedBuildAndRuntime": "pending exact-source hosted CI",
+    "correctedUnsupportedFixture": "PASS local validation/profile and all 6 tested sections nonempty; full compiler assertion awaits hosted Linux"
   },
   "logs": [
     {
@@ -96,6 +97,26 @@
       "path": "output/verification/roadmap-019-portable.log",
       "bytes": 3123,
       "sha256": "80f907f85241e56a81bf01d88f3fda88fceff5da025674dd0886e94b7919adfe"
+    },
+    {
+      "path": "output/verification/roadmap-019-hosted-linux-initial-failed.log",
+      "bytes": 25821,
+      "sha256": "255ef10e3d3a6a768efd03a7ceb414b709110250da1d2dece3748fa523ba3d61"
+    },
+    {
+      "path": "output/verification/roadmap-019-corrected-fixture.log",
+      "bytes": 99,
+      "sha256": "896c4ca3bd289950bdd7ebe4dbc533cfd791a33afa6cf0d2c28f6a75d38a5257"
+    },
+    {
+      "path": "output/verification/roadmap-019-fix-typecheck.log",
+      "bytes": 176,
+      "sha256": "fe0327fb3a908a7cea6b4e5ef62bbaa7903d4f4149a209170e6249f0dd5c8190"
+    },
+    {
+      "path": "output/verification/roadmap-019-fix-lint.log",
+      "bytes": 29,
+      "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
     }
   ],
   "existingCompilerRejections": "Known valid but unsupported entities/structures/screens/authored model/texture/animation sections must all produce explicit SPEC_UNSUPPORTED; assertions await full Linux suite.",
@@ -105,5 +126,13 @@
   "trustedPacksChanged": false,
   "artisticApproval": "not-granted",
   "productionReleaseApproval": "not-granted",
-  "hostedCurrentSource": "pending after point019 work commit"
+  "hostedCurrentSource": "pending after test correction commit; failed compiler run is retained and is not claimed as PASS",
+  "initialHostedFailure": {
+    "runId": 37291852953,
+    "sourceRevision": "ede9c722b51e163d5e1846d174fd06ed38e8c7a0",
+    "jobId": 111703858623,
+    "conclusion": "failure",
+    "reason": "New test incorrectly asserted SPEC_UNSUPPORTED for empty fixture assets.textures.",
+    "correction": "Build an owned valid test copy with one real texture entry; assert schema/profile validity and all tested nonempty sections. Immutable fixture unchanged."
+  }
 }

@@ -1,7 +1,8 @@
 import assert from "node:assert/strict";
 import { containsForbiddenExecutionSurface, isBuildPlan } from "@mcdev/contracts";
 import { fabricBasicContentFixture } from "../../fixtures/specs/fabric-basic-content.ts";
-import { validFabricV1Fixture } from "../../fixtures/specs/validation.ts";
+import { validFabricV1Fixture, validModFixture } from "../../fixtures/specs/validation.ts";
+import { validateSpec } from "@mcdev/validation";
 import {
   compileFabricPhase1,
   FabricCompilerError,
@@ -408,8 +409,15 @@ assert.equal(
   "item declaration order must not affect generated content",
 );
 
+const unsupportedFixture = structuredClone(validFabricV1Fixture);
+unsupportedFixture.assets.textures = [{
+  ...validModFixture.assets.textures[0]!,
+  id: "infectedfrontier:unsupported_texture", path: "textures/unsupported_texture.png",
+}];
+assert.equal(validateSpec(unsupportedFixture, "mod", { profile: "fabric-1.20.1-java-17" }).valid, true,
+  "The unsupported fixture must be structurally and semantically valid before backend capability checking.");
 const unsupported = await expectCompilerError(
-  JSON.stringify(validFabricV1Fixture), "SPEC_UNSUPPORTED", "/gameplay/entities",
+  JSON.stringify(unsupportedFixture), "SPEC_UNSUPPORTED", "/gameplay/entities",
 );
 for (const path of ["/gameplay/structures", "/gameplay/screens",
   "/assets/models", "/assets/textures", "/assets/animations"]) {
