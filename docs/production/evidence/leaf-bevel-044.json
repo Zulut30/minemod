@@ -1,0 +1,586 @@
+{
+  "schemaVersion": 1,
+  "status": "LOCAL_TECHNICAL_DRAFT",
+  "point": 44,
+  "pointClosed": false,
+  "checkedAtUtc": "2026-10-05T20:38:31.679Z",
+  "sourceBeforeImplementation": "8a49732fbd5f50b5ae2237861d4d2c264e2fa83e",
+  "sourceCommit": null,
+  "sourceInputs": [
+    {
+      "path": "apps/model-editor/scripts/create-leaf-bevel-draft.mjs",
+      "bytes": 11843,
+      "sha256": "f908a59da1e5b647fb204fa99a69833ccef12815f2a09af42ba0b36deb19ef53"
+    },
+    {
+      "path": "fixtures/art/leaf-sword.artspec-v1.json",
+      "bytes": 7001,
+      "sha256": "45af443a83f00a0075b9de23df9e91d357cae50104156384a9a6cff01c329157"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "bytes": 95944,
+      "sha256": "e955ab8e82d8bb87128cf10f0f95b67c217fb1bf31eb7f2321823e66b03195c2"
+    }
+  ],
+  "originalModels": [
+    {
+      "key": "a",
+      "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\leaf-volume-20261005-v3c\\a.mmeditor.json",
+      "sha256": "6996f1cceb3ac0f1ffed341c0ff109d289a05b608ca4994493b3601bd76c007b"
+    },
+    {
+      "key": "b",
+      "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\leaf-volume-20261005-v3c\\b.mmeditor.json",
+      "sha256": "7f0407e6840320b2255c0f59e87ea643ac5644204f04053c4a4c99784d1c76e8"
+    }
+  ],
+  "candidate": {
+    "source": {
+      "path": "output\\model-editor\\leaf-bevel-94fbca11\\c.mmeditor.json",
+      "bytes": 613693,
+      "sha256": "9b8e63ce3279981870260d8c960dffea567e4c7a091b672154fa46d1c455f82b"
+    },
+    "originalSnapshotsPreserved": true,
+    "budget": {
+      "cubes": 59,
+      "maxCubes": 64,
+      "triangles": 708,
+      "maxTriangles": 768
+    },
+    "concept": {
+      "label": "Лист / Клык / Раскол · направления формы",
+      "role": "concept",
+      "origin": "ai-generated",
+      "attribution": "OpenAI image_gen · собственный brief",
+      "rights": "Оригинальная генерация для проекта; внешние references не использованы. Отдельная проверка прав не выполнялась.",
+      "source": "imagegen skill · 2026-10-05",
+      "note": "A: широкая листовая масса. B: увеличить ширину клинка. C: сохранить открытый раскол и соединённое основание.",
+      "id": "b69455bb-8d7c-41a3-b537-d1cb764a6166",
+      "mime": "image/png",
+      "sha256": "e4c7daa05f5dd1b8b6e3f27a56b0f2edab85d8dc6dc0a4bbdd28f3dddfc5f6fb",
+      "bytes": 1426740,
+      "width": 1536,
+      "height": 1024,
+      "review": "direction-only"
+    }
+  },
+  "technical": {
+    "crossSectionProbes": {
+      "status": "PASS",
+      "sampledPoints": 29768
+    },
+    "connectivity": {
+      "report": {
+        "path": "output/verification/leaf-bevel-v4c-connected.json",
+        "bytes": 21737,
+        "sha256": "6cdd3bbeb6a34b2a4b73951af20ee3b255a61d363bc2683486a851819feab4e8"
+      },
+      "status": "CONNECTED",
+      "cubes": 59,
+      "contacts": 265,
+      "method": "SAT of solid oriented cuboids, face/volume contacts; edge/point contacts excluded; epsilon=1e-6 model units"
+    },
+    "measurements": {
+      "report": {
+        "path": "output/verification/leaf-v4c-measurements.json",
+        "bytes": 1955,
+        "sha256": "2ff8af0eb021f6d13304b265d5071389bc2e2b1bd21a8198f0d22ee2b1c2c06d"
+      },
+      "whole": {
+        "min": [
+          5.19155551528252,
+          1.7911165235168154,
+          7.375
+        ],
+        "max": [
+          10.808444484717482,
+          25.749999999999996,
+          8.625
+        ],
+        "size": [
+          5.616888969434962,
+          23.95888347648318,
+          1.25
+        ]
+      },
+      "parts": [
+        {
+          "id": "handle_group",
+          "min": [
+            7.375,
+            3.25,
+            7.375
+          ],
+          "max": [
+            8.625,
+            8.85,
+            8.625
+          ],
+          "size": [
+            1.25,
+            5.6,
+            1.25
+          ]
+        },
+        {
+          "id": "pommel_group",
+          "min": [
+            7.116116523516816,
+            1.7911165235168154,
+            7.375
+          ],
+          "max": [
+            8.883883476483184,
+            3.5588834764831843,
+            8.625
+          ],
+          "size": [
+            1.7677669529663689,
+            1.7677669529663689,
+            1.25
+          ]
+        },
+        {
+          "id": "guard_group",
+          "min": [
+            5.19155551528252,
+            8.303349665501814,
+            7.4
+          ],
+          "max": [
+            10.808444484717482,
+            9.769551813004515,
+            8.6
+          ],
+          "size": [
+            5.616888969434962,
+            1.4662021475027007,
+            1.1999999999999993
+          ]
+        },
+        {
+          "id": "blade_group",
+          "min": [
+            5.624999999999999,
+            9.600000000000001,
+            7.375
+          ],
+          "max": [
+            10.375,
+            25.749999999999996,
+            8.625
+          ],
+          "size": [
+            4.750000000000001,
+            16.149999999999995,
+            1.25
+          ]
+        }
+      ],
+      "ratioChecks": [
+        {
+          "partId": "blade",
+          "dimension": "height",
+          "relativeTo": "whole",
+          "relativeDimension": "height",
+          "minimum": 0.62,
+          "maximum": 0.76,
+          "reason": "Клинок доминирует над хватом",
+          "actual": 0.6740714781576534,
+          "status": "PASS"
+        },
+        {
+          "partId": "handle",
+          "dimension": "height",
+          "relativeTo": "whole",
+          "relativeDimension": "height",
+          "minimum": 0.2,
+          "maximum": 0.28,
+          "reason": "Достаточная длина хвата",
+          "actual": 0.2337337633240161,
+          "status": "PASS"
+        },
+        {
+          "partId": "guard",
+          "dimension": "width",
+          "relativeTo": "blade",
+          "relativeDimension": "width",
+          "minimum": 0.85,
+          "maximum": 1.2,
+          "reason": "Гарда собрана вокруг центрального клинка",
+          "actual": 1.182502940933676,
+          "status": "PASS"
+        }
+      ],
+      "bounds": {
+        "declared": {
+          "width": 8,
+          "height": 24,
+          "depth": 3
+        },
+        "actual": [
+          5.616888969434962,
+          23.95888347648318,
+          1.25
+        ],
+        "status": "WITHIN_NOMINAL_BOUNDS"
+      },
+      "nativeRotations": {
+        "y22_5": 32,
+        "zGuard": 2,
+        "zPommel": 1
+      }
+    },
+    "exports": [
+      {
+        "path": "output\\model-editor\\leaf-bevel-94fbca11\\a-export\\assets\\mcdev\\models\\item\\weapon_blockout.json",
+        "bytes": 40118,
+        "sha256": "f0829180f45042bb6bbbf853774c7c795979d0b69392d033b86aa3d4d5bba5a7"
+      },
+      {
+        "path": "output\\model-editor\\leaf-bevel-94fbca11\\a-export\\assets\\mcdev\\textures\\item\\weapon_blockout.png",
+        "bytes": 670,
+        "sha256": "a7d9d23bb621eabcb8003da4dbb96be0cda55755c647b63ba6f045a6bcf94ac7"
+      },
+      {
+        "path": "output\\model-editor\\leaf-bevel-94fbca11\\a-export\\editable\\mcdev\\weapon_blockout.bbmodel",
+        "bytes": 52338,
+        "sha256": "c55c61c30aa18046f86e0c5f3ed465ab474aa4fb433f7c422edd6efc6858603c"
+      },
+      {
+        "path": "output\\model-editor\\leaf-bevel-94fbca11\\b-export\\assets\\mcdev\\models\\item\\weapon_blockout.json",
+        "bytes": 49386,
+        "sha256": "27760b6d59c391dc6e14d9293e4e69a0e2821066e3763d8fed903bf2602adedd"
+      },
+      {
+        "path": "output\\model-editor\\leaf-bevel-94fbca11\\b-export\\assets\\mcdev\\textures\\item\\weapon_blockout.png",
+        "bytes": 727,
+        "sha256": "adb5a974bf4b7c44d43188e25874dcf7c0b2f2d661cd84bc1aaa36f527db7696"
+      },
+      {
+        "path": "output\\model-editor\\leaf-bevel-94fbca11\\b-export\\editable\\mcdev\\weapon_blockout.bbmodel",
+        "bytes": 63415,
+        "sha256": "1bfdc35e94bf5a53e963f74628dc08da4c4da7eeb143ba4ae23a76f687c92470"
+      },
+      {
+        "path": "output\\model-editor\\leaf-bevel-94fbca11\\c-export\\assets\\mcdev\\models\\item\\weapon_blockout.json",
+        "bytes": 81979,
+        "sha256": "8a3a9fce5d6a8b9acc9b6eaa930033a486af3a458c6d5c37c24213be2e0cf095"
+      },
+      {
+        "path": "output\\model-editor\\leaf-bevel-94fbca11\\c-export\\assets\\mcdev\\textures\\item\\weapon_blockout.png",
+        "bytes": 904,
+        "sha256": "8fa82113a430bb52fa6fa617ec94f648b0fa52c7f5ff4d3b8af367e2937d50fd"
+      },
+      {
+        "path": "output\\model-editor\\leaf-bevel-94fbca11\\c-export\\editable\\mcdev\\weapon_blockout.bbmodel",
+        "bytes": 97265,
+        "sha256": "51db3c9cd605ca996db6784b9b3af975c7732c61411828703c0ea066112708ee"
+      }
+    ],
+    "authoringReport": {
+      "path": "output\\model-editor\\leaf-bevel-94fbca11\\authoring-report.json",
+      "bytes": 119277,
+      "sha256": "54c037cd6761c25dd20c53c5156e025140445ee718b67ffbdaf051c458d4e327"
+    },
+    "captures": {
+      "report": {
+        "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\report.json",
+        "bytes": 44652,
+        "sha256": "1b51ae6f4b7c8acb9415caa3db0b7204efb4d364cebc597657ebbfee873ba269"
+      },
+      "studioVersion": "0.19.0",
+      "asarSha256": "32d78fa6863c4181d25299361e8713aacbbc25df51693053af8d0b83cbc2176a",
+      "allFramesEqual": true,
+      "reviewCamerasEqual": true,
+      "priorRasters": [
+        {
+          "key": "a",
+          "allNativePngsUnchanged": true
+        },
+        {
+          "key": "b",
+          "allNativePngsUnchanged": true
+        }
+      ],
+      "files": [
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\a-review.png",
+          "bytes": 68840,
+          "sha256": "573f11517cd73aebcb1dfa2b87fa73d61fab0da68b5087b3d706138f21a6efc1"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\a-front.png",
+          "bytes": 12419,
+          "sha256": "a0e0688184f11efbaa5e920a259d73c4320446a92e43ca36343a00c4902b6828"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\a-back.png",
+          "bytes": 11891,
+          "sha256": "95ad8cbcf3d0007096cbaa7748f479fbc987a80bd672bb67a5e63a02fc0ed628"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\a-left.png",
+          "bytes": 7832,
+          "sha256": "e21d54fa341e5bc120b279e7be0c7a248b88bacce09f97fd49c9ef296b0a49d7"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\a-right.png",
+          "bytes": 8264,
+          "sha256": "4d63eab86d0ac701f30fc1b00c531657d046b1391ec8a292018f1f01032d4179"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\a-top.png",
+          "bytes": 5863,
+          "sha256": "31eec96903e45daa1e3d32bd8beb3bf3e46476e414b03926b39a12609fcf9e5d"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\a-bottom.png",
+          "bytes": 5869,
+          "sha256": "e674f2b8de0fcb1a415cfec5f10b8d83f0dc1cf511b2a553e05111df500cab1c"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\a-perspective.png",
+          "bytes": 34957,
+          "sha256": "7a36bf82fe524c80989d09f6de7260f6691925fe7ca3476e15d5d09719b5a004"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\a-rear-perspective.png",
+          "bytes": 33281,
+          "sha256": "2b8e4561d67ef189739ac7f86658cae8b785febf4111ae316463ba16f6ef0e15"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\a-silhouette.png",
+          "bytes": 12262,
+          "sha256": "db0a618d6f4f1703a1c1aac21d823322110f69699ace2cb0d213e6823986a449"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\a-native-silhouette-32.png",
+          "bytes": 221,
+          "sha256": "cf1784c701143e22e2cb6a90eddd6f750925d16f9233f25243037554f03dcc4c"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\a-native-silhouette-64.png",
+          "bytes": 452,
+          "sha256": "942ecb419b352aeb7efe7618be0785d4720bbf4b91cdd392ef69cb4c63b284c2"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\a-native-color-32.png",
+          "bytes": 287,
+          "sha256": "faf9859b72516ee2b9f1c442ca2474b8b44d2ee182839fde3c19c3f78eef846f"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\a-native-perspective-silhouette-32.png",
+          "bytes": 228,
+          "sha256": "fe2493386aa33aac520e5dbace8842d3a057a6731cd51b8cdd7ead036f6d04e6"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\a-native-color-64.png",
+          "bytes": 531,
+          "sha256": "180fb884dfea01be02155ef03187c1203bdc552d7ca9039b3bf640000f8bc723"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\a-native-perspective-silhouette-64.png",
+          "bytes": 427,
+          "sha256": "446c6d20b4549621229ae805d1ef7652639d9f46a9604cb35c404c8d7ad401bb"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\b-review.png",
+          "bytes": 70568,
+          "sha256": "3f1e0001ef336167d8bec8f395a7af9b7abe286af93039f1459cecf46c32d935"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\b-front.png",
+          "bytes": 17120,
+          "sha256": "470a50aacc07553d63548241e58e189469d20d911b90ee4ea4f0aec3df1b72bb"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\b-back.png",
+          "bytes": 16186,
+          "sha256": "ea5262859ca7f627c00fe63d515736001473871083effd178662180d59503431"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\b-left.png",
+          "bytes": 8831,
+          "sha256": "dd3556daa132b9ecd64b3e891e5523bd11267442992c517b8b840943ae297c3d"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\b-right.png",
+          "bytes": 9253,
+          "sha256": "acac78f5f4fbdaf01ee4609fd7ea5354957336335af198b0d236ae5331e509b9"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\b-top.png",
+          "bytes": 5799,
+          "sha256": "865560d9eccfaccc8900263c5499ab2af772572a84a3ab125b326650e8be0b55"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\b-bottom.png",
+          "bytes": 5514,
+          "sha256": "d56533a979b2470790d306d72d12212b809481e818ddce616171e8a8144549ba"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\b-perspective.png",
+          "bytes": 27430,
+          "sha256": "f69e20755189aafa4b347d2c41549de66e8bf244a0472eb1382206adcb1a5029"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\b-rear-perspective.png",
+          "bytes": 26238,
+          "sha256": "edf2e8fa6e3c95344c2476b8e5b377d50e00793186cef7b32c1e791f4462f453"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\b-silhouette.png",
+          "bytes": 16422,
+          "sha256": "7f4220f58d2b0bbc71805e8b587b656b5c4a47bad3c10fa4e03cc8663319209d"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\b-native-silhouette-32.png",
+          "bytes": 219,
+          "sha256": "87765007a0528e29354309067d43a4e94ef679ed05c09e3567ed133462915028"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\b-native-silhouette-64.png",
+          "bytes": 465,
+          "sha256": "db0f3ac88aeec0a000ab2e1c2db57fd27d9a83f246735439e5a90d35bd182363"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\b-native-color-32.png",
+          "bytes": 337,
+          "sha256": "179e69f3f37c792843b14a8e45d863efab300d817b2bb17f3f61ab3115481da6"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\b-native-perspective-silhouette-32.png",
+          "bytes": 226,
+          "sha256": "eaac28d343097e0daaaf9ea77f012a76ae9612cdbd9d509c22492b38e3c29d3a"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\b-native-color-64.png",
+          "bytes": 585,
+          "sha256": "cc1ae043b4fca9b51f5989b949dc07790ae10bc4aeeb03d79c6614dc1659458f"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\b-native-perspective-silhouette-64.png",
+          "bytes": 442,
+          "sha256": "dce439f758d57be0dcc2a136a912935ad4ce365838876d2f84415862565146d8"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\c-review.png",
+          "bytes": 63874,
+          "sha256": "1b26a8edab3cdd32bab37c156e425f1edb158f6691af18818cdcd9993c5c00de"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\c-front.png",
+          "bytes": 14651,
+          "sha256": "d78b271bd7a78aaa05c04f6445e0a1406671159698779aad568363d2a168b9f0"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\c-back.png",
+          "bytes": 13200,
+          "sha256": "954f22e2ac337120ef143835f0b1d351b5d1e6621f5d2d42af20e39d09504468"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\c-left.png",
+          "bytes": 7604,
+          "sha256": "1c4d9b52db9d4fc6837d6bd9db6a0e361ea6e6b15a63688013d33d401ffa85de"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\c-right.png",
+          "bytes": 8019,
+          "sha256": "afddd0604e1242a6c1bb547e8b2f6896382c06f710a4ce82fa720001c97a47a6"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\c-top.png",
+          "bytes": 5980,
+          "sha256": "cf6566de2994b1a9c16eb67c7a5a6f00bb115337c3926bc439d792c2b18ca206"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\c-bottom.png",
+          "bytes": 5344,
+          "sha256": "b036cec3219d14b7c5d1df0dd440f2082234d1329c8553601c0a25595678d8f8"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\c-perspective.png",
+          "bytes": 20575,
+          "sha256": "99dc442940fbb0e8397937ba79c2c146867c0fa720ee27d0bc0434a0e7815eeb"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\c-rear-perspective.png",
+          "bytes": 19778,
+          "sha256": "eea842bcd3496e1c9db19dcd7654aad7517ff90e4616ad844bd0f2794dc45340"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\c-silhouette.png",
+          "bytes": 13417,
+          "sha256": "1b47802ef705bf1dd23b1c1b7f8e7c8262557f6efcab3719864f80753d73f59c"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\c-native-silhouette-32.png",
+          "bytes": 210,
+          "sha256": "5a697ed3a072c95ef01af0759dc826f2db3407f8ac517d8a5950c485e1232d08"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\c-native-silhouette-64.png",
+          "bytes": 445,
+          "sha256": "862a6ef538fbefa09f9242acfc54fff9c96578203748e049454f786698fb9341"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\c-native-color-32.png",
+          "bytes": 305,
+          "sha256": "3fde1601763a9bdb339dd7230198a513ecaff3f9a8f690415161c61befe3de63"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\c-native-perspective-silhouette-32.png",
+          "bytes": 213,
+          "sha256": "ff7e59a3e4cff99b6875b4e3ccfe2f1021b8e92ede378b2c57f676e6896c4097"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\c-native-color-64.png",
+          "bytes": 591,
+          "sha256": "f780f5ed59d81b8df6ff5a2becf59354a6d83bef7dd7268d07557443a26b4a6b"
+        },
+        {
+          "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\c-native-perspective-silhouette-64.png",
+          "bytes": 402,
+          "sha256": "1fe2081ca7e307b6d79e553e49e5847c579e236cd13704148ba374451656f384"
+        }
+      ]
+    },
+    "page": {
+      "report": {
+        "path": "output/playwright/leaf-bevel-v4c-page/report.json",
+        "bytes": 6969,
+        "sha256": "f7988d4bf5af07c90efe9ec524459763087c59ec3345f8114d7fac3bdc2ced3e"
+      },
+      "comparison": {
+        "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\comparison.html",
+        "bytes": 3620,
+        "sha256": "6f1837674f574d7c413a2d66c2a512667a1c0ea8dbf9153bf6212c8392ac6c52"
+      },
+      "recognition": {
+        "path": "output\\model-editor\\leaf-bevel-94fbca11\\reviews-d33eecf4\\recognition.html",
+        "bytes": 10832,
+        "sha256": "ee0c2342bac27809d8378fae131bfadbdbe3cb403d21dc8e4e77f7bad24492e2"
+      },
+      "widths": [
+        1400,
+        390
+      ],
+      "ratios": [
+        1,
+        1.75
+      ],
+      "errors": [],
+      "externalNetworkRequests": [],
+      "humanObservation": "NOT_PERFORMED",
+      "download": "SCRIPTED_PROBE_ONLY"
+    },
+    "lint": {
+      "path": "output/verification/leaf-bevel-v4c-lint.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "boundary": "Fixed developer recipe plus real hidden packaged MCP captures. Neutral form DRAFT; intentional internal bevel overlaps and coarser outline need art review. Full ArtSpec materials/accent/provenance conformity, human recognition/volume approval, authored JAR integration and game acceptance remain open. Existing S1/S2 human recognition question is not superseded."
+}
