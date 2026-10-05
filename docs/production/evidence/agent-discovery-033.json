@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "roadmapPoint": 33,
-  "status": "PARTIAL",
+  "status": "PASS",
   "scope": "Actual MCP tool schemas, current IDs and revision, closed agent commands and bounded actionable errors in Studio 0.10.0",
-  "verifiedAtUtc": "2026-10-04T20:15:15.938427+00:00",
+  "verifiedAtUtc": "2026-10-05T09:10:20.433309+00:00",
   "sourceParentRevision": "5c9bc5da1373cf143e74c0b9c3b98dd1bdde6bf0",
   "sourceHashes": [
     {
@@ -61,8 +61,8 @@
     "lint": "PASS",
     "portable": "PASS",
     "focusedPackagedDiscovery": "PASS",
-    "fullPackagedSuite": "pending",
-    "productionCI": "pending"
+    "fullPackagedSuite": "PASS hosted exact source; local repeat incomplete",
+    "productionCI": "PASS clean build, 2 infrastructure GameTests and dedicated server"
   },
   "logs": [
     {
@@ -187,5 +187,123 @@
   "newDependencies": false,
   "projectSchemaVersion": 2,
   "gamePackBaselineChanged": false,
-  "remainingRegressionFailure": "Existing Fabric 26.2 derived JAR checksum mismatch; no checksum bypass."
+  "remainingRegressionFailure": "Existing Fabric 26.2 derived JAR checksum mismatch; no checksum bypass.",
+  "localFullRepeat": {
+    "directory": "output/playwright/studio-packaged-6f992eab",
+    "status": "INCOMPLETE",
+    "reason": "No full report. Exec handle 71761 and its process were absent on current-state inspection; cause not established. No local full PASS claimed."
+  },
+  "hostedCurrentSource": {
+    "runId": 37231372434,
+    "runUrl": "https://github.com/Zulut30/minemod/actions/runs/37231372434",
+    "sourceRevision": "57dd6ddffa49c864b4e98aeb93d396ce0c3eafc9",
+    "windowsJobId": 111521525795,
+    "linuxControlPlaneJobId": 111521526125,
+    "productionCleanBuildGameTestServerJobId": 111521526008,
+    "clientSmokeJobId": 111522206002,
+    "neoForgeRegressionJobId": 111521526096,
+    "fullPackagedSuite": "PASS",
+    "report": {
+      "path": "output/ci/37231372434-windows/output/playwright/studio-packaged-2d4a6939/report.json",
+      "bytes": 21315,
+      "sha256": "53879e37e2f26fe61d8c6d31d0f259e5834c8f1f9b33018ca287598890010f77"
+    },
+    "discovery": {
+      "status": "PASS",
+      "hidden": true,
+      "toolCount": 10,
+      "publishedSchemasMatchSDK": true,
+      "contractDigest": "0e80fa96698cb090662f2351e366eee4ad797fe7ada3f94a4f8d09222b1ad400",
+      "dynamicIdsAndRevision": true,
+      "unknownToolRecovery": true,
+      "invalidInputWithoutPayloadEcho": true,
+      "rejectedCallsAtomic": true,
+      "actualHumanCasConflict": true,
+      "repairedPreviewApply": true,
+      "actualPng": {
+        "bytes": 24754,
+        "sha256": "d23e9977760157d19178199358e6dbac59bbf1796d4fca4716f94ce99b9b3082"
+      },
+      "independentModelTurn": false
+    },
+    "screenshot": {
+      "path": "output/ci/37231372434-windows/output/playwright/studio-packaged-2d4a6939/discovery/after-repaired-call.png",
+      "bytes": 24754,
+      "sha256": "d23e9977760157d19178199358e6dbac59bbf1796d4fca4716f94ce99b9b3082"
+    },
+    "logs": [
+      {
+        "path": "output/verification/roadmap-033-hosted-linux.log",
+        "bytes": 35354,
+        "sha256": "08bb50e57ce7734300a2379d42ede71ad68a44d728aba4c32cdd3d18b41005e9"
+      },
+      {
+        "path": "output/verification/roadmap-033-hosted-production.log",
+        "bytes": 110130,
+        "sha256": "249ecd37fd6b96a96ebffe50c516db432921c849ffa44d80da7c377f9d727fa4"
+      }
+    ],
+    "catalog": "CI upload contains reports and PNG only; reported schemaDigest matches full local catalog and live root-agent catalog.",
+    "workflowConclusion": "failure",
+    "remainingFailure": "Existing Fabric 26.2 derived JAR checksum mismatch; no checksum bypass."
+  },
+  "currentChatAgentExercise": {
+    "status": "PASS",
+    "scope": "Codex root agent chose tool names, IDs and mutation after reading live resources and actual front PNG; own hidden packaged Studio. This is not an independent installed Codex CLI or Claude Code session.",
+    "calls": 14,
+    "changedCubes": [
+      "guard_center",
+      "guard_left",
+      "guard_right",
+      "guard_tip_left",
+      "guard_tip_right"
+    ],
+    "texturePlanAndOtherCubesUnchanged": true,
+    "previewEntireStateUnchanged": true,
+    "undoEntireProjectAndPngRestored": true,
+    "files": [
+      {
+        "path": "output/playwright/root-agent-033-cfedc11c/trace.json",
+        "bytes": 124947,
+        "sha256": "8aa0bf1462e2d81c9b428b85d102b9dd40bc6815539f52f26d95ac75b15b27f4"
+      },
+      {
+        "path": "output/playwright/root-agent-033-cfedc11c/report.json",
+        "bytes": 376,
+        "sha256": "7dc7463d7f28a65f7580a3b698d7b7347ada98d4f485eda3615c12f6fa65d493"
+      },
+      {
+        "path": "output/playwright/root-agent-033-cfedc11c/contract.json",
+        "bytes": 40932,
+        "sha256": "5bb7d8ed4c7d5e970404fad83ce4859bae3f9a44e402b8588c0ba227a8c5d1f3"
+      },
+      {
+        "path": "output/playwright/root-agent-033-cfedc11c/scene.json",
+        "bytes": 4711,
+        "sha256": "da277d589c30e4c1c23b52f93e4a60c3961b3bc01634cbc0440624ecc8078be8"
+      },
+      {
+        "path": "output/playwright/root-agent-033-cfedc11c/capture-4.png",
+        "bytes": 35328,
+        "sha256": "6d878cee8d3ec715c6c4574372c9540f3ced90d445aa0c81d99aad2f47418058"
+      },
+      {
+        "path": "output/playwright/root-agent-033-cfedc11c/capture-8.png",
+        "bytes": 33968,
+        "sha256": "69c062f7e795f7398e24a9d84ab6ede649a7cac908f24b934727477e86d247d8"
+      },
+      {
+        "path": "output/playwright/root-agent-033-cfedc11c/capture-9.png",
+        "bytes": 130832,
+        "sha256": "2bb8db6de18be8b17e71c75185ca6c45df27b422b4292f7bc90ffdccb4e3de8a"
+      },
+      {
+        "path": "output/playwright/root-agent-033-cfedc11c/capture-12.png",
+        "bytes": 35328,
+        "sha256": "6d878cee8d3ec715c6c4574372c9540f3ced90d445aa0c81d99aad2f47418058"
+      }
+    ],
+    "humanArtAcceptance": "not-granted",
+    "minecraft": "not-verified"
+  }
 }
