@@ -1,6 +1,6 @@
 # Адресное исправление модели
 
-Roadmap 038, в работе. Studio 0.14.0 добавляет задание ремонта, которое пользователь задаёт в редакторе; агент получает его через существующие MCP inspect/scene и preview/apply. Появление функции не является художественной приёмкой модели или проверкой в Minecraft.
+Roadmap 038 закрыт в техническом объёме: адресная правка, сохранность принятых частей/рисунка и лимит итераций. Studio 0.14.0 добавляет задание ремонта, которое пользователь задаёт в редакторе; агент получает его через существующие MCP inspect/scene и preview/apply. Появление функции не является художественной приёмкой модели или проверкой в Minecraft.
 
 ## Ручной путь
 
@@ -31,5 +31,9 @@ Roadmap 038, в работе. Studio 0.14.0 добавляет задание р
 Задание и счётчик — состояние текущего EditorSession. Файл проекта v2, варианты и экспортный asset bundle не меняют формат. При open/new/restart авторская модель восстанавливается обычным путём, а задание нужно задать заново. Агент не может самостоятельно открыть файл, перезапустить приложение или создать новый case через MCP.
 
 Локально проверены geometry/texture/UV, atomic rejection, сохранение настоящего ручного stroke и exact exported PNG, бюджет, replay и HTTP MCP. Упакованный GUI тест получает настоящие PNG обзора до/после. [Evidence](evidence/targeted-repair-038.json) отделяет эти проверки от hosted suite и художественной/игровой приёмки. Independent Codex/Claude repair-сеанс этой новой версии не заявляется по одному SDK-тесту.
+
+Hosted [run 37329796444](https://github.com/Zulut30/minemod/actions/runs/37329796444) завершён на exact source `92e337e`: full Linux suite и Windows packaged 0.14.0 с 17 подотчётами, включая repair, PASS. В Windows witness сохранены пять реальных PNG и GUI-состояние; runtime assertion проверяет bytes экспортированной ручной покраски до/после изменения формы. Native Fabric 1.20.1 clean build, два harness GameTests и dedicated-server/client smoke также PASS. Это не authored-model GameTest или игровая художественная приёмка. Общий workflow failed на legacy Fabric 26.2 checksum; защита не ослаблена.
+
+В первом combined review PNG 0.14.0 отдельно воспроизведено обрезание предмета после загрузки миниатюр. [Корректировка layout 0.14.1](CAPTURE_LAYOUT_FIX.md) прошла локальный отрицательный/положительный packaged regression и повтор адресной правки; её hosted source проверяется отдельно. Закрытие 038 относится к preservation/scope/budget, а не к universal framing или улучшению художественного score.
 
 Схема использует существующий Zod 4.4.2; новые зависимости не добавлены. Strict object/refinement semantics сверены 5 октября 2026 года через Context7 по [официальной документации Zod](https://zod.dev/api).

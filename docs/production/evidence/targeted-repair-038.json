@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
   "roadmapPoint": 38,
-  "status": "PARTIAL",
-  "checkedAtUtc": "2026-10-05T15:00:30.748Z",
+  "status": "PASS",
+  "checkedAtUtc": "2026-10-05T15:16:52.991Z",
   "studioVersion": "0.14.0",
   "node": "24.21.0",
-  "scope": "Human-authorized scoped repair with bounded agent iterations; local core/HTTP/packaged proof, hosted pending; no artistic or authored game approval",
+  "scope": "Human scoped geometry/paint/UV repair, preservation and bounded iterations verified by exact-source Linux and 17-subreport packaged Windows; no artistic or authored game approval",
   "sourceHashes": [
     {
       "path": "packages/editor-core/repair.ts",
@@ -268,7 +268,7 @@
     "commandsPerTransaction": 32
   },
   "boundaries": {
-    "hosted": "PENDING",
+    "hosted": "SCOPED_PASS",
     "independentCodexClaudeRepairSession": "NOT_RUN",
     "artisticAcceptance": "NOT_PERFORMED",
     "authoredGameAcceptance": "NOT_RUN",
@@ -276,7 +276,17 @@
     "dependencies": "UNCHANGED",
     "trustedPacks": "UNCHANGED",
     "projectSchema": "UNCHANGED_V2",
-    "repairPersistence": "SESSION_ONLY_NEW_HUMAN_CASE_AFTER_OPEN_OR_RESTART"
+    "repairPersistence": "SESSION_ONLY_NEW_HUMAN_CASE_AFTER_OPEN_OR_RESTART",
+    "wholeCI": "FAILURE_LEGACY_FABRIC_26_2",
+    "reviewLayoutFollowup": {
+      "issue": "First combined PNG can be clipped after preview image layout reflow in 0.14.0",
+      "technicalRepairScope": "Preservation/budget validated independently of framing",
+      "fixSource": "c29fcc4",
+      "localFixVersion": "0.14.1",
+      "localFix": "PASS_NEGATIVE_AND_POSITIVE_PACKAGED",
+      "evidence": "capture-layout-023.json",
+      "hostedFix": "PENDING"
+    }
   },
   "retainedDiagnostics": [
     {
@@ -294,5 +304,272 @@
       "bytes": 257,
       "sha256": "e851efd648be88b02bc68523ff6181c882616ddd28383be205304b0537c7bc9a"
     }
-  ]
+  ],
+  "hosted": {
+    "status": "SCOPED_PASS",
+    "sourceCommit": "92e337eaddfe96c3eaf6074aa04540c126b3cb6b",
+    "runId": 37329796444,
+    "url": "https://github.com/Zulut30/minemod/actions/runs/37329796444",
+    "checkedAtUtc": "2026-10-05T15:16:52.977Z",
+    "jobs": [
+      {
+        "conclusion": "success",
+        "id": 111829713257,
+        "name": "Fabric 1.20.1 / Java 17 production target",
+        "status": "completed",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37329796444/job/111829713257"
+      },
+      {
+        "conclusion": "failure",
+        "id": 111829713663,
+        "name": "fabric",
+        "status": "completed",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37329796444/job/111829713663"
+      },
+      {
+        "conclusion": "success",
+        "id": 111829713702,
+        "name": "studio-windows",
+        "status": "completed",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37329796444/job/111829713702"
+      },
+      {
+        "conclusion": "success",
+        "id": 111829713716,
+        "name": "control-plane",
+        "status": "completed",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37329796444/job/111829713716"
+      },
+      {
+        "conclusion": "success",
+        "id": 111829713719,
+        "name": "neoforge",
+        "status": "completed",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37329796444/job/111829713719"
+      },
+      {
+        "conclusion": "skipped",
+        "id": 111830049160,
+        "name": "fabric-client",
+        "status": "completed",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37329796444/job/111830049160"
+      },
+      {
+        "conclusion": "success",
+        "id": 111831135732,
+        "name": "client-smoke",
+        "status": "completed",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37329796444/job/111831135732"
+      }
+    ],
+    "artifacts": [
+      {
+        "id": 11354820742,
+        "name": "minemod-studio-windows-evidence",
+        "bytes": 2834891,
+        "digest": "sha256:abe826a68a7c38c95389c8c14c8d547d85d673e4ef5a7f6a5d32400f10a58a65"
+      },
+      {
+        "id": 11354560283,
+        "name": "fabric-1.20.1-java17-evidence",
+        "bytes": 50777,
+        "digest": "sha256:7b5ad0ef108a7c82a86f37b9a0b399c5753da421b99676d67d2b785f6a2a51a9"
+      },
+      {
+        "id": 11353776741,
+        "name": "control-plane-clean-checkout-evidence",
+        "bytes": 1895,
+        "digest": "sha256:62e2528a3edd998891efd785cb4f40ac54971f3f361bb648d6476329c9bb72d4"
+      },
+      {
+        "id": 11353657240,
+        "name": "fabric-26.2-verification-failure",
+        "bytes": 102358,
+        "digest": "sha256:ee3db6d2b8ee568168c2a5de21f9d4b2a80a4e606cf6dacd6016bdfc783abcca"
+      }
+    ],
+    "statusReport": {
+      "path": "output/verification/roadmap-038-hosted-final-status.json",
+      "bytes": 1396,
+      "sha256": "1aeaf0f6763f4e0e0fefcfb85b8184102c087f8b3041bdea7ed0608499855e16"
+    },
+    "artifactMetadata": {
+      "path": "output/verification/roadmap-038-hosted-artifacts.json",
+      "bytes": 2890,
+      "sha256": "086c9983a3b0dae2f9e4b8ed4a0297fed043d03442a69c49b4c4d80ae30f5dbb"
+    },
+    "windows": {
+      "report": {
+        "path": "output/ci/37329796444-windows\\output\\playwright\\studio-packaged-3cc2bdd1\\report.json",
+        "bytes": 33801,
+        "sha256": "4fed38b3105d83c2cf07edde46135f85ed6f52019c9da4a9ba83176d824a2b11"
+      },
+      "packagePath": "D:\\a\\minemod\\minemod\\output\\model-editor\\releases\\0.14.0\\5136989a\\MineMod Studio-win32-x64\\MineMod Studio.exe",
+      "subreports": [
+        "mcp",
+        "texture",
+        "polish",
+        "editing",
+        "variants",
+        "brief",
+        "parts",
+        "manual",
+        "accessibility",
+        "accessibilityStates",
+        "review",
+        "migrations",
+        "history",
+        "geometry",
+        "camera",
+        "discovery",
+        "repair"
+      ],
+      "repairReport": {
+        "path": "output\\ci\\37329796444-windows\\output\\playwright\\studio-packaged-3cc2bdd1\\repair\\report.json",
+        "bytes": 1910,
+        "sha256": "a4f6f6e38901a44589b38e4daf01705deb869e97dd256c1743f15f7051e14b6f"
+      },
+      "repairBody": {
+        "status": "PASS",
+        "hidden": true,
+        "projectId": "b3234588-d294-4f4c-98e5-f139618e74bf",
+        "captures": [
+          {
+            "path": "before-review.png",
+            "bytes": 52265,
+            "sha256": "6041fd9b23a9604d35e13f44ee78c100b476d3d176f923a4ff3de1d37061c7ce"
+          },
+          {
+            "path": "after-1-review.png",
+            "bytes": 51480,
+            "sha256": "b88372e2eaf3766f4fc697df6b8b7cdeaa9caf50f8b834f9b575e494357d710f"
+          },
+          {
+            "path": "after-2-review.png",
+            "bytes": 51437,
+            "sha256": "c2d22ac1a1d91d619acb1b3d51c055760a1783ecf047e21ef02928b81c20dd21"
+          },
+          {
+            "path": "material-review.png",
+            "bytes": 51445,
+            "sha256": "a5a3ccf93859781be3dadee42433336caf0f9ab4ad73a20dfff3eccf6ae1434e"
+          },
+          {
+            "path": "uv-review.png",
+            "bytes": 51446,
+            "sha256": "f1f477995779135c324f758f291b08c8d81f919f514ded1e6d770da28eb3cdb8"
+          }
+        ],
+        "manualPng": {
+          "path": "assets/mcdev/textures/item/aurora_longsword_v2.png",
+          "sha256": "55a940bf644c5cc5869ef694bce022d5579c33760d7aa2294dc497b160547a07",
+          "bytes": 1659
+        },
+        "finalProjectSha256": "1cbac03db013042e00b9f9ffe3b5db90fcc40eec76e3837b04ba99834377d106",
+        "checks": [
+          "real human canvas stroke",
+          "human starts scoped case via UI",
+          "MCP discovers note/parts/budget",
+          "out-of-scope request rejected atomically",
+          "preview preserves actual state and budget",
+          "two targeted HTTP geometry applies",
+          "accepted geometry and manual PNG unchanged",
+          "exact replay spends no budget",
+          "actual multi-angle PNG before/after",
+          "third iteration rejected",
+          "agent cannot reset authorization",
+          "UI shows exhausted budget",
+          "human ends and starts face-specific material task",
+          "wrong face rejected",
+          "actual target face material paint preserves geometry/other pixels",
+          "actual scoped UV mirror preserves geometry",
+          "material and UV rendered reviews"
+        ]
+      },
+      "captures": [
+        {
+          "path": "output\\ci\\37329796444-windows\\output\\playwright\\studio-packaged-3cc2bdd1\\repair\\before-review.png",
+          "bytes": 52265,
+          "sha256": "6041fd9b23a9604d35e13f44ee78c100b476d3d176f923a4ff3de1d37061c7ce"
+        },
+        {
+          "path": "output\\ci\\37329796444-windows\\output\\playwright\\studio-packaged-3cc2bdd1\\repair\\after-1-review.png",
+          "bytes": 51480,
+          "sha256": "b88372e2eaf3766f4fc697df6b8b7cdeaa9caf50f8b834f9b575e494357d710f"
+        },
+        {
+          "path": "output\\ci\\37329796444-windows\\output\\playwright\\studio-packaged-3cc2bdd1\\repair\\after-2-review.png",
+          "bytes": 51437,
+          "sha256": "c2d22ac1a1d91d619acb1b3d51c055760a1783ecf047e21ef02928b81c20dd21"
+        },
+        {
+          "path": "output\\ci\\37329796444-windows\\output\\playwright\\studio-packaged-3cc2bdd1\\repair\\material-review.png",
+          "bytes": 51445,
+          "sha256": "a5a3ccf93859781be3dadee42433336caf0f9ab4ad73a20dfff3eccf6ae1434e"
+        },
+        {
+          "path": "output\\ci\\37329796444-windows\\output\\playwright\\studio-packaged-3cc2bdd1\\repair\\uv-review.png",
+          "bytes": 51446,
+          "sha256": "f1f477995779135c324f758f291b08c8d81f919f514ded1e6d770da28eb3cdb8"
+        }
+      ],
+      "uiScreenshot": {
+        "path": "output\\ci\\37329796444-windows\\output\\playwright\\studio-packaged-3cc2bdd1\\repair\\repair-panel.png",
+        "bytes": 101114,
+        "sha256": "cf8be05b96d3902fd36a20d40f868cb9e862471d4ca3f80537995d9387dd69cd"
+      }
+    },
+    "native": {
+      "report": {
+        "path": "output/ci/37329796444-production/output/ci/fabric-production/generated/operation-evidence.v1.json",
+        "bytes": 9643,
+        "sha256": "3e42770acd9daa1262d7b44f9c93dc75dba6d8e0939b96caf5799ea41536dfd3"
+      },
+      "jar": {
+        "path": "output/ci/37329796444-production/output/ci/fabric-production/generated/build/libs/infectedfrontier-0.1.0.jar",
+        "bytes": 28835,
+        "sha256": "63c8139423e57b925edfa40f030020b23ae2cc21571eaf711c879d58a382cc15"
+      },
+      "independentlyCheckedSourceFiles": 6,
+      "harnessXml": {
+        "path": "output/ci/37329796444-production/fixtures/fabric-1.20.1-empty/build/reports/gametest/production.xml",
+        "bytes": 406,
+        "sha256": "fc0f67c9a8ffbb80ec0e9834ba11c14fe9db30a76438f63fd0374c3dd0d85b05"
+      },
+      "harnessTests": 2
+    },
+    "legacy": {
+      "report": {
+        "path": "output/ci/37329796444-legacy\\at-1791212690453\\dependency-verification-report.html",
+        "bytes": 9060,
+        "sha256": "50d91ccae86de533b26dfa2afbb9df2442e0df7dc7126bf289f5d16d74aeb718"
+      },
+      "coordinate": "net.minecraft:minecraft-common-043a8b3edf:26.2",
+      "expectedSha256": "23248c15f8413aa0d06ac59e676913dd6a1dc0c5fffaa09365afd6c98d59fcd3",
+      "actualSha256": "6774c9939efb3b638900a951854ecc5bde981bda41f1e44651204e834281c28d",
+      "cause": "NOT_ESTABLISHED"
+    },
+    "logs": [
+      {
+        "path": "output/verification/roadmap-038-hosted-control.log",
+        "bytes": 39465,
+        "sha256": "fd90de38cb822d818f4220aa03dc9a4b2656878d66be2b9cf9764eb7b379dbd9"
+      },
+      {
+        "path": "output/verification/roadmap-038-hosted-production.log",
+        "bytes": 75487,
+        "sha256": "29727c2d21ebee313defa7e50cdf22f16e1c2e8df224c7408a4cdbc040c639d5"
+      },
+      {
+        "path": "output/verification/roadmap-038-hosted-windows.log",
+        "bytes": 38942,
+        "sha256": "71e18115e3fc8b769c5555ebcc90b55a06873591a36e1349ee6e8c548942c122"
+      },
+      {
+        "path": "output/verification/roadmap-038-hosted-legacy.log",
+        "bytes": 32119,
+        "sha256": "932eb6ac8b3d49eac2540e6e8bd35e3bca47c347c61452154445752bdc2242b2"
+      }
+    ]
+  }
 }
