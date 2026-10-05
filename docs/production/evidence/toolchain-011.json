@@ -1,6 +1,6 @@
 {
   "status": "PARTIAL",
-  "checkedAtUtc": "2026-10-05T12:22:00.073Z",
+  "checkedAtUtc": "2026-10-05T14:09:25.654Z",
   "scope": "Initial readonly toolchain audit plus separately recorded development runtime upgrade; production transitive licenses incomplete",
   "node": {
     "version": "24.11.0",
@@ -116,7 +116,97 @@
     "archiveUrl": "https://registry.npmjs.org/pnpm/-/pnpm-11.8.0.tgz",
     "registryIntegrity": "sha512-wfXnxMskHI8XS3Q4UdgvQrgCMkr8iw8Ra5atsVqgZmSUjd42lgo7oQebpbSyndAUATW5S1tfUmNZIknWjlVfJg==",
     "packageManagerHashMatched": true,
-    "tarballRead": "not-performed"
+    "tarballRead": "PASS exact 4,597,313 bytes SHA-512, actual bundled MIT license and npm registry ECDSA signature; initial metadata-only snapshot retained",
+    "publisherVerification": {
+      "status": "PASS",
+      "checkedAtUtc": "2026-10-05T14:07:26.491Z",
+      "scope": "Exact pnpm 11.8.0 tarball bytes, bundled package/license and npm registry ECDSA signature; not maintainer signature or SLSA provenance acceptance",
+      "name": "pnpm",
+      "version": "11.8.0",
+      "license": "MIT",
+      "source": {
+        "url": "git+https://github.com/pnpm/pnpm.git",
+        "type": "git",
+        "directory": "pnpm"
+      },
+      "archiveUrl": "https://registry.npmjs.org/pnpm/-/pnpm-11.8.0.tgz",
+      "archiveBytes": 4597313,
+      "sha512": "c1f5e7c4cb241c8f174b743851d82f42b802324afc8b0f116b96adb15aa06664948dde36960a3ba1079ba5b4b29dd0140135b94b5b5f5263592249d68e555f26",
+      "packageManagerIntegrityMatched": true,
+      "registrySignature": {
+        "status": "PASS",
+        "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
+        "keyExpiry": null,
+        "keySource": "https://registry.npmjs.org/-/npm/v1/keys",
+        "secondAnchor": "Corepack 0.36.0 inside signed Node 24.21.0 archive",
+        "tamperedPayloadRejected": true,
+        "anchorBytes": {
+          "status": "PASS",
+          "checkedAtUtc": "2026-10-05T14:08:27.8764942Z",
+          "nodeArchiveSha256": "158f7685b44de51f6c0df1d153526cbcd3e1bc739a8dfc607721cef75de9e541",
+          "entry": "node-v24.21.0-win-x64/node_modules/corepack/dist/lib/corepack.cjs",
+          "entryBytes": 544878,
+          "sha256": "030f36035dc0423ebc2e0e229bc5b35ad19a581755c87614e8c0b7d9ad6b2dab",
+          "installedBytesMatch": true,
+          "scope": "Corepack trust-anchor bytes match exact entry in signed Node archive"
+        }
+      },
+      "tamperedTarballRejected": true,
+      "provenance": {
+        "advertised": {
+          "url": "https://registry.npmjs.org/-/npm/v1/attestations/pnpm@11.8.0",
+          "provenance": {
+            "predicateType": "https://slsa.dev/provenance/v1"
+          }
+        },
+        "verification": "NOT_RUN"
+      },
+      "installed": false,
+      "executed": false,
+      "userConfiguration": "not-read-or-written",
+      "artifacts": [
+        {
+          "path": "output\\verification\\pnpm-publisher-011-ae6bcb03\\metadata.json",
+          "bytes": 2847,
+          "sha256": "d907376aee541dedf124e294cfc12cecf8bf400d182014bfe8edee2e809842e2"
+        },
+        {
+          "path": "output\\verification\\pnpm-publisher-011-ae6bcb03\\registry-keys.json",
+          "bytes": 580,
+          "sha256": "faf23d8753d5bb79df250f10391ac89b63ecf7743e48487a544a99c847f9c8df"
+        },
+        {
+          "path": "output\\verification\\pnpm-publisher-011-ae6bcb03\\pnpm-11.8.0.tgz",
+          "bytes": 4597313,
+          "sha256": "1e963a5c4ca5168550ba03fc4ee8d873a772b072b7fce63b48fff27d720e2e98"
+        },
+        {
+          "path": "output\\verification\\pnpm-publisher-011-ae6bcb03\\pnpm-package.json",
+          "bytes": 2216,
+          "sha256": "b3144ca9688dfdd1f6bf81826855b9dffe199d46465c9e27dc72aabcbc104367"
+        },
+        {
+          "path": "output\\verification\\pnpm-publisher-011-ae6bcb03\\pnpm-LICENSE",
+          "bytes": 1170,
+          "sha256": "e0a867ff513ea7be2a0ddc339ac6a031e459a38668e077b8f0e649544062f9f2"
+        }
+      ],
+      "report": {
+        "path": "output/verification/pnpm-publisher-011-ae6bcb03/report.json",
+        "bytes": 2913,
+        "sha256": "a007f5460b0bd99e6d33e1b4ae5ecf030f18487a288fd8d3bcf28631b8b62525"
+      },
+      "anchorReport": {
+        "path": "output/verification/pnpm-publisher-011-ae6bcb03/corepack-anchor.json",
+        "bytes": 472,
+        "sha256": "e5c4c03ec332f80a850690221bd5ef109711757b0e833b713dbb40a629498f9f"
+      },
+      "log": {
+        "path": "output/verification/roadmap-011-pnpm-publisher.log",
+        "bytes": 2522,
+        "sha256": "b483355235ee93c75360a96a667dd15e9d5705457c6109c1148f5910cc2bcef6"
+      }
+    }
   },
   "electron": {
     "version": "44.5.1",
@@ -266,7 +356,7 @@
     "sha256": "c67fd78ff70af70b5695be4a6321a61151d9376ae7cf92f31928abae0454d7e8"
   },
   "developmentUpgrade": {
-    "status": "LOCAL_PASS_HOSTED_PENDING",
+    "status": "LOCAL_AND_FRESH_CHECKOUT_PASS_HOSTED_PENDING",
     "checkedAtUtc": "2026-10-05T12:22:00.069Z",
     "from": "24.11.0",
     "to": "24.21.0",
@@ -409,6 +499,48 @@
       "https://nodejs.org/en/blog/vulnerability/july-2026-security-releases",
       "https://nodejs.org/en/blog/release/v24.21.0"
     ],
-    "vulnerabilitiesScope": "Official security release delta reviewed; no claim of project-specific exploitability or complete security audit"
+    "vulnerabilitiesScope": "Official security release delta reviewed; no claim of project-specific exploitability or complete security audit",
+    "freshCheckout": {
+      "status": "PASS",
+      "checkedAtUtc": "2026-10-05T14:09:25.642Z",
+      "sourceRevision": "2d040dfecbfbd9eeccbe4a595d86d52e1aed4159",
+      "node": "24.21.0",
+      "tree": "f90834d97cfb67afdd514c85e1accad54ad408fa",
+      "trackedFiles": 499,
+      "scope": "New Windows checkout before install: exact raw Git bytes/modes/bootstrap and nine rejection guards, then frozen install/typecheck/build using shared pnpm store; no GUI or Linux claims",
+      "positive": {
+        "path": "output/verification/node-checkout-011-e2443ffe/checkout-corrected.log",
+        "bytes": 4592,
+        "sha256": "b0aead92c77be7b117337a8b57ba04cb6e9cbe42cdc3dbcdd38a123f0640f41d"
+      },
+      "negative": {
+        "path": "output/verification/node-checkout-011-e2443ffe/guards.json",
+        "bytes": 659,
+        "sha256": "f0a4728c49f73229e4f4888433474103d20c7e8ba104693055d4ca4d60a8220f"
+      },
+      "logs": [
+        {
+          "path": "output/verification/node-checkout-011-e2443ffe/install.log",
+          "bytes": 775,
+          "sha256": "3417a2f18e30824914284b2427dd0eb7e7aedea660a64c2156ab00014c5b8801"
+        },
+        {
+          "path": "output/verification/node-checkout-011-e2443ffe/typecheck-resumed.log",
+          "bytes": 176,
+          "sha256": "fe0327fb3a908a7cea6b4e5ef62bbaa7903d4f4149a209170e6249f0dd5c8190"
+        },
+        {
+          "path": "output/verification/node-checkout-011-e2443ffe/build.log",
+          "bytes": 596,
+          "sha256": "58989282b4f1ad6345692d0f74d231d7e5234b04be0d341e09ba6da57358b3d7"
+        }
+      ],
+      "retainedInvocationError": {
+        "path": "output/verification/node-checkout-011-e2443ffe/checkout.log",
+        "bytes": 45,
+        "sha256": "ef197f2a7d12135ba78661b4458c583acd4208d674a027522dd821483a2508bd"
+      },
+      "continuation": "First observer/process handle was missing after interruption; own processes absent and build not started. Resumed typecheck/build in same checkout without restarting completed install/guards."
+    }
   }
 }
