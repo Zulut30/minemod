@@ -1,6 +1,6 @@
 # Воспроизводимый старт из чистого checkout
 
-Пункт 012, в работе. Заявленный scope: TypeScript bundles на Linux x64 и Windows x64, Windows x64 package Studio и production fixture Fabric 1.20.1 / Java 17 на Linux x64. Воспроизводимый запуск команд не означает побайтную идентичность JAR/EXE между машинами. Подпись пакета, установка зависимостей полностью без сети и другие ОС не подтверждены.
+Пункт 012 закрыт в описанном scope. Заявленный scope: TypeScript bundles на Linux x64 и Windows x64, Windows x64 package Studio и production fixture Fabric 1.20.1 / Java 17 на Linux x64. Воспроизводимый запуск команд не означает побайтную идентичность JAR/EXE между машинами. Подпись пакета, установка зависимостей полностью без сети и другие ОС не подтверждены.
 
 ## До установки зависимостей
 
@@ -54,6 +54,8 @@ cd fixtures/fabric-1.20.1-empty
 
 Guard suite создаёт собственный disposable clone с `core.autocrlf=true`. Проверяются raw CRLF corruption, bootstrap corruption, изменённый executable bit, untracked input и четыре заранее существовавших generated dirs; после восстановления clone снова совпадает с первоначальным отчётом. Linux дополнительно проверяет отказ после снятия physical executable bit. Рабочая копия пользователя не очищается.
 
-Локальный Windows guard suite прошёл. Hosted checks нового source ещё ожидаются; пункт пока открыт. Legacy Fabric 26.2 checksum failure относится к отдельному regression-target и не обходится ради общего зелёного статуса.
+Локальный Windows guard suite прошёл. Hosted exact source `9247445` прошёл: три fresh-checkout guards, 10 Linux и 9 Windows negative cases, frozen install, Linux bundles/full suite, Windows package/full hidden GUI и production strict build/GameTests/server/client. Legacy Fabric 26.2 checksum failure относится к отдельному regression-target и не обходится ради общего зелёного статуса.
 
-Первый hosted source `37077a4` прошёл fresh-checkout guards на Linux/Windows и production runtime, но новый evidence uploader выявил старый статический smoke-test с точным общим числом upload-шагов. NeoForge job отказал до dedicated-server smoke. Этот отказ сохранён; проверка заменена на конкретные обязательные artifact/guard commands. Новый source ещё требует hosted проверки, исключения проверки не добавлялись.
+Первый hosted source `37077a4` прошёл fresh-checkout guards на Linux/Windows и production runtime, но новый evidence uploader выявил старый статический smoke-test с точным общим числом upload-шагов. NeoForge job отказал до dedicated-server smoke. Этот отказ сохранён; проверка заменена на конкретные обязательные artifact/guard commands. Fixed source `9247445` прошёл полный NeoForge job, включая smoke guards и dedicated server; исключения проверки не добавлялись.
+
+[Hosted run](https://github.com/Zulut30/minemod/actions/runs/37303019843) сохранил byte/mode/bootstrap reports по одинаковому Git tree на Windows и Linux. Общий workflow failed на оставшемся legacy Fabric 26.2 checksum gate. [Точное evidence](evidence/clean-checkout-012.json).

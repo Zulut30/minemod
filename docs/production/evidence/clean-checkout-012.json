@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "roadmapPoint": 12,
-  "status": "PARTIAL",
+  "status": "PASS",
   "checkedAtUtc": "2026-10-05T11:16:34.582Z",
   "scope": "Fresh Windows x64 Studio and Linux x64 TypeScript/production Fabric 1.20.1 builds; checkout byte/mode guards before install",
   "sourceHashes": [
@@ -63,12 +63,32 @@
       "path": "output/verification/roadmap-012-lint-full.log",
       "bytes": 29,
       "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+    },
+    {
+      "path": "output/verification/roadmap-012-025-hosted-status.json",
+      "bytes": 19147,
+      "sha256": "53e74ff4b7ebeb80fc989a22a61c1da4fd91688f2f35f45b4657995549e1982f"
+    },
+    {
+      "path": "output/verification/roadmap-012-025-hosted-artifacts.json",
+      "bytes": 2892,
+      "sha256": "a2ef8d61d81323afcc225c7da08cc054692f56cd79975b1bfc02da574b2dbabc"
+    },
+    {
+      "path": "output/verification/roadmap-012-hosted-first-status.json",
+      "bytes": 16637,
+      "sha256": "95cb1310062dc20429eaa4760355a8a10eb41f58275546f6363b1be5e928a6c0"
+    },
+    {
+      "path": "output/verification/roadmap-012-hosted-first-artifacts.json",
+      "bytes": 2892,
+      "sha256": "67ab7ee7971b003121f89f7235c30913b6b7150fbfa0350642342e32d4a48662"
     }
   ],
   "checks": {
     "lint": "PASS full workspace",
     "negativeGuards": "PASS nine Windows cases",
-    "hostedNewSource": "pending"
+    "hostedNewSource": "PASS three fresh byte/mode/bootstrap guards, frozen installs, Linux full/build/bundles, complete Windows package/GUI, strict production clean build/GameTests/server/client"
   },
   "newDependencies": false,
   "trustedPacksChanged": false,
@@ -98,6 +118,172 @@
       "bytes": 74331,
       "sha256": "0e5269b4ba0640ce5b415b9e2c4a705248a4d5e4ccf8ece5cae7fbfc78a5c11e"
     },
-    "subsequentHosted": "pending fixed source"
+    "subsequentHosted": "PASS fixed source: full NeoForge bootstrap/build/GameTests/smoke guards/dedicated server"
+  },
+  "verifiedAtUtc": "2026-10-05T11:38:19.017Z",
+  "sourceRevision": "9247445a96a8f67c6d47c73dbc607b181c49cec6",
+  "hosted": {
+    "runId": 37303019843,
+    "sourceRevision": "9247445a96a8f67c6d47c73dbc607b181c49cec6",
+    "workflowConclusion": "failure",
+    "jobs": [
+      {
+        "name": "studio-windows",
+        "jobId": 111740010177,
+        "conclusion": "success"
+      },
+      {
+        "name": "neoforge",
+        "jobId": 111740010487,
+        "conclusion": "success"
+      },
+      {
+        "name": "Fabric 1.20.1 / Java 17 production target",
+        "jobId": 111740010501,
+        "conclusion": "success"
+      },
+      {
+        "name": "fabric",
+        "jobId": 111740010572,
+        "conclusion": "failure"
+      },
+      {
+        "name": "control-plane",
+        "jobId": 111740010852,
+        "conclusion": "success"
+      },
+      {
+        "name": "fabric-client",
+        "jobId": 111740340052,
+        "conclusion": "skipped"
+      },
+      {
+        "name": "client-smoke",
+        "jobId": 111741140868,
+        "conclusion": "success"
+      }
+    ],
+    "artifacts": [
+      {
+        "id": 11343015474,
+        "name": "control-plane-clean-checkout-evidence",
+        "digest": "sha256:a64c8990d6a30cecef2efa5b2244cc0f4970f570f745a144cf10282c875be5a8"
+      },
+      {
+        "id": 11342592570,
+        "name": "minemod-studio-windows-evidence",
+        "digest": "sha256:f7de1fe21631799dca57663bf5e53d5160e99a6d665dc90710a2a7fff9493d58"
+      },
+      {
+        "id": 11342961186,
+        "name": "fabric-1.20.1-java17-evidence",
+        "digest": "sha256:7646b26b3efca65881179b2165529bee189871fa5540462a9c133d3cb5644726"
+      }
+    ],
+    "guards": [
+      {
+        "report": {
+          "path": "output/ci/37303019843-control/control-plane.json",
+          "bytes": 4469,
+          "sha256": "b7126aaec6378f6439b3ad4b33d9a9f3b6d971b6706d6930b4472858ed34f6b4"
+        },
+        "platform": "linux",
+        "node": "24.11.0",
+        "trackedFiles": 489,
+        "bytesChecked": 6556746,
+        "tree": "924d5b4147def1a175875dd156b92df38f635a42",
+        "bootstrap": [
+          {
+            "path": "fixtures/fabric-1.20.1-empty/gradle/wrapper/gradle-wrapper.jar",
+            "bytes": 43453,
+            "sha256": "cb0da6751c2b753a16ac168bb354870ebb1e162e9083f116729cec9c781156b8"
+          },
+          {
+            "path": "fixtures/fabric-1.20.1-empty/gradle/wrapper/gradle-wrapper.properties",
+            "bytes": 366,
+            "sha256": "6573ff94809ecafc91d9cf817662adf6175df7032ec3ebf53e7da476c2702270"
+          },
+          {
+            "path": "fixtures/fabric-1.20.1-empty/gradlew",
+            "bytes": 9671,
+            "sha256": "edeebb8b7ddcd62dc39d85846bf93bc016da6a644bf7489fad47c3d6c02ad0ad"
+          },
+          {
+            "path": "fixtures/fabric-1.20.1-empty/gradlew.bat",
+            "bytes": 3543,
+            "sha256": "cbf5d8eb5d36bfe4d19cef74da88f0cb45361bcb8a6fa185220ce05e6e4ae524"
+          }
+        ]
+      },
+      {
+        "report": {
+          "path": "output/ci/37303019843-windows/output/ci/clean-checkout/studio-windows.json",
+          "bytes": 4469,
+          "sha256": "e8c09a9844de000f033c85a61e9cafc785fda2f82552dffb707c8614e3fc8104"
+        },
+        "platform": "win32",
+        "node": "24.11.0",
+        "trackedFiles": 489,
+        "bytesChecked": 6556746,
+        "tree": "924d5b4147def1a175875dd156b92df38f635a42",
+        "bootstrap": [
+          {
+            "path": "fixtures/fabric-1.20.1-empty/gradle/wrapper/gradle-wrapper.jar",
+            "bytes": 43453,
+            "sha256": "cb0da6751c2b753a16ac168bb354870ebb1e162e9083f116729cec9c781156b8"
+          },
+          {
+            "path": "fixtures/fabric-1.20.1-empty/gradle/wrapper/gradle-wrapper.properties",
+            "bytes": 366,
+            "sha256": "6573ff94809ecafc91d9cf817662adf6175df7032ec3ebf53e7da476c2702270"
+          },
+          {
+            "path": "fixtures/fabric-1.20.1-empty/gradlew",
+            "bytes": 9671,
+            "sha256": "edeebb8b7ddcd62dc39d85846bf93bc016da6a644bf7489fad47c3d6c02ad0ad"
+          },
+          {
+            "path": "fixtures/fabric-1.20.1-empty/gradlew.bat",
+            "bytes": 3543,
+            "sha256": "cbf5d8eb5d36bfe4d19cef74da88f0cb45361bcb8a6fa185220ce05e6e4ae524"
+          }
+        ]
+      },
+      {
+        "report": {
+          "path": "output/ci/37303019843-production/output/ci/clean-checkout/fabric-production.json",
+          "bytes": 4469,
+          "sha256": "b7126aaec6378f6439b3ad4b33d9a9f3b6d971b6706d6930b4472858ed34f6b4"
+        },
+        "platform": "linux",
+        "node": "24.11.0",
+        "trackedFiles": 489,
+        "bytesChecked": 6556746,
+        "tree": "924d5b4147def1a175875dd156b92df38f635a42",
+        "bootstrap": [
+          {
+            "path": "fixtures/fabric-1.20.1-empty/gradle/wrapper/gradle-wrapper.jar",
+            "bytes": 43453,
+            "sha256": "cb0da6751c2b753a16ac168bb354870ebb1e162e9083f116729cec9c781156b8"
+          },
+          {
+            "path": "fixtures/fabric-1.20.1-empty/gradle/wrapper/gradle-wrapper.properties",
+            "bytes": 366,
+            "sha256": "6573ff94809ecafc91d9cf817662adf6175df7032ec3ebf53e7da476c2702270"
+          },
+          {
+            "path": "fixtures/fabric-1.20.1-empty/gradlew",
+            "bytes": 9671,
+            "sha256": "edeebb8b7ddcd62dc39d85846bf93bc016da6a644bf7489fad47c3d6c02ad0ad"
+          },
+          {
+            "path": "fixtures/fabric-1.20.1-empty/gradlew.bat",
+            "bytes": 3543,
+            "sha256": "cbf5d8eb5d36bfe4d19cef74da88f0cb45361bcb8a6fa185220ce05e6e4ae524"
+          }
+        ]
+      }
+    ],
+    "remainingRegression": "Legacy Fabric 26.2 derived checksum mismatch remains; no bypass or all-green claim"
   }
 }
