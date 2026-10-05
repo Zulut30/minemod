@@ -12,7 +12,71 @@
     "officialChecksumSource": "https://nodejs.org/dist/v24.11.0/SHASUMS256.txt",
     "checksum": "1054540bce22b54ec7e50ebc078ec5d090700a77657607a58f6a64df21f49fdd",
     "license": "MIT plus third-party notices",
-    "pgpSignature": "not-verified"
+    "pgpSignature": "PASS official release-key signature, signed checksum binds cached Windows archive",
+    "pgpEvidence": {
+      "status": "PASS",
+      "checkedAtUtc": "2026-10-05T12:05:21.565Z",
+      "node": "24.11.0",
+      "archiveSha256": "1054540bce22b54ec7e50ebc078ec5d090700a77657607a58f6a64df21f49fdd",
+      "signingFingerprint": "C82FA3AE1CBEDC6BE46B9360C43CEC45C17AB93C",
+      "primaryFingerprint": "C82FA3AE1CBEDC6BE46B9360C43CEC45C17AB93C",
+      "keySource": "https://github.com/nodejs/release-keys/tree/481637f813e912c4aa3622d7964ab426c97b8e8d",
+      "keyRevision": "481637f813e912c4aa3622d7964ab426c97b8e8d",
+      "verifiedChecksumSignature": true,
+      "signerMatchesOfficialList": true,
+      "tamperedChecksumRejected": true,
+      "userKeyring": "not-read-or-written",
+      "artifacts": [
+        {
+          "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\verification\\toolchain-pgp-011-36e173bc\\SHASUMS256.txt",
+          "bytes": 2967,
+          "sha256": "ee1afe484a32496fd72c22f02acc80e28e6af559491b46cdfbd1c7a3922c42bd"
+        },
+        {
+          "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\verification\\toolchain-pgp-011-36e173bc\\SHASUMS256.txt.sig",
+          "bytes": 566,
+          "sha256": "57c9dbfe449a0edf0dd15a8e9adb8f4ad0c0ab478ee5be8362834e8e1c3d038e"
+        },
+        {
+          "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\verification\\toolchain-pgp-011-36e173bc\\pubring.kbx",
+          "bytes": 95960,
+          "sha256": "610b8d249da3d5733f5a128def2dd0294dbbf5b5713e6ca2529db8db419dee00"
+        },
+        {
+          "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\verification\\toolchain-pgp-011-36e173bc\\keys.list",
+          "bytes": 1189,
+          "sha256": "d1ed2bc5c8874fbc826213e751a6dfca45143d026029640f5aced1be1cac4f20"
+        },
+        {
+          "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\verification\\toolchain-pgp-011-36e173bc\\verification.log",
+          "bytes": 598,
+          "sha256": "54c522be461b770b3ef2ab509e7f5a3ab5cb1d0a7a653ff08801d6551972176e"
+        },
+        {
+          "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\verification\\toolchain-pgp-011-36e173bc\\tampered-verification.log",
+          "bytes": 337,
+          "sha256": "9e52e810e8c857c73001e9c3b0d561009bf1e0676c664700d1954eab38be06a9"
+        }
+      ],
+      "operatorLogs": [
+        {
+          "path": "output/verification/roadmap-011-node-pgp.log",
+          "bytes": 424,
+          "sha256": "fc349acfff6e10d74b2516d6030919c2a73771f05ef0a9f7c4d34c5fb9c5e915"
+        },
+        {
+          "path": "output/verification/roadmap-011-node-pgp-corrected.log",
+          "bytes": 2294,
+          "sha256": "e470cbce22a76cfd3a10a79a2b1e0217320572980cd2c1927dae46bf6eaa7771"
+        },
+        {
+          "path": "output/verification/toolchain-pgp-011-ce3de4a5/verification.log",
+          "bytes": 626,
+          "sha256": "15935806335885d9e339e4280d58ed93712ea2f27b750c4353adea2b011d1e4f"
+        }
+      ],
+      "retainedEarlierOperator": "Git-for-Windows key resource rejects Windows drive syntax; corrected relative paths in isolated cwd, no weaker verification"
+    }
   },
   "pnpm": {
     "version": "11.8.0",
@@ -144,7 +208,6 @@
   "remaining": [
     "Pinned Node patch security review and separately verified revision",
     "Full Fabric transitive license review",
-    "PGP signature verification for official Node archive",
     "Current source linked hosted verification before production"
   ],
   "trustedPacksChanged": false,
