@@ -8,6 +8,11 @@ const bridge: EditorBridge = {
     ipcRenderer.on("studio:state", listener);
     return () => ipcRenderer.removeListener("studio:state", listener);
   },
+  onAgentStatus: (callback) => {
+    const listener = (_event: unknown, value: Parameters<typeof callback>[0]) => callback(value);
+    ipcRenderer.on("studio:agent-status",listener);
+    return () => ipcRenderer.removeListener("studio:agent-status",listener);
+  },
   selection: (value) => ipcRenderer.invoke("studio:selection", value),
   onCapture: (callback) => {
     const listener = (_event: unknown, value: Parameters<typeof callback>[0]) =>

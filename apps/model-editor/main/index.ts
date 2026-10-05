@@ -20,6 +20,7 @@ import type {
   HostResponse,
   CaptureJob,
 } from "../shared/bridge.ts";
+import {emptyAgentStatus, MAX_AGENT_STATUS_BYTES, type AgentStatusMessage} from "../shared/agent-status.ts";
 
 protocol.registerSchemesAsPrivileged([
   {
@@ -35,7 +36,13 @@ if (dataArg)
 const primaryInstance = hidden || app.requestSingleInstanceLock();
 if (!primaryInstance) app.quit();
 let window: BrowserWindow;
-let worker: UtilityProcess;
+let worker: UtilityProcess | undefined;
+let agentStatus: AgentStatusMessage = {sequence:0,status:emptyAgentStatus()};
+function publishAgentStatus(value: AgentStatusMessage): void {
+  if (value.sequence <= agentStatus.sequence || Buffer.byteLength(JSON.stringify(value.status)) > MAX_AGENT_STATUS_BYTES) return;
+  agentStatus=value;
+  if (window && !window.isDestroyed()) window.webContents.send("studio:agent-status", value);
+}
 let captureWindow: BrowserWindow | undefined;
 let captureJob: CaptureJob | undefined;
 let captureTimer: ReturnType<typeof setTimeout> | undefined;
@@ -60,6 +67,10 @@ function ask(
   kind: string,
   fields: Record<string, unknown> = {},
 ): Promise<HostResponse> {
+  if (!worker) {
+    if (window && !window.isDestroyed()) window.webContents.send("studio:agent-status",agentStatus);
+    return Promise.resolve(unavailable());
+  }
   return new Promise((complete) => {
     const id = ++sequence;
     const timer = setTimeout(() => {
@@ -68,7 +79,7 @@ function ask(
     }, 20_000);
     pending.set(id, { resolve: complete, timer });
     try {
-      worker.postMessage({ id, kind, ...fields });
+      worker!.postMessage({ id, kind, ...fields });
     } catch {
       clearTimeout(timer);
       pending.delete(id);
@@ -229,7 +240,12 @@ async function boot(): Promise<void> {
       event?: string;
       job?: CaptureJob;
       captureId?: string;
+      agentStatus?: AgentStatusMessage;
     }) => {
+      if (!worker) return;
+      if (message.event === "agent-status" && message.agentStatus) {
+        publishAgentStatus(message.agentStatus);return;
+      }
       if (message.event === "state") {
         if (window && !window.isDestroyed())
           window.webContents.send("studio:state", message.result);
@@ -252,11 +268,20 @@ async function boot(): Promise<void> {
     },
   );
   worker.on("exit", () => {
+    worker=undefined;
+    clearTimeout(captureTimer);captureJob=undefined;
+    captureWindow?.destroy();captureWindow=undefined;
+    const latest=agentStatus.status.latest;
+    publishAgentStatus({sequence:agentStatus.sequence+1,status:{...agentStatus.status,
+      available:false,access:"off",notice:null,sessions:[],queued:0,running:0,
+      latest:latest && (latest.stage === "running" || latest.stage === "queued")
+        ? {...latest,stage:"cancelled",finishedAt:Date.now(),elapsedMs:Math.max(0,Date.now()-latest.enqueuedAt),code:"SERVICE_UNAVAILABLE"} : latest}});
     for (const p of pending.values()) {
       clearTimeout(p.timer);
       p.resolve(unavailable());
     }
     pending.clear();
+    if (window && !window.isDestroyed()) window.webContents.send("studio:state", unavailable());
   });
   const initialized = await ask("init", {
     fixturePath: join(runtime, "example.json"),
@@ -387,7 +412,7 @@ async function boot(): Promise<void> {
   let closing = false;
   let closePending = false;
   window.on("close", (event) => {
-    if (closing || (hidden && !testClose)) return;
+    if (closing || !worker || (hidden && !testClose)) return;
     event.preventDefault();
     if (closePending) return;
     closePending = true;
@@ -418,7 +443,7 @@ async function boot(): Promise<void> {
     app.quit();
   });
   app.on("window-all-closed", () => app.quit());
-  app.on("will-quit", () => worker.kill());
+  app.on("will-quit", () => worker?.kill());
 }
 function captureFailure(id: string): void {
   if (captureJob?.id !== id) return;
@@ -426,7 +451,7 @@ function captureFailure(id: string): void {
   captureJob = undefined;
   captureWindow?.destroy();
   captureWindow = undefined;
-  worker.postMessage({
+  worker?.postMessage({
     event: "capture-result",
     captureId: id,
     error: "CAPTURE_FAILED",
@@ -434,7 +459,7 @@ function captureFailure(id: string): void {
 }
 async function renderCapture(job: CaptureJob, runtime: string): Promise<void> {
   if (captureJob) {
-    worker.postMessage({
+    worker?.postMessage({
       event: "capture-result",
       captureId: job.id,
       error: "CAPTURE_BUSY",
@@ -485,7 +510,7 @@ async function finishCapture(id: string): Promise<void> {
     if (captureJob?.id !== id) return;
     clearTimeout(captureTimer);
     captureJob = undefined;
-    worker.postMessage({ event: "capture-result", captureId: id, png });
+    worker?.postMessage({ event: "capture-result", captureId: id, png });
   } catch {
     captureFailure(id);
   }

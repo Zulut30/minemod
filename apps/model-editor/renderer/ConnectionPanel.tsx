@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useStudio } from "./store.ts";
 import { RepairPanel } from "./RepairPanel.tsx";
+import {AgentStatusPanel} from "./AgentStatusPanel.tsx";
 export function ConnectionPanel() {
-  const { connection, request, busy, state } = useStudio();
+  const { connection, request, busy, state, agentStatus } = useStudio();
   const [provider, setProvider] = useState<"codex" | "claude">("codex");
   const [controlling, setControlling] = useState(false);
   const control = async (action: "start" | "stop" | "pause" | "resume") => {
@@ -27,7 +28,7 @@ export function ConnectionPanel() {
       </p>
       <button
         data-testid="agent-toggle"
-        disabled={controlling || busy && !connection.enabled}
+        disabled={!agentStatus.available || controlling || busy && !connection.enabled}
         onClick={() => {
           void control(connection.enabled ? "stop" : "start");
         }}
@@ -44,6 +45,7 @@ export function ConnectionPanel() {
         </p>
         <small>Пауза отменяет ожидающие правки и снимки. Продолжение не требует повторной настройки клиента. Внешний AI-клиент работает отдельно.</small>
       </>}
+      <AgentStatusPanel status={agentStatus} />
       <RepairPanel />
       {connection.enabled && (
         <>

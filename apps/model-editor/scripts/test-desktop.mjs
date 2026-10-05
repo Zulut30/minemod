@@ -32,6 +32,7 @@ import { checkRepairDesktop } from "./check-repair-desktop.mjs";
 import { checkConceptsDesktop } from "./check-concepts-desktop.mjs";
 import { checkAgentBlockoutsDesktop } from "./check-agent-blockouts-desktop.mjs";
 import { checkContinuationDesktop } from "./check-continuation-desktop.mjs";
+import { checkAgentStatusDesktop } from "./check-agent-status-desktop.mjs";
 
 const appDir = resolve(dirname(fileURLToPath(import.meta.url)), ".."),
   repo = resolve(appDir, "../..");
@@ -399,6 +400,7 @@ try {
   const variants = await checkVariantsDesktop(options, output);
   const agentBlockouts = await checkAgentBlockoutsDesktop(options, output);
   const continuation = await checkContinuationDesktop(options, output);
+  const agentStatus = await checkAgentStatusDesktop(options, output);
   const brief = await checkBriefDesktop(options, output);
   const concepts = await checkConceptsDesktop(options, output);
   const parts = await checkPartsDesktop(options, output);
@@ -428,6 +430,7 @@ try {
         variants,
         agentBlockouts,
         continuation,
+        agentStatus,
         brief,
         concepts,
         parts,

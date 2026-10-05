@@ -12,6 +12,7 @@ import type {
   ConnectionInfo,
   View,
 } from "../shared/bridge.ts";
+import {emptyAgentStatus, type AgentStatus, type AgentStatusMessage} from "../shared/agent-status.ts";
 interface StudioUi {
   state: EditorState | null;
   selection: string[];
@@ -31,6 +32,8 @@ interface StudioUi {
   paintFocus: boolean;
   draft: { projectId: string; revision: number; project: EditorProject } | null;
   connection: ConnectionInfo;
+  agentStatus: AgentStatus;
+  receiveAgentStatus: (value: AgentStatusMessage) => void;
   receive: (result: HostResponse) => void;
   request: (
     request: HostRequest,
@@ -43,6 +46,7 @@ interface StudioUi {
 let requestQueue: Promise<HostResponse | null> = Promise.resolve(null);
 let pendingRequests = 0;
 let stateSequence = -1;
+let agentSequence = -1;
 export const useStudio = create<StudioUi>((set, get) => ({
   state: null,
   selection: [],
@@ -62,6 +66,12 @@ export const useStudio = create<StudioUi>((set, get) => ({
   paintFocus: true,
   draft: null,
   connection: { enabled: false },
+  agentStatus: emptyAgentStatus(),
+  receiveAgentStatus: (value) => {
+    if (value.sequence <= agentSequence) return;
+    agentSequence=value.sequence;
+    set({agentStatus:value.status,...(!value.status.available ? {connection:{enabled:false}} : {})});
+  },
   select: (ids, additive = false) => {
     const previous = get().selection;
     const selection = additive ? (ids.every(id => previous.includes(id))
@@ -76,6 +86,7 @@ export const useStudio = create<StudioUi>((set, get) => ({
       set({ error: `${result.error.message} (${result.error.code})` });
       return;
     }
+    if (result.connection?.agentStatus) get().receiveAgentStatus(result.connection.agentStatus);
     if (result.sequence !== undefined) {
       if (result.sequence < stateSequence) return;
       stateSequence = result.sequence;
@@ -102,7 +113,7 @@ export const useStudio = create<StudioUi>((set, get) => ({
       ...(result.note ? { note: result.note, error: "" } : {}),
       ...(result.warning !== undefined ? { warning: result.warning } : {}),
       ...(result.fileName ? { fileName: result.fileName } : {}),
-      ...(result.connection ? { connection: result.connection } : {}),
+      ...(result.connection ? { connection: get().agentStatus.available ? result.connection : {enabled:false} } : {}),
     });
     void window.studio.selection({
       projectId: result.state.project.projectId,

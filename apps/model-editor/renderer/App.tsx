@@ -389,8 +389,10 @@ export function App() {
     const unsubscribe = window.studio.onState((result) =>
       useStudio.getState().receive(result),
     );
+    const unsubscribeAgent = window.studio.onAgentStatus(value => useStudio.getState().receiveAgentStatus(value));
     void useStudio.getState().request({ kind: "inspect" });
-    return unsubscribe;
+    void useStudio.getState().request({kind:"connection",action:"get"});
+    return () => {unsubscribe();unsubscribeAgent();};
   }, []);
   useEffect(() => {
     const key = (event: KeyboardEvent) => {

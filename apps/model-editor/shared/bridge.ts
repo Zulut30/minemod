@@ -1,4 +1,5 @@
 import type { EditorState, EditorProject, Mutation, RepairControl, ConceptImport } from "@mcdev/editor-core";
+import type { AgentStatusMessage } from "./agent-status.ts";
 export const VIEWS = ["perspective", "front", "side", "back", "left", "right", "top", "bottom", "rear-perspective"] as const;
 export type View = typeof VIEWS[number];
 export interface ConnectionInfo {
@@ -6,6 +7,7 @@ export interface ConnectionInfo {
   paused?: boolean;
   url?: string;
   token?: string;
+  agentStatus?: AgentStatusMessage;
 }
 export interface CaptureJob {
   id: string;
@@ -47,6 +49,7 @@ export type HostResponse =
 export interface EditorBridge {
   request: (request: HostRequest) => Promise<HostResponse>;
   onState: (callback: (response: HostResponse) => void) => () => void;
+  onAgentStatus: (callback: (value: AgentStatusMessage) => void) => () => void;
   selection: (value: { projectId: string; cubeIds: string[] }) => Promise<void>;
   onCapture: (callback: (job: CaptureJob) => void) => () => void;
   captureReady: (id: string, failed?: boolean) => void;

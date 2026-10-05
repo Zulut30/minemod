@@ -9,6 +9,8 @@ import {EditorSession,EditorError,projectFromAsset,cubes,type Mutation} from "@m
 import {startEditorMcp,type McpEditor} from "./mcp.ts";
 import {SCENE_URI} from "./discovery.ts";
 import {STUDIO_LIMITS} from "./discovery.ts";
+import {Buffer} from "node:buffer";
+import {MAX_AGENT_STATUS_BYTES, AGENT_TOOL_LABELS, type AgentStatus} from "../shared/agent-status.ts";
 
 function deferred<T>() { let resolve!: (value:T)=>void; return {promise:new Promise<T>(r=>{resolve=r;}),resolve:(value:T)=>resolve(value)}; }
 async function within<T>(promise:Promise<T>):Promise<T> {
@@ -36,7 +38,9 @@ const backend:McpEditor={
     queue=result.catch(()=>undefined);return result;
   },
 };
-let server=await startEditorMcp(backend);
+const statuses:AgentStatus[]=[];
+const observer={onStatus:(s:AgentStatus)=>{statuses.push(s);}};
+let server=await startEditorMcp(backend,observer);
 let client!:Client;
 let transport!:StreamableHTTPClientTransport,cancellationObserved=deferred<void>();
 const connect=async()=>{client=new Client({name:"continuation-039",version:"1"});transport=new StreamableHTTPClientTransport(new URL(server.url),{requestInit:{headers:{Authorization:`Bearer ${server.token}`}},fetch:async(input,init)=>{
@@ -139,9 +143,9 @@ try{
   server.invalidate();session=new EditorSession(manual.project,manual.revision+1);
   const afterOpen=session.state();const oldRequest=await call("studio_changes_preview",original);assert(oldRequest.isError);assert.equal(body(oldRequest).error.code,"REVISION_CONFLICT");assert.deepEqual(session.state(),afterOpen);
   assert.throws(()=>new EditorSession(project,-1),RangeError);assert.throws(()=>new EditorSession(project,Number.MAX_SAFE_INTEGER+1),RangeError);
-  server.close();await client.close();server=await startEditorMcp(backend);await connect();assert.equal((await scene()).revision,afterOpen.revision);
+  server.close();await client.close();server=await startEditorMcp(backend,observer);await connect();assert.equal((await scene()).revision,afterOpen.revision);
   const resumed=mutation([{type:"add",cubeId:"new_connection"}]);assert(!(await apply(await preview(resumed))).isError);
-  await client.close();server.close();server=await startEditorMcp(backend);
+  await client.close();server.close();server=await startEditorMcp(backend,observer);
   const boundedBefore=session.state();
   // Только тестовые часы: никакого production флага обхода limits или истечения сессии.
   const realNow=Date.now;let now=realNow();Date.now=()=>now;
@@ -162,5 +166,17 @@ try{
     const fresh=await initialize();const last=await rpc(fresh,{jsonrpc:"2.0",id:2,method:"resources/list"});assert.equal(last.status,200);await last.json();
     assert.deepEqual(session.state(),boundedBefore);
   }finally{Date.now=realNow;}
+  assert(statuses.some(s=>s.running===1&&s.queued>0),"Наблюдение различает выполняемый native adapter и очередь");
+  for(const stage of ["succeeded","failed","cancelled"])assert(statuses.some(s=>s.recent.some(r=>r.stage===stage)),stage);
+  for(const notice of ["RATE_LIMIT","SESSION_LIMIT","SESSION_EXPIRED","CLIENT_DISCONNECTED"])assert(statuses.some(s=>s.notice===notice),notice);
+  assert(statuses.some(s=>s.sessions.some(c=>c.remainingRequests===0&&c.limit===1024)));
+  assert(statuses.some(s=>s.access==="paused"));assert(statuses.some(s=>s.access==="off"));
+  assert(statuses.every(s=>s.recent.length<=8&&s.usage.tokens===null&&s.usage.cost===null));
+  assert(statuses.every(s=>Buffer.byteLength(JSON.stringify(s))<=MAX_AGENT_STATUS_BYTES));
+  assert(statuses.every(s=>!s.latest||s.latest.tool in AGENT_TOOL_LABELS));
+  assert(!JSON.stringify(statuses).includes(server.token));assert(!JSON.stringify(statuses).includes("Ручная правка во время сеанса"));
+  assert.equal(server.status().notice,null,"Свежая сессия снимает старое сообщение о лимите");
+  assert.equal(server.status().queued+server.status().running,0);
+  process.stdout.write("Agent status over real HTTP/SDK: queue, cancellation, error, caps, reconnect, bounded private metadata and unknown external usage PASS\n");
   process.stdout.write("Studio continuation: pause/resume, SDK cancellation, same-id MCP/HTTP isolation, session count/lifetime/idle caps/DELETE, reconnect replay, stale human/open revisions and token restart PASS\n");
 }finally{server.close();await client?.close();}

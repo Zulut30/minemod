@@ -19,6 +19,8 @@ import {
   type EditorProject,
 } from "@mcdev/editor-core";
 import { VIEWS, type View } from "../shared/bridge.ts";
+import { type AgentStatus, type AgentTool, type AgentConnectionStatus } from "../shared/agent-status.ts";
+import { AgentMonitor } from "./agent-status.ts";
 import { assetOperationWithEvidence } from "../../../packages/application/evidence.ts";
 import {
   AgentMutationSchema, CONTRACT_URI, SCENE_URI, HUMAN_COMMANDS, STUDIO_LIMITS,
@@ -60,6 +62,7 @@ interface EditorConnection {
   persistent: boolean;
   lastUsed: number;
   calls: number;
+  client: number;
 }
 const refSchema = z.strictObject({
   projectId: z.uuid(),
@@ -96,8 +99,10 @@ function summary(state: EditorState) {
 
 export async function startEditorMcp(
   editor: McpEditor,
+  options: {onStatus?: (status: AgentStatus) => void} = {},
 ): Promise<{ server: Server; url: string; token: string; close: () => void;
   pause: () => void; resume: () => void; invalidate: () => void;
+  status: () => AgentStatus;
   access: () => { state: "active" | "paused" | "off"; epoch: number } }> {
   const token = randomBytes(32).toString("hex");
   let enabled = true;
@@ -110,13 +115,14 @@ export async function startEditorMcp(
     const previous = controller;
     controller = new AbortController();
     previous.abort();
+    monitor.publish();
   };
   const definitions = new Map<string, ToolDefinition>();
   const prune = () => {
     for (const [id, proposal] of proposals)
       if (proposal.expires <= Date.now()) proposals.delete(id);
   };
-  function makeServer(pending: Map<RequestId, PendingRequest>) {
+  function makeServer(pending: Map<RequestId, PendingRequest>, client: number) {
     const mcp = new McpServer(
       {
         name: "minemod-studio",
@@ -156,6 +162,10 @@ export async function startEditorMcp(
           const requestEpoch = epoch;
           const transportSignal = pending.get(extra.requestId)?.controller.signal;
           const signal = AbortSignal.any([extra.signal, controller.signal, ...(transportSignal ? [transportSignal] : [])]);
+          const observed = monitor.begin(name as AgentTool, client);
+          const abort = () => observed.finish("cancelled", enabled ? "REQUEST_CANCELLED" : "DISCONNECTED");
+          signal.addEventListener("abort", abort, {once:true});
+          if (signal.aborted) abort();
           try {
             const result = await editor.enqueue(() => {
               if (!enabled)
@@ -167,15 +177,23 @@ export async function startEditorMcp(
                 throw new EditorError("REQUEST_CANCELLED", "Запрос отменён до выполнения; прочитайте актуальную сцену.");
               if (paused)
                 throw new EditorError("AGENT_PAUSED", "Пользователь приостановил доступ агента.");
+              observed.running();
               return operation(args as z.infer<S>, signal);
             });
             if (Buffer.byteLength(JSON.stringify(result)) > MAX_RESPONSE_BYTES)
               throw new EditorError("OUTPUT_LIMIT", "Результат превышает лимит ответа.");
+            const error = result.structuredContent?.error;
+            const code = typeof error === "object" && error !== null && "code" in error && typeof error.code === "string" ? error.code : "STUDIO_ERROR";
+            observed.finish(result.isError ? "failed" : "succeeded", result.isError ? code : null);
             return result;
           } catch (error) {
+            const code = error instanceof EditorError ? error.code : "STUDIO_ERROR";
+            observed.finish(code === "REQUEST_CANCELLED" || code === "DISCONNECTED" ? "cancelled" : "failed", code);
             return error instanceof EditorError
               ? toolError(error.code, error.message)
               : toolError("STUDIO_ERROR", "Операция не выполнена; прочитайте актуальную сцену.");
+          } finally {
+            signal.removeEventListener("abort", abort);
           }
         },
       );
@@ -542,6 +560,16 @@ export async function startEditorMcp(
     rateReset = Date.now() + 60_000;
   const connections = new Set<EditorConnection>();
   const sessions = new Map<string, EditorConnection>();
+  let clientSequence = 0;
+  let notice: Exclude<AgentConnectionStatus["notice"],undefined> = null;
+  const monitor = new AgentMonitor(() => ({
+    available: true, access: access().state, notice,
+    sessions: [...sessions.values()].map(c => ({client:c.client,
+      remainingRequests:Math.max(0,STUDIO_LIMITS.sessionRequests-c.calls), limit:STUDIO_LIMITS.sessionRequests,
+      expiresAt:c.lastUsed+STUDIO_LIMITS.sessionIdleSeconds*1000})),
+    httpBudget:{remainingRequests:Date.now() >= rateReset ? STUDIO_LIMITS.requestsPerMinute : Math.max(0,STUDIO_LIMITS.requestsPerMinute-requests),
+      limit:STUDIO_LIMITS.requestsPerMinute,resetAt:rateReset},
+  }), options.onStatus);
   const closeConnection = (connection: EditorConnection) => {
     connections.delete(connection);
     const id = connection.transport.sessionId;
@@ -551,6 +579,7 @@ export async function startEditorMcp(
       if (!request.response.writableEnded) request.response.writeHead(202).end();
     }
     connection.pending.clear();
+    monitor.publish();
     void connection.mcp.close().catch(() => undefined);
   };
   const pruneSessions = () => {
@@ -600,15 +629,16 @@ export async function startEditorMcp(
       rateReset = Date.now() + 60_000;
     }
     const overNormalRate = ++requests > STUDIO_LIMITS.requestsPerMinute;
+    monitor.publish();
     const overNormalConcurrency = active >= STUDIO_LIMITS.concurrentRequests;
     if (active >= STUDIO_LIMITS.concurrentRequests + STUDIO_LIMITS.controlConcurrentRequests ||
-        requests > STUDIO_LIMITS.requestsPerMinute + STUDIO_LIMITS.controlRequestsPerMinute) return reject(429);
+        requests > STUDIO_LIMITS.requestsPerMinute + STUDIO_LIMITS.controlRequestsPerMinute) { notice="RATE_LIMIT"; monitor.publish(); return reject(429); }
     pruneSessions();
     const sessionId = req.headers["mcp-session-id"];
     if (sessionId !== undefined && (typeof sessionId !== "string" || !z.uuid().safeParse(sessionId).success))
       return reject(400);
     let connection = sessionId === undefined ? undefined : sessions.get(sessionId);
-    if (sessionId !== undefined && !connection) return reject(404);
+    if (sessionId !== undefined && !connection) { notice="SESSION_EXPIRED"; monitor.publish(); return reject(404); }
     if (req.method === "DELETE" && !connection) return reject(400);
     active++;
     let requestId: RequestId | undefined;
@@ -624,8 +654,10 @@ export async function startEditorMcp(
         requestController?.abort();
         if (!res.writableFinished)
           connection.transport.onmessage?.({jsonrpc: "2.0", method: "notifications/cancelled", params: {requestId}});
+        if (!res.writableFinished) notice = "CLIENT_DISCONNECTED";
       }
       if (connection && (!connection.persistent || !connection.transport.sessionId)) closeConnection(connection);
+      monitor.publish();
     };
     res.once("close", release);
     try {
@@ -658,11 +690,12 @@ export async function startEditorMcp(
         connection?.pending.has(cancellation.data.params.requestId);
       // Переполненная очередь не должна блокировать отмену уже допущенного запроса.
       // Резерв доступен только cancellation своей сессии и DELETE; body/total/rate всё ещё ограничены.
-      if ((overNormalRate || overNormalConcurrency) && !isControl) return reject(429);
+      if ((overNormalRate || overNormalConcurrency) && !isControl) { notice="RATE_LIMIT"; monitor.publish(); return reject(429); }
       if (connection && connection.calls >= STUDIO_LIMITS.sessionRequests && !isControl) {
         // JSON transport SDK 1.29.0 хранит учёт отменённых responses до закрытия.
         // Ограничение lifetime requests не даёт расти ему бесконечно у постоянно активного клиента.
         if (connection.pending.size === 0) closeConnection(connection);
+        notice="SESSION_LIMIT";monitor.publish();
         return reject(429);
       }
       if (typeof body === "object" && body !== null && "id" in body) {
@@ -673,14 +706,15 @@ export async function startEditorMcp(
       }
       if (!connection) {
         const persistent = typeof body === "object" && body !== null && "method" in body && body.method === "initialize";
-        if (persistent && [...connections].filter(c => c.persistent).length >= STUDIO_LIMITS.sessions) return reject(429);
+        if (persistent && [...connections].filter(c => c.persistent).length >= STUDIO_LIMITS.sessions) { notice="SESSION_LIMIT"; monitor.publish(); return reject(429); }
         const pending = new Map<RequestId, PendingRequest>();
-        const mcp = makeServer(pending);
+        const client = ++clientSequence;
+        const mcp = makeServer(pending, client);
         const transport = new StreamableHTTPServerTransport({
           enableJsonResponse: true,
           ...(persistent ? {sessionIdGenerator: randomUUID, onsessioninitialized: (id: string) => { sessions.set(id, connection!); }} : {}),
         });
-        connection = {mcp, transport, pending, persistent, lastUsed: Date.now(), calls: 0};
+        connection = {mcp, transport, pending, persistent, lastUsed: Date.now(), calls: 0, client};
         connections.add(connection);
         // SDK 1.29.0 onclose объявлен с explicit undefined; Transport использует optional.
         await mcp.connect(transport as Transport);
@@ -693,6 +727,7 @@ export async function startEditorMcp(
             if (!request.response.writableEnded) request.response.writeHead(202).end();
           }
           pending.clear();
+          monitor.publish();
           onclose?.();
         };
         transport.onmessage = (message, extra) => {
@@ -711,6 +746,7 @@ export async function startEditorMcp(
       }
       connection.lastUsed = Date.now();
       if (!isControl) connection.calls++;
+      notice=null;monitor.publish();
       if (requestId !== undefined) {
         requestController = new AbortController();
         connection.pending.set(requestId, {controller: requestController, response: res});
@@ -743,6 +779,9 @@ export async function startEditorMcp(
           }
         }
         if (failure) {
+          const failed=monitor.begin(definition ? name as AgentTool : "unknown", connection.client);
+          const error=failure.structuredContent?.error;
+          failed.finish("failed", typeof error === "object" && error !== null && "code" in error && typeof error.code === "string" ? error.code : "INVALID_ARGUMENTS");
           res.writeHead(200, { "Content-Type": "application/json", "Cache-Control": "no-store" });
           res.end(JSON.stringify({ jsonrpc: "2.0", id: body.id, result: failure }));
           return;
@@ -770,10 +809,12 @@ export async function startEditorMcp(
   if (!address || typeof address === "string")
     throw new Error("Missing local MCP address");
   url = `http://127.0.0.1:${address.port}/mcp`;
+  monitor.publish();
   return {
     server: http,
     url,
     token,
+    status: () => monitor.snapshot(),
     access,
     invalidate,
     pause: () => { if (enabled && !paused) { paused = true; invalidate(); } },

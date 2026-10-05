@@ -18,6 +18,7 @@ import { compileItemAssetPayload } from "../../../packages/application/item-asse
 import { assetOperationWithEvidence } from "../../../packages/application/evidence.ts";
 import { readProjectWithVersion, writeProject, renameWithRetry } from "./persistence.ts";
 import type { HostResponse, View } from "../shared/bridge.ts";
+import {emptyAgentStatus, type AgentStatus, type AgentStatusMessage} from "../shared/agent-status.ts";
 import { startEditorMcp } from "./mcp.ts";
 import { ConceptStore } from "./concept-files.ts";
 
@@ -43,6 +44,12 @@ let fixture: unknown;
 let recoveryPath: string;
 let conceptStore: ConceptStore;
 let connection: Awaited<ReturnType<typeof startEditorMcp>> | undefined;
+let agentSequence = 0;
+let agentStatus: AgentStatusMessage = {sequence:agentSequence,status:emptyAgentStatus()};
+function agentChanged(status: AgentStatus): void {
+  agentStatus={sequence:++agentSequence,status};
+  port!.postMessage({event:"agent-status",agentStatus});
+}
 let selection: string[] = [];
 let recoveryWarning = "";
 let recoveryWritable = true;
@@ -227,13 +234,14 @@ async function run(request: ServiceRequest): Promise<HostResponse> {
         capture,
         export: bundle,
         enqueue,
-      });
+      }, {onStatus:agentChanged});
     if (request.action === "stop") {
       connection?.close();
       connection = undefined;
     }
     if (request.action === "pause") connection?.pause();
     if (request.action === "resume") connection?.resume();
+    if (connection) agentChanged(connection.status());
     note = request.action === "pause" ? "Доступ агента приостановлен. Применённые правки сохранены в сцене."
       : request.action === "resume" ? "Доступ продолжен. Агент должен прочитать текущую сцену и создать новый preview."
       : request.action === "stop" ? "Доступ агента выключен. Для нового подключения настройте новый ключ." : undefined;
@@ -243,8 +251,8 @@ async function run(request: ServiceRequest): Promise<HostResponse> {
       warning: recoveryWarning,
       ...(note ? {note} : {}),
       connection: connection
-        ? { enabled: true, paused: connection.access().state === "paused", url: connection.url, token: connection.token }
-        : { enabled: false },
+        ? { enabled: true, paused: connection.access().state === "paused", url: connection.url, token: connection.token, agentStatus }
+        : { enabled: false, agentStatus },
     };
   } else if (request.kind === "selection") {
     if (request.projectId === session.state().project.projectId) {

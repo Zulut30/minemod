@@ -942,6 +942,13 @@ select {
   border-radius: 5px;
 }
 .repair-panel label { display: grid; gap: 5px; margin-top: 10px; }
+.agent-progress { border-top: 1px solid var(--border); margin-top: 12px; padding-top: 4px; }
+.agent-progress [role="status"] { color: var(--text); font-weight: 600; }
+.agent-progress-line { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px; font-size: 10px; font-variant-numeric: tabular-nums; }
+.agent-notice { color: var(--text); border-left: 2px solid var(--accent); padding-left: 7px; }
+.agent-recent { padding-left: 16px; font-size: 10px; line-height: 1.6; }
+.agent-recent li { margin: 7px 0; overflow-wrap: anywhere; }
+.agent-recent code { display: block; color: var(--muted); font-size: 9px; }
 .repair-panel textarea { font: inherit; color: var(--text); background: var(--surface-raised); line-height: 1.5; }
 .repair-panel summary { color: var(--text); line-height: 1.5; }
 .repair-panel [data-testid="repair-budget"] { color: var(--accent); }

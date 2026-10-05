@@ -2,6 +2,7 @@ import process from "node:process";
 await import("./camera.test.ts");
 await import("../worker/mcp.test.ts");
 await import("../worker/continuation.test.ts");
+await import("../worker/agent-status.test.ts");
 await import("../worker/discovery.test.ts");
 await import("../worker/concept-files.test.ts");
 await import("../worker/concepts-mcp.test.ts");
