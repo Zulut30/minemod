@@ -320,6 +320,64 @@ assert.equal(
     .sha256,
   exported.editable.sha256,
 );
+
+// Цветной знак и прозрачное отверстие сохраняются при смене материала.
+const materialSource = fixture();
+materialSource.texturePlan.palette = [
+  { symbol: "0", color: "#808080" }, { symbol: "1", color: "#202020" },
+  { symbol: "2", color: "#ffff00" },
+];
+materialSource.texturePlan.rows[2] = materialSource.texturePlan.rows[2]!.slice(0, 2) + "2" + materialSource.texturePlan.rows[2]!.slice(3);
+materialSource.texturePlan.rows[3] = materialSource.texturePlan.rows[3]!.slice(0, 3) + "." + materialSource.texturePlan.rows[3]!.slice(4);
+validateProject(materialSource);
+const material = new EditorSession(materialSource), materialBefore = texturePixels(materialSource);
+const materialMask = textureMask(materialSource, ["first"]);
+apply(material, [{ type: "recolor", cubeIds: ["first"], color: "#804020", preserveColors: ["#FFFF00"] }], "agent");
+const recoloredMaterial = material.state().project, materialAfter = texturePixels(recoloredMaterial);
+assert.equal(materialAfter[1 * 32 + 2], "#804020", "Самый светлый незащищённый металл получает целевой цвет");
+assert.equal(materialAfter[1 * 32 + 1], "#201008", "Тень сохраняет четверть яркости основы");
+assert.equal(materialAfter[2 * 32 + 2], "#ffff00", "Цвет знака сохранён без изменения RGB и не задаёт яркость металла");
+assert.equal(materialAfter[3 * 32 + 3], null);
+assert(materialAfter.every((color, i) => materialMask[i] || color === materialBefore[i]), "Соседняя часть не меняется");
+assert.deepEqual(recoloredMaterial.model, materialSource.model);
+assert.deepEqual(recoloredMaterial.parts, materialSource.parts);
+const materialPng = Buffer.from(compilePaintedMinecraftItemAssets(recoloredMaterial.model, recoloredMaterial.texturePlan).editable.texture.bytes);
+const materialChunks: Buffer[] = [];
+for (let offset = 8; offset < materialPng.length;) {
+  const n = materialPng.readUInt32BE(offset);
+  if (materialPng.toString("ascii", offset + 4, offset + 8) === "IDAT") materialChunks.push(materialPng.subarray(offset + 8, offset + 8 + n));
+  offset += n + 12;
+}
+const materialRaw = inflateSync(Buffer.concat(materialChunks));
+for (let y = 0; y < 32; y++) assert.equal(materialRaw[y * 129], 0);
+const materialRgba = (x: number, y: number) => [...materialRaw.subarray(y * 129 + 1 + x * 4, y * 129 + 5 + x * 4)];
+assert.deepEqual(materialRgba(2, 2), [255, 255, 0, 255]);
+assert.deepEqual(materialRgba(2, 1), [128, 64, 32, 255]);
+assert.deepEqual(materialRgba(1, 1), [32, 16, 8, 255]);
+assert.deepEqual(materialRgba(3, 3), [0, 0, 0, 0]);
+apply(material, [{ type: "undo" }]); assert.deepEqual(material.state().project, materialSource);
+apply(material, [{ type: "redo" }]); assert.deepEqual(material.state().project, recoloredMaterial);
+const unchangedMaterial = new EditorSession(materialSource);
+rejects(unchangedMaterial, { type: "recolor", cubeIds: ["first"], color: "#804020", preserveColors: ["#808080", "#202020", "#ffff00"] }, "NO_CHANGE");
+for (const invalid of [["#ff00ff", "#FF00FF"], ["red"], Array.from({ length: 33 }, (_, i) => "#" + i.toString(16).padStart(6, "0"))])
+  rejects(unchangedMaterial, { type: "recolor", cubeIds: ["first"], color: "#804020", preserveColors: invalid });
+const legacyMaterial = new EditorSession(materialSource), explicitEmpty = new EditorSession(materialSource);
+apply(legacyMaterial, [{ type: "recolor", cubeIds: ["first"], color: "#804020" }]);
+apply(explicitEmpty, [{ type: "recolor", cubeIds: ["first"], color: "#804020", preserveColors: [] }]);
+assert.deepEqual(legacyMaterial.state().project, explicitEmpty.state().project, "Старый recolor сохраняет поведение");
+assert.notEqual(texturePixels(legacyMaterial.state().project)[66], "#ffff00");
+const overflowMaterial = structuredClone(materialSource), neighborMask = textureMask(materialSource, ["second"]);
+let extra = 0;
+for (let i = 0; i < neighborMask.length && extra < 29; i++) {
+  if (!neighborMask[i]) continue;
+  const symbol = (extra + 3).toString(32), color = "#" + (extra + 1).toString(16).padStart(6, "0");
+  overflowMaterial.texturePlan.palette.push({ symbol, color });
+  const y = Math.floor(i / 32), x = i % 32, row = overflowMaterial.texturePlan.rows[y]!;
+  overflowMaterial.texturePlan.rows[y] = row.slice(0, x) + symbol + row.slice(x + 1);
+  extra++;
+}
+assert.equal(extra, 29); validateProject(overflowMaterial);
+rejects(new EditorSession(overflowMaterial), { type: "recolor", cubeIds: ["first"], color: "#804020", preserveColors: ["#ffff00"] }, "PALETTE_FULL");
 process.stdout.write(
-  "Покраска и UV: границы, прозрачность, заливка, перенос/отражение/масштаб, палитра, история, конфликты, закрепления и RGBA PNG PASS\n",
+  "Покраска и UV: границы, прозрачность, заливка, перенос/отражение/масштаб, палитра, защищённые цвета, история, конфликты, закрепления и RGBA PNG PASS\n",
 );

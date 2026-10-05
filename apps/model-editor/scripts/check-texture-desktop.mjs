@@ -4,6 +4,7 @@ import { randomUUID } from "node:crypto";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
 import { URL } from "node:url";
+import { checkLocalRecolorDesktop } from "./check-local-recolor-desktop.mjs";
 function pixels(project) {
   const palette = new Map(
     project.texturePlan.palette.map((c) => [c.symbol, c.color.toLowerCase()]),
@@ -13,6 +14,7 @@ function pixels(project) {
   );
 }
 export async function checkTextureDesktop(page, inspect, capture) {
+  const localRecolor = await checkLocalRecolorDesktop(page, inspect, capture);
   const original = await inspect(page),
     cubeId = original.project.parts.find((p) => p.id === "guard").cubeIds[0];
   await page.getByTestId("mode-texture").click();
@@ -342,6 +344,7 @@ export async function checkTextureDesktop(page, inspect, capture) {
     state: await inspect(page),
     report: {
       status: "PASS",
+      localRecolor,
       checks: [
         "real pointer stroke",
         "live 3D draft",

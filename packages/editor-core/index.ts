@@ -139,6 +139,9 @@ export const CommandSchema = z.discriminatedUnion("type", [
     type: z.literal("recolor"),
     cubeIds: targets,
     color: z.string().regex(/^#[0-9a-fA-F]{6}$/u),
+    preserveColors: z.array(z.string().regex(/^#[0-9a-fA-F]{6}$/u)).max(32)
+      .refine(colors => new Set(colors.map(color => color.toLowerCase())).size === colors.length,
+        "Сохраняемые цвета должны быть уникальны.").optional(),
   }),
   z.strictObject({
     type: z.literal("pivot"),
@@ -527,7 +530,7 @@ function newFaces(
   p.texturePlan.rows = rows.map((r) => r.join(""));
   return faces;
 }
-function recolor(p: EditorProject, ids: Set<string>, color: string): void {
+function recolor(p: EditorProject, ids: Set<string>, color: string, preserveColors: readonly string[] = []): void {
   const chosen = mask(p, ids),
     other = mask(
       p,
@@ -552,9 +555,12 @@ function recolor(p: EditorProject, ids: Set<string>, color: string): void {
     return r! * 0.2126 + g! * 0.7152 + b! * 0.0722;
   };
   const flat = p.texturePlan.rows.join("");
+  const preserved = new Set(preserveColors.map(color => color.toLowerCase()));
   const luminosities = [...flat].flatMap((s, i) =>
-    chosen[i] && s !== "." ? [luma(old.get(s)!)] : [],
+    chosen[i] && s !== "." && !preserved.has(old.get(s)!) ? [luma(old.get(s)!)] : [],
   );
+  if (preserved.size && !luminosities.length)
+    fail("NO_CHANGE", "В выбранной области нет пикселей для перекраски с текущими сохранёнными цветами.");
   const max = Math.max(1, ...luminosities),
     target = rgb(color);
   const palette: { symbol: string; color: string }[] = [],
@@ -562,7 +568,7 @@ function recolor(p: EditorProject, ids: Set<string>, color: string): void {
   const pixels = [...flat].map((symbol, i) => {
     if (symbol === ".") return ".";
     let result = old.get(symbol)!;
-    if (chosen[i])
+    if (chosen[i] && !preserved.has(result))
       result =
         "#" +
         target
@@ -734,7 +740,7 @@ function applyCommand(
       break;
     }
     case "recolor":
-      recolor(p, ids, command.color);
+      recolor(p, ids, command.color, command.preserveColors);
       break;
     case "paint":
     case "fill":

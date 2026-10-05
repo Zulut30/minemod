@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import { ConnectionPanel } from "./ConnectionPanel.tsx";
 import { TextureEditor } from "./TextureEditor.tsx";
@@ -6,7 +6,7 @@ import { VariantsPanel } from "./VariantsPanel.tsx";
 import { ReviewBoard } from "./ReviewBoard.tsx";
 import { PartEditor } from "./PartEditor.tsx";
 import type { ReactNode, ComponentProps } from "react";
-import { bounds, cubes, snapToGrid, type GridStep, type EditorProject, type EditorCommand } from "@mcdev/editor-core";
+import { bounds, cubes, snapToGrid, textureMask, type GridStep, type EditorProject, type EditorCommand } from "@mcdev/editor-core";
 import { useStudio, saveProject } from "./store.ts";
 import { Viewport, drawAtlas } from "./Viewport.tsx";
 import type { View } from "../shared/bridge.ts";
@@ -146,6 +146,16 @@ function Inspector({ project }: { project: EditorProject }) {
   const [color, setColor] = useState("#c58d5d"),
     [angle, setAngle] = useState("0"),
     [axis, setAxis] = useState<"x" | "y" | "z">("z");
+  const scope = project.projectId + ":" + [...selection].sort().join(",");
+  const [preservation, setPreservation] = useState<{ scope: string; colors: string[] }>({ scope: "", colors: [] });
+  const selectedColors = useMemo(() => {
+    const mask = textureMask(project, selection), flat = project.texturePlan.rows.join("");
+    const palette = new Map(project.texturePlan.palette.map(c => [c.symbol, c.color.toLowerCase()]));
+    const used = new Set<string>();
+    for (let i = 0; i < mask.length; i++) if (mask[i] && flat[i] !== ".") used.add(palette.get(flat[i]!)!);
+    return [...used].sort();
+  }, [project, selection]);
+  const preserveColors = preservation.scope === scope ? preservation.colors.filter(c => selectedColors.includes(c)) : [];
   return (
     <aside className="inspector panel">
       <div className="panel-heading">
@@ -336,12 +346,24 @@ function Inspector({ project }: { project: EditorProject }) {
             />
           ))}
         </div>
+        {selectedColors.length > 0 && <details className="color-preservation">
+          <summary>Сохранить цвета</summary>
+          <p className="hint">Отметьте цвета руны, кристалла или блика, которые нужно оставить прежними.</p>
+          <div className="preserve-color-list">
+            {selectedColors.map(c => <label key={c}>
+              <input type="checkbox" aria-label={`Сохранить цвет ${c}`} checked={preserveColors.includes(c)} disabled={busy}
+                onChange={e => setPreservation({ scope, colors: e.target.checked ? [...preserveColors, c] : preserveColors.filter(v => v !== c) })} />
+              <span className="preserve-color-swatch" aria-hidden="true" style={{ background: c }} />
+              <span>{c.toUpperCase()}</span>
+            </label>)}
+          </div>
+        </details>}
         <button
           className="apply-color"
           data-testid="apply-color"
-          disabled={!selected.length || busy}
+          disabled={!selected.length || busy || selectedColors.length > 0 && preserveColors.length === selectedColors.length}
           onClick={() => {
-            void command({ type: "recolor", cubeIds: selection, color });
+            void command({ type: "recolor", cubeIds: selection, color, ...(preserveColors.length ? { preserveColors } : {}) });
           }}
         >
           Применить цвет <span>↗</span>
