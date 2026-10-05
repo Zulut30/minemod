@@ -12,7 +12,7 @@ const concept: Concept={id:randomUUID(),label:"Контрольный конце
 project.design={brief:"Read concept before geometry",variants:[],concepts:[concept]};const session=new EditorSession(project);
 let queue:Promise<unknown>=Promise.resolve(),captured:unknown;
 const server=await startEditorMcp({inspect:()=>session.state(),selection:()=>[],preview:m=>session.preview(m),apply:async m=>session.apply(m,"agent"),
-  capture:async(_state,_view,options)=>{captured=options;return "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4z8DwHwAFgAI/ScLbtAAAAABJRU5ErkJggg==";},export:()=>({}),
+  capture:async(_state,_view,options)=>{const {signal,...parameters}=options!;assert(signal instanceof AbortSignal);assert.equal(signal.aborted,false);captured=parameters;return "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4z8DwHwAFgAI/ScLbtAAAAABJRU5ErkJggg==";},export:()=>({}),
   enqueue:operation=>{const result=queue.then(operation);queue=result.catch(()=>undefined);return result;}});
 const client=new Client({name:"concept-contract-test",version:"1"});
 const ref=()=>({projectId:project.projectId,expectedRevision:session.state().revision});

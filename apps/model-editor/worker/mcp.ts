@@ -660,7 +660,7 @@ export async function startEditorMcp(
       // Резерв доступен только cancellation своей сессии и DELETE; body/total/rate всё ещё ограничены.
       if ((overNormalRate || overNormalConcurrency) && !isControl) return reject(429);
       if (connection && connection.calls >= STUDIO_LIMITS.sessionRequests && !isControl) {
-        // SDK 1.29.0 JSON transport retains cancelled response bookkeeping until close.
+        // JSON transport SDK 1.29.0 хранит учёт отменённых responses до закрытия.
         // Ограничение lifetime requests не даёт расти ему бесконечно у постоянно активного клиента.
         if (connection.pending.size === 0) closeConnection(connection);
         return reject(429);
