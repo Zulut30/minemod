@@ -36,4 +36,6 @@ Read-only MCP regression сохраняет revision, проект и ручну
 
 «Лист» переснят в `leaf-volume-20261005-v3c/reviews-c167c4d7`: 32 PNG, неизменённые source hashes, совпадающие фактические review cameras и union framing. Страница recognition проверена в 1400/390 px и DPR 1/1.75; отдельные фронтальные/perspective masks чёрные, непустые, не обрезаны и сохраняют source alpha. Download probe был scripted и не является человеческим ответом. [Локальный evidence](evidence/native-silhouette-043.json) сохраняет hashes и отдельные статусы.
 
-Hosted CI нового source фиксируется отдельно. До человеческого ответа этап 043 не отмечается выполненным, даже при техническом PASS.
+Hosted [run 37368539822](https://github.com/Zulut30/minemod/actions/runs/37368539822) проверил Studio 0.19 по source `8a49732`: Windows clean checkout и все 21 packaged subreports PASS. Native display также проверен при DPR 1 и 0.8. Девять source inputs совпадают с исходным внедрением `0a1f739`; независимое byte comparison ASAR не выполнялось, архив пакета в CI evidence не загружался.
+
+Attempt 1 завершился failure: control-plane, Fabric 1.20.1 и NeoForge отменены до первого шага; причина не установлена. Legacy Fabric 26.2 сохранил checksum failure, expected `23248c15…`, actual `d46235d8…`; gate не менялся. Attempt 2 запущен для отсутствующих проверок. Пока его terminal evidence нет, hosted matrix остаётся PARTIAL. До человеческого ответа этап 043 не отмечается выполненным, даже при техническом PASS.

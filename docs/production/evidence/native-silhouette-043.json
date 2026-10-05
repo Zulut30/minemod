@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "status": "LOCAL_TECHNICAL_PASS",
+  "status": "WINDOWS_HOSTED_TECHNICAL_PASS",
   "point": 43,
   "pointClosed": false,
   "checkedAtUtc": "2026-10-05T19:59:38.936Z",
@@ -497,7 +497,264 @@
     ]
   },
   "hosted": {
-    "status": "NOT_RUN_FOR_NEW_SOURCE"
+    "status": "PARTIAL_MATRIX",
+    "runId": 37368539822,
+    "url": "https://github.com/Zulut30/minemod/actions/runs/37368539822",
+    "sourceCommit": "8a49732fbd5f50b5ae2237861d4d2c264e2fa83e",
+    "tree": "7582c44d401ea4129d0b67a7504689260966861a",
+    "sourceInputsMatch": true,
+    "attempt1": {
+      "status": "completed",
+      "conclusion": "failure",
+      "jobs": [
+        {
+          "id": 111959570810,
+          "name": "neoforge",
+          "conclusion": "cancelled",
+          "startedAt": "2026-10-05T20:14:53Z",
+          "completedAt": "2026-10-05T20:29:56Z",
+          "stepCount": 0
+        },
+        {
+          "id": 111959571031,
+          "name": "Fabric 1.20.1 / Java 17 production target",
+          "conclusion": "cancelled",
+          "startedAt": "2026-10-05T20:14:53Z",
+          "completedAt": "2026-10-05T20:29:56Z",
+          "stepCount": 0
+        },
+        {
+          "id": 111959571048,
+          "name": "fabric",
+          "conclusion": "failure",
+          "startedAt": "2026-10-05T20:15:11Z",
+          "completedAt": "2026-10-05T20:16:05Z",
+          "stepCount": 15
+        },
+        {
+          "id": 111959571163,
+          "name": "studio-windows",
+          "conclusion": "success",
+          "startedAt": "2026-10-05T20:20:41Z",
+          "completedAt": "2026-10-05T20:33:53Z",
+          "stepCount": 16
+        },
+        {
+          "id": 111959571185,
+          "name": "control-plane",
+          "conclusion": "cancelled",
+          "startedAt": "2026-10-05T20:14:53Z",
+          "completedAt": "2026-10-05T20:29:57Z",
+          "stepCount": 0
+        },
+        {
+          "id": 111959989040,
+          "name": "fabric-client",
+          "conclusion": "skipped",
+          "startedAt": "2026-10-05T20:16:05Z",
+          "completedAt": "2026-10-05T20:16:05Z",
+          "stepCount": 0
+        },
+        {
+          "id": 111964854241,
+          "name": "client-smoke",
+          "conclusion": "skipped",
+          "startedAt": "2026-10-05T20:29:56Z",
+          "completedAt": "2026-10-05T20:29:56Z",
+          "stepCount": 0
+        }
+      ]
+    },
+    "windows": {
+      "status": "PASS",
+      "jobId": 111959571163,
+      "artifactId": 11370900496,
+      "cleanCheckout": {
+        "path": "output/ci/37368539822-windows/output/ci/clean-checkout/studio-windows.json",
+        "bytes": 4469,
+        "sha256": "c95968c38abb86af028f5c0ce64f52dc0edc576a803fa32ccf511f4e622d7f23"
+      },
+      "trackedFiles": 579,
+      "report": {
+        "path": "output/ci/37368539822-windows/output/playwright/studio-packaged-622c4dac/report.json",
+        "bytes": 94607,
+        "sha256": "bdd43fe6131063ef66706d26434cc00a5f65c95f282b02559f49171f492ab6c7"
+      },
+      "subreports": [
+        {
+          "name": "mcp",
+          "status": "PASS"
+        },
+        {
+          "name": "texture",
+          "status": "PASS"
+        },
+        {
+          "name": "polish",
+          "status": "PASS"
+        },
+        {
+          "name": "editing",
+          "status": "PASS"
+        },
+        {
+          "name": "variants",
+          "status": "PASS"
+        },
+        {
+          "name": "agentBlockouts",
+          "status": "PASS"
+        },
+        {
+          "name": "continuation",
+          "status": "PASS"
+        },
+        {
+          "name": "agentStatus",
+          "status": "PASS"
+        },
+        {
+          "name": "brief",
+          "status": "PASS"
+        },
+        {
+          "name": "concepts",
+          "status": "PASS"
+        },
+        {
+          "name": "parts",
+          "status": "PASS"
+        },
+        {
+          "name": "repair",
+          "status": "PASS"
+        },
+        {
+          "name": "manual",
+          "status": "PASS"
+        },
+        {
+          "name": "accessibility",
+          "status": "PASS"
+        },
+        {
+          "name": "accessibilityStates",
+          "status": "PASS"
+        },
+        {
+          "name": "review",
+          "status": "PASS"
+        },
+        {
+          "name": "migrations",
+          "status": "PASS"
+        },
+        {
+          "name": "history",
+          "status": "PASS"
+        },
+        {
+          "name": "geometry",
+          "status": "PASS"
+        },
+        {
+          "name": "camera",
+          "status": "PASS"
+        },
+        {
+          "name": "discovery",
+          "status": "PASS"
+        }
+      ],
+      "nativeRaster": {
+        "widths": [
+          32,
+          64,
+          32,
+          64
+        ],
+        "displaySizes": [
+          [
+            32,
+            32
+          ],
+          [
+            64,
+            64
+          ],
+          [
+            32,
+            32
+          ],
+          [
+            64,
+            64
+          ]
+        ],
+        "pixelRatio": 1,
+        "zoomNativeSizes": [
+          {
+            "pixelRatio": 0.800000011920929,
+            "widths": [
+              32.00000047683716,
+              64.00000095367432,
+              32.00000047683716,
+              64.00000095367432
+            ]
+          },
+          {
+            "pixelRatio": 1,
+            "widths": [
+              32,
+              64,
+              32,
+              64
+            ]
+          }
+        ],
+        "masks": [
+          {
+            "resolution": 32,
+            "painted": 78,
+            "invalid": 0,
+            "edgePixels": 0,
+            "rows": 25
+          },
+          {
+            "resolution": 64,
+            "painted": 256,
+            "invalid": 0,
+            "edgePixels": 0,
+            "rows": 52
+          }
+        ],
+        "differingPixelsFromNearestDownsample": 55,
+        "recognition": "NOT_PERFORMED"
+      },
+      "asarByteComparison": "NOT_PERFORMED; archive not uploaded"
+    },
+    "linux": {
+      "status": "CANCELLED_BEFORE_RUN",
+      "affected": [
+        "control-plane",
+        "fabric-production",
+        "neoforge"
+      ],
+      "cause": "NOT_ESTABLISHED",
+      "retry": "attempt 2 dispatched; no success claimed"
+    },
+    "legacyFabric262": {
+      "status": "FAILED_CHECKSUM",
+      "report": {
+        "path": "output/ci/37368539822-legacy/at-1791231347498/dependency-verification-report.html",
+        "bytes": 9060,
+        "sha256": "54ba2c757b4bcb5099093ac7985daed508d6b7947eb85e2680a28b77049aea5b"
+      },
+      "coordinate": "net.minecraft:minecraft-common-043a8b3edf:26.2",
+      "expected": "23248c15f8413aa0d06ac59e676913dd6a1dc0c5fffaa09365afd6c98d59fcd3",
+      "actual": "d46235d854bbe3843a34472ecd635574fdab1d948efd2fc087a338e332c4fbbd",
+      "cause": "NOT_ESTABLISHED"
+    }
   },
   "boundary": "Technical native raster/display and read-only capture verified. User selected direction A only. Human type/distinctive-form recognition is still required for 043; volume/texture/art approval and authored Minecraft/JAR integration are not granted."
 }
