@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "roadmapPoint": 55,
-  "status": "LOCAL_FOCUSED_PASS_FULL_PENDING",
-  "pointClosed": false,
-  "checkedAtUtc": "2026-10-05T21:46:11.776Z",
+  "status": "HOSTED_UV_REPACK_PASS",
+  "pointClosed": true,
+  "checkedAtUtc": "2026-10-05T22:03:07.469Z",
   "sourceBeforeImplementation": "b5c9fc5c678d79b128289bf9a2522d8d15d46231",
   "implementationCommit": "52318b1181af0e1bdfe173dfaf356cc7732cf83a",
   "sourceCommit": "14b42d39f02506336dd5fc35f6f18c3040e954e3",
@@ -521,7 +521,406 @@
       }
     },
     "fullDesktop": {
-      "status": "PENDING_FINAL_PACKAGE"
+      "status": "PASS",
+      "sourceCommit": "384744df8bd9443d9cca68af0c24be4e28ad3c59",
+      "report": {
+        "path": "output/playwright/studio-packaged-c61fbf27/report.json",
+        "bytes": 100417,
+        "sha256": "02600fe434a2145b6516e2f866e33c86b78d50aae11209711267335043201347"
+      },
+      "log": {
+        "path": "output/verification/uv-repack-055-desktop.log",
+        "bytes": 202,
+        "sha256": "711f987727f4961141cacab850a403b5df6a3ab4a561dcd6a7fd27cec73de683"
+      },
+      "subreports": [
+        {
+          "name": "mcp",
+          "status": "PASS"
+        },
+        {
+          "name": "texture",
+          "status": "PASS"
+        },
+        {
+          "name": "polish",
+          "status": "PASS"
+        },
+        {
+          "name": "editing",
+          "status": "PASS"
+        },
+        {
+          "name": "variants",
+          "status": "PASS"
+        },
+        {
+          "name": "agentBlockouts",
+          "status": "PASS"
+        },
+        {
+          "name": "continuation",
+          "status": "PASS"
+        },
+        {
+          "name": "agentStatus",
+          "status": "PASS"
+        },
+        {
+          "name": "brief",
+          "status": "PASS"
+        },
+        {
+          "name": "concepts",
+          "status": "PASS"
+        },
+        {
+          "name": "parts",
+          "status": "PASS"
+        },
+        {
+          "name": "repair",
+          "status": "PASS"
+        },
+        {
+          "name": "manual",
+          "status": "PASS"
+        },
+        {
+          "name": "accessibility",
+          "status": "PASS"
+        },
+        {
+          "name": "accessibilityStates",
+          "status": "PASS"
+        },
+        {
+          "name": "review",
+          "status": "PASS"
+        },
+        {
+          "name": "migrations",
+          "status": "PASS"
+        },
+        {
+          "name": "history",
+          "status": "PASS"
+        },
+        {
+          "name": "geometry",
+          "status": "PASS"
+        },
+        {
+          "name": "camera",
+          "status": "PASS"
+        },
+        {
+          "name": "discovery",
+          "status": "PASS"
+        },
+        {
+          "name": "uvRepack",
+          "status": "PASS"
+        }
+      ],
+      "uvRepack": {
+        "status": "PASS",
+        "hidden": true,
+        "selectedCubes": 5,
+        "checkedSurfaces": 312,
+        "uiSplit": true,
+        "semanticPixelsUnchanged": true,
+        "unselectedPixelsUnchanged": true,
+        "humanUndoRedo": true,
+        "saveReopen": true,
+        "mcpPreviewApplyExportUndo": true,
+        "repeatNoChange": true,
+        "pngExactRgba": true,
+        "pngSha256": "86dd983ad09d62a3268366a2aeb3d3c0e8bc1ad92341c638cbc10acd45e2d0e1",
+        "beforeViews": [
+          {
+            "view": "front",
+            "sha256": "6633158637bb65399611244f12eae025b1759a280d1636fd8e18644098ab1ef6"
+          },
+          {
+            "view": "back",
+            "sha256": "48e492fa43ae21cac98808bf381efd254b0c57c60749e855b5587b5d7a7da068"
+          },
+          {
+            "view": "side",
+            "sha256": "5a24d8102df2a0c8ecbb34e3b4490989171ead35cca36ea54d04b02418846496"
+          },
+          {
+            "view": "perspective",
+            "sha256": "4b28838a79dd4434bb46a5f46dc7bf10a71484a666513a1c7dd47eeb6ddf43ab"
+          }
+        ],
+        "packedViews": [
+          {
+            "view": "front",
+            "sha256": "6633158637bb65399611244f12eae025b1759a280d1636fd8e18644098ab1ef6"
+          },
+          {
+            "view": "back",
+            "sha256": "48e492fa43ae21cac98808bf381efd254b0c57c60749e855b5587b5d7a7da068"
+          },
+          {
+            "view": "side",
+            "sha256": "5a24d8102df2a0c8ecbb34e3b4490989171ead35cca36ea54d04b02418846496"
+          },
+          {
+            "view": "perspective",
+            "sha256": "4b28838a79dd4434bb46a5f46dc7bf10a71484a666513a1c7dd47eeb6ddf43ab"
+          }
+        ],
+        "reopenedViews": [
+          {
+            "view": "front",
+            "sha256": "6633158637bb65399611244f12eae025b1759a280d1636fd8e18644098ab1ef6"
+          },
+          {
+            "view": "back",
+            "sha256": "48e492fa43ae21cac98808bf381efd254b0c57c60749e855b5587b5d7a7da068"
+          },
+          {
+            "view": "side",
+            "sha256": "5a24d8102df2a0c8ecbb34e3b4490989171ead35cca36ea54d04b02418846496"
+          },
+          {
+            "view": "perspective",
+            "sha256": "4b28838a79dd4434bb46a5f46dc7bf10a71484a666513a1c7dd47eeb6ddf43ab"
+          }
+        ],
+        "mirroredViews": [
+          {
+            "view": "front",
+            "sha256": "6633158637bb65399611244f12eae025b1759a280d1636fd8e18644098ab1ef6"
+          },
+          {
+            "view": "back",
+            "sha256": "48e492fa43ae21cac98808bf381efd254b0c57c60749e855b5587b5d7a7da068"
+          },
+          {
+            "view": "side",
+            "sha256": "5a24d8102df2a0c8ecbb34e3b4490989171ead35cca36ea54d04b02418846496"
+          },
+          {
+            "view": "perspective",
+            "sha256": "4b28838a79dd4434bb46a5f46dc7bf10a71484a666513a1c7dd47eeb6ddf43ab"
+          }
+        ],
+        "mirroredGpuPattern": true,
+        "atlasSwitchViews": [
+          {
+            "width": 256,
+            "views": [
+              {
+                "view": "front",
+                "sha256": "3a3e70079e5b5f273a1b6c705b7c8fba545cd7f40ce2ae18ab1933f465d3383e"
+              },
+              {
+                "view": "back",
+                "sha256": "1370de900d1c5408a89f5a6fc2a990ca4ef188446c98d76ede03ec736098f49a"
+              },
+              {
+                "view": "side",
+                "sha256": "477ff4f1d31a812d15c2984c3189df903916d186a44601551544430b3dc4b5dd"
+              },
+              {
+                "view": "perspective",
+                "sha256": "c91a334b3537868119f08990e0595bc9335b898dc55337a77d0d675b9c592747"
+              }
+            ]
+          },
+          {
+            "width": 32,
+            "views": [
+              {
+                "view": "front",
+                "sha256": "3a3e70079e5b5f273a1b6c705b7c8fba545cd7f40ce2ae18ab1933f465d3383e"
+              },
+              {
+                "view": "back",
+                "sha256": "1370de900d1c5408a89f5a6fc2a990ca4ef188446c98d76ede03ec736098f49a"
+              },
+              {
+                "view": "side",
+                "sha256": "477ff4f1d31a812d15c2984c3189df903916d186a44601551544430b3dc4b5dd"
+              },
+              {
+                "view": "perspective",
+                "sha256": "c91a334b3537868119f08990e0595bc9335b898dc55337a77d0d675b9c592747"
+              }
+            ]
+          },
+          {
+            "width": 256,
+            "views": [
+              {
+                "view": "front",
+                "sha256": "3a3e70079e5b5f273a1b6c705b7c8fba545cd7f40ce2ae18ab1933f465d3383e"
+              },
+              {
+                "view": "back",
+                "sha256": "1370de900d1c5408a89f5a6fc2a990ca4ef188446c98d76ede03ec736098f49a"
+              },
+              {
+                "view": "side",
+                "sha256": "477ff4f1d31a812d15c2984c3189df903916d186a44601551544430b3dc4b5dd"
+              },
+              {
+                "view": "perspective",
+                "sha256": "c91a334b3537868119f08990e0595bc9335b898dc55337a77d0d675b9c592747"
+              }
+            ]
+          }
+        ],
+        "artisticApproval": "NOT_PERFORMED",
+        "gameIntegration": "NOT_RUN"
+      },
+      "snapshots": [
+        {
+          "path": "output\\playwright\\studio-packaged-c61fbf27\\uv-repack\\before-front.png",
+          "bytes": 35315,
+          "sha256": "6633158637bb65399611244f12eae025b1759a280d1636fd8e18644098ab1ef6"
+        },
+        {
+          "path": "output\\playwright\\studio-packaged-c61fbf27\\uv-repack\\before-back.png",
+          "bytes": 33665,
+          "sha256": "48e492fa43ae21cac98808bf381efd254b0c57c60749e855b5587b5d7a7da068"
+        },
+        {
+          "path": "output\\playwright\\studio-packaged-c61fbf27\\uv-repack\\before-side.png",
+          "bytes": 14437,
+          "sha256": "5a24d8102df2a0c8ecbb34e3b4490989171ead35cca36ea54d04b02418846496"
+        },
+        {
+          "path": "output\\playwright\\studio-packaged-c61fbf27\\uv-repack\\before-perspective.png",
+          "bytes": 137622,
+          "sha256": "4b28838a79dd4434bb46a5f46dc7bf10a71484a666513a1c7dd47eeb6ddf43ab"
+        },
+        {
+          "path": "output\\playwright\\studio-packaged-c61fbf27\\uv-repack\\packed-front.png",
+          "bytes": 35315,
+          "sha256": "6633158637bb65399611244f12eae025b1759a280d1636fd8e18644098ab1ef6"
+        },
+        {
+          "path": "output\\playwright\\studio-packaged-c61fbf27\\uv-repack\\packed-back.png",
+          "bytes": 33665,
+          "sha256": "48e492fa43ae21cac98808bf381efd254b0c57c60749e855b5587b5d7a7da068"
+        },
+        {
+          "path": "output\\playwright\\studio-packaged-c61fbf27\\uv-repack\\packed-side.png",
+          "bytes": 14437,
+          "sha256": "5a24d8102df2a0c8ecbb34e3b4490989171ead35cca36ea54d04b02418846496"
+        },
+        {
+          "path": "output\\playwright\\studio-packaged-c61fbf27\\uv-repack\\packed-perspective.png",
+          "bytes": 137622,
+          "sha256": "4b28838a79dd4434bb46a5f46dc7bf10a71484a666513a1c7dd47eeb6ddf43ab"
+        },
+        {
+          "path": "output\\playwright\\studio-packaged-c61fbf27\\uv-repack\\reopened-front.png",
+          "bytes": 35315,
+          "sha256": "6633158637bb65399611244f12eae025b1759a280d1636fd8e18644098ab1ef6"
+        },
+        {
+          "path": "output\\playwright\\studio-packaged-c61fbf27\\uv-repack\\reopened-back.png",
+          "bytes": 33665,
+          "sha256": "48e492fa43ae21cac98808bf381efd254b0c57c60749e855b5587b5d7a7da068"
+        },
+        {
+          "path": "output\\playwright\\studio-packaged-c61fbf27\\uv-repack\\reopened-side.png",
+          "bytes": 14437,
+          "sha256": "5a24d8102df2a0c8ecbb34e3b4490989171ead35cca36ea54d04b02418846496"
+        },
+        {
+          "path": "output\\playwright\\studio-packaged-c61fbf27\\uv-repack\\reopened-perspective.png",
+          "bytes": 137622,
+          "sha256": "4b28838a79dd4434bb46a5f46dc7bf10a71484a666513a1c7dd47eeb6ddf43ab"
+        },
+        {
+          "path": "output\\playwright\\studio-packaged-c61fbf27\\uv-repack\\mirrored-front.png",
+          "bytes": 35315,
+          "sha256": "6633158637bb65399611244f12eae025b1759a280d1636fd8e18644098ab1ef6"
+        },
+        {
+          "path": "output\\playwright\\studio-packaged-c61fbf27\\uv-repack\\mirrored-back.png",
+          "bytes": 33665,
+          "sha256": "48e492fa43ae21cac98808bf381efd254b0c57c60749e855b5587b5d7a7da068"
+        },
+        {
+          "path": "output\\playwright\\studio-packaged-c61fbf27\\uv-repack\\mirrored-side.png",
+          "bytes": 14437,
+          "sha256": "5a24d8102df2a0c8ecbb34e3b4490989171ead35cca36ea54d04b02418846496"
+        },
+        {
+          "path": "output\\playwright\\studio-packaged-c61fbf27\\uv-repack\\mirrored-perspective.png",
+          "bytes": 137622,
+          "sha256": "4b28838a79dd4434bb46a5f46dc7bf10a71484a666513a1c7dd47eeb6ddf43ab"
+        },
+        {
+          "path": "output\\playwright\\studio-packaged-c61fbf27\\uv-repack\\atlas-0-256-front.png",
+          "bytes": 4926,
+          "sha256": "3a3e70079e5b5f273a1b6c705b7c8fba545cd7f40ce2ae18ab1933f465d3383e"
+        },
+        {
+          "path": "output\\playwright\\studio-packaged-c61fbf27\\uv-repack\\atlas-0-256-back.png",
+          "bytes": 4937,
+          "sha256": "1370de900d1c5408a89f5a6fc2a990ca4ef188446c98d76ede03ec736098f49a"
+        },
+        {
+          "path": "output\\playwright\\studio-packaged-c61fbf27\\uv-repack\\atlas-0-256-side.png",
+          "bytes": 4906,
+          "sha256": "477ff4f1d31a812d15c2984c3189df903916d186a44601551544430b3dc4b5dd"
+        },
+        {
+          "path": "output\\playwright\\studio-packaged-c61fbf27\\uv-repack\\atlas-0-256-perspective.png",
+          "bytes": 28858,
+          "sha256": "c91a334b3537868119f08990e0595bc9335b898dc55337a77d0d675b9c592747"
+        },
+        {
+          "path": "output\\playwright\\studio-packaged-c61fbf27\\uv-repack\\atlas-1-32-front.png",
+          "bytes": 4926,
+          "sha256": "3a3e70079e5b5f273a1b6c705b7c8fba545cd7f40ce2ae18ab1933f465d3383e"
+        },
+        {
+          "path": "output\\playwright\\studio-packaged-c61fbf27\\uv-repack\\atlas-1-32-back.png",
+          "bytes": 4937,
+          "sha256": "1370de900d1c5408a89f5a6fc2a990ca4ef188446c98d76ede03ec736098f49a"
+        },
+        {
+          "path": "output\\playwright\\studio-packaged-c61fbf27\\uv-repack\\atlas-1-32-side.png",
+          "bytes": 4906,
+          "sha256": "477ff4f1d31a812d15c2984c3189df903916d186a44601551544430b3dc4b5dd"
+        },
+        {
+          "path": "output\\playwright\\studio-packaged-c61fbf27\\uv-repack\\atlas-1-32-perspective.png",
+          "bytes": 28858,
+          "sha256": "c91a334b3537868119f08990e0595bc9335b898dc55337a77d0d675b9c592747"
+        },
+        {
+          "path": "output\\playwright\\studio-packaged-c61fbf27\\uv-repack\\atlas-2-256-front.png",
+          "bytes": 4926,
+          "sha256": "3a3e70079e5b5f273a1b6c705b7c8fba545cd7f40ce2ae18ab1933f465d3383e"
+        },
+        {
+          "path": "output\\playwright\\studio-packaged-c61fbf27\\uv-repack\\atlas-2-256-back.png",
+          "bytes": 4937,
+          "sha256": "1370de900d1c5408a89f5a6fc2a990ca4ef188446c98d76ede03ec736098f49a"
+        },
+        {
+          "path": "output\\playwright\\studio-packaged-c61fbf27\\uv-repack\\atlas-2-256-side.png",
+          "bytes": 4906,
+          "sha256": "477ff4f1d31a812d15c2984c3189df903916d186a44601551544430b3dc4b5dd"
+        },
+        {
+          "path": "output\\playwright\\studio-packaged-c61fbf27\\uv-repack\\atlas-2-256-perspective.png",
+          "bytes": 28858,
+          "sha256": "c91a334b3537868119f08990e0595bc9335b898dc55337a77d0d675b9c592747"
+        }
+      ],
+      "asarSha256": "119e3c9f2e15b4e278f02e444bc5013e9855fae6aff506420e6fd6fc70ff77b3"
     },
     "failuresPreserved": [
       {
@@ -565,7 +964,565 @@
     "clientOverride": false
   },
   "hosted": {
-    "status": "NOT_RUN_FOR_NEW_SOURCE"
+    "status": "BASELINE_PASS_LEGACY_GATE_UNRESOLVED",
+    "sourceCommit": "384744df8bd9443d9cca68af0c24be4e28ad3c59",
+    "tree": "b49141d3771e9cbd2ae2db3ce33f0fdaea2d7c4b",
+    "runId": 37378096557,
+    "attempt": 1,
+    "url": "https://github.com/Zulut30/minemod/actions/runs/37378096557",
+    "workflowConclusion": "failure",
+    "run": {
+      "path": "output/verification/uv-repack-055-ci-run.json",
+      "bytes": 11954,
+      "sha256": "9535d507fac1cc2bf7fb3bcf346f9f26484d623d4c5dba1c8167856327b21972"
+    },
+    "jobs": {
+      "path": "output/verification/uv-repack-055-ci-jobs.json",
+      "bytes": 23569,
+      "sha256": "a99d1e56752916f3de83efb89d46675cc8e5e54b6afbf29e3173608b393f190f"
+    },
+    "artifacts": {
+      "path": "output/verification/uv-repack-055-ci-artifacts.json",
+      "bytes": 2892,
+      "sha256": "045f7983f4b60ce4e65782520cc1e0eb693db48acc6d752408e22e3afa6ada4d"
+    },
+    "jobResults": [
+      {
+        "id": 111992494144,
+        "name": "Fabric 1.20.1 / Java 17 production target",
+        "conclusion": "success"
+      },
+      {
+        "id": 111992494505,
+        "name": "fabric",
+        "conclusion": "failure"
+      },
+      {
+        "id": 111992494559,
+        "name": "neoforge",
+        "conclusion": "success"
+      },
+      {
+        "id": 111992494578,
+        "name": "studio-windows",
+        "conclusion": "success"
+      },
+      {
+        "id": 111992494592,
+        "name": "control-plane",
+        "conclusion": "success"
+      },
+      {
+        "id": 111992832430,
+        "name": "fabric-client",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 111993765074,
+        "name": "client-smoke",
+        "conclusion": "success"
+      }
+    ],
+    "cleanCheckouts": [
+      {
+        "path": "output/ci/37378096557-windows/output/ci/clean-checkout/studio-windows.json",
+        "bytes": 4469,
+        "sha256": "e4a516ff0d6f44bb76b75b84b58602db772b579a9235a7555c9609ab34dce57d"
+      },
+      {
+        "path": "output/ci/37378096557-control/control-plane.json",
+        "bytes": 4469,
+        "sha256": "37d8259741cd3244c7e23fc58343613e53517816f671a05cad97cca98070ad98"
+      },
+      {
+        "path": "output/ci/37378096557-production/output/ci/clean-checkout/fabric-production.json",
+        "bytes": 4469,
+        "sha256": "37d8259741cd3244c7e23fc58343613e53517816f671a05cad97cca98070ad98"
+      }
+    ],
+    "windows": {
+      "status": "PASS",
+      "jobId": 111992494578,
+      "artifactId": 11373740566,
+      "report": {
+        "path": "output\\ci\\37378096557-windows\\output\\playwright\\studio-packaged-1a9cc723\\report.json",
+        "bytes": 99844,
+        "sha256": "52e14d13812e237041e8365cee0c2772e246ad92d6893d9b240068638590971e"
+      },
+      "subreports": [
+        {
+          "name": "mcp",
+          "status": "PASS"
+        },
+        {
+          "name": "texture",
+          "status": "PASS"
+        },
+        {
+          "name": "polish",
+          "status": "PASS"
+        },
+        {
+          "name": "editing",
+          "status": "PASS"
+        },
+        {
+          "name": "variants",
+          "status": "PASS"
+        },
+        {
+          "name": "agentBlockouts",
+          "status": "PASS"
+        },
+        {
+          "name": "continuation",
+          "status": "PASS"
+        },
+        {
+          "name": "agentStatus",
+          "status": "PASS"
+        },
+        {
+          "name": "brief",
+          "status": "PASS"
+        },
+        {
+          "name": "concepts",
+          "status": "PASS"
+        },
+        {
+          "name": "parts",
+          "status": "PASS"
+        },
+        {
+          "name": "repair",
+          "status": "PASS"
+        },
+        {
+          "name": "manual",
+          "status": "PASS"
+        },
+        {
+          "name": "accessibility",
+          "status": "PASS"
+        },
+        {
+          "name": "accessibilityStates",
+          "status": "PASS"
+        },
+        {
+          "name": "review",
+          "status": "PASS"
+        },
+        {
+          "name": "migrations",
+          "status": "PASS"
+        },
+        {
+          "name": "history",
+          "status": "PASS"
+        },
+        {
+          "name": "geometry",
+          "status": "PASS"
+        },
+        {
+          "name": "camera",
+          "status": "PASS"
+        },
+        {
+          "name": "discovery",
+          "status": "PASS"
+        },
+        {
+          "name": "uvRepack",
+          "status": "PASS"
+        }
+      ],
+      "uvRepack": {
+        "status": "PASS",
+        "hidden": true,
+        "selectedCubes": 5,
+        "checkedSurfaces": 312,
+        "uiSplit": true,
+        "semanticPixelsUnchanged": true,
+        "unselectedPixelsUnchanged": true,
+        "humanUndoRedo": true,
+        "saveReopen": true,
+        "mcpPreviewApplyExportUndo": true,
+        "repeatNoChange": true,
+        "pngExactRgba": true,
+        "pngSha256": "86dd983ad09d62a3268366a2aeb3d3c0e8bc1ad92341c638cbc10acd45e2d0e1",
+        "beforeViews": [
+          {
+            "view": "front",
+            "sha256": "705e5ecbe2985ddd5df46c64c1c936473586ef4dbaa199256cb51edad77f8c6d"
+          },
+          {
+            "view": "back",
+            "sha256": "7837bc779e55590ee23285e387f22a3c518fdd5187ef0ec409c2871117b30f55"
+          },
+          {
+            "view": "side",
+            "sha256": "c12b882cf6a8c2a9052b135deffd0cfab0192f66bd6d632bc727427f68b816ae"
+          },
+          {
+            "view": "perspective",
+            "sha256": "25b754d24d21502ca5bfcc00c149d769c27dbc011dfbeb4107cb708cb830f640"
+          }
+        ],
+        "packedViews": [
+          {
+            "view": "front",
+            "sha256": "705e5ecbe2985ddd5df46c64c1c936473586ef4dbaa199256cb51edad77f8c6d"
+          },
+          {
+            "view": "back",
+            "sha256": "7837bc779e55590ee23285e387f22a3c518fdd5187ef0ec409c2871117b30f55"
+          },
+          {
+            "view": "side",
+            "sha256": "c12b882cf6a8c2a9052b135deffd0cfab0192f66bd6d632bc727427f68b816ae"
+          },
+          {
+            "view": "perspective",
+            "sha256": "25b754d24d21502ca5bfcc00c149d769c27dbc011dfbeb4107cb708cb830f640"
+          }
+        ],
+        "reopenedViews": [
+          {
+            "view": "front",
+            "sha256": "705e5ecbe2985ddd5df46c64c1c936473586ef4dbaa199256cb51edad77f8c6d"
+          },
+          {
+            "view": "back",
+            "sha256": "7837bc779e55590ee23285e387f22a3c518fdd5187ef0ec409c2871117b30f55"
+          },
+          {
+            "view": "side",
+            "sha256": "c12b882cf6a8c2a9052b135deffd0cfab0192f66bd6d632bc727427f68b816ae"
+          },
+          {
+            "view": "perspective",
+            "sha256": "25b754d24d21502ca5bfcc00c149d769c27dbc011dfbeb4107cb708cb830f640"
+          }
+        ],
+        "mirroredViews": [
+          {
+            "view": "front",
+            "sha256": "705e5ecbe2985ddd5df46c64c1c936473586ef4dbaa199256cb51edad77f8c6d"
+          },
+          {
+            "view": "back",
+            "sha256": "7837bc779e55590ee23285e387f22a3c518fdd5187ef0ec409c2871117b30f55"
+          },
+          {
+            "view": "side",
+            "sha256": "c12b882cf6a8c2a9052b135deffd0cfab0192f66bd6d632bc727427f68b816ae"
+          },
+          {
+            "view": "perspective",
+            "sha256": "25b754d24d21502ca5bfcc00c149d769c27dbc011dfbeb4107cb708cb830f640"
+          }
+        ],
+        "mirroredGpuPattern": true,
+        "atlasSwitchViews": [
+          {
+            "width": 256,
+            "views": [
+              {
+                "view": "front",
+                "sha256": "eb77edb7fd380343bcd24f6bce0d793f0fd63962987af17003af64d0a4d004ac"
+              },
+              {
+                "view": "back",
+                "sha256": "96e60160ef1619fbf2e987e5158823c2274559c8cd255d02567866604fb42d5c"
+              },
+              {
+                "view": "side",
+                "sha256": "09f07aba4e1fcdc13f448eca4995f3758d6c5512676f00781a07a66f3e47e786"
+              },
+              {
+                "view": "perspective",
+                "sha256": "02e3f08409369ed8221bf1908dbed4beac7cfc11343a157cdd438e07e02a836d"
+              }
+            ]
+          },
+          {
+            "width": 32,
+            "views": [
+              {
+                "view": "front",
+                "sha256": "eb77edb7fd380343bcd24f6bce0d793f0fd63962987af17003af64d0a4d004ac"
+              },
+              {
+                "view": "back",
+                "sha256": "96e60160ef1619fbf2e987e5158823c2274559c8cd255d02567866604fb42d5c"
+              },
+              {
+                "view": "side",
+                "sha256": "09f07aba4e1fcdc13f448eca4995f3758d6c5512676f00781a07a66f3e47e786"
+              },
+              {
+                "view": "perspective",
+                "sha256": "02e3f08409369ed8221bf1908dbed4beac7cfc11343a157cdd438e07e02a836d"
+              }
+            ]
+          },
+          {
+            "width": 256,
+            "views": [
+              {
+                "view": "front",
+                "sha256": "eb77edb7fd380343bcd24f6bce0d793f0fd63962987af17003af64d0a4d004ac"
+              },
+              {
+                "view": "back",
+                "sha256": "96e60160ef1619fbf2e987e5158823c2274559c8cd255d02567866604fb42d5c"
+              },
+              {
+                "view": "side",
+                "sha256": "09f07aba4e1fcdc13f448eca4995f3758d6c5512676f00781a07a66f3e47e786"
+              },
+              {
+                "view": "perspective",
+                "sha256": "02e3f08409369ed8221bf1908dbed4beac7cfc11343a157cdd438e07e02a836d"
+              }
+            ]
+          }
+        ],
+        "artisticApproval": "NOT_PERFORMED",
+        "gameIntegration": "NOT_RUN"
+      },
+      "snapshots": [
+        {
+          "path": "output\\ci\\37378096557-windows\\output\\playwright\\studio-packaged-1a9cc723\\uv-repack\\before-front.png",
+          "bytes": 25362,
+          "sha256": "705e5ecbe2985ddd5df46c64c1c936473586ef4dbaa199256cb51edad77f8c6d"
+        },
+        {
+          "path": "output\\ci\\37378096557-windows\\output\\playwright\\studio-packaged-1a9cc723\\uv-repack\\before-back.png",
+          "bytes": 24121,
+          "sha256": "7837bc779e55590ee23285e387f22a3c518fdd5187ef0ec409c2871117b30f55"
+        },
+        {
+          "path": "output\\ci\\37378096557-windows\\output\\playwright\\studio-packaged-1a9cc723\\uv-repack\\before-side.png",
+          "bytes": 9157,
+          "sha256": "c12b882cf6a8c2a9052b135deffd0cfab0192f66bd6d632bc727427f68b816ae"
+        },
+        {
+          "path": "output\\ci\\37378096557-windows\\output\\playwright\\studio-packaged-1a9cc723\\uv-repack\\before-perspective.png",
+          "bytes": 86532,
+          "sha256": "25b754d24d21502ca5bfcc00c149d769c27dbc011dfbeb4107cb708cb830f640"
+        },
+        {
+          "path": "output\\ci\\37378096557-windows\\output\\playwright\\studio-packaged-1a9cc723\\uv-repack\\packed-front.png",
+          "bytes": 25362,
+          "sha256": "705e5ecbe2985ddd5df46c64c1c936473586ef4dbaa199256cb51edad77f8c6d"
+        },
+        {
+          "path": "output\\ci\\37378096557-windows\\output\\playwright\\studio-packaged-1a9cc723\\uv-repack\\packed-back.png",
+          "bytes": 24121,
+          "sha256": "7837bc779e55590ee23285e387f22a3c518fdd5187ef0ec409c2871117b30f55"
+        },
+        {
+          "path": "output\\ci\\37378096557-windows\\output\\playwright\\studio-packaged-1a9cc723\\uv-repack\\packed-side.png",
+          "bytes": 9157,
+          "sha256": "c12b882cf6a8c2a9052b135deffd0cfab0192f66bd6d632bc727427f68b816ae"
+        },
+        {
+          "path": "output\\ci\\37378096557-windows\\output\\playwright\\studio-packaged-1a9cc723\\uv-repack\\packed-perspective.png",
+          "bytes": 86532,
+          "sha256": "25b754d24d21502ca5bfcc00c149d769c27dbc011dfbeb4107cb708cb830f640"
+        },
+        {
+          "path": "output\\ci\\37378096557-windows\\output\\playwright\\studio-packaged-1a9cc723\\uv-repack\\reopened-front.png",
+          "bytes": 25362,
+          "sha256": "705e5ecbe2985ddd5df46c64c1c936473586ef4dbaa199256cb51edad77f8c6d"
+        },
+        {
+          "path": "output\\ci\\37378096557-windows\\output\\playwright\\studio-packaged-1a9cc723\\uv-repack\\reopened-back.png",
+          "bytes": 24121,
+          "sha256": "7837bc779e55590ee23285e387f22a3c518fdd5187ef0ec409c2871117b30f55"
+        },
+        {
+          "path": "output\\ci\\37378096557-windows\\output\\playwright\\studio-packaged-1a9cc723\\uv-repack\\reopened-side.png",
+          "bytes": 9157,
+          "sha256": "c12b882cf6a8c2a9052b135deffd0cfab0192f66bd6d632bc727427f68b816ae"
+        },
+        {
+          "path": "output\\ci\\37378096557-windows\\output\\playwright\\studio-packaged-1a9cc723\\uv-repack\\reopened-perspective.png",
+          "bytes": 86532,
+          "sha256": "25b754d24d21502ca5bfcc00c149d769c27dbc011dfbeb4107cb708cb830f640"
+        },
+        {
+          "path": "output\\ci\\37378096557-windows\\output\\playwright\\studio-packaged-1a9cc723\\uv-repack\\mirrored-front.png",
+          "bytes": 25362,
+          "sha256": "705e5ecbe2985ddd5df46c64c1c936473586ef4dbaa199256cb51edad77f8c6d"
+        },
+        {
+          "path": "output\\ci\\37378096557-windows\\output\\playwright\\studio-packaged-1a9cc723\\uv-repack\\mirrored-back.png",
+          "bytes": 24121,
+          "sha256": "7837bc779e55590ee23285e387f22a3c518fdd5187ef0ec409c2871117b30f55"
+        },
+        {
+          "path": "output\\ci\\37378096557-windows\\output\\playwright\\studio-packaged-1a9cc723\\uv-repack\\mirrored-side.png",
+          "bytes": 9157,
+          "sha256": "c12b882cf6a8c2a9052b135deffd0cfab0192f66bd6d632bc727427f68b816ae"
+        },
+        {
+          "path": "output\\ci\\37378096557-windows\\output\\playwright\\studio-packaged-1a9cc723\\uv-repack\\mirrored-perspective.png",
+          "bytes": 86532,
+          "sha256": "25b754d24d21502ca5bfcc00c149d769c27dbc011dfbeb4107cb708cb830f640"
+        },
+        {
+          "path": "output\\ci\\37378096557-windows\\output\\playwright\\studio-packaged-1a9cc723\\uv-repack\\atlas-0-256-front.png",
+          "bytes": 4356,
+          "sha256": "eb77edb7fd380343bcd24f6bce0d793f0fd63962987af17003af64d0a4d004ac"
+        },
+        {
+          "path": "output\\ci\\37378096557-windows\\output\\playwright\\studio-packaged-1a9cc723\\uv-repack\\atlas-0-256-back.png",
+          "bytes": 4350,
+          "sha256": "96e60160ef1619fbf2e987e5158823c2274559c8cd255d02567866604fb42d5c"
+        },
+        {
+          "path": "output\\ci\\37378096557-windows\\output\\playwright\\studio-packaged-1a9cc723\\uv-repack\\atlas-0-256-side.png",
+          "bytes": 4373,
+          "sha256": "09f07aba4e1fcdc13f448eca4995f3758d6c5512676f00781a07a66f3e47e786"
+        },
+        {
+          "path": "output\\ci\\37378096557-windows\\output\\playwright\\studio-packaged-1a9cc723\\uv-repack\\atlas-0-256-perspective.png",
+          "bytes": 20868,
+          "sha256": "02e3f08409369ed8221bf1908dbed4beac7cfc11343a157cdd438e07e02a836d"
+        },
+        {
+          "path": "output\\ci\\37378096557-windows\\output\\playwright\\studio-packaged-1a9cc723\\uv-repack\\atlas-1-32-front.png",
+          "bytes": 4356,
+          "sha256": "eb77edb7fd380343bcd24f6bce0d793f0fd63962987af17003af64d0a4d004ac"
+        },
+        {
+          "path": "output\\ci\\37378096557-windows\\output\\playwright\\studio-packaged-1a9cc723\\uv-repack\\atlas-1-32-back.png",
+          "bytes": 4350,
+          "sha256": "96e60160ef1619fbf2e987e5158823c2274559c8cd255d02567866604fb42d5c"
+        },
+        {
+          "path": "output\\ci\\37378096557-windows\\output\\playwright\\studio-packaged-1a9cc723\\uv-repack\\atlas-1-32-side.png",
+          "bytes": 4373,
+          "sha256": "09f07aba4e1fcdc13f448eca4995f3758d6c5512676f00781a07a66f3e47e786"
+        },
+        {
+          "path": "output\\ci\\37378096557-windows\\output\\playwright\\studio-packaged-1a9cc723\\uv-repack\\atlas-1-32-perspective.png",
+          "bytes": 20868,
+          "sha256": "02e3f08409369ed8221bf1908dbed4beac7cfc11343a157cdd438e07e02a836d"
+        },
+        {
+          "path": "output\\ci\\37378096557-windows\\output\\playwright\\studio-packaged-1a9cc723\\uv-repack\\atlas-2-256-front.png",
+          "bytes": 4356,
+          "sha256": "eb77edb7fd380343bcd24f6bce0d793f0fd63962987af17003af64d0a4d004ac"
+        },
+        {
+          "path": "output\\ci\\37378096557-windows\\output\\playwright\\studio-packaged-1a9cc723\\uv-repack\\atlas-2-256-back.png",
+          "bytes": 4350,
+          "sha256": "96e60160ef1619fbf2e987e5158823c2274559c8cd255d02567866604fb42d5c"
+        },
+        {
+          "path": "output\\ci\\37378096557-windows\\output\\playwright\\studio-packaged-1a9cc723\\uv-repack\\atlas-2-256-side.png",
+          "bytes": 4373,
+          "sha256": "09f07aba4e1fcdc13f448eca4995f3758d6c5512676f00781a07a66f3e47e786"
+        },
+        {
+          "path": "output\\ci\\37378096557-windows\\output\\playwright\\studio-packaged-1a9cc723\\uv-repack\\atlas-2-256-perspective.png",
+          "bytes": 20868,
+          "sha256": "02e3f08409369ed8221bf1908dbed4beac7cfc11343a157cdd438e07e02a836d"
+        }
+      ],
+      "jobLog": {
+        "path": "output/verification/uv-repack-055-ci-windows.log",
+        "bytes": 58637,
+        "sha256": "591a43e7cddd2576ac013cf82c1823e5567f90b8daa310cf2b8db27e839867c8"
+      },
+      "asarByteComparison": "NOT_AVAILABLE_ARTIFACT_DOES_NOT_INCLUDE_ASAR"
+    },
+    "linux": {
+      "status": "PASS",
+      "jobId": 111992494592,
+      "artifactId": 11372715662,
+      "jobLog": {
+        "path": "output/verification/uv-repack-055-ci-control.log",
+        "bytes": 59064,
+        "sha256": "b26d00059c303b0914294689114249a598c1f86de11ce743f09f1869842b5956"
+      }
+    },
+    "production": {
+      "status": "PASS",
+      "jobId": 111992494144,
+      "artifactId": 11372811481,
+      "inputs": {
+        "path": "output/ci/37378096557-production/output/ci/fabric-production/inputs.json",
+        "bytes": 884,
+        "sha256": "9ee967c1efa32b52ab1128b35c3afbf4e28427b7eab1d6a82842656a816e8f02"
+      },
+      "javaRuntime": "17.0.19+10",
+      "gameTests": {
+        "report": {
+          "path": "output/ci/37378096557-production/fixtures/fabric-1.20.1-empty/build/reports/gametest/production.xml",
+          "bytes": 406,
+          "sha256": "90a38455387e9e3aaa1a3e92877c9b499d55ee8621da245bf9eb70365a516522"
+        },
+        "verification": "PASS: 2 required Fabric 1.20.1 harness tests",
+        "scope": "two required baseline harness tests"
+      },
+      "dedicatedServer": {
+        "status": "READINESS_EXIT_0_NONCE_STOPPED",
+        "nonce": "phase0-fabric-1.20.1-server-3406-32346-3743-0"
+      },
+      "headlessClient": {
+        "status": "READINESS_NONCE_STOPPED",
+        "nonce": "phase0-fabric-1.20.1-client-8820-7194-29807-0"
+      },
+      "jobLog": {
+        "path": "output/verification/uv-repack-055-ci-production.log",
+        "bytes": 124453,
+        "sha256": "f26377dcaa8f1d1c0140db07cc7265a7964b2086ff42f0cced0ba43064bfe5bb"
+      },
+      "generated": {
+        "manifest": {
+          "path": "output/ci/37378096557-production/output/ci/fabric-production/generated/source-review-manifest.json",
+          "bytes": 1663,
+          "sha256": "358db61afefcc01b674e313b928d69e9edd122c0f6528bb3d48e70971a78871f"
+        },
+        "operationEvidence": {
+          "path": "output/ci/37378096557-production/output/ci/fabric-production/generated/operation-evidence.v1.json",
+          "bytes": 9643,
+          "sha256": "3e42770acd9daa1262d7b44f9c93dc75dba6d8e0939b96caf5799ea41536dfd3"
+        },
+        "sourceFiles": 6,
+        "jar": {
+          "path": "output/ci/37378096557-production/output/ci/fabric-production/generated/build/libs/infectedfrontier-0.1.0.jar",
+          "bytes": 28835,
+          "sha256": "63c8139423e57b925edfa40f030020b23ae2cc21571eaf711c879d58a382cc15"
+        },
+        "dedicatedLog": {
+          "path": "output/ci/37378096557-production/output/ci/fabric-production/generated/dedicated-server.log",
+          "bytes": 10120,
+          "sha256": "e1bd9c9c55391d9b2fc9d99021ab80abed8db52f8f7e480255c5e2a71b305ba6"
+        }
+      }
+    },
+    "legacyFabric262": {
+      "status": "CHECKSUM_MISMATCH_UNRESOLVED",
+      "jobId": 111992494505,
+      "artifactId": 11373255219,
+      "coordinate": "net.minecraft:minecraft-common-043a8b3edf:26.2",
+      "expectedSha256": "23248c15f8413aa0d06ac59e676913dd6a1dc0c5fffaa09365afd6c98d59fcd3",
+      "actualSha256": "8869313e07813b6a82e22d99ed2abd20b9d4d7e956f7d62aee7d4359fde9fc26",
+      "report": {
+        "path": "output/ci/37378096557-legacy/at-1791236821057/dependency-verification-report.html",
+        "bytes": 9060,
+        "sha256": "8b798868cd4d251efa6f82897d99ed916e15335f918c6a21d04e596ae78bd99d"
+      }
+    },
+    "boundary": "Point 055 editor UV preservation acceptance passed; auxiliary legacy 26.2 workflow gate unresolved; no authored model/game/art approval"
   },
   "boundaries": [
     "Greedy placement can reject when an alternative layout might fit; no rotation/resizing/optimal packing claim",
