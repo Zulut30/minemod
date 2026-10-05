@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 21,
+  "status": "PARTIAL",
+  "checkedAtUtc": "2026-10-05T11:32:28.542Z",
+  "studioVersion": "0.12.0",
+  "scope": "Fresh held-item authored through manual GUI, exact save/reopen/export/restart; no terminal or model writes in product flow",
+  "sourceHashes": [
+    {
+      "path": "apps/model-editor/scripts/check-manual-desktop.mjs",
+      "bytes": 6159,
+      "sha256": "e52e484e7418ee0ec8940190f81e4e1ef3cf2eaff320508495ea5d0be5820967"
+    },
+    {
+      "path": "apps/model-editor/scripts/test-desktop.mjs",
+      "bytes": 17106,
+      "sha256": "4c1b7bb6fd5f96dbf91f5d2ec03edfab2942e10d0fc40d23c868a2a7dc49da96"
+    }
+  ],
+  "runtimeSourceRevision": "9247445a96a8f67c6d47c73dbc607b181c49cec6",
+  "focused": {
+    "report": {
+      "status": "PASS",
+      "hidden": true,
+      "projectId": "ea8e6491-bc73-4376-9b10-39b15659896b",
+      "startedEmpty": true,
+      "savedFile": {
+        "bytes": 70316,
+        "sha256": "5ae66c8491b9440eef01cba5b525d74ad07763dcaefbc48acb4c01cf2ec3a5a2"
+      },
+      "manifestSha256": "31bd8ced8fd9abcc8a9357c41ae73158e66335ab7766a1a81169014316354918",
+      "files": [
+        {
+          "path": "assets/mcdev/models/item/new_item.json",
+          "bytes": 2922,
+          "sha256": "ff692748129a561bbbb00d12314075f67ff1b6caa1e98cc09b2c41cba26312e0"
+        },
+        {
+          "path": "assets/mcdev/textures/item/new_item.png",
+          "bytes": 365,
+          "sha256": "9be23ce15f840cca973855f81940659fc6ce9851acdb523fa209e4799711c811"
+        },
+        {
+          "path": "editable/mcdev/new_item.bbmodel",
+          "bytes": 4691,
+          "sha256": "9c229af3e217386e4653de98e2d43133104e407cd30a38276f36f4f5e128a020"
+        },
+        {
+          "path": "source/mcdev/new_item.item-asset.json",
+          "bytes": 67046,
+          "sha256": "c27f0940261c5bdd7aff0e16bed3d45ba49dc556d94ca94daab20a265b661303"
+        }
+      ],
+      "mutationPath": "UI controls only; inspect reads state, native dialog mocks provide paths only",
+      "checks": [
+        "new empty project",
+        "add/name/geometry/color from UI",
+        "Cyrillic Save As exact bytes",
+        "saved clean state",
+        "switch to another empty document",
+        "reopen exact original",
+        "GUI export actual bundle/files/source integrity",
+        "restart restores authored document and original file"
+      ]
+    },
+    "artifacts": [
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\playwright\\manual-021-ffdbbf28\\manual\\report.json",
+        "bytes": 1459,
+        "sha256": "78132557e861932dc423ea9523175524fc32e97653a45087ade374b80b02b25c"
+      },
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\playwright\\manual-021-ffdbbf28\\manual\\manual-export.png",
+        "bytes": 196608,
+        "sha256": "185c538e7b23c6c3644cef7e1ffc0315f45f177cb410e335896497012b866861"
+      },
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\playwright\\manual-021-ffdbbf28\\manual\\ручной новый предмет.mmeditor.json",
+        "bytes": 70316,
+        "sha256": "5ae66c8491b9440eef01cba5b525d74ad07763dcaefbc48acb4c01cf2ec3a5a2"
+      }
+    ],
+    "packageHashes": [
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.12.0\\39c4bd7d\\MineMod Studio-win32-x64\\MineMod Studio.exe",
+        "bytes": 245726208,
+        "sha256": "abaef22f6a8714f4e1675284b9b1953313aaf92d3dd716c9e8a916f943c22c99"
+      },
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.12.0\\39c4bd7d\\MineMod Studio-win32-x64\\resources\\app.asar",
+        "bytes": 3549136,
+        "sha256": "81b6aa11549907b49c06815ebabd127d146a96087f1a9feee42bd7462036c579"
+      }
+    ]
+  },
+  "retainedEarlierOperator": {
+    "log": {
+      "path": "output/verification/roadmap-021-desktop.log",
+      "bytes": 891,
+      "sha256": "314af824457f661350dc185363016ecb42e85c81d1f7514c56d8c091b06873d1"
+    },
+    "reason": "Helper used nonexistent manifest.source.path; corrected to manifest.assets[0].source"
+  },
+  "logs": [
+    {
+      "path": "output/verification/roadmap-021-desktop-corrected.log",
+      "bytes": 1624,
+      "sha256": "e560a7086ced0887e43ac92f609e8ff2b62b9e887122dd409e06ac83cb19895e"
+    }
+  ],
+  "checks": {
+    "focusedGui": "PASS eight sequential cases, exact four exported files",
+    "helperLint": "PASS",
+    "hostedNewTestSource": "pending"
+  },
+  "limits": {
+    "nativeDialogPaths": "mocked paths/discard only; actual dialogs and external pilot not verified",
+    "modelClass": "held-item only",
+    "modelIdentity": "current fixed mcdev:new_item defaults",
+    "otherUserWorkspaces": "not-touched",
+    "artisticApproval": "not-granted",
+    "minecraftAcceptance": "not-tested"
+  },
+  "runtimeChanged": false,
+  "newDependencies": false,
+  "trustedPacksChanged": false
+}
