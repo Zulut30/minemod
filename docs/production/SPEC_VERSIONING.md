@@ -34,6 +34,8 @@ ArtSpec уже проверяет unique asset IDs/paths, target tuple/runtime a
 
 Regression suite покрывает сохранение известных версий, 12 отказов future/negative/fractional версий, отказ future shape без старой семантики и сохранение structural limits перед version dispatch. Material cases проверяют declared/vanilla repair, duplicate/missing material, armor properties и item/block domain. Отдельный portable `@mcdev/compiler-fabric test:spec-preflight` подтверждает шесть отказов unknown versions/primitives до pack loading. Linux full compiler suite дополнительно требует явных `SPEC_UNSUPPORTED` для всех непустых неподдерживаемых секций контрольного valid fixture.
 
+Hosted run `37293017239` по source `2f96752` завершил full Linux compiler, Windows Studio и production-target успешно. Проверены strict clean build, два fixture GameTests, dedicated server/headless client и generated equipment/config build/server. Все шесть generated source/metadata файлов проверены по bytes/SHA-256 и совпадают с приёмкой 018. Это не full gameplay coverage; общий workflow failed на сохранённой legacy Fabric 26.2 checksum проверке.
+
 [Evidence пункта 019](evidence/spec-versioning-019.json) различает local проверки и hosted compiler/build/runtime. Formal art approval и production release этим документом не выдаются.
 
 Источники: [Zod discriminated unions](https://zod.dev/api#discriminated-unions), [Zod JSON Schema](https://zod.dev/json-schema). APIs сверены с официальными docs, Context7 и установленным pinned Zod 4.4.2; переход на новую версию библиотеки не выполнялся.

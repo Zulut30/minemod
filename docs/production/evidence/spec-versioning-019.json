@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "roadmapPoint": 19,
-  "status": "PARTIAL",
-  "verifiedAtUtc": "2026-10-05T09:47:46.017730+00:00",
-  "sourceParentRevision": "ede9c722b51e163d5e1846d174fd06ed38e8c7a0",
+  "status": "PASS",
+  "verifiedAtUtc": "2026-10-05T10:04:35.372Z",
+  "sourceParentRevision": "2f96752c8804bcfc220a2fb15eabd546846a838a",
   "scope": "Explicit unknown-version rejection and supported-version catalog derived from parser literals; early material, armor and item-domain repair reference validation; fail-closed Fabric primitive preflight",
   "supportedSpecVersions": {
     "ModSpec": [
@@ -63,8 +63,8 @@
     "typecheck": "PASS",
     "lint": "PASS",
     "portableAssetsEditorCliMcp": "PASS",
-    "fullLinuxCompiler": "pending exact-source hosted CI",
-    "generatedBuildAndRuntime": "pending exact-source hosted CI",
+    "fullLinuxCompiler": "PASS exact-source hosted Linux full workspace and unsupported nonempty sections",
+    "generatedBuildAndRuntime": "PASS strict clean build, fixture GameTests, dedicated server and headless client; generated equipment/config clean build and dedicated server",
     "correctedUnsupportedFixture": "PASS local validation/profile and all 6 tested sections nonempty; full compiler assertion awaits hosted Linux"
   },
   "logs": [
@@ -117,16 +117,41 @@
       "path": "output/verification/roadmap-019-fix-lint.log",
       "bytes": 29,
       "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+    },
+    {
+      "path": "output/verification/roadmap-019-hosted-status.json",
+      "bytes": 18032,
+      "sha256": "5ef4742143678ce55ed05eaa4af6c8d491abb370c1d8d186e36cf9e855b796ec"
+    },
+    {
+      "path": "output/verification/roadmap-019-hosted-linux-final.log",
+      "bytes": 36871,
+      "sha256": "ad4bdb95d324eaaf8d5cdd00b8318da6989a0082605507e2e52342c62c803460"
+    },
+    {
+      "path": "output/verification/roadmap-019-hosted-production.log",
+      "bytes": 66950,
+      "sha256": "bf0342bba763f1540694eb08a07f745868c352cc53e7d449613e3ad07b03a2d5"
+    },
+    {
+      "path": "output/verification/roadmap-019-hosted-windows.log",
+      "bytes": 41462,
+      "sha256": "5c4f666d81dd073dbbf18b51d0aba427c47c0cc3028a64e611fcd665a02d4b7e"
+    },
+    {
+      "path": "output/verification/roadmap-019-generated-source-verification.json",
+      "bytes": 2097,
+      "sha256": "ccd52edc14429d2e3ea07eeace2db314fb6e726f7062083ecef71b6c1fffe01b"
     }
   ],
-  "existingCompilerRejections": "Known valid but unsupported entities/structures/screens/authored model/texture/animation sections must all produce explicit SPEC_UNSUPPORTED; assertions await full Linux suite.",
+  "existingCompilerRejections": "PASS all six nonempty valid unsupported sections explicitly reject as SPEC_UNSUPPORTED (entities, structures, screens, model, texture, animation).",
   "contractChanges": "No schema shapes/IDs, automatic coercion or migrations; semantic corrections reject inputs already rejected by Fabric content preflight. ModSpec and ArtSpec versions are separate from EditorProject and asset bundle.",
   "limits": "Structural spec acceptance is not backend support. ArtSpec path is declarative; cross-document reviewed import remains 049/062. Minecraft namespace acceptance is not proof of arbitrary vanilla registry id existence.",
   "newDependencies": false,
   "trustedPacksChanged": false,
   "artisticApproval": "not-granted",
   "productionReleaseApproval": "not-granted",
-  "hostedCurrentSource": "pending after test correction commit; failed compiler run is retained and is not claimed as PASS",
+  "hostedCurrentSource": "PASS scoped Linux, production and Windows jobs on exact source; whole workflow failure retained for legacy Fabric 26.2",
   "initialHostedFailure": {
     "runId": 37291852953,
     "sourceRevision": "ede9c722b51e163d5e1846d174fd06ed38e8c7a0",
@@ -134,5 +159,70 @@
     "conclusion": "failure",
     "reason": "New test incorrectly asserted SPEC_UNSUPPORTED for empty fixture assets.textures.",
     "correction": "Build an owned valid test copy with one real texture entry; assert schema/profile validity and all tested nonempty sections. Immutable fixture unchanged."
-  }
+  },
+  "hosted": {
+    "runId": 37293017239,
+    "sourceRevision": "2f96752c8804bcfc220a2fb15eabd546846a838a",
+    "status": "completed",
+    "workflowConclusion": "failure",
+    "jobs": [
+      {
+        "name": "fabric",
+        "jobId": 111707646103,
+        "conclusion": "failure"
+      },
+      {
+        "name": "studio-windows",
+        "jobId": 111707646273,
+        "conclusion": "success"
+      },
+      {
+        "name": "Fabric 1.20.1 / Java 17 production target",
+        "jobId": 111707646342,
+        "conclusion": "success"
+      },
+      {
+        "name": "neoforge",
+        "jobId": 111707646361,
+        "conclusion": "success"
+      },
+      {
+        "name": "control-plane",
+        "jobId": 111707646416,
+        "conclusion": "success"
+      },
+      {
+        "name": "fabric-client",
+        "jobId": 111707878598,
+        "conclusion": "skipped"
+      },
+      {
+        "name": "client-smoke",
+        "jobId": 111708774955,
+        "conclusion": "success"
+      }
+    ],
+    "artifactId": 11336414762,
+    "artifactName": "fabric-1.20.1-java17-evidence",
+    "gameTests": {
+      "count": 2,
+      "names": [
+        "fabriclegacygametests.fixtureloadedonpinnedserver",
+        "fabriclegacygametests.directionalblockstatesurvivestick"
+      ],
+      "scope": "Production fixture infrastructure and directional block tick; not full generated gameplay coverage"
+    },
+    "generatedValidOutputs": {
+      "files": 6,
+      "allManifestHashesVerified": true,
+      "unchangedSince018": true,
+      "planId": "b10bac363628fe3afac1995e1d01403d70f0294d6f470dd3896f4f8b100c0f72",
+      "pack": {
+        "packId": "fabric-1.20.1-java-17",
+        "revision": 5,
+        "treeSha256": "dae2523ebfccd6c9215438643b0586605de24e6db876862fc55ef4010e124099"
+      }
+    }
+  },
+  "remainingRegressionFailure": "Legacy Fabric 26.2 derived Minecraft JAR checksum mismatch; no checksum or pack bypass."
 }
