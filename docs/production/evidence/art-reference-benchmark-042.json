@@ -1,0 +1,421 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 42,
+  "status": "PASS",
+  "pointClosed": true,
+  "sourceCommit": "5dc73bf5b545b67ded0ebb23bc69417d21c6f8ee",
+  "sourceTree": "586c103fdd427e93e73734aa8edba9970b7b70af",
+  "sourceHashes": [
+    {
+      "path": "README.md",
+      "bytes": 23559,
+      "sha256": "a70472c9917e75bfdbc297ff7fe1371c52d62237b411991538166060fb539442"
+    },
+    {
+      "path": "apps/model-editor/package.json",
+      "bytes": 2031,
+      "sha256": "874f324f172c26ca4b3dfbcedf0cbeb6c8bb318dda4caa540d0e8ad1a717d696"
+    },
+    {
+      "path": "apps/model-editor/scripts/test.mjs",
+      "bytes": 772,
+      "sha256": "83dfd0006803bd87e2592399a8c06c0bbd159f6b494513216cc55c528feb1c7d"
+    },
+    {
+      "path": "apps/model-editor/scripts/art-benchmark-data.mjs",
+      "bytes": 5469,
+      "sha256": "2fa5064f92819930871e9b8abb2473d644d586b2b818dfe0d160d36b9d2051c1"
+    },
+    {
+      "path": "apps/model-editor/scripts/art-benchmark-paint.mjs",
+      "bytes": 3487,
+      "sha256": "0ea23bd755269bbdf39da0599e70d4819edec46730f34a59ab3f1ecbf815f878"
+    },
+    {
+      "path": "apps/model-editor/scripts/art-benchmark-renderer.mjs",
+      "bytes": 4804,
+      "sha256": "7cba370702fc96daff9ad6ac38137dcc803c60f2e625304c27da821ff29e4d22"
+    },
+    {
+      "path": "apps/model-editor/scripts/preview-art-benchmark.mjs",
+      "bytes": 20556,
+      "sha256": "7b7fdc97440c0c72fa063f3d18ca7a18e1adc2f2a0e9f22ab3b6d287d3092a5b"
+    },
+    {
+      "path": "apps/model-editor/scripts/art-benchmark.test.mjs",
+      "bytes": 4687,
+      "sha256": "172c93e2c8a6bf7f379950ce46bea7235ccf87ab1705150983d655df908cd8c1"
+    },
+    {
+      "path": "fixtures/art/benchmark-scenes.v1.json",
+      "bytes": 41508,
+      "sha256": "bed30d15111d0b6db9ddf14e8e6b388a537543770b06fc555f82d3a54d74e8fc"
+    },
+    {
+      "path": "docs/production/ART_REFERENCE_BENCHMARK.md",
+      "bytes": 10647,
+      "sha256": "b36c5a7583d5b62a86c2cd58d062d01383932056dd9c34f1e726abb41a071057"
+    }
+  ],
+  "local": {
+    "checks": [
+      {
+        "path": "output/verification/art-benchmark-042-tests.log",
+        "bytes": 310,
+        "sha256": "53ff7a305b2b2ccdd4506b267d5a62de4d9eca55576e5ebb098d99d236eb669d"
+      },
+      {
+        "path": "output/verification/art-benchmark-042-render.log",
+        "bytes": 867,
+        "sha256": "a495220f72f7a7df318d0c1be43a93b7492584dc92d0e8d55870681b684f5620"
+      },
+      {
+        "path": "output/verification/art-benchmark-042-lint.log",
+        "bytes": 29,
+        "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+      },
+      {
+        "path": "output/verification/art-benchmark-042-typecheck.log",
+        "bytes": 176,
+        "sha256": "fe0327fb3a908a7cea6b4e5ef62bbaa7903d4f4149a209170e6249f0dd5c8190"
+      },
+      {
+        "path": "output/verification/art-benchmark-042-portable.log",
+        "bytes": 4345,
+        "sha256": "f2c0f6f09f8c9c5ff21c37fb6a6f024a9a390b10280e75ced38bc332dfc99343"
+      },
+      {
+        "path": "output/verification/art-benchmark-042-studio-build.log",
+        "bytes": 540,
+        "sha256": "dd9a3d9ff599eb3097db29f3f737cf16e2599d96308d4bf9bfeddb712d85ecb7"
+      }
+    ],
+    "renderManifest": {
+      "path": "output/model-editor/art-benchmark-042/manifest.json",
+      "bytes": 141942,
+      "sha256": "1e62e64039c8c0c9334343e1b3d79822c5fc56ab07c9267a9da71fe73405630e"
+    },
+    "referenceExamples": 10,
+    "classes": 5,
+    "referenceCaptures": 238,
+    "leafCaptures": 20,
+    "leafSources": [
+      {
+        "id": "a",
+        "sha256": "6996f1cceb3ac0f1ffed341c0ff109d289a05b608ca4994493b3601bd76c007b",
+        "sidecarHashes": [
+          "e4c7daa05f5dd1b8b6e3f27a56b0f2edab85d8dc6dc0a4bbdd28f3dddfc5f6fb"
+        ]
+      },
+      {
+        "id": "b",
+        "sha256": "7f0407e6840320b2255c0f59e87ea643ac5644204f04053c4a4c99784d1c76e8",
+        "sidecarHashes": [
+          "e4c7daa05f5dd1b8b6e3f27a56b0f2edab85d8dc6dc0a4bbdd28f3dddfc5f6fb"
+        ]
+      }
+    ],
+    "native32and64": "direct buffer verified; no human recognition score",
+    "browser": {
+      "status": "technical-pass",
+      "images": {
+        "native": 40,
+        "failures": [],
+        "articles": 10
+      },
+      "layouts": [
+        {
+          "width": 1400,
+          "overflow": false,
+          "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\playwright\\art-benchmark-042\\board-1400.png",
+          "sha256": "a443036fc09cf5cda97c1aff46377b54cb262ddcd46ac8407937fad24d80e82a"
+        },
+        {
+          "width": 390,
+          "overflow": false,
+          "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\playwright\\art-benchmark-042\\board-390.png",
+          "sha256": "d3689ee232bc1c79c4da5b9651471448d1d202a3d25aa79dbd93b8d95cdc9c6f"
+        }
+      ],
+      "networkRequests": 0,
+      "browserErrors": 0,
+      "artisticScore": "not-computed"
+    },
+    "versions": {
+      "node": "24.21.0",
+      "three": "0.186.1",
+      "playwright": "1.63.0",
+      "browser": "154.0.4258.53"
+    },
+    "sourceCatalogSha256": "bed30d15111d0b6db9ddf14e8e6b388a537543770b06fc555f82d3a54d74e8fc",
+    "controlBriefsSha256": "11554fd93bf02281a928d81f2de689db4da265858ce13088c13a326b7c714d99",
+    "compiledStudioBundles": [
+      {
+        "path": "apps/model-editor/dist/main.cjs",
+        "bytes": 620160,
+        "sha256": "0e19713d6df4a89ca8ba08e9719928aacd2b963b1e362daf12b3b924fdcbd014"
+      },
+      {
+        "path": "apps/model-editor/dist/worker.cjs",
+        "bytes": 1500754,
+        "sha256": "8c99e26fe4bf96564380e48c15402a8fa6b1a1e056d7fe753f983a3f5e512712"
+      },
+      {
+        "path": "apps/model-editor/dist/preload.cjs",
+        "bytes": 1186,
+        "sha256": "6516e0ddc1af23f45d8a978d90be61c3f0e3533fc315924ff368c149d9952b92"
+      }
+    ],
+    "compiledStudioChange": "none; developer scripts only",
+    "lockfile": {
+      "path": "pnpm-lock.yaml",
+      "bytes": 95944,
+      "sha256": "e955ab8e82d8bb87128cf10f0f95b67c217fb1bf31eb7f2321823e66b03195c2"
+    }
+  },
+  "boundaries": {
+    "collection": "original illustrative references; explicit good traits and counterexamples",
+    "generationComparison": "not-run",
+    "humanRatings": "not-recorded",
+    "artisticApproval": "not-performed",
+    "authoredGame": "not-run",
+    "authoredIntegration": "not-run",
+    "leaf": "direction A selected; volume and texture unapproved"
+  },
+  "hosted": {
+    "status": "TERMINAL",
+    "runId": 37362390292,
+    "url": "https://github.com/Zulut30/minemod/actions/runs/37362390292",
+    "sourceCommit": "5dc73bf5b545b67ded0ebb23bc69417d21c6f8ee",
+    "wholeConclusion": "failure",
+    "jobs": [
+      {
+        "id": 111939857307,
+        "name": "studio-windows",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111939857652,
+        "name": "fabric",
+        "status": "completed",
+        "conclusion": "failure"
+      },
+      {
+        "id": 111939857739,
+        "name": "neoforge",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111939857811,
+        "name": "Fabric 1.20.1 / Java 17 production target",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111939857873,
+        "name": "control-plane",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111940247067,
+        "name": "fabric-client",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 111941001225,
+        "name": "client-smoke",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "cleanCheckouts": [
+      {
+        "name": "windows",
+        "sourceRevision": "5dc73bf5b545b67ded0ebb23bc69417d21c6f8ee",
+        "tree": "586c103fdd427e93e73734aa8edba9970b7b70af",
+        "trackedFiles": 572,
+        "path": "output/ci/37362390292-windows/output/ci/clean-checkout/studio-windows.json",
+        "bytes": 4469,
+        "sha256": "ab1e0fc2088c576b4e2c025a198afd4f5fa56a1e3278ffd42e946dfb6010fa07"
+      },
+      {
+        "name": "control",
+        "sourceRevision": "5dc73bf5b545b67ded0ebb23bc69417d21c6f8ee",
+        "tree": "586c103fdd427e93e73734aa8edba9970b7b70af",
+        "trackedFiles": 572,
+        "path": "output/ci/37362390292-control/control-plane.json",
+        "bytes": 4469,
+        "sha256": "04ca0a28ec88c7eec7f6ee44e632374868dbf9c151103e3c4e384f473fbe862f"
+      },
+      {
+        "name": "production",
+        "sourceRevision": "5dc73bf5b545b67ded0ebb23bc69417d21c6f8ee",
+        "tree": "586c103fdd427e93e73734aa8edba9970b7b70af",
+        "trackedFiles": 572,
+        "path": "output/ci/37362390292-production/output/ci/clean-checkout/fabric-production.json",
+        "bytes": 4469,
+        "sha256": "04ca0a28ec88c7eec7f6ee44e632374868dbf9c151103e3c4e384f473fbe862f"
+      }
+    ],
+    "windows": {
+      "status": "PASS",
+      "report": {
+        "path": "output\\ci\\37362390292-windows\\output\\playwright\\studio-packaged-eed6b587\\report.json",
+        "bytes": 93347,
+        "sha256": "6facd19aa94c0bf9bffe580b7a8f9795046222e0e6b134a5533da436492ad682"
+      },
+      "subreports": [
+        {
+          "name": "mcp",
+          "status": "PASS"
+        },
+        {
+          "name": "texture",
+          "status": "PASS"
+        },
+        {
+          "name": "polish",
+          "status": "PASS"
+        },
+        {
+          "name": "editing",
+          "status": "PASS"
+        },
+        {
+          "name": "variants",
+          "status": "PASS"
+        },
+        {
+          "name": "agentBlockouts",
+          "status": "PASS"
+        },
+        {
+          "name": "continuation",
+          "status": "PASS"
+        },
+        {
+          "name": "agentStatus",
+          "status": "PASS"
+        },
+        {
+          "name": "brief",
+          "status": "PASS"
+        },
+        {
+          "name": "concepts",
+          "status": "PASS"
+        },
+        {
+          "name": "parts",
+          "status": "PASS"
+        },
+        {
+          "name": "repair",
+          "status": "PASS"
+        },
+        {
+          "name": "manual",
+          "status": "PASS"
+        },
+        {
+          "name": "accessibility",
+          "status": "PASS"
+        },
+        {
+          "name": "accessibilityStates",
+          "status": "PASS"
+        },
+        {
+          "name": "review",
+          "status": "PASS"
+        },
+        {
+          "name": "migrations",
+          "status": "PASS"
+        },
+        {
+          "name": "history",
+          "status": "PASS"
+        },
+        {
+          "name": "geometry",
+          "status": "PASS"
+        },
+        {
+          "name": "camera",
+          "status": "PASS"
+        },
+        {
+          "name": "discovery",
+          "status": "PASS"
+        }
+      ],
+      "scope": "Actual hidden packaged Studio 0.18.0 regression; reference renderer ran locally at exact source and is not a new Studio capability."
+    },
+    "production": {
+      "status": "PASS",
+      "operation": {
+        "path": "output\\ci\\37362390292-production\\output\\ci\\fabric-production\\generated\\operation-evidence.v1.json",
+        "bytes": 9643,
+        "sha256": "3e42770acd9daa1262d7b44f9c93dc75dba6d8e0939b96caf5799ea41536dfd3"
+      },
+      "sourceManifest": {
+        "path": "output\\ci\\37362390292-production\\output\\ci\\fabric-production\\generated\\source-review-manifest.json",
+        "bytes": 1663,
+        "sha256": "358db61afefcc01b674e313b928d69e9edd122c0f6528bb3d48e70971a78871f"
+      },
+      "verifiedGeneratedFiles": 6,
+      "jar": {
+        "path": "output\\ci\\37362390292-production\\output\\ci\\fabric-production\\generated\\build\\libs\\infectedfrontier-0.1.0.jar",
+        "bytes": 28835,
+        "sha256": "63c8139423e57b925edfa40f030020b23ae2cc21571eaf711c879d58a382cc15"
+      },
+      "gameTests": {
+        "path": "output/ci/37362390292-production/fixtures/fabric-1.20.1-empty/build/reports/gametest/production.xml",
+        "bytes": 406,
+        "sha256": "55f9661248cf3fbf8ac840b31e3facaf4eea1682c746a96d1bd3c1d7c48e164e"
+      },
+      "scope": "Strict online/offline clean builds, two infrastructure GameTests, dedicated/client nonce stopped, generated fixture build/server. No authored reference or Leaf in JAR."
+    },
+    "legacyFabric262": {
+      "status": "FAILED_CHECKSUM",
+      "report": {
+        "path": "output\\ci\\37362390292-legacy\\at-1791227917863\\dependency-verification-report.html",
+        "bytes": 9060,
+        "sha256": "85e9c19054748eb8e297e257c3cf5c60af7982300cd41073b5169f04f64c6c81"
+      },
+      "coordinate": "net.minecraft:minecraft-common-043a8b3edf:26.2",
+      "expected": "23248c15f8413aa0d06ac59e676913dd6a1dc0c5fffaa09365afd6c98d59fcd3",
+      "actual": "4954665c434812be6e2940e68b5a93deb469bded098b130e02af4a337cda8312",
+      "cause": "NOT_ESTABLISHED"
+    },
+    "logs": [
+      {
+        "path": "output/verification/roadmap-042-windows.log",
+        "bytes": 58123,
+        "sha256": "bc92ece153697a80f3dea7efee0f96917878bdf06da7f63e3186b66c6b0e6e49"
+      },
+      {
+        "path": "output/verification/roadmap-042-control-plane.log",
+        "bytes": 58693,
+        "sha256": "8d10b2fe04bd7a17771880eb26ea892d5eeb3702aa8d85418d740bd80e4dd855"
+      },
+      {
+        "path": "output/verification/roadmap-042-production.log",
+        "bytes": 124654,
+        "sha256": "435128bf0722b12f258af118b91153e3ca3514f9af1672a4408f81f6b4e1de50"
+      },
+      {
+        "path": "output/verification/roadmap-042-fabric262.log",
+        "bytes": 47344,
+        "sha256": "fd985b7676b03de498a2401f5cfeffdbf0617149951686bd1fc00f7362356c87"
+      }
+    ]
+  },
+  "checkedAtUtc": "2026-10-05T19:33:51.146Z",
+  "closureBoundary": "042 original illustrative benchmark collection: five classes, good traits/counterexamples, real PNG and provenance. No human score, generator quality gain, class exporter or game/art acceptance. Subsequent Unicode correction is separate work."
+}
