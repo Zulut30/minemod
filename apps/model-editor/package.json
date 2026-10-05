@@ -15,6 +15,8 @@
     "test:desktop": "node scripts/test-desktop.mjs",
     "test:mcp": "node --experimental-strip-types worker/mcp.test.ts && node --experimental-strip-types worker/continuation.test.ts",
     "test:camera": "node --experimental-strip-types scripts/camera.test.ts",
+    "test:art-benchmark": "node scripts/art-benchmark.test.mjs",
+    "preview:art-benchmark": "node scripts/preview-art-benchmark.mjs",
     "test:discovery": "node --experimental-strip-types worker/discovery.test.ts",
     "verify:blockouts": "node scripts/run-agent-blockouts-desktop.mjs",
     "verify:continuation": "node scripts/run-continuation-desktop.mjs",

@@ -1,0 +1,1749 @@
+{
+  "schemaVersion": 1,
+  "kind": "mcdev-art-reference-benchmark",
+  "purpose": "Оригинальные учебные контрасты для пяти неизменённых control briefs. Набор показывает конкретные дизайнерские приёмы и ошибки; это не выполнение брифов генератором, не рейтинг моделей и не runtime export.",
+  "provenance": {
+    "origin": "original-procedural-reference",
+    "authorMode": "ai-assisted",
+    "provider": "Codex",
+    "model": "not-recorded",
+    "license": "Apache-2.0",
+    "externalAssets": false,
+    "source": "fixtures/art/benchmark-scenes.v1.json"
+  },
+  "evidenceState": {
+    "generationComparison": "not-run",
+    "humanRatings": "not-recorded",
+    "artisticApproval": "not-performed",
+    "game": "not-run",
+    "runtimeExport": "not-produced"
+  },
+  "examples": [
+    {
+      "id": "polar-cleaver-trait",
+      "modelClass": "weapon",
+      "briefId": "polar-cleaver",
+      "variant": "trait",
+      "label": "Топор: ясная голова и хват",
+      "representation": "reference-cuboids",
+      "pattern": "calm",
+      "palette": [
+        "#172333",
+        "#304b63",
+        "#628fa5",
+        "#b8e5ed",
+        "#e9f8ed",
+        "#665040"
+      ],
+      "boxes": [
+        {
+          "id": "handle",
+          "role": "Хват",
+          "origin": [
+            -1,
+            0,
+            -1
+          ],
+          "size": [
+            2,
+            12,
+            2
+          ],
+          "material": "leather"
+        },
+        {
+          "id": "socket",
+          "role": "Крепление головы",
+          "origin": [
+            -1.5,
+            11,
+            -1.5
+          ],
+          "size": [
+            3,
+            5,
+            3
+          ],
+          "material": "steel"
+        },
+        {
+          "id": "head",
+          "role": "Главная рубящая масса",
+          "origin": [
+            1,
+            12,
+            -1.25
+          ],
+          "size": [
+            5,
+            6,
+            2.5
+          ],
+          "material": "steel"
+        },
+        {
+          "id": "edge",
+          "role": "Светлая кромка",
+          "origin": [
+            6,
+            10,
+            -0.5
+          ],
+          "size": [
+            2,
+            9,
+            1
+          ],
+          "material": "ice"
+        },
+        {
+          "id": "guard",
+          "role": "Короткая гарда",
+          "origin": [
+            -3,
+            8,
+            -1
+          ],
+          "size": [
+            4,
+            1.5,
+            2
+          ],
+          "material": "steel"
+        },
+        {
+          "id": "crystal",
+          "role": "Один кристальный акцент",
+          "origin": [
+            -2,
+            10,
+            1
+          ],
+          "size": [
+            2,
+            2,
+            1.5
+          ],
+          "material": "ice"
+        }
+      ],
+      "observations": [
+        {
+          "criterion": "silhouette",
+          "view": "front",
+          "observation": "Рубящая масса смещена на одну сторону; тонкий хват и кромка имеют разные роли. Это пример приёма, а не принятый топор.",
+          "question": "Узнаётся ли односторонний топор без цвета в native 32 px?"
+        },
+        {
+          "criterion": "construction",
+          "view": "right",
+          "observation": "Вид сбоку показывает толщину головы и отдельный socket; короткая гарда остаётся у хвата.",
+          "question": "Виден ли переход головы к хвату, без избыточной массы у руки?"
+        }
+      ]
+    },
+    {
+      "id": "polar-cleaver-counterexample",
+      "modelClass": "weapon",
+      "briefId": "polar-cleaver",
+      "variant": "counterexample",
+      "label": "Топор: гарда спорит с головой",
+      "representation": "reference-cuboids",
+      "pattern": "noise",
+      "palette": [
+        "#172333",
+        "#304b63",
+        "#628fa5",
+        "#b8e5ed",
+        "#e9f8ed",
+        "#665040"
+      ],
+      "boxes": [
+        {
+          "id": "handle",
+          "role": "Хват",
+          "origin": [
+            -1,
+            0,
+            -1
+          ],
+          "size": [
+            2,
+            4,
+            2
+          ],
+          "material": "leather"
+        },
+        {
+          "id": "socket",
+          "role": "Крепление головы",
+          "origin": [
+            -1.5,
+            4,
+            -1.5
+          ],
+          "size": [
+            3,
+            5,
+            3
+          ],
+          "material": "steel"
+        },
+        {
+          "id": "head",
+          "role": "Главная рубящая масса",
+          "origin": [
+            1,
+            5,
+            -1.25
+          ],
+          "size": [
+            3,
+            6,
+            2.5
+          ],
+          "material": "steel"
+        },
+        {
+          "id": "edge",
+          "role": "Светлая кромка",
+          "origin": [
+            4,
+            4,
+            -0.5
+          ],
+          "size": [
+            1,
+            8,
+            1
+          ],
+          "material": "ice"
+        },
+        {
+          "id": "guard",
+          "role": "Короткая гарда",
+          "origin": [
+            -3,
+            3,
+            -1
+          ],
+          "size": [
+            10,
+            1.5,
+            2
+          ],
+          "material": "steel"
+        },
+        {
+          "id": "crystal",
+          "role": "Один кристальный акцент",
+          "origin": [
+            -2,
+            5,
+            1
+          ],
+          "size": [
+            2,
+            2,
+            1.5
+          ],
+          "material": "ice"
+        }
+      ],
+      "observations": [
+        {
+          "criterion": "silhouette",
+          "view": "front",
+          "observation": "Длинная поперечная гарда и короткий хват превращают основную массу в крест; голова почти теряется.",
+          "question": "Какую массу нужно убрать или увеличить, чтобы вернуть рубящую роль?"
+        },
+        {
+          "criterion": "hierarchy",
+          "view": "native-32-64",
+          "observation": "Однопиксельный рисунок покрывает и хват, и голову одинаково; цвет не объясняет функцию.",
+          "question": "Сохранится ли главный акцент после удаления мелкого рисунка?"
+        }
+      ]
+    },
+    {
+      "id": "polar-armor-trait",
+      "modelClass": "armor",
+      "briefId": "polar-armor",
+      "variant": "trait",
+      "label": "Броня: лицо, края и один акцент",
+      "representation": "wearable-layer-mannequin",
+      "pattern": "calm",
+      "palette": [
+        "#172333",
+        "#304b63",
+        "#628fa5",
+        "#b8e5ed",
+        "#e9f8ed",
+        "#665040"
+      ],
+      "boxes": [
+        {
+          "id": "helmet",
+          "role": "Шлем",
+          "origin": [
+            -4,
+            24,
+            -4
+          ],
+          "size": [
+            8,
+            8,
+            8
+          ],
+          "material": "steel",
+          "armorPart": "head"
+        },
+        {
+          "id": "chest",
+          "role": "Нагрудник",
+          "origin": [
+            -4,
+            12,
+            -2
+          ],
+          "size": [
+            8,
+            12,
+            4
+          ],
+          "material": "steel",
+          "armorPart": "body"
+        },
+        {
+          "id": "left-arm",
+          "role": "Левая рука",
+          "origin": [
+            -8,
+            12,
+            -2
+          ],
+          "size": [
+            4,
+            12,
+            4
+          ],
+          "material": "steel",
+          "armorPart": "arm"
+        },
+        {
+          "id": "right-arm",
+          "role": "Правая рука",
+          "origin": [
+            4,
+            12,
+            -2
+          ],
+          "size": [
+            4,
+            12,
+            4
+          ],
+          "material": "steel",
+          "armorPart": "arm"
+        },
+        {
+          "id": "left-leg",
+          "role": "Левая нога",
+          "origin": [
+            -4,
+            0,
+            -2
+          ],
+          "size": [
+            4,
+            12,
+            4
+          ],
+          "material": "steel",
+          "armorPart": "leg"
+        },
+        {
+          "id": "right-leg",
+          "role": "Правая нога",
+          "origin": [
+            0,
+            0,
+            -2
+          ],
+          "size": [
+            4,
+            12,
+            4
+          ],
+          "material": "steel",
+          "armorPart": "leg"
+        }
+      ],
+      "observations": [
+        {
+          "criterion": "wearable-layout",
+          "view": "layers",
+          "observation": "Два оригинальных слоя 64×32 раскладываются по head/body/arm/leg UV учебного манекена. Иконка предмета здесь не используется вместо wearable.",
+          "question": "Согласованы ли четыре слота и свободная область лица на переднем виде?"
+        },
+        {
+          "criterion": "hierarchy",
+          "view": "front",
+          "observation": "Тёмные нижние области отделяют светлые края; один кристальный знак расположен на груди.",
+          "question": "Может ли глаз выбрать главный знак, пока остальные поверхности спокойны?"
+        }
+      ]
+    },
+    {
+      "id": "polar-armor-counterexample",
+      "modelClass": "armor",
+      "briefId": "polar-armor",
+      "variant": "counterexample",
+      "label": "Броня: одинаковый шум на всех частях",
+      "representation": "wearable-layer-mannequin",
+      "pattern": "noise",
+      "palette": [
+        "#172333",
+        "#304b63",
+        "#628fa5",
+        "#b8e5ed",
+        "#e9f8ed",
+        "#665040"
+      ],
+      "boxes": [
+        {
+          "id": "helmet",
+          "role": "Шлем",
+          "origin": [
+            -4,
+            24,
+            -4
+          ],
+          "size": [
+            8,
+            8,
+            8
+          ],
+          "material": "steel",
+          "armorPart": "head"
+        },
+        {
+          "id": "chest",
+          "role": "Нагрудник",
+          "origin": [
+            -4,
+            12,
+            -2
+          ],
+          "size": [
+            8,
+            12,
+            4
+          ],
+          "material": "steel",
+          "armorPart": "body"
+        },
+        {
+          "id": "left-arm",
+          "role": "Левая рука",
+          "origin": [
+            -8,
+            12,
+            -2
+          ],
+          "size": [
+            4,
+            12,
+            4
+          ],
+          "material": "steel",
+          "armorPart": "arm"
+        },
+        {
+          "id": "right-arm",
+          "role": "Правая рука",
+          "origin": [
+            4,
+            12,
+            -2
+          ],
+          "size": [
+            4,
+            12,
+            4
+          ],
+          "material": "steel",
+          "armorPart": "arm"
+        },
+        {
+          "id": "left-leg",
+          "role": "Левая нога",
+          "origin": [
+            -4,
+            0,
+            -2
+          ],
+          "size": [
+            4,
+            12,
+            4
+          ],
+          "material": "steel",
+          "armorPart": "leg"
+        },
+        {
+          "id": "right-leg",
+          "role": "Правая нога",
+          "origin": [
+            0,
+            0,
+            -2
+          ],
+          "size": [
+            4,
+            12,
+            4
+          ],
+          "material": "steel",
+          "armorPart": "leg"
+        }
+      ],
+      "observations": [
+        {
+          "criterion": "hierarchy",
+          "view": "front",
+          "observation": "Та же геометрия и палитра, но шахматный рисунок распределён по всему комплекту, включая лицо.",
+          "question": "Какие пятна следует объединить, чтобы лицо и грудь снова стали различимыми?"
+        },
+        {
+          "criterion": "materials",
+          "view": "layers",
+          "observation": "Светлые точки не привязаны к краям или материалу; увеличить число кубов этот рисунок не исправит.",
+          "question": "Нужны ли более крупные зоны материала вместо новой геометрии?"
+        }
+      ]
+    },
+    {
+      "id": "copper-masonry-trait",
+      "modelClass": "building-block",
+      "briefId": "copper-masonry",
+      "variant": "trait",
+      "label": "Блок: спокойный камень и крепления",
+      "representation": "six-face-block-reference",
+      "pattern": "calm",
+      "palette": [
+        "#263334",
+        "#506266",
+        "#8b9996",
+        "#674735",
+        "#af7851",
+        "#d6b08a"
+      ],
+      "boxes": [
+        {
+          "id": "block",
+          "role": "Полный блок",
+          "origin": [
+            -8,
+            0,
+            -8
+          ],
+          "size": [
+            16,
+            16,
+            16
+          ],
+          "material": "stone"
+        }
+      ],
+      "observations": [
+        {
+          "criterion": "tiling",
+          "view": "wall",
+          "observation": "Смещение каменных швов чередуется внутри тайла; медные крепления занимают небольшую площадь.",
+          "question": "Виден ли спокойный рисунок кладки, когда один блок повторён 3×3?"
+        },
+        {
+          "criterion": "materials",
+          "view": "top",
+          "observation": "Верх и низ имеют собственный рисунок; крупные пятна разделяют камень и медь.",
+          "question": "Сохраняется ли роль креплений без сплошной яркой рамки?"
+        }
+      ]
+    },
+    {
+      "id": "copper-masonry-counterexample",
+      "modelClass": "building-block",
+      "briefId": "copper-masonry",
+      "variant": "counterexample",
+      "label": "Блок: рамка и повторяющийся шум",
+      "representation": "six-face-block-reference",
+      "pattern": "noise",
+      "palette": [
+        "#263334",
+        "#506266",
+        "#8b9996",
+        "#674735",
+        "#af7851",
+        "#d6b08a"
+      ],
+      "boxes": [
+        {
+          "id": "block",
+          "role": "Полный блок",
+          "origin": [
+            -8,
+            0,
+            -8
+          ],
+          "size": [
+            16,
+            16,
+            16
+          ],
+          "material": "stone"
+        }
+      ],
+      "observations": [
+        {
+          "criterion": "tiling",
+          "view": "wall",
+          "observation": "Тёмная рамка каждого тайла даёт сильную сетку 3×3; одиночные пиксели повторяются во всей стене.",
+          "question": "Можно ли ослабить границы и объединить шум в каменные пятна?"
+        },
+        {
+          "criterion": "materials",
+          "view": "top",
+          "observation": "Один шумовой рисунок повторён на верхе, низе и боках; назначение грани исчезло.",
+          "question": "Чем верх должен отличаться от боковой кладки?"
+        }
+      ]
+    },
+    {
+      "id": "tide-altar-trait",
+      "modelClass": "decorative-prop",
+      "briefId": "tide-altar",
+      "variant": "trait",
+      "label": "Алтарь: чаша остаётся главным объёмом",
+      "representation": "reference-cuboids",
+      "pattern": "calm",
+      "palette": [
+        "#263334",
+        "#506266",
+        "#8b9996",
+        "#674735",
+        "#af7851",
+        "#d6b08a",
+        "#ac5361",
+        "#edaaa1"
+      ],
+      "boxes": [
+        {
+          "id": "base",
+          "role": "Широкое основание",
+          "origin": [
+            -7,
+            0,
+            -6
+          ],
+          "size": [
+            14,
+            2,
+            12
+          ],
+          "material": "stone"
+        },
+        {
+          "id": "plinth",
+          "role": "Переход к чаше",
+          "origin": [
+            -4,
+            2,
+            -3
+          ],
+          "size": [
+            8,
+            2,
+            6
+          ],
+          "material": "stone"
+        },
+        {
+          "id": "bowl-floor",
+          "role": "Дно чаши",
+          "origin": [
+            -5,
+            4,
+            -4
+          ],
+          "size": [
+            10,
+            1,
+            8
+          ],
+          "material": "copper"
+        },
+        {
+          "id": "bowl-front",
+          "role": "Передний борт",
+          "origin": [
+            -5,
+            5,
+            3
+          ],
+          "size": [
+            10,
+            2,
+            1
+          ],
+          "material": "copper"
+        },
+        {
+          "id": "bowl-back",
+          "role": "Задний борт",
+          "origin": [
+            -5,
+            5,
+            -4
+          ],
+          "size": [
+            10,
+            2,
+            1
+          ],
+          "material": "copper"
+        },
+        {
+          "id": "bowl-left",
+          "role": "Левый борт",
+          "origin": [
+            -5,
+            5,
+            -3
+          ],
+          "size": [
+            1,
+            2,
+            6
+          ],
+          "material": "copper"
+        },
+        {
+          "id": "bowl-right",
+          "role": "Правый борт",
+          "origin": [
+            4,
+            5,
+            -3
+          ],
+          "size": [
+            1,
+            2,
+            6
+          ],
+          "material": "copper"
+        },
+        {
+          "id": "coral-a",
+          "role": "Первый коралл",
+          "origin": [
+            -4,
+            7,
+            -3
+          ],
+          "size": [
+            2,
+            4,
+            2
+          ],
+          "material": "coral"
+        },
+        {
+          "id": "coral-b",
+          "role": "Главный коралл",
+          "origin": [
+            -1,
+            7,
+            -3
+          ],
+          "size": [
+            2,
+            6,
+            2
+          ],
+          "material": "coral"
+        },
+        {
+          "id": "coral-c",
+          "role": "Третий коралл",
+          "origin": [
+            2,
+            7,
+            -2
+          ],
+          "size": [
+            3,
+            3,
+            2
+          ],
+          "material": "coral"
+        },
+        {
+          "id": "front-mark",
+          "role": "Передний акцент",
+          "origin": [
+            -1,
+            2,
+            3
+          ],
+          "size": [
+            2,
+            2,
+            1
+          ],
+          "material": "copper"
+        }
+      ],
+      "observations": [
+        {
+          "criterion": "construction",
+          "view": "front",
+          "observation": "Широкое основание поддерживает чашу, три коралла стоят у задней части и оставляют середину открытой.",
+          "question": "Виден ли рабочий объём чаши между декоративными выступами?"
+        },
+        {
+          "criterion": "volume",
+          "view": "rear-perspective",
+          "observation": "Задний борт и коралловые крепления существуют в объёме; задний ракурс не превращается в пустую пластину.",
+          "question": "Остаётся ли конструкция понятной с тыла?"
+        }
+      ]
+    },
+    {
+      "id": "tide-altar-counterexample",
+      "modelClass": "decorative-prop",
+      "briefId": "tide-altar",
+      "variant": "counterexample",
+      "label": "Алтарь: декор закрывает действие",
+      "representation": "reference-cuboids",
+      "pattern": "noise",
+      "palette": [
+        "#263334",
+        "#506266",
+        "#8b9996",
+        "#674735",
+        "#af7851",
+        "#d6b08a",
+        "#ac5361",
+        "#edaaa1"
+      ],
+      "boxes": [
+        {
+          "id": "base",
+          "role": "Широкое основание",
+          "origin": [
+            -3,
+            0,
+            -3
+          ],
+          "size": [
+            6,
+            2,
+            6
+          ],
+          "material": "stone"
+        },
+        {
+          "id": "plinth",
+          "role": "Переход к чаше",
+          "origin": [
+            -4,
+            2,
+            -3
+          ],
+          "size": [
+            8,
+            2,
+            6
+          ],
+          "material": "stone"
+        },
+        {
+          "id": "bowl-floor",
+          "role": "Дно чаши",
+          "origin": [
+            -5,
+            4,
+            -4
+          ],
+          "size": [
+            10,
+            1,
+            8
+          ],
+          "material": "copper"
+        },
+        {
+          "id": "bowl-front",
+          "role": "Передний борт",
+          "origin": [
+            -5,
+            5,
+            3
+          ],
+          "size": [
+            10,
+            2,
+            1
+          ],
+          "material": "copper"
+        },
+        {
+          "id": "bowl-back",
+          "role": "Задний борт",
+          "origin": [
+            -5,
+            5,
+            -4
+          ],
+          "size": [
+            10,
+            2,
+            1
+          ],
+          "material": "copper"
+        },
+        {
+          "id": "bowl-left",
+          "role": "Левый борт",
+          "origin": [
+            -5,
+            5,
+            -3
+          ],
+          "size": [
+            1,
+            2,
+            6
+          ],
+          "material": "copper"
+        },
+        {
+          "id": "bowl-right",
+          "role": "Правый борт",
+          "origin": [
+            4,
+            5,
+            -3
+          ],
+          "size": [
+            1,
+            2,
+            6
+          ],
+          "material": "copper"
+        },
+        {
+          "id": "coral-a",
+          "role": "Первый коралл",
+          "origin": [
+            -4,
+            7,
+            3
+          ],
+          "size": [
+            3,
+            7,
+            2
+          ],
+          "material": "coral"
+        },
+        {
+          "id": "coral-b",
+          "role": "Главный коралл",
+          "origin": [
+            -1,
+            7,
+            3
+          ],
+          "size": [
+            4,
+            6,
+            2
+          ],
+          "material": "coral"
+        },
+        {
+          "id": "coral-c",
+          "role": "Третий коралл",
+          "origin": [
+            2,
+            7,
+            3
+          ],
+          "size": [
+            3,
+            7,
+            2
+          ],
+          "material": "coral"
+        },
+        {
+          "id": "front-mark",
+          "role": "Передний акцент",
+          "origin": [
+            -1,
+            2,
+            3
+          ],
+          "size": [
+            2,
+            2,
+            1
+          ],
+          "material": "copper"
+        }
+      ],
+      "observations": [
+        {
+          "criterion": "hierarchy",
+          "view": "front",
+          "observation": "Широкие высокие кораллы выставлены перед чашей; рабочая область закрыта, несмотря на то же число частей.",
+          "question": "Куда переместить акцент, чтобы открыть чашу?"
+        },
+        {
+          "criterion": "construction",
+          "view": "right",
+          "observation": "Малое основание и тяжёлый верх выглядят несбалансированно; рисунок не исправляет распределение масс.",
+          "question": "Достаточно ли ширины основания для этого объёма?"
+        }
+      ]
+    },
+    {
+      "id": "tidecaller-crab-trait",
+      "modelClass": "creature",
+      "briefId": "tidecaller-crab",
+      "variant": "trait",
+      "label": "Краб: широкий панцирь и две разные клешни",
+      "representation": "static-creature-reference",
+      "pattern": "calm",
+      "palette": [
+        "#253232",
+        "#674735",
+        "#af7851",
+        "#d6b08a",
+        "#ac5361",
+        "#edaaa1"
+      ],
+      "boxes": [
+        {
+          "id": "body",
+          "role": "Панцирь",
+          "origin": [
+            -6,
+            4,
+            -4
+          ],
+          "size": [
+            12,
+            5,
+            8
+          ],
+          "material": "copper"
+        },
+        {
+          "id": "shell-top",
+          "role": "Верх панциря",
+          "origin": [
+            -5,
+            9,
+            -3.5
+          ],
+          "size": [
+            10,
+            2,
+            7
+          ],
+          "material": "copper"
+        },
+        {
+          "id": "leg-left-0",
+          "role": "Левая опора 0",
+          "origin": [
+            -9,
+            1,
+            -4
+          ],
+          "size": [
+            4,
+            4,
+            2
+          ],
+          "material": "joint"
+        },
+        {
+          "id": "leg-right-0",
+          "role": "Правая опора 0",
+          "origin": [
+            5,
+            1,
+            -4
+          ],
+          "size": [
+            4,
+            4,
+            2
+          ],
+          "material": "joint"
+        },
+        {
+          "id": "leg-left-1",
+          "role": "Левая опора 1",
+          "origin": [
+            -9,
+            1,
+            -1
+          ],
+          "size": [
+            4,
+            4,
+            2
+          ],
+          "material": "joint"
+        },
+        {
+          "id": "leg-right-1",
+          "role": "Правая опора 1",
+          "origin": [
+            5,
+            1,
+            -1
+          ],
+          "size": [
+            4,
+            4,
+            2
+          ],
+          "material": "joint"
+        },
+        {
+          "id": "leg-left-2",
+          "role": "Левая опора 2",
+          "origin": [
+            -9,
+            1,
+            2
+          ],
+          "size": [
+            4,
+            4,
+            2
+          ],
+          "material": "joint"
+        },
+        {
+          "id": "leg-right-2",
+          "role": "Правая опора 2",
+          "origin": [
+            5,
+            1,
+            2
+          ],
+          "size": [
+            4,
+            4,
+            2
+          ],
+          "material": "joint"
+        },
+        {
+          "id": "arm-left",
+          "role": "Крепление большой клешни",
+          "origin": [
+            -7,
+            4,
+            2
+          ],
+          "size": [
+            3,
+            2,
+            5
+          ],
+          "material": "joint"
+        },
+        {
+          "id": "arm-right",
+          "role": "Крепление малой клешни",
+          "origin": [
+            4,
+            4,
+            2
+          ],
+          "size": [
+            3,
+            2,
+            5
+          ],
+          "material": "joint"
+        },
+        {
+          "id": "claw-left",
+          "role": "Ладонь большой клешни",
+          "origin": [
+            -9,
+            3,
+            6
+          ],
+          "size": [
+            5,
+            4,
+            2.5
+          ],
+          "material": "copper"
+        },
+        {
+          "id": "pincer-left",
+          "role": "Внешний палец большой клешни",
+          "origin": [
+            -9,
+            3,
+            8.5
+          ],
+          "size": [
+            1.5,
+            4,
+            4.5
+          ],
+          "material": "copper"
+        },
+        {
+          "id": "pincer-left-inner",
+          "role": "Внутренний палец большой клешни",
+          "origin": [
+            -5.5,
+            3,
+            8.5
+          ],
+          "size": [
+            1.5,
+            4,
+            4.5
+          ],
+          "material": "copper"
+        },
+        {
+          "id": "claw-right",
+          "role": "Ладонь малой клешни",
+          "origin": [
+            4,
+            4,
+            6
+          ],
+          "size": [
+            3,
+            3,
+            2
+          ],
+          "material": "copper"
+        },
+        {
+          "id": "pincer-right",
+          "role": "Внешний палец малой клешни",
+          "origin": [
+            4,
+            4,
+            8
+          ],
+          "size": [
+            1,
+            3,
+            4
+          ],
+          "material": "copper"
+        },
+        {
+          "id": "pincer-right-inner",
+          "role": "Внутренний палец малой клешни",
+          "origin": [
+            6,
+            4,
+            8
+          ],
+          "size": [
+            1,
+            3,
+            4
+          ],
+          "material": "copper"
+        },
+        {
+          "id": "eye-stem-left",
+          "role": "Левый глаз",
+          "origin": [
+            -3,
+            9,
+            2
+          ],
+          "size": [
+            1,
+            3,
+            1
+          ],
+          "material": "joint"
+        },
+        {
+          "id": "eye-stem-right",
+          "role": "Правый глаз",
+          "origin": [
+            2,
+            9,
+            2
+          ],
+          "size": [
+            1,
+            3,
+            1
+          ],
+          "material": "joint"
+        },
+        {
+          "id": "eye-left",
+          "role": "Левая глазная масса",
+          "origin": [
+            -3.5,
+            12,
+            1.5
+          ],
+          "size": [
+            2,
+            1,
+            2
+          ],
+          "material": "joint"
+        },
+        {
+          "id": "eye-right",
+          "role": "Правая глазная масса",
+          "origin": [
+            1.5,
+            12,
+            1.5
+          ],
+          "size": [
+            2,
+            1,
+            2
+          ],
+          "material": "joint"
+        },
+        {
+          "id": "coral-root",
+          "role": "Крепление коралла",
+          "origin": [
+            0,
+            11,
+            -2
+          ],
+          "size": [
+            2,
+            2,
+            2
+          ],
+          "material": "coral"
+        },
+        {
+          "id": "coral-tip",
+          "role": "Один коралловый акцент",
+          "origin": [
+            1,
+            13,
+            -2
+          ],
+          "size": [
+            2,
+            2,
+            2
+          ],
+          "material": "coral"
+        }
+      ],
+      "observations": [
+        {
+          "criterion": "silhouette",
+          "view": "perspective",
+          "observation": "Широкий панцирь, низкие опоры и большая левая клешня выделяют разные массы. Семантические части здесь ещё не rig.",
+          "question": "Узнаётся ли краб по силуэту и видна ли большая клешня в native 64 px?"
+        },
+        {
+          "criterion": "construction",
+          "view": "right",
+          "observation": "Клешни примыкают к передним креплениям, короткие ноги идут от тела к нижнему уровню.",
+          "question": "Понятны ли места крепления в статике до оценки движения?"
+        }
+      ]
+    },
+    {
+      "id": "tidecaller-crab-counterexample",
+      "modelClass": "creature",
+      "briefId": "tidecaller-crab",
+      "variant": "counterexample",
+      "label": "Краб: слабые опоры и оторванные клешни",
+      "representation": "static-creature-reference",
+      "pattern": "noise",
+      "palette": [
+        "#253232",
+        "#674735",
+        "#af7851",
+        "#d6b08a",
+        "#ac5361",
+        "#edaaa1"
+      ],
+      "boxes": [
+        {
+          "id": "body",
+          "role": "Панцирь",
+          "origin": [
+            -6,
+            4,
+            -4
+          ],
+          "size": [
+            12,
+            5,
+            8
+          ],
+          "material": "copper"
+        },
+        {
+          "id": "shell-top",
+          "role": "Верх панциря",
+          "origin": [
+            -5,
+            9,
+            -3.5
+          ],
+          "size": [
+            10,
+            2,
+            7
+          ],
+          "material": "copper"
+        },
+        {
+          "id": "leg-left-0",
+          "role": "Левая опора 0",
+          "origin": [
+            -9,
+            4,
+            -4
+          ],
+          "size": [
+            6,
+            1,
+            2
+          ],
+          "material": "joint"
+        },
+        {
+          "id": "leg-right-0",
+          "role": "Правая опора 0",
+          "origin": [
+            5,
+            4,
+            -4
+          ],
+          "size": [
+            6,
+            1,
+            2
+          ],
+          "material": "joint"
+        },
+        {
+          "id": "leg-left-1",
+          "role": "Левая опора 1",
+          "origin": [
+            -9,
+            4,
+            -1
+          ],
+          "size": [
+            6,
+            1,
+            2
+          ],
+          "material": "joint"
+        },
+        {
+          "id": "leg-right-1",
+          "role": "Правая опора 1",
+          "origin": [
+            5,
+            4,
+            -1
+          ],
+          "size": [
+            6,
+            1,
+            2
+          ],
+          "material": "joint"
+        },
+        {
+          "id": "leg-left-2",
+          "role": "Левая опора 2",
+          "origin": [
+            -9,
+            4,
+            2
+          ],
+          "size": [
+            6,
+            1,
+            2
+          ],
+          "material": "joint"
+        },
+        {
+          "id": "leg-right-2",
+          "role": "Правая опора 2",
+          "origin": [
+            5,
+            4,
+            2
+          ],
+          "size": [
+            6,
+            1,
+            2
+          ],
+          "material": "joint"
+        },
+        {
+          "id": "arm-left",
+          "role": "Крепление большой клешни",
+          "origin": [
+            -7,
+            4,
+            2
+          ],
+          "size": [
+            3,
+            2,
+            5
+          ],
+          "material": "joint"
+        },
+        {
+          "id": "arm-right",
+          "role": "Крепление малой клешни",
+          "origin": [
+            4,
+            4,
+            2
+          ],
+          "size": [
+            3,
+            2,
+            5
+          ],
+          "material": "joint"
+        },
+        {
+          "id": "claw-left",
+          "role": "Ладонь большой клешни",
+          "origin": [
+            -9,
+            3,
+            9
+          ],
+          "size": [
+            3,
+            4,
+            2.5
+          ],
+          "material": "copper"
+        },
+        {
+          "id": "pincer-left",
+          "role": "Внешний палец большой клешни",
+          "origin": [
+            -9,
+            3,
+            11.5
+          ],
+          "size": [
+            1.5,
+            4,
+            4.5
+          ],
+          "material": "copper"
+        },
+        {
+          "id": "pincer-left-inner",
+          "role": "Внутренний палец большой клешни",
+          "origin": [
+            -7.5,
+            3,
+            11.5
+          ],
+          "size": [
+            1.5,
+            4,
+            4.5
+          ],
+          "material": "copper"
+        },
+        {
+          "id": "claw-right",
+          "role": "Ладонь малой клешни",
+          "origin": [
+            4,
+            4,
+            9
+          ],
+          "size": [
+            3,
+            3,
+            2
+          ],
+          "material": "copper"
+        },
+        {
+          "id": "pincer-right",
+          "role": "Внешний палец малой клешни",
+          "origin": [
+            4,
+            4,
+            11
+          ],
+          "size": [
+            1,
+            3,
+            4
+          ],
+          "material": "copper"
+        },
+        {
+          "id": "pincer-right-inner",
+          "role": "Внутренний палец малой клешни",
+          "origin": [
+            6,
+            4,
+            11
+          ],
+          "size": [
+            1,
+            3,
+            4
+          ],
+          "material": "copper"
+        },
+        {
+          "id": "eye-stem-left",
+          "role": "Левый глаз",
+          "origin": [
+            -3,
+            9,
+            2
+          ],
+          "size": [
+            1,
+            3,
+            1
+          ],
+          "material": "joint"
+        },
+        {
+          "id": "eye-stem-right",
+          "role": "Правый глаз",
+          "origin": [
+            2,
+            9,
+            2
+          ],
+          "size": [
+            1,
+            3,
+            1
+          ],
+          "material": "joint"
+        },
+        {
+          "id": "eye-left",
+          "role": "Левая глазная масса",
+          "origin": [
+            -3.5,
+            12,
+            1.5
+          ],
+          "size": [
+            2,
+            1,
+            2
+          ],
+          "material": "joint"
+        },
+        {
+          "id": "eye-right",
+          "role": "Правая глазная масса",
+          "origin": [
+            1.5,
+            12,
+            1.5
+          ],
+          "size": [
+            2,
+            1,
+            2
+          ],
+          "material": "joint"
+        },
+        {
+          "id": "coral-root",
+          "role": "Крепление коралла",
+          "origin": [
+            0,
+            11,
+            -2
+          ],
+          "size": [
+            2,
+            2,
+            2
+          ],
+          "material": "coral"
+        },
+        {
+          "id": "coral-tip",
+          "role": "Один коралловый акцент",
+          "origin": [
+            1,
+            13,
+            -2
+          ],
+          "size": [
+            2,
+            2,
+            2
+          ],
+          "material": "coral"
+        }
+      ],
+      "observations": [
+        {
+          "criterion": "construction",
+          "view": "right",
+          "observation": "Клешни отодвинуты от передних креплений, а длинные тонкие ноги остаются у тела и не доходят до земли.",
+          "question": "Какие соединения и опорные массы нужно восстановить?"
+        },
+        {
+          "criterion": "hierarchy",
+          "view": "front",
+          "observation": "Клешни близки по размеру, шум занимает все материалы; коралл перестаёт быть отдельным акцентом.",
+          "question": "Можно ли вернуть различие основных масс без добавления деталей?"
+        }
+      ]
+    }
+  ]
+}

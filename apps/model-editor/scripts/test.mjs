@@ -1,4 +1,5 @@
 import process from "node:process";
+await import("./art-benchmark.test.mjs");
 await import("./camera.test.ts");
 await import("../worker/mcp.test.ts");
 await import("../worker/continuation.test.ts");

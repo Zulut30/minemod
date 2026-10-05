@@ -25,6 +25,7 @@
 - cuboid-модели, pixel texture atlases, rig и editable Blockbench 5 `.bbmodel`;
 - отдельный экспорт authored 3D-предмета в Minecraft JSON, PNG и `.bbmodel` с локальным интерактивным просмотром;
 - [ArtSpec v1 для пяти классов моделей](docs/production/MODEL_ART_SPEC.md): части, пропорции, материалы и бюджеты до генерации через CLI/MCP;
+- [Художественный reference benchmark](docs/production/ART_REFERENCE_BENCHMARK.md): десять оригинальных учебных контрастов, нейтральные виды и native 32/64 PNG; человеческая и игровая приёмка остаются отдельными;
 - параметрический архетип большого дракона и structural/texture preflight;
 - доверенный каталог интеграций Fabric-библиотек.
 - сохраняемая JSON5-конфигурация с generated boolean/integer/string controls, YACL-экран и кнопка Mod Menu.
