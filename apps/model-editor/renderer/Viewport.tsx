@@ -12,6 +12,7 @@ import {
 import { useStudio } from "./store.ts";
 import type { View } from "../shared/bridge.ts";
 import { frameCubes, cameraSettings, viewUp, type CameraFrame } from "./camera.ts";
+import { faceTextureShader } from "./face-texture.ts";
 export { comparisonFrame } from "./camera.ts";
 
 export type NativePreviews = Record<32 | 64, string>;
@@ -46,6 +47,8 @@ function geometry(cube: Cube, project: EditorProject): THREE.BufferGeometry {
   ];
   const positions: number[] = [],
     uv: number[] = [],
+    facePixels: number[] = [],
+    faceRects: number[] = [],
     indices: number[] = [];
   const binding = project.texturePlan.faces.find((f) => f.cubeId === cube.id)!;
   for (const [index, face] of FACE_NAMES.entries()) {
@@ -54,6 +57,11 @@ function geometry(cube: Cube, project: EditorProject): THREE.BufferGeometry {
     const [u, v, U, V] = binding.uv[face],
       w = project.model.texture.width,
       h = project.model.texture.height;
+    const faceWidth = Math.abs(U - u), faceHeight = Math.abs(V - v);
+    const x0 = u < U ? 0 : faceWidth, x1 = u < U ? faceWidth : 0;
+    const y0 = v < V ? 0 : faceHeight, y1 = v < V ? faceHeight : 0;
+    facePixels.push(x0, y0, x1, y0, x1, y1, x0, y1);
+    for (let vertex = 0; vertex < 4; vertex++) faceRects.push(Math.min(u, U), Math.min(v, V), faceWidth, faceHeight);
     uv.push(
       u / w,
       1 - v / h,
@@ -76,6 +84,8 @@ function geometry(cube: Cube, project: EditorProject): THREE.BufferGeometry {
   const g = new THREE.BufferGeometry();
   g.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
   g.setAttribute("uv", new THREE.Float32BufferAttribute(uv, 2));
+  g.setAttribute("studioPixel", new THREE.Float32BufferAttribute(facePixels, 2));
+  g.setAttribute("studioRect", new THREE.Float32BufferAttribute(faceRects, 4));
   g.setIndex(indices);
   g.computeVertexNormals();
   return g;
@@ -117,6 +127,7 @@ function ItemCube({
   const selected = useStudio((s) => s.selection.includes(cube.id)),
     wire = useStudio((s) => s.wire);
   const g = useMemo(() => geometry(cube, project), [cube, project]);
+  const sampleFace = useMemo(() => faceTextureShader(), []);
   const edges = useMemo(() => new THREE.EdgesGeometry(g), [g]);
   useEffect(
     () => () => {
@@ -144,9 +155,9 @@ function ItemCube({
         }}
       >
         {review?.silhouette ? (
-          <meshBasicMaterial map={texture} color="#000000" alphaTest={0.5} />
+          <meshBasicMaterial map={texture} color="#000000" alphaTest={0.5} onBeforeCompile={sampleFace} />
         ) : (
-          <meshLambertMaterial map={texture} alphaTest={0.5} />
+          <meshLambertMaterial map={texture} alphaTest={0.5} onBeforeCompile={sampleFace} />
         )}
       </mesh>
       {!review && (selected || wire) && (

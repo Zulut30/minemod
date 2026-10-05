@@ -23,6 +23,7 @@ export {
   texturePixels,
   pixelLine,
   MAX_STROKE_POINTS,
+  UV_PACK_LIMITS,
 } from "./texture.ts";
 export type { TextureCommand, PixelPoint } from "./texture.ts";
 import {
@@ -142,6 +143,11 @@ export const CommandSchema = z.discriminatedUnion("type", [
     preserveColors: z.array(z.string().regex(/^#[0-9a-fA-F]{6}$/u)).max(32)
       .refine(colors => new Set(colors.map(color => color.toLowerCase())).size === colors.length,
         "Сохраняемые цвета должны быть уникальны.").optional(),
+  }),
+  z.strictObject({
+    type: z.literal("repackUv"),
+    cubeIds: targets,
+    shared: z.enum(["preserve-exact", "split"]).optional(),
   }),
   z.strictObject({
     type: z.literal("pivot"),
@@ -745,6 +751,7 @@ function applyCommand(
     case "paint":
     case "fill":
     case "uv":
+    case "repackUv":
       applyTexture(p, command);
       break;
     case "lock": {
@@ -843,6 +850,7 @@ const labels: Record<EditorCommand["type"], string> = {
   paint: "Пиксельный штрих",
   fill: "Заливка пикселей",
   uv: "Развёртка UV",
+  repackUv: "Перепаковка UV",
   undo: "Отмена",
   redo: "Повтор",
   brief: "Задание для модели",

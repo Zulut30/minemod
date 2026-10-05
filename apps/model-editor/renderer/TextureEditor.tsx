@@ -146,6 +146,7 @@ export function TextureEditor({ project }: { project: EditorProject }) {
     [zoom, setZoom] = useState(2),
     [face, setFace] = useState<FaceName | "">("");
   const [drawing, setDrawing] = useState(false);
+  const [sharedUv, setSharedUv] = useState<"preserve-exact" | "split">("preserve-exact");
   const canvas = useRef<HTMLCanvasElement>(null),
     overlay = useRef<HTMLCanvasElement>(null),
     scroll = useRef<HTMLDivElement>(null),
@@ -526,6 +527,19 @@ export function TextureEditor({ project }: { project: EditorProject }) {
           ))}
         </select>
       </div>
+      <details className="uv-repack">
+        <summary>Упаковка UV выделения</summary>
+        <p className="hint">Перенести все грани выбранных кубов без изменения рисунка, отражения и масштаба пикселей.</p>
+        <label>Общие UV{" "}<select aria-label="Общие UV при перепаковке" value={sharedUv} disabled={busy || drawing}
+          onChange={e => setSharedUv(e.target.value as "preserve-exact" | "split")}>
+          <option value="preserve-exact">Сохранить одинаковые</option>
+          <option value="split">Разделить поверхности</option>
+        </select></label>
+        <button data-testid="repack-uv" disabled={busy || drawing || !selection.length}
+          onClick={() => { void useStudio.getState().command({ type: "repackUv", cubeIds: selection, shared: sharedUv }); }}>
+          Перепаковать UV
+        </button>
+      </details>
       <div className="texture-scroll" ref={scroll}>
         <div
           className="texture-surface"

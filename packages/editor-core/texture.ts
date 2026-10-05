@@ -3,8 +3,9 @@ import { EditorError } from "./errors.ts";
 export const MAX_STROKE_POINTS = 4096;
 export type TextureCommand = Extract<
   EditorCommand,
-  { type: "paint" | "fill" | "uv" }
+  { type: "paint" | "fill" | "uv" | "repackUv" }
 >;
+export const UV_PACK_LIMITS = Object.freeze({ prefixCells: 100_663_296, placementChecks: 4_000_000 });
 export type PixelPoint = [number, number];
 type Rect = [number, number, number, number];
 function pixelsIn(rect: Rect, width: number, visit: (i: number) => void): void {
@@ -109,6 +110,10 @@ export function applyTexture(
   project: EditorProject,
   command: TextureCommand,
 ): void {
+  if (command.type === "repackUv") {
+    repackUv(project, command);
+    return;
+  }
   if (command.type === "uv") {
     moveUv(project, command);
     return;
@@ -251,5 +256,75 @@ function moveUv(
       result[y * width + x] = source[sy * width + sx]!;
     }
   binding.uv[command.face] = [...next];
+  writePixels(project, result);
+}
+
+function repackUv(project: EditorProject, command: Extract<TextureCommand, { type: "repackUv" }>): void {
+  const { width, height } = project.model.texture, ids = new Set(command.cubeIds);
+  const selected = area(project, id => ids.has(id)), other = area(project, id => !ids.has(id));
+  const source = texturePixels(project);
+  // Защищаем также неиспользуемый рисунок вне выбранных UV.
+  const occupied = Uint8Array.from(source, (color, i) => other[i] || color !== null && !selected[i] ? 1 : 0);
+  type Face = { binding: EditorProject["texturePlan"]["faces"][number]; face: FaceName; old: Rect };
+  type Group = { order: string; left: number; top: number; width: number; height: number; faces: Face[]; destination?: [number, number] };
+  const groups = new Map<string, Group>();
+  for (const binding of project.texturePlan.faces) {
+    if (!ids.has(binding.cubeId)) continue;
+    for (const [name, rect] of Object.entries(binding.uv)) {
+      const left = Math.min(rect[0], rect[2]), top = Math.min(rect[1], rect[3]);
+      const w = Math.abs(rect[2] - rect[0]), h = Math.abs(rect[3] - rect[1]);
+      const key = command.shared === "split" ? binding.cubeId + ":" + name : [left, top, w, h].join(",");
+      const order = binding.cubeId + ":" + name;
+      const face = { binding, face: name as FaceName, old: [...rect] as Rect };
+      const group = groups.get(key);
+      if (group) { group.faces.push(face); if (order < group.order) group.order = order; }
+      else groups.set(key, { order, left, top, width: w, height: h, faces: [face] });
+    }
+  }
+  const ordered = [...groups.values()].sort((a, b) => b.height - a.height || b.width - a.width || (a.order < b.order ? -1 : a.order > b.order ? 1 : 0));
+  const stride = width + 1, prefix = new Uint32Array(stride * (height + 1));
+  let prefixCells = 0, placementChecks = 0;
+  const exhausted = () => { throw new EditorError("UV_PACK_BUDGET", "Перепаковка достигла предела вычислений. Выберите меньше поверхностей."); };
+  for (const group of ordered) {
+    prefixCells += width * height;
+    if (prefixCells > UV_PACK_LIMITS.prefixCells) exhausted();
+    prefix.fill(0);
+    for (let y = 0; y < height; y++) {
+      let row = 0;
+      for (let x = 0; x < width; x++) {
+        row += occupied[y * width + x]!;
+        prefix[(y + 1) * stride + x + 1] = prefix[y * stride + x + 1]! + row;
+      }
+    }
+    placement: for (let y = 0; y + group.height <= height; y++) for (let x = 0; x + group.width <= width; x++) {
+      if (++placementChecks > UV_PACK_LIMITS.placementChecks) exhausted();
+      const left = Math.max(0, x - 1), top = Math.max(0, y - 1);
+      const right = Math.min(width, x + group.width + 1), bottom = Math.min(height, y + group.height + 1);
+      const used = prefix[bottom * stride + right]! - prefix[top * stride + right]!
+        - prefix[bottom * stride + left]! + prefix[top * stride + left]!;
+      if (used) continue;
+      group.destination = [x, y];
+      for (let v = y; v < y + group.height; v++) for (let u = x; u < x + group.width; u++) occupied[v * width + u] = 1;
+      break placement;
+    }
+    if (!group.destination) throw new EditorError("UV_PACK_FULL", "Не хватает свободного места с отступом 1 пиксель. Разделите выделение; рисунок сохранён.");
+  }
+  const placements = ordered.flatMap(group => group.faces.map(face => {
+    const [x, y] = group.destination!, [u0, v0, u1, v1] = face.old;
+    const rect: Rect = [u0 > u1 ? x + group.width : x, v0 > v1 ? y + group.height : y,
+      u0 > u1 ? x : x + group.width, v0 > v1 ? y : y + group.height];
+    return { ...face, rect };
+  }));
+  if (placements.every(face => face.rect.every((v, i) => v === face.old[i])))
+    throw new EditorError("NO_CHANGE", "UV уже размещены в этих позициях.");
+  const result = [...source];
+  for (let i = 0; i < result.length; i++) if (selected[i] && !other[i]) result[i] = null;
+  for (const group of ordered) {
+    const [x, y] = group.destination!;
+    for (let v = 0; v < group.height; v++) for (let u = 0; u < group.width; u++)
+      result[(y + v) * width + x + u] = source[(group.top + v) * width + group.left + u]!;
+  }
+  // Публикуем план только после размещения всех групп. EditorSession дополнительно обеспечивает rollback/history.
+  for (const face of placements) face.binding.uv[face.face] = face.rect;
   writePixels(project, result);
 }

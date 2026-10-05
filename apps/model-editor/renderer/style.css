@@ -795,6 +795,10 @@ select {
   background: var(--surface-hover);
 }
 .color-preservation { margin: 10px 0; }
+.uv-repack { padding: 6px 12px; border-bottom: 1px solid var(--border); }
+.uv-repack summary { font-size: 12px; cursor: pointer; }
+.uv-repack label { display: inline-flex; align-items: center; gap: 6px; margin-right: 8px; font-size: 12px; }
+.uv-repack button { padding: 8px 12px; }
 .color-preservation summary { cursor: pointer; font-size: 12px; }
 .preserve-color-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
 .preserve-color-list label { display: flex; align-items: center; gap: 5px; font-size: 10px; cursor: pointer; }

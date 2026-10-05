@@ -499,6 +499,41 @@ try {
   assert.equal((budgetDenied.data.error as {code:string}).code,"REPAIR_BUDGET");
   assert.deepEqual(session.state().project.texturePlan,repairBefore.project.texturePlan);
   assert.equal((await clients[0]!.callTool({name:"studio_repair_reset",arguments:{}})).isError,true);
+  // Перепаковка через настоящий HTTP; предыдущая последовательность сохраняет свои revision assertions.
+  session = new EditorSession({ ...repairBefore.project, projectId: randomUUID() });
+  const packBefore = session.state(), packPart = packBefore.project.parts.find(p => !p.locked)!;
+  const packCommand: EditorCommand = { type: "repackUv", cubeIds: packPart.cubeIds, shared: "split" };
+  const packPreview = await call(0, "studio_changes_preview", mutation([packCommand]));
+  assert.equal(packPreview.error, undefined); assert.deepEqual(session.state(), packBefore);
+  const packArgs = { projectId: packBefore.project.projectId, proposalId: packPreview.data.proposalId };
+  assert.equal((await call(0, "studio_changes_apply", packArgs)).error, undefined);
+  const packed = session.state();
+  assert.deepEqual(packed.project.model, packBefore.project.model);
+  assert.notDeepEqual(packed.project.texturePlan, packBefore.project.texturePlan);
+  assert.equal((await call(0, "studio_changes_apply", packArgs)).error, undefined);
+  assert.deepEqual(session.state(), packed, "Повторный apply не перепаковывает второй раз");
+  const packRef = { projectId: packed.project.projectId, expectedRevision: packed.revision };
+  const packedExport = await call(0, "studio_asset_export", { ...packRef, format: "bundle-v1" });
+  assert.equal(packedExport.error, undefined);
+  assert.deepEqual(JSON.parse(verifyAssetBundleV1(packedExport.data.bundle).files[3]!.content), assetRequest(packed.project));
+  assert.deepEqual(session.state(), packed);
+  const stalePack = await call(0, "studio_changes_preview", { ...mutation([packCommand]), expectedRevision: packBefore.revision });
+  assert.equal((stalePack.data.error as { code: string }).code, "REVISION_CONFLICT");
+  assert.deepEqual(session.state(), packed);
+  assert.equal((await call(0, "studio_history_undo", { ...packRef, key: randomUUID() })).error, undefined);
+  assert.deepEqual(session.state().project, packBefore.project);
+  for (const bad of [{ ...packCommand, shared: "rotate" }, { ...packCommand, placementChecks: 100_000_000 }]) {
+    const beforeBad = session.state();
+    assert((await clients[0]!.callTool({ name: "studio_changes_preview", arguments: mutation([bad as EditorCommand]) })).isError);
+    assert.deepEqual(session.state(), beforeBad);
+  }
+  const packRepair = session.state();
+  session.setRepair({ projectId: packRepair.project.projectId, expectedRevision: packRepair.revision,
+    repair: { id: randomUUID(), note: "Перенести только заданную грань", partIds: [packPart.id], area: "uv", face: "north", maxIterations: 2 } });
+  const repairPackBefore = session.state();
+  const repairPack = await call(0, "studio_changes_preview", mutation([packCommand]));
+  assert.equal((repairPack.data.error as { code: string }).code, "REPAIR_SCOPE");
+  assert.deepEqual(session.state(), repairPackBefore);
   process.stdout.write(
     "Studio MCP: real HTTP clients, authentication, origins, byte limits, preview isolation, conflicts, locks, human history, replay and bounded export PASS\n",
   );

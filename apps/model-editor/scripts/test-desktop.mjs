@@ -33,6 +33,7 @@ import { checkConceptsDesktop } from "./check-concepts-desktop.mjs";
 import { checkAgentBlockoutsDesktop } from "./check-agent-blockouts-desktop.mjs";
 import { checkContinuationDesktop } from "./check-continuation-desktop.mjs";
 import { checkAgentStatusDesktop } from "./check-agent-status-desktop.mjs";
+import { checkUvRepackDesktop } from "./check-uv-repack-desktop.mjs";
 
 const appDir = resolve(dirname(fileURLToPath(import.meta.url)), ".."),
   repo = resolve(appDir, "../..");
@@ -414,6 +415,7 @@ try {
   const geometry = await checkGeometryDesktop(options, output);
   const camera = await checkCameraDesktop(options, output);
   const discovery = await checkDiscoveryDesktop(options, output);
+  const uvRepack = await checkUvRepackDesktop(options, output);
   await writeFile(
     join(output, "report.json"),
     JSON.stringify(
@@ -444,6 +446,7 @@ try {
         geometry,
         camera,
         discovery,
+        uvRepack,
         checks: [
           "real texture render",
           "resize",

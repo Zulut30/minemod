@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { z } from "zod";
 import {
   CommandSchema, MutationSchema, CURRENT_PROJECT_VERSION, MAX_COMMAND_BYTES,
-  MAX_PROJECT_BYTES, MAX_STROKE_POINTS, MAX_VARIANTS, MAX_AGENT_DRAFTS, MAX_REPAIR_ITERATIONS, MAX_CONCEPTS, MAX_CONCEPT_BYTES, MAX_CONCEPT_DIMENSION, cubes,
+  MAX_PROJECT_BYTES, MAX_STROKE_POINTS, UV_PACK_LIMITS, MAX_VARIANTS, MAX_AGENT_DRAFTS, MAX_REPAIR_ITERATIONS, MAX_CONCEPTS, MAX_CONCEPT_BYTES, MAX_CONCEPT_DIMENSION, cubes,
   type EditorState,
 } from "@mcdev/editor-core";
 import { VIEWS } from "../shared/bridge.ts";
@@ -40,6 +40,7 @@ export const AgentMutationSchema = agentMutationSchema.meta({ properties: compat
 export const STUDIO_LIMITS = Object.freeze({
   cubes: 256, commands: 32, strokePoints: MAX_STROKE_POINTS, brushSize: 8,
   paletteColors: 32, uvPadding: 1, requestBytes: MAX_COMMAND_BYTES,
+  uvRepackPrefixCells: UV_PACK_LIMITS.prefixCells, uvRepackPlacementChecks: UV_PACK_LIMITS.placementChecks,
   responseBytes: 2_097_152, projectBytes: MAX_PROJECT_BYTES, variants: MAX_VARIANTS,
   agentDrafts: MAX_AGENT_DRAFTS,
   proposals: 64, proposalTtlSeconds: 300, captureWidth: 1024, captureHeight: 768,
@@ -82,12 +83,14 @@ export function recovery(code: string) {
     SHARED_UV: "Прочитайте UV и выделите независимую поверхность; общий рисунок других частей защищён.",
     UV_BOUNDS: "Прочитайте фактический размер атласа и задайте rect внутри него.",
     UV_COLLISION: "Оставьте один пиксель между UV-областями; перенос рисунка выполняется вместе с гранью.",
+    UV_PACK_FULL: "Выберите меньше поверхностей или сохраните одинаковые общие UV через shared=preserve-exact. Размер атласа остаётся прежним.",
+    UV_PACK_BUDGET: "Уменьшите выделение; вычислительный предел перепаковки применяется ко всей команде. Повтор того же входа не помогает.",
     PALETTE_FULL: "Используйте существующий цвет палитры; атлас допускает не более 32 цветов.",
     PIXEL_BOUNDS: "Используйте целочисленный пиксель внутри фактических width/height атласа.",
     EMPTY_PAINT: "Выберите seed внутри UV выделенной поверхности.",
     BONE_LIMIT: "Кость допускает не более 64 кубов; уменьшите добавление или дублирование.",
     EMPTY_MODEL: "Для экспорта требуется хотя бы один куб.",
-    ATLAS_FULL: "В атласе нет свободного места; перепаковка не реализована. Уменьшите запрос.",
+    ATLAS_FULL: "Уменьшите запрос на добавление кубов: их box-UV требует свободного места в атласе.",
     NO_CHANGE: "Сцена уже соответствует запросу; прочитайте её и не повторяйте ту же правку.",
     EMPTY_HISTORY: "Нет действия для undo/redo; продолжите с текущей сценой.",
     HISTORY_BATCH: "undo/redo выполняются отдельным запросом без других команд.",
@@ -121,6 +124,7 @@ export function contract(definitions: Map<string, ToolDefinition>) {
     agentCommands: agentOptions.map((s) => s.shape.type.value),
     humanOnlyCommands: HUMAN_COMMANDS,
     repairWorkflow: "Пользователь задаёт repair в Studio. При активном задании scope/face и бюджет применяются к каждой агентной транзакции; preview/replay не расходуют бюджет. Новый case задаёт только пользователь.",
+    uvRepackWorkflow: "repackUv переносит все грани выбранных cubeIds без ресайза и поворота. shared=preserve-exact (default) сохраняет одинаковые общие UV; split разделяет поверхности. Другие UV и неиспользуемый рисунок защищены, padding минимум 1 px. Нехватка места или вычислительный предел отвергает всю команду; размер атласа прежний. Во время active repair используйте разрешённый адресный uv. Сравните обзор и экспорт после применения.",
     conceptWorkflow: "Прочитайте design.brief и design.concepts; studio_view_capture с conceptId показывает исходное 2D направление в ограниченном кадре. Пользователь импортирует PNG и указывает права; эти сведения не являются проверкой лицензии или готовности 3D. Концепты не попадают в game asset bundle/JAR.",
     variantWorkflow: "draftVariant добавляет снимок текущей сцены как ИИ-черновик. Вход содержит новый UUID, label до 32 и note до 300 символов; модель или approval во входе запрещены. Максимум три ИИ-черновика и четыре снимка всего. Существующие снимки неизменяемы; restore/delete/checkpoint остаются ручными. Во время адресного repair создание черновика запрещено. Проверка различия размещённых кубоидов не является художественной оценкой.",
     continuationWorkflow: "Пауза задаётся пользователем: новые tool calls отклоняются, ожидающие команды и capture отменяются, прежние proposals удаляются. Scene resource остаётся доступен и показывает agentAccess.state/epoch. После resume/reconnect сначала прочитайте живые projectId/revision и создайте новый preview. Точный payload/key повторяет уже применённую команду без дублирования в пределах последних 100 ключей текущего EditorSession; изменённый payload требует нового UUID. Stop/перезапуск меняют endpoint/token; перезапуск процесса не сохраняет replay cache. Ни пауза, ни cancellation не откатывают уже применённую атомарную правку.",
@@ -131,7 +135,7 @@ export function contract(definitions: Map<string, ToolDefinition>) {
     errors: Object.fromEntries(["UNKNOWN_TOOL", "INVALID_ARGUMENTS", "PROJECT_CONFLICT", "REVISION_CONFLICT",
       "KEY_CONFLICT", "PROPOSAL_EXPIRED", "PROPOSAL_LIMIT", "LOCKED", "HUMAN_ONLY", "HUMAN_HISTORY",
       "TARGET", "DUPLICATE_ID", "VARIANT_NOT_FOUND", "VARIANT_ID", "VARIANT_LIMIT", "VARIANT_DRAFT_LIMIT", "VARIANT_GEOMETRY_DUPLICATE", "BOUNDS", "ROTATION", "SHARED_UV", "UV_BOUNDS",
-      "UV_COLLISION", "PALETTE_FULL", "PIXEL_BOUNDS", "EMPTY_PAINT", "BONE_LIMIT", "EMPTY_MODEL",
+      "UV_COLLISION", "UV_PACK_FULL", "UV_PACK_BUDGET", "PALETTE_FULL", "PIXEL_BOUNDS", "EMPTY_PAINT", "BONE_LIMIT", "EMPTY_MODEL",
       "ATLAS_FULL", "NO_CHANGE", "EMPTY_HISTORY", "HISTORY_BATCH", "SIZE_LIMIT",
       "OUTPUT_LIMIT", "DISCONNECTED", "AGENT_PAUSED", "REQUEST_CANCELLED", "REPAIR_SCOPE", "REPAIR_TARGET", "REPAIR_BUDGET", "REPAIR_PRESERVATION", "CONCEPT_NOT_FOUND", "CONCEPT_MISSING", "CONCEPT_INTEGRITY"].map((code) => [code, recovery(code)])),
     workflow: ["tools/list and resources/list", "studio_project_inspect and studio_selection_get",

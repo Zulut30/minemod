@@ -1,7 +1,7 @@
 {
   "name": "@mcdev/model-editor",
   "productName": "MineMod Studio",
-  "version": "0.20.0",
+  "version": "0.21.0",
   "private": true,
   "type": "module",
   "license": "Apache-2.0",
@@ -21,6 +21,7 @@
     "verify:blockouts": "node scripts/run-agent-blockouts-desktop.mjs",
     "verify:continuation": "node scripts/run-continuation-desktop.mjs",
     "verify:agent-status": "node scripts/run-agent-status-desktop.mjs",
+    "verify:uv-repack": "node scripts/run-uv-repack-desktop.mjs",
     "verify:codex-session": "node --experimental-strip-types scripts/verify-codex-session.mjs",
     "verify:claude-session": "node --experimental-strip-types scripts/verify-claude-session.mjs",
     "test:concepts": "node --experimental-strip-types worker/concept-files.test.ts"

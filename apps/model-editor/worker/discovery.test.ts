@@ -101,7 +101,12 @@ try {
   }
   assert.deepEqual(contracts.humanOnlyCommands, HUMAN_COMMANDS);
   for (const human of HUMAN_COMMANDS) assert(!advertised.includes(human));
-  for (const required of ["pivot", "snap", "paint", "uv", "redo", "draftVariant"]) assert(advertised.includes(required));
+  for (const required of ["pivot", "snap", "paint", "uv", "repackUv", "redo", "draftVariant"]) assert(advertised.includes(required));
+  assert.deepEqual(byCommand("repackUv").shared.enum, ["preserve-exact", "split"]);
+  assert.equal(byCommand("repackUv").cubeIds.maxItems, 256);
+  assert.equal(contracts.limits.uvRepackPrefixCells, 100_663_296);
+  assert.equal(contracts.limits.uvRepackPlacementChecks, 4_000_000);
+  assert(client.getInstructions()!.includes("UV_PACK_BUDGET"));
   assert.equal(byCommand("draftVariant").label.maxLength,32);
   assert.equal(byCommand("draftVariant").note.maxLength,300);
   assert.equal(contracts.limits.agentDrafts,3);
