@@ -138,14 +138,17 @@ export function ReviewBoard({
       </div>
       <div className="review-readability">
         <div>
+          <div className="review-preview-image">
           {silhouette && (
             <img src={silhouette} width={64} height={64} alt="Силуэт спереди" />
           )}
+          </div>
           <span>
             Силуэт<small>Форма без цвета</small>
           </span>
         </div>
         <div>
+          <div className="review-preview-image">
           {small && (
             <img
               src={small}
@@ -154,11 +157,13 @@ export function ReviewBoard({
               alt="Три четверти на 32 пикселях"
             />
           )}
+          </div>
           <span>
             32 px<small>Крупные акценты</small>
           </span>
         </div>
         <div>
+          <div className="review-preview-image">
           {thumbs.perspective && (
             <img
               src={thumbs.perspective}
@@ -167,6 +172,7 @@ export function ReviewBoard({
               alt="Три четверти на 64 пикселях"
             />
           )}
+          </div>
           <span>
             64 px<small>Рисунок и контраст</small>
           </span>

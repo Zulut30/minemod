@@ -1554,6 +1554,11 @@ select {
   background: var(--canvas);
   flex-shrink: 0;
 }
+.review-preview-image {
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+}
 .review-readability span {
   font-size: 11px;
   color: var(--text);

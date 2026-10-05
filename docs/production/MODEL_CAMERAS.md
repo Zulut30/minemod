@@ -22,6 +22,8 @@ Square thumbnails используют тот же расчёт при 64×64. N
 
 ## Проверки
 
+После исходного evidence 023 обнаружена отдельная гонка layout при загрузке миниатюр четырёхстороннего обзора: поздний hidden screenshot уже корректен, а первый MCP PNG может обрезать предмет. Studio 0.14.1 резервирует место до загрузки изображений. [Отрицательный witness 0.14.0, исправленный PNG и hosted статус](CAPTURE_LAYOUT_FIX.md) сохраняются отдельно; прежний camera projection proof не считается проверкой этой гонки.
+
 - Pure camera suite проецирует **31 968 углов** через настоящий pinned Three.js: девять preset names, четыре aspect ratios, полный предмет/часть/крайние pivot и inflate/общую рамку. Проверяются NDC bounds, near/far, одинаковый zoom, up vectors, alias и отсутствие mutation snapshots.
 - Hidden packaged E2E выполняет реальный orbit и pan через CDP собственного окна, затем снимает все ракурсы через публичный HTTP MCP. Проверяются textured pixels, идентичность alias PNG, сохранность фактической ручной камеры и документа, fit, top/bottom и компактный toolbar.
 - Три пары сравнения source/working используют одинаковую фактическую camera matrix, показывая разные PNG после правки геометрии. Их hashes входят в [evidence](evidence/cameras-023.json).

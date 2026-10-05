@@ -1,4 +1,4 @@
-/* global window, document, getComputedStyle */
+/* global window, document, getComputedStyle, Image */
 import { _electron as electron } from "playwright";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
@@ -235,6 +235,39 @@ export async function checkReviewDesktop(options, output) {
     assert.equal(data.readUInt32BE(16), 1024);
     assert.equal(data.readUInt32BE(20), 768);
     await writeFile(join(root, "mcp-review.png"), data);
+    // Проверяем именно возвращаемый PNG: более поздний capturePage может уже
+    // скрыть гонку layout/resize и показать целую модель после обрезанного MCP кадра.
+    const captureLayout = await application.evaluate(async ({ BrowserWindow }) => {
+      const captureWindow = BrowserWindow.getAllWindows().find(w => w.webContents.getURL().endsWith("?capture=1"));
+      return JSON.parse(await captureWindow.webContents.executeJavaScript(`JSON.stringify({
+        width: innerWidth, height: innerHeight,
+        canvases: Array.from(document.querySelectorAll('.review-angle'), angle => {
+          const r = angle.querySelector('canvas').getBoundingClientRect();
+          return {view: angle.dataset.view, x:r.x, y:r.y, width:r.width, height:r.height};
+        })
+      })`));
+    });
+    const returnedFrame = await page.evaluate(async ({ png, layout }) => {
+      const image = new Image(); image.src = `data:image/png;base64,${png}`; await image.decode();
+      const bitmap = document.createElement("canvas"); bitmap.width = image.naturalWidth; bitmap.height = image.naturalHeight;
+      const ctx = bitmap.getContext("2d"); ctx.drawImage(image, 0, 0);
+      const pixels = ctx.getImageData(0, 0, bitmap.width, bitmap.height).data;
+      const sx = bitmap.width / layout.width, sy = bitmap.height / layout.height;
+      return layout.canvases.map(c => {
+        const x0 = Math.ceil(c.x*sx), y0 = Math.ceil(c.y*sy), x1 = Math.floor((c.x+c.width)*sx), y1 = Math.floor((c.y+c.height)*sy);
+        let left=x1, top=y1, right=x0, bottom=y0, painted=0;
+        for(let y=y0;y<y1;y++) for(let x=x0;x<x1;x++) {
+          const i=(y*bitmap.width+x)*4;
+          if(Math.max(pixels[i],pixels[i+1],pixels[i+2])>95) {
+            painted++; left=Math.min(left,x); right=Math.max(right,x); top=Math.min(top,y); bottom=Math.max(bottom,y);
+          }
+        }
+        return {view:c.view, painted, margins:[left-x0,top-y0,x1-right-1,y1-bottom-1]};
+      });
+    }, { png: reviewed.content[1].data, layout: captureLayout });
+    assert.equal(returnedFrame.length, 4);
+    for (const frame of returnedFrame) assert(frame.painted>20 && frame.margins.every(m=>m>=4),
+      `Returned ${frame.view} PNG must include both tip and pommel with margins: ${JSON.stringify(frame)}`);
     assert.deepEqual((await inspect()).project, before.project);
     assert.equal((await inspect()).revision, before.revision);
     assert.equal(
@@ -265,11 +298,13 @@ export async function checkReviewDesktop(options, output) {
         "thumbnail framing independent of panel aspect ratio",
         "compact review",
         "bounded MCP review PNG",
+        "returned MCP PNG contains whole geometry with margins in all four panels",
         "read-only scene and manual camera",
         "project conflict rejected",
       ],
       textContrast: visuals.textContrast,
       activeContrast: visuals.activeContrast,
+      returnedFrame,
     };
     await writeFile(join(root, "report.json"), JSON.stringify(report, null, 2));
     return report;

@@ -1,0 +1,398 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 23,
+  "kind": "renderer-followup",
+  "status": "PARTIAL",
+  "checkedAtUtc": "2026-10-05T15:11:07.091Z",
+  "studioVersion": "0.14.1",
+  "node": "24.21.0",
+  "scope": "Reserve preview layout before image loading; regression checks returned MCP PNG, not later screenshot",
+  "sourceHashes": [
+    {
+      "path": "apps/model-editor/package.json",
+      "bytes": 1531,
+      "sha256": "bd220050c3f920a8968cd86b9d97cef5b3f3a3156db1d4f21f7cf5cfe423dcb5"
+    },
+    {
+      "path": "apps/model-editor/renderer/ReviewBoard.tsx",
+      "bytes": 5755,
+      "sha256": "7c5bfbb0f3713df804cbe79363196d024b570e5ce76dbe1c5ff5e4e212d6b942"
+    },
+    {
+      "path": "apps/model-editor/renderer/style.css",
+      "bytes": 31256,
+      "sha256": "c3c4532eb4fc2b451cfe6912f46854578e080c7ac9ba7fb642b04bc4f04fc1e0"
+    },
+    {
+      "path": "apps/model-editor/scripts/check-review-desktop.mjs",
+      "bytes": 13053,
+      "sha256": "32056be7d0776a1fe3434d8b4d0bc41cb0adbf12f976be3bcbbd44e526e294eb"
+    }
+  ],
+  "package": {
+    "metadata": {
+      "path": "output/model-editor/latest-build.json",
+      "bytes": 328,
+      "sha256": "22ac78a5ef511aa6947cbe4ce26f81ead85025e783f10f271581a3e852c23eab"
+    },
+    "executable": {
+      "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.14.1\\a8b1d98e\\MineMod Studio-win32-x64\\MineMod Studio.exe",
+      "bytes": 245726208,
+      "sha256": "708faeb6fc27232cea7e0664ebd7375e3d3c3fbe76337d30e150cdac27cc9133"
+    },
+    "asar": {
+      "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.14.1\\a8b1d98e\\MineMod Studio-win32-x64\\resources\\app.asar",
+      "bytes": 3582806,
+      "sha256": "d920e8ba168e9d8d5a9d214f991a27106bfc445ffa58f3d75966993ba70c1ad8"
+    }
+  },
+  "local": {
+    "status": "PASS",
+    "oldFailure": {
+      "status": "EXPECTED_FAILURE",
+      "package": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.14.0\\155b6429\\MineMod Studio-win32-x64\\MineMod Studio.exe",
+      "reason": "Returned front PNG must include both tip and pommel with margins: {\"view\":\"front\",\"painted\":4164,\"margins\":[205,22,205,0]}"
+    },
+    "returnedFrame": [
+      {
+        "view": "front",
+        "painted": 3296,
+        "margins": [
+          210,
+          19,
+          210,
+          20
+        ]
+      },
+      {
+        "view": "side",
+        "painted": 870,
+        "margins": [
+          237,
+          19,
+          236,
+          19
+        ]
+      },
+      {
+        "view": "back",
+        "painted": 2647,
+        "margins": [
+          210,
+          19,
+          210,
+          21
+        ]
+      },
+      {
+        "view": "perspective",
+        "painted": 2705,
+        "margins": [
+          218,
+          21,
+          217,
+          21
+        ]
+      }
+    ],
+    "reviewReport": {
+      "status": "PASS",
+      "hidden": true,
+      "checks": [
+        "dark text and active control contrast",
+        "four independent views with common framing",
+        "real alpha silhouette",
+        "native square 64px render and nearest 32px preview",
+        "thumbnail framing independent of panel aspect ratio",
+        "compact review",
+        "bounded MCP review PNG",
+        "returned MCP PNG contains whole geometry with margins in all four panels",
+        "read-only scene and manual camera",
+        "project conflict rejected"
+      ],
+      "textContrast": 14.980762409476815,
+      "activeContrast": 8.972271758994312,
+      "returnedFrame": [
+        {
+          "view": "front",
+          "painted": 3296,
+          "margins": [
+            210,
+            19,
+            210,
+            20
+          ]
+        },
+        {
+          "view": "side",
+          "painted": 870,
+          "margins": [
+            237,
+            19,
+            236,
+            19
+          ]
+        },
+        {
+          "view": "back",
+          "painted": 2647,
+          "margins": [
+            210,
+            19,
+            210,
+            21
+          ]
+        },
+        {
+          "view": "perspective",
+          "painted": 2705,
+          "margins": [
+            218,
+            21,
+            217,
+            21
+          ]
+        }
+      ]
+    },
+    "related": {
+      "cameraStatus": "PASS",
+      "views": 9,
+      "repairStatus": "PASS",
+      "captures": 5,
+      "checks": 17
+    },
+    "files": [
+      {
+        "path": "output/playwright/review-frame-fix-3b4771ca/negative.json",
+        "bytes": 340,
+        "sha256": "d6e5e63af260001458caf1033a381985bb7f2259cbe7ecd22bb7ea6d57745e39"
+      },
+      {
+        "path": "output/playwright/review-frame-fix-3b4771ca/summary.json",
+        "bytes": 1795,
+        "sha256": "8b829dca26921d9225cafb4c799fa5722946d28604bd96980e7f5e56e65d54e2"
+      },
+      {
+        "path": "output/playwright/review-frame-fix-3b4771ca/negative/review/compact-review.png",
+        "bytes": 275947,
+        "sha256": "96ed4c0200f1dce3c67f8f964aa1d3276a31cf4621d015c5657c05ec713a4b54"
+      },
+      {
+        "path": "output/playwright/review-frame-fix-3b4771ca/negative/review/dark-review.png",
+        "bytes": 222705,
+        "sha256": "d5ce6186046e1ec7e4b1d35a78e3468d113ecf432eddbaff95d2e25c18789044"
+      },
+      {
+        "path": "output/playwright/review-frame-fix-3b4771ca/negative/review/mcp-review.png",
+        "bytes": 75110,
+        "sha256": "25e0853a63c3769fe255a3691b4aa3aa68d87af7f2f9f2a341c54705f07ec7c0"
+      },
+      {
+        "path": "output/playwright/review-frame-fix-3b4771ca/fixed/review/compact-review.png",
+        "bytes": 275725,
+        "sha256": "7c059f3c2bf85e2641b9cf4c9b69b805443da3edf77292380de08b72b2e85bba"
+      },
+      {
+        "path": "output/playwright/review-frame-fix-3b4771ca/fixed/review/dark-review.png",
+        "bytes": 222679,
+        "sha256": "399ce32baf1f3b992a553b82791fd43335b2cb464adde8a81478c9e3c4237c6e"
+      },
+      {
+        "path": "output/playwright/review-frame-fix-3b4771ca/fixed/review/mcp-review.png",
+        "bytes": 72555,
+        "sha256": "3f5b27f193a7daf4968d84be7d68da0d4fdd04c0a9813c339c0d399942a0ee5c"
+      },
+      {
+        "path": "output/playwright/review-frame-fix-3b4771ca/fixed/review/report.json",
+        "bytes": 1150,
+        "sha256": "26f7f1fc46741a911a251f8281c6c2ca98b769a0fe17e3c1e0709b9a99cdcbb9"
+      },
+      {
+        "path": "output/playwright/review-frame-related-fe018533/summary.json",
+        "bytes": 13074,
+        "sha256": "dfa7737c1b02024b4714bc15dd66a7bbe9c6675809bdbcc7f290a694e05940f9"
+      },
+      {
+        "path": "output/playwright/review-frame-related-fe018533/repair/after-1-review.png",
+        "bytes": 72295,
+        "sha256": "d846003c0890a0697d750932b445dec7b2b7bdf39e1ddc4ce5f113dc028641fc"
+      },
+      {
+        "path": "output/playwright/review-frame-related-fe018533/repair/after-2-review.png",
+        "bytes": 71965,
+        "sha256": "6830dae613c45cae9d88f33b8de092cb8ec1bfc3e295355a31cba3c6c515a971"
+      },
+      {
+        "path": "output/playwright/review-frame-related-fe018533/repair/before-review.png",
+        "bytes": 72555,
+        "sha256": "3f5b27f193a7daf4968d84be7d68da0d4fdd04c0a9813c339c0d399942a0ee5c"
+      },
+      {
+        "path": "output/playwright/review-frame-related-fe018533/repair/material-review.png",
+        "bytes": 71959,
+        "sha256": "55f3db7380f22a720e1c972fc93f8dcdf6fc00f6aecd313864030cf527172673"
+      },
+      {
+        "path": "output/playwright/review-frame-related-fe018533/repair/repair-panel.png",
+        "bytes": 349791,
+        "sha256": "98ef3034049f5354dfb17bafa76e47b0ba30bb9f770cfda5e99da26a47928790"
+      },
+      {
+        "path": "output/playwright/review-frame-related-fe018533/repair/report.json",
+        "bytes": 1910,
+        "sha256": "96727ef24d4349f809d2ef204cd997a9492902bb4837a73223d5c2392899235b"
+      },
+      {
+        "path": "output/playwright/review-frame-related-fe018533/repair/uv-review.png",
+        "bytes": 71959,
+        "sha256": "55f3db7380f22a720e1c972fc93f8dcdf6fc00f6aecd313864030cf527172673"
+      },
+      {
+        "path": "output/playwright/review-frame-related-fe018533/camera/back.png",
+        "bytes": 33671,
+        "sha256": "1615931871538c46ce88214caf832f5a593ba6c580207ba31ee971887af9301b"
+      },
+      {
+        "path": "output/playwright/review-frame-related-fe018533/camera/bottom.png",
+        "bytes": 33814,
+        "sha256": "1634ec6903f6bfb0805c551e1fbd3ce5a575ecfe3a3c5940e0177a560a0de468"
+      },
+      {
+        "path": "output/playwright/review-frame-related-fe018533/camera/front.png",
+        "bytes": 35328,
+        "sha256": "6d878cee8d3ec715c6c4574372c9540f3ced90d445aa0c81d99aad2f47418058"
+      },
+      {
+        "path": "output/playwright/review-frame-related-fe018533/camera/left.png",
+        "bytes": 13977,
+        "sha256": "81440286688d9b5ba4af3a2abf97d1ab27e976ddf6100fb67fff5aa4a8eb723c"
+      },
+      {
+        "path": "output/playwright/review-frame-related-fe018533/camera/perspective.png",
+        "bytes": 137589,
+        "sha256": "d2a5c80d32b09e64fab467633655d0b3463cbf4c558082bb2379343182e680cc"
+      },
+      {
+        "path": "output/playwright/review-frame-related-fe018533/camera/rear-perspective.png",
+        "bytes": 136531,
+        "sha256": "c1ba8c636c05b7560ecfc7dc1c805faca730ad60cc6daefb36ed267f9286462a"
+      },
+      {
+        "path": "output/playwright/review-frame-related-fe018533/camera/report.json",
+        "bytes": 9671,
+        "sha256": "ac6c7ce48d16709eafaa8622f4dda50f9dcbd80585273c979fa369f33d2783bb"
+      },
+      {
+        "path": "output/playwright/review-frame-related-fe018533/camera/right.png",
+        "bytes": 14437,
+        "sha256": "5a24d8102df2a0c8ecbb34e3b4490989171ead35cca36ea54d04b02418846496"
+      },
+      {
+        "path": "output/playwright/review-frame-related-fe018533/camera/side.png",
+        "bytes": 14437,
+        "sha256": "5a24d8102df2a0c8ecbb34e3b4490989171ead35cca36ea54d04b02418846496"
+      },
+      {
+        "path": "output/playwright/review-frame-related-fe018533/camera/source-front.png",
+        "bytes": 31747,
+        "sha256": "081d5190d79d55e782cbd6783ebae795bc1897737e68062f73712abb67a89206"
+      },
+      {
+        "path": "output/playwright/review-frame-related-fe018533/camera/source-rear-perspective.png",
+        "bytes": 35956,
+        "sha256": "1f1fe8a727959f3e12d99b07b6729afae797e64fecba8e3c5d7a4c85b5f25856"
+      },
+      {
+        "path": "output/playwright/review-frame-related-fe018533/camera/source-top.png",
+        "bytes": 9462,
+        "sha256": "bc3e5ef3ab4dedeac81fc064f346a8573c747fc04aacbe79aa7623ef227d8408"
+      },
+      {
+        "path": "output/playwright/review-frame-related-fe018533/camera/top.png",
+        "bytes": 32414,
+        "sha256": "13d8243038d8ec16c6d3e9557812118dc9b92807082a9f4dcbb92aef2265ef31"
+      },
+      {
+        "path": "output/playwright/review-frame-related-fe018533/camera/working-front.png",
+        "bytes": 35062,
+        "sha256": "4eacedb52ebfa79f9926fb51b9efc7a47b43eb1be2bc97dded709eae5ab4e065"
+      },
+      {
+        "path": "output/playwright/review-frame-related-fe018533/camera/working-rear-perspective.png",
+        "bytes": 41549,
+        "sha256": "76f1300ee02cd4e07c08094d1d471b6afea1edaa487f0febacc5b7f8c55e58a6"
+      },
+      {
+        "path": "output/playwright/review-frame-related-fe018533/camera/working-top.png",
+        "bytes": 10468,
+        "sha256": "afaa0382490f3a95936a1bdacb7c698fa2a43f3d0d4adb063aff3eab8be6ade7"
+      },
+      {
+        "path": "output/playwright/review-frame-a297eef4/geometry.json",
+        "bytes": 4684,
+        "sha256": "4918b1a21cbffa8f5cdf6eff1130965cf5c816695c3ce49e9790a51c0f868707"
+      },
+      {
+        "path": "output/playwright/review-frame-a297eef4/returned.png",
+        "bytes": 75110,
+        "sha256": "25e0853a63c3769fe255a3691b4aa3aa68d87af7f2f9f2a341c54705f07ec7c0"
+      },
+      {
+        "path": "output/playwright/review-frame-a297eef4/raw.png",
+        "bytes": 92602,
+        "sha256": "72d5c2600979af9e7fb356f777187733265155aaf6e8f80db7a955ddd375bc55"
+      },
+      {
+        "path": "output/playwright/review-frame-a297eef4/front-canvas.png",
+        "bytes": 12084,
+        "sha256": "18dea4494e1fc2842d52bd516e4d782b10febb8a85e3db3c0ecc0f4f06f54443"
+      }
+    ],
+    "logs": [
+      {
+        "path": "output/verification/roadmap-review-frame-diagnostic.log",
+        "bytes": 2933,
+        "sha256": "b871be0968c9f15f6548f2f38f45495d140c04b3534f69de3217547939daa3e3"
+      },
+      {
+        "path": "output/verification/roadmap-review-frame-package.log",
+        "bytes": 787,
+        "sha256": "729db5cab48a1347caae9f30cf2f2b8a79479a7bcd33ab61746720d43883084a"
+      },
+      {
+        "path": "output/verification/roadmap-review-frame-regression.log",
+        "bytes": 422,
+        "sha256": "07a08964063634af1b6809939412d69a6df247ae2fe4b13081b071e5ef3d7b91"
+      },
+      {
+        "path": "output/verification/roadmap-review-frame-related.log",
+        "bytes": 198,
+        "sha256": "0e771fa506747edccf16246599e436cabbe6ac0bb0e89f2024f700a3173702e1"
+      },
+      {
+        "path": "output/verification/roadmap-review-frame-lint-fixed.log",
+        "bytes": 29,
+        "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+      },
+      {
+        "path": "output/verification/roadmap-review-frame-typecheck.log",
+        "bytes": 176,
+        "sha256": "fe0327fb3a908a7cea6b4e5ef62bbaa7903d4f4149a209170e6249f0dd5c8190"
+      }
+    ]
+  },
+  "boundaries": {
+    "hosted": "PENDING",
+    "artisticAcceptance": "NOT_PERFORMED",
+    "authoredGameAcceptance": "NOT_RUN",
+    "geometryAndTexture": "UNCHANGED",
+    "dependenciesAndPacks": "UNCHANGED",
+    "scopeOfPixelAssertion": "Known textured control weapon, not universal project validity"
+  },
+  "retainedLintDiagnostic": {
+    "path": "output/verification/roadmap-review-frame-lint.log",
+    "bytes": 265,
+    "sha256": "234285bb6def7c4c10add21a432337be036ad84ae877ee70a7fc3b0a6be7ca53"
+  }
+}
