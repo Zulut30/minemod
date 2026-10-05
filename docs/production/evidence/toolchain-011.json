@@ -104,6 +104,25 @@
       "path": "apps/model-editor/node_modules/electron/checksums.json",
       "bytes": 7212,
       "sha256": "5d50092913d34c25993512dad7205c112c935da8ff9dc0296f3090d3e39cb001"
+    },
+    "actualRuntime": {
+      "status": "PASS",
+      "checkedAtUtc": "2026-10-05T12:06:58.943Z",
+      "studioVersion": "0.12.1",
+      "executable": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.12.1\\ebc2e796\\MineMod Studio-win32-x64\\MineMod Studio.exe",
+      "hidden": true,
+      "versions": {
+        "node": "24.21.0",
+        "electron": "44.5.1",
+        "chrome": "152.0.7977.130",
+        "v8": "15.2.124.28-electron.0"
+      },
+      "scope": "Actual packaged host process.versions; no model writes or user workspace",
+      "artifact": {
+        "path": "output/playwright/runtime-audit-011-603805a8/report.json",
+        "bytes": 502,
+        "sha256": "0ae5fa01914274a2528388313dcd5b4a7e7a1eaf21534515c84f81c9a1948c07"
+      }
     }
   },
   "java": {
