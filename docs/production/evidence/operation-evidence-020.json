@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "roadmapPoint": 20,
-  "status": "PARTIAL",
-  "checkedAtUtc": "2026-10-05T14:25:26.619Z",
-  "scope": "Local bounded operation reports across application/CLI/MCP and actual hidden packaged GUI; hosted/native collector pending",
+  "status": "PASS",
+  "checkedAtUtc": "2026-10-05T14:54:05.218Z",
+  "scope": "Unified bounded operation diagnostics for application/CLI/MCP/GUI with exact source-linked native JAR and failure-phase proof; no artistic or authored game approval",
   "contract": "mcdev.operation-evidence/v1",
   "studioVersion": "0.13.0",
   "node": "24.21.0",
@@ -187,7 +187,7 @@
   "boundaries": {
     "artisticAcceptance": "NOT_PERFORMED",
     "authoredGameAcceptance": "NOT_RUN",
-    "nativeGeneratedJarReport": "SCOPED_HOSTED_PASS_INITIAL_SOURCE",
+    "nativeGeneratedJarReport": "SCOPED_HOSTED_PASS_FINAL_SOURCE",
     "wholeCI": "FAILURE_LEGACY_FABRIC_26_2",
     "reportValidator": "Transport shape only, not producer identity",
     "assetBundleSchema": "UNCHANGED",
@@ -735,7 +735,7 @@
     ]
   },
   "failureContextCandidate": {
-    "status": "LOCAL_PASS_HOSTED_PENDING",
+    "status": "SCOPED_HOSTED_PASS",
     "checkedAtUtc": "2026-10-05T14:40:55.695Z",
     "sourceHashes": [
       {
@@ -802,9 +802,545 @@
       "CLI and MCP serialize bound failure without private paths",
       "different payload and null digest do not reuse context"
     ],
-    "actualApplicationPhaseCases": "HOSTED_PENDING_LINUX",
-    "nativeBuildForNewSource": "HOSTED_PENDING",
+    "actualApplicationPhaseCases": "PASS_LINUX",
+    "nativeBuildForNewSource": "SCOPED_HOSTED_PASS",
     "artisticAcceptance": "NOT_PERFORMED",
-    "authoredGameAcceptance": "NOT_RUN"
+    "authoredGameAcceptance": "NOT_RUN",
+    "sourceCommit": "ca6cc68752c1782a2d9d912ba3248a45da4e12b5"
+  },
+  "finalHosted": {
+    "status": "SCOPED_HOSTED_PASS",
+    "sourceCommit": "ca6cc68752c1782a2d9d912ba3248a45da4e12b5",
+    "runId": 37326698895,
+    "url": "https://github.com/Zulut30/minemod/actions/runs/37326698895",
+    "checkedAtUtc": "2026-10-05T14:54:05.204Z",
+    "jobs": [
+      {
+        "name": "fabric",
+        "conclusion": "failure",
+        "id": 111819174237,
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37326698895/job/111819174237"
+      },
+      {
+        "name": "control-plane",
+        "conclusion": "success",
+        "id": 111819174624,
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37326698895/job/111819174624"
+      },
+      {
+        "name": "studio-windows",
+        "conclusion": "success",
+        "id": 111819174643,
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37326698895/job/111819174643"
+      },
+      {
+        "name": "neoforge",
+        "conclusion": "success",
+        "id": 111819174709,
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37326698895/job/111819174709"
+      },
+      {
+        "name": "Fabric 1.20.1 / Java 17 production target",
+        "conclusion": "success",
+        "id": 111819174844,
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37326698895/job/111819174844"
+      },
+      {
+        "name": "fabric-client",
+        "conclusion": "skipped",
+        "id": 111819552830,
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37326698895/job/111819552830"
+      },
+      {
+        "name": "client-smoke",
+        "conclusion": "success",
+        "id": 111820430496,
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37326698895/job/111820430496"
+      }
+    ],
+    "artifacts": [
+      {
+        "id": 11353430362,
+        "name": "minemod-studio-windows-evidence",
+        "bytes": 2500175,
+        "digest": "sha256:8458312a784645b7a3064bd90c18877a397c656cfcd55bdd63008a90cc85e845"
+      },
+      {
+        "id": 11352716941,
+        "name": "control-plane-clean-checkout-evidence",
+        "bytes": 1897,
+        "digest": "sha256:63b40075ef9b1a0188973e108a8db02d14930dfd8fbb3fa3f9e0c6a56dbc6c37"
+      },
+      {
+        "id": 11352009853,
+        "name": "fabric-1.20.1-java17-evidence",
+        "bytes": 50776,
+        "digest": "sha256:a8fcfadfb1d32a955e98425d306fc6e5c59fa5c4268b07ce462e883b04ca1d1c"
+      },
+      {
+        "id": 11351513847,
+        "name": "fabric-26.2-verification-failure",
+        "bytes": 102355,
+        "digest": "sha256:a7beb976cc25a634e3e4a9abf635c4cb9a95e417c042ae838652ad9f7aacee55"
+      }
+    ],
+    "statusReport": {
+      "path": "output/verification/roadmap-020-final-hosted-status.json",
+      "bytes": 19135,
+      "sha256": "01a6a7a9a4d90dbc811b8cb2484c355ee4764bf2ead7cae3a4e37fed20e30e8c"
+    },
+    "artifactMetadata": {
+      "path": "output/verification/roadmap-020-final-hosted-artifacts.json",
+      "bytes": 2892,
+      "sha256": "8cf661ec4e5c474c42c7e7347c7cca7928b07d0556fc0e7db715e42a30d33197"
+    },
+    "applicationPhaseFailures": {
+      "status": "PASS",
+      "phases": [
+        "compile",
+        "workspace",
+        "runner",
+        "index"
+      ],
+      "log": {
+        "path": "output/verification/roadmap-020-final-control.log",
+        "bytes": 39662,
+        "sha256": "401bfd5a91ea6a60c3b768ab527d05bb4afe1a2f19c7d67d2ab4f9297ae7c1ce"
+      }
+    },
+    "native": {
+      "report": {
+        "path": "output/ci/37326698895-production/output/ci/fabric-production/generated/operation-evidence.v1.json",
+        "bytes": 9643,
+        "sha256": "3e42770acd9daa1262d7b44f9c93dc75dba6d8e0939b96caf5799ea41536dfd3"
+      },
+      "reportBody": {
+        "contract": "mcdev.operation-evidence/v1",
+        "input": {
+          "bytes": 3658,
+          "sha256": "84088c5281cb9027a8ed6a11e08b6510a80d55af20a9a7ca0a89d5ac8fa2811d"
+        },
+        "revision": {
+          "kind": "plan",
+          "planId": "b10bac363628fe3afac1995e1d01403d70f0294d6f470dd3896f4f8b100c0f72"
+        },
+        "command": "fabric-build",
+        "artistic": {
+          "status": "requires-human-review"
+        },
+        "game": {
+          "status": "not-run"
+        },
+        "pack": {
+          "packId": "fabric-1.20.1-java-17",
+          "revision": 5,
+          "treeSha256": "dae2523ebfccd6c9215438643b0586605de24e6db876862fc55ef4010e124099"
+        },
+        "technical": {
+          "status": "pass",
+          "scope": "fabric-clean-build",
+          "error": null
+        },
+        "artifacts": [
+          {
+            "path": ".gitignore",
+            "bytes": 24,
+            "sha256": "396ab9741dafc378702deebe4a5dbbdb1eb0a0dd0ffcafb43f8ce1a7758aed0d"
+          },
+          {
+            "path": "build.gradle",
+            "bytes": 1899,
+            "sha256": "038f6e0c8f769658a0c682ff1507351e9471fd7801529cc910271d22d15d05f2"
+          },
+          {
+            "path": "build/libs/infectedfrontier-0.1.0.jar",
+            "bytes": 28835,
+            "sha256": "63c8139423e57b925edfa40f030020b23ae2cc21571eaf711c879d58a382cc15"
+          },
+          {
+            "path": "gradle.properties",
+            "bytes": 415,
+            "sha256": "afd36e241a6c2822490fa6eafb80b085f0d7c5b5b65165363527c326348b24c2"
+          },
+          {
+            "path": "gradle/verification-metadata.xml",
+            "bytes": 188459,
+            "sha256": "e80a9f8e06e2163266dde49abebea655e8bb9809b2b7e5a2e6bb22127f64ee90"
+          },
+          {
+            "path": "gradle/wrapper/gradle-wrapper.jar",
+            "bytes": 43453,
+            "sha256": "cb0da6751c2b753a16ac168bb354870ebb1e162e9083f116729cec9c781156b8"
+          },
+          {
+            "path": "gradle/wrapper/gradle-wrapper.properties",
+            "bytes": 366,
+            "sha256": "6573ff94809ecafc91d9cf817662adf6175df7032ec3ebf53e7da476c2702270"
+          },
+          {
+            "path": "gradlew",
+            "bytes": 9671,
+            "sha256": "edeebb8b7ddcd62dc39d85846bf93bc016da6a644bf7489fad47c3d6c02ad0ad"
+          },
+          {
+            "path": "gradlew.bat",
+            "bytes": 3543,
+            "sha256": "cbf5d8eb5d36bfe4d19cef74da88f0cb45361bcb8a6fa185220ce05e6e4ae524"
+          },
+          {
+            "path": "settings.gradle",
+            "bytes": 239,
+            "sha256": "9e6a800e693c84d7de3b2ab7b9a20e45a17a97b67213507c1284bb6aa36e629d"
+          },
+          {
+            "path": "src/client/java/dev/mcdev/generated/m_infectedfrontier/client/GeneratedModMenuIntegration.java",
+            "bytes": 4582,
+            "sha256": "6f7a89b230ce2827f83d8594ce04f545f8516be3cd5ec3ec54c957635b4ff808"
+          },
+          {
+            "path": "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedConfig.java",
+            "bytes": 1947,
+            "sha256": "f0f16ba4dd8623949447c816bb1047dbf3f4c179a3292137e3fec2505a6502bc"
+          },
+          {
+            "path": "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedConfiguredBehavior.java",
+            "bytes": 636,
+            "sha256": "45edea171920ccb5f00b2173a5871202a9b1ba5a9f44018334a7d086a7e89a8a"
+          },
+          {
+            "path": "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedContent.java",
+            "bytes": 6384,
+            "sha256": "6b475a89f39a229a1144ba72cacafe3bb7fee6220f0da281b44b403f163b0f01"
+          },
+          {
+            "path": "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedMod.java",
+            "bytes": 497,
+            "sha256": "c0c8e389a8e8e11b98afddd5ff495046e9c0ad7ddf2171b5e31a15ae7884d187"
+          },
+          {
+            "path": "src/main/resources/assets/infectedfrontier/blockstates/blue_ore.json",
+            "bytes": 62,
+            "sha256": "0d944963b929454427d20cec5ca5866870ca4eb7047e7d97269414eaf2ca0373"
+          },
+          {
+            "path": "src/main/resources/assets/infectedfrontier/lang/en_us.json",
+            "bytes": 1150,
+            "sha256": "45384b8e75925ceb4fa0b1877156945186ee8b263aff20edbd293c2d754f97de"
+          },
+          {
+            "path": "src/main/resources/assets/infectedfrontier/models/block/blue_ore.json",
+            "bytes": 94,
+            "sha256": "2c6a72c4ddbe4c2dbadd4fabf9e48cff3214703a8cc1799e25747874bfbe10f0"
+          },
+          {
+            "path": "src/main/resources/assets/infectedfrontier/models/item/blue_ingot.json",
+            "bytes": 97,
+            "sha256": "d0c7ef16056a4547503a3691427d686432621f85fec1eb55f48dd6c4b7d07bff"
+          },
+          {
+            "path": "src/main/resources/assets/infectedfrontier/models/item/blue_ore_item.json",
+            "bytes": 45,
+            "sha256": "9e8fa37725aecbe930387ffa8206f65877ffc4c8827f2fb34d7689129e37eeb7"
+          },
+          {
+            "path": "src/main/resources/assets/infectedfrontier/models/item/blue_steel_axe.json",
+            "bytes": 98,
+            "sha256": "178fc5d696e20d234a475af435f3b91b7928bc8d2faaa5ce1c901d19d814a063"
+          },
+          {
+            "path": "src/main/resources/assets/infectedfrontier/models/item/blue_steel_chestplate.json",
+            "bytes": 106,
+            "sha256": "853edd95e0a0797ffdd3eb348cc1119fa37760e5dfee254cd516d78f6bdfcca0"
+          },
+          {
+            "path": "src/main/resources/assets/infectedfrontier/models/item/blue_steel_hoe.json",
+            "bytes": 98,
+            "sha256": "4d094eebb26a0b21baa7efa3b68b2c2a9ca13196f37405bd447b95f424296354"
+          },
+          {
+            "path": "src/main/resources/assets/infectedfrontier/models/item/blue_steel_pickaxe.json",
+            "bytes": 102,
+            "sha256": "cd66ba644f0cfd933b2418281584d722f9a53c9004ea8e7bc05ddb7f457a7a22"
+          },
+          {
+            "path": "src/main/resources/assets/infectedfrontier/models/item/blue_steel_shovel.json",
+            "bytes": 101,
+            "sha256": "8b2c21ce29d576ac0dc2d775b0b57118ae852177932c071636deb29d6aa4c9f8"
+          },
+          {
+            "path": "src/main/resources/assets/infectedfrontier/models/item/blue_steel_sword.json",
+            "bytes": 100,
+            "sha256": "3b209be49b389c233709c3fb279c33bbd5b952fb7bcc0807869b874e00b33505"
+          },
+          {
+            "path": "src/main/resources/assets/infectedfrontier/textures/item/blue_steel_axe.png",
+            "bytes": 133,
+            "sha256": "96cb437865f140e7799da7326c2cda92be34d76abc08a92d6af736ef7f3d0994"
+          },
+          {
+            "path": "src/main/resources/assets/infectedfrontier/textures/item/blue_steel_chestplate.png",
+            "bytes": 128,
+            "sha256": "bfc9e76def34739a13ef3f818fbd577442c29606602842f91c0f516c481f6a60"
+          },
+          {
+            "path": "src/main/resources/assets/infectedfrontier/textures/item/blue_steel_hoe.png",
+            "bytes": 129,
+            "sha256": "65f392f43291012ddc4a846534dda0b366201ed880340600e39041bfd2dad6b1"
+          },
+          {
+            "path": "src/main/resources/assets/infectedfrontier/textures/item/blue_steel_pickaxe.png",
+            "bytes": 130,
+            "sha256": "085d9754010e7afc6412f53249cf0b2bf54d29b46717bc909b715a6d8ab417c7"
+          },
+          {
+            "path": "src/main/resources/assets/infectedfrontier/textures/item/blue_steel_shovel.png",
+            "bytes": 134,
+            "sha256": "62dc8856aba499a12560c4952235dc55efbe69f2f73b2a00de438543ce491e03"
+          },
+          {
+            "path": "src/main/resources/assets/infectedfrontier/textures/item/blue_steel_sword.png",
+            "bytes": 143,
+            "sha256": "9ae54b9c07925588d6a01388dd5572861e9c2f835407d0742541a844be02a745"
+          },
+          {
+            "path": "src/main/resources/assets/infectedfrontier/textures/mcdev/placeholder.png",
+            "bytes": 97,
+            "sha256": "918a4d7a554bfec52db1649d1aa5d6db74d220d698c69d6724ce6bc12ecf6971"
+          },
+          {
+            "path": "src/main/resources/assets/infectedfrontier/textures/models/armor/blue_steel_layer_1.png",
+            "bytes": 264,
+            "sha256": "8b7958d60a9b3e9eebdfa63f488f82eb05bbc861d3b280f6e207ccce1671d917"
+          },
+          {
+            "path": "src/main/resources/assets/infectedfrontier/textures/models/armor/blue_steel_layer_2.png",
+            "bytes": 267,
+            "sha256": "fd8c651f69eb2d7620351bd134d375291c20c027007e43d6f091bf41577127e0"
+          },
+          {
+            "path": "src/main/resources/data/infectedfrontier/loot_tables/blocks/blue_ore.json",
+            "bytes": 203,
+            "sha256": "12ee01c6a92ff7704a0d2a9e2151158c76611ca487677d8215a427808a5c5e2d"
+          },
+          {
+            "path": "src/main/resources/data/infectedfrontier/recipes/blue_ingot_recycling.json",
+            "bytes": 164,
+            "sha256": "9f37d2988863c3d3edb132350711708c08756a749efc5c8e18de308ce0991c43"
+          },
+          {
+            "path": "src/main/resources/data/infectedfrontier/recipes/blue_steel_sword.json",
+            "bytes": 240,
+            "sha256": "bf2d7f0a0cc37fc6ba37cc8a1a567ebcf17fcb76476f312e78ef1117439cc3fe"
+          },
+          {
+            "path": "src/main/resources/data/infectedfrontier/recipes/smelt_blue_ore.json",
+            "bytes": 175,
+            "sha256": "30850e57cd04e560f5d163bc1fdc3fd1f58251c859e8828413f4a7e31832b708"
+          },
+          {
+            "path": "src/main/resources/data/minecraft/tags/items/axes.json",
+            "bytes": 47,
+            "sha256": "7b28331593639e7139f309f9de8152e13f5c6807f50ecb9914d46ee790dceef6"
+          },
+          {
+            "path": "src/main/resources/data/minecraft/tags/items/hoes.json",
+            "bytes": 47,
+            "sha256": "f4996406f7e2ce04295168a302a70b42c7c7b266e7af20930f56745a4c0fda6c"
+          },
+          {
+            "path": "src/main/resources/data/minecraft/tags/items/pickaxes.json",
+            "bytes": 51,
+            "sha256": "1f5a2a8d1d6e56084278dd7f7ef7bf9ccb262f29be4a4148ee046d66e68d2541"
+          },
+          {
+            "path": "src/main/resources/data/minecraft/tags/items/shovels.json",
+            "bytes": 50,
+            "sha256": "76b5f8f52ca62b0ed4f0cc7dc896c7b46ffa3750b54497b8bc2da27db36ab795"
+          },
+          {
+            "path": "src/main/resources/data/minecraft/tags/items/swords.json",
+            "bytes": 49,
+            "sha256": "de08bd0ce5711e011443708f0600d1a2d5c6cfec3ab129115892de60830c1a94"
+          },
+          {
+            "path": "src/main/resources/data/minecraft/tags/items/trimmable_armor.json",
+            "bytes": 54,
+            "sha256": "339de1224039755a73b788e3f94725ba2e24789bbada0dbaedab693112e9e073"
+          },
+          {
+            "path": "src/main/resources/fabric.mod.json",
+            "bytes": 601,
+            "sha256": "7a26b533a01233c980b0a1d58705c4f1760c41d987ee68cdb3214000b6849c4d"
+          }
+        ]
+      },
+      "jar": {
+        "path": "output/ci/37326698895-production/output/ci/fabric-production/generated/build/libs/infectedfrontier-0.1.0.jar",
+        "bytes": 28835,
+        "sha256": "63c8139423e57b925edfa40f030020b23ae2cc21571eaf711c879d58a382cc15"
+      },
+      "independentlyCheckedSourceFiles": 6
+    },
+    "windows": {
+      "report": {
+        "path": "output/ci/37326698895-windows\\output\\playwright\\studio-packaged-eddf9d79\\report.json",
+        "bytes": 31766,
+        "sha256": "6a8b379af996edb4b844edaa2346938a6ae00fbaf8e5b5a6865c6da488061bfe"
+      },
+      "packagePath": "D:\\a\\minemod\\minemod\\output\\model-editor\\releases\\0.13.0\\0cf3dfc5\\MineMod Studio-win32-x64\\MineMod Studio.exe",
+      "subreports": [
+        "mcp",
+        "texture",
+        "polish",
+        "editing",
+        "variants",
+        "brief",
+        "parts",
+        "manual",
+        "accessibility",
+        "accessibilityStates",
+        "review",
+        "migrations",
+        "history",
+        "geometry",
+        "camera",
+        "discovery"
+      ],
+      "manual": {
+        "path": "output/ci/37326698895-windows\\output\\playwright\\studio-packaged-eddf9d79/manual/report.json",
+        "bytes": 2898,
+        "sha256": "b2f84e1a297103612fedcb9228fd4bf1767b21cfabef86f481ce7f48a52e2b65"
+      },
+      "manualBody": {
+        "status": "PASS",
+        "hidden": true,
+        "projectId": "b4504e97-c3fb-48cb-869b-cac0be2560ed",
+        "startedEmpty": true,
+        "savedFile": {
+          "bytes": 70316,
+          "sha256": "bc206ddc3393aafb2d2d9bc2512ac8298be0b13e7af895572aad06ce48bf3176"
+        },
+        "manifestSha256": "2dc1b13f1fd33461151af575ec385d94c266890c49174bab93b3087a485ba732",
+        "files": [
+          {
+            "path": "assets/mcdev/models/item/new_item.json",
+            "bytes": 2922,
+            "sha256": "236094088f16e77f5b1d06dfc5f070d32518c4ac4d5519cd71fd720d32b3d26e"
+          },
+          {
+            "path": "assets/mcdev/textures/item/new_item.png",
+            "bytes": 365,
+            "sha256": "9be23ce15f840cca973855f81940659fc6ce9851acdb523fa209e4799711c811"
+          },
+          {
+            "path": "editable/mcdev/new_item.bbmodel",
+            "bytes": 4691,
+            "sha256": "26eead6cf7c406bba0d6ee4cdaf7787a3aaacd96498429979c9fb8d211c52f65"
+          },
+          {
+            "path": "source/mcdev/new_item.item-asset.json",
+            "bytes": 67046,
+            "sha256": "bdaafd2971c8315b28cca5e2df6724babd4f8fb92696139dd6c30c574be720d8"
+          }
+        ],
+        "evidence": {
+          "contract": "mcdev.operation-evidence/v1",
+          "input": {
+            "bytes": 67046,
+            "sha256": "bdaafd2971c8315b28cca5e2df6724babd4f8fb92696139dd6c30c574be720d8"
+          },
+          "revision": {
+            "kind": "editor",
+            "projectId": "b4504e97-c3fb-48cb-869b-cac0be2560ed",
+            "revision": 0
+          },
+          "command": "asset-bundle-export",
+          "artistic": {
+            "status": "requires-human-review"
+          },
+          "game": {
+            "status": "not-run"
+          },
+          "pack": null,
+          "technical": {
+            "status": "pass",
+            "scope": "asset-export-integrity",
+            "error": null
+          },
+          "artifacts": [
+            {
+              "path": "assets/mcdev/models/item/new_item.json",
+              "bytes": 2922,
+              "sha256": "236094088f16e77f5b1d06dfc5f070d32518c4ac4d5519cd71fd720d32b3d26e"
+            },
+            {
+              "path": "assets/mcdev/textures/item/new_item.png",
+              "bytes": 365,
+              "sha256": "9be23ce15f840cca973855f81940659fc6ce9851acdb523fa209e4799711c811"
+            },
+            {
+              "path": "editable/mcdev/new_item.bbmodel",
+              "bytes": 4691,
+              "sha256": "26eead6cf7c406bba0d6ee4cdaf7787a3aaacd96498429979c9fb8d211c52f65"
+            },
+            {
+              "path": "source/mcdev/new_item.item-asset.json",
+              "bytes": 67046,
+              "sha256": "bdaafd2971c8315b28cca5e2df6724babd4f8fb92696139dd6c30c574be720d8"
+            }
+          ]
+        },
+        "evidenceSha256": "e22861cfc19cc6f35af3992fd0e9dee0baaa94c55e9f3091468d4232aa91b5b9",
+        "mutationPath": "UI controls only; inspect reads state, native dialog mocks provide paths only",
+        "checks": [
+          "new empty project",
+          "add/name/geometry/color from UI",
+          "Cyrillic Save As exact bytes",
+          "saved clean state",
+          "switch to another empty document",
+          "reopen exact original",
+          "GUI export actual bundle/files/source integrity",
+          "restart restores authored document and original file"
+        ]
+      },
+      "actualExportedPng": {
+        "path": "output/ci/37326698895-windows\\output\\playwright\\studio-packaged-eddf9d79\\manual\\item-bb81dcfb-12d3-4338-bfb2-58087def7ecb\\assets\\mcdev\\textures\\item\\new_item.png",
+        "bytes": 365,
+        "sha256": "9be23ce15f840cca973855f81940659fc6ce9851acdb523fa209e4799711c811"
+      }
+    },
+    "legacy": {
+      "report": {
+        "path": "output/ci/37326698895-legacy\\at-1791211308086\\dependency-verification-report.html",
+        "bytes": 9060,
+        "sha256": "07f0950dfe00fa12b5eca6c613075d01996e6ac897085a701520bab138f2480a"
+      },
+      "coordinate": "net.minecraft:minecraft-common-043a8b3edf:26.2",
+      "expectedSha256": "23248c15f8413aa0d06ac59e676913dd6a1dc0c5fffaa09365afd6c98d59fcd3",
+      "actualSha256": "e93ac473ed9edb52123a8cd1c00d5a65652f858420e6425ffb23f51bae4d6f5d",
+      "cause": "NOT_ESTABLISHED"
+    },
+    "logs": [
+      {
+        "path": "output/verification/roadmap-020-final-control.log",
+        "bytes": 39662,
+        "sha256": "401bfd5a91ea6a60c3b768ab527d05bb4afe1a2f19c7d67d2ab4f9297ae7c1ce"
+      },
+      {
+        "path": "output/verification/roadmap-020-final-production.log",
+        "bytes": 76374,
+        "sha256": "e84982bcf2b4b9e80c75d090d9ccf608b3c1ff4346d739df12d550432d38fd51"
+      },
+      {
+        "path": "output/verification/roadmap-020-final-windows.log",
+        "bytes": 38515,
+        "sha256": "36580681f51ed8aabf0cc9586d8162b47ddc509531f2b6bd2ab171ca593af900"
+      },
+      {
+        "path": "output/verification/roadmap-020-final-legacy.log",
+        "bytes": 32490,
+        "sha256": "137c6ca10c02ee057c22c54b06bf01de3dc69af2eb24ec5752e6c54e968fa8d3"
+      }
+    ]
   }
 }
