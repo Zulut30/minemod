@@ -15,7 +15,7 @@ import { compileItemAssetPayload } from "../packages/application/item-assets.ts"
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const policyText = await readFile(join(root, "docs/production/acceptance-policy.v1.json"), "utf8");
 const policy = JSON.parse(policyText);
-assert.equal(process.version, "v24.11.0", "Use the pinned Node toolchain for comparable measurements.");
+assert.equal(process.version, "v24.21.0", "Use the pinned Node toolchain; compare measurements within the same recorded runtime.");
 assert.equal(policy.kind, "mcdev-production-acceptance-policy");
 const warmup = policy.performanceTargets.warmupIterations;
 const iterations = policy.performanceTargets.measuredIterations;

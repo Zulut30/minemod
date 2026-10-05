@@ -4,7 +4,7 @@
 
 ## До установки зависимостей
 
-Создайте новый clone выбранного commit в отдельном каталоге. Не копируйте туда `output/`, `node_modules/`, `dist/`, fixture `run/`, локальные Gradle caches или конфигурацию агента. Нужны Git, Node 24.11.0 с Corepack и Python 3; версия pnpm 11.8.0 и integrity закреплены в `package.json`.
+Создайте новый clone выбранного commit в отдельном каталоге. Не копируйте туда `output/`, `node_modules/`, `dist/`, fixture `run/`, локальные Gradle caches или конфигурацию агента. Нужны Git, Node 24.21.0 с Corepack и Python 3; версия pnpm 11.8.0 и integrity закреплены в `package.json`. Предыдущие evidence на Node 24.11.0 сохраняют исходную версию; переход development pin описан в [ADR-0005](../decisions/0005-development-node-24.21.md).
 
 ```powershell
 node scripts/verify-clean-checkout.mjs

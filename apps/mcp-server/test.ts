@@ -810,7 +810,7 @@ function testWorkspaceRuntimeContract(): void {
     "root package.json",
   );
   assert.equal(packageJson.packageManager, expectedPackageManager);
-  assert.deepEqual(asObject(packageJson.engines, "root engines"), { node: "24.11.0", pnpm: "11.8.0" });
+  assert.deepEqual(asObject(packageJson.engines, "root engines"), { node: "24.21.0", pnpm: "11.8.0" });
   assert.equal(
     asObject(packageJson.scripts, "root scripts").typecheck,
     "tsc --project tsconfig.json",

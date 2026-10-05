@@ -122,7 +122,7 @@ artifact index ←── verified JAR ←── fixed Gradle runner ←── ne
 
 Требуется:
 
-- Node.js `24.11.0`;
+- Node.js `24.21.0`;
 - pnpm `11.8.0` через Corepack;
 - Git и Python 3 для проверок checkout и игровых bootstrap inputs;
 - Eclipse Temurin `17.0.19+10` для Fabric 1.20.1 builds на Linux x64.
@@ -166,7 +166,7 @@ MCP-сервер публикует:
 - `mcdev_fabric_build` — сборка только с literal-полем `approved: true`.
 
 Вторая версия оружия с пиксельной покраской и рабочий цикл улучшения кода/моделей: [AI code and 3D workflow](docs/AI_CODE_AND_3D_WORKFLOW.md).
-Для воспроизведения примера на Node.js 24.11.0:
+Для воспроизведения примера на Node.js 24.21.0:
 
 ```bash
 node scripts/preview-item.mjs

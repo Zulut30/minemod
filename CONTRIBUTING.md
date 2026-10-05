@@ -4,7 +4,7 @@
 
 ## Локальная настройка
 
-Требуются Node.js `24.11.0`, pnpm `11.8.0` и Java 17 для Fabric 1.20.1 fixtures.
+Требуются Node.js `24.21.0`, pnpm `11.8.0` и Java 17 для Fabric 1.20.1 fixtures.
 
 ```bash
 corepack pnpm install

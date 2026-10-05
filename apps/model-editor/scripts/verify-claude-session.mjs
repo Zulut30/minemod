@@ -15,7 +15,7 @@ import {cubes} from '@mcdev/editor-core';
 import {verifyAssetBundleV1} from '../../../packages/application/asset-bundles.ts';
 import {retainNativeExport} from './retain-native-export.mjs';
 const root=resolve(fileURLToPath(new URL('../../../',import.meta.url)));
-assert.equal(process.version,'v24.11.0','Use pinned workspace Node');
+assert.equal(process.version,'v24.21.0','Use pinned workspace Node');
 const cli=process.env.MINEMOD_CLAUDE_EXE;assert(cli,'Set MINEMOD_CLAUDE_EXE to the installed Claude Code executable');
 const version=spawnSync(cli,['--version'],{encoding:'utf8',windowsHide:true,timeout:10000});
 assert.equal(version.status,0);assert.equal(version.stdout.trim(),'2.1.289 (Claude Code)');

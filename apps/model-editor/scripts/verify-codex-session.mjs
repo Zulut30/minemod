@@ -15,7 +15,7 @@ import { cubes } from '@mcdev/editor-core';
 import { verifyAssetBundleV1 } from '../../../packages/application/asset-bundles.ts';
 
 const root=resolve(fileURLToPath(new URL('../../../',import.meta.url)));
-assert.equal(process.version,'v24.11.0','Use the pinned workspace Node runtime');
+assert.equal(process.version,'v24.21.0','Use the pinned workspace Node runtime');
 const cli=process.env.MINEMOD_CODEX_ENTRY;
 assert(cli,'Set MINEMOD_CODEX_ENTRY to the installed @openai/codex/bin/codex.js entrypoint');
 const version=spawnSync(process.execPath,[cli,'--version'],{encoding:'utf8',windowsHide:true,timeout:10000});
