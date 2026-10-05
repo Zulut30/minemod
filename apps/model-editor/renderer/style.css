@@ -956,6 +956,22 @@ select {
   font-size: 12px;
   cursor: pointer;
 }
+.brief-editor { display: grid; gap: 8px; font-size: 12px; }
+.brief-modes { display: flex; gap: 6px; }
+.brief-modes button[aria-pressed="true"] { background: var(--surface-raised); }
+.structured-brief { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.structured-brief label { display: grid; gap: 5px; min-width: 0; }
+.structured-brief textarea, .structured-brief input {
+  min-width: 0; width: 100%; border: 1px solid var(--border); border-radius: 6px;
+  padding: 8px; font: inherit; color: inherit; background: var(--surface-raised);
+}
+.structured-brief textarea { resize: vertical; }
+.brief-wide, .brief-target { grid-column: 1 / -1; }
+.brief-target, .brief-editor > small, .brief-protection small { color: var(--muted); line-height: 1.5; }
+.brief-protection { display: grid; gap: 4px; overflow-wrap: anywhere; }
+.brief-conflict { padding: 8px; border: 1px solid var(--border); border-radius: 6px; }
+.brief-conflict button { margin-top: 6px; }
+.brief-error { margin: 0; color: var(--danger); }
 .design-brief-wrap summary small {
   margin-left: 8px;
   color: var(--muted);

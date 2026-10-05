@@ -12,6 +12,7 @@ import {
   MutationSchema,
   cubes,
   assetRequest,
+  readDesignBrief,
   MAX_COMMAND_BYTES,
   type EditorState,
   type Mutation,
@@ -162,6 +163,7 @@ export async function startEditorMcp(
               ? {
                   design: {
                     brief: state.project.design.brief,
+                    structuredBrief: readDesignBrief(state.project.design.brief) ?? null,
                     variants: state.project.design.variants.map((v) => ({
                       id: v.id,
                       label: v.label,

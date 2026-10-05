@@ -1,0 +1,250 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 34,
+  "status": "PARTIAL",
+  "checkedAtUtc": "2026-10-05T11:05:06.178Z",
+  "scope": "Human editable structured held-item brief before geometry, same bounded public Studio contract, CAS and exact v2 persistence",
+  "implementation": "New DesignBrief v1 and human-only mutation; existing project string stores known typed record; no project-format change",
+  "studioVersion": "0.11.0",
+  "sourceHashes": [
+    {
+      "path": "packages/editor-core/design-brief.ts",
+      "bytes": 1904,
+      "sha256": "f40cc164d1c31a9731bade4b84473c06d8fb9e983ef33dbcba36b9615b84ff41"
+    },
+    {
+      "path": "packages/editor-core/design-brief.test.ts",
+      "bytes": 5123,
+      "sha256": "bdd5e13cd2f13ee683db7f7a3f86158ee8645086cda30da30b848d68da406253"
+    },
+    {
+      "path": "packages/editor-core/index.ts",
+      "bytes": 33609,
+      "sha256": "2db622265972ef783a4df75739547804ca3a956225092de71f274bdcbde218da"
+    },
+    {
+      "path": "packages/editor-core/package.json",
+      "bytes": 701,
+      "sha256": "844be00df67294fa62e7fdf3908db6193c941c76edf9f759d8316033ed7807da"
+    },
+    {
+      "path": "apps/model-editor/renderer/BriefEditor.tsx",
+      "bytes": 6618,
+      "sha256": "b0823a74a36f522c49615517c4d5d88a8ddc5df6eb6eac332a00232c771bfe92"
+    },
+    {
+      "path": "apps/model-editor/renderer/VariantsPanel.tsx",
+      "bytes": 8807,
+      "sha256": "6abb39fbdb81f4a06b44e3f56997fb3485fff6cd355b593edd4c052352aaa5c3"
+    },
+    {
+      "path": "apps/model-editor/renderer/style.css",
+      "bytes": 30092,
+      "sha256": "5e27a6a9c86239c39180aab12317a3847d7dcac8c33644cffe5ee10eb25b21e5"
+    },
+    {
+      "path": "apps/model-editor/worker/discovery.ts",
+      "bytes": 10939,
+      "sha256": "163ba798b2567585e79f0f2041d8b02f33a89bf3e881e5ba01bf38a1b4350bff"
+    },
+    {
+      "path": "apps/model-editor/worker/mcp.ts",
+      "bytes": 30585,
+      "sha256": "cbc8e877eea459fdabfe575a70ea044fd0c360ed1d7125931a914ed7567d12e4"
+    },
+    {
+      "path": "apps/model-editor/scripts/check-brief-desktop.mjs",
+      "bytes": 8356,
+      "sha256": "ebd09507d1065f98b265f9035a97809790ba83d8887470a75a6b5c75986ce5c0"
+    },
+    {
+      "path": "apps/model-editor/scripts/test-desktop.mjs",
+      "bytes": 16829,
+      "sha256": "915c8dd08ea2e43e82a755b50771c16820f3179c9931ea6a31a34c37def7aa6d"
+    },
+    {
+      "path": "apps/model-editor/package.json",
+      "bytes": 1531,
+      "sha256": "2e32f417eb478ed9a565acaa3fbe84a91e398ee4d5f124f495de362e14f1938c"
+    }
+  ],
+  "checks": {
+    "core": "PASS 13 malformed cases, aggregate limit, CAS/human-only/real protection, v2 persistence/undo, empty scene and 24 unique colors",
+    "lint": "PASS",
+    "typecheck": "PASS",
+    "portable": "PASS full portable packages and application assets",
+    "discovery": "PASS published agent schema excludes designBrief",
+    "http": "PASS authentication/limits/replay/CAS/locks/bundle",
+    "package": "PASS fresh Windows x64 0.11.0",
+    "focusedPackaged": "PASS 12 meaningful GUI/MCP/save/restart/empty-scene cases; natural cleanup, exit0",
+    "hostedNewSource": "pending"
+  },
+  "focused": {
+    "report": {
+      "status": "PASS",
+      "hidden": true,
+      "projectId": "27f79249-4225-467f-8215-ec4a26b031a6",
+      "initialStructuredBrief": {
+        "schemaVersion": 1,
+        "kind": "mcdev-design-brief",
+        "target": "fabric-1.20.1-held-item",
+        "purpose": "Короткий ледяной топор",
+        "style": "Выразительный Minecraft",
+        "silhouette": "Односторонняя широкая кромка и короткий обух",
+        "materials": "Лёд, сталь, кожа",
+        "palette": [
+          "#172333",
+          "#b8e5ed",
+          "#e9f8ed"
+        ],
+        "preserve": [
+          "grip"
+        ]
+      },
+      "finalStructuredBrief": {
+        "schemaVersion": 1,
+        "kind": "mcdev-design-brief",
+        "target": "fabric-1.20.1-held-item",
+        "purpose": "Сохранённое исправление человека",
+        "style": "Выразительный Minecraft",
+        "silhouette": "Односторонняя широкая кромка и короткий обух",
+        "materials": "Лёд, сталь, кожа",
+        "palette": [
+          "#172333",
+          "#b8e5ed",
+          "#e9f8ed"
+        ],
+        "preserve": [
+          "grip"
+        ]
+      },
+      "finalRevision": 4,
+      "newProjectBeforeGeneration": {
+        "projectId": "e9549110-a9f3-494a-ad07-0ed75635d20c",
+        "cubes": 0,
+        "brief": {
+          "schemaVersion": 1,
+          "kind": "mcdev-design-brief",
+          "target": "fabric-1.20.1-held-item",
+          "purpose": "Бриф до создания модели",
+          "style": "Выразительный Minecraft",
+          "silhouette": "Односторонний короткий топор",
+          "materials": "Лёд и кожа",
+          "palette": [
+            "#172333",
+            "#e9f8ed"
+          ],
+          "preserve": []
+        }
+      },
+      "savedFile": {
+        "bytes": 135985,
+        "sha256": "27b36bda5285d256d1dab25c48043ea24aa48c18fbafcb831ee0cead15231672"
+      },
+      "checks": [
+        "editable structured fields",
+        "invalid palette preserves scene",
+        "same brief reaches public MCP",
+        "agent cannot replace brief",
+        "concurrent agent edit rejects stale brief",
+        "draft survives conflict",
+        "explicit refresh preserves new geometry",
+        "geometry/pixels/locks unchanged by brief",
+        "exact saved project",
+        "restart restores structured fields",
+        "project switch resets draft",
+        "editable brief in empty scene before geometry"
+      ]
+    },
+    "artifacts": [
+      {
+        "path": "output/playwright/brief-034-8b0da886/brief/report.json",
+        "bytes": 2342,
+        "sha256": "e371f7c0ab047aa06c2dc13875a8f517831eb78b92187de05f98865bd7130faa"
+      },
+      {
+        "path": "output/playwright/brief-034-8b0da886/brief/структурированный бриф.mmeditor.json",
+        "bytes": 135985,
+        "sha256": "27b36bda5285d256d1dab25c48043ea24aa48c18fbafcb831ee0cead15231672"
+      },
+      {
+        "path": "output/playwright/brief-034-8b0da886/brief/structured-brief.png",
+        "bytes": 249313,
+        "sha256": "adf424d193abd2d3ec6f832400f920422cb309ae3793a5bd1f28f232710c8d3d"
+      }
+    ],
+    "packageHashes": [
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.11.0\\478eac3c\\MineMod Studio-win32-x64\\MineMod Studio.exe",
+        "bytes": 245726208,
+        "sha256": "e9b013766a439b36cba8f61dcba5e4bbecfda4b25539ec25eddef67fb9b90e38"
+      },
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.11.0\\478eac3c\\MineMod Studio-win32-x64\\resources\\app.asar",
+        "bytes": 3542116,
+        "sha256": "0e3226ceae1f7f681dcf3f16e9c6bcdac9911d7047d14700103c820356734d24"
+      }
+    ]
+  },
+  "retainedEarlierOperator": {
+    "path": "output/playwright/brief-034-a37aaaa7/brief/report.json",
+    "status": "GUI cases PASS; cleanup intervention required",
+    "reason": "Wrong editor-test-close flag enabled a native confirmation dialog in restored own hidden instance",
+    "action": "Exact owned Studio PID27644 verified by executable/release/own user-data args then stopped; no user app stopped",
+    "subsequentChecks": "Corrected helper and final package complete naturally"
+  },
+  "logs": [
+    {
+      "path": "output/verification/roadmap-034-core-brief-final.log",
+      "bytes": 126,
+      "sha256": "23c95d3eb818e57030e6784f99e985e96d38c05a23255f3848aed698d7e18c09"
+    },
+    {
+      "path": "output/verification/roadmap-034-lint-final.log",
+      "bytes": 29,
+      "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+    },
+    {
+      "path": "output/verification/roadmap-034-typecheck-final.log",
+      "bytes": 176,
+      "sha256": "fe0327fb3a908a7cea6b4e5ef62bbaa7903d4f4149a209170e6249f0dd5c8190"
+    },
+    {
+      "path": "output/verification/roadmap-034-portable.log",
+      "bytes": 3332,
+      "sha256": "dedbcd3e3016b1208e8e7a6ac37801988c89eb647370767f895487385c186014"
+    },
+    {
+      "path": "output/verification/roadmap-034-discovery-final.log",
+      "bytes": 203,
+      "sha256": "a8a7fda7aed1426020f3caa5d1d22f036754524f8906a1f3f78035671b9171ac"
+    },
+    {
+      "path": "output/verification/roadmap-034-mcp.log",
+      "bytes": 207,
+      "sha256": "ce600a29360c371575566860a7c94c33766d03e9a2ba5f6249e976ae6338a777"
+    },
+    {
+      "path": "output/verification/roadmap-034-package-final.log",
+      "bytes": 787,
+      "sha256": "245a53a6fe72db540bf6b7f1343904d120bf401981806e9f6c6c3ad88eff8207"
+    },
+    {
+      "path": "output/verification/roadmap-034-desktop-empty-scene.log",
+      "bytes": 2013,
+      "sha256": "66d6ad20e4e4c8abdfd4d98ab8e2bb766330df135bf533adcfcfd5a05cde82a0"
+    }
+  ],
+  "scopeLimits": {
+    "supportedClass": "held-item only",
+    "automaticNlpExtraction": "not-implemented",
+    "artSpecBinding": "not-implemented",
+    "qualityImprovement": "not-scored",
+    "artisticApproval": "not-granted",
+    "minecraftAssetAcceptance": "not-tested",
+    "preserveAuthority": "Actual current locks, not historical brief text"
+  },
+  "newDependencies": false,
+  "trustedPacksChanged": false,
+  "fixturesChanged": false
+}

@@ -1,7 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { MAX_VARIANTS, cubes, type EditorProject } from "@mcdev/editor-core";
 import { useStudio } from "./store.ts";
 import { Viewport, comparisonFrame } from "./Viewport.tsx";
+import { BriefEditor } from "./BriefEditor.tsx";
 
 export function VariantsPanel({ project }: { project: EditorProject }) {
   const busy = useStudio((s) => s.busy),
@@ -10,7 +11,6 @@ export function VariantsPanel({ project }: { project: EditorProject }) {
   const canUndo = useStudio((s) => s.state?.canUndo),
     canRedo = useStudio((s) => s.state?.canRedo);
   const variants = project.design?.variants ?? [];
-  const [brief, setBrief] = useState(project.design?.brief ?? "");
   const [label, setLabel] = useState(
     variants.length ? "Вариант A" : "Исходник",
   );
@@ -19,10 +19,6 @@ export function VariantsPanel({ project }: { project: EditorProject }) {
   const [silhouette, setSilhouette] = useState(false);
   const [leftThumb, setLeftThumb] = useState(""),
     [rightThumb, setRightThumb] = useState("");
-  useEffect(
-    () => setBrief(project.design?.brief ?? ""),
-    [project.design?.brief],
-  );
   const chosen = variants.find((v) => v.id === selected) ?? variants[0];
   const framing = useMemo(
     () => comparisonFrame(chosen ? [chosen.project, project] : [project]),
@@ -65,29 +61,7 @@ export function VariantsPanel({ project }: { project: EditorProject }) {
               : "Опишите форму и стиль"}
           </small>
         </summary>
-        <div className="design-brief">
-          <label htmlFor="design-brief">Задание для агента</label>
-          <textarea
-            id="design-brief"
-            data-testid="design-brief"
-            maxLength={1200}
-            rows={2}
-            value={brief}
-            onChange={(e) => setBrief(e.target.value)}
-            placeholder="Например: выразительный клинок Minecraft, холодная сталь и бирюзовые акценты. Сохранить рукоять."
-          />
-          <button
-            data-testid="save-brief"
-            disabled={busy || brief === (project.design?.brief ?? "")}
-            onClick={() => void command({ type: "brief", text: brief })}
-          >
-            Сохранить задание
-          </button>
-          <small>
-            Агент прочитает задание вместе со сценой. Защитите нужные части
-            замком в дереве.
-          </small>
-        </div>
+        <BriefEditor key={project.projectId} project={project} />
       </details>
       <div className="variant-history">
         <button

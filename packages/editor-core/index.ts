@@ -1,5 +1,8 @@
 import { z } from "zod";
 import { EditorError } from "./errors.ts";
+import { DesignBriefSchema, serializeDesignBrief } from "./design-brief.ts";
+export { DesignBriefSchema, serializeDesignBrief, readDesignBrief } from "./design-brief.ts";
+export type { DesignBrief } from "./design-brief.ts";
 import {
   applyTexture,
   textureMask,
@@ -176,6 +179,7 @@ export const CommandSchema = z.discriminatedUnion("type", [
   z.strictObject({ type: z.literal("undo") }),
   z.strictObject({ type: z.literal("redo") }),
   z.strictObject({ type: z.literal("brief"), text: z.string().max(1200) }),
+  z.strictObject({ type: z.literal("designBrief"), brief: DesignBriefSchema }),
   z.strictObject({
     type: z.literal("checkpoint"),
     variantId: z.uuid(),
@@ -567,7 +571,7 @@ function applyCommand(
   if (command.type === "undo" || command.type === "redo")
     return fail("HISTORY_BATCH", "История меняется отдельной командой.");
   if (
-    ["brief", "checkpoint", "restoreVariant", "deleteVariant"].includes(
+    ["brief", "designBrief", "checkpoint", "restoreVariant", "deleteVariant"].includes(
       command.type,
     )
   ) {
@@ -578,6 +582,14 @@ function applyCommand(
       );
     p.design ??= { brief: "", variants: [] };
     if (command.type === "brief") p.design.brief = command.text;
+    else if (command.type === "designBrief") {
+      for (const id of command.brief.preserve) {
+        const part = p.parts.find((part) => part.id === id);
+        if (!part || !part.locked)
+          fail("BRIEF_PROTECTION", "Деталь брифа отсутствует или не закреплена. Сверьте замки в дереве модели.");
+      }
+      p.design.brief = serializeDesignBrief(command.brief);
+    }
     else if (command.type === "checkpoint") {
       if (p.design.variants.length >= MAX_VARIANTS)
         fail("VARIANT_LIMIT", "Можно сохранить до четырёх вариантов.");
@@ -763,6 +775,7 @@ const labels: Record<EditorCommand["type"], string> = {
   undo: "Отмена",
   redo: "Повтор",
   brief: "Задание для модели",
+  designBrief: "Структурированный бриф",
   checkpoint: "Сохранение варианта",
   restoreVariant: "Возврат к варианту",
   deleteVariant: "Удаление варианта",

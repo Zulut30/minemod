@@ -23,6 +23,7 @@ import { checkHistoryDesktop } from "./check-history-desktop.mjs";
 import { checkGeometryDesktop } from "./check-geometry-desktop.mjs";
 import { checkCameraDesktop } from "./check-camera-desktop.mjs";
 import { checkDiscoveryDesktop } from "./check-discovery-desktop.mjs";
+import { checkBriefDesktop } from "./check-brief-desktop.mjs";
 
 const appDir = resolve(dirname(fileURLToPath(import.meta.url)), ".."),
   repo = resolve(appDir, "../..");
@@ -386,6 +387,7 @@ try {
   const polish = await checkPolishDesktop(options, output);
   const editing = await checkEditingDesktop(options, output);
   const variants = await checkVariantsDesktop(options, output);
+  const brief = await checkBriefDesktop(options, output);
   const review = await checkReviewDesktop(options, output);
   const migrations = await checkMigrationsDesktop(options, output);
   const history = await checkHistoryDesktop(options, output);
@@ -406,6 +408,7 @@ try {
         polish,
         editing,
         variants,
+        brief,
         review,
         migrations,
         history,
