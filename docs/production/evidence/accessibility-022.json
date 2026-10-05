@@ -190,9 +190,8 @@
   },
   "remaining": [
     "Other actual display scales and per-monitor transfer",
-    "All important hover/warning/disabled/selection text states",
     "Screen reader complete manual workflow",
-    "Full hosted packaged source suite"
+    "Full hosted packaged expanded source suite"
   ],
   "logs": [
     {
@@ -254,6 +253,31 @@
       "path": "output\\verification\\roadmap-022-typecheck-release.log",
       "bytes": 62,
       "sha256": "7f1749195a67dd86a18bfb4f76b66413850f0ee377a565acbf98182de15f29c2"
+    },
+    {
+      "path": "output/verification/roadmap-022-states-restored.log",
+      "bytes": 1976,
+      "sha256": "5d5da79580fd78973060c50e8affbf81d8b9576ed1a26ecf2875e63ad7f39c61"
+    },
+    {
+      "path": "output/verification/roadmap-022-states-focus-regression.log",
+      "bytes": 2102,
+      "sha256": "babf7ec5d5d18603cb71c75fe0f65fd7313d0b201f515b338bb074ecc1471ffd"
+    },
+    {
+      "path": "output/verification/roadmap-022-states-package.log",
+      "bytes": 787,
+      "sha256": "b38063c3833e283641429d6cc3e2268ee9b12e810d9254a9860111fe2703c50c"
+    },
+    {
+      "path": "output/verification/roadmap-022-states-lint.log",
+      "bytes": 29,
+      "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+    },
+    {
+      "path": "output/verification/roadmap-022-states-typecheck.log",
+      "bytes": 62,
+      "sha256": "7f1749195a67dd86a18bfb4f76b66413850f0ee377a565acbf98182de15f29c2"
     }
   ],
   "limits": {
@@ -264,5 +288,156 @@
     "minecraftAssets": "not-tested"
   },
   "newDependencies": false,
-  "trustedPacksChanged": false
+  "trustedPacksChanged": false,
+  "extendedStates": {
+    "checkedAtUtc": "2026-10-05T11:57:13.881Z",
+    "report": {
+      "status": "PASS",
+      "hidden": true,
+      "displayScale": 1.75,
+      "zoomFactor": 1,
+      "states": [
+        {
+          "state": "model/normal/selected",
+          "textCount": 84,
+          "minContrast": 5.863648288370666
+        },
+        {
+          "state": "model/export-hover",
+          "textCount": 84,
+          "minContrast": 5.863648288370666
+        },
+        {
+          "state": "texture/keyboard-selected",
+          "textCount": 97,
+          "minContrast": 5.863648288370666
+        },
+        {
+          "state": "variants/keyboard-selected",
+          "textCount": 81,
+          "minContrast": 5.863648288370666
+        },
+        {
+          "state": "review/keyboard-selected",
+          "textCount": 88,
+          "minContrast": 5.863648288370666
+        },
+        {
+          "state": "model/keyboard-selected",
+          "textCount": 84,
+          "minContrast": 5.863648288370666
+        },
+        {
+          "state": "part/invalid-name-alert",
+          "textCount": 85,
+          "minContrast": 5.863648288370666
+        },
+        {
+          "state": "recovery/warning/keyboard-rename",
+          "textCount": 84,
+          "minContrast": 5.863648288370666
+        },
+        {
+          "state": "recovery/warning/saved-clean",
+          "textCount": 83,
+          "minContrast": 5.863648288370666
+        },
+        {
+          "state": "part/keyboard-lock-true",
+          "textCount": 85,
+          "minContrast": 5.863648288370666
+        },
+        {
+          "state": "part/keyboard-lock-false",
+          "textCount": 85,
+          "minContrast": 5.863648288370666
+        }
+      ],
+      "keyboardRename": true,
+      "keyboardSave": true,
+      "keyboardViewAndPaintTools": true,
+      "keyboardExpandAndHide": true,
+      "keyboardLockRestored": true,
+      "geometryAndTexturePreserved": true,
+      "warningVisibleAfterSave": true,
+      "scope": "Visible opaque text in real states; disabled/opacity controls and raster/canvas text excluded, not complete WCAG certification"
+    },
+    "sourceHashes": [
+      {
+        "path": "apps/model-editor/renderer/App.tsx",
+        "bytes": 34631,
+        "sha256": "b83276fffbcaadb662c5731a453ec4884e23455998c9c3c1195d543b6eff3083"
+      },
+      {
+        "path": "apps/model-editor/renderer/TextureEditor.tsx",
+        "bytes": 19227,
+        "sha256": "b05a430543af0c6e50aa28d14abce029a494ff556ddf1da85c458a7d876a8b8a"
+      },
+      {
+        "path": "apps/model-editor/scripts/check-accessibility-states-desktop.mjs",
+        "bytes": 10283,
+        "sha256": "36f737a6e6f97a8afc069d01905ce67f1989f4d81eacd69e1ba4071c0e944ef4"
+      },
+      {
+        "path": "apps/model-editor/scripts/test-desktop.mjs",
+        "bytes": 17489,
+        "sha256": "ccf0106e7f407cfa9ac3b12d612316a85e888b6dea8004ef439c8a11b1b87df8"
+      }
+    ],
+    "artifacts": [
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\playwright\\accessibility-states-022-ff80e465\\accessibility-states\\report.json",
+        "bytes": 1770,
+        "sha256": "e5331d03ba50b18209ad8daa6d9fa8266d46a9d74e14a12abe3cd497f9550b11"
+      },
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\playwright\\accessibility-states-022-ff80e465\\accessibility-states\\contrast.json",
+        "bytes": 114533,
+        "sha256": "7f402c6a53e41f8e7556c2226e6ac261d7a5d1074fc0c4f23ce3fbd3da8638ae"
+      },
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\playwright\\accessibility-states-022-ff80e465\\accessibility-states\\warning-keyboard-save.png",
+        "bytes": 351730,
+        "sha256": "b31866de8a2a0cc21ad525ad52e95a409da519d5bc651b4436f2e41ec4793269"
+      },
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\playwright\\accessibility-states-022-ff80e465\\accessibility-states\\клавиатурное сохранение.mmeditor.json",
+        "bytes": 135508,
+        "sha256": "7e7cb8629f49fd0db8ff428bf211f0f7a528ace960d563df354b9386629c609d"
+      }
+    ],
+    "focusArtifacts": [
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\playwright\\accessibility-022-901ec879\\accessibility\\report.json",
+        "bytes": 1897,
+        "sha256": "79f70940dfb42cfa6838c371832d1ae6aacb7f1392ebbd5664e6424a2f499a1f"
+      },
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\playwright\\accessibility-022-901ec879\\accessibility\\keyboard-focus.png",
+        "bytes": 499227,
+        "sha256": "9e64a871cc4eb7a95f1b598b81b6b2b220c4a22ee1658fa0c22a79fea6314c55"
+      }
+    ],
+    "packageHashes": [
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.12.1\\ebc2e796\\MineMod Studio-win32-x64\\MineMod Studio.exe",
+        "bytes": 245726208,
+        "sha256": "9e081b4c3b1e0b9dfee8dd7e55eca9697672a8ce236fe81f8fe8500b469e5c6a"
+      },
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.12.1\\ebc2e796\\MineMod Studio-win32-x64\\resources\\app.asar",
+        "bytes": 3549941,
+        "sha256": "a17ad71dab7dbf700be93d42ec6db2ba36ce68380d6a81635117a4f3d13e5069"
+      }
+    ],
+    "retainedOperator": {
+      "log": {
+        "path": "output/verification/roadmap-022-states-final.log",
+        "bytes": 746,
+        "sha256": "20ade330af1298a9add65e4d4f3a9aed09c0d5d94a086fc8b1391a012776be11"
+      },
+      "reason": "Helper assumed sample grip initially locked; now checks actual document state, then tests and restores lock by keyboard"
+    },
+    "hostedNewSource": "pending"
+  }
 }

@@ -545,6 +545,8 @@ export function App() {
                     <button
                       className={`expand-button ${expanded.includes(part.id) ? "expanded" : ""}`}
                       title="Кубы части"
+                      aria-label={`Кубы части: ${part.label}`}
+                      aria-expanded={expanded.includes(part.id)}
                       onClick={() =>
                         setExpanded(
                           expanded.includes(part.id)
@@ -558,6 +560,7 @@ export function App() {
                     <button
                       className="part-select"
                       data-testid={`part-${part.id}`}
+                      aria-pressed={active}
                       title={`${part.label} · ${part.cubeIds.length} куб.`}
                       onClick={(event) => ui.select(part.cubeIds, event.ctrlKey || event.metaKey || event.shiftKey)}
                     >
@@ -577,6 +580,8 @@ export function App() {
                     </button>
                     <button
                       data-testid={`lock-${part.id}`}
+                      aria-pressed={part.locked}
+                      aria-label={`${part.locked ? "Снять закрепление от AI" : "Закрепить от AI"}: ${part.label}`}
                       className={part.locked ? "toggled" : ""}
                       title={
                         part.locked
@@ -601,6 +606,7 @@ export function App() {
                         className={`cube-row ${ui.selection.length === 1 && ui.selection[0] === id ? "active" : ""}`}
                         key={id}
                         data-testid={`cube-${id}`}
+                        aria-pressed={ui.selection.includes(id)}
                         onClick={(event) => ui.select([id], event.ctrlKey || event.metaKey || event.shiftKey)}
                       >
                         <Icon name="cube" size={12} />
@@ -702,6 +708,7 @@ export function App() {
                   ).map(([view, label]) => (
                     <button
                       data-testid={`view-${view}`}
+                      aria-pressed={ui.view === view}
                       key={view}
                       className={ui.view === view ? "active" : ""}
                       onClick={() =>
@@ -727,6 +734,8 @@ export function App() {
                   </button>
                   <button
                     title="Сетка"
+                    data-testid="toggle-grid"
+                    aria-pressed={ui.grid}
                     className={ui.grid ? "active" : ""}
                     onClick={() => useStudio.setState({ grid: !ui.grid })}
                   >
@@ -734,6 +743,8 @@ export function App() {
                   </button>
                   <button
                     title="Каркас"
+                    data-testid="toggle-wire"
+                    aria-pressed={ui.wire}
                     className={ui.wire ? "active" : ""}
                     onClick={() => useStudio.setState({ wire: !ui.wire })}
                   >

@@ -427,6 +427,7 @@ export function TextureEditor({ project }: { project: EditorProject }) {
             <button
               key={name}
               data-testid={`paint-${name}`}
+              aria-pressed={tool === name}
               className={tool === name ? "active" : ""}
               disabled={busy || drawing}
               onClick={() => setTool(name)}
