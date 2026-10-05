@@ -103,6 +103,11 @@ export function VariantsPanel({ project }: { project: EditorProject }) {
           Сохранить вариант · {variants.length}/{MAX_VARIANTS}
         </button>
       </div>
+      <p className="comparison-note">
+        Агент может добавить до трёх черновиков рядом с сохранённым исходником.
+        Сравните их форму; выбор и удаление остаются у вас. ИИ-черновик ещё не
+        означает принятую модель.
+      </p>
       {!chosen ? (
         <div className="variants-empty">
           Сохраните исходник перед изменениями. Затем создавайте варианты формы

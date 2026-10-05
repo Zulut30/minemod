@@ -6,7 +6,7 @@
   "license": "Apache-2.0",
   "exports": "./index.ts",
   "scripts": {
-    "test": "node --experimental-strip-types test.ts && node --experimental-strip-types texture.test.ts && node --experimental-strip-types variants.test.ts && node --experimental-strip-types persistence-crash.test.ts && node --experimental-strip-types migrations.test.ts && node --experimental-strip-types history-roundtrip.test.ts && node --experimental-strip-types geometry.test.ts && node --experimental-strip-types design-brief.test.ts && node --experimental-strip-types parts.test.ts && node --experimental-strip-types repair.test.ts && node --experimental-strip-types concepts.test.ts"
+    "test": "node --experimental-strip-types test.ts && node --experimental-strip-types texture.test.ts && node --experimental-strip-types variants.test.ts && node --experimental-strip-types blockouts.test.ts && node --experimental-strip-types persistence-crash.test.ts && node --experimental-strip-types migrations.test.ts && node --experimental-strip-types history-roundtrip.test.ts && node --experimental-strip-types geometry.test.ts && node --experimental-strip-types design-brief.test.ts && node --experimental-strip-types parts.test.ts && node --experimental-strip-types repair.test.ts && node --experimental-strip-types concepts.test.ts"
   },
   "dependencies": {
     "@mcdev/assets-contracts": "workspace:*",

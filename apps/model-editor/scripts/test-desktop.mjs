@@ -30,6 +30,7 @@ import { checkAccessibilityDesktop } from "./check-accessibility-desktop.mjs";
 import { checkAccessibilityStatesDesktop } from "./check-accessibility-states-desktop.mjs";
 import { checkRepairDesktop } from "./check-repair-desktop.mjs";
 import { checkConceptsDesktop } from "./check-concepts-desktop.mjs";
+import { checkAgentBlockoutsDesktop } from "./check-agent-blockouts-desktop.mjs";
 
 const appDir = resolve(dirname(fileURLToPath(import.meta.url)), ".."),
   repo = resolve(appDir, "../..");
@@ -393,6 +394,7 @@ try {
   const polish = await checkPolishDesktop(options, output);
   const editing = await checkEditingDesktop(options, output);
   const variants = await checkVariantsDesktop(options, output);
+  const agentBlockouts = await checkAgentBlockoutsDesktop(options, output);
   const brief = await checkBriefDesktop(options, output);
   const concepts = await checkConceptsDesktop(options, output);
   const parts = await checkPartsDesktop(options, output);
@@ -420,6 +422,7 @@ try {
         polish,
         editing,
         variants,
+        agentBlockouts,
         brief,
         concepts,
         parts,

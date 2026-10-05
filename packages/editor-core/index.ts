@@ -2,6 +2,8 @@ import { z } from "zod";
 import { EditorError } from "./errors.ts";
 import { DesignBriefSchema, serializeDesignBrief } from "./design-brief.ts";
 import { ConceptDescriptorSchema, MAX_CONCEPTS } from "./concepts.ts";
+import { blockoutGeometry, AGENT_DRAFT_PREFIX, AGENT_DRAFT_NOTE, MAX_AGENT_DRAFTS } from "./blockouts.ts";
+export { blockoutGeometry, AGENT_DRAFT_PREFIX, MAX_AGENT_DRAFTS } from "./blockouts.ts";
 export { ConceptDraftSchema, ConceptDescriptorSchema, ConceptImportSchema, MAX_CONCEPTS, MAX_CONCEPT_BYTES, MAX_CONCEPT_DIMENSION } from "./concepts.ts";
 export type { Concept, ConceptDraft, ConceptImport } from "./concepts.ts";
 import { RepairControlSchema, repairCubeIds, checkRepairCommands, checkRepairResult, type ActiveRepair } from "./repair.ts";
@@ -202,6 +204,12 @@ export const CommandSchema = z.discriminatedUnion("type", [
     variantId: z.uuid(),
     label: z.string().trim().min(1).max(48),
     note: z.string().max(400).default(""),
+  }),
+  z.strictObject({
+    type: z.literal("draftVariant"),
+    variantId: z.uuid(),
+    label: z.string().trim().min(1).max(32),
+    note: z.string().max(300).default(""),
   }),
   z.strictObject({ type: z.literal("restoreVariant"), variantId: z.uuid() }),
   z.strictObject({ type: z.literal("deleteVariant"), variantId: z.uuid() }),
@@ -594,11 +602,11 @@ function applyCommand(
   if ((command.type === "renamePart" || command.type === "groupPart") && actor !== "human")
     return fail("HUMAN_ONLY", "Имена и состав частей меняет пользователь.");
   if (
-    ["brief", "designBrief", "conceptAdd", "conceptRemove", "checkpoint", "restoreVariant", "deleteVariant"].includes(
+    ["brief", "designBrief", "conceptAdd", "conceptRemove", "checkpoint", "draftVariant", "restoreVariant", "deleteVariant"].includes(
       command.type,
     )
   ) {
-    if (actor !== "human")
+    if (actor !== "human" && command.type !== "draftVariant")
       fail(
         "HUMAN_ONLY",
         "Задание и сохранённые варианты управляются пользователем.",
@@ -621,15 +629,23 @@ function applyCommand(
       if (!p.design.concepts?.some(c => c.id === command.conceptId)) fail("CONCEPT_NOT_FOUND", "Концепт отсутствует в текущем проекте.");
       p.design.concepts = p.design.concepts.filter(c => c.id !== command.conceptId);
     }
-    else if (command.type === "checkpoint") {
+    else if (command.type === "checkpoint" || command.type === "draftVariant") {
       if (p.design.variants.length >= MAX_VARIANTS)
         fail("VARIANT_LIMIT", "Можно сохранить до четырёх вариантов.");
       if (p.design.variants.some((v) => v.id === command.variantId))
         fail("VARIANT_ID", "Вариант с таким идентификатором уже существует.");
+      if (command.type === "draftVariant") {
+        if (p.design.variants.filter(v => v.label.startsWith(AGENT_DRAFT_PREFIX)).length >= MAX_AGENT_DRAFTS)
+          fail("VARIANT_DRAFT_LIMIT", "Можно добавить до трёх ИИ-черновиков. Выберите направление; удалить снимок может только пользователь.");
+        const geometry = blockoutGeometry(p);
+        if (!geometry) fail("EMPTY_MODEL", "Сначала создайте геометрию черновика.");
+        if (p.design.variants.some(v => blockoutGeometry(v.project) === geometry))
+          fail("VARIANT_GEOMETRY_DUPLICATE", "Форма уже сохранена. Для нового blockout измените геометрию, а не только цвет или IDs.");
+      }
       p.design.variants.push({
         id: command.variantId,
-        label: command.label,
-        note: command.note,
+        label: command.type === "draftVariant" ? AGENT_DRAFT_PREFIX + command.label : command.label,
+        note: command.type === "draftVariant" ? AGENT_DRAFT_NOTE + command.note : command.note,
         project: {
           schemaVersion: p.schemaVersion,
           kind: p.kind,
@@ -828,6 +844,7 @@ const labels: Record<EditorCommand["type"], string> = {
   conceptAdd: "Концепт или reference",
   conceptRemove: "Удаление ссылки на концепт",
   checkpoint: "Сохранение варианта",
+  draftVariant: "Добавление ИИ-черновика",
   restoreVariant: "Возврат к варианту",
   deleteVariant: "Удаление варианта",
 };

@@ -2078,13 +2078,1799 @@
   },
   "boundaries": {
     "authoring": "Geometry chosen by Codex, executed through editor-core agent commands; not an independent live CLI/MCP generation session",
-    "variantManagement": "Human-owned metadata/checkpoints prepared by local developer workflow; app agent permissions unchanged",
+    "variantManagement": "Initial illustrative fixtures used local human-owned snapshots. Studio 0.16.0 now additionally permits append-only agent drafts; restore/delete/checkpoint and human metadata remain protected.",
     "artisticApproval": "NOT_PERFORMED",
     "textures": "Neutral blockout only; painted texture not accepted",
     "gameAcceptance": "NOT_RUN",
     "jarIntegration": "NOT_PERFORMED",
-    "generalAgentVariantWorkflow": "NOT_IMPLEMENTED",
-    "hosted": "No new runtime code; earlier exact-source 035 evidence retained, no fresh hosted claim for these developer helpers",
+    "generalAgentVariantWorkflow": "IMPLEMENTED; local MCP/GUI proof PASS, independent model turn/full matrix/hosted not yet terminal",
+    "hosted": "Previous 035 evidence applies to old runtime only; 0.16.0 hosted proof still required",
     "scope": "Reproducible drafts and local proofs only; point 036 remains unchecked"
+  },
+  "agentRuntime": {
+    "status": "LOCAL_FUNCTIONAL_PASS_AWAITING_FULL_INDEPENDENT_HOSTED",
+    "updatedAtUtc": "2026-10-05T16:51:58.146Z",
+    "studioVersion": "0.16.0",
+    "projectVersion": 3,
+    "sourceHashes": [
+      {
+        "path": "packages/editor-core/index.ts",
+        "bytes": 40377,
+        "sha256": "fd5e6fcf1eac2310ed8de421071e0ad774e630d51afa391764682aa0642e4e09"
+      },
+      {
+        "path": "packages/editor-core/blockouts.ts",
+        "bytes": 1963,
+        "sha256": "b7692b5cfb8dc71f105608a8457fefcca48c2cdf35e1ab3c29cde7b88a150085"
+      },
+      {
+        "path": "packages/editor-core/blockouts.test.ts",
+        "bytes": 7151,
+        "sha256": "5acd36f91ee6dcf08731d4e238c1122bdb1b173e97f49cb7a672d8689e5230c3"
+      },
+      {
+        "path": "packages/editor-core/package.json",
+        "bytes": 905,
+        "sha256": "2aa1c6195d0a3bcb16b5fee6de4c4bd175db4c5d1d1052c0aba145122059019d"
+      },
+      {
+        "path": "apps/model-editor/package.json",
+        "bytes": 1688,
+        "sha256": "bf7208143a9d834508f77785cd8369b50df6ed92aea741d84b0ba6adcd7f043f"
+      },
+      {
+        "path": "apps/model-editor/worker/discovery.ts",
+        "bytes": 15683,
+        "sha256": "33fdcca17da9257d26f96397713dc70ecbf3d19eb1302b49fb035aa17c500f5e"
+      },
+      {
+        "path": "apps/model-editor/worker/discovery.test.ts",
+        "bytes": 11653,
+        "sha256": "2b0c7f776900e8aa016abf275c6750634bdc876c30ef1ee9053ffaad10b7ebfa"
+      },
+      {
+        "path": "apps/model-editor/worker/mcp.ts",
+        "bytes": 33953,
+        "sha256": "df9560c7eaad5ba6129d1494ed9b670ccd0c50a2d0fb2130310a9595291abc10"
+      },
+      {
+        "path": "apps/model-editor/renderer/VariantsPanel.tsx",
+        "bytes": 9304,
+        "sha256": "23dc61b519627e76f7bd67582cfbfc1d30c69c0d278784eb54632ec0167263fb"
+      },
+      {
+        "path": "apps/model-editor/scripts/check-agent-blockouts-desktop.mjs",
+        "bytes": 13614,
+        "sha256": "2eaa3f27252cbffa0370b6a674a11b79aa29c427ca30b951fd2eb6bc7adf37fc"
+      },
+      {
+        "path": "apps/model-editor/scripts/run-agent-blockouts-desktop.mjs",
+        "bytes": 1287,
+        "sha256": "87015210c2c0a18281e1d5ee685a9f611a7e8b58b3e148a74b713563ba1be467"
+      },
+      {
+        "path": "apps/model-editor/scripts/verify-codex-session.mjs",
+        "bytes": 19073,
+        "sha256": "035ffb9a054a789d9a5dca7ecdad6debbac87292cdef40d99dda3a325138d24e"
+      },
+      {
+        "path": "apps/model-editor/scripts/test-desktop.mjs",
+        "bytes": 17963,
+        "sha256": "ff584151d9572f963303b70542faa5c1788db38aae1487d2f9b76ab53027a01e"
+      }
+    ],
+    "operation": "draftVariant: closed append-only snapshot of current scene, three agent drafts/four total, manual baseline immutable, no model/path/approval payload",
+    "geometryFilter": "Placed cuboid corner sets, normalized to 1e-6; ignores IDs/colors/UV and exact duplicate cuboids; not an artistic difference score",
+    "package": {
+      "path": "output/model-editor/releases/0.16.0/eef7d7d7/MineMod Studio-win32-x64/MineMod Studio.exe",
+      "asarPath": "output/model-editor/releases/0.16.0/eef7d7d7/MineMod Studio-win32-x64/resources/app.asar",
+      "asarBytes": 3636773,
+      "asarSha256": "c290c99e45811bc1e4ea1c626a90ed0ece95d25cea46fa208334dcca13f54504"
+    },
+    "core": {
+      "status": "PASS",
+      "focusedLog": "output/verification/roadmap-036-agent-core-focused.log",
+      "portableLog": "output/verification/roadmap-036-agent-portable.log",
+      "discoveryLog": "output/verification/roadmap-036-agent-discovery.log",
+      "mcpLog": "output/verification/roadmap-036-agent-mcp.log",
+      "lintLog": "output/verification/roadmap-036-agent-lint.log",
+      "typecheckLog": "output/verification/roadmap-036-agent-typecheck.log"
+    },
+    "sdk": {
+      "status": "PASS",
+      "root": "output/playwright/agent-blockouts-036-0543febd/agent-blockouts",
+      "hidden": true,
+      "actor": "Actual MCP SDK agent operations",
+      "independentModelTurn": false,
+      "operatorBaselineCubes": 3,
+      "snapshotCreation": "All three drafts created through MCP preview/apply; operator created only manual baseline",
+      "variants": [
+        {
+          "key": "a",
+          "id": "ce556d78-a6d2-42c0-8924-647982cfe57d",
+          "label": "ИИ-черновик · A · Лист",
+          "geometrySha256": "d75f1c9aad076a3cf73a742b66c37ea3cadbd00e84947894022c1a0952b04a36"
+        },
+        {
+          "key": "b",
+          "id": "ac7f8660-33af-466a-b6e1-f7cdc6c53348",
+          "label": "ИИ-черновик · B · Клык",
+          "geometrySha256": "c1ca6d2bc8652988c997fb6db862deb4cc11cb119dc1319db73875cb122fcd1b"
+        },
+        {
+          "key": "c",
+          "id": "1fefbdf3-b55f-4378-b3b6-4ca9f77ba7bd",
+          "label": "ИИ-черновик · C · Раскол",
+          "geometrySha256": "b64196f43f8e0f7f9f1a36af888884a1f2db79ab650572670ef3ade69d9e24b3"
+        }
+      ],
+      "allFramesEqual": true,
+      "captures": [
+        {
+          "path": "output/playwright/agent-blockouts-036-0543febd/agent-blockouts/a-front.png",
+          "sha256": "0c1beeb29bedeec606c1067645da2f2dd4c4f8c51ff2372baa3a5150e0ea4216",
+          "bytes": 12188,
+          "metadata": {
+            "projectId": "6658ec42-a3b0-45f5-9b1b-2728901329e0",
+            "revision": 22,
+            "cubeCount": 36,
+            "history": [
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              },
+              {
+                "label": "Удаление",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              }
+            ],
+            "view": "front",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ce556d78-a6d2-42c0-8924-647982cfe57d",
+            "compareToVariantId": "ac7f8660-33af-466a-b6e1-f7cdc6c53348",
+            "silhouette": false,
+            "renderedCubeCount": 33,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/playwright/agent-blockouts-036-0543febd/agent-blockouts/a-back.png",
+          "sha256": "acf9fe4ebfa65a68b31ec0d61dd9e5ab162a21fbb768c70ae416d4a12a7e51dd",
+          "bytes": 11698,
+          "metadata": {
+            "projectId": "6658ec42-a3b0-45f5-9b1b-2728901329e0",
+            "revision": 22,
+            "cubeCount": 36,
+            "history": [
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              },
+              {
+                "label": "Удаление",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              }
+            ],
+            "view": "back",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ce556d78-a6d2-42c0-8924-647982cfe57d",
+            "compareToVariantId": "ac7f8660-33af-466a-b6e1-f7cdc6c53348",
+            "silhouette": false,
+            "renderedCubeCount": 33,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/playwright/agent-blockouts-036-0543febd/agent-blockouts/a-left.png",
+          "sha256": "ef545c6ed10a62d8abefec62c8c4e047e61f941de94cf960d3cc970401743552",
+          "bytes": 7989,
+          "metadata": {
+            "projectId": "6658ec42-a3b0-45f5-9b1b-2728901329e0",
+            "revision": 22,
+            "cubeCount": 36,
+            "history": [
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              },
+              {
+                "label": "Удаление",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              }
+            ],
+            "view": "left",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ce556d78-a6d2-42c0-8924-647982cfe57d",
+            "compareToVariantId": "ac7f8660-33af-466a-b6e1-f7cdc6c53348",
+            "silhouette": false,
+            "renderedCubeCount": 33,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/playwright/agent-blockouts-036-0543febd/agent-blockouts/a-right.png",
+          "sha256": "ba146cef5835ac9999f510c84129fe6499de421ccb11cf4aa2658a4b86506952",
+          "bytes": 8063,
+          "metadata": {
+            "projectId": "6658ec42-a3b0-45f5-9b1b-2728901329e0",
+            "revision": 22,
+            "cubeCount": 36,
+            "history": [
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              },
+              {
+                "label": "Удаление",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              }
+            ],
+            "view": "right",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ce556d78-a6d2-42c0-8924-647982cfe57d",
+            "compareToVariantId": "ac7f8660-33af-466a-b6e1-f7cdc6c53348",
+            "silhouette": false,
+            "renderedCubeCount": 33,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/playwright/agent-blockouts-036-0543febd/agent-blockouts/a-top.png",
+          "sha256": "54a396f381778800a999161107322c0ab1da2ec9927800b642e8bcdf4618a71d",
+          "bytes": 5937,
+          "metadata": {
+            "projectId": "6658ec42-a3b0-45f5-9b1b-2728901329e0",
+            "revision": 22,
+            "cubeCount": 36,
+            "history": [
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              },
+              {
+                "label": "Удаление",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              }
+            ],
+            "view": "top",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ce556d78-a6d2-42c0-8924-647982cfe57d",
+            "compareToVariantId": "ac7f8660-33af-466a-b6e1-f7cdc6c53348",
+            "silhouette": false,
+            "renderedCubeCount": 33,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/playwright/agent-blockouts-036-0543febd/agent-blockouts/a-bottom.png",
+          "sha256": "1c4ab76ca5229daf6afe788c56791e6a9237201547ad3a53447c50f7769440a4",
+          "bytes": 5844,
+          "metadata": {
+            "projectId": "6658ec42-a3b0-45f5-9b1b-2728901329e0",
+            "revision": 22,
+            "cubeCount": 36,
+            "history": [
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              },
+              {
+                "label": "Удаление",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              }
+            ],
+            "view": "bottom",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ce556d78-a6d2-42c0-8924-647982cfe57d",
+            "compareToVariantId": "ac7f8660-33af-466a-b6e1-f7cdc6c53348",
+            "silhouette": false,
+            "renderedCubeCount": 33,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/playwright/agent-blockouts-036-0543febd/agent-blockouts/a-perspective.png",
+          "sha256": "fa365b7e0622c78a4d796543b1eaf97dcc8effa98b9439b4ac907744ed1f834a",
+          "bytes": 34742,
+          "metadata": {
+            "projectId": "6658ec42-a3b0-45f5-9b1b-2728901329e0",
+            "revision": 22,
+            "cubeCount": 36,
+            "history": [
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              },
+              {
+                "label": "Удаление",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              }
+            ],
+            "view": "perspective",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ce556d78-a6d2-42c0-8924-647982cfe57d",
+            "compareToVariantId": "ac7f8660-33af-466a-b6e1-f7cdc6c53348",
+            "silhouette": false,
+            "renderedCubeCount": 33,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/playwright/agent-blockouts-036-0543febd/agent-blockouts/a-rear-perspective.png",
+          "sha256": "ab70d2c9f8f46882cfff0db490868c923ee18b673bb48dd6241128513e416bf0",
+          "bytes": 33673,
+          "metadata": {
+            "projectId": "6658ec42-a3b0-45f5-9b1b-2728901329e0",
+            "revision": 22,
+            "cubeCount": 36,
+            "history": [
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              },
+              {
+                "label": "Удаление",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              }
+            ],
+            "view": "rear-perspective",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ce556d78-a6d2-42c0-8924-647982cfe57d",
+            "compareToVariantId": "ac7f8660-33af-466a-b6e1-f7cdc6c53348",
+            "silhouette": false,
+            "renderedCubeCount": 33,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/playwright/agent-blockouts-036-0543febd/agent-blockouts/a-silhouette.png",
+          "sha256": "13c74499ac5020278be805eaf87380873c87daf0946d53835d286b9303fe7aa3",
+          "bytes": 12007,
+          "metadata": {
+            "projectId": "6658ec42-a3b0-45f5-9b1b-2728901329e0",
+            "revision": 22,
+            "cubeCount": 36,
+            "history": [
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              },
+              {
+                "label": "Удаление",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              }
+            ],
+            "view": "front",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ce556d78-a6d2-42c0-8924-647982cfe57d",
+            "compareToVariantId": "ac7f8660-33af-466a-b6e1-f7cdc6c53348",
+            "silhouette": true,
+            "renderedCubeCount": 33,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/playwright/agent-blockouts-036-0543febd/agent-blockouts/a-review.png",
+          "sha256": "7a408101287179d32f53c5f6abf6d9d4f0a09a0a2d9d34688671b7f015f796ab",
+          "bytes": 62446,
+          "metadata": {
+            "projectId": "6658ec42-a3b0-45f5-9b1b-2728901329e0",
+            "revision": 22,
+            "cubeCount": 36,
+            "history": [
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              },
+              {
+                "label": "Удаление",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              }
+            ],
+            "width": 1024,
+            "height": 768,
+            "variantId": "ce556d78-a6d2-42c0-8924-647982cfe57d",
+            "compareToVariantId": "ac7f8660-33af-466a-b6e1-f7cdc6c53348",
+            "brief": "Три нейтральные формы меча: Лист, Клык и Раскол. Сохранить ручную рукоять и рисунок; выбрать направление до текстуры.",
+            "lockedParts": [
+              {
+                "id": "manual_handle",
+                "label": "Ручная рукоять"
+              }
+            ],
+            "views": [
+              "front",
+              "side",
+              "back",
+              "perspective"
+            ],
+            "smallPreviews": [
+              32,
+              64
+            ],
+            "silhouette": "front-alpha-mask",
+            "reviewChecklist": [
+              "Спереди: ясный силуэт, один главный акцент; крупные детали читаются на 32 px.",
+              "Сбоку: клинок не исчезает; стыки гарды и рукояти не имеют случайных зазоров.",
+              "Сзади: покраска завершена, материалы и крупные элементы согласованы со передней стороной.",
+              "Три четверти: кромки и объём читаются; UV не растянуты, материалы различимы.",
+              "Назовите видимую проблему, конкретную правку и ожидаемый эффект; повторите обзор после исправления."
+            ],
+            "artisticAcceptance": "requires-human-review",
+            "game": "not-verified"
+          }
+        },
+        {
+          "path": "output/playwright/agent-blockouts-036-0543febd/agent-blockouts/b-front.png",
+          "sha256": "24b00db969765efbc41739e58ac54ebda9c92278dc071684c66b7216f0dbfb97",
+          "bytes": 11272,
+          "metadata": {
+            "projectId": "6658ec42-a3b0-45f5-9b1b-2728901329e0",
+            "revision": 22,
+            "cubeCount": 36,
+            "history": [
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              },
+              {
+                "label": "Удаление",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              }
+            ],
+            "view": "front",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ac7f8660-33af-466a-b6e1-f7cdc6c53348",
+            "compareToVariantId": "ce556d78-a6d2-42c0-8924-647982cfe57d",
+            "silhouette": false,
+            "renderedCubeCount": 34,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/playwright/agent-blockouts-036-0543febd/agent-blockouts/b-back.png",
+          "sha256": "80fdbb8521b45bab428ce72687552fbdb1984ce33f650c309c86ae515ad5a414",
+          "bytes": 10979,
+          "metadata": {
+            "projectId": "6658ec42-a3b0-45f5-9b1b-2728901329e0",
+            "revision": 22,
+            "cubeCount": 36,
+            "history": [
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              },
+              {
+                "label": "Удаление",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              }
+            ],
+            "view": "back",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ac7f8660-33af-466a-b6e1-f7cdc6c53348",
+            "compareToVariantId": "ce556d78-a6d2-42c0-8924-647982cfe57d",
+            "silhouette": false,
+            "renderedCubeCount": 34,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/playwright/agent-blockouts-036-0543febd/agent-blockouts/b-left.png",
+          "sha256": "77066600c2cede34420beeebffad4c848b84e6f20e68347c0bf91449018b9945",
+          "bytes": 8118,
+          "metadata": {
+            "projectId": "6658ec42-a3b0-45f5-9b1b-2728901329e0",
+            "revision": 22,
+            "cubeCount": 36,
+            "history": [
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              },
+              {
+                "label": "Удаление",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              }
+            ],
+            "view": "left",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ac7f8660-33af-466a-b6e1-f7cdc6c53348",
+            "compareToVariantId": "ce556d78-a6d2-42c0-8924-647982cfe57d",
+            "silhouette": false,
+            "renderedCubeCount": 34,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/playwright/agent-blockouts-036-0543febd/agent-blockouts/b-right.png",
+          "sha256": "ea7080e71ddab7ab45ec61c3209dd795305dde87f41fae2c1d2965a836c126cb",
+          "bytes": 8194,
+          "metadata": {
+            "projectId": "6658ec42-a3b0-45f5-9b1b-2728901329e0",
+            "revision": 22,
+            "cubeCount": 36,
+            "history": [
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              },
+              {
+                "label": "Удаление",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              }
+            ],
+            "view": "right",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ac7f8660-33af-466a-b6e1-f7cdc6c53348",
+            "compareToVariantId": "ce556d78-a6d2-42c0-8924-647982cfe57d",
+            "silhouette": false,
+            "renderedCubeCount": 34,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/playwright/agent-blockouts-036-0543febd/agent-blockouts/b-top.png",
+          "sha256": "3743bc53a4b711e446019f9824dfdd5e697a78b1dc3be567ef47378e5d7cfae8",
+          "bytes": 5541,
+          "metadata": {
+            "projectId": "6658ec42-a3b0-45f5-9b1b-2728901329e0",
+            "revision": 22,
+            "cubeCount": 36,
+            "history": [
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              },
+              {
+                "label": "Удаление",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              }
+            ],
+            "view": "top",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ac7f8660-33af-466a-b6e1-f7cdc6c53348",
+            "compareToVariantId": "ce556d78-a6d2-42c0-8924-647982cfe57d",
+            "silhouette": false,
+            "renderedCubeCount": 34,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/playwright/agent-blockouts-036-0543febd/agent-blockouts/b-bottom.png",
+          "sha256": "a9aef3d5a532e6b95c0f5989a0d2893e3d563a35868b2bef5f576fb0867f60f1",
+          "bytes": 5505,
+          "metadata": {
+            "projectId": "6658ec42-a3b0-45f5-9b1b-2728901329e0",
+            "revision": 22,
+            "cubeCount": 36,
+            "history": [
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              },
+              {
+                "label": "Удаление",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              }
+            ],
+            "view": "bottom",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ac7f8660-33af-466a-b6e1-f7cdc6c53348",
+            "compareToVariantId": "ce556d78-a6d2-42c0-8924-647982cfe57d",
+            "silhouette": false,
+            "renderedCubeCount": 34,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/playwright/agent-blockouts-036-0543febd/agent-blockouts/b-perspective.png",
+          "sha256": "8841eb9787033d064f47c02ecf19d954ece4492b2d67e9d33fb3fbf96b2bbb90",
+          "bytes": 35034,
+          "metadata": {
+            "projectId": "6658ec42-a3b0-45f5-9b1b-2728901329e0",
+            "revision": 22,
+            "cubeCount": 36,
+            "history": [
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              },
+              {
+                "label": "Удаление",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              }
+            ],
+            "view": "perspective",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ac7f8660-33af-466a-b6e1-f7cdc6c53348",
+            "compareToVariantId": "ce556d78-a6d2-42c0-8924-647982cfe57d",
+            "silhouette": false,
+            "renderedCubeCount": 34,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/playwright/agent-blockouts-036-0543febd/agent-blockouts/b-rear-perspective.png",
+          "sha256": "678ec2df876dcb431bbb9c2088025d1c34c7aa623eb7bd021a8e1ea9b62d6e9f",
+          "bytes": 35965,
+          "metadata": {
+            "projectId": "6658ec42-a3b0-45f5-9b1b-2728901329e0",
+            "revision": 22,
+            "cubeCount": 36,
+            "history": [
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              },
+              {
+                "label": "Удаление",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              }
+            ],
+            "view": "rear-perspective",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ac7f8660-33af-466a-b6e1-f7cdc6c53348",
+            "compareToVariantId": "ce556d78-a6d2-42c0-8924-647982cfe57d",
+            "silhouette": false,
+            "renderedCubeCount": 34,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/playwright/agent-blockouts-036-0543febd/agent-blockouts/b-silhouette.png",
+          "sha256": "90230c4dc27e1669232e6eddad8980df7d3af1875115179331e4d9f5aecaad92",
+          "bytes": 11091,
+          "metadata": {
+            "projectId": "6658ec42-a3b0-45f5-9b1b-2728901329e0",
+            "revision": 22,
+            "cubeCount": 36,
+            "history": [
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              },
+              {
+                "label": "Удаление",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              }
+            ],
+            "view": "front",
+            "width": 1024,
+            "height": 768,
+            "variantId": "ac7f8660-33af-466a-b6e1-f7cdc6c53348",
+            "compareToVariantId": "ce556d78-a6d2-42c0-8924-647982cfe57d",
+            "silhouette": true,
+            "renderedCubeCount": 34,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/playwright/agent-blockouts-036-0543febd/agent-blockouts/b-review.png",
+          "sha256": "87ad4e7daeee4c987a786f8d064d2d93e3c4e0293752cea2ede731318a1cf140",
+          "bytes": 61637,
+          "metadata": {
+            "projectId": "6658ec42-a3b0-45f5-9b1b-2728901329e0",
+            "revision": 22,
+            "cubeCount": 36,
+            "history": [
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              },
+              {
+                "label": "Удаление",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              }
+            ],
+            "width": 1024,
+            "height": 768,
+            "variantId": "ac7f8660-33af-466a-b6e1-f7cdc6c53348",
+            "compareToVariantId": "ce556d78-a6d2-42c0-8924-647982cfe57d",
+            "brief": "Три нейтральные формы меча: Лист, Клык и Раскол. Сохранить ручную рукоять и рисунок; выбрать направление до текстуры.",
+            "lockedParts": [
+              {
+                "id": "manual_handle",
+                "label": "Ручная рукоять"
+              }
+            ],
+            "views": [
+              "front",
+              "side",
+              "back",
+              "perspective"
+            ],
+            "smallPreviews": [
+              32,
+              64
+            ],
+            "silhouette": "front-alpha-mask",
+            "reviewChecklist": [
+              "Спереди: ясный силуэт, один главный акцент; крупные детали читаются на 32 px.",
+              "Сбоку: клинок не исчезает; стыки гарды и рукояти не имеют случайных зазоров.",
+              "Сзади: покраска завершена, материалы и крупные элементы согласованы со передней стороной.",
+              "Три четверти: кромки и объём читаются; UV не растянуты, материалы различимы.",
+              "Назовите видимую проблему, конкретную правку и ожидаемый эффект; повторите обзор после исправления."
+            ],
+            "artisticAcceptance": "requires-human-review",
+            "game": "not-verified"
+          }
+        },
+        {
+          "path": "output/playwright/agent-blockouts-036-0543febd/agent-blockouts/c-front.png",
+          "sha256": "b5c2844857e37cf50c2bef4a463abedab2a5951a29bf5c8a85807119e16763f2",
+          "bytes": 12605,
+          "metadata": {
+            "projectId": "6658ec42-a3b0-45f5-9b1b-2728901329e0",
+            "revision": 22,
+            "cubeCount": 36,
+            "history": [
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              },
+              {
+                "label": "Удаление",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              }
+            ],
+            "view": "front",
+            "width": 1024,
+            "height": 768,
+            "variantId": "1fefbdf3-b55f-4378-b3b6-4ca9f77ba7bd",
+            "compareToVariantId": "ac7f8660-33af-466a-b6e1-f7cdc6c53348",
+            "silhouette": false,
+            "renderedCubeCount": 36,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/playwright/agent-blockouts-036-0543febd/agent-blockouts/c-back.png",
+          "sha256": "1345ef6c5908ab1ce46d1b461a6e65879b741adf1ac395ca6f7a80a188479a16",
+          "bytes": 12100,
+          "metadata": {
+            "projectId": "6658ec42-a3b0-45f5-9b1b-2728901329e0",
+            "revision": 22,
+            "cubeCount": 36,
+            "history": [
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              },
+              {
+                "label": "Удаление",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              }
+            ],
+            "view": "back",
+            "width": 1024,
+            "height": 768,
+            "variantId": "1fefbdf3-b55f-4378-b3b6-4ca9f77ba7bd",
+            "compareToVariantId": "ac7f8660-33af-466a-b6e1-f7cdc6c53348",
+            "silhouette": false,
+            "renderedCubeCount": 36,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/playwright/agent-blockouts-036-0543febd/agent-blockouts/c-left.png",
+          "sha256": "f3d77424f1afbf2d05560dd10f9acbf2f911b961cdd34ec24124573a9cfc10f5",
+          "bytes": 7550,
+          "metadata": {
+            "projectId": "6658ec42-a3b0-45f5-9b1b-2728901329e0",
+            "revision": 22,
+            "cubeCount": 36,
+            "history": [
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              },
+              {
+                "label": "Удаление",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              }
+            ],
+            "view": "left",
+            "width": 1024,
+            "height": 768,
+            "variantId": "1fefbdf3-b55f-4378-b3b6-4ca9f77ba7bd",
+            "compareToVariantId": "ac7f8660-33af-466a-b6e1-f7cdc6c53348",
+            "silhouette": false,
+            "renderedCubeCount": 36,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/playwright/agent-blockouts-036-0543febd/agent-blockouts/c-right.png",
+          "sha256": "a922f115033b6fa965fda0251cb396bcad2331a2453dfbb0769586634f8630dc",
+          "bytes": 7639,
+          "metadata": {
+            "projectId": "6658ec42-a3b0-45f5-9b1b-2728901329e0",
+            "revision": 22,
+            "cubeCount": 36,
+            "history": [
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              },
+              {
+                "label": "Удаление",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              }
+            ],
+            "view": "right",
+            "width": 1024,
+            "height": 768,
+            "variantId": "1fefbdf3-b55f-4378-b3b6-4ca9f77ba7bd",
+            "compareToVariantId": "ac7f8660-33af-466a-b6e1-f7cdc6c53348",
+            "silhouette": false,
+            "renderedCubeCount": 36,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/playwright/agent-blockouts-036-0543febd/agent-blockouts/c-top.png",
+          "sha256": "5e8cce12ec48e31a07d7a39c08844b920182149dcab32c27acf8b0dded85c4bd",
+          "bytes": 5968,
+          "metadata": {
+            "projectId": "6658ec42-a3b0-45f5-9b1b-2728901329e0",
+            "revision": 22,
+            "cubeCount": 36,
+            "history": [
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              },
+              {
+                "label": "Удаление",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              }
+            ],
+            "view": "top",
+            "width": 1024,
+            "height": 768,
+            "variantId": "1fefbdf3-b55f-4378-b3b6-4ca9f77ba7bd",
+            "compareToVariantId": "ac7f8660-33af-466a-b6e1-f7cdc6c53348",
+            "silhouette": false,
+            "renderedCubeCount": 36,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/playwright/agent-blockouts-036-0543febd/agent-blockouts/c-bottom.png",
+          "sha256": "5cefd04b5b1555f45e7917dae18775843c7f812951beb3928a7387e98c166d9f",
+          "bytes": 5861,
+          "metadata": {
+            "projectId": "6658ec42-a3b0-45f5-9b1b-2728901329e0",
+            "revision": 22,
+            "cubeCount": 36,
+            "history": [
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              },
+              {
+                "label": "Удаление",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              }
+            ],
+            "view": "bottom",
+            "width": 1024,
+            "height": 768,
+            "variantId": "1fefbdf3-b55f-4378-b3b6-4ca9f77ba7bd",
+            "compareToVariantId": "ac7f8660-33af-466a-b6e1-f7cdc6c53348",
+            "silhouette": false,
+            "renderedCubeCount": 36,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/playwright/agent-blockouts-036-0543febd/agent-blockouts/c-perspective.png",
+          "sha256": "dde1e3eba0d21d1ad9517183a31d73e98c3638d0665dc6c83676ed2e2c1109f1",
+          "bytes": 34478,
+          "metadata": {
+            "projectId": "6658ec42-a3b0-45f5-9b1b-2728901329e0",
+            "revision": 22,
+            "cubeCount": 36,
+            "history": [
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              },
+              {
+                "label": "Удаление",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              }
+            ],
+            "view": "perspective",
+            "width": 1024,
+            "height": 768,
+            "variantId": "1fefbdf3-b55f-4378-b3b6-4ca9f77ba7bd",
+            "compareToVariantId": "ac7f8660-33af-466a-b6e1-f7cdc6c53348",
+            "silhouette": false,
+            "renderedCubeCount": 36,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/playwright/agent-blockouts-036-0543febd/agent-blockouts/c-rear-perspective.png",
+          "sha256": "cde4b3c7884f78cb881ab391b437a8984471600037edfc527fc547a9894ed88f",
+          "bytes": 33622,
+          "metadata": {
+            "projectId": "6658ec42-a3b0-45f5-9b1b-2728901329e0",
+            "revision": 22,
+            "cubeCount": 36,
+            "history": [
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              },
+              {
+                "label": "Удаление",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              }
+            ],
+            "view": "rear-perspective",
+            "width": 1024,
+            "height": 768,
+            "variantId": "1fefbdf3-b55f-4378-b3b6-4ca9f77ba7bd",
+            "compareToVariantId": "ac7f8660-33af-466a-b6e1-f7cdc6c53348",
+            "silhouette": false,
+            "renderedCubeCount": 36,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/playwright/agent-blockouts-036-0543febd/agent-blockouts/c-silhouette.png",
+          "sha256": "029caadb5aa8a01e86ed1af90b64cdd6178cd75fcc131719df64e14c24e1c189",
+          "bytes": 12448,
+          "metadata": {
+            "projectId": "6658ec42-a3b0-45f5-9b1b-2728901329e0",
+            "revision": 22,
+            "cubeCount": 36,
+            "history": [
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              },
+              {
+                "label": "Удаление",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              }
+            ],
+            "view": "front",
+            "width": 1024,
+            "height": 768,
+            "variantId": "1fefbdf3-b55f-4378-b3b6-4ca9f77ba7bd",
+            "compareToVariantId": "ac7f8660-33af-466a-b6e1-f7cdc6c53348",
+            "silhouette": true,
+            "renderedCubeCount": 36,
+            "visualReview": "Рендер редактора; работа в игре не проверена."
+          }
+        },
+        {
+          "path": "output/playwright/agent-blockouts-036-0543febd/agent-blockouts/c-review.png",
+          "sha256": "2c956f8aeb8de2deec451a5e193c35b5585dff710502abea98c43bb5f900fe47",
+          "bytes": 63574,
+          "metadata": {
+            "projectId": "6658ec42-a3b0-45f5-9b1b-2728901329e0",
+            "revision": 22,
+            "cubeCount": 36,
+            "history": [
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              },
+              {
+                "label": "Удаление",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Новый куб",
+                "actor": "agent"
+              },
+              {
+                "label": "Добавление ИИ-черновика",
+                "actor": "agent"
+              }
+            ],
+            "width": 1024,
+            "height": 768,
+            "variantId": "1fefbdf3-b55f-4378-b3b6-4ca9f77ba7bd",
+            "compareToVariantId": "ac7f8660-33af-466a-b6e1-f7cdc6c53348",
+            "brief": "Три нейтральные формы меча: Лист, Клык и Раскол. Сохранить ручную рукоять и рисунок; выбрать направление до текстуры.",
+            "lockedParts": [
+              {
+                "id": "manual_handle",
+                "label": "Ручная рукоять"
+              }
+            ],
+            "views": [
+              "front",
+              "side",
+              "back",
+              "perspective"
+            ],
+            "smallPreviews": [
+              32,
+              64
+            ],
+            "silhouette": "front-alpha-mask",
+            "reviewChecklist": [
+              "Спереди: ясный силуэт, один главный акцент; крупные детали читаются на 32 px.",
+              "Сбоку: клинок не исчезает; стыки гарды и рукояти не имеют случайных зазоров.",
+              "Сзади: покраска завершена, материалы и крупные элементы согласованы со передней стороной.",
+              "Три четверти: кромки и объём читаются; UV не растянуты, материалы различимы.",
+              "Назовите видимую проблему, конкретную правку и ожидаемый эффект; повторите обзор после исправления."
+            ],
+            "artisticAcceptance": "requires-human-review",
+            "game": "not-verified"
+          }
+        }
+      ],
+      "sourcePath": "output/playwright/agent-blockouts-036-0543febd/agent-blockouts/три черновика.mmeditor.json",
+      "sourceSha256": "8aa1c025707a288ad59494d0593921bced7f991f0f888aa928711c31f6cc52bd",
+      "manualSourceAndPixelsPreserved": true,
+      "restoreUndo": true,
+      "replay": true,
+      "restart": true,
+      "exportVerified": true,
+      "artisticApproval": "NOT_PERFORMED",
+      "gameAcceptance": "NOT_RUN",
+      "reportPath": "output/playwright/agent-blockouts-036-0543febd/agent-blockouts/report.json",
+      "reportSha256": "8f010721a3fa1dcf0dfdc1c784f5a38c0aef623ff083dfb0f5a1bbd1637831b0",
+      "tracePath": "output/playwright/agent-blockouts-036-0543febd/agent-blockouts/trace.json",
+      "traceSha256": "dc9f805eff46624f3a978c24457369c3c6724aa29ffb4f77cc3239f94d012ae7"
+    },
+    "negativeRuns": [
+      {
+        "status": "TEST_HELPER_LOCATOR_ERROR",
+        "log": "output/verification/roadmap-036-agent-desktop-focused.log",
+        "reason": "Restart helper waited for part-guard from default example; corrected to application readiness and four restored snapshots. App/source kept."
+      }
+    ],
+    "independent": {
+      "status": "RUNNING_NOT_VERIFIED",
+      "output": "output/playwright/independent-codex-036-611f0d57",
+      "log": "output/verification/roadmap-036-independent-codex.log"
+    },
+    "fullPackaged": {
+      "status": "RUNNING_NOT_VERIFIED",
+      "output": "output/playwright/studio-packaged-62811844",
+      "log": "output/verification/roadmap-036-agent-full-desktop.log"
+    },
+    "hosted": {
+      "status": "NOT_RUN_FOR_THIS_SOURCE"
+    },
+    "artisticApproval": "NOT_PERFORMED",
+    "authoredGameAcceptance": "NOT_RUN"
   }
 }

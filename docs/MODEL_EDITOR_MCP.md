@@ -1,5 +1,7 @@
 # MineMod Studio 0.5.0: подключение к общей сцене
 
+Дополнение Studio 0.16.0: команда `draftVariant` добавляет снимок текущей формы через обычные preview/apply. Максимум три ИИ-черновика и четыре снимка всего; существующие ручные snapshots не заменяются. Вход содержит новый UUID, label и note, без модели или approval. Только цвет, UV, IDs или дублирование того же размещённого кубоида не создают новый blockout. Checkpoint, restore/delete, brief/locks и conceptual metadata остаются ручными. Во время адресного repair новый снимок запрещён. Текущие проверки и ещё открытые gates описаны в [blockout workflow](production/BLOCKOUT_DRAFTS.md).
+
 Дополнение Studio 0.10.0: [agent discovery](production/AGENT_DISCOVERY.md) публикует schemas и текущие IDs через два фиксированных MCP resources. Неверные вызовы получают bounded code/recovery без отражения исходного payload; десять имён инструментов сохранены. Ручные операции исключены из агентной mutation schema. Это проверка интерфейса, а самостоятельные model turns Codex/Claude Code остаются отдельной приёмкой.
 
 Дополнение Studio 0.8.0: [точные геометрические правки](production/GEOMETRY_EDITING.md) добавляют в schema `pivot` и `snap` без новых shell/eval возможностей. Документ ниже сохраняет исторический scope 0.5; текущий target редактора остаётся held-item, игровой импорт не добавлен.

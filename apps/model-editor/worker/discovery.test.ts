@@ -101,7 +101,10 @@ try {
   }
   assert.deepEqual(contracts.humanOnlyCommands, HUMAN_COMMANDS);
   for (const human of HUMAN_COMMANDS) assert(!advertised.includes(human));
-  for (const required of ["pivot", "snap", "paint", "uv", "redo"]) assert(advertised.includes(required));
+  for (const required of ["pivot", "snap", "paint", "uv", "redo", "draftVariant"]) assert(advertised.includes(required));
+  assert.equal(byCommand("draftVariant").label.maxLength,32);
+  assert.equal(byCommand("draftVariant").note.maxLength,300);
+  assert.equal(contracts.limits.agentDrafts,3);
   const initial = session.state(), scene = await read(SCENE_URI);
   assert.equal(scene.projectId, initial.project.projectId);
   assert.equal(scene.revision, initial.revision);
@@ -119,6 +122,8 @@ try {
     ["studio_changes_preview", mutation([{ type: "rotate", cubeIds: scene.cubeIds.slice(0, 1), axis: "z", angle: 30 }]), "INVALID_ARGUMENTS"],
     ["studio_changes_preview", mutation([{ type: "paint", cubeIds: scene.cubeIds.slice(0, 1), color: "#fff000", size: 9, points: [[0, 0]] }]), "INVALID_ARGUMENTS"],
     ["studio_changes_preview", mutation([{ type: "eval", script: sentinel }]), "INVALID_ARGUMENTS"],
+    ["studio_changes_preview", mutation([{ type: "draftVariant", variantId: randomUUID(), label: "A", project: sentinel }]), "INVALID_ARGUMENTS"],
+    ["studio_changes_preview", mutation([{ type: "draftVariant", variantId: randomUUID(), label: "A", approval: sentinel }]), "INVALID_ARGUMENTS"],
     ["studio_changes_preview", mutation([{ type: "brief", text: sentinel }]), "HUMAN_ONLY"],
     ["studio_changes_preview", mutation([{ type: "lock", partId: scene.parts[0].id, locked: false }]), "LOCKED"],
     ["studio_changes_preview", mutation([{ type: "delete", cubeIds: ["invented_cube"] }]), "TARGET"],
@@ -159,5 +164,5 @@ try {
   await assert.rejects(client.readResource({ uri: "file:///C:/Windows/system.ini" }));
   assert.equal((await fetch(server.url, { method: "POST", headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ jsonrpc: "2.0", id: 9, method: "resources/read", params: { uri: CONTRACT_URI } }) })).status, 401);
-  process.stdout.write("Studio discovery: exact ten SDK schemas, dynamic IDs/revision, 16 rejected calls without payload echo, bounded recovery and repaired CAS PASS\n");
+  process.stdout.write(`Studio discovery: exact ten SDK schemas, dynamic IDs/revision, ${invalid.length} rejected calls without payload echo, bounded recovery and repaired CAS PASS\n`);
 } finally { await client.close(); server.close(); }
