@@ -31,6 +31,7 @@ import { checkAccessibilityStatesDesktop } from "./check-accessibility-states-de
 import { checkRepairDesktop } from "./check-repair-desktop.mjs";
 import { checkConceptsDesktop } from "./check-concepts-desktop.mjs";
 import { checkAgentBlockoutsDesktop } from "./check-agent-blockouts-desktop.mjs";
+import { checkContinuationDesktop } from "./check-continuation-desktop.mjs";
 
 const appDir = resolve(dirname(fileURLToPath(import.meta.url)), ".."),
   repo = resolve(appDir, "../..");
@@ -274,9 +275,11 @@ try {
   );
   await page.getByTestId("new-project").click();
   await page.locator(".empty-scene").waitFor();
-  assert.equal((await inspect(page)).project.parts.length, 0);
+  const empty = await inspect(page);
+  assert.equal(empty.project.parts.length, 0);
+  assert(empty.revision > painted.revision, "Новый документ продолжает runtime revision");
   await page.getByTestId("add-cube").click();
-  await revision(page, 1);
+  await revision(page, empty.revision + 1);
   const added = await inspect(page);
   assert.equal(added.project.model.bones[0].cubes.length, 1);
   await page.getByTestId(`part-${added.project.parts[0].id}`).click();
@@ -395,6 +398,7 @@ try {
   const editing = await checkEditingDesktop(options, output);
   const variants = await checkVariantsDesktop(options, output);
   const agentBlockouts = await checkAgentBlockoutsDesktop(options, output);
+  const continuation = await checkContinuationDesktop(options, output);
   const brief = await checkBriefDesktop(options, output);
   const concepts = await checkConceptsDesktop(options, output);
   const parts = await checkPartsDesktop(options, output);
@@ -423,6 +427,7 @@ try {
         editing,
         variants,
         agentBlockouts,
+        continuation,
         brief,
         concepts,
         parts,

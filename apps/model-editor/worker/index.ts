@@ -31,7 +31,7 @@ interface ServiceRequest {
   control?: unknown;
   conceptImport?: unknown;
   conceptId?: string;
-  action?: "get" | "start" | "stop";
+  action?: "get" | "start" | "stop" | "pause" | "resume";
   projectId?: string;
   cubeIds?: string[];
   reference?: { projectId: string; revision: number };
@@ -79,17 +79,32 @@ async function capture(
     silhouette?: boolean;
     layout?: "review";
     conceptId?: string;
+    signal?: AbortSignal;
   },
 ): Promise<string> {
+  const {signal, ...renderOptions} = options ?? {};
+  const cancelled = () => new EditorError("REQUEST_CANCELLED", "Снимок отменён; текущая сцена сохранена.");
+  if (signal?.aborted) throw cancelled();
   if (options?.conceptId) {
     const concept=state.project.design?.concepts?.find(c=>c.id===options.conceptId);
     if(!concept)throw new EditorError("CONCEPT_NOT_FOUND","Концепт отсутствует в текущем проекте.");
     await conceptStore.image(concept);
   }
   return new Promise((resolve, reject) => {
+    if (signal?.aborted) { reject(cancelled()); return; }
     const id = randomUUID();
-    const timer = setTimeout(() => {
+    const cleanup = () => {
+      clearTimeout(timer);
       captureWaiters.delete(id);
+      signal?.removeEventListener("abort", abort);
+    };
+    const abort = () => {
+      cleanup();
+      port!.postMessage({event:"capture-cancel", captureId:id});
+      reject(cancelled());
+    };
+    const timer = setTimeout(() => {
+      cleanup();
       reject(
         new EditorError(
           "CAPTURE_TIMEOUT",
@@ -97,7 +112,11 @@ async function capture(
         ),
       );
     }, 12_000);
-    captureWaiters.set(id, { resolve, reject, timer });
+    captureWaiters.set(id, {
+      resolve: data => { cleanup(); resolve(data); },
+      reject: error => { cleanup(); reject(error); }, timer,
+    });
+    signal?.addEventListener("abort", abort, {once:true});
     port!.postMessage({
       event: "capture",
       job: {
@@ -105,7 +124,7 @@ async function capture(
         project: state.project,
         revision: state.revision,
         view,
-        ...options,
+        ...renderOptions,
       },
     });
   });
@@ -213,12 +232,18 @@ async function run(request: ServiceRequest): Promise<HostResponse> {
       connection?.close();
       connection = undefined;
     }
+    if (request.action === "pause") connection?.pause();
+    if (request.action === "resume") connection?.resume();
+    note = request.action === "pause" ? "Доступ агента приостановлен. Применённые правки сохранены в сцене."
+      : request.action === "resume" ? "Доступ продолжен. Агент должен прочитать текущую сцену и создать новый preview."
+      : request.action === "stop" ? "Доступ агента выключен. Для нового подключения настройте новый ключ." : undefined;
     return {
       ok: true,
       state: session.state(),
       warning: recoveryWarning,
+      ...(note ? {note} : {}),
       connection: connection
-        ? { enabled: true, url: connection.url, token: connection.token }
+        ? { enabled: true, paused: connection.access().state === "paused", url: connection.url, token: connection.token }
         : { enabled: false },
     };
   } else if (request.kind === "selection") {
@@ -254,10 +279,12 @@ async function run(request: ServiceRequest): Promise<HostResponse> {
     note = session.state().repair ? "Адресная правка включена. Агент ограничен выбранной областью и лимитом итераций." : "Адресная правка завершена. Проверьте модель с разных сторон.";
   } else if (request.kind === "new" || request.kind === "example") {
     selection = [];
+    connection?.invalidate();
     session = new EditorSession(
       request.kind === "new"
         ? emptyProject(randomUUID())
         : projectFromAsset(fixture, randomUUID()),
+      session.state().revision + 1,
     );
     note =
       request.kind === "new"
@@ -272,7 +299,8 @@ async function run(request: ServiceRequest): Promise<HostResponse> {
     const loaded = await readProjectWithVersion(request.path!);
     await conceptStore.restore(request.path!, loaded.project);
     selection = [];
-    session = new EditorSession(loaded.project);
+    connection?.invalidate();
+    session = new EditorSession(loaded.project, session.state().revision + 1);
     session.markSaved();
     note = loaded.sourceVersion < CURRENT_PROJECT_VERSION ? `Проект v${loaded.sourceVersion} открыт в формате v${CURRENT_PROJECT_VERSION}. Исходник не изменён; при сохранении будет оставлена отдельная оригинальная копия.` : "Проект открыт.";
   } else if (request.kind === "export") {
@@ -383,7 +411,7 @@ port.on(
     };
     // Только чтение исходного PNG: capture ждёт renderer, который запросит его через protocol.
     // Постановка этого закрытого запроса в очередь capture создала бы взаимное ожидание.
-    if (data.kind === "conceptImage") void dispatch();
+    if (data.kind === "conceptImage" || data.kind === "connection" && (data.action === "pause" || data.action === "stop")) void dispatch();
     else void enqueue(dispatch);
   },
 );

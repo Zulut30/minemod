@@ -118,7 +118,7 @@ export const useStudio = create<StudioUi>((set, get) => ({
   request: async (request, options) => {
     pendingRequests++;
     set({ busy: true, error: "" });
-    const operation = requestQueue.then(async (previous) => {
+    const execute = async (previous: HostResponse | null) => {
       try {
         // Сохранение после ввода не должно скрывать отказ его команды.
         if (options?.requirePreviousSuccess && !previous?.ok) return previous;
@@ -132,8 +132,10 @@ export const useStudio = create<StudioUi>((set, get) => ({
         pendingRequests--;
         set({ busy: pendingRequests > 0 });
       }
-    });
-    requestQueue = operation.catch(() => null);
+    };
+    const urgent = request.kind === "connection" && (request.action === "pause" || request.action === "stop");
+    const operation = urgent ? execute(null) : requestQueue.then(execute);
+    if (!urgent) requestQueue = operation.catch(() => null);
     return operation;
   },
   command: async (command) => {

@@ -313,10 +313,11 @@ export async function checkTextureDesktop(page, inspect, capture) {
     window.studio.request({ kind: "new" }),
   );
   assert.equal(switched.ok, true);
-  await revision(0);
+  await revision(switched.state.revision);
   await page.mouse.up();
   assert.equal((await inspect(page)).project.parts.length, 0);
-  assert.equal((await inspect(page)).revision, 0);
+  assert.equal((await inspect(page)).revision, switched.state.revision);
+  assert(switched.state.revision > moved.revision, "Смена документа не переиспользует старую revision");
   await page.getByTestId("open-project").click();
   await page.getByTestId("part-guard").waitFor();
   assert.deepEqual((await inspect(page)).project, uvBefore.project);

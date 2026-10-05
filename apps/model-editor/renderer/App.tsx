@@ -493,7 +493,7 @@ export function App() {
                 ?.scrollIntoView({ block: "start" })
             }
           >
-            {ui.connection.enabled ? "AI · доступ включён" : "Подключить AI"}
+            {ui.connection.enabled ? ui.connection.paused ? "AI · пауза" : "AI · доступ включён" : "Подключить AI"}
           </ToolButton>
         </div>
         <span className="version">

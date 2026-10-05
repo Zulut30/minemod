@@ -2,8 +2,14 @@ import { useState } from "react";
 import { useStudio } from "./store.ts";
 import { RepairPanel } from "./RepairPanel.tsx";
 export function ConnectionPanel() {
-  const { connection, request, busy } = useStudio();
+  const { connection, request, busy, state } = useStudio();
   const [provider, setProvider] = useState<"codex" | "claude">("codex");
+  const [controlling, setControlling] = useState(false);
+  const control = async (action: "start" | "stop" | "pause" | "resume") => {
+    setControlling(true);
+    try { await request({kind:"connection", action}); }
+    finally { setControlling(false); }
+  };
   const config = connection.enabled
     ? provider === "codex"
       ? `$env:MINEMOD_STUDIO_TOKEN='${connection.token}'\ncodex mcp add minemod-studio --url ${connection.url} --bearer-token-env-var MINEMOD_STUDIO_TOKEN\ncodex`
@@ -14,21 +20,30 @@ export function ConnectionPanel() {
       <strong>Codex / Claude Code</strong>
       <p>
         {connection.enabled
-          ? "Доступ к общей сцене включён. Агент может читать и менять незакреплённые части."
+          ? connection.paused
+            ? "Работа со сценой приостановлена. Применённые правки и ручное редактирование сохранены."
+            : "Доступ к общей сцене включён. Агент может читать и менять незакреплённые части."
           : "Подключите агента к проекту: форма, цвет, история и снимки с разных сторон."}
       </p>
       <button
         data-testid="agent-toggle"
-        disabled={busy}
+        disabled={controlling || busy && !connection.enabled}
         onClick={() => {
-          void request({
-            kind: "connection",
-            action: connection.enabled ? "stop" : "start",
-          });
+          void control(connection.enabled ? "stop" : "start");
         }}
       >
         {connection.enabled ? "Выключить доступ" : "Включить подключение"}
       </button>
+      {connection.enabled && <>
+        <button data-testid="agent-pause" disabled={controlling}
+          onClick={() => { void control(connection.paused ? "resume" : "pause"); }}>
+          {connection.paused ? "Продолжить доступ" : "Приостановить доступ"}
+        </button>
+        <p data-testid="agent-access-state" role="status">
+          {connection.paused ? "Пауза" : "Доступ активен"} · версия сцены {state?.revision}
+        </p>
+        <small>Пауза отменяет ожидающие правки и снимки. Продолжение не требует повторной настройки клиента. Внешний AI-клиент работает отдельно.</small>
+      </>}
       <RepairPanel />
       {connection.enabled && (
         <>

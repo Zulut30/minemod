@@ -228,6 +228,7 @@ async function boot(): Promise<void> {
       result: HostResponse;
       event?: string;
       job?: CaptureJob;
+      captureId?: string;
     }) => {
       if (message.event === "state") {
         if (window && !window.isDestroyed())
@@ -236,6 +237,10 @@ async function boot(): Promise<void> {
       }
       if (message.event === "capture" && message.job) {
         void renderCapture(message.job, runtime);
+        return;
+      }
+      if (message.event === "capture-cancel" && message.captureId) {
+        captureFailure(message.captureId);
         return;
       }
       const waiting = pending.get(message.id);
@@ -346,7 +351,7 @@ async function boot(): Promise<void> {
             : request.kind === "conceptImport" ? "control,kind"
             : "kind") ||
       (request.kind === "connection" &&
-        !["get", "start", "stop"].includes(request.action)) ||
+        !["get", "start", "stop", "pause", "resume"].includes(request.action)) ||
       (request.kind === "apply" &&
         !MutationSchema.safeParse(request.mutation).success) ||
       (request.kind === "repair" && !RepairControlSchema.safeParse(request.control).success) ||
@@ -360,14 +365,17 @@ async function boot(): Promise<void> {
         },
       };
     }
-    const result = hostQueue.then(() => {
+    const dispatch = async () => {
       if (firstInspect && request.kind === "inspect") {
         firstInspect = false;
         return initialized;
       }
       return handle(request);
-    });
-    hostQueue = result.catch(() => undefined);
+    };
+    // Пауза не должна ждать зависший MCP capture или очередь файловых операций.
+    const urgent = request.kind === "connection" && (request.action === "pause" || request.action === "stop");
+    const result = urgent ? dispatch() : hostQueue.then(dispatch);
+    if (!urgent) hostQueue = result.catch(() => undefined);
     return result.catch(() => ({
       ok: false,
       error: {

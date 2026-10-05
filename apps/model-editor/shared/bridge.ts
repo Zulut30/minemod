@@ -3,6 +3,7 @@ export const VIEWS = ["perspective", "front", "side", "back", "left", "right", "
 export type View = typeof VIEWS[number];
 export interface ConnectionInfo {
   enabled: boolean;
+  paused?: boolean;
   url?: string;
   token?: string;
 }
@@ -30,7 +31,7 @@ export type HostRequest =
   | { kind: "apply"; mutation: Mutation }
   | { kind: "repair"; control: RepairControl }
   | { kind: "conceptImport"; control: ConceptImport }
-  | { kind: "connection"; action: "get" | "start" | "stop" };
+  | { kind: "connection"; action: "get" | "start" | "stop" | "pause" | "resume" };
 export type HostResponse =
   | {
       ok: true;

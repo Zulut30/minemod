@@ -873,8 +873,11 @@ export class EditorSession {
   private future: Entry[] = [];
   private replay = new Map<string, { signature: string; revision: number }>();
   private repair: ActiveRepair | null = null;
-  constructor(project: EditorProject) {
+  constructor(project: EditorProject, initialRevision = 0) {
+    if (!Number.isSafeInteger(initialRevision) || initialRevision < 0)
+      throw new RangeError("Начальная revision должна быть безопасным неотрицательным целым.");
     this.project = validateProject(project);
+    this.revision = initialRevision;
   }
   state(): EditorState {
     return structuredClone({
