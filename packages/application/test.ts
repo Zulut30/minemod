@@ -15,6 +15,8 @@ import { fabricBasicContentFixture } from "../../fixtures/specs/fabric-basic-con
 import {
   createFabricApplication,
   type FabricApplicationDependencies,
+  FabricBuildOperationError,
+  operationFailureEvidence,
 } from "./index.ts";
 
 const jarBytes = Buffer.from("fabric application jar", "utf8");
@@ -136,12 +138,51 @@ try {
   }));
   const failureRoot = await mkdtemp(join(tmpdir(), "mcdev-fabric-application-failure-"));
   try {
+    const payload = JSON.stringify(fabricBasicContentFixture());
     await assert.rejects(app.build({
-      payload: JSON.stringify(fabricBasicContentFixture()),
+      payload,
       workspaceRoot: failureRoot,
-    }), runnerFailure);
+    }), (error: unknown) => {
+      assert(error instanceof FabricBuildOperationError);assert.equal(error.cause, runnerFailure);
+      const evidence = operationFailureEvidence(payload, "fabric-build", error);
+      assert.equal(evidence.technical.status, "fail");assert.equal(evidence.artifacts.length, 0);
+      assert.equal(evidence.pack?.packId, "fabric-1.20.1-java-17");assert.equal(evidence.pack?.revision, 5);
+      assert.equal(evidence.revision.kind, "plan");
+      return true;
+    });
     assert.equal(indexCalls, 0, "failed builds must never be indexed as successful artifacts");
   } finally {
     await rm(failureRoot, { recursive: true, force: true });
   }
 }
+
+// Ошибка на каждой фазе связывается с known plan только после фактической compile.
+for (const stage of ["compile", "workspace", "index"] as const) {
+  const payload = JSON.stringify(fabricBasicContentFixture());
+  const original = Object.freeze(Object.assign(new Error("private /operator/path"), { code: "BUILD_FAILED" }));
+  let observedPlan: CompiledFabricProject["plan"] | undefined;
+  const app = createFabricApplication({ java17Home: "/fixed/jdk-17", artifactCacheRoot: "/fixed/cache" }, dependencies({
+    compile: async input => {
+      if (stage === "compile") throw original;
+      const compiled = await compileFabricPhase1(input);observedPlan = compiled.plan;return compiled;
+    },
+    ...(stage === "workspace" ? { applyWorkspace: async () => Promise.reject(original) } : {}),
+    ...(stage === "index" ? { indexArtifacts: () => { throw original; } } : {}),
+  }));
+  const directory = await mkdtemp(join(tmpdir(), "mcdev-fabric-evidence-failure-"));
+  try {
+    await assert.rejects(app.build({ payload, workspaceRoot: directory }), (error: unknown) => {
+      assert(error instanceof FabricBuildOperationError);assert.equal(error.cause, original);assert.equal(error.code, "BUILD_FAILED");
+      const report = operationFailureEvidence(payload, "fabric-build", error);
+      assert.equal(report.technical.status, "fail");assert.equal(report.artifacts.length, 0);
+      assert.equal(report.input.sha256, createHash("sha256").update(payload).digest("hex"));
+      assert.equal(report.game.status, "not-run");assert.equal(report.artistic.status, "requires-human-review");
+      assert(!JSON.stringify(report).includes("/operator"));
+      if (observedPlan) {
+        assert.deepEqual(report.pack, observedPlan.pack);assert.deepEqual(report.revision, { kind: "plan", planId: observedPlan.planId });
+      } else { assert.equal(report.pack, null);assert.equal(report.revision.kind, "input"); }
+      return true;
+    });
+  } finally { await rm(directory, { recursive: true, force: true }); }
+}
+process.stdout.write("Fabric failure evidence: compile/workspace/runner/index preserve known plan/pack, private cause and no false artifacts PASS\n");

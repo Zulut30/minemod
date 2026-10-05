@@ -1,4 +1,5 @@
 import { isProxy } from "node:util/types";
+import { FabricBuildOperationError } from "./evidence.ts";
 import { createArtifactIndex, type ArtifactSource } from "@mcdev/artifacts";
 import {
   createFabricPhase1BuildRunner,
@@ -123,24 +124,29 @@ export function createFabricApplication(
       if (request === undefined) throw new TypeError("Fabric build request must use the closed data shape.");
       const payload = request.payload ?? "";
       const workspaceRoot = request.workspaceRoot ?? "";
-      const compiled = await dependencies.compile(payload);
-      const applied = await dependencies.applyWorkspace(workspaceInput(workspaceRoot, compiled.plan, compiled));
-      const built = await runner.run({ workspaceRoot, plan: compiled.plan, manifest: applied.manifest });
-      const artifacts = dependencies.indexArtifacts({
-        planId: compiled.plan.planId,
-        pack: compiled.plan.pack,
-        sources: buildArtifactSources(compiled, built),
-      });
-      return Object.freeze({
-        planId: compiled.plan.planId,
-        workspaceStatus: applied.status,
-        artifacts,
-        warnings: Object.freeze([...compiled.plan.warnings]),
-      });
+      let compiled: CompiledFabricProject | undefined;
+      try {
+        compiled = await dependencies.compile(payload);
+        const applied = await dependencies.applyWorkspace(workspaceInput(workspaceRoot, compiled.plan, compiled));
+        const built = await runner.run({ workspaceRoot, plan: compiled.plan, manifest: applied.manifest });
+        const artifacts = dependencies.indexArtifacts({
+          planId: compiled.plan.planId,
+          pack: compiled.plan.pack,
+          sources: buildArtifactSources(compiled, built),
+        });
+        return Object.freeze({
+          planId: compiled.plan.planId,
+          workspaceStatus: applied.status,
+          artifacts,
+          warnings: Object.freeze([...compiled.plan.warnings]),
+        });
+      } catch (cause) {
+        throw new FabricBuildOperationError(payload, cause, compiled?.plan);
+      }
     },
   });
 }
 
 export { compileItemAssetPayload, itemAssetDiagnostic, MAX_ITEM_ASSET_PAYLOAD_BYTES, type ItemAssetBundle } from "./item-assets.ts";
 export { compileItemAssetBundleV1, verifyAssetBundleV1, verifyAssetBundlePayloadV1 } from "./asset-bundles.ts";
-export { assetOperationWithEvidence, fabricBuildEvidence, operationFailureEvidence } from "./evidence.ts";
+export { assetOperationWithEvidence, fabricBuildEvidence, operationFailureEvidence, FabricBuildOperationError } from "./evidence.ts";

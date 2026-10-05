@@ -75,6 +75,7 @@ export function isOperationEvidence(value: unknown): value is OperationEvidence 
   if (value.revision.kind === "input" && value.revision.sha256 !== input.sha256) return false;
   if (value.command === "fabric-build") {
     if (technical.status === "pass" && (value.pack === null || value.revision.kind !== "plan")) return false;
+    if (value.pack === null ? value.revision.kind !== "input" : value.revision.kind !== "plan") return false;
   } else if (value.pack !== null || value.revision.kind === "plan") return false;
   return (technical.status === "pass" || artifacts.length === 0) &&
     artifacts.reduce((total, file) => total + file.bytes, 0) <= CONTRACT_LIMITS.generatedTotalBytes &&

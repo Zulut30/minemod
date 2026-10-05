@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import { validModFixture } from "../../fixtures/specs/validation.ts";
 import { VALIDATION_PROFILE_IDS } from "@mcdev/validation";
 import { isOperationEvidence } from "@mcdev/contracts";
+import { FabricBuildOperationError } from "@mcdev/application";
 import { runCli } from "./index.ts";
 
 const output: string[] = [];
@@ -132,22 +133,24 @@ for (const operation of ["bundle", "verify"]) {
   assert.match(output.join(""), /PLACEHOLDER_ASSETS_USED/u);
 }
 
-{
+for (const resolved of [false, true]) {
   const errors: string[] = [];
+  const original = Object.assign(new Error("must not leak /workspace"), { code: "BUILD_FAILED" });
+  const plan = { planId: "1".repeat(64), pack: { packId: "fabric-1.20.1-java-17", revision: 2, treeSha256: "2".repeat(64) } };
   const code = await runCli([
     "fabric", "build", "--workspace", "/workspace", "--java17-home", "/jdk",
     "--artifact-cache", "/cache", "{}",
   ], () => undefined, (text) => errors.push(text), {
     createFabricApplication: () => ({
-      build: async () => Promise.reject(Object.assign(new Error("must not leak /workspace"), {
-        code: "BUILD_FAILED",
-      })),
+      build: async () => Promise.reject(resolved ? new FabricBuildOperationError("{}", original, plan) : original),
     }),
   });
   assert.equal(code, 1);
   const failure = JSON.parse(errors.join("")) as { code: string; evidence: unknown };
   assert.equal(failure.code, "BUILD_FAILED");assert(isOperationEvidence(failure.evidence));
-  assert.equal(failure.evidence.technical.status, "fail");assert.equal(failure.evidence.pack, null);
+  assert.equal(failure.evidence.technical.status, "fail");assert.equal(failure.evidence.artifacts.length, 0);
+  assert.deepEqual(failure.evidence.pack, resolved ? plan.pack : null);
+  assert.deepEqual(failure.evidence.revision, resolved ? { kind: "plan", planId: plan.planId } : { kind: "input", sha256: failure.evidence.input.sha256 });
   assert(!errors.join("").includes("/workspace"));
 }
 

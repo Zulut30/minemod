@@ -1,9 +1,10 @@
 import { createHash } from "node:crypto";
 import { Buffer } from "node:buffer";
+import { isProxy } from "node:util/types";
 import {
   EVIDENCE_INPUT_BYTES, OPERATION_EVIDENCE_CONTRACT, isArtifactIndex, isDomainErrorCode,
   isOperationEvidence, mcdevError, type ArtifactIndex, type EvidenceCommand,
-  type EvidenceRevision, type OperationEvidence,
+  type CompatibilityPackRef, type DomainErrorCode, type EvidenceRevision, type OperationEvidence,
 } from "@mcdev/contracts";
 import { compileItemAssetPayload, itemAssetDiagnostic } from "./item-assets.ts";
 import { compileItemAssetBundleV1, verifyAssetBundlePayloadV1 } from "./asset-bundles.ts";
@@ -24,14 +25,36 @@ function finish(value: OperationEvidence): OperationEvidence {
   if (!isOperationEvidence(value)) throw new TypeError("Invalid bounded operation evidence.");
   return freeze(value);
 }
-/** Не сохраняет stack, request content, workspace/Java paths или произвольные exception fields. */
-export function operationFailureEvidence(payload: string, command: EvidenceCommand, error: unknown, revision?: EvidenceRevision): OperationEvidence {
-  const code = typeof error === "object" && error !== null ? Object.getOwnPropertyDescriptor(error, "code") : undefined;
-  const safeCode = code && "value" in code && isDomainErrorCode(code.value) ? code.value : "INTERNAL_ERROR";
-  return finish({ ...base(payload, command, revision), pack: null,
+function errorCode(error: unknown): DomainErrorCode {
+  const code = typeof error === "object" && error !== null && !isProxy(error)
+    ? Object.getOwnPropertyDescriptor(error, "code") : undefined;
+  return code && "value" in code && isDomainErrorCode(code.value) ? code.value : "INTERNAL_ERROR";
+}
+function failure(payload: string, command: EvidenceCommand, error: unknown, revision?: EvidenceRevision, pack: CompatibilityPackRef | null = null): OperationEvidence {
+  return finish({ ...base(payload, command, revision), pack: pack ? { ...pack } : null,
     technical: { status: "fail", scope: command === "fabric-build" ? "fabric-clean-build" :
       command === "asset-bundle-verify" ? "asset-bundle-integrity" : "asset-export-integrity",
-      error: mcdevError(safeCode, "Operation failed; no artistic or game acceptance was performed.") }, artifacts: [] });
+      error: mcdevError(errorCode(error), "Operation failed; no artistic or game acceptance was performed.") }, artifacts: [] });
+}
+/** Bound к одному фактическому request/plan; original exception остаётся только во внутреннем cause. */
+export class FabricBuildOperationError extends Error {
+  readonly code: DomainErrorCode;
+  readonly evidence: OperationEvidence;
+  constructor(payload: string, cause: unknown, plan?: { readonly planId: string; readonly pack: CompatibilityPackRef }) {
+    super("Fabric build failed safely.", { cause });
+    this.name = "FabricBuildOperationError";
+    this.code = errorCode(cause);
+    this.evidence = failure(payload, "fabric-build", cause,
+      plan ? { kind: "plan", planId: plan.planId } : undefined, plan?.pack ?? null);
+  }
+}
+/** Не сохраняет stack, request content, workspace/Java paths или произвольные exception fields. */
+export function operationFailureEvidence(payload: string, command: EvidenceCommand, error: unknown, revision?: EvidenceRevision): OperationEvidence {
+  if (command === "fabric-build" && !isProxy(error) && error instanceof FabricBuildOperationError) {
+    const input = base(payload, command).input;
+    if (input.sha256 !== null && input.sha256 === error.evidence.input.sha256 && input.bytes === error.evidence.input.bytes) return error.evidence;
+  }
+  return failure(payload, command, error, revision);
 }
 export function fabricBuildEvidence(payload: string, artifacts: ArtifactIndex): OperationEvidence {
   if (!isArtifactIndex(artifacts) || !artifacts.entries.some(file => file.kind === "build-output" && file.provenance === "build" && file.path.endsWith(".jar") && file.size > 0))

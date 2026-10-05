@@ -11,6 +11,7 @@ import { LATEST_PROTOCOL_VERSION } from "@modelcontextprotocol/sdk/types.js";
 import { validModFixture } from "../../fixtures/specs/validation.ts";
 import { MAX_INLINE_SPEC_BYTES, validateInlineSpec } from "@mcdev/validation";
 import { isOperationEvidence } from "@mcdev/contracts";
+import { FabricBuildOperationError } from "@mcdev/application";
 import {
   BoundedJsonLineInput,
   createMcpServer,
@@ -144,6 +145,7 @@ async function testLinkedInMemoryProtocol(): Promise<void> {
   let buildCalls = 0;
   let buildConfig: unknown;
   let buildRequest: unknown;
+  let buildFailure: FabricBuildOperationError | undefined;
   const server = createMcpServer(function validateForMcpTest(payload, kind) {
     assert.equal(arguments.length, 2, "MCP must pass only payload and kind to loader-neutral validation");
     handlerCalls += 1;
@@ -154,6 +156,7 @@ async function testLinkedInMemoryProtocol(): Promise<void> {
       build: async (request) => {
         buildCalls += 1;
         buildRequest = request;
+        if (buildFailure) throw buildFailure;
         return {
           planId: "1".repeat(64),
           workspaceStatus: "created",
@@ -270,6 +273,23 @@ async function testLinkedInMemoryProtocol(): Promise<void> {
     });
     assert.equal(buildCalls, 1);
 
+    const failurePlan = { planId: "1".repeat(64), pack: { packId: "fabric-1.20.1-java-17", revision: 2, treeSha256: "2".repeat(64) } };
+    buildFailure = new FabricBuildOperationError(JSON.stringify(validModFixture),
+      Object.assign(new Error("private /approved/workspace"), { code: "BUILD_FAILED" }), failurePlan);
+    const failedBuild = await client.callTool({ name: MCP_FABRIC_BUILD_TOOL_NAME, arguments: {
+      approved: true, artifactCacheRoot: "/fixed/cache", java17Home: "/fixed/jdk-17",
+      payload: JSON.stringify(validModFixture), workspaceRoot: "/approved/workspace",
+    } });
+    assert.equal(failedBuild.isError, true);
+    const failureText = (failedBuild.content as { text: string }[])[0]!.text;
+    const failureReport = asObject(JSON.parse(failureText), "failed build");
+    assert.equal(failureReport.code, "BUILD_FAILED");assert(isOperationEvidence(failureReport.evidence));
+    assert.equal(failureReport.evidence.technical.status, "fail");assert.equal(failureReport.evidence.artifacts.length, 0);
+    assert.deepEqual(failureReport.evidence.pack, failurePlan.pack);
+    assert.deepEqual(failureReport.evidence.revision, { kind: "plan", planId: failurePlan.planId });
+    assert.equal(failureReport.evidence.game.status, "not-run");assert.equal(failureReport.evidence.artistic.status, "requires-human-review");
+    assert(!failureText.includes("/approved/workspace"));assert.equal(buildCalls, 2);
+
     const unapprovedBuild = asObject(await client.callTool({
       name: MCP_FABRIC_BUILD_TOOL_NAME,
       arguments: {
@@ -281,7 +301,7 @@ async function testLinkedInMemoryProtocol(): Promise<void> {
       },
     }), "unapproved Fabric build result");
     assert.equal(unapprovedBuild.isError, true);
-    assert.equal(buildCalls, 1, "unapproved MCP builds must stop before the application factory");
+    assert.equal(buildCalls, 2, "unapproved MCP builds must stop before the application factory");
 
     const fabricFixture = {
       ...validModFixture,
