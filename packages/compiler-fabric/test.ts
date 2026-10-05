@@ -408,7 +408,14 @@ assert.equal(
   "item declaration order must not affect generated content",
 );
 
-await expectCompilerError(JSON.stringify(validFabricV1Fixture), "SPEC_UNSUPPORTED", "/gameplay/entities");
+const unsupported = await expectCompilerError(
+  JSON.stringify(validFabricV1Fixture), "SPEC_UNSUPPORTED", "/gameplay/entities",
+);
+for (const path of ["/gameplay/structures", "/gameplay/screens",
+  "/assets/models", "/assets/textures", "/assets/animations"]) {
+  assert(unsupported.errors.some((error) => error.path === path),
+    `Known schema content must be rejected explicitly instead of silently omitted: ${path}`);
+}
 const libraries = fabricBasicContentFixture();
 libraries.dependencies.required = ["yet_another_config_lib_v3"];
 libraries.dependencies.optional = ["modmenu"];
@@ -662,7 +669,7 @@ assert.ok(equipmentSword !== undefined && "material" in equipmentSword);
 equipmentSword.material = "infectedfrontier:missing_material";
 await expectCompilerError(
   JSON.stringify(missingEquipmentMaterial),
-  "SPEC_UNSUPPORTED",
+  "SPEC_INVALID",
   `/gameplay/items/${missingEquipmentMaterial.gameplay.items.indexOf(equipmentSword)}/material`,
 );
 const armorWithoutProperties = fabricEquipmentFixture();
@@ -670,18 +677,21 @@ armorWithoutProperties.gameplay.materials[0]!.armor = undefined;
 const armorIndex = armorWithoutProperties.gameplay.items.findIndex(({ kind }) => kind === "armor");
 await expectCompilerError(
   JSON.stringify(armorWithoutProperties),
-  "SPEC_UNSUPPORTED",
+  "SPEC_INVALID",
   `/gameplay/items/${armorIndex}/material`,
 );
 const unknownRepairIngredient = fabricEquipmentFixture();
 unknownRepairIngredient.gameplay.materials[0]!.repairIngredient = "othermod:blue_ingot";
 await expectCompilerError(
   JSON.stringify(unknownRepairIngredient),
-  "SPEC_UNSUPPORTED",
+  "SPEC_INVALID",
   "/gameplay/materials/0/repairIngredient",
 );
 const foreignMaterial = fabricEquipmentFixture();
 foreignMaterial.gameplay.materials[0]!.id = "othermod:blue_steel";
+for (const item of foreignMaterial.gameplay.items) {
+  if ("material" in item) item.material = "othermod:blue_steel";
+}
 await expectCompilerError(JSON.stringify(foreignMaterial), "SPEC_UNSUPPORTED", "/gameplay/materials/0/id");
 const customSerializer = fabricBasicContentFixture();
 customSerializer.gameplay.recipes[0]!.serializer = "infectedfrontier:custom";

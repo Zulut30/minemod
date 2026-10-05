@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { ModSpecJsonSchema, SPEC_COLLECTION_LIMITS } from "@mcdev/modspec";
+import { fabricBasicContentFixture } from "../../fixtures/specs/fabric-basic-content.ts";
 import {
   createEnumerableArrayExtraKeyBomb,
   createEnumerableObjectKeyBomb,
@@ -177,6 +178,66 @@ function selfTest(): void {
   assert.equal(validateSpec(validModFixture, "mod").valid, true);
   assert.equal(validateSpec(validFabricV1Fixture, "mod").valid, true);
   assert.equal(validateSpec(validArtFixture, "art").valid, true);
+
+  for (const fixture of [validModFixture, validFabricV1Fixture, validArtFixture]) {
+    for (const schemaVersion of [-1, 0.5, 2, 99]) {
+      const candidate = { ...fixture, schemaVersion };
+      const snapshot = JSON.stringify(candidate);
+      const result = validateInlineSpec(snapshot, fixture.kind);
+      assert.equal(result.valid, false);
+      assert.equal(result.value, undefined, "An unknown version must not produce normalized data.");
+      assert.deepEqual(result.diagnostics, [{
+        code: "SCHEMA_INVALID", path: "/schemaVersion",
+        message: `Unsupported ${fixture.kind === "mod" ? "ModSpec" : "ArtSpec"} schemaVersion; ` +
+          `supported versions: ${fixture.kind === "mod" ? "0, 1" : "0"}.`,
+      }]);
+      assert.equal(JSON.stringify(candidate), snapshot, "Version rejection must not rewrite input.");
+    }
+  }
+  assert.deepEqual(validateSpec({ kind: "mod", schemaVersion: 99, gameplay: "future-format" }).diagnostics, [{
+    code: "SCHEMA_INVALID", path: "/schemaVersion",
+    message: "Unsupported ModSpec schemaVersion; supported versions: 0, 1.",
+  }], "Unknown versions must not be interpreted as the old gameplay shape.");
+  assert.equal(validateSpec({
+    kind: "art", schemaVersion: 99, bomb: Array.from({ length: MAX_SPEC_ARRAY_ITEMS + 1 }, () => null),
+  }).diagnostics[0]?.code, "STRUCTURE_LIMIT_EXCEEDED", "Structural limits must still precede version dispatch.");
+
+  const equipment = fabricBasicContentFixture();
+  equipment.gameplay.materials = [{
+    id: "infectedfrontier:steel", repairIngredient: "infectedfrontier:blue_ingot",
+    durability: 512, miningSpeed: 6, attackDamageBonus: 2, miningLevel: 2, enchantmentValue: 10,
+    armor: {
+      durabilityMultiplier: 10, defense: { helmet: 2, chestplate: 6, leggings: 5, boots: 2 },
+      toughness: 0, knockbackResistance: 0,
+    },
+  }];
+  equipment.gameplay.items.push({
+    id: "infectedfrontier:steel_helmet", references: [], maxStackSize: 1,
+    kind: "armor", material: "infectedfrontier:steel", armorSlot: "helmet",
+  });
+  assert.equal(validateSpec(equipment).valid, true, "Declared material and repair item must be accepted.");
+  const vanillaRepair = structuredClone(equipment);
+  vanillaRepair.gameplay.materials[0]!.repairIngredient = "minecraft:iron_ingot";
+  assert.equal(validateSpec(vanillaRepair).valid, true, "Vanilla repair ids remain permitted.");
+  const duplicateMaterial = structuredClone(equipment);
+  duplicateMaterial.gameplay.materials.push(duplicateMaterial.gameplay.materials[0]!);
+  assert.ok(validateSpec(duplicateMaterial).diagnostics.some(({ code, path }) =>
+    code === "DUPLICATE_RESOURCE_LOCATION" && path === "/gameplay/materials/1/id"));
+  const missingMaterial = structuredClone(equipment);
+  missingMaterial.gameplay.materials = [];
+  assert.ok(validateSpec(missingMaterial).diagnostics.some(({ code, path }) =>
+    code === "BROKEN_REFERENCE" && path === "/gameplay/items/2/material"));
+  const missingArmor = structuredClone(equipment);
+  delete missingArmor.gameplay.materials[0]!.armor;
+  assert.ok(validateSpec(missingArmor).diagnostics.some(({ code, path }) =>
+    code === "SEMANTIC_INVALID" && path === "/gameplay/items/2/material"));
+  for (const repairIngredient of ["othermod:missing", "infectedfrontier:blue_ore"]) {
+    const invalidRepair = structuredClone(equipment);
+    invalidRepair.gameplay.materials[0]!.repairIngredient = repairIngredient;
+    assert.ok(validateSpec(invalidRepair).diagnostics.some(({ code, path }) =>
+      code === "BROKEN_REFERENCE" && path === "/gameplay/materials/0/repairIngredient"),
+    "Repair references must resolve in the item domain, not the block domain.");
+  }
 
   assert.deepEqual(VALIDATION_PROFILE_IDS, ["fabric-1.20.1-java-17", "neoforge-26.1.2-java-25"]);
   const fabricProfileRejectsV0 = validateSpec(validModFixture, "mod", {

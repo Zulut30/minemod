@@ -3,6 +3,7 @@ import {
   AnyModSpecSchema,
   ArtSpecSchema,
   SPEC_COLLECTION_LIMITS,
+  SUPPORTED_SPEC_VERSIONS,
   type Spec,
 } from "@mcdev/modspec";
 
@@ -816,6 +817,27 @@ function validateResourceGraph(value: JsonObject, diagnostics: Diagnostic[]): vo
   const resourceIds = collectGameplayIds(value, diagnostics);
   collectModAssetIds(value, diagnostics);
   const itemIds = idsFromEntries(value.gameplay.items);
+  if (value.schemaVersion === 1) {
+    const materials = Array.isArray(value.gameplay.materials) ? value.gameplay.materials : [];
+    const materialIds = collectUniqueIds(materials, "/gameplay/materials", diagnostics);
+    materials.forEach((material, index) => {
+      if (!isObject(material)) return;
+      if (typeof material.repairIngredient !== "string" || !material.repairIngredient.startsWith("minecraft:")) {
+        validateKnownReference(material.repairIngredient,
+          `/gameplay/materials/${index}/repairIngredient`, itemIds, diagnostics);
+      }
+    });
+    if (Array.isArray(value.gameplay.items)) value.gameplay.items.forEach((item, index) => {
+      if (!isObject(item) || typeof item.material !== "string") return;
+      const path = `/gameplay/items/${index}/material`;
+      validateKnownReference(item.material, path, materialIds, diagnostics);
+      const material = materials.find((entry) => isObject(entry) && entry.id === item.material);
+      if (item.kind === "armor" && isObject(material) && material.armor === undefined) push(diagnostics, {
+        code: "SEMANTIC_INVALID", path,
+        message: "Armor items require a declared material with armor properties.",
+      });
+    });
+  }
   const blockIds = idsFromEntries(value.gameplay.blocks);
   const entityIds = idsFromEntries(value.gameplay.entities);
   const itemOrBlockIds = new Set([...itemIds, ...blockIds]);
@@ -1239,6 +1261,19 @@ export function validateSpec(
       path: "/kind",
       message: `Expected ${expectedKind} spec.`,
     });
+  }
+
+  if (actualKind !== undefined && typeof normalized.schemaVersion === "number") {
+    const supported: readonly number[] = SUPPORTED_SPEC_VERSIONS[actualKind];
+    if (!supported.includes(normalized.schemaVersion)) {
+      push(diagnostics, {
+        code: "SCHEMA_INVALID",
+        path: "/schemaVersion",
+        message: `Unsupported ${actualKind === "mod" ? "ModSpec" : "ArtSpec"} schemaVersion; ` +
+          `supported versions: ${supported.join(", ")}.`,
+      });
+      return { valid: false, kind: actualKind, diagnostics };
+    }
   }
 
   missingRequiredMetadata(normalized, diagnostics);

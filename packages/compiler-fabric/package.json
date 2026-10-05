@@ -8,8 +8,9 @@
     ".": "./index.ts"
   },
   "scripts": {
-    "test": "node --experimental-strip-types source-quality.test.ts && node --experimental-strip-types test.ts",
+    "test": "node --experimental-strip-types source-quality.test.ts && node --experimental-strip-types spec-preflight.test.ts && node --experimental-strip-types test.ts",
     "test:source-quality": "node --experimental-strip-types source-quality.test.ts",
+    "test:spec-preflight": "node --experimental-strip-types spec-preflight.test.ts",
     "test:build": "node --experimental-strip-types build-test.ts"
   },
   "dependencies": {

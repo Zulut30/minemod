@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 19,
+  "status": "PARTIAL",
+  "verifiedAtUtc": "2026-10-05T09:43:01.753600+00:00",
+  "sourceParentRevision": "ae0ca2db56af1559e1361e870837ba36e5c32e62",
+  "scope": "Explicit unknown-version rejection and supported-version catalog derived from parser literals; early material, armor and item-domain repair reference validation; fail-closed Fabric primitive preflight",
+  "supportedSpecVersions": {
+    "ModSpec": [
+      0,
+      1
+    ],
+    "ArtSpec": [
+      0
+    ]
+  },
+  "sourceHashes": [
+    {
+      "path": "packages/modspec/index.ts",
+      "bytes": 28236,
+      "sha256": "9f3bf2d5b9493215d1dc985d609b326fdf95ec5bb019e2ab96c9294ff21b9546"
+    },
+    {
+      "path": "packages/modspec/test.ts",
+      "bytes": 17602,
+      "sha256": "78b755f6ae40751569e743fac5825327d7d9682856385e8ce9057fbb33289a1e"
+    },
+    {
+      "path": "packages/validation/index.ts",
+      "bytes": 49328,
+      "sha256": "a1871c92153d5733f249adaf6b6a23efebbd978f96251d779131a351c07477d3"
+    },
+    {
+      "path": "packages/validation/test.ts",
+      "bytes": 67689,
+      "sha256": "33e1eb4684b21e21a08dc6c9e5ec51c4e37007f032dd557048644c4dff917f6c"
+    },
+    {
+      "path": "packages/compiler-fabric/test.ts",
+      "bytes": 30418,
+      "sha256": "f44b5a185e82fcd599e6c31dc90176850e132042547a3d3c911da6bc14aa9a7b"
+    },
+    {
+      "path": "packages/compiler-fabric/spec-preflight.test.ts",
+      "bytes": 1900,
+      "sha256": "a4e6fe79f80c4ffb6e9a03504c95b16da7fed9234f410f7a23706afafc29be1c"
+    },
+    {
+      "path": "packages/compiler-fabric/package.json",
+      "bytes": 921,
+      "sha256": "7048890308face38b5b8fbe405152775739ba0f4278e2a3fa83a69a9c30f2dd9"
+    }
+  ],
+  "checks": {
+    "modspec": "PASS local Windows",
+    "validation": "PASS local Windows including bounded key/prototype tests",
+    "unknownVersionCases": 12,
+    "futureShapeRejectedWithoutOldSemantics": true,
+    "structuralLimitsPrecedeVersionDispatch": true,
+    "materialCases": "PASS declared and vanilla repair; duplicate/missing material; armor properties; wrong item/block domain",
+    "compilerBeforePackCases": 6,
+    "compilerBeforePack": "PASS local Windows (SPEC_INVALID, no pack integrity bypass)",
+    "typecheck": "PASS",
+    "lint": "PASS",
+    "portableAssetsEditorCliMcp": "PASS",
+    "fullLinuxCompiler": "pending exact-source hosted CI",
+    "generatedBuildAndRuntime": "pending exact-source hosted CI"
+  },
+  "logs": [
+    {
+      "path": "output/verification/roadmap-019-modspec.log",
+      "bytes": 43,
+      "sha256": "d531d6a2069cddce923cd45da00d05a8f25b76cad7cb38e20a98048212660f3e"
+    },
+    {
+      "path": "output/verification/roadmap-019-validation.log",
+      "bytes": 55,
+      "sha256": "e61eec9f37d5d27f9d90e8d1dfcfee4810487368b76d7452eb0e71f7b4c241b3"
+    },
+    {
+      "path": "output/verification/roadmap-019-preflight.log",
+      "bytes": 146,
+      "sha256": "4aa8ae7c69289736db6270fd0b05dcce29486992fcb7ddf8cd90b8642d891796"
+    },
+    {
+      "path": "output/verification/roadmap-019-typecheck.log",
+      "bytes": 176,
+      "sha256": "fe0327fb3a908a7cea6b4e5ef62bbaa7903d4f4149a209170e6249f0dd5c8190"
+    },
+    {
+      "path": "output/verification/roadmap-019-lint.log",
+      "bytes": 29,
+      "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+    },
+    {
+      "path": "output/verification/roadmap-019-portable.log",
+      "bytes": 3123,
+      "sha256": "80f907f85241e56a81bf01d88f3fda88fceff5da025674dd0886e94b7919adfe"
+    }
+  ],
+  "existingCompilerRejections": "Known valid but unsupported entities/structures/screens/authored model/texture/animation sections must all produce explicit SPEC_UNSUPPORTED; assertions await full Linux suite.",
+  "contractChanges": "No schema shapes/IDs, automatic coercion or migrations; semantic corrections reject inputs already rejected by Fabric content preflight. ModSpec and ArtSpec versions are separate from EditorProject and asset bundle.",
+  "limits": "Structural spec acceptance is not backend support. ArtSpec path is declarative; cross-document reviewed import remains 049/062. Minecraft namespace acceptance is not proof of arbitrary vanilla registry id existence.",
+  "newDependencies": false,
+  "trustedPacksChanged": false,
+  "artisticApproval": "not-granted",
+  "productionReleaseApproval": "not-granted",
+  "hostedCurrentSource": "pending after point019 work commit"
+}

@@ -713,6 +713,12 @@ export type AnyModSpec = z.infer<typeof AnyModSpecSchema>;
 export type ArtSpec = z.infer<typeof ArtSpecSchema>;
 export type Spec = AnyModSpec | ArtSpec;
 
+/** Supported discriminators come from the actual parsers; no implicit version migration. */
+export const SUPPORTED_SPEC_VERSIONS = Object.freeze({
+  mod: Object.freeze(AnyModSpecSchema.options.map((schema) => schema.shape.schemaVersion.value)),
+  art: Object.freeze([ArtSpecSchema.shape.schemaVersion.value]),
+});
+
 function jsonSchema(schema: z.ZodType, id: string): Readonly<Record<string, unknown>> {
   return Object.freeze({
     ...z.toJSONSchema(schema),
