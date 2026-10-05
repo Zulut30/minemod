@@ -3,6 +3,7 @@ import { ConnectionPanel } from "./ConnectionPanel.tsx";
 import { TextureEditor } from "./TextureEditor.tsx";
 import { VariantsPanel } from "./VariantsPanel.tsx";
 import { ReviewBoard } from "./ReviewBoard.tsx";
+import { PartEditor } from "./PartEditor.tsx";
 import type { ReactNode, ComponentProps } from "react";
 import { bounds, cubes, snapToGrid, type GridStep, type EditorProject, type EditorCommand } from "@mcdev/editor-core";
 import { useStudio, saveProject } from "./store.ts";
@@ -159,6 +160,7 @@ function Inspector({ project }: { project: EditorProject }) {
           </p>
         </div>
       </div>
+      <PartEditor key={`${project.projectId}-${[...selection].sort().join(",")}-${part?.id ?? "selection"}`} project={project} />
       <div className="inspector-section">
         <h3>Форма</h3>
         <div className="geometry-grid">
@@ -549,7 +551,8 @@ export function App() {
                     <button
                       className="part-select"
                       data-testid={`part-${part.id}`}
-                      onClick={() => ui.select(part.cubeIds)}
+                      title={`${part.label} · ${part.cubeIds.length} куб.`}
+                      onClick={(event) => ui.select(part.cubeIds, event.ctrlKey || event.metaKey || event.shiftKey)}
                     >
                       <Icon name="cube" size={16} />
                       <span>{part.label}</span>
@@ -557,7 +560,10 @@ export function App() {
                     </button>
                     <button
                       className={ui.hidden.includes(part.id) ? "toggled" : ""}
-                      title="Скрыть часть"
+                      data-testid={`hide-${part.id}`}
+                      aria-label={ui.hidden.includes(part.id) ? `Показать: ${part.label}` : `Скрыть: ${part.label}`}
+                      aria-pressed={ui.hidden.includes(part.id)}
+                      title={ui.hidden.includes(part.id) ? "Показать часть" : "Скрыть часть"}
                       onClick={() => ui.toggleHidden(part.id)}
                     >
                       <Icon name="eye" size={14} />
@@ -587,7 +593,8 @@ export function App() {
                       <button
                         className={`cube-row ${ui.selection.length === 1 && ui.selection[0] === id ? "active" : ""}`}
                         key={id}
-                        onClick={() => ui.select([id])}
+                        data-testid={`cube-${id}`}
+                        onClick={(event) => ui.select([id], event.ctrlKey || event.metaKey || event.shiftKey)}
                       >
                         <Icon name="cube" size={12} />
                         {id}

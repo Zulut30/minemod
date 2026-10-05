@@ -137,7 +137,7 @@ function ItemCube({
         geometry={g}
         onClick={(event) => {
           event.stopPropagation();
-          if (!review) useStudio.getState().select([cube.id]);
+          if (!review) useStudio.getState().select([cube.id], event.ctrlKey || event.metaKey || event.shiftKey);
         }}
       >
         {review?.silhouette ? (

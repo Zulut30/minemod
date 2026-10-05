@@ -148,6 +148,8 @@ export const CommandSchema = z.discriminatedUnion("type", [
   z.strictObject({ type: z.literal("delete"), cubeIds: targets }),
   z.strictObject({ type: z.literal("duplicate"), cubeId: id, newId: id }),
   z.strictObject({ type: z.literal("lock"), partId: id, locked: z.boolean() }),
+  z.strictObject({ type: z.literal("renamePart"), partId: id, label: z.string().trim().min(1).max(80) }),
+  z.strictObject({ type: z.literal("groupPart"), partId: id, label: z.string().trim().min(1).max(80), cubeIds: targets }),
   z.strictObject({
     type: z.literal("paint"),
     cubeIds: targets,
@@ -570,6 +572,8 @@ function applyCommand(
 ): void {
   if (command.type === "undo" || command.type === "redo")
     return fail("HISTORY_BATCH", "История меняется отдельной командой.");
+  if ((command.type === "renamePart" || command.type === "groupPart") && actor !== "human")
+    return fail("HUMAN_ONLY", "Имена и состав частей меняет пользователь.");
   if (
     ["brief", "designBrief", "checkpoint", "restoreVariant", "deleteVariant"].includes(
       command.type,
@@ -700,6 +704,22 @@ function applyCommand(
       part.locked = command.locked;
       break;
     }
+    case "renamePart": {
+      const part = p.parts.find((v) => v.id === command.partId);
+      if (!part) fail("TARGET", "Часть не найдена.");
+      part.label = command.label;
+      break;
+    }
+    case "groupPart": {
+      if (p.parts.some((part) => part.id === command.partId) || all.some((cube) => cube.id === command.partId))
+        fail("DUPLICATE_ID", "Этот ID уже занят.");
+      if (p.parts.some((part) => part.locked && part.cubeIds.some((cubeId) => ids.has(cubeId))))
+        fail("LOCKED", "Сначала явно снимите закрепление частей, которые хотите объединить.");
+      p.parts = p.parts.map((part) => ({ ...part, cubeIds: part.cubeIds.filter((cubeId) => !ids.has(cubeId)) }))
+        .filter((part) => part.cubeIds.length);
+      p.parts.push({ id: command.partId, label: command.label, cubeIds: [...requested], locked: false });
+      break;
+    }
     case "delete":
       for (const bone of p.model.bones)
         bone.cubes = bone.cubes.filter((c) => !ids.has(c.id));
@@ -769,6 +789,8 @@ const labels: Record<EditorCommand["type"], string> = {
   delete: "Удаление",
   duplicate: "Копия куба",
   lock: "Закрепление части",
+  renamePart: "Название части",
+  groupPart: "Объединение в часть",
   paint: "Пиксельный штрих",
   fill: "Заливка пикселей",
   uv: "Развёртка UV",

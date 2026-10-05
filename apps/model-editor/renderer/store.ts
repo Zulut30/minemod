@@ -37,7 +37,7 @@ interface StudioUi {
     options?: { requirePreviousSuccess: boolean },
   ) => Promise<HostResponse | null>;
   command: (command: EditorCommand) => Promise<void>;
-  select: (ids: string[]) => void;
+  select: (ids: string[], additive?: boolean) => void;
   toggleHidden: (partId: string) => void;
 }
 let requestQueue: Promise<HostResponse | null> = Promise.resolve(null);
@@ -62,7 +62,10 @@ export const useStudio = create<StudioUi>((set, get) => ({
   paintFocus: true,
   draft: null,
   connection: { enabled: false },
-  select: (selection) => {
+  select: (ids, additive = false) => {
+    const previous = get().selection;
+    const selection = additive ? (ids.every(id => previous.includes(id))
+      ? previous.filter(id => !ids.includes(id)) : [...new Set([...previous, ...ids])]) : ids;
     set({ selection, draft: null });
     const projectId = get().state?.project.projectId;
     if (projectId)
@@ -94,7 +97,8 @@ export const useStudio = create<StudioUi>((set, get) => ({
       ...(switched || previous?.revision !== result.state.revision
         ? { draft: null }
         : {}),
-      ...(switched ? { hidden: [], fileName: "" } : {}),
+      hidden: switched ? [] : get().hidden.filter(id => result.state.project.parts.some(part => part.id === id)),
+      ...(switched ? { fileName: "" } : {}),
       ...(result.note ? { note: result.note, error: "" } : {}),
       ...(result.warning !== undefined ? { warning: result.warning } : {}),
       ...(result.fileName ? { fileName: result.fileName } : {}),

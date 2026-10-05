@@ -1,0 +1,218 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 25,
+  "status": "PARTIAL",
+  "checkedAtUtc": "2026-10-05T11:27:23.999Z",
+  "studioVersion": "0.12.0",
+  "scope": "Human named flat groups, additive cube selection, actual hide/show view and enforced protected parts; no geometry/UV changes by structure",
+  "sourceHashes": [
+    {
+      "path": "packages/editor-core/index.ts",
+      "bytes": 35088,
+      "sha256": "0c5762e91409bca6c71e31e37f703068dbd15a2037383b1773460f0c2fbf3894"
+    },
+    {
+      "path": "packages/editor-core/parts.test.ts",
+      "bytes": 4804,
+      "sha256": "93746116154367fab7b60bbc43d19179fe39c48110a63d258946704c2bd9bbdf"
+    },
+    {
+      "path": "packages/editor-core/package.json",
+      "bytes": 750,
+      "sha256": "97b8f0ee08b26f06205ded60a3b5f944a2b531f60c066d0f75a9d87472a5fb97"
+    },
+    {
+      "path": "apps/model-editor/renderer/PartEditor.tsx",
+      "bytes": 3325,
+      "sha256": "1c0157f65692f712aac18765d4a68e95e9b8c2b70a53b20f4b72a048c0467715"
+    },
+    {
+      "path": "apps/model-editor/renderer/App.tsx",
+      "bytes": 33373,
+      "sha256": "c3d141e285adf0093eb97b3fd05501461c742b51575455258c49ccc0d3905521"
+    },
+    {
+      "path": "apps/model-editor/renderer/Viewport.tsx",
+      "bytes": 13615,
+      "sha256": "5b8fda09ac0d51340d5dcdc399b59b4dee6ff6df0987a5c783466cda09d15a77"
+    },
+    {
+      "path": "apps/model-editor/renderer/store.ts",
+      "bytes": 5236,
+      "sha256": "3191a6a549aabfc1089e3120e99b141793174e7d3de03eb77ae84acf6f3efeb6"
+    },
+    {
+      "path": "apps/model-editor/renderer/style.css",
+      "bytes": 30777,
+      "sha256": "004b069f1b63dad0d5cd057f8ac730568013645948a0e26eb3e951ecf210509a"
+    },
+    {
+      "path": "apps/model-editor/worker/discovery.ts",
+      "bytes": 10966,
+      "sha256": "d971ac155aa395e52c79b77f15601f522f83628233f5487c06031efac4ff070f"
+    },
+    {
+      "path": "apps/model-editor/scripts/check-parts-desktop.mjs",
+      "bytes": 9725,
+      "sha256": "547343e4b42a81f9c39ed7b20d8355a817a4d7c7fcd50e6b0a83a4ffb9eedc31"
+    },
+    {
+      "path": "apps/model-editor/scripts/test-desktop.mjs",
+      "bytes": 16965,
+      "sha256": "caf687eb919e106d25764e0b8b44cd68d9678556ddbdeaa693f5adeb60cbd561"
+    },
+    {
+      "path": "apps/model-editor/package.json",
+      "bytes": 1531,
+      "sha256": "383bcb033085517cf3498632e069849e6f4ba8168d22d8cfe3c69384f2a3d6a6"
+    }
+  ],
+  "checks": {
+    "core": "PASS permissions/locks/CAS/rollback/invariants/persistence/history",
+    "lint": "PASS full workspace + final helper",
+    "typecheck": "PASS",
+    "portable": "PASS complete portable suite",
+    "discovery": "PASS exact ten SDK schemas, excludes human structural commands",
+    "http": "PASS",
+    "package": "PASS fresh Windows x64 0.12.0",
+    "focusedPackaged": "PASS twelve GUI/public MCP/save/restart checks; actual viewport hide/show PNG restores exact pixels",
+    "hostedNewSource": "pending"
+  },
+  "focused": {
+    "report": {
+      "status": "PASS",
+      "hidden": true,
+      "projectId": "2f8afc7c-198a-4777-98c0-950f4229e97d",
+      "groupId": "part_ad0f94f6828f",
+      "finalRevision": 7,
+      "savedFile": {
+        "bytes": 135432,
+        "sha256": "d3627ac099d304965a0b98204105a1a158f196ea69641a0b650ad297347b4fc4"
+      },
+      "checks": [
+        "rename locked part preserves ID and protection",
+        "real hide/show PNG with unchanged document",
+        "Control multiselect groups parts",
+        "grouping preserves geometry/pixels/UV and protected grip",
+        "exact undo/redo",
+        "public MCP names and new group ID",
+        "agent cannot rename/regroup/unlock",
+        "locked agent edit rejected",
+        "stale name rejected with draft retained",
+        "explicit refresh preserves agent geometry",
+        "exact saved project",
+        "restart restores names/group/locks"
+      ]
+    },
+    "artifacts": [
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\playwright\\parts-025-209eaf32\\parts\\report.json",
+        "bytes": 807,
+        "sha256": "d547ada8f32c17e7c0a432556b9407a8efe17b994878bc95957bb0023c6fb873"
+      },
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\playwright\\parts-025-209eaf32\\parts\\named-parts.png",
+        "bytes": 349866,
+        "sha256": "53116e1df2bc2b49de7c3d306eded8b83c99436a7199cf6a467ed3d508800eb7"
+      },
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\playwright\\parts-025-209eaf32\\parts\\grip-shown.png",
+        "bytes": 177170,
+        "sha256": "6886e0c2ff4b538df14eb991be3421de69ef249ec0d59e87a5bf4d34d936bbc9"
+      },
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\playwright\\parts-025-209eaf32\\parts\\grip-hidden.png",
+        "bytes": 172220,
+        "sha256": "8915fa52178ca3c3617de0348bbcffa87edf8a57ecd6ceda0229330ae5f98c76"
+      },
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\playwright\\parts-025-209eaf32\\parts\\именованные части.mmeditor.json",
+        "bytes": 135432,
+        "sha256": "d3627ac099d304965a0b98204105a1a158f196ea69641a0b650ad297347b4fc4"
+      }
+    ],
+    "packageHashes": [
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.12.0\\39c4bd7d\\MineMod Studio-win32-x64\\MineMod Studio.exe",
+        "bytes": 245726208,
+        "sha256": "abaef22f6a8714f4e1675284b9b1953313aaf92d3dd716c9e8a916f943c22c99"
+      },
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.12.0\\39c4bd7d\\MineMod Studio-win32-x64\\resources\\app.asar",
+        "bytes": 3549136,
+        "sha256": "81b6aa11549907b49c06815ebabd127d146a96087f1a9feee42bd7462036c579"
+      }
+    ]
+  },
+  "retainedEarlierOperators": [
+    {
+      "log": {
+        "path": "output/verification/roadmap-025-desktop.log",
+        "bytes": 837,
+        "sha256": "00e665bd51a98847c4d19bffac2777e3ffe31edd659226c0cb54d8d7628fa1e8"
+      },
+      "reason": "Harness used pre-undo/redo revision; real server correctly returned REVISION_CONFLICT instead of expected LOCKED"
+    },
+    {
+      "log": {
+        "path": "output/verification/roadmap-025-desktop-visibility.log",
+        "bytes": 2241,
+        "sha256": "2a419542b822093397c1e1c58c9c53a8ae623544adc9c2ce594aac5d06324db2"
+      },
+      "reason": "Harness first canvas selector captured unchanged texture atlas; corrected to actual viewport"
+    }
+  ],
+  "logs": [
+    {
+      "path": "output/verification/roadmap-025-core.log",
+      "bytes": 1652,
+      "sha256": "449c8acaa4253940f67a0df554def85ff5a06a766ee76aef066789cebada563b"
+    },
+    {
+      "path": "output/verification/roadmap-025-lint-final.log",
+      "bytes": 29,
+      "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+    },
+    {
+      "path": "output/verification/roadmap-025-typecheck-final.log",
+      "bytes": 176,
+      "sha256": "fe0327fb3a908a7cea6b4e5ef62bbaa7903d4f4149a209170e6249f0dd5c8190"
+    },
+    {
+      "path": "output/verification/roadmap-025-portable.log",
+      "bytes": 3517,
+      "sha256": "d9a79f9e9d1f9a4dcbd24aaf87b91162c3e94aa2ce1b460903e0a7f341ad7a72"
+    },
+    {
+      "path": "output/verification/roadmap-025-discovery.log",
+      "bytes": 203,
+      "sha256": "a8a7fda7aed1426020f3caa5d1d22f036754524f8906a1f3f78035671b9171ac"
+    },
+    {
+      "path": "output/verification/roadmap-025-mcp.log",
+      "bytes": 207,
+      "sha256": "ce600a29360c371575566860a7c94c33766d03e9a2ba5f6249e976ae6338a777"
+    },
+    {
+      "path": "output/verification/roadmap-025-package-final.log",
+      "bytes": 787,
+      "sha256": "70b4806c56bd86f312b211553a6bcbc8f833ba8f14e0e96fde0392fa239b3eb6"
+    },
+    {
+      "path": "output/verification/roadmap-025-desktop-visibility-corrected.log",
+      "bytes": 952,
+      "sha256": "f3b739bd8ba3f382f2f55af9a1eae9836d6076a77a325433d7cf2d785e056b2a"
+    }
+  ],
+  "scopeLimits": {
+    "groups": "existing flat semantic parts; no nested hierarchy",
+    "hidden": "current view only; not persisted/export filter/permission",
+    "projectFormat": "v2 unchanged",
+    "newModelClasses": "none",
+    "artisticImprovement": "not-scored",
+    "minecraftAuthoredAcceptance": "not-tested"
+  },
+  "newDependencies": false,
+  "trustedPacksChanged": false,
+  "fixturesChanged": false
+}

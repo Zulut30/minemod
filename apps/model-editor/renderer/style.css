@@ -145,6 +145,12 @@ select {
   font-weight: 600;
   white-space: nowrap;
 }
+.part-editor label { display: grid; gap: 6px; font-size: 11px; }
+.part-editor input { width: 100%; min-width: 0; padding: 8px; background: var(--surface-raised); border: 1px solid var(--border); border-radius: 6px; }
+.part-editor-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.part-editor-actions button, .part-editor > button { padding: 7px 8px; font-size: 10px; background: var(--surface-raised); border: 1px solid var(--border); border-radius: 6px; }
+.part-editor-actions button:hover:enabled, .part-editor > button:hover:enabled { background: var(--surface-hover); }
+.part-error { color: var(--danger, #ffb4b4); font-size: 11px; overflow-wrap: anywhere; }
 .tool-button:hover:enabled {
   background: var(--surface-raised);
 }

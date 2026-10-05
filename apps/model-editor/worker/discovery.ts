@@ -9,7 +9,7 @@ import { VIEWS } from "../shared/bridge.ts";
 
 export const CONTRACT_URI = "studio://contracts/v1";
 export const SCENE_URI = "studio://scene/v1";
-export const HUMAN_COMMANDS = ["brief", "designBrief", "checkpoint", "restoreVariant", "deleteVariant", "lock"];
+export const HUMAN_COMMANDS = ["brief", "designBrief", "checkpoint", "restoreVariant", "deleteVariant", "lock", "renamePart", "groupPart"];
 const agentOptions = CommandSchema.options.filter((s) => !HUMAN_COMMANDS.includes(s.shape.type.value));
 const [firstAgentOption, ...otherAgentOptions] = agentOptions;
 // Схема агента использует те же поля, что core, и исключает ручные операции.
