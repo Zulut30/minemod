@@ -1,0 +1,306 @@
+{
+  "schemaVersion": 1,
+  "point": 44,
+  "pointClosed": false,
+  "status": "LOCAL_GEOMETRIC_MEASUREMENT",
+  "checkedAtUtc": "2026-10-05T21:10:17.494Z",
+  "sourceRevisionBeforeScript": "ebedc534e0fdf6a0d28bb1d9c609c2a61b3e188c",
+  "sourceCommit": null,
+  "sourceInputs": [
+    {
+      "path": "apps/model-editor/scripts/measure-leaf-volume.mjs",
+      "bytes": 7936,
+      "sha256": "cbcd430a5239abb5edeb89a939fd8f0528ec6616d6e60c360387b48037b4ab81"
+    },
+    {
+      "path": "packages/editor-core/index.ts",
+      "bytes": 41346,
+      "sha256": "abb89587034711388d1291b514492e62eac7ecbe1bbd5f2d12c31e733187f11a"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "bytes": 95944,
+      "sha256": "e955ab8e82d8bb87128cf10f0f95b67c217fb1bf31eb7f2321823e66b03195c2"
+    }
+  ],
+  "report": {
+    "path": "output/verification/leaf-union-volume-044-689cb286.json",
+    "bytes": 6565,
+    "sha256": "4d812d132358821b9480a1b9bb75ce6145b8cc1b28303f437e641e4db96dbb87"
+  },
+  "verificationLog": {
+    "path": "output/verification/leaf-union-volume-044.log",
+    "bytes": 1122,
+    "sha256": "53dd7accc911ca3a23360f2b3f33119867b6a02ccc4aa9789be8cbcc955b383f"
+  },
+  "lint": {
+    "status": "PASS",
+    "log": {
+      "path": "output/verification/local-recolor-057-lint.log",
+      "bytes": 29,
+      "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+    }
+  },
+  "measurements": {
+    "status": "MEASURED",
+    "method": "Midpoint quadrature of the union of solid oriented cuboids; equal geometric density; XYZ rotation/pivot/inflate",
+    "scriptSha256": "cbcd430a5239abb5edeb89a939fd8f0528ec6616d6e60c360387b48037b4ab81",
+    "three": "0.186.1",
+    "probes": {
+      "status": "PASS",
+      "exactCases": [
+        "single solid",
+        "duplicate solid",
+        "overlapping union",
+        "inflate",
+        "cell budget rejection"
+      ],
+      "approximateRotatedVolume": 2.0061591695501733,
+      "membershipComparisons": 6144
+    },
+    "results": [
+      {
+        "key": "a",
+        "path": "output/model-editor/leaf-volume-20261005-v3c/a.mmeditor.json",
+        "sha256": "6996f1cceb3ac0f1ffed341c0ff109d289a05b608ca4994493b3601bd76c007b",
+        "cubeCount": 33,
+        "guardCoreCenter": [
+          8,
+          9,
+          8
+        ],
+        "samples": [
+          {
+            "requestedStep": 0.1,
+            "spacing": [
+              0.1,
+              0.1,
+              0.10000000000000003
+            ],
+            "cells": [
+              80,
+              268,
+              18
+            ],
+            "occupied": 80784,
+            "volume": 80.78400000000003,
+            "centroid": [
+              8,
+              14.805709051297015,
+              7.999999999999967
+            ]
+          },
+          {
+            "requestedStep": 0.05,
+            "spacing": [
+              0.05,
+              0.05,
+              0.05000000000000002
+            ],
+            "cells": [
+              160,
+              536,
+              36
+            ],
+            "occupied": 634800,
+            "volume": 79.35000000000004,
+            "centroid": [
+              8,
+              14.855575299306953,
+              7.999999999999924
+            ]
+          },
+          {
+            "requestedStep": 0.025,
+            "spacing": [
+              0.025,
+              0.025,
+              0.02500000000000001
+            ],
+            "cells": [
+              320,
+              1072,
+              72
+            ],
+            "occupied": 5064000,
+            "volume": 79.12500000000004,
+            "centroid": [
+              8,
+              14.828861295417614,
+              7.999999999999809
+            ]
+          }
+        ],
+        "summedCuboidVolume": 80.241,
+        "duplicateVolumeAvoided": 1.115999999999957,
+        "centroidAboveGuard": 5.828861295417614,
+        "lastRefinement": {
+          "relativeVolumeChange": 0.0028436018957345237,
+          "centroidDistance": 0.026714003889338755
+        }
+      },
+      {
+        "key": "b",
+        "path": "output/model-editor/leaf-volume-20261005-v3c/b.mmeditor.json",
+        "sha256": "7f0407e6840320b2255c0f59e87ea643ac5644204f04053c4a4c99784d1c76e8",
+        "cubeCount": 40,
+        "guardCoreCenter": [
+          8,
+          9.3,
+          8
+        ],
+        "samples": [
+          {
+            "requestedStep": 0.1,
+            "spacing": [
+              0.09914545256444222,
+              0.09966001297195218,
+              0.10000000000000003
+            ],
+            "cells": [
+              77,
+              268,
+              16
+            ],
+            "occupied": 64964,
+            "volume": 64.18987006291624,
+            "centroid": [
+              7.999999999999999,
+              14.260347725381079,
+              7.999999999999992
+            ]
+          },
+          {
+            "requestedStep": 0.05,
+            "spacing": [
+              0.049896731029163734,
+              0.049923146685015296,
+              0.05000000000000002
+            ],
+            "cells": [
+              153,
+              535,
+              32
+            ],
+            "occupied": 517774,
+            "volume": 64.48879887624526,
+            "centroid": [
+              7.999999999999999,
+              14.24126901428946,
+              7.997599049005917
+            ]
+          },
+          {
+            "requestedStep": 0.025,
+            "spacing": [
+              0.024948365514581867,
+              0.024984923738524963,
+              0.02500000000000001
+            ],
+            "cells": [
+              306,
+              1069,
+              64
+            ],
+            "occupied": 4118996,
+            "volume": 64.1876543490699,
+            "centroid": [
+              8,
+              14.283252017413218,
+              7.999999999999943
+            ]
+          }
+        ],
+        "summedCuboidVolume": 77.7958359375,
+        "duplicateVolumeAvoided": 13.6081815884301,
+        "centroidAboveGuard": 4.983252017413218,
+        "lastRefinement": {
+          "relativeVolumeChange": 0.004691626921551725,
+          "centroidDistance": 0.04205160064688722
+        }
+      },
+      {
+        "key": "c",
+        "path": "output/model-editor/leaf-bevel-94fbca11/c.mmeditor.json",
+        "sha256": "9b8e63ce3279981870260d8c960dffea567e4c7a091b672154fa46d1c455f82b",
+        "cubeCount": 59,
+        "guardCoreCenter": [
+          8,
+          9.200000000000001,
+          8
+        ],
+        "samples": [
+          {
+            "requestedStep": 0.1,
+            "spacing": [
+              0.09854191174447298,
+              0.09982868115201327,
+              0.09615384615384616
+            ],
+            "cells": [
+              57,
+              240,
+              13
+            ],
+            "occupied": 58290,
+            "volume": 55.1362256460625,
+            "centroid": [
+              7.999999999999999,
+              13.943380564787155,
+              7.9999999999999885
+            ]
+          },
+          {
+            "requestedStep": 0.05,
+            "spacing": [
+              0.049706982030397875,
+              0.04991434057600663,
+              0.05
+            ],
+            "cells": [
+              113,
+              480,
+              25
+            ],
+            "occupied": 451968,
+            "volume": 56.06869205363019,
+            "centroid": [
+              8,
+              13.818026847350923,
+              7.999999999999956
+            ]
+          },
+          {
+            "requestedStep": 0.025,
+            "spacing": [
+              0.02496395097526649,
+              0.024983194448887573,
+              0.025
+            ],
+            "cells": [
+              225,
+              959,
+              50
+            ],
+            "occupied": 3596306,
+            "volume": 56.0735349505363,
+            "centroid": [
+              8.000000000000002,
+              13.83454901982187,
+              8.000000000000016
+            ]
+          }
+        ],
+        "summedCuboidVolume": 72.62971822705295,
+        "duplicateVolumeAvoided": 16.55618327651665,
+        "centroidAboveGuard": 4.634549019821868,
+        "lastRefinement": {
+          "relativeVolumeChange": 0.00008636689144681329,
+          "centroidDistance": 0.016522172470946117
+        }
+      }
+    ],
+    "limits": "Convergence observations are not certified error bounds. Ignores texture alpha, material density and physical simulation. No balance target, artistic acceptance or game acceptance is assigned."
+  },
+  "boundary": "Readonly fixed Leaf developer study. Equal-density solid union centroid is not physical mass, a balance score, artistic approval, generic class gate or Minecraft/JAR acceptance. No model changes."
+}
