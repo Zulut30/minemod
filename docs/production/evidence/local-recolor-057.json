@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "roadmapPoint": 57,
-  "status": "LOCAL_PASS_CI_PENDING",
-  "pointClosed": false,
-  "checkedAtUtc": "2026-10-05T21:17:18.576Z",
+  "status": "HOSTED_LOCAL_RECOLOR_PASS",
+  "pointClosed": true,
+  "checkedAtUtc": "2026-10-05T21:36:24.338Z",
   "sourceBeforeImplementation": "8543c265227c56567e435abc35a81bdd87261dc8",
   "sourceCommit": "2b8bd6a64548e51805c7989f9644f9d67f4983a3",
   "sourceInputs": [
@@ -306,7 +306,204 @@
     ]
   },
   "hosted": {
-    "status": "NOT_RUN_FOR_NEW_SOURCE"
+    "status": "BASELINE_PASS_LEGACY_GATE_UNRESOLVED",
+    "sourceCommit": "ae393f047175baac59c7401c04d7d609e74bce3c",
+    "tree": "c7f664246468e8573d893224e66e61a55d602d94",
+    "runId": 37374969447,
+    "attempt": 1,
+    "url": "https://github.com/Zulut30/minemod/actions/runs/37374969447",
+    "workflowConclusion": "failure",
+    "run": {
+      "path": "output/verification/local-recolor-057-ci-run.json",
+      "bytes": 11963,
+      "sha256": "af3ee619cb3a48117d28bbd63a2e5abfed2206f11dbf18e58f4c03855fa490e8"
+    },
+    "jobs": {
+      "path": "output/verification/local-recolor-057-ci-jobs.json",
+      "bytes": 23567,
+      "sha256": "20fb1cec770ebaa2c460e5d1541f73266c713840f22b0d20f3b50200a26f9413"
+    },
+    "jobResults": [
+      {
+        "id": 111981181664,
+        "name": "neoforge",
+        "conclusion": "success",
+        "startedAt": "2026-10-05T21:23:05Z",
+        "completedAt": "2026-10-05T21:26:20Z"
+      },
+      {
+        "id": 111981181950,
+        "name": "control-plane",
+        "conclusion": "success",
+        "startedAt": "2026-10-05T21:27:54Z",
+        "completedAt": "2026-10-05T21:28:45Z"
+      },
+      {
+        "id": 111981181965,
+        "name": "Fabric 1.20.1 / Java 17 production target",
+        "conclusion": "success",
+        "startedAt": "2026-10-05T21:27:54Z",
+        "completedAt": "2026-10-05T21:34:12Z"
+      },
+      {
+        "id": 111981181990,
+        "name": "fabric",
+        "conclusion": "failure",
+        "startedAt": "2026-10-05T21:23:00Z",
+        "completedAt": "2026-10-05T21:24:11Z"
+      },
+      {
+        "id": 111981182056,
+        "name": "studio-windows",
+        "conclusion": "success",
+        "startedAt": "2026-10-05T21:17:55Z",
+        "completedAt": "2026-10-05T21:31:17Z"
+      },
+      {
+        "id": 111983493420,
+        "name": "fabric-client",
+        "conclusion": "skipped",
+        "startedAt": "2026-10-05T21:24:12Z",
+        "completedAt": "2026-10-05T21:24:12Z"
+      },
+      {
+        "id": 111984306628,
+        "name": "client-smoke",
+        "conclusion": "success",
+        "startedAt": "2026-10-05T21:26:27Z",
+        "completedAt": "2026-10-05T21:29:27Z"
+      }
+    ],
+    "cleanCheckouts": [
+      {
+        "path": "output/ci/37374969447-windows/output/ci/clean-checkout/studio-windows.json",
+        "bytes": 4469,
+        "sha256": "3f07f9d29ec0c2fb984b44951fb1504283d02c66e8e3768915e22414508f1028"
+      },
+      {
+        "path": "output/ci/37374969447-control/control-plane.json",
+        "bytes": 4469,
+        "sha256": "3b5b16c25cb73977dbe41fe3ec158bd6fda4b0482fad1a23b12f829bbbcd9335"
+      },
+      {
+        "path": "output/ci/37374969447-production/output/ci/clean-checkout/fabric-production.json",
+        "bytes": 4469,
+        "sha256": "3b5b16c25cb73977dbe41fe3ec158bd6fda4b0482fad1a23b12f829bbbcd9335"
+      }
+    ],
+    "windows": {
+      "status": "PASS",
+      "jobId": 111981182056,
+      "artifactId": 11371871460,
+      "report": {
+        "path": "output/ci/37374969447-windows/output/playwright/studio-packaged-e6c556ea/report.json",
+        "bytes": 95184,
+        "sha256": "b18a856daff39cc7650e60c6fccb94c90d8bd96a4f919317f65125f70f531e62"
+      },
+      "scenarios": 21,
+      "recolor": {
+        "status": "PASS",
+        "preservedColor": "#aa8ccd",
+        "preservedPixels": 184,
+        "changedPixels": 684,
+        "pngSha256": "2d9f9f4ad142a64636b275d347a79cfa2ee688058b5dbffaa69ab082a6e8f8ed",
+        "checks": [
+          "scripted UI action and full undo/redo",
+          "selection isolation",
+          "all-preserved disabled action",
+          "HTTP MCP rejection atomicity",
+          "read-only preview and actual apply",
+          "exported PNG exact RGBA scope/alpha",
+          "agent undo"
+        ],
+        "artisticApproval": "NOT_PERFORMED"
+      },
+      "screenshot": {
+        "path": "output/ci/37374969447-windows/output/playwright/studio-packaged-e6c556ea/07-preserved-material-color.png",
+        "bytes": 101830,
+        "sha256": "003120462501a67eac6f29463b87ca95fbf11439e44a5c4dafe90fd43da906b5"
+      },
+      "jobLog": {
+        "path": "output/verification/local-recolor-057-ci-windows.log",
+        "bytes": 57583,
+        "sha256": "4f928a8cd75537250758b95cec6ac73804d9949e51ad34405ad20b919d12281a"
+      },
+      "asarByteComparison": "NOT_AVAILABLE_ARTIFACT_DOES_NOT_INCLUDE_ASAR"
+    },
+    "linux": {
+      "status": "PASS",
+      "jobId": 111981181950,
+      "artifactId": 11371482029,
+      "jobLog": {
+        "path": "output/verification/local-recolor-057-ci-control.log",
+        "bytes": 58157,
+        "sha256": "7e2719017f2b298e28931cbbfe193f06c1cc810962a30e1e22f153ae2735f316"
+      }
+    },
+    "production": {
+      "status": "PASS",
+      "jobId": 111981181965,
+      "artifactId": 11372111721,
+      "inputs": {
+        "path": "output/ci/37374969447-production/output/ci/fabric-production/inputs.json",
+        "bytes": 884,
+        "sha256": "9ee967c1efa32b52ab1128b35c3afbf4e28427b7eab1d6a82842656a816e8f02"
+      },
+      "javaRuntime": "17.0.19+10",
+      "gameTests": {
+        "report": {
+          "path": "output/ci/37374969447-production/fixtures/fabric-1.20.1-empty/build/reports/gametest/production.xml",
+          "bytes": 406,
+          "sha256": "178af6ec978d94885fec73a803ce20d66277ae2c430dd4ba222fe7a41de0cd15"
+        },
+        "verification": "PASS: 2 required Fabric 1.20.1 harness tests",
+        "scope": "two required baseline harness tests"
+      },
+      "dedicatedServer": "READINESS_EXIT_0_NONCE_STOPPED",
+      "headlessClient": "READINESS_NONCE_STOPPED",
+      "jobLog": {
+        "path": "output/verification/local-recolor-057-ci-production.log",
+        "bytes": 124101,
+        "sha256": "8b89d6b0d716859580e3436e89adadea16ee43338e3127db83ccf67e0d0d2093"
+      },
+      "generated": {
+        "manifest": {
+          "path": "output/ci/37374969447-production/output/ci/fabric-production/generated/source-review-manifest.json",
+          "bytes": 1663,
+          "sha256": "358db61afefcc01b674e313b928d69e9edd122c0f6528bb3d48e70971a78871f"
+        },
+        "operationEvidence": {
+          "path": "output/ci/37374969447-production/output/ci/fabric-production/generated/operation-evidence.v1.json",
+          "bytes": 9643,
+          "sha256": "3e42770acd9daa1262d7b44f9c93dc75dba6d8e0939b96caf5799ea41536dfd3"
+        },
+        "sourceFiles": 6,
+        "jar": {
+          "path": "output/ci/37374969447-production/output/ci/fabric-production/generated/build/libs/infectedfrontier-0.1.0.jar",
+          "bytes": 28835,
+          "sha256": "63c8139423e57b925edfa40f030020b23ae2cc21571eaf711c879d58a382cc15"
+        },
+        "dedicatedLog": {
+          "path": "output/ci/37374969447-production/output/ci/fabric-production/generated/dedicated-server.log",
+          "bytes": 10120,
+          "sha256": "b557267c141d6f6af9ed34a8b95978713480c1ed5c9c71d06876f19b4d1b4c68"
+        }
+      }
+    },
+    "legacyFabric262": {
+      "status": "CHECKSUM_MISMATCH_UNRESOLVED",
+      "jobId": 111981181990,
+      "artifactId": 11372120301,
+      "coordinate": "net.minecraft:minecraft-common-043a8b3edf:26.2",
+      "expectedSha256": "23248c15f8413aa0d06ac59e676913dd6a1dc0c5fffaa09365afd6c98d59fcd3",
+      "actualSha256": "342337bdb804aae4c00be42463f6c500d565fb12044f7358da9574ca176cbc82",
+      "report": {
+        "path": "output/ci/37374969447-legacy/at-1791235427144/dependency-verification-report.html",
+        "bytes": 9060,
+        "sha256": "4b251a9e1607b16abdaa545735b123d2bfd7ce1c356db93f37a027d0d19316b2"
+      }
+    },
+    "boundary": "Point 057 local color/rollback acceptance passed; workflow remains failed for auxiliary legacy 26.2, authored art/JAR acceptance not granted"
   },
   "boundaries": [
     "Exact color preservation within selected cube UV; same RGB cannot distinguish material and decoration",
