@@ -4,7 +4,7 @@
 
 | Компонент | Закреплённый ввод | Проверка сейчас | Осталось |
 |---|---|---|---|
-| Development Node | 24.21.0 Windows x64 | Архив SHA-256 совпал с подписанным official checksum; exact pnpm frozen install, lint/typecheck/build, portable/MCP tests, hidden packaged geometry и fresh checkout с 9 negative guards PASS | Hosted Linux/full Windows suites новой source revision |
+| Development Node | 24.21.0 Windows x64 | Signed archive, local/fresh checkout и source-linked hosted Windows/Linux compatibility PASS; 16 packaged suites, full Linux suite и production fixture runtime | Whole release gates и общий workflow остаются незавершёнными |
 | pnpm | 11.8.0 | Actual tarball SHA-512 совпал с `packageManager`; bundled package/license и npm registry ECDSA signature проверены | Advertised SLSA provenance отдельно не проверена; registry signature не означает подпись maintainer |
 | Electron | 44.5.1 Windows x64 | Installed version/license, cached ZIP совпал с checksums package; Electron/Chromium license files присутствуют и имеют hashes | Проверка publisher source/signatures, полный distribution inventory и актуальности patch перед выпуском |
 | Temurin | 17.0.19+10 Linux x64 | URL/SHA-256/source/license записаны в runtime-r5; hosted production job проверяет actual archive, identity и runtime | Финальный release inventory и лицензионная приёмка; Windows Java runner этим не заявляется |
@@ -30,3 +30,7 @@ Actual packaged host `process.versions` прочитан в собственно
 Имеющийся [Fabric inventory](../provenance/fabric-1.20.1-dependencies.json) явно содержит `transitiveLicenseReviewComplete: false` и redistribution block. Reviewed source license одного компонента, strict Gradle verification или CI PASS этого флага не отменяют. [Container review](../provenance/fabric-1.20.1-container-review-r4.json) подтверждает вложенные JAR entries в своём scope, а не художественную/лицензионную или игровую приёмку всех generated outputs.
 
 Аудит использует источники, licenses и hashes; пока остаются реальные gaps, пункт не отмечается завершённым. Технические CI evidence находятся в пунктах 012–016; legacy Fabric 26.2 checksum failure сохранён отдельно.
+
+Hosted [run 37322237001](https://github.com/Zulut30/minemod/actions/runs/37322237001) завершён на exact Node-upgrade source `2d040df`. Control-plane full suite/build, Windows frozen install/package/16 hidden GUI suites, Fabric 1.20.1 clean/offline build, два server GameTests и dedicated server/client PASS. Raw checkout reports подтверждают Node 24.21.0 и одинаковый source tree на Linux/Windows; negative guards дали 10/9 PASS. Actual Studio в этом run — 0.12.1, новая 0.13.0 из следующего этапа этим run не проверена.
+
+Whole workflow FAIL: legacy derived `minecraft-common-043a8b3edf:26.2` снова не совпал с immutable expected SHA-256 `23248c15…`. В этом run actual hash `038e70e7…`, а в прежнем был `04e25d2f…`; полный diagnostic HTML и оба значения сохранены. Причина различия derived bytes не установлена; исправления trusted checksum и обхода verification не было. Пункт 011 остаётся PARTIAL из-за Fabric licenses, Electron publisher/release review и оставшихся provenance/release gates.

@@ -1,6 +1,6 @@
 {
   "status": "PARTIAL",
-  "checkedAtUtc": "2026-10-05T14:09:25.654Z",
+  "checkedAtUtc": "2026-10-05T14:21:30.316Z",
   "scope": "Initial readonly toolchain audit plus separately recorded development runtime upgrade; production transitive licenses incomplete",
   "node": {
     "version": "24.11.0",
@@ -338,13 +338,14 @@
   ],
   "currentSupport": {
     "nodeMajor": "24 LTS on official schedule",
-    "nodePinnedPatch": "24.21.0 separately pinned; local compatibility PASS, hosted source-linked checks pending",
+    "nodePinnedPatch": "24.21.0 signed archive and exact source-linked local/fresh/hosted compatibility PASS; whole workflow failed legacy Fabric 26.2",
     "electronMajor": "44 stable, planned EOL 2027-03-02; recheck release policy before distribution"
   },
   "remaining": [
-    "Source-linked hosted and fresh-checkout verification of Node 24.21.0 revision",
     "Full Fabric transitive license review",
-    "Current source linked hosted verification before production"
+    "Electron independent publisher/release inventory review",
+    "pnpm advertised SLSA provenance not verified",
+    "Legacy derived-cache provenance and whole release verification"
   ],
   "trustedPacksChanged": false,
   "dependenciesChanged": false,
@@ -356,7 +357,7 @@
     "sha256": "c67fd78ff70af70b5695be4a6321a61151d9376ae7cf92f31928abae0454d7e8"
   },
   "developmentUpgrade": {
-    "status": "LOCAL_AND_FRESH_CHECKOUT_PASS_HOSTED_PENDING",
+    "status": "SCOPED_HOSTED_PASS",
     "checkedAtUtc": "2026-10-05T12:22:00.069Z",
     "from": "24.11.0",
     "to": "24.21.0",
@@ -541,6 +542,156 @@
         "sha256": "ef197f2a7d12135ba78661b4458c583acd4208d674a027522dd821483a2508bd"
       },
       "continuation": "First observer/process handle was missing after interruption; own processes absent and build not started. Resumed typecheck/build in same checkout without restarting completed install/guards."
+    },
+    "hosted": {
+      "status": "SCOPED_PASS",
+      "run": 37322237001,
+      "url": "https://github.com/Zulut30/minemod/actions/runs/37322237001",
+      "sourceRevision": "2d040dfecbfbd9eeccbe4a595d86d52e1aed4159",
+      "scope": "Node 24.21.0 fresh Windows/Linux install/build, Linux full suite, Windows packaged 16 suites and Fabric 1.20.1/Java17 fixture runtime; whole workflow remains failed",
+      "checkedAtUtc": "2026-10-05T14:21:30.299Z",
+      "jobs": [
+        {
+          "name": "control-plane",
+          "id": 111803947103,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "studio-windows",
+          "id": 111803947374,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Fabric 1.20.1 / Java 17 production target",
+          "id": 111803947511,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "fabric",
+          "id": 111803947523,
+          "status": "completed",
+          "conclusion": "failure"
+        },
+        {
+          "name": "neoforge",
+          "id": 111803947804,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "fabric-client",
+          "id": 111804331513,
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "client-smoke",
+          "id": 111805406610,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ],
+      "windowsSuites": [
+        "mcp",
+        "texture",
+        "polish",
+        "editing",
+        "variants",
+        "brief",
+        "parts",
+        "manual",
+        "accessibility",
+        "accessibilityStates",
+        "review",
+        "migrations",
+        "history",
+        "geometry",
+        "camera",
+        "discovery"
+      ],
+      "windowsPackage": "D:\\a\\minemod\\minemod\\output\\model-editor\\releases\\0.12.1\\fb3c6a3b\\MineMod Studio-win32-x64\\MineMod Studio.exe",
+      "linuxGuardChecks": 10,
+      "windowsGuardChecks": 9,
+      "serverGameTests": 2,
+      "reports": [
+        {
+          "path": "output/ci/37322237001-control/control-plane.json",
+          "bytes": 4469,
+          "sha256": "298e44c358ad5b37fbcab73e3fb9be50badee18554322b4a155a90765760ab5e"
+        },
+        {
+          "path": "output/ci/37322237001-windows/output/ci/clean-checkout/studio-windows.json",
+          "bytes": 4469,
+          "sha256": "7d79231aa02b6d411b8920633a04cd4ad67bcb9816334c1acab3ea8e37253949"
+        },
+        {
+          "path": "output/ci/37322237001-production/output/ci/clean-checkout/fabric-production.json",
+          "bytes": 4469,
+          "sha256": "298e44c358ad5b37fbcab73e3fb9be50badee18554322b4a155a90765760ab5e"
+        },
+        {
+          "path": "output/ci/37322237001-windows/output/playwright/studio-packaged-d2ff4722/report.json",
+          "bytes": 30231,
+          "sha256": "bc8f8d970213c035482c0e59c6fdde39101694d2e4bd1f49b818d2c8b91daa2a"
+        },
+        {
+          "path": "output/ci/37322237001-production/fixtures/fabric-1.20.1-empty/build/reports/gametest/production.xml",
+          "bytes": 406,
+          "sha256": "45cb1e85dc64b14ad8182744d88fcf680f1d6f61f3898ff345c84242d243afa2"
+        },
+        {
+          "path": "output/ci/37322237001-control/guard-tests.json",
+          "bytes": 695,
+          "sha256": "54979d729ac71d4f45611447ed936f32f2195180a27666527f591362c0a07b17"
+        },
+        {
+          "path": "output/ci/37322237001-windows/output/ci/clean-checkout/guard-tests.json",
+          "bytes": 642,
+          "sha256": "2f5e6b9d1ade45d2d20178de8e586e05d3f97ae9cde2e250f6c96e62589cf1ed"
+        }
+      ],
+      "metadata": [
+        {
+          "path": "output/verification/roadmap-011-node-hosted-status.json",
+          "bytes": 19066,
+          "sha256": "082c610519e5a876d9d91c5682744f67986ed08901912e634d1c787da765e347"
+        },
+        {
+          "path": "output/verification/roadmap-011-node-hosted-artifacts.json",
+          "bytes": 2890,
+          "sha256": "478a7778e77125ab77b1fc626f952f5c961ac0ac1dcac5119f2a72f7494f033c"
+        }
+      ],
+      "logs": [
+        {
+          "path": "output/verification/roadmap-011-node-hosted-control.log",
+          "bytes": 38698,
+          "sha256": "81697cb16c5eac19bf1f5ae58bdd5c9cc47159f9bbb759279767621bdd4e127e"
+        },
+        {
+          "path": "output/verification/roadmap-011-node-hosted-windows.log",
+          "bytes": 38695,
+          "sha256": "0e2b0a875c41cf0845ff119b1b3f2031f2227e28ae450aa6f784736b98d81a9f"
+        }
+      ],
+      "legacy": {
+        "status": "FAIL",
+        "coordinate": "net.minecraft:minecraft-common-043a8b3edf:26.2",
+        "expectedSha256": "23248c15f8413aa0d06ac59e676913dd6a1dc0c5fffaa09365afd6c98d59fcd3",
+        "actualSha256": "038e70e741a72ce4232ccf9fed348be0927670db38000797eaa8b3583a4a648c",
+        "previousObservedActual": "04e25d2fe708fe311722a1fd891307e5c2b7d9e1c263fbb58abcc2c15c19aae2",
+        "interpretation": "Same immutable expected input; derived bytes differ again. Cause and cache provenance not established, no checksum bypass.",
+        "report": {
+          "path": "output/ci/37322237001-legacy/at-1791209319592/dependency-verification-report.html",
+          "bytes": 9060,
+          "sha256": "71ac39409a1cc8c72821bef0c15e8adf3f4f21d1c71a4346233527d5a91752da"
+        }
+      },
+      "authoredAssetGameAcceptance": "NOT_RUN",
+      "nativeAgentSessions": "NOT_RUN in this compatibility run"
     }
   }
 }
