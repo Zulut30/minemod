@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "roadmapPoint": 36,
-  "status": "PARTIAL",
-  "checkedAtUtc": "2026-10-05T16:30:36.303Z",
-  "studioVersion": "0.15.0",
+  "status": "PASS",
+  "checkedAtUtc": "2026-10-05T17:09:14.778Z",
+  "studioVersion": "0.16.0",
   "editorProjectVersion": 3,
   "node": "24.21.0",
   "sourceHashes": [
@@ -2083,13 +2083,14 @@
     "textures": "Neutral blockout only; painted texture not accepted",
     "gameAcceptance": "NOT_RUN",
     "jarIntegration": "NOT_PERFORMED",
-    "generalAgentVariantWorkflow": "IMPLEMENTED; local MCP/GUI proof PASS, independent model turn/full matrix/hosted not yet terminal",
-    "hosted": "Previous 035 evidence applies to old runtime only; 0.16.0 hosted proof still required",
-    "scope": "Reproducible drafts and local proofs only; point 036 remains unchecked"
+    "generalAgentVariantWorkflow": "IMPLEMENTED and technically verified: independent installed Codex CLI creates three editable shapes through MCP; local and exact-source hosted packaged GUI compare/restore/undo/save/restart pass. No human artistic approval assigned.",
+    "hosted": "SCOPED_PASS_FOR_012d2b5",
+    "scope": "Reproducible drafts and local proofs only; point 036 remains unchecked",
+    "wholeCI": "FAILURE_LEGACY_FABRIC_26_2_CHECKSUM"
   },
   "agentRuntime": {
-    "status": "LOCAL_FUNCTIONAL_PASS_AWAITING_FULL_INDEPENDENT_HOSTED",
-    "updatedAtUtc": "2026-10-05T16:51:58.146Z",
+    "status": "SCOPED_PASS",
+    "updatedAtUtc": "2026-10-05T16:59:18.415Z",
     "studioVersion": "0.16.0",
     "projectVersion": 3,
     "sourceHashes": [
@@ -3858,19 +3859,1858 @@
       }
     ],
     "independent": {
-      "status": "RUNNING_NOT_VERIFIED",
+      "schemaVersion": 1,
+      "status": "PASS",
+      "actor": "Installed Codex CLI independent model turn",
+      "cliVersion": "0.160.0",
       "output": "output/playwright/independent-codex-036-611f0d57",
-      "log": "output/verification/roadmap-036-independent-codex.log"
+      "executable": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.16.0\\eef7d7d7\\MineMod Studio-win32-x64\\MineMod Studio.exe",
+      "studioVersion": "0.16.0",
+      "initialCubes": 0,
+      "finalCubes": 21,
+      "initialRevision": 2,
+      "finalRevision": 13,
+      "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+      "exitCode": 0,
+      "timedOut": false,
+      "hidden": true,
+      "violations": [],
+      "captures": [
+        {
+          "file": "item_11-1.png",
+          "tool": "studio_model_review",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 2
+          },
+          "bytes": 40933,
+          "sha256": "886e98ea78ecc71c6e775927c646806e93d4bad6aa7b00e2dae8327ee477ef19",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_11-1.png"
+        },
+        {
+          "file": "item_10-1.png",
+          "tool": "studio_view_capture",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 2,
+            "conceptId": "a85015b6-4dcf-4f16-a5ff-e2611719981b"
+          },
+          "bytes": 632538,
+          "sha256": "82ca8d48017d8b0b0efa2a76dabb7d6f0396c1a948245ee635ba8fe1cb8cc150",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_10-1.png"
+        },
+        {
+          "file": "item_21-1.png",
+          "tool": "studio_model_review",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 5
+          },
+          "bytes": 57356,
+          "sha256": "7f10d61ec04942778454f2ac07b66036d2be11fc84d1f1b6de57c28ee06621d1",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_21-1.png"
+        },
+        {
+          "file": "item_23-1.png",
+          "tool": "studio_view_capture",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 5,
+            "view": "back"
+          },
+          "bytes": 9584,
+          "sha256": "fe247ff2cb5dded2e315c0e06a8229f027c34df3cdf57d766bf9e4c9bdf7247b",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_23-1.png"
+        },
+        {
+          "file": "item_24-1.png",
+          "tool": "studio_view_capture",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 5,
+            "view": "side"
+          },
+          "bytes": 6922,
+          "sha256": "fc650856f23a9a713db6edbac5b15e5e7e8fe9e0e10e6f753ed222f45d09ad45",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_24-1.png"
+        },
+        {
+          "file": "item_22-1.png",
+          "tool": "studio_view_capture",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 5,
+            "view": "front"
+          },
+          "bytes": 9774,
+          "sha256": "67d97a380a1983d7a79579e922ed4809b8d16367e6197433bef0f8a01e482ce4",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_22-1.png"
+        },
+        {
+          "file": "item_25-1.png",
+          "tool": "studio_view_capture",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 5,
+            "view": "perspective"
+          },
+          "bytes": 133730,
+          "sha256": "313e8b70ed9f432d6e4533901071ba524f5049b1d537a0e1a3bc74ad04c1949e",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_25-1.png"
+        },
+        {
+          "file": "item_29-1.png",
+          "tool": "studio_model_review",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 6
+          },
+          "bytes": 57209,
+          "sha256": "6c0028cca8a86b19ee07be795fca8eb577e1c7e86f65b90cf51f793d76e7ecb5",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_29-1.png"
+        },
+        {
+          "file": "item_31-1.png",
+          "tool": "studio_view_capture",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 6,
+            "view": "right"
+          },
+          "bytes": 6903,
+          "sha256": "3d02135ba1daef887ab10da151a99d8380e10c7bb7e1cd1f2929384a25888f7f",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_31-1.png"
+        },
+        {
+          "file": "item_32-1.png",
+          "tool": "studio_view_capture",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 6,
+            "view": "top"
+          },
+          "bytes": 42160,
+          "sha256": "c6f08922be4a04567e5ca803972240326dd77a40c76a19e3957649c84b772bd7",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_32-1.png"
+        },
+        {
+          "file": "item_30-1.png",
+          "tool": "studio_view_capture",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 6,
+            "view": "left"
+          },
+          "bytes": 6781,
+          "sha256": "99d38bec682a8f9a3796570954c309ba9967ebd0b6802a2c34e5c258d55df358",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_30-1.png"
+        },
+        {
+          "file": "item_33-1.png",
+          "tool": "studio_view_capture",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 6,
+            "view": "bottom"
+          },
+          "bytes": 41101,
+          "sha256": "36a93a25fa60054cc7c4ac7cafbf2b52fd35c4b6f4fcd15db51047ca3592b6c7",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_33-1.png"
+        },
+        {
+          "file": "item_34-1.png",
+          "tool": "studio_view_capture",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 6,
+            "view": "rear-perspective"
+          },
+          "bytes": 129738,
+          "sha256": "3bebdca627810ad9cead4301065c1092bfbd726f15b0f0f1af6033b2e9fe5ddd",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_34-1.png"
+        },
+        {
+          "file": "item_41-1.png",
+          "tool": "studio_model_review",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 8
+          },
+          "bytes": 60830,
+          "sha256": "e18738bfe33b026be0726e38fe15e0595c327ffb4bc262af1d2dd5db3988d71c",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_41-1.png"
+        },
+        {
+          "file": "item_43-1.png",
+          "tool": "studio_view_capture",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 8,
+            "view": "back"
+          },
+          "bytes": 10337,
+          "sha256": "14657dd1f32a95959ead2689bc38e71c677fe5b65cae7fd78f30336acc7bc778",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_43-1.png"
+        },
+        {
+          "file": "item_44-1.png",
+          "tool": "studio_view_capture",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 8,
+            "view": "front"
+          },
+          "bytes": 10775,
+          "sha256": "a3c38b72e136bf3a8bd57b7271d5a26f2632592ba2be25679e14b3a86ba1d174",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_44-1.png"
+        },
+        {
+          "file": "item_45-1.png",
+          "tool": "studio_view_capture",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 8,
+            "view": "side"
+          },
+          "bytes": 7291,
+          "sha256": "514024c0f218e4abc8555ec3ffb50c303a7250aa1032a97ae23217b96dfecd27",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_45-1.png"
+        },
+        {
+          "file": "item_46-1.png",
+          "tool": "studio_view_capture",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 8,
+            "view": "perspective"
+          },
+          "bytes": 127217,
+          "sha256": "129fa3588abf44b478d809b5139692e4d2e5529c8d27411f7076296381e55299",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_46-1.png"
+        },
+        {
+          "file": "item_50-1.png",
+          "tool": "studio_model_review",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 9,
+            "compareToVariantId": "913a5e24-e822-4b76-8c30-41c243738f01"
+          },
+          "bytes": 60605,
+          "sha256": "fae1982f84aef2db292bca945b89ebcc41b6d47c44a6b5484d43cf01b4194feb",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_50-1.png"
+        },
+        {
+          "file": "item_51-1.png",
+          "tool": "studio_view_capture",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 9,
+            "view": "right"
+          },
+          "bytes": 7527,
+          "sha256": "9e1409d76e45b94b0fd821b8de6dc92438d12be81d42a0f924947d1f5ec2f274",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_51-1.png"
+        },
+        {
+          "file": "item_54-1.png",
+          "tool": "studio_view_capture",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 9,
+            "view": "bottom"
+          },
+          "bytes": 41195,
+          "sha256": "cdb49ba7af12c9d887b7f626bdec0c438e464dfc956fab1b7f04ba7f5d850d78",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_54-1.png"
+        },
+        {
+          "file": "item_53-1.png",
+          "tool": "studio_view_capture",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 9,
+            "view": "top"
+          },
+          "bytes": 41380,
+          "sha256": "875afae19a329448c83832a00b71e7bf13db148e1c8f1b286fe3438a641656b5",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_53-1.png"
+        },
+        {
+          "file": "item_52-1.png",
+          "tool": "studio_view_capture",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 9,
+            "view": "left"
+          },
+          "bytes": 7347,
+          "sha256": "3bdc395bcf9e39ff02f9a6328c535029ddab0613eb232cad8a0c353997426d78",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_52-1.png"
+        },
+        {
+          "file": "item_55-1.png",
+          "tool": "studio_view_capture",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 9,
+            "view": "rear-perspective"
+          },
+          "bytes": 125705,
+          "sha256": "61576d242d33f52413fda5893296a6661b90b147708d72c41e8d7e95803ba3fc",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_55-1.png"
+        },
+        {
+          "file": "item_63-1.png",
+          "tool": "studio_model_review",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 11
+          },
+          "bytes": 61144,
+          "sha256": "2cae5812970412a475994a829162cf935f46117768f8173df1252126039219a7",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_63-1.png"
+        },
+        {
+          "file": "item_66-1.png",
+          "tool": "studio_view_capture",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 11,
+            "view": "perspective"
+          },
+          "bytes": 137950,
+          "sha256": "a27eeb9279632f9bf7d91a201bc069aa1634caccff333600586d22529b2a859d",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_66-1.png"
+        },
+        {
+          "file": "item_65-1.png",
+          "tool": "studio_view_capture",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 11,
+            "view": "back"
+          },
+          "bytes": 9636,
+          "sha256": "6e3809da9106caba82c40bbc17d5daa338598074d018a31b252d6ac757cfa989",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_65-1.png"
+        },
+        {
+          "file": "item_64-1.png",
+          "tool": "studio_view_capture",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 11,
+            "view": "front"
+          },
+          "bytes": 10790,
+          "sha256": "9a5a8203281ac187971d4ef421364a78b0e3e8a2927b1da5decfb25adc8b8f06",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_64-1.png"
+        },
+        {
+          "file": "item_67-1.png",
+          "tool": "studio_view_capture",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 11,
+            "view": "side"
+          },
+          "bytes": 7531,
+          "sha256": "661ecd6bb94fe1c4f161420ada73e2b56b491958d6279c0aa3ff6b05cab4d295",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_67-1.png"
+        },
+        {
+          "file": "item_71-1.png",
+          "tool": "studio_model_review",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 12
+          },
+          "bytes": 60898,
+          "sha256": "8a805fd19dc6f2c84bc24c5d67de73ca292ffc7a852fd1f3a41ba92e97889f34",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_71-1.png"
+        },
+        {
+          "file": "item_73-1.png",
+          "tool": "studio_view_capture",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 12,
+            "view": "left"
+          },
+          "bytes": 7159,
+          "sha256": "b51b9dace80fc593a4a0e75461b92a1587069e61c0789e0cc88b3bc5dfcf96ba",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_73-1.png"
+        },
+        {
+          "file": "item_72-1.png",
+          "tool": "studio_view_capture",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 12,
+            "view": "right"
+          },
+          "bytes": 7691,
+          "sha256": "53dd7ad26ce164332f3dcefdea47bef4a4c4aa58dffd406cf6afc5408cdd62a5",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_72-1.png"
+        },
+        {
+          "file": "item_74-1.png",
+          "tool": "studio_view_capture",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 12,
+            "view": "top"
+          },
+          "bytes": 40640,
+          "sha256": "2fef61d2a4641db5049bd922b96f9a33d6d43cd300ae1cc998e4ca019c5a0250",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_74-1.png"
+        },
+        {
+          "file": "item_76-1.png",
+          "tool": "studio_view_capture",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 12,
+            "view": "rear-perspective"
+          },
+          "bytes": 134722,
+          "sha256": "af1dc74bbb889bb26b33f927a82c140400f8cd4398a146e333e6b83d93b58e0e",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_76-1.png"
+        },
+        {
+          "file": "item_75-1.png",
+          "tool": "studio_view_capture",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 12,
+            "view": "bottom"
+          },
+          "bytes": 39490,
+          "sha256": "556df424d28ec4dbf9ececb03406f615a1e136a17fcfe991fd9924e2750b054e",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_75-1.png"
+        },
+        {
+          "file": "item_86-1.png",
+          "tool": "studio_view_capture",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 13,
+            "view": "front",
+            "variantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+            "compareToVariantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02"
+          },
+          "bytes": 9610,
+          "sha256": "4e0e1d005ebd2baa6ca213654e7729c1faf975849dcb027ab0f4513e811b7eda",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_86-1.png"
+        },
+        {
+          "file": "item_87-1.png",
+          "tool": "studio_view_capture",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 13,
+            "view": "front",
+            "variantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02",
+            "compareToVariantId": "913a5e24-e822-4b76-8c30-41c243738f01"
+          },
+          "bytes": 9918,
+          "sha256": "ba0c56333a369ea98523c665e101e926422548f7c306e7ca3cb03749a2d5dc60",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_87-1.png"
+        },
+        {
+          "file": "item_89-1.png",
+          "tool": "studio_view_capture",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 13,
+            "view": "front",
+            "variantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02",
+            "compareToVariantId": "c6db8a53-e143-4d2a-a369-1377ad8e8f03"
+          },
+          "bytes": 9918,
+          "sha256": "ba0c56333a369ea98523c665e101e926422548f7c306e7ca3cb03749a2d5dc60",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_89-1.png"
+        },
+        {
+          "file": "item_88-1.png",
+          "tool": "studio_view_capture",
+          "arguments": {
+            "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+            "expectedRevision": 13,
+            "view": "front",
+            "variantId": "c6db8a53-e143-4d2a-a369-1377ad8e8f03",
+            "compareToVariantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02"
+          },
+          "bytes": 11061,
+          "sha256": "22cf1db6b903d8e9b60bd1dfb12c08ebf7f08dbcdbbfa1a4284836e3b9caa456",
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_88-1.png"
+        }
+      ],
+      "exports": [
+        {
+          "path": "output\\playwright\\independent-codex-036-611f0d57\\item_91-bundle.json",
+          "sha256": "b7b6592085195dd72486fa9993d59b81c37bcd24b6ec8e98ea35b770ee390c47"
+        }
+      ],
+      "usage": {
+        "input_tokens": 2247330,
+        "cached_input_tokens": 2137088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 15270,
+        "reasoning_output_tokens": 6151
+      },
+      "mcpCalls": 82,
+      "completed": true,
+      "artisticApproval": "not-granted",
+      "minecraftAcceptance": "not-tested",
+      "blockoutRun": true,
+      "blockoutPass": true,
+      "variants": [
+        {
+          "id": "913a5e24-e822-4b76-8c30-41c243738f01",
+          "label": "ИИ-черновик · Лист 1 · Ива",
+          "geometrySha256": "f65de4fe93d54fc3aa3af860f7beb74e65e46d1cb7afb167d586a6fcdc883e25"
+        },
+        {
+          "id": "58d1398c-9c25-4a43-95b7-9f3a80728f02",
+          "label": "ИИ-черновик · Лист 2 · Липа",
+          "geometrySha256": "3dd6174fdb3b9611609bb76a2cc12015e823ccb61c85882a6fc19ebafda27cc1"
+        },
+        {
+          "id": "c6db8a53-e143-4d2a-a369-1377ad8e8f03",
+          "label": "ИИ-черновик · Лист 3 · Лавр",
+          "geometrySha256": "3de9f094b19967eb657a569209a6030f24bb14d5b68508e1794b5d364180b2b3"
+        }
+      ],
+      "operatorGeometryChanges": 0,
+      "operatorSnapshots": 1,
+      "agentDrafts": 3,
+      "editablePath": "output/playwright/independent-codex-036-611f0d57/three-leaf-blockouts.mmeditor.json",
+      "fullControlBrief005": "not-tested: three neutral blockouts from one direction, no game views",
+      "reportPath": "output\\playwright\\independent-codex-036-611f0d57\\report.json",
+      "reportSha256": "534fb8aa738e0a62e9ca5fc4732b2d75ccee9a9e0905e6bd4e6509bd6102569b",
+      "eventsPath": "output\\playwright\\independent-codex-036-611f0d57\\events.jsonl",
+      "eventsSha256": "1add7265f4d03d13e6482fb385563baf1f778aa9fa11f8d6fc6506bd02bda66e",
+      "sourceSha256": "45cd872afd83b425c0fa765366513eb606e3e98c425b655ed904e8a3f3f1846f",
+      "conceptSidecar": {
+        "path": "output/playwright/independent-codex-036-611f0d57/three-leaf-blockouts.mmeditor.json.assets/concepts/e4c7daa05f5dd1b8b6e3f27a56b0f2edab85d8dc6dc0a4bbdd28f3dddfc5f6fb.png",
+        "sha256": "e4c7daa05f5dd1b8b6e3f27a56b0f2edab85d8dc6dc0a4bbdd28f3dddfc5f6fb"
+      },
+      "reviews": {
+        "root": "output/playwright/independent-codex-036-611f0d57/reviews-844e5beb",
+        "reportSha256": "0815dedcfc711dbaf29d53cf010d507d5a4150a46fba8e1931c9259077e2de04",
+        "comparison": "output\\playwright\\independent-codex-036-611f0d57\\reviews-844e5beb\\comparison.html",
+        "scenePreserved": true,
+        "captures": [
+          {
+            "variantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+            "view": "front",
+            "path": "1-front.png",
+            "bytes": 9610,
+            "sha256": "4e0e1d005ebd2baa6ca213654e7729c1faf975849dcb027ab0f4513e811b7eda",
+            "frame": {
+              "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+              "revision": 0,
+              "variantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+              "compareToVariantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02",
+              "view": "front",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "variantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+            "view": "back",
+            "path": "1-back.png",
+            "bytes": 9194,
+            "sha256": "ea61ca21093f0225b59dc3fe2fd742882d6fb48b1e1959d535db4043f4c19f67",
+            "frame": {
+              "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+              "revision": 0,
+              "variantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+              "compareToVariantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02",
+              "view": "back",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "variantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+            "view": "left",
+            "path": "1-left.png",
+            "bytes": 6344,
+            "sha256": "9800238140cde68417c9f0f0d6847ada8fb2318eb9784b32a0777ca5fc7da14b",
+            "frame": {
+              "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+              "revision": 0,
+              "variantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+              "compareToVariantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02",
+              "view": "left",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "variantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+            "view": "right",
+            "path": "1-right.png",
+            "bytes": 6486,
+            "sha256": "a58743199deca82641ea1eed08fe15ac42a63197422a53def432bfa7d5acfe1c",
+            "frame": {
+              "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+              "revision": 0,
+              "variantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+              "compareToVariantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02",
+              "view": "right",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "variantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+            "view": "top",
+            "path": "1-top.png",
+            "bytes": 4904,
+            "sha256": "9fcd31bd7a69e092bc5807dda03a98cec6e826c3ed3d92ffe2eab5aa8739d2af",
+            "frame": {
+              "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+              "revision": 0,
+              "variantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+              "compareToVariantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02",
+              "view": "top",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "variantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+            "view": "bottom",
+            "path": "1-bottom.png",
+            "bytes": 4855,
+            "sha256": "953be6ca776dbdf25066100eb84ff390644afb24f99388800a99d3f3f7cefb00",
+            "frame": {
+              "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+              "revision": 0,
+              "variantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+              "compareToVariantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02",
+              "view": "bottom",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "variantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+            "view": "perspective",
+            "path": "1-perspective.png",
+            "bytes": 20378,
+            "sha256": "90b57de39b3db9c11a6a249af259c40e207045efba7fbaa144b020171e092d3f",
+            "frame": {
+              "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+              "revision": 0,
+              "variantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+              "compareToVariantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02",
+              "view": "perspective",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "variantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+            "view": "rear-perspective",
+            "path": "1-rear-perspective.png",
+            "bytes": 19317,
+            "sha256": "5f172d0aef916063e8867145109fec3646ab0ed88d1194c3d582060777e0aa1a",
+            "frame": {
+              "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+              "revision": 0,
+              "variantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+              "compareToVariantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02",
+              "view": "rear-perspective",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "variantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+            "view": "silhouette",
+            "path": "1-silhouette.png",
+            "bytes": 9196,
+            "sha256": "7142f1a1eecc63010faf71789a4b73a0c9add70f920fd1d39bd2772a8bb006ed",
+            "frame": {
+              "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+              "revision": 0,
+              "variantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+              "compareToVariantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02",
+              "view": "front",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "variantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+            "view": "review",
+            "path": "1-review.png",
+            "bytes": 56724,
+            "sha256": "d5f09d467b543501099bdd128ff668901f37aff2340b7e4e9b7a36b4077f93e2",
+            "frame": {
+              "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+              "revision": 0,
+              "variantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+              "compareToVariantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "variantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02",
+            "view": "front",
+            "path": "2-front.png",
+            "bytes": 9918,
+            "sha256": "ba0c56333a369ea98523c665e101e926422548f7c306e7ca3cb03749a2d5dc60",
+            "frame": {
+              "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+              "revision": 0,
+              "variantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02",
+              "compareToVariantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+              "view": "front",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "variantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02",
+            "view": "back",
+            "path": "2-back.png",
+            "bytes": 9364,
+            "sha256": "5140d3ea31eef3b523fb8b2fcb51cd9877f1081a5f5e017c89229430070f88f8",
+            "frame": {
+              "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+              "revision": 0,
+              "variantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02",
+              "compareToVariantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+              "view": "back",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "variantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02",
+            "view": "left",
+            "path": "2-left.png",
+            "bytes": 7053,
+            "sha256": "4431ee0f59668d9baa379eef5f65e979124abc80e04f1a9108f3fcb1802cb06c",
+            "frame": {
+              "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+              "revision": 0,
+              "variantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02",
+              "compareToVariantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+              "view": "left",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "variantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02",
+            "view": "right",
+            "path": "2-right.png",
+            "bytes": 7231,
+            "sha256": "82e245fc52c9d4f2495ce772955ad5f926efdb8be83da75e567ac9a3ded3aa01",
+            "frame": {
+              "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+              "revision": 0,
+              "variantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02",
+              "compareToVariantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+              "view": "right",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "variantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02",
+            "view": "top",
+            "path": "2-top.png",
+            "bytes": 5567,
+            "sha256": "8c249d88ef4d74c034a6a5a687018b79dd04082708a1e60cc2d313877061b86f",
+            "frame": {
+              "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+              "revision": 0,
+              "variantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02",
+              "compareToVariantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+              "view": "top",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "variantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02",
+            "view": "bottom",
+            "path": "2-bottom.png",
+            "bytes": 5442,
+            "sha256": "ef3210340441bf02e692eeba4e8ceb3fe2b974663a48857c91656658e73e7ffc",
+            "frame": {
+              "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+              "revision": 0,
+              "variantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02",
+              "compareToVariantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+              "view": "bottom",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "variantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02",
+            "view": "perspective",
+            "path": "2-perspective.png",
+            "bytes": 24585,
+            "sha256": "2736cb326a73dfcd572a6aa61e9b0d02413aa0fbe5bff05d7a9f3d85d2509620",
+            "frame": {
+              "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+              "revision": 0,
+              "variantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02",
+              "compareToVariantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+              "view": "perspective",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "variantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02",
+            "view": "rear-perspective",
+            "path": "2-rear-perspective.png",
+            "bytes": 22931,
+            "sha256": "e46224da4e6ebac7fc56da17c8817c5d5cd5ab48027194523ca06f9a7b52f29f",
+            "frame": {
+              "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+              "revision": 0,
+              "variantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02",
+              "compareToVariantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+              "view": "rear-perspective",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "variantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02",
+            "view": "silhouette",
+            "path": "2-silhouette.png",
+            "bytes": 9821,
+            "sha256": "839028f47a3b0948042138fd0737bf1520c3fb2fe5027c70e81534609a392fb4",
+            "frame": {
+              "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+              "revision": 0,
+              "variantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02",
+              "compareToVariantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+              "view": "front",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "variantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02",
+            "view": "review",
+            "path": "2-review.png",
+            "bytes": 60605,
+            "sha256": "fae1982f84aef2db292bca945b89ebcc41b6d47c44a6b5484d43cf01b4194feb",
+            "frame": {
+              "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+              "revision": 0,
+              "variantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02",
+              "compareToVariantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "variantId": "c6db8a53-e143-4d2a-a369-1377ad8e8f03",
+            "view": "front",
+            "path": "3-front.png",
+            "bytes": 11121,
+            "sha256": "8880dd2dad8fb16d42297f861b17e0b4623accec99a44875bd1122c435afbe56",
+            "frame": {
+              "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+              "revision": 0,
+              "variantId": "c6db8a53-e143-4d2a-a369-1377ad8e8f03",
+              "compareToVariantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+              "view": "front",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "variantId": "c6db8a53-e143-4d2a-a369-1377ad8e8f03",
+            "view": "back",
+            "path": "3-back.png",
+            "bytes": 9591,
+            "sha256": "5f8d8cea5549568a4c246286d55e71957f5d899574dbda2026c4b8cf71d5f6e2",
+            "frame": {
+              "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+              "revision": 0,
+              "variantId": "c6db8a53-e143-4d2a-a369-1377ad8e8f03",
+              "compareToVariantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+              "view": "back",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "variantId": "c6db8a53-e143-4d2a-a369-1377ad8e8f03",
+            "view": "left",
+            "path": "3-left.png",
+            "bytes": 6841,
+            "sha256": "70e8f3a25bfe82c39e8d883ead8ccdee8e5a1a33b2fc4ebaeb0ad4d1b5ccddf6",
+            "frame": {
+              "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+              "revision": 0,
+              "variantId": "c6db8a53-e143-4d2a-a369-1377ad8e8f03",
+              "compareToVariantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+              "view": "left",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "variantId": "c6db8a53-e143-4d2a-a369-1377ad8e8f03",
+            "view": "right",
+            "path": "3-right.png",
+            "bytes": 7367,
+            "sha256": "2ebc3a595bff3b35732b4cf7b1db1a81978c7e597c8030e0aa263225fa3bca5c",
+            "frame": {
+              "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+              "revision": 0,
+              "variantId": "c6db8a53-e143-4d2a-a369-1377ad8e8f03",
+              "compareToVariantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+              "view": "right",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "variantId": "c6db8a53-e143-4d2a-a369-1377ad8e8f03",
+            "view": "top",
+            "path": "3-top.png",
+            "bytes": 5014,
+            "sha256": "c05cf4bab518efa7764a597db55707d2db3ed5e7edea036ec1adfa2f16bca50f",
+            "frame": {
+              "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+              "revision": 0,
+              "variantId": "c6db8a53-e143-4d2a-a369-1377ad8e8f03",
+              "compareToVariantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+              "view": "top",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "variantId": "c6db8a53-e143-4d2a-a369-1377ad8e8f03",
+            "view": "bottom",
+            "path": "3-bottom.png",
+            "bytes": 4988,
+            "sha256": "349e772fc1ee30824a1f64c3479db8b2d627a1cfaab2ef5319d53a6738bb7e5e",
+            "frame": {
+              "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+              "revision": 0,
+              "variantId": "c6db8a53-e143-4d2a-a369-1377ad8e8f03",
+              "compareToVariantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+              "view": "bottom",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "variantId": "c6db8a53-e143-4d2a-a369-1377ad8e8f03",
+            "view": "perspective",
+            "path": "3-perspective.png",
+            "bytes": 25624,
+            "sha256": "fa824621b458d96c805b4b555d53d80796526d23f63bc2b2016a97cf57f4caad",
+            "frame": {
+              "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+              "revision": 0,
+              "variantId": "c6db8a53-e143-4d2a-a369-1377ad8e8f03",
+              "compareToVariantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+              "view": "perspective",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "variantId": "c6db8a53-e143-4d2a-a369-1377ad8e8f03",
+            "view": "rear-perspective",
+            "path": "3-rear-perspective.png",
+            "bytes": 24393,
+            "sha256": "288927a8e4ca850c8c619c6fa518e917e9348afacdf828b10b1271c6c7c0a26d",
+            "frame": {
+              "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+              "revision": 0,
+              "variantId": "c6db8a53-e143-4d2a-a369-1377ad8e8f03",
+              "compareToVariantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+              "view": "rear-perspective",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "variantId": "c6db8a53-e143-4d2a-a369-1377ad8e8f03",
+            "view": "silhouette",
+            "path": "3-silhouette.png",
+            "bytes": 9643,
+            "sha256": "aff1dafd19e015954aca26c2c9afcc29e00e6e8aade5174772f800be03316998",
+            "frame": {
+              "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+              "revision": 0,
+              "variantId": "c6db8a53-e143-4d2a-a369-1377ad8e8f03",
+              "compareToVariantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+              "view": "front",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "variantId": "c6db8a53-e143-4d2a-a369-1377ad8e8f03",
+            "view": "review",
+            "path": "3-review.png",
+            "bytes": 60898,
+            "sha256": "8a805fd19dc6f2c84bc24c5d67de73ca292ffc7a852fd1f3a41ba92e97889f34",
+            "frame": {
+              "projectId": "e3cda194-308a-4b00-a996-6597f904b18e",
+              "revision": 0,
+              "variantId": "c6db8a53-e143-4d2a-a369-1377ad8e8f03",
+              "compareToVariantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+              "width": 1024,
+              "height": 768
+            }
+          }
+        ]
+      },
+      "constructions": [
+        {
+          "variantId": "913a5e24-e822-4b76-8c30-41c243738f01",
+          "label": "ИИ-черновик · Лист 1 · Ива",
+          "status": "CONNECTED",
+          "cubes": 18,
+          "components": 1,
+          "reportPath": "output\\verification\\cli-blockout-036-construction\\1.report.json",
+          "method": "SAT of solid oriented cuboids, face/volume contacts; edge/point contacts excluded; epsilon=1e-6 model units",
+          "boundary": "Ignores alpha-cut texture holes and semantics of deliberate intersections; not an artistic or game collision approval"
+        },
+        {
+          "variantId": "58d1398c-9c25-4a43-95b7-9f3a80728f02",
+          "label": "ИИ-черновик · Лист 2 · Липа",
+          "status": "CONNECTED",
+          "cubes": 24,
+          "components": 1,
+          "reportPath": "output\\verification\\cli-blockout-036-construction\\2.report.json",
+          "method": "SAT of solid oriented cuboids, face/volume contacts; edge/point contacts excluded; epsilon=1e-6 model units",
+          "boundary": "Ignores alpha-cut texture holes and semantics of deliberate intersections; not an artistic or game collision approval"
+        },
+        {
+          "variantId": "c6db8a53-e143-4d2a-a369-1377ad8e8f03",
+          "label": "ИИ-черновик · Лист 3 · Лавр",
+          "status": "CONNECTED",
+          "cubes": 21,
+          "components": 1,
+          "reportPath": "output\\verification\\cli-blockout-036-construction\\3.report.json",
+          "method": "SAT of solid oriented cuboids, face/volume contacts; edge/point contacts excluded; epsilon=1e-6 model units",
+          "boundary": "Ignores alpha-cut texture holes and semantics of deliberate intersections; not an artistic or game collision approval"
+        }
+      ]
     },
     "fullPackaged": {
-      "status": "RUNNING_NOT_VERIFIED",
-      "output": "output/playwright/studio-packaged-62811844",
+      "status": "PASS",
+      "root": "output/playwright/studio-packaged-62811844",
+      "reportPath": "output\\playwright\\studio-packaged-62811844\\report.json",
+      "reportSha256": "c3d220ee11da8f584619d6d3cb843ba0f8f6cd7110a41e29ea9649951512b46b",
+      "subreports": [
+        {
+          "name": "mcp",
+          "status": "PASS"
+        },
+        {
+          "name": "texture",
+          "status": "PASS"
+        },
+        {
+          "name": "polish",
+          "status": "PASS"
+        },
+        {
+          "name": "editing",
+          "status": "PASS"
+        },
+        {
+          "name": "variants",
+          "status": "PASS"
+        },
+        {
+          "name": "agentBlockouts",
+          "status": "PASS"
+        },
+        {
+          "name": "brief",
+          "status": "PASS"
+        },
+        {
+          "name": "concepts",
+          "status": "PASS"
+        },
+        {
+          "name": "parts",
+          "status": "PASS"
+        },
+        {
+          "name": "repair",
+          "status": "PASS"
+        },
+        {
+          "name": "manual",
+          "status": "PASS"
+        },
+        {
+          "name": "accessibility",
+          "status": "PASS"
+        },
+        {
+          "name": "accessibilityStates",
+          "status": "PASS"
+        },
+        {
+          "name": "review",
+          "status": "PASS"
+        },
+        {
+          "name": "migrations",
+          "status": "PASS"
+        },
+        {
+          "name": "history",
+          "status": "PASS"
+        },
+        {
+          "name": "geometry",
+          "status": "PASS"
+        },
+        {
+          "name": "camera",
+          "status": "PASS"
+        },
+        {
+          "name": "discovery",
+          "status": "PASS"
+        }
+      ],
+      "hidden": true,
+      "checks": [
+        "real texture render",
+        "resize",
+        "part recolor",
+        "undo/redo",
+        "Cyrillic save",
+        "new project",
+        "add cube",
+        "reopen",
+        "export hashes",
+        "asset bundle v1 manifest/source/runtime integrity",
+        "decoded exported RGBA",
+        "compact window controls",
+        "IPC bounds",
+        "restart recovery"
+      ],
       "log": "output/verification/roadmap-036-agent-full-desktop.log"
     },
     "hosted": {
-      "status": "NOT_RUN_FOR_THIS_SOURCE"
+      "status": "SCOPED_PASS",
+      "sourceCommit": "012d2b5aed6cd86c4c0e2847e5c9cc0d11d4b220",
+      "runId": 37344629791,
+      "url": "https://github.com/Zulut30/minemod/actions/runs/37344629791",
+      "checkedAtUtc": "2026-10-05T17:09:14.760Z",
+      "overallConclusion": "failure",
+      "applicableJobs": [
+        "control-plane",
+        "studio-windows",
+        "Fabric 1.20.1 / Java 17 production target",
+        "neoforge",
+        "client-smoke"
+      ],
+      "jobs": [
+        {
+          "name": "fabric",
+          "id": 111879992077,
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Zulut30/minemod/actions/runs/37344629791/job/111879992077"
+        },
+        {
+          "name": "Fabric 1.20.1 / Java 17 production target",
+          "id": 111879992415,
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/Zulut30/minemod/actions/runs/37344629791/job/111879992415"
+        },
+        {
+          "name": "control-plane",
+          "id": 111879992445,
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/Zulut30/minemod/actions/runs/37344629791/job/111879992445"
+        },
+        {
+          "name": "studio-windows",
+          "id": 111879992517,
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/Zulut30/minemod/actions/runs/37344629791/job/111879992517"
+        },
+        {
+          "name": "neoforge",
+          "id": 111879992550,
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/Zulut30/minemod/actions/runs/37344629791/job/111879992550"
+        },
+        {
+          "name": "fabric-client",
+          "id": 111880396529,
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/Zulut30/minemod/actions/runs/37344629791/job/111880396529"
+        },
+        {
+          "name": "client-smoke",
+          "id": 111881325970,
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/Zulut30/minemod/actions/runs/37344629791/job/111881325970"
+        }
+      ],
+      "statusReport": {
+        "path": "output/verification/roadmap-036-hosted-status.json",
+        "bytes": 19134,
+        "sha256": "d3e4a711c57f4a9a20ba7b866b1d26e623f4db89262dd19e98e1d4099fcdcc1f"
+      },
+      "artifactMetadata": {
+        "path": "output/verification/roadmap-036-hosted-artifacts.json",
+        "bytes": 2890,
+        "sha256": "a63414f42f82d85bc44313e04728dc02e47a797dfb4b1da2219b2cba00ee4729"
+      },
+      "artifacts": [
+        {
+          "id": 11360696028,
+          "name": "fabric-1.20.1-java17-evidence",
+          "bytes": 50600,
+          "digest": "sha256:df7f0751ff75f007ea468b1a841c7a55cea9b58893a37056e6b28b530d0e3299"
+        },
+        {
+          "id": 11360091786,
+          "name": "fabric-26.2-verification-failure",
+          "bytes": 102356,
+          "digest": "sha256:5750ab157e9b95803852a4d0fe316825aa33ce7ad910a5b4bdf9b72f9217590e"
+        },
+        {
+          "id": 11359997059,
+          "name": "control-plane-clean-checkout-evidence",
+          "bytes": 1895,
+          "digest": "sha256:7df2418edc01691e3a12facf570ac2931db1f249fe54b0a4bfdc3c7e4759c44b"
+        },
+        {
+          "id": 11359639243,
+          "name": "minemod-studio-windows-evidence",
+          "bytes": 3307073,
+          "digest": "sha256:f5a0de6c3a69fc224b7145d99b55bc5b01d9d9a9791089f51d8705c9787ae849"
+        }
+      ],
+      "cleanCheckout": [
+        {
+          "path": "output/ci/37344629791-control/control-plane.json",
+          "bytes": 4469,
+          "sha256": "a4296e4e2660d4e68c47ededd7636fb60ae80459b1e077eda78ceb48d6647846",
+          "tree": "6f2595bc6ef1532710dde75c2d24587e0c8c0cbb",
+          "trackedFiles": 538,
+          "bytesChecked": 8800326,
+          "platform": "linux",
+          "node": "24.21.0"
+        },
+        {
+          "path": "output\\ci\\37344629791-windows\\output\\ci\\clean-checkout\\studio-windows.json",
+          "bytes": 4469,
+          "sha256": "cf6ce6e603dfbdf090143defaaa07e9739524b9be323bc5e1f5fd18d42296a3e",
+          "tree": "6f2595bc6ef1532710dde75c2d24587e0c8c0cbb",
+          "trackedFiles": 538,
+          "bytesChecked": 8800326,
+          "platform": "win32",
+          "node": "24.21.0"
+        },
+        {
+          "path": "output/ci/37344629791-production/output/ci/clean-checkout/fabric-production.json",
+          "bytes": 4469,
+          "sha256": "a4296e4e2660d4e68c47ededd7636fb60ae80459b1e077eda78ceb48d6647846",
+          "tree": "6f2595bc6ef1532710dde75c2d24587e0c8c0cbb",
+          "trackedFiles": 538,
+          "bytesChecked": 8800326,
+          "platform": "linux",
+          "node": "24.21.0"
+        }
+      ],
+      "windows": {
+        "report": {
+          "path": "output/ci/37344629791-windows\\output\\playwright\\studio-packaged-a47f3f85\\report.json",
+          "bytes": 90963,
+          "sha256": "c60a39180e17c04e4600446978a04e9c9e4940c5e153cc6b8010ddc6bb2498eb"
+        },
+        "subreports": [
+          "mcp",
+          "texture",
+          "polish",
+          "editing",
+          "variants",
+          "agentBlockouts",
+          "brief",
+          "concepts",
+          "parts",
+          "repair",
+          "manual",
+          "accessibility",
+          "accessibilityStates",
+          "review",
+          "migrations",
+          "history",
+          "geometry",
+          "camera",
+          "discovery"
+        ],
+        "packagePath": "D:\\a\\minemod\\minemod\\output\\model-editor\\releases\\0.16.0\\46da73d8\\MineMod Studio-win32-x64\\MineMod Studio.exe",
+        "agentReport": {
+          "path": "output\\ci\\37344629791-windows\\output\\playwright\\studio-packaged-a47f3f85\\agent-blockouts\\report.json",
+          "bytes": 51026,
+          "sha256": "a9cf889ae768af07a74df447d9802f5e10786daabc61a8cbff9a86f77aebef55"
+        },
+        "agentBody": {
+          "status": "PASS",
+          "root": "D:\\a\\minemod\\minemod\\output\\playwright\\studio-packaged-a47f3f85\\agent-blockouts",
+          "hidden": true,
+          "actor": "Actual MCP SDK agent operations",
+          "independentModelTurn": false,
+          "operatorBaselineCubes": 3,
+          "snapshotCreation": "All three drafts created through MCP preview/apply; operator created only manual baseline",
+          "variants": [
+            {
+              "key": "a",
+              "id": "f6653379-1183-41c8-ae86-aa5ab9c0a85d",
+              "label": "ИИ-черновик · A · Лист",
+              "geometrySha256": "d75f1c9aad076a3cf73a742b66c37ea3cadbd00e84947894022c1a0952b04a36"
+            },
+            {
+              "key": "b",
+              "id": "f32e2c93-64b2-4e92-b597-19f49e61a9e0",
+              "label": "ИИ-черновик · B · Клык",
+              "geometrySha256": "c1ca6d2bc8652988c997fb6db862deb4cc11cb119dc1319db73875cb122fcd1b"
+            },
+            {
+              "key": "c",
+              "id": "aff2b75f-ac09-4fd1-8324-2e320d913edc",
+              "label": "ИИ-черновик · C · Раскол",
+              "geometrySha256": "b64196f43f8e0f7f9f1a36af888884a1f2db79ab650572670ef3ade69d9e24b3"
+            }
+          ],
+          "allFramesEqual": true,
+          "sourcePath": "D:\\a\\minemod\\minemod\\output\\playwright\\studio-packaged-a47f3f85\\agent-blockouts\\три черновика.mmeditor.json",
+          "sourceSha256": "66d089b577265f705d1565d9aac47e5273a647baeec9d52e4e5f43a59c547d22",
+          "manualSourceAndPixelsPreserved": true,
+          "restoreUndo": true,
+          "replay": true,
+          "restart": true,
+          "exportVerified": true,
+          "artisticApproval": "NOT_PERFORMED",
+          "gameAcceptance": "NOT_RUN",
+          "captureCount": 30
+        },
+        "captures": [
+          {
+            "path": "output\\ci\\37344629791-windows\\output\\playwright\\studio-packaged-a47f3f85\\agent-blockouts\\a-front.png",
+            "sha256": "b188a76db411bdec75e7ae221ace36847ee6d6c32190a40286d870c9d0c8781e",
+            "bytes": 8009,
+            "frame": {
+              "projectId": "a9ff64df-995d-4980-9c68-ad5853f1f5ad",
+              "revision": 22,
+              "variantId": "f6653379-1183-41c8-ae86-aa5ab9c0a85d",
+              "compareToVariantId": "f32e2c93-64b2-4e92-b597-19f49e61a9e0",
+              "view": "front",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "path": "output\\ci\\37344629791-windows\\output\\playwright\\studio-packaged-a47f3f85\\agent-blockouts\\a-back.png",
+            "sha256": "21de8b7baeadfadd0db62256f89945e17d4fab2612bd012fe69cd5e5749d1383",
+            "bytes": 7912,
+            "frame": {
+              "projectId": "a9ff64df-995d-4980-9c68-ad5853f1f5ad",
+              "revision": 22,
+              "variantId": "f6653379-1183-41c8-ae86-aa5ab9c0a85d",
+              "compareToVariantId": "f32e2c93-64b2-4e92-b597-19f49e61a9e0",
+              "view": "back",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "path": "output\\ci\\37344629791-windows\\output\\playwright\\studio-packaged-a47f3f85\\agent-blockouts\\a-left.png",
+            "sha256": "13e1cf2e238576d92e5206aa0607e905de4e932babf204223df8ba7c81c63493",
+            "bytes": 6052,
+            "frame": {
+              "projectId": "a9ff64df-995d-4980-9c68-ad5853f1f5ad",
+              "revision": 22,
+              "variantId": "f6653379-1183-41c8-ae86-aa5ab9c0a85d",
+              "compareToVariantId": "f32e2c93-64b2-4e92-b597-19f49e61a9e0",
+              "view": "left",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "path": "output\\ci\\37344629791-windows\\output\\playwright\\studio-packaged-a47f3f85\\agent-blockouts\\a-right.png",
+            "sha256": "499d36cbbe4e50c424362dbb0f0f868a2771041aff2b525c13ba10e7ad5183f9",
+            "bytes": 6139,
+            "frame": {
+              "projectId": "a9ff64df-995d-4980-9c68-ad5853f1f5ad",
+              "revision": 22,
+              "variantId": "f6653379-1183-41c8-ae86-aa5ab9c0a85d",
+              "compareToVariantId": "f32e2c93-64b2-4e92-b597-19f49e61a9e0",
+              "view": "right",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "path": "output\\ci\\37344629791-windows\\output\\playwright\\studio-packaged-a47f3f85\\agent-blockouts\\a-top.png",
+            "sha256": "089eeadebfaa67fbe8fa3c053fd0ef09268acf0ca9969280626173aa29809766",
+            "bytes": 4901,
+            "frame": {
+              "projectId": "a9ff64df-995d-4980-9c68-ad5853f1f5ad",
+              "revision": 22,
+              "variantId": "f6653379-1183-41c8-ae86-aa5ab9c0a85d",
+              "compareToVariantId": "f32e2c93-64b2-4e92-b597-19f49e61a9e0",
+              "view": "top",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "path": "output\\ci\\37344629791-windows\\output\\playwright\\studio-packaged-a47f3f85\\agent-blockouts\\a-bottom.png",
+            "sha256": "55d98d7a2fe12e934da5917d655cac61d6057a58a66ac1db337992c0a39cbed8",
+            "bytes": 4883,
+            "frame": {
+              "projectId": "a9ff64df-995d-4980-9c68-ad5853f1f5ad",
+              "revision": 22,
+              "variantId": "f6653379-1183-41c8-ae86-aa5ab9c0a85d",
+              "compareToVariantId": "f32e2c93-64b2-4e92-b597-19f49e61a9e0",
+              "view": "bottom",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "path": "output\\ci\\37344629791-windows\\output\\playwright\\studio-packaged-a47f3f85\\agent-blockouts\\a-perspective.png",
+            "sha256": "9eeae13fb5e11e7fe46ee85363b2cd64e06ea14261471fa9752ccbd273879675",
+            "bytes": 26177,
+            "frame": {
+              "projectId": "a9ff64df-995d-4980-9c68-ad5853f1f5ad",
+              "revision": 22,
+              "variantId": "f6653379-1183-41c8-ae86-aa5ab9c0a85d",
+              "compareToVariantId": "f32e2c93-64b2-4e92-b597-19f49e61a9e0",
+              "view": "perspective",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "path": "output\\ci\\37344629791-windows\\output\\playwright\\studio-packaged-a47f3f85\\agent-blockouts\\a-rear-perspective.png",
+            "sha256": "5c7b5467394f9355c6e98f3c41a6eb36b5467bd8efd7139b602c8bed7746aba1",
+            "bytes": 24735,
+            "frame": {
+              "projectId": "a9ff64df-995d-4980-9c68-ad5853f1f5ad",
+              "revision": 22,
+              "variantId": "f6653379-1183-41c8-ae86-aa5ab9c0a85d",
+              "compareToVariantId": "f32e2c93-64b2-4e92-b597-19f49e61a9e0",
+              "view": "rear-perspective",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "path": "output\\ci\\37344629791-windows\\output\\playwright\\studio-packaged-a47f3f85\\agent-blockouts\\a-silhouette.png",
+            "sha256": "a372301b46592d5a4cc5ddceab10fdb6285796281f4dd7ba2a03432f4659a76d",
+            "bytes": 7812,
+            "frame": {
+              "projectId": "a9ff64df-995d-4980-9c68-ad5853f1f5ad",
+              "revision": 22,
+              "variantId": "f6653379-1183-41c8-ae86-aa5ab9c0a85d",
+              "compareToVariantId": "f32e2c93-64b2-4e92-b597-19f49e61a9e0",
+              "view": "front",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "path": "output\\ci\\37344629791-windows\\output\\playwright\\studio-packaged-a47f3f85\\agent-blockouts\\a-review.png",
+            "sha256": "3aaa461d9f9afb66885ca3c1950d535c8ff4b57d668a74a460c499da00d71944",
+            "bytes": 42020,
+            "frame": {
+              "projectId": "a9ff64df-995d-4980-9c68-ad5853f1f5ad",
+              "revision": 22,
+              "variantId": "f6653379-1183-41c8-ae86-aa5ab9c0a85d",
+              "compareToVariantId": "f32e2c93-64b2-4e92-b597-19f49e61a9e0",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "path": "output\\ci\\37344629791-windows\\output\\playwright\\studio-packaged-a47f3f85\\agent-blockouts\\b-front.png",
+            "sha256": "a3d664e4bdfb005b805754c9a5283a51f85c0e501d3a86874db4d8b36e40e115",
+            "bytes": 6987,
+            "frame": {
+              "projectId": "a9ff64df-995d-4980-9c68-ad5853f1f5ad",
+              "revision": 22,
+              "variantId": "f32e2c93-64b2-4e92-b597-19f49e61a9e0",
+              "compareToVariantId": "f6653379-1183-41c8-ae86-aa5ab9c0a85d",
+              "view": "front",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "path": "output\\ci\\37344629791-windows\\output\\playwright\\studio-packaged-a47f3f85\\agent-blockouts\\b-back.png",
+            "sha256": "cf2f02448cf1c7a1eb4da5dbc477213f157f58c63ff035420b725a940dd0f8d4",
+            "bytes": 7199,
+            "frame": {
+              "projectId": "a9ff64df-995d-4980-9c68-ad5853f1f5ad",
+              "revision": 22,
+              "variantId": "f32e2c93-64b2-4e92-b597-19f49e61a9e0",
+              "compareToVariantId": "f6653379-1183-41c8-ae86-aa5ab9c0a85d",
+              "view": "back",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "path": "output\\ci\\37344629791-windows\\output\\playwright\\studio-packaged-a47f3f85\\agent-blockouts\\b-left.png",
+            "sha256": "e64e8274646cfa56a60db156e1f796e7860da85330e7d316de0ff16e4803fa42",
+            "bytes": 5657,
+            "frame": {
+              "projectId": "a9ff64df-995d-4980-9c68-ad5853f1f5ad",
+              "revision": 22,
+              "variantId": "f32e2c93-64b2-4e92-b597-19f49e61a9e0",
+              "compareToVariantId": "f6653379-1183-41c8-ae86-aa5ab9c0a85d",
+              "view": "left",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "path": "output\\ci\\37344629791-windows\\output\\playwright\\studio-packaged-a47f3f85\\agent-blockouts\\b-right.png",
+            "sha256": "0f3d81fbafdce3224533fe621db64ed812932e68741c49099c27a8f6ceda7180",
+            "bytes": 5723,
+            "frame": {
+              "projectId": "a9ff64df-995d-4980-9c68-ad5853f1f5ad",
+              "revision": 22,
+              "variantId": "f32e2c93-64b2-4e92-b597-19f49e61a9e0",
+              "compareToVariantId": "f6653379-1183-41c8-ae86-aa5ab9c0a85d",
+              "view": "right",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "path": "output\\ci\\37344629791-windows\\output\\playwright\\studio-packaged-a47f3f85\\agent-blockouts\\b-top.png",
+            "sha256": "7bb76bfa1ad06fb8da6774e6155d5ab3b3db1b49586040b3d974dcecb1e237c3",
+            "bytes": 4641,
+            "frame": {
+              "projectId": "a9ff64df-995d-4980-9c68-ad5853f1f5ad",
+              "revision": 22,
+              "variantId": "f32e2c93-64b2-4e92-b597-19f49e61a9e0",
+              "compareToVariantId": "f6653379-1183-41c8-ae86-aa5ab9c0a85d",
+              "view": "top",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "path": "output\\ci\\37344629791-windows\\output\\playwright\\studio-packaged-a47f3f85\\agent-blockouts\\b-bottom.png",
+            "sha256": "70cc5721dd511dd120148c2895ef2bcaefe4f2376d2a8995b70bcd45589e80ea",
+            "bytes": 4634,
+            "frame": {
+              "projectId": "a9ff64df-995d-4980-9c68-ad5853f1f5ad",
+              "revision": 22,
+              "variantId": "f32e2c93-64b2-4e92-b597-19f49e61a9e0",
+              "compareToVariantId": "f6653379-1183-41c8-ae86-aa5ab9c0a85d",
+              "view": "bottom",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "path": "output\\ci\\37344629791-windows\\output\\playwright\\studio-packaged-a47f3f85\\agent-blockouts\\b-perspective.png",
+            "sha256": "435108f90e7e59d0d1fad02dd08851c23e45177deb3204cbc211ee80b59a10ae",
+            "bytes": 26475,
+            "frame": {
+              "projectId": "a9ff64df-995d-4980-9c68-ad5853f1f5ad",
+              "revision": 22,
+              "variantId": "f32e2c93-64b2-4e92-b597-19f49e61a9e0",
+              "compareToVariantId": "f6653379-1183-41c8-ae86-aa5ab9c0a85d",
+              "view": "perspective",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "path": "output\\ci\\37344629791-windows\\output\\playwright\\studio-packaged-a47f3f85\\agent-blockouts\\b-rear-perspective.png",
+            "sha256": "6d5ebf9ca9223293f0ac29fb3714b38d57e7b45e3c31866749d3717f590005d2",
+            "bytes": 27159,
+            "frame": {
+              "projectId": "a9ff64df-995d-4980-9c68-ad5853f1f5ad",
+              "revision": 22,
+              "variantId": "f32e2c93-64b2-4e92-b597-19f49e61a9e0",
+              "compareToVariantId": "f6653379-1183-41c8-ae86-aa5ab9c0a85d",
+              "view": "rear-perspective",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "path": "output\\ci\\37344629791-windows\\output\\playwright\\studio-packaged-a47f3f85\\agent-blockouts\\b-silhouette.png",
+            "sha256": "7ecdc32026338c77c45884ea7fdb06f6931441d7b81698776558e9aab0acd960",
+            "bytes": 6849,
+            "frame": {
+              "projectId": "a9ff64df-995d-4980-9c68-ad5853f1f5ad",
+              "revision": 22,
+              "variantId": "f32e2c93-64b2-4e92-b597-19f49e61a9e0",
+              "compareToVariantId": "f6653379-1183-41c8-ae86-aa5ab9c0a85d",
+              "view": "front",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "path": "output\\ci\\37344629791-windows\\output\\playwright\\studio-packaged-a47f3f85\\agent-blockouts\\b-review.png",
+            "sha256": "83b9c4c4e206cb88b409f5635a12a6c2c03377b1bdde84580f7824147884db43",
+            "bytes": 41955,
+            "frame": {
+              "projectId": "a9ff64df-995d-4980-9c68-ad5853f1f5ad",
+              "revision": 22,
+              "variantId": "f32e2c93-64b2-4e92-b597-19f49e61a9e0",
+              "compareToVariantId": "f6653379-1183-41c8-ae86-aa5ab9c0a85d",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "path": "output\\ci\\37344629791-windows\\output\\playwright\\studio-packaged-a47f3f85\\agent-blockouts\\c-front.png",
+            "sha256": "d9c7586c80aad7838228ce2f80d7affcc0ccea88e4656c34805567a2149bc3c7",
+            "bytes": 7921,
+            "frame": {
+              "projectId": "a9ff64df-995d-4980-9c68-ad5853f1f5ad",
+              "revision": 22,
+              "variantId": "aff2b75f-ac09-4fd1-8324-2e320d913edc",
+              "compareToVariantId": "f32e2c93-64b2-4e92-b597-19f49e61a9e0",
+              "view": "front",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "path": "output\\ci\\37344629791-windows\\output\\playwright\\studio-packaged-a47f3f85\\agent-blockouts\\c-back.png",
+            "sha256": "d9c67f85d190f47f11b30f8710a7c46770646628e7d20baa144162f1bfb04a26",
+            "bytes": 7933,
+            "frame": {
+              "projectId": "a9ff64df-995d-4980-9c68-ad5853f1f5ad",
+              "revision": 22,
+              "variantId": "aff2b75f-ac09-4fd1-8324-2e320d913edc",
+              "compareToVariantId": "f32e2c93-64b2-4e92-b597-19f49e61a9e0",
+              "view": "back",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "path": "output\\ci\\37344629791-windows\\output\\playwright\\studio-packaged-a47f3f85\\agent-blockouts\\c-left.png",
+            "sha256": "b96472a308cfe6226e7bb02e481647331386f1eb7add6dd234dcbb2e6656c273",
+            "bytes": 5467,
+            "frame": {
+              "projectId": "a9ff64df-995d-4980-9c68-ad5853f1f5ad",
+              "revision": 22,
+              "variantId": "aff2b75f-ac09-4fd1-8324-2e320d913edc",
+              "compareToVariantId": "f32e2c93-64b2-4e92-b597-19f49e61a9e0",
+              "view": "left",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "path": "output\\ci\\37344629791-windows\\output\\playwright\\studio-packaged-a47f3f85\\agent-blockouts\\c-right.png",
+            "sha256": "ced4bbead83bbfb987b756ab7191dac7bda1f7c77fee1eb7df9f09d9ededaaf1",
+            "bytes": 5530,
+            "frame": {
+              "projectId": "a9ff64df-995d-4980-9c68-ad5853f1f5ad",
+              "revision": 22,
+              "variantId": "aff2b75f-ac09-4fd1-8324-2e320d913edc",
+              "compareToVariantId": "f32e2c93-64b2-4e92-b597-19f49e61a9e0",
+              "view": "right",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "path": "output\\ci\\37344629791-windows\\output\\playwright\\studio-packaged-a47f3f85\\agent-blockouts\\c-top.png",
+            "sha256": "09a7f16b076ff652d0cb3ce16c97e1a8586c77e2f539ff1247af370745a192d2",
+            "bytes": 4889,
+            "frame": {
+              "projectId": "a9ff64df-995d-4980-9c68-ad5853f1f5ad",
+              "revision": 22,
+              "variantId": "aff2b75f-ac09-4fd1-8324-2e320d913edc",
+              "compareToVariantId": "f32e2c93-64b2-4e92-b597-19f49e61a9e0",
+              "view": "top",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "path": "output\\ci\\37344629791-windows\\output\\playwright\\studio-packaged-a47f3f85\\agent-blockouts\\c-bottom.png",
+            "sha256": "3f070e1f30942586101c2b0e6056c3aba99b57d9ee7b0aac1fdb966409106e83",
+            "bytes": 4869,
+            "frame": {
+              "projectId": "a9ff64df-995d-4980-9c68-ad5853f1f5ad",
+              "revision": 22,
+              "variantId": "aff2b75f-ac09-4fd1-8324-2e320d913edc",
+              "compareToVariantId": "f32e2c93-64b2-4e92-b597-19f49e61a9e0",
+              "view": "bottom",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "path": "output\\ci\\37344629791-windows\\output\\playwright\\studio-packaged-a47f3f85\\agent-blockouts\\c-perspective.png",
+            "sha256": "4f282d1435a4a007f42bcb90e5be080ce374d00e880bd1d6ebc3c52a9ad6e173",
+            "bytes": 25336,
+            "frame": {
+              "projectId": "a9ff64df-995d-4980-9c68-ad5853f1f5ad",
+              "revision": 22,
+              "variantId": "aff2b75f-ac09-4fd1-8324-2e320d913edc",
+              "compareToVariantId": "f32e2c93-64b2-4e92-b597-19f49e61a9e0",
+              "view": "perspective",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "path": "output\\ci\\37344629791-windows\\output\\playwright\\studio-packaged-a47f3f85\\agent-blockouts\\c-rear-perspective.png",
+            "sha256": "7601cdcdca2a78369b2304e4e17c2ab82b98e48306e786303c8a60ac5b7f39ae",
+            "bytes": 24399,
+            "frame": {
+              "projectId": "a9ff64df-995d-4980-9c68-ad5853f1f5ad",
+              "revision": 22,
+              "variantId": "aff2b75f-ac09-4fd1-8324-2e320d913edc",
+              "compareToVariantId": "f32e2c93-64b2-4e92-b597-19f49e61a9e0",
+              "view": "rear-perspective",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "path": "output\\ci\\37344629791-windows\\output\\playwright\\studio-packaged-a47f3f85\\agent-blockouts\\c-silhouette.png",
+            "sha256": "9297d2d191faf6f91361ae4e4b2a38dfaa4033326d049c4f7edf643dd74337d6",
+            "bytes": 7769,
+            "frame": {
+              "projectId": "a9ff64df-995d-4980-9c68-ad5853f1f5ad",
+              "revision": 22,
+              "variantId": "aff2b75f-ac09-4fd1-8324-2e320d913edc",
+              "compareToVariantId": "f32e2c93-64b2-4e92-b597-19f49e61a9e0",
+              "view": "front",
+              "width": 1024,
+              "height": 768
+            }
+          },
+          {
+            "path": "output\\ci\\37344629791-windows\\output\\playwright\\studio-packaged-a47f3f85\\agent-blockouts\\c-review.png",
+            "sha256": "df7301d9069a9cd17c8bc215b634fd39958653f225689605958c2672b0e4c45f",
+            "bytes": 42548,
+            "frame": {
+              "projectId": "a9ff64df-995d-4980-9c68-ad5853f1f5ad",
+              "revision": 22,
+              "variantId": "aff2b75f-ac09-4fd1-8324-2e320d913edc",
+              "compareToVariantId": "f32e2c93-64b2-4e92-b597-19f49e61a9e0",
+              "width": 1024,
+              "height": 768
+            }
+          }
+        ],
+        "sourceAndTraceRetention": "NOT_IN_HOSTED_ARTIFACT: source/bundle/trace checked by runtime helper assertions; retained local proof is recorded separately. Hosted PNGs independently rehashed.",
+        "captureMetadataRetention": "Full metadata remains in retained hosted report.json bound above by SHA-256; this evidence stores frame identity and pixel hashes."
+      },
+      "native": {
+        "report": {
+          "path": "output/ci/37344629791-production/output/ci/fabric-production/generated/operation-evidence.v1.json",
+          "bytes": 9643,
+          "sha256": "3e42770acd9daa1262d7b44f9c93dc75dba6d8e0939b96caf5799ea41536dfd3"
+        },
+        "jar": {
+          "path": "output/ci/37344629791-production/output/ci/fabric-production/generated/build/libs/infectedfrontier-0.1.0.jar",
+          "bytes": 28835,
+          "sha256": "63c8139423e57b925edfa40f030020b23ae2cc21571eaf711c879d58a382cc15"
+        },
+        "independentlyCheckedSourceFiles": 6,
+        "harnessXml": {
+          "path": "output/ci/37344629791-production/fixtures/fabric-1.20.1-empty/build/reports/gametest/production.xml",
+          "bytes": 405,
+          "sha256": "e0a38e30cebd3c002cec50e6c3fcf117e79f06b19e54f81776fd28ce358e904d"
+        },
+        "harnessTests": 2,
+        "scope": "Generated production fixture/harness; no authored weapon integrated or accepted in Minecraft."
+      },
+      "legacy": {
+        "report": {
+          "path": "output/ci/37344629791-legacy\\at-1791219410940\\dependency-verification-report.html",
+          "bytes": 9060,
+          "sha256": "c19042e807dc8d9861ab3aa05cf164d370d016b66a9e587a49bbb61f8982db6d"
+        },
+        "coordinate": "net.minecraft:minecraft-common-043a8b3edf:26.2",
+        "expectedSha256": "23248c15f8413aa0d06ac59e676913dd6a1dc0c5fffaa09365afd6c98d59fcd3",
+        "actualSha256": "b968fe61934399eb614e9c042f821d7ea93a6780f892adab3056fe50bba6c0a0",
+        "cause": "NOT_ESTABLISHED"
+      },
+      "logs": [
+        {
+          "path": "output/verification/roadmap-036-hosted-control.log",
+          "bytes": 40295,
+          "sha256": "27845713eafbc01f46d0a6e8d556fce4c49ecf261a7a9186e0a435f54688d0e6"
+        },
+        {
+          "path": "output/verification/roadmap-036-hosted-windows.log",
+          "bytes": 39417,
+          "sha256": "160a1872071cdef4e5b3bab2697528018b03136c00116cc4aeee02c9a7aa9bd4"
+        },
+        {
+          "path": "output/verification/roadmap-036-hosted-production.log",
+          "bytes": 74911,
+          "sha256": "309479575ce4ad65471ebccb66faf05980dea2711b16244711fd8d1c1e699183"
+        },
+        {
+          "path": "output/verification/roadmap-036-hosted-legacy.log",
+          "bytes": 32119,
+          "sha256": "12aa2234921ed993a028f63a0140ca7af6685ebc08d3e07ecb20e3ce4bfcb39c"
+        },
+        {
+          "path": "output/verification/roadmap-036-hosted-neoforge.log",
+          "bytes": 68488,
+          "sha256": "7f014990afb31815e1fb5812df0460c262a043a8a0ca1bdaeb8d4f9d2b660ba1"
+        },
+        {
+          "path": "output/verification/roadmap-036-hosted-client.log",
+          "bytes": 37827,
+          "sha256": "1cbe1c58d0f972a9cf012553b67a8c9810cab4671da52fe4b83dc9766034d931"
+        }
+      ]
     },
     "artisticApproval": "NOT_PERFORMED",
     "authoredGameAcceptance": "NOT_RUN"
-  }
+  },
+  "initialIllustrativeStudioVersion": "0.15.0"
 }

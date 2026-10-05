@@ -1,6 +1,6 @@
 # Три направления формы и объём «Листа»
 
-Roadmap 036: **PARTIAL**. Пункт не закрыт. Studio 0.16.0 реализует добавление ИИ-черновиков; полный packaged suite, самостоятельный model turn и hosted verification ещё требуют завершения. Пользователь выбрал направление A — «Лист»; выбор направления не означает художественную приёмку готовой модели.
+Roadmap 036: **техническая приёмка пройдена**. В Studio 0.16.0 проверены самостоятельный Codex model turn с тремя редактируемыми формами и полный 19-subreport packaged suite локально и в hosted Windows CI точного коммита `012d2b5`. Пункт закрыт по функциональному workflow; художественная приёмка и authored Minecraft acceptance ещё не получены. Общий CI остаётся failed из-за checksum старого regression target Fabric 26.2. Пользователь выбрал направление A — «Лист»; это не approval готовой модели.
 
 В репозитории сохранены оригинальные данные трёх нейтральных форм: [Лист / Клык / Раскол](../../fixtures/production/weapon-blockouts.v1.json). Отличаются геометрия и силуэт, материал общий. [Оригинальный AI-концепт](../../fixtures/production/concepts/weapon-directions-20261005.png) сохранён побайтно с [provenance](../../fixtures/production/concepts/weapon-directions-20261005.provenance.json). Он задаёт 2D-направление, не является готовой 3D-моделью. Сторонние references не использованы; независимая проверка прав не выполнена.
 
@@ -56,5 +56,15 @@ node --experimental-strip-types apps/model-editor/scripts/verify-codex-session.m
 - [Три исходных направления](../../output/model-editor/weapon-blockouts-reproduced-20261005/reviews-f0497ca9/comparison.html).
 - [«Лист» v2/v3 в одинаковом масштабе](../../output/model-editor/leaf-volume-20261005-v3c/reviews-96a36d05/comparison.html).
 - [Многовидовой обзор нового «Листа»](../../output/model-editor/leaf-volume-20261005-v3c/reviews-96a36d05/b-review.png).
+- [Три самостоятельных формы Codex: Ива / Липа / Лавр](../../output/playwright/independent-codex-036-611f0d57/reviews-844e5beb/comparison.html).
+- [Редактируемый проект самостоятельного сеанса](../../output/playwright/independent-codex-036-611f0d57/three-leaf-blockouts.mmeditor.json).
+
+Самостоятельный сеанс установленного Codex CLI 0.160.0 начал с нуля кубов. Оператор добавил бриф, исходный концепт и пустой ручной snapshot, но не менял геометрию. Агент выполнил 82 MCP-вызова, создал три разные геометрии, сохранил их через `draftVariant`, получил 39 PNG и экспортировал проверенный bundle-v1. Ручной исходник остался побайтно равным исходному snapshot. Сохранённый `.mmeditor.json` повторно открыт отдельным скрытым экземпляром: получены ещё 30 PNG всех вариантов без изменения сцены. Sidecar исходного концепта и все PNG проверены по hashes.
+
+Три геометрии прошли ограниченную SAT-проверку связности твёрдых кубоидов. Полный локальный packaged suite содержит 19 успешных subreports, включая отдельный SDK workflow со сравнением, ручным выбором, undo, сохранением и restart. CLI-сеанс и SDK-проверка — разные доказательства: CLI создаёт формы самостоятельно; scripted GUI проверяет доступность ручных операций. Ни один результат не присваивает художественное approval. Визуально формы остаются простыми черновиками; работа над пропорциями и гардой продолжается после человеческой оценки.
+
+[Hosted run 37344629791](https://github.com/Zulut30/minemod/actions/runs/37344629791) проверил точный source `012d2b5`: control-plane, Windows Studio, Fabric 1.20.1 / Java 17, NeoForge и client-smoke прошли. Windows повторил все 19 subreports; 30 PNG нового agent workflow скачаны и независимо сверены по hashes. Source JSON, bundle и trace не входят в hosted retention: их точные проверки выполнены самим helper, локальные файлы сохранены отдельно. Проверены чистые checkout трёх заданий и совпадение 20 source/fixture hashes с Git blobs. Native proof содержит шесть generated source-файлов, JAR, два infrastructure GameTests и dedicated-server lifecycle; авторские мечи этим путём не интегрированы в Minecraft.
+
+Общий workflow failed: legacy Fabric 26.2 получил checksum mismatch `net.minecraft:minecraft-common-043a8b3edf:26.2`. Текущий observed SHA-256 — `b968fe61934399eb614e9c042f821d7ea93a6780f892adab3056fe50bba6c0a0`; причина не установлена, checksum policy не изменена. Это ограничение общего CI сохранено в evidence и не выдано за успешный production release.
 
 Эти output-файлы локальны и не входят в checkout; исходные fixture и команды выше позволяют создать новый набор. Число кубов, связность и корректный JSON не доказывают художественное качество. Форма ещё ожидает человеческой оценки; текстура не принята, модель не интегрирована в JAR и не проверена в игре. Следующий художественный шаг зависит от оценки нейтрального объёма.
