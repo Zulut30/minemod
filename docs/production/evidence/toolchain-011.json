@@ -1,0 +1,159 @@
+{
+  "status": "PARTIAL",
+  "checkedAtUtc": "2026-10-05T11:59:58.018Z",
+  "scope": "Readonly pinned development and desktop binaries/metadata; production transitive licenses incomplete",
+  "node": {
+    "version": "24.11.0",
+    "archive": {
+      "path": "output/tools/node-v24.11.0-win-x64.zip",
+      "bytes": 36356854,
+      "sha256": "1054540bce22b54ec7e50ebc078ec5d090700a77657607a58f6a64df21f49fdd"
+    },
+    "officialChecksumSource": "https://nodejs.org/dist/v24.11.0/SHASUMS256.txt",
+    "checksum": "1054540bce22b54ec7e50ebc078ec5d090700a77657607a58f6a64df21f49fdd",
+    "license": "MIT plus third-party notices",
+    "pgpSignature": "not-verified"
+  },
+  "pnpm": {
+    "version": "11.8.0",
+    "license": "MIT",
+    "source": {
+      "url": "git+https://github.com/pnpm/pnpm.git",
+      "type": "git",
+      "directory": "pnpm"
+    },
+    "archiveUrl": "https://registry.npmjs.org/pnpm/-/pnpm-11.8.0.tgz",
+    "registryIntegrity": "sha512-wfXnxMskHI8XS3Q4UdgvQrgCMkr8iw8Ra5atsVqgZmSUjd42lgo7oQebpbSyndAUATW5S1tfUmNZIknWjlVfJg==",
+    "packageManagerHashMatched": true,
+    "tarballRead": "not-performed"
+  },
+  "electron": {
+    "version": "44.5.1",
+    "license": "MIT",
+    "source": "https://github.com/electron/electron",
+    "archive": {
+      "path": "C:\\Users\\zulut\\AppData\\Local\\electron\\Cache\\773aa4e04f5abf2d0c5fef6d69bfaa8ef10f8e9615d6ee8300fd1f572dfbc32b\\electron-v44.5.1-win32-x64.zip",
+      "bytes": 157998329,
+      "sha256": "9b382492dcfee91f8f9e92c91f7972550a1b95d2299cac72279dab33a600d7db"
+    },
+    "checksums": {
+      "path": "apps/model-editor/node_modules/electron/checksums.json",
+      "bytes": 7212,
+      "sha256": "5d50092913d34c25993512dad7205c112c935da8ff9dc0296f3090d3e39cb001"
+    }
+  },
+  "java": {
+    "distribution": "temurin",
+    "version": "17.0.19+10",
+    "linuxX64ArchiveUrl": "https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.19%2B10/OpenJDK17U-jdk_x64_linux_hotspot_17.0.19_10.tar.gz",
+    "linuxX64ArchiveSha256": "d8afc263758141a66e0e3aafc321e783f7016696f4eaea067d340a269037d331",
+    "sourceCommit": "982d53c227943a511e8d61694feced764b71a6c1",
+    "license": "GPL-2.0-only WITH Classpath-exception-2.0",
+    "proof": "actual locked archive install, java identity and clean runtime CI in point 013"
+  },
+  "gradle": {
+    "distributionUrl": "https://services.gradle.org/distributions/gradle-8.7-bin.zip",
+    "distributionSha256": "544c35d6bd849ae8a5ed0bcea39ba677dc40f49df7d1835561582da2009b961d",
+    "wrapperJarUrl": "https://raw.githubusercontent.com/gradle/gradle/v8.7.0/gradle/wrapper/gradle-wrapper.jar",
+    "wrapperJarSourceCommit": "650af14d7653aa949fce5e886e685efc9cf97c10",
+    "wrapperJarSha256": "cb0da6751c2b753a16ac168bb354870ebb1e162e9083f116729cec9c781156b8"
+  },
+  "fabric": {
+    "loom": {
+      "coordinate": "net.fabricmc:fabric-loom:1.6.12",
+      "sourceBranchCommit": "c4d36fac4ea7ccd1ef9526aa138139a154c8f581",
+      "license": "MIT"
+    },
+    "loader": {
+      "coordinate": "net.fabricmc:fabric-loader:0.19.3",
+      "sourceCommit": "35b0b1c0268eb5f9d377322db491b0bb436541a8",
+      "license": "Apache-2.0"
+    },
+    "api": {
+      "coordinate": "net.fabricmc.fabric-api:fabric-api:0.92.11+1.20.1",
+      "sourceCommit": "43c8677721b24b77688d8ad7e2fda2680842ba7f",
+      "license": "Apache-2.0"
+    },
+    "mappings": {
+      "kind": "officialMojangMappings",
+      "redistribution": false
+    }
+  },
+  "tuple": {
+    "minecraft": "1.20.1",
+    "fabricLoader": "0.19.3",
+    "fabricApi": "0.92.11+1.20.1",
+    "fabricLoom": "1.6.12",
+    "gradle": "8.7",
+    "java": "17.0.19+10"
+  },
+  "licenses": [
+    {
+      "path": "output/tools/node-v24.11.0-win-x64/LICENSE",
+      "bytes": 145976,
+      "sha256": "b4c7840e841ab8f14543646bd941d01a459fb0f8ce1249244341b2a63272ca79"
+    },
+    {
+      "path": "apps/model-editor/node_modules/electron/LICENSE",
+      "bytes": 1096,
+      "sha256": "5154e165bd6c2cc0cfbcd8916498c7abab0497923bafcd5cb07673fe8480087d"
+    },
+    {
+      "path": "apps/model-editor/node_modules/electron/dist/LICENSE",
+      "bytes": 1096,
+      "sha256": "5154e165bd6c2cc0cfbcd8916498c7abab0497923bafcd5cb07673fe8480087d"
+    },
+    {
+      "path": "apps/model-editor/node_modules/electron/dist/LICENSES.chromium.html",
+      "bytes": 20472830,
+      "sha256": "7b328b8c7463ac9bfc7dc648c751533517c8441a0b5b21047d6c0b2620e60d70"
+    }
+  ],
+  "sources": [
+    {
+      "path": "package.json",
+      "bytes": 1201,
+      "sha256": "1667cd290de07743ae2c9a6a9d4baa3499c0131aef1e967d7e6773a37dc9ddec"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "bytes": 95944,
+      "sha256": "e955ab8e82d8bb87128cf10f0f95b67c217fb1bf31eb7f2321823e66b03195c2"
+    },
+    {
+      "path": "packs/fabric-1.20.1/runtime-r5/versions.lock.json",
+      "bytes": 4755,
+      "sha256": "37ffd06483f6ae7c25adce4ac63dc4a692c43b8b24778ff6f5e96bfef254c7ca"
+    },
+    {
+      "path": "docs/provenance/fabric-1.20.1-dependencies.json",
+      "bytes": 4686,
+      "sha256": "9483c0ade3870f04722a0febf5a28ebef5aa95ed40a49424c46da25093c79b50"
+    },
+    {
+      "path": "apps/model-editor/dist/dependency-inventory.json",
+      "bytes": 7599,
+      "sha256": "ae80107479f65d0e56b6f417c02409852fba9a00251119568f7578705e0fa107"
+    }
+  ],
+  "currentSupport": {
+    "nodeMajor": "24 LTS on official schedule",
+    "nodePinnedPatch": "24.11.0 predates current 24.21.0; security delta review/update required",
+    "electronMajor": "44 stable, planned EOL 2027-03-02; recheck release policy before distribution"
+  },
+  "remaining": [
+    "Pinned Node patch security review and separately verified revision",
+    "Full Fabric transitive license review",
+    "PGP signature verification for official Node archive",
+    "Current source linked hosted verification before production"
+  ],
+  "trustedPacksChanged": false,
+  "dependenciesChanged": false,
+  "roadmapPoint": 11,
+  "schemaVersion": 1,
+  "log": {
+    "path": "output/verification/roadmap-011-audit.log",
+    "bytes": 6003,
+    "sha256": "c67fd78ff70af70b5695be4a6321a61151d9376ae7cf92f31928abae0454d7e8"
+  }
+}
