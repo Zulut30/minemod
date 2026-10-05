@@ -1,0 +1,667 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 41,
+  "status": "PASS",
+  "pointClosed": true,
+  "sourceCommit": "63c4646be8facdf76782a82bdc65e013838773fd",
+  "sourceTree": "eab77796db4e794046a57d464b17eaf45b8f5adc",
+  "node": "v24.21.0",
+  "sourceHashes": [
+    {
+      "path": "README.md",
+      "bytes": 23236,
+      "sha256": "fb9dbbad24f0b3811d954b7967c4cf51140fb3eed6693d55c204e29f1aab8e3d",
+      "workingTreeSha256": "fb9dbbad24f0b3811d954b7967c4cf51140fb3eed6693d55c204e29f1aab8e3d"
+    },
+    {
+      "path": "apps/cli/index.ts",
+      "bytes": 5092,
+      "sha256": "12d05a23e0b9f857400c9fb1535ee8b46bc7d205aa0bab03c9ed13b907ac405f",
+      "workingTreeSha256": "12d05a23e0b9f857400c9fb1535ee8b46bc7d205aa0bab03c9ed13b907ac405f"
+    },
+    {
+      "path": "apps/cli/test.ts",
+      "bytes": 9600,
+      "sha256": "0683993443632393532248b9e8e21e18f7aa745e93f1c01a04ee173f512e1595",
+      "workingTreeSha256": "0683993443632393532248b9e8e21e18f7aa745e93f1c01a04ee173f512e1595"
+    },
+    {
+      "path": "apps/mcp-server/index.ts",
+      "bytes": 11742,
+      "sha256": "7c69aa8e792b5604a1fd8208c776f059a6bc592a801d69e8bfe5b6a3e79822be",
+      "workingTreeSha256": "7c69aa8e792b5604a1fd8208c776f059a6bc592a801d69e8bfe5b6a3e79822be"
+    },
+    {
+      "path": "apps/mcp-server/test.ts",
+      "bytes": 44842,
+      "sha256": "a4dea46594962de488465586c62178b92619ae5fd2bc4e8c341f757ea9e511d2",
+      "workingTreeSha256": "a4dea46594962de488465586c62178b92619ae5fd2bc4e8c341f757ea9e511d2"
+    },
+    {
+      "path": "docs/production/MODEL_ART_SPEC.md",
+      "bytes": 7425,
+      "sha256": "2e7d168a9f679fc22373b604938f2d7b8f16547fdb321e9a1b7bea945e31ca48",
+      "workingTreeSha256": "2e7d168a9f679fc22373b604938f2d7b8f16547fdb321e9a1b7bea945e31ca48"
+    },
+    {
+      "path": "docs/production/SPEC_VERSIONING.md",
+      "bytes": 7872,
+      "sha256": "f0511c5be7341eb9df0acfd0d6f11c7e3eeacc3a7761d96cf91419b5eb203668",
+      "workingTreeSha256": "f0511c5be7341eb9df0acfd0d6f11c7e3eeacc3a7761d96cf91419b5eb203668"
+    },
+    {
+      "path": "fixtures/art/copper-masonry.artspec-v1.json",
+      "bytes": 5909,
+      "sha256": "53b25a8fb8dc8db2caffc43cdc47efc29b86034d0761814973c45a46b6f08699",
+      "workingTreeSha256": "53b25a8fb8dc8db2caffc43cdc47efc29b86034d0761814973c45a46b6f08699"
+    },
+    {
+      "path": "fixtures/art/leaf-sword.artspec-v1.json",
+      "bytes": 7001,
+      "sha256": "45af443a83f00a0075b9de23df9e91d357cae50104156384a9a6cff01c329157",
+      "workingTreeSha256": "45af443a83f00a0075b9de23df9e91d357cae50104156384a9a6cff01c329157"
+    },
+    {
+      "path": "fixtures/art/polar-armor.artspec-v1.json",
+      "bytes": 7293,
+      "sha256": "66195bc6bcc18e4342efc2b337a0c27cbf6d40baea85fab1d36c080654b1e997",
+      "workingTreeSha256": "66195bc6bcc18e4342efc2b337a0c27cbf6d40baea85fab1d36c080654b1e997"
+    },
+    {
+      "path": "fixtures/art/polar-cleaver.artspec-v1.json",
+      "bytes": 6890,
+      "sha256": "b25e61838915d7dc53426358ca8adfcc363f973aa2293b17c255f0f582bdf347",
+      "workingTreeSha256": "b25e61838915d7dc53426358ca8adfcc363f973aa2293b17c255f0f582bdf347"
+    },
+    {
+      "path": "fixtures/art/tide-altar.artspec-v1.json",
+      "bytes": 6493,
+      "sha256": "915cfbe9e7cfaff073ee4b2738d7ac22f8626c81dce7cbe92792142462a18e5c",
+      "workingTreeSha256": "915cfbe9e7cfaff073ee4b2738d7ac22f8626c81dce7cbe92792142462a18e5c"
+    },
+    {
+      "path": "fixtures/art/tidecaller-crab.artspec-v1.json",
+      "bytes": 7456,
+      "sha256": "a26378d977cc6b07a78be78ce0b86b50028161ba9f104eac503fa794e6241fa8",
+      "workingTreeSha256": "a26378d977cc6b07a78be78ce0b86b50028161ba9f104eac503fa794e6241fa8"
+    },
+    {
+      "path": "packages/modspec/index.ts",
+      "bytes": 29831,
+      "sha256": "e6f1fddb35a99322383fa7257d908c69399007d18989ca3f0a89cc68d8867af2",
+      "workingTreeSha256": "e6f1fddb35a99322383fa7257d908c69399007d18989ca3f0a89cc68d8867af2"
+    },
+    {
+      "path": "packages/modspec/model-intent.test.ts",
+      "bytes": 4182,
+      "sha256": "0d40fecd759abc7f59f444ebac96075ba8d09fb9a424ee1add9b4121895d894b",
+      "workingTreeSha256": "0d40fecd759abc7f59f444ebac96075ba8d09fb9a424ee1add9b4121895d894b"
+    },
+    {
+      "path": "packages/modspec/model-intent.ts",
+      "bytes": 6820,
+      "sha256": "058cb9afba5d29ebf146c4c8b97ff025c6929207fb3368ee945475d0f0c3ec5b",
+      "workingTreeSha256": "058cb9afba5d29ebf146c4c8b97ff025c6929207fb3368ee945475d0f0c3ec5b"
+    },
+    {
+      "path": "packages/modspec/package.json",
+      "bytes": 343,
+      "sha256": "21ffa7e9e2cbe5fc27d58a58999039aba3c11adb19d1f6f275669652791769bb",
+      "workingTreeSha256": "21ffa7e9e2cbe5fc27d58a58999039aba3c11adb19d1f6f275669652791769bb"
+    },
+    {
+      "path": "packages/modspec/test.ts",
+      "bytes": 17605,
+      "sha256": "b75f16d2573c032e26f30f054704d7ea8018d3bafea480e7ffa0c082f89e0de1",
+      "workingTreeSha256": "b75f16d2573c032e26f30f054704d7ea8018d3bafea480e7ffa0c082f89e0de1"
+    },
+    {
+      "path": "packages/validation/art-plan.ts",
+      "bytes": 2520,
+      "sha256": "cb9020717577ae742c28bc561d1c6dec8cb6fd8c7d71291ed410ee28864af6df",
+      "workingTreeSha256": "cb9020717577ae742c28bc561d1c6dec8cb6fd8c7d71291ed410ee28864af6df"
+    },
+    {
+      "path": "packages/validation/index.ts",
+      "bytes": 49750,
+      "sha256": "9ce77ae47cf6c87bd941aaf6256e4bcf0c1c7cda81009c53d6dd7cfd314a76b8",
+      "workingTreeSha256": "9ce77ae47cf6c87bd941aaf6256e4bcf0c1c7cda81009c53d6dd7cfd314a76b8"
+    },
+    {
+      "path": "packages/validation/model-art.test.ts",
+      "bytes": 8836,
+      "sha256": "47ecee8708c23f3dff068e6138e7386f01a3f790b29683293dd86592ea09aed0",
+      "workingTreeSha256": "47ecee8708c23f3dff068e6138e7386f01a3f790b29683293dd86592ea09aed0"
+    },
+    {
+      "path": "packages/validation/model-art.ts",
+      "bytes": 5259,
+      "sha256": "f9c335dcefd141e3be1f685150b0d14274bed1504c62f837f5e58103469aeffe",
+      "workingTreeSha256": "f9c335dcefd141e3be1f685150b0d14274bed1504c62f837f5e58103469aeffe"
+    },
+    {
+      "path": "packages/validation/package.json",
+      "bytes": 372,
+      "sha256": "8026e323cd98f50523ea71a4c7e3d351bad5984fc2882b391cc13ff2021dc8f2",
+      "workingTreeSha256": "8026e323cd98f50523ea71a4c7e3d351bad5984fc2882b391cc13ff2021dc8f2"
+    },
+    {
+      "path": "packages/validation/test.ts",
+      "bytes": 67653,
+      "sha256": "1738ba1aab9cb5d5eb2f09bd656af378cb5f549a567d08d9587711e4be8d2e53",
+      "workingTreeSha256": "1738ba1aab9cb5d5eb2f09bd656af378cb5f549a567d08d9587711e4be8d2e53"
+    },
+    {
+      "path": "scripts/preview-art-plans.mjs",
+      "bytes": 8753,
+      "sha256": "22f3941e98fce61b7106e41310d063f618c11f9cbec72b6310de122e34b695c1",
+      "workingTreeSha256": "22f3941e98fce61b7106e41310d063f618c11f9cbec72b6310de122e34b695c1"
+    }
+  ],
+  "lock": {
+    "path": "pnpm-lock.yaml",
+    "bytes": 95944,
+    "sha256": "e955ab8e82d8bb87128cf10f0f95b67c217fb1bf31eb7f2321823e66b03195c2"
+  },
+  "local": {
+    "logs": [
+      {
+        "path": "output/verification/roadmap-041-lint-terminal.log",
+        "bytes": 29,
+        "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+      },
+      {
+        "path": "output/verification/roadmap-041-typecheck-terminal.log",
+        "bytes": 31,
+        "sha256": "996f3562f9208e98d465f549a4df5ffe56751fdf4a4c54c23db693e88a46e347"
+      },
+      {
+        "path": "output/verification/roadmap-041-typecheck-final.log",
+        "bytes": 176,
+        "sha256": "fe0327fb3a908a7cea6b4e5ef62bbaa7903d4f4149a209170e6249f0dd5c8190"
+      },
+      {
+        "path": "output/verification/roadmap-041-spec-tests-terminal.log",
+        "bytes": 679,
+        "sha256": "389d6a1641fa22702733a867f52f3bd69fc76b3f5012b943e47c3713d32536d2"
+      },
+      {
+        "path": "output/verification/roadmap-041-validation-terminal.log",
+        "bytes": 242,
+        "sha256": "619a71070362bb3ea42ad6f303045fd9fa41f421b213a71132bb93b4aaf186c0"
+      },
+      {
+        "path": "output/verification/roadmap-041-app-tests-corrected.log",
+        "bytes": 203,
+        "sha256": "a06b07023466914ec263494a29e2776f8f384d7616afefceb67e82c2f2af03dd"
+      },
+      {
+        "path": "output/verification/roadmap-041-portable-terminal.log",
+        "bytes": 4345,
+        "sha256": "112eda4b79cccc68bb1340d5522466b156d43a48418af3dbdfbf09ea8313b345"
+      },
+      {
+        "path": "output/verification/roadmap-041-desktop-build-first.log",
+        "bytes": 540,
+        "sha256": "1979de7498948fc280c999e64ac7998e472cbef78bd78e26f93ff72b1b8c1359"
+      },
+      {
+        "path": "output/verification/roadmap-041-style-sheet-terminal.log",
+        "bytes": 123,
+        "sha256": "fa879ba2761f60454ea2ed82bef94e33ce23f73f1053604ee0e4654a97d85727"
+      },
+      {
+        "path": "output/verification/roadmap-041-style-browser.log",
+        "bytes": 413,
+        "sha256": "96522e024e17596d36c31bf4140070bf5aa35c3afd37c67e493cd90d8682b51a"
+      }
+    ],
+    "plans": [
+      {
+        "name": "polar-cleaver",
+        "sourceSha256": "b25e61838915d7dc53426358ca8adfcc363f973aa2293b17c255f0f582bdf347",
+        "planSha256": "46ab0194dab3ba56b1214256f579abdfe2f46554945294259ade38bf775fb4bc",
+        "modelClass": "weapon",
+        "status": {
+          "specification": "validated",
+          "generation": "not-run",
+          "runtimeCapability": "not-verified",
+          "artistic": "requires-human-review",
+          "game": "not-run",
+          "integration": "not-run"
+        }
+      },
+      {
+        "name": "polar-armor",
+        "sourceSha256": "66195bc6bcc18e4342efc2b337a0c27cbf6d40baea85fab1d36c080654b1e997",
+        "planSha256": "de0dc7228d080203939bef1c1528f5d7132b2c4906b54769c3b79cffa301cdbc",
+        "modelClass": "armor",
+        "status": {
+          "specification": "validated",
+          "generation": "not-run",
+          "runtimeCapability": "not-verified",
+          "artistic": "requires-human-review",
+          "game": "not-run",
+          "integration": "not-run"
+        }
+      },
+      {
+        "name": "copper-masonry",
+        "sourceSha256": "53b25a8fb8dc8db2caffc43cdc47efc29b86034d0761814973c45a46b6f08699",
+        "planSha256": "7b162050ed6a2c027b4592fd37a839f17f3bc6482f496febae54354a03b65fb4",
+        "modelClass": "building-block",
+        "status": {
+          "specification": "validated",
+          "generation": "not-run",
+          "runtimeCapability": "not-verified",
+          "artistic": "requires-human-review",
+          "game": "not-run",
+          "integration": "not-run"
+        }
+      },
+      {
+        "name": "tide-altar",
+        "sourceSha256": "915cfbe9e7cfaff073ee4b2738d7ac22f8626c81dce7cbe92792142462a18e5c",
+        "planSha256": "ef2c490dd447c48ca456232a09c3e615639c0f28df8b687bf2d83d7194f70b39",
+        "modelClass": "decorative-prop",
+        "status": {
+          "specification": "validated",
+          "generation": "not-run",
+          "runtimeCapability": "not-verified",
+          "artistic": "requires-human-review",
+          "game": "not-run",
+          "integration": "not-run"
+        }
+      },
+      {
+        "name": "tidecaller-crab",
+        "sourceSha256": "a26378d977cc6b07a78be78ce0b86b50028161ba9f104eac503fa794e6241fa8",
+        "planSha256": "b53bb59275ebd17e06a95843c66fc8b87c7e2179b9686785f0bb89ab2eddd0d4",
+        "modelClass": "creature",
+        "status": {
+          "specification": "validated",
+          "generation": "not-run",
+          "runtimeCapability": "not-verified",
+          "artistic": "requires-human-review",
+          "game": "not-run",
+          "integration": "not-run"
+        }
+      },
+      {
+        "name": "leaf-sword",
+        "sourceSha256": "45af443a83f00a0075b9de23df9e91d357cae50104156384a9a6cff01c329157",
+        "planSha256": "2fd47dfa32acb92a8cd9b6fa9472177f653d4f7798dabccfe46fdfebf7ef9c33",
+        "modelClass": "weapon",
+        "status": {
+          "specification": "validated",
+          "generation": "not-run",
+          "runtimeCapability": "not-verified",
+          "artistic": "requires-human-review",
+          "game": "not-run",
+          "integration": "not-run"
+        }
+      }
+    ],
+    "browser": {
+      "status": "PASS",
+      "headless": true,
+      "computerUse": false,
+      "checks": [
+        {
+          "label": "desktop",
+          "width": 1440,
+          "height": 1000,
+          "scroll": 1440,
+          "viewport": 1440,
+          "grid": "562px 562px",
+          "background": "rgb(17, 21, 28)",
+          "articles": 6,
+          "linkedLeaf": true
+        },
+        {
+          "label": "narrow",
+          "width": 390,
+          "height": 844,
+          "scroll": 390,
+          "viewport": 390,
+          "grid": "362px",
+          "background": "rgb(17, 21, 28)",
+          "articles": 6,
+          "linkedLeaf": true
+        }
+      ],
+      "pageErrors": [],
+      "externalRequests": []
+    },
+    "preview": {
+      "path": "output/model-editor/art-plans-041/index.html",
+      "bytes": 30335,
+      "sha256": "60a1701f5c9be8703bc9ac28ab4f8ccc3d5d3a84a25ae910fbd8b2aa02e17668"
+    },
+    "screenshots": [
+      {
+        "path": "output/model-editor/art-plans-041/desktop.png",
+        "bytes": 608630,
+        "sha256": "7f0d7fd8a8cfc386c897b94e8d7232782e5f40741ada494631d26927dd0a1fa4"
+      },
+      {
+        "path": "output/model-editor/art-plans-041/narrow.png",
+        "bytes": 621401,
+        "sha256": "155be1df961b7f6d536a8f471b9587a516d37a012663d890109c92ced80c62c0"
+      }
+    ],
+    "desktop": {
+      "studioVersion": "0.18.0",
+      "mainWorkerPreloadUnchanged": true,
+      "before": [
+        {
+          "Algorithm": "SHA256",
+          "Hash": "0E19713D6DF4A89CA8BA08E9719928AACD2B963B1E362DAF12B3B924FDCBD014",
+          "Path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\apps\\model-editor\\dist\\main.cjs"
+        },
+        {
+          "Algorithm": "SHA256",
+          "Hash": "8C99E26FE4BF96564380E48C15402A8FA6B1A1E056D7FE753F983A3F5E512712",
+          "Path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\apps\\model-editor\\dist\\worker.cjs"
+        },
+        {
+          "Algorithm": "SHA256",
+          "Hash": "6516E0DDC1AF23F45D8A978D90BE61C3F0E3533FC315924FF368C149D9952B92",
+          "Path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\apps\\model-editor\\dist\\preload.cjs"
+        }
+      ],
+      "after": [
+        {
+          "Algorithm": "SHA256",
+          "Hash": "0E19713D6DF4A89CA8BA08E9719928AACD2B963B1E362DAF12B3B924FDCBD014",
+          "Path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\apps\\model-editor\\dist\\main.cjs"
+        },
+        {
+          "Algorithm": "SHA256",
+          "Hash": "8C99E26FE4BF96564380E48C15402A8FA6B1A1E056D7FE753F983A3F5E512712",
+          "Path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\apps\\model-editor\\dist\\worker.cjs"
+        },
+        {
+          "Algorithm": "SHA256",
+          "Hash": "6516E0DDC1AF23F45D8A978D90BE61C3F0E3533FC315924FF368C149D9952B92",
+          "Path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\apps\\model-editor\\dist\\preload.cjs"
+        }
+      ],
+      "nativeAcceptance": "Await exact-source hosted packaged suite. Prior local 040 package acceptance is separate evidence."
+    },
+    "legacySchemas": {
+      "status": "PASS",
+      "baselineCommit": "46f0908ba0714dcaa32cb054f5f1cd1b463fb527",
+      "currentCommit": "63c4646be8facdf76782a82bdc65e013838773fd",
+      "schemas": [
+        {
+          "name": "ArtSpecJsonSchema",
+          "bytes": 9419,
+          "sha256": "3f1b3d26efc8432a8e60aa14711dc4f523db007a04df589cccf1cdba535e21a9"
+        },
+        {
+          "name": "ModSpecJsonSchema",
+          "bytes": 15713,
+          "sha256": "05b7bace7ed9d039f797999f6c0af939117ed9f5f5e466462ecd28db6110134e"
+        },
+        {
+          "name": "ModSpecV1JsonSchema",
+          "bytes": 32766,
+          "sha256": "59d44708800dca4132444d7c1c8c6cc63019c5454ed802235303d4a321dd1d94"
+        }
+      ],
+      "report": {
+        "path": "output/verification/roadmap-041-legacy-schemas.json",
+        "bytes": 629,
+        "sha256": "0838af10ec3a3f76d9506a69a40665558b2ccf3804c20ca7dfa2741a920830a6"
+      }
+    }
+  },
+  "hosted": {
+    "status": "TERMINAL",
+    "runId": 37358494032,
+    "url": "https://github.com/Zulut30/minemod/actions/runs/37358494032",
+    "sourceCommit": "63c4646be8facdf76782a82bdc65e013838773fd",
+    "wholeConclusion": "failure",
+    "jobs": [
+      {
+        "id": 111926856620,
+        "name": "neoforge",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111926856718,
+        "name": "Fabric 1.20.1 / Java 17 production target",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111926856774,
+        "name": "control-plane",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111926856856,
+        "name": "studio-windows",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111926857405,
+        "name": "fabric",
+        "status": "completed",
+        "conclusion": "failure"
+      },
+      {
+        "id": 111927186068,
+        "name": "fabric-client",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 111928342114,
+        "name": "client-smoke",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "cleanCheckouts": [
+      {
+        "name": "windows",
+        "tree": "eab77796db4e794046a57d464b17eaf45b8f5adc",
+        "sourceRevision": "63c4646be8facdf76782a82bdc65e013838773fd",
+        "trackedFiles": 564,
+        "path": "output/ci/37358494032-windows/output/ci/clean-checkout/studio-windows.json",
+        "bytes": 4469,
+        "sha256": "127c61c8504613c9c20db1b1964f5af3bf64d8f1d67a6f93c60659ddc79fd53f"
+      },
+      {
+        "name": "control",
+        "tree": "eab77796db4e794046a57d464b17eaf45b8f5adc",
+        "sourceRevision": "63c4646be8facdf76782a82bdc65e013838773fd",
+        "trackedFiles": 564,
+        "path": "output/ci/37358494032-control/control-plane.json",
+        "bytes": 4469,
+        "sha256": "a2b8b4380b551d37d4a3a8f4526fd1759a6f09c3b66a736896196b7ff2ddb333"
+      },
+      {
+        "name": "production",
+        "tree": "eab77796db4e794046a57d464b17eaf45b8f5adc",
+        "sourceRevision": "63c4646be8facdf76782a82bdc65e013838773fd",
+        "trackedFiles": 564,
+        "path": "output/ci/37358494032-production/output/ci/clean-checkout/fabric-production.json",
+        "bytes": 4469,
+        "sha256": "a2b8b4380b551d37d4a3a8f4526fd1759a6f09c3b66a736896196b7ff2ddb333"
+      }
+    ],
+    "windows": {
+      "status": "PASS",
+      "root": "output\\ci\\37358494032-windows\\output\\playwright\\studio-packaged-95ace19a",
+      "report": {
+        "path": "output\\ci\\37358494032-windows\\output\\playwright\\studio-packaged-95ace19a\\report.json",
+        "bytes": 93347,
+        "sha256": "46c9a3ae597691a7e85cad3eb87af0c06f2c152337e60fff32a1d95b2f7a2ec8"
+      },
+      "subreports": [
+        {
+          "name": "mcp",
+          "status": "PASS"
+        },
+        {
+          "name": "texture",
+          "status": "PASS"
+        },
+        {
+          "name": "polish",
+          "status": "PASS"
+        },
+        {
+          "name": "editing",
+          "status": "PASS"
+        },
+        {
+          "name": "variants",
+          "status": "PASS"
+        },
+        {
+          "name": "agentBlockouts",
+          "status": "PASS"
+        },
+        {
+          "name": "continuation",
+          "status": "PASS"
+        },
+        {
+          "name": "agentStatus",
+          "status": "PASS"
+        },
+        {
+          "name": "brief",
+          "status": "PASS"
+        },
+        {
+          "name": "concepts",
+          "status": "PASS"
+        },
+        {
+          "name": "parts",
+          "status": "PASS"
+        },
+        {
+          "name": "repair",
+          "status": "PASS"
+        },
+        {
+          "name": "manual",
+          "status": "PASS"
+        },
+        {
+          "name": "accessibility",
+          "status": "PASS"
+        },
+        {
+          "name": "accessibilityStates",
+          "status": "PASS"
+        },
+        {
+          "name": "review",
+          "status": "PASS"
+        },
+        {
+          "name": "migrations",
+          "status": "PASS"
+        },
+        {
+          "name": "history",
+          "status": "PASS"
+        },
+        {
+          "name": "geometry",
+          "status": "PASS"
+        },
+        {
+          "name": "camera",
+          "status": "PASS"
+        },
+        {
+          "name": "discovery",
+          "status": "PASS"
+        }
+      ],
+      "boundary": "Actual hidden native packaged suite. Authored class runtime and human art acceptance are separate."
+    },
+    "production": {
+      "status": "PASS",
+      "operation": {
+        "path": "output\\ci\\37358494032-production\\output\\ci\\fabric-production\\generated\\operation-evidence.v1.json",
+        "bytes": 9643,
+        "sha256": "3e42770acd9daa1262d7b44f9c93dc75dba6d8e0939b96caf5799ea41536dfd3"
+      },
+      "sourceManifest": {
+        "path": "output\\ci\\37358494032-production\\output\\ci\\fabric-production\\generated\\source-review-manifest.json",
+        "bytes": 1663,
+        "sha256": "358db61afefcc01b674e313b928d69e9edd122c0f6528bb3d48e70971a78871f"
+      },
+      "verifiedGeneratedFiles": 6,
+      "jar": {
+        "path": "output\\ci\\37358494032-production\\output\\ci\\fabric-production\\generated\\build\\libs\\infectedfrontier-0.1.0.jar",
+        "bytes": 28835,
+        "sha256": "63c8139423e57b925edfa40f030020b23ae2cc21571eaf711c879d58a382cc15"
+      },
+      "gameTests": {
+        "path": "output/ci/37358494032-production/fixtures/fabric-1.20.1-empty/build/reports/gametest/production.xml",
+        "bytes": 406,
+        "sha256": "9bfe61eb0215fbaba9f2ecca46058e881c12d0d321956c5a20691935eaed9514"
+      },
+      "scope": "Strict clean online/offline build, two required infrastructure GameTests online/offline, dedicated/client nonce stopped and generated fixture build/server. No authored Leaf integration."
+    },
+    "legacyFabric262": {
+      "status": "FAILED_CHECKSUM",
+      "report": {
+        "path": "output\\ci\\37358494032-legacy\\at-1791226024940\\dependency-verification-report.html",
+        "bytes": 9060,
+        "sha256": "d2a9f364dd6f30c9a1fe28d1a7fb1f64e38990f447bb6c9dc6ae4a84a8a547c5"
+      },
+      "coordinate": "net.minecraft:minecraft-common-043a8b3edf:26.2",
+      "expected": "23248c15f8413aa0d06ac59e676913dd6a1dc0c5fffaa09365afd6c98d59fcd3",
+      "actual": "cf1ce23326b526d47a191726bcd54d11e72b8e71eea56255d0848c9947710b06",
+      "cause": "NOT_ESTABLISHED"
+    },
+    "logs": [
+      {
+        "path": "output/verification/roadmap-041-windows.log",
+        "bytes": 39772,
+        "sha256": "ac33f25c72008582b18b5262ce2313843d40e517250df8c658f25d96a342e5b5"
+      },
+      {
+        "path": "output/verification/roadmap-041-control-plane.log",
+        "bytes": 41435,
+        "sha256": "a308e980d4b3f775103428e3fd990b1dd5c21d45e20dcbdb3b80d03b13a3f3a9"
+      },
+      {
+        "path": "output/verification/roadmap-041-production.log",
+        "bytes": 75480,
+        "sha256": "f746e86741e4c7b2e3e763cdfe5cbc72a33ae72ff0aacfef692a1516a224a4bc"
+      },
+      {
+        "path": "output/verification/roadmap-041-fabric262.log",
+        "bytes": 32122,
+        "sha256": "7f80afd37c2ccb666a4ab75052c98b2cf5d01517e4b584c47660db0ed9814b0d"
+      }
+    ]
+  },
+  "boundaries": {
+    "specification": "validated",
+    "generation": "not-run",
+    "runtimeCapability": "not-verified",
+    "artistic": "requires-human-review",
+    "game": "not-run",
+    "integration": "not-run",
+    "leaf": "Direction A only; volume v3c and texture not approved.",
+    "baseline": "Fabric 1.20.1 / Java 17; trusted pack unchanged."
+  },
+  "checkedAtUtc": "2026-10-05T19:00:50.837Z",
+  "closureBoundary": "041 pre-generation contract for five model classes and separate Leaf direction only. No generated geometry quality, formal approval, authored runtime or JAR integration claim. Closure changes documentation only."
+}

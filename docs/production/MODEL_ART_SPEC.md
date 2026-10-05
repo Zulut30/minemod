@@ -1,6 +1,6 @@
 # ArtSpec для классов моделей
 
-Пункт 041: требования к будущей модели выражены публичным ArtSpec v1 и проверяются до генерации. Версия v0, её schema ID и прежние правила остаются доступны без автоматической миграции. Пункт пока не закрыт: окончательная запись evidence будет сделана после проверки точного source revision в CI.
+Пункт 041 закрыт: требования к будущей модели выражены публичным ArtSpec v1 и проверяются до генерации. Версия v0, её schema ID и прежние правила остаются доступны без автоматической миграции. [Exact-source evidence](evidence/model-art-spec-041.json) относится к source `63c4646`; художественная и игровая приёмка authored моделей этим пунктом не выполнялась.
 
 ArtSpec v1 добавляет обязательный `modelIntent` и `textureLayout`. Контракт содержит стиль, палитру, материал каждой смысловой части, дерево креплений, роль и важность части, габариты в model units (16 units/block), интервалы отношений размеров, крупные детали, читаемость в 32/64 px, причины отклонения, бюджеты и обязательные capture contexts. Это требования конкретного задания; интервалы не являются универсальной формулой художественного качества.
 
@@ -33,3 +33,15 @@ Art plan отклоняет v0 явно; ошибка не возвращает 
 `node --experimental-strip-types scripts/preview-art-plans.mjs` записывает offline dark style sheets, шесть plan JSON и три JSON Schema в `output/model-editor/art-plans-041/`. Это локальный скрипт разработчика; HTML экранирует текст, не загружает сеть и показывает те же validated data, что CLI/MCP. Это просмотр задания, не рендер модели.
 
 Фактическая оценка силуэта, пропорций, объёма и formal human review относится к 042–050. Binding задания к exported bundle и игровой интеграции требует отдельной проверки.
+
+## Подтверждённая проверка
+
+Шесть fixtures проходят публичный validator и art plan; пять классов представлены, 32 ошибочных случая отклоняются без частичного plan. Максимальные intent collections сохраняют прежние structural limits; part material reference поддерживает полный 193-character ResourceLocation. Проверены actual CLI process, linked SDK и реальный stdio MCP. Lint, root/Studio typecheck, portable tests и desktop build прошли локально. Старые ArtSpec v0 и ModSpec v0/v1 JSON Schema сравнены с предыдущим Git source: объекты и hashes совпадают.
+
+Offline style sheets проверены headless на 1440×1000 и 390×844: шесть карточек, ссылки, размеры native armor, статус направления Leaf, отсутствие horizontal overflow/page errors/network requests. Root-agent посмотрел полученный screenshot. Main/worker/preload Studio 0.18.0 после пересборки имеют прежние SHA-256; новый class exporter или UI generator не заявляется.
+
+Hosted [run 37358494032](https://github.com/Zulut30/minemod/actions/runs/37358494032) завершился по точному source `63c4646`: Linux full tests/build, Windows 21 packaged subreports, Fabric 1.20.1, NeoForge и client smoke прошли. Clean-checkout reports Windows/Linux/production имеют одинаковые source/tree. Production подтверждает strict clean online/offline build, два обязательных infrastructure GameTests online/offline, dedicated/client readiness с полностью остановленными nonce, generated fixture build/server; hashes шести generated source files и JAR проверены по выгруженным bytes. Это не игровая проверка authored Leaf или других ArtSpec fixtures.
+
+Whole workflow завершился failure только на сохранённом legacy Fabric 26.2 checksum gate: ожидается `23248c15f8413aa0d06ac59e676913dd6a1dc0c5fffaa09365afd6c98d59fcd3`, фактически `cf1ce23326b526d47a191726bcd54d11e72b8e71eea56255d0848c9947710b06`. Причина не установлена; checksum policy не менялась. Закрытие 041 касается pre-generation contract, а не production release всего проекта.
+
+Ограничение native coordinate span 48 units в задании соответствует границам −16…32 [зафиксированного Java model format Blockbench 5.0.0](https://github.com/JannisX11/blockbench/blob/v5.0.0/js/io/formats/java_block.js). Фактические координаты и rotations проверяются отдельным exporter.
