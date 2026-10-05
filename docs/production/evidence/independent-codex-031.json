@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "roadmapPoint": 31,
-  "status": "PARTIAL",
-  "checkedAtUtc": "2026-10-05T10:07:30.656Z",
+  "status": "PASS",
+  "checkedAtUtc": "2026-10-05T10:16:08.973Z",
   "scope": "One independent installed Codex CLI 0.160.0 model turn creating held-item through bounded Studio HTTP MCP from empty scene",
   "implementation": "Studio 0.10.1 homogeneous fixed tuple schema metadata; unchanged runtime parsers; optional installed-client operator harness",
   "sourceHashes": [
@@ -33,8 +33,8 @@
     "lint": "PASS",
     "typecheck": "PASS",
     "package": "PASS Windows x64",
-    "independentSession": "running; not claimed as PASS",
-    "hostedFullWindows": "pending current source"
+    "independentSession": "PASS installed client turn, exact PNG/export hashes and replay of all 8 agent applies",
+    "hostedFullWindows": "PASS complete exact-source packaged desktop suite, attempt2"
   },
   "logs": [
     {
@@ -61,6 +61,26 @@
       "path": "output/verification/roadmap-031-package.log",
       "bytes": 787,
       "sha256": "a5b249ff3da2d6258c63133d4c6b62ff8b9775fb3f3d970258e2cf1023dd261a"
+    },
+    {
+      "path": "output/verification/roadmap-031-independent-session-verification.json",
+      "bytes": 10047,
+      "sha256": "41bfeb360995480741c84c5afd76dc9655840ffd87ed1705712288a0c30b70a7"
+    },
+    {
+      "path": "output/verification/roadmap-031-hosted-retry-status.json",
+      "bytes": 18043,
+      "sha256": "5f879f4a38e3192c5d954cbc8e334ec002fb54bbf08fbaaf688eecd1aee852a5"
+    },
+    {
+      "path": "output/verification/roadmap-031-hosted-windows-retry.log",
+      "bytes": 29555,
+      "sha256": "d64c737560c421862aba0158d4c57d42c015f0cd2f4b16a3fbf7544cea8a221f"
+    },
+    {
+      "path": "output/verification/roadmap-031-hosted-windows-artifact.json",
+      "bytes": 292,
+      "sha256": "cb81cc4539ecdbd67521818717bd9fb4d210569d073380726d45fba5844b95c7"
     }
   ],
   "retainedFailedAttempts": [
@@ -96,5 +116,538 @@
   "trustedPacksChanged": false,
   "artisticApproval": "not-granted",
   "minecraftAcceptance": "not-tested",
-  "fullControlBrief005": "not-tested: one design with existing 256 atlas, not three variants/game contexts"
+  "fullControlBrief005": "not-tested: one design with existing 256 atlas, not three variants/game contexts",
+  "successfulSession": {
+    "schemaVersion": 1,
+    "status": "PASS",
+    "actor": "Installed Codex CLI independent model turn",
+    "cliVersion": "0.160.0",
+    "output": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\playwright\\independent-codex-031-9ab419a3",
+    "executable": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.10.1\\1aab9f14\\MineMod Studio-win32-x64\\MineMod Studio.exe",
+    "studioVersion": "0.10.1",
+    "initialCubes": 0,
+    "finalCubes": 22,
+    "initialRevision": 1,
+    "finalRevision": 9,
+    "projectId": "3015b117-c981-44dc-a0c7-e29e5c2c2b76",
+    "exitCode": 0,
+    "timedOut": false,
+    "hidden": true,
+    "violations": [],
+    "captures": [
+      {
+        "file": "item_8-1.png",
+        "tool": "studio_model_review",
+        "arguments": {
+          "projectId": "3015b117-c981-44dc-a0c7-e29e5c2c2b76",
+          "expectedRevision": 1
+        },
+        "bytes": 40933,
+        "sha256": "886e98ea78ecc71c6e775927c646806e93d4bad6aa7b00e2dae8327ee477ef19"
+      },
+      {
+        "file": "item_16-1.png",
+        "tool": "studio_model_review",
+        "arguments": {
+          "projectId": "3015b117-c981-44dc-a0c7-e29e5c2c2b76",
+          "expectedRevision": 3
+        },
+        "bytes": 61579,
+        "sha256": "674a28c0b4199f840c41ca1ad1e45ba5a1be1e4f1aa89cc12faf3c4ccf6a0073"
+      },
+      {
+        "file": "item_20-1.png",
+        "tool": "studio_model_review",
+        "arguments": {
+          "projectId": "3015b117-c981-44dc-a0c7-e29e5c2c2b76",
+          "expectedRevision": 4
+        },
+        "bytes": 72691,
+        "sha256": "1666d32a1e8968818ba8576e863acf9dc9c4c38ced77b2fb73d14d0432dfc227"
+      },
+      {
+        "file": "item_24-1.png",
+        "tool": "studio_model_review",
+        "arguments": {
+          "projectId": "3015b117-c981-44dc-a0c7-e29e5c2c2b76",
+          "expectedRevision": 5
+        },
+        "bytes": 79850,
+        "sha256": "c894ca445c5c622c3ac2045ffc7bb5334d4b8e6c43246c51aa3ef68420d19da2"
+      },
+      {
+        "file": "item_31-1.png",
+        "tool": "studio_view_capture",
+        "arguments": {
+          "projectId": "3015b117-c981-44dc-a0c7-e29e5c2c2b76",
+          "expectedRevision": 6,
+          "view": "perspective"
+        },
+        "bytes": 192710,
+        "sha256": "9a71b07727efba5382e8ec4a7f5d994f30a2e292058d6000bd38514bf86d5a8e"
+      },
+      {
+        "file": "item_30-1.png",
+        "tool": "studio_model_review",
+        "arguments": {
+          "projectId": "3015b117-c981-44dc-a0c7-e29e5c2c2b76",
+          "expectedRevision": 6
+        },
+        "bytes": 86276,
+        "sha256": "c9cfaf29e09af8ffade4635750141691063488ac043a52df969172c3f8f7cea4"
+      },
+      {
+        "file": "item_32-1.png",
+        "tool": "studio_view_capture",
+        "arguments": {
+          "projectId": "3015b117-c981-44dc-a0c7-e29e5c2c2b76",
+          "expectedRevision": 6,
+          "view": "front"
+        },
+        "bytes": 30372,
+        "sha256": "96febfd50761c7fa2dedeab86cb97b89e5555bd95a8a15faf3d26a0ccccd004b"
+      },
+      {
+        "file": "item_34-1.png",
+        "tool": "studio_view_capture",
+        "arguments": {
+          "projectId": "3015b117-c981-44dc-a0c7-e29e5c2c2b76",
+          "expectedRevision": 6,
+          "view": "rear-perspective"
+        },
+        "bytes": 198723,
+        "sha256": "f1fb74e21893766152f679f7d96f187394e95e10909c9d1f851b4d2e758151e6"
+      },
+      {
+        "file": "item_33-1.png",
+        "tool": "studio_view_capture",
+        "arguments": {
+          "projectId": "3015b117-c981-44dc-a0c7-e29e5c2c2b76",
+          "expectedRevision": 6,
+          "view": "back"
+        },
+        "bytes": 29300,
+        "sha256": "63e1882559e157056f036a328236854463eacf3ac268dcebf8ba26636fe5bb66"
+      },
+      {
+        "file": "item_40-1.png",
+        "tool": "studio_view_capture",
+        "arguments": {
+          "projectId": "3015b117-c981-44dc-a0c7-e29e5c2c2b76",
+          "expectedRevision": 7,
+          "view": "perspective"
+        },
+        "bytes": 193520,
+        "sha256": "b06bd19462554b099866e619d7fae7b270774318f70e94520368a435a750158b"
+      },
+      {
+        "file": "item_39-1.png",
+        "tool": "studio_model_review",
+        "arguments": {
+          "projectId": "3015b117-c981-44dc-a0c7-e29e5c2c2b76",
+          "expectedRevision": 7
+        },
+        "bytes": 86578,
+        "sha256": "e94e76213b03474beedaaa10bbe180b53b913cb1ff764614cb0638b7edd97b06"
+      },
+      {
+        "file": "item_49-1.png",
+        "tool": "studio_model_review",
+        "arguments": {
+          "projectId": "3015b117-c981-44dc-a0c7-e29e5c2c2b76",
+          "expectedRevision": 9
+        },
+        "bytes": 91112,
+        "sha256": "915b8cea0cfe9368f33ee33069f3b054e8ce2de55864e0f867f0fd93739f5820"
+      },
+      {
+        "file": "item_50-1.png",
+        "tool": "studio_view_capture",
+        "arguments": {
+          "projectId": "3015b117-c981-44dc-a0c7-e29e5c2c2b76",
+          "expectedRevision": 9,
+          "view": "front"
+        },
+        "bytes": 29995,
+        "sha256": "335e4740affa68589777c20a179174e09da4d779fbd11cfd232e701441466e2c"
+      },
+      {
+        "file": "item_51-1.png",
+        "tool": "studio_view_capture",
+        "arguments": {
+          "projectId": "3015b117-c981-44dc-a0c7-e29e5c2c2b76",
+          "expectedRevision": 9,
+          "view": "back"
+        },
+        "bytes": 28692,
+        "sha256": "95bb9c9018ee73f1e221ddb36d15d4083e5efd36e746bb9e12b1b0b13f57d6a0"
+      },
+      {
+        "file": "item_52-1.png",
+        "tool": "studio_view_capture",
+        "arguments": {
+          "projectId": "3015b117-c981-44dc-a0c7-e29e5c2c2b76",
+          "expectedRevision": 9,
+          "view": "perspective"
+        },
+        "bytes": 192658,
+        "sha256": "b09858b099888da2f20b466824aea8762e36d8d67402643310853ea49ba608a6"
+      },
+      {
+        "file": "item_54-1.png",
+        "tool": "studio_view_capture",
+        "arguments": {
+          "projectId": "3015b117-c981-44dc-a0c7-e29e5c2c2b76",
+          "expectedRevision": 9,
+          "view": "left"
+        },
+        "bytes": 14703,
+        "sha256": "d7a73c53690d8f2cde7f2ecd07d7a924d1a6d1382c491e452e25db9884a8423d"
+      },
+      {
+        "file": "item_55-1.png",
+        "tool": "studio_view_capture",
+        "arguments": {
+          "projectId": "3015b117-c981-44dc-a0c7-e29e5c2c2b76",
+          "expectedRevision": 9,
+          "view": "top"
+        },
+        "bytes": 24551,
+        "sha256": "754e52602aee05e813b4e8aec7f21b542cad27f69c49c907c10154b0f7508924"
+      },
+      {
+        "file": "item_53-1.png",
+        "tool": "studio_view_capture",
+        "arguments": {
+          "projectId": "3015b117-c981-44dc-a0c7-e29e5c2c2b76",
+          "expectedRevision": 9,
+          "view": "right"
+        },
+        "bytes": 14106,
+        "sha256": "05b17e5d0fabbcc294eb82e4558662f6792c434fbd914da2497e785efef343d1"
+      },
+      {
+        "file": "item_56-1.png",
+        "tool": "studio_view_capture",
+        "arguments": {
+          "projectId": "3015b117-c981-44dc-a0c7-e29e5c2c2b76",
+          "expectedRevision": 9,
+          "view": "bottom"
+        },
+        "bytes": 27246,
+        "sha256": "c0bec7c16ae95e7faae0a294c33f48585497fe3496b9b06e1d8486abb754ba0e"
+      },
+      {
+        "file": "item_57-1.png",
+        "tool": "studio_view_capture",
+        "arguments": {
+          "projectId": "3015b117-c981-44dc-a0c7-e29e5c2c2b76",
+          "expectedRevision": 9,
+          "view": "rear-perspective"
+        },
+        "bytes": 198516,
+        "sha256": "dcdf28d8acc728eb5ff7e858dbeec3c04eeb6d0e4f1d82c6bf72318754db62d1"
+      }
+    ],
+    "exports": [
+      "item_60-bundle.json"
+    ],
+    "usage": {
+      "input_tokens": 1442182,
+      "cached_input_tokens": 1375744,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 14313,
+      "reasoning_output_tokens": 6165
+    },
+    "mcpCalls": 52,
+    "completed": true,
+    "artisticApproval": "not-granted",
+    "minecraftAcceptance": "not-tested",
+    "fullControlBrief005": "not-tested: single-design 256 atlas technical session, not three variants or game views",
+    "sourceRevision": "fa1d871ed8dc7aa655f97f5ddaa837f41737abe2",
+    "operatorScriptNote": "Model run started before import-only lint fixes; exact CLI invocation and tool trace retained. Runtime schema/package matches this source.",
+    "exactReplay": true,
+    "exportMatchesFinalProject": true,
+    "finalViews": [
+      "back",
+      "bottom",
+      "front",
+      "left",
+      "perspective",
+      "rear-perspective",
+      "right",
+      "top"
+    ],
+    "colors": 6,
+    "successfulAgentApplies": 8,
+    "bundleManifestSha256": "8c0ef25bb39bd49535fc6ed27ee269c475c9224d2c60d50fba7c8e1f6d4abc92",
+    "bundleManifest": {
+      "schemaVersion": 1,
+      "kind": "mcdev-asset-bundle-manifest",
+      "target": {
+        "minecraft": "1.20.1",
+        "loader": "fabric",
+        "java": 17
+      },
+      "reviewRequired": true,
+      "modSpecSha256": null,
+      "artSpecSha256": null,
+      "namespaces": [
+        "mcdev"
+      ],
+      "files": [
+        {
+          "path": "assets/mcdev/models/item/new_item.json",
+          "role": "model",
+          "encoding": "utf8",
+          "bytes": 29541,
+          "sha256": "b8f265b9b7467c56d37f50b9c44cf6cb43b2a226362d87b240342355b7aac00f"
+        },
+        {
+          "path": "assets/mcdev/textures/item/new_item.png",
+          "role": "texture",
+          "encoding": "base64",
+          "bytes": 977,
+          "sha256": "54ca64d9cd5e3ec0888d1694e6bd146d1e4ece5ae2f1009ed79964b566d9d095"
+        },
+        {
+          "path": "editable/mcdev/new_item.bbmodel",
+          "role": "editable",
+          "encoding": "utf8",
+          "bytes": 37081,
+          "sha256": "4743131ad867392cab4e99b5b8504b77fb5dac61739dbbc7732c66dbe56709b7"
+        },
+        {
+          "path": "source/mcdev/new_item.item-asset.json",
+          "role": "source",
+          "encoding": "utf8",
+          "bytes": 73953,
+          "sha256": "9ad6d6f7a538cc5b1cb1b48469632ddcb1760c18cb14f0901dc2dcffe9805326"
+        }
+      ],
+      "assets": [
+        {
+          "id": "mcdev:new_item",
+          "source": "source/mcdev/new_item.item-asset.json",
+          "editable": [
+            "editable/mcdev/new_item.bbmodel"
+          ],
+          "references": [
+            {
+              "collection": "items",
+              "id": "mcdev:new_item"
+            }
+          ],
+          "kind": "held-item",
+          "runtime": {
+            "model": "assets/mcdev/models/item/new_item.json",
+            "textures": [
+              "assets/mcdev/textures/item/new_item.png"
+            ]
+          }
+        }
+      ]
+    },
+    "operatorGeometryChanges": 0,
+    "failures": [
+      {
+        "id": "item_26",
+        "tool": "studio_changes_preview",
+        "text": "{\"error\":{\"code\":\"NO_CHANGE\",\"message\":\"Штрих не меняет выбранные пиксели.\",\"recovery\":{\"action\":\"Сцена уже соответствует запросу; прочитайте её и не повторяйте ту же правку.\",\"automaticRetry\":false,\"contracts\":\"studio://contracts/v1\",\"scene\":\"studio://scene/v1\"}}}",
+        "error": null
+      }
+    ],
+    "artifacts": [
+      {
+        "path": "output\\playwright\\independent-codex-031-9ab419a3\\report.json",
+        "bytes": 7636,
+        "sha256": "5ad589731f7d7eccdaca7f04814bd19032a83de7d21885e54fbcc197de19ac94"
+      },
+      {
+        "path": "output\\playwright\\independent-codex-031-9ab419a3\\events.jsonl",
+        "bytes": 646809,
+        "sha256": "b787eb784831897586b69c31f9d09b9ba7e4e9ea7141a7f0a5d7979d6f5b4fba"
+      },
+      {
+        "path": "output\\playwright\\independent-codex-031-9ab419a3\\initial-project.json",
+        "bytes": 69905,
+        "sha256": "47b8e7e26765d4359a65e2e426f098a7dee9721d440e13d1c8531da4a844168c"
+      },
+      {
+        "path": "output\\playwright\\independent-codex-031-9ab419a3\\final-project.json",
+        "bytes": 100388,
+        "sha256": "2744e3eec20231f705cd813b2296d75ddda752a62ae8757e682bebf40178a613"
+      },
+      {
+        "path": "output\\playwright\\independent-codex-031-9ab419a3\\invocation.json",
+        "bytes": 2240,
+        "sha256": "764f1604ebcc58ab282d6885e66c6fbd1667ed0f11f99406e78e1249c327ef48"
+      },
+      {
+        "path": "output\\playwright\\independent-codex-031-9ab419a3\\prompt.txt",
+        "bytes": 3017,
+        "sha256": "1813f31f09bc22d942a0f5166fea85e7bc506ed8cec4e2e924bb8889700f3c17"
+      },
+      {
+        "path": "output\\playwright\\independent-codex-031-9ab419a3\\item_60-bundle.json",
+        "bytes": 152845,
+        "sha256": "9abe76938c964b8061bfc679ec79025fc93dd7a66a2ef2eb0bf41bc74d3a447c"
+      },
+      {
+        "path": "output\\playwright\\independent-codex-031-9ab419a3\\item_49-1.png",
+        "bytes": 91112,
+        "sha256": "915b8cea0cfe9368f33ee33069f3b054e8ce2de55864e0f867f0fd93739f5820"
+      }
+    ],
+    "packageHashes": [
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.10.1\\1aab9f14\\MineMod Studio-win32-x64\\MineMod Studio.exe",
+        "bytes": 245726208,
+        "sha256": "8332e485c470ac7521ed752a02881bdb28a8399ac3c7b77afa3ded514931c805"
+      },
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.10.1\\1aab9f14\\MineMod Studio-win32-x64\\resources\\app.asar",
+        "bytes": 3531764,
+        "sha256": "bc5ce83be204785bc2114663c9aa17da5cfa0a4b7d57c0d0aedefd3d1458a0f3"
+      }
+    ]
+  },
+  "visualFeedback": {
+    "actor": "Installed client model plus independent root image inspection; no human approval",
+    "blockoutRevision": 3,
+    "finalRevision": 9,
+    "actualImageDrivenRepairs": "Rectangular blade silhouette and smooth grip -> angled blade segments, leather wrapping, diamond pommel; later light/dark texture placement and six-color cleanup",
+    "rawAgentMessages": [
+      {
+        "id": "item_2",
+        "text": "Сначала прочитаю схему, идентификаторы и состояние проекта через studio_verification_031. Затем соберу один дизайн, проверю его на реальных PNG и выполню валидацию и экспорт bundle-v1.\n"
+      },
+      {
+        "id": "item_12",
+        "text": "Сцена действительно пустая: revision 1, атлас 256×256, сохранённых вариантов нет. Собираю компактный топор с широкой ледяной лопастью на одной стороне, коротким тёмным обухом и ромбовидным кристаллом в навершии рукояти. Крупные светлые и тёмные плоскости будут основой читаемости в малом размере.\n"
+      },
+      {
+        "id": "item_17",
+        "text": "На PNG blockout уже читается как односторонний топор, но лопасть пока прямоугольная, кромка обрывается квадратными уступами, а рукоять выглядит гладкой. Исправлю верх и нижний «бородатый» край наклонными деталями, добавлю объёмное крепление, кристалл и отчётливые витки обмотки.\n"
+      },
+      {
+        "id": "item_25",
+        "text": "После правки силуэт стал угловатым, крепёж и кристалл появились с обеих сторон. На перспективном PNG видна толщина головы, но центральная плоскость ещё похожа на однотонную пластину, а кожа — на гладкий брусок. Добавлю крупные ледяные грани и диагональные швы обмотки; мелкие руны для 32 px не нужны.\n"
+      },
+      {
+        "id": "item_35",
+        "text": "Крупные снимки фронта и тыла выявили две конкретные проблемы: тёмная грань текстуры оказалась возле режущей кромки, а блик кристалла дал зубчатую полосу. Перенесу тёмную грань к креплению, упрощу блик и разведу пересекающиеся плоскости сегментов кромки по глубине.\n"
+      },
+      {
+        "id": "item_46",
+        "text": "Проверка пикселей атласа показала, что recolor сохранил старый рисунок и добавил два промежуточных оттенка. Я перерисовал нужные области явными цветами; завершаю очистку боковых граней, чтобы вернуть ровно шесть цветов брифа. Затем проверю итог со всех ракурсов.\n"
+      },
+      {
+        "id": "item_58",
+        "text": "Итоговые PNG проверены спереди, сзади, с боков, сверху, снизу и в обеих перспективах. Видны широкая светлая кромка, объём крепления и кристалл; в 32/64 px сохраняется силуэт, но мелкие швы и заклёпка различимы хуже. Сейчас revision 9, 22 куба и ровно 6 цветов. Перехожу к технической валидации и экспорту.\n"
+      },
+      {
+        "id": "item_61",
+        "text": "Создан один дизайн: **revision 9, 22 куба, 6 цветов**, атлас 256×256.\n\nНа PNG фронта, тыла и перспективы видны светлая кромка, тёмный обух, крепление, обмотка и гранёный кристалл. В 32/64 px силуэт сохраняется; мелкие детали читаются слабее.\n\n`studio_asset_validate`: **pass**. Экспорт **bundle-v1** получен, файлы не записывались.\n\nХудожественная приёмка человеком и проверка в Minecraft остаются открытыми."
+      }
+    ],
+    "limits": "One technical design, no validated ArtSpec binding, game views, rubric score or human acceptance. 32/64 previews are editor images."
+  },
+  "verifiedAtUtc": "2026-10-05T10:45:36.184Z",
+  "hosted": {
+    "runId": 37294506792,
+    "attempt": 2,
+    "sourceRevision": "fa1d871ed8dc7aa655f97f5ddaa837f41737abe2",
+    "status": "completed",
+    "workflowConclusion": "failure",
+    "jobs": [
+      {
+        "name": "studio-windows",
+        "jobId": 111722133851,
+        "conclusion": "success"
+      },
+      {
+        "name": "Fabric 1.20.1 / Java 17 production target",
+        "jobId": 111722135313,
+        "conclusion": "success"
+      },
+      {
+        "name": "control-plane",
+        "jobId": 111722136099,
+        "conclusion": "success"
+      },
+      {
+        "name": "client-smoke",
+        "jobId": 111722136200,
+        "conclusion": "success"
+      },
+      {
+        "name": "fabric",
+        "jobId": 111722136238,
+        "conclusion": "failure"
+      },
+      {
+        "name": "neoforge",
+        "jobId": 111722136348,
+        "conclusion": "success"
+      },
+      {
+        "name": "fabric-client",
+        "jobId": 111722136988,
+        "conclusion": "skipped"
+      }
+    ],
+    "artifactId": 11339153989,
+    "artifactName": "minemod-studio-windows-evidence",
+    "report": {
+      "path": "output/ci/37294506792-windows/output/playwright/studio-packaged-f145da5c/report.json",
+      "bytes": 21315,
+      "sha256": "cb3d961ba4b18b283a2ae27ad79b8b9d57703aa1ce202503cbe45bb26ac021e9"
+    },
+    "packaged": true,
+    "hidden": true,
+    "mcpCliModels": "not-run in offline CI; actual installed-client turn verified separately",
+    "review": {
+      "status": "PASS",
+      "hidden": true,
+      "checks": [
+        "dark text and active control contrast",
+        "four independent views with common framing",
+        "real alpha silhouette",
+        "native square 64px render and nearest 32px preview",
+        "thumbnail framing independent of panel aspect ratio",
+        "compact review",
+        "bounded MCP review PNG",
+        "read-only scene and manual camera",
+        "project conflict rejected"
+      ],
+      "textContrast": 14.980762409476815,
+      "activeContrast": 8.972271758994312
+    },
+    "remainingRegression": "Legacy Fabric 26.2 derived JAR checksum mismatch; no verification bypass"
+  },
+  "retainedCiAttempts": [
+    {
+      "attempt": 1,
+      "windowsJobId": 111712438395,
+      "status": "cancelled",
+      "reason": "Operator canceled and then force-canceled after portable tests remained active for over17min; underlying cause unconfirmed",
+      "annotations": {
+        "path": "output/verification/roadmap-031-hosted-cancelled-annotations.json",
+        "bytes": 292,
+        "sha256": "4213cfa46f027785e0f7fdc9936f994accf86ee5d4b3a5fcb3717d6dd8657852"
+      },
+      "metadata": {
+        "path": "output/verification/roadmap-031-hosted-attempt-1.json",
+        "bytes": 12035,
+        "sha256": "c2bbf71f60deec737bb76137c8abcfb7b9493f2f424ba8fa88b72b1b6caaa060"
+      },
+      "jobs": {
+        "path": "output/verification/roadmap-031-hosted-attempt-1-jobs.json",
+        "bytes": 22089,
+        "sha256": "918c350eb99b659f85a77ac6684ed9c18eef019400ee8b758de276bfdf296af5"
+      },
+      "logs": "HTTP404 retained in operator notes; no absent job log used as evidence"
+    }
+  ]
 }

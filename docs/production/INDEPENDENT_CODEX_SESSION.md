@@ -1,6 +1,6 @@
 # Самостоятельный сеанс установленного Codex CLI
 
-Пункт 031. Проверяется создание одного held-item из пустой сцены через публичные инструменты Studio. Это технический сеанс; художественная приёмка, три варианта контрольного брифа 005 и работа в Minecraft проверяются отдельно. До успешного экспорта и проверки evidence пункт остаётся открытым.
+Пункт 031. Проверяется создание одного held-item из пустой сцены через публичные инструменты Studio. Это технический сеанс; художественная приёмка, три варианта контрольного брифа 005 и работа в Minecraft проверяются отдельно. Установленный клиент успешно создал и экспортировал модель. Hosted full Windows suite по точному source также прошёл; пункт 031 закрыт в этом техническом объёме.
 
 ## Проверяемое окружение
 
@@ -37,3 +37,15 @@ corepack pnpm --filter @mcdev/model-editor verify:codex-session
 Операторский watchdog ограничивает сеанс 12 минутами и 500 events. Он завершает только свой дочерний CLI и собственную скрытую Studio. Это не общий cancel/resume механизм приложения.
 
 Источники: [Codex non-interactive mode](https://learn.chatgpt.com/docs/non-interactive-mode), [MCP per-tool approval config](https://github.com/openai/codex/blob/rust-v0.160.0/codex-rs/config/src/mcp_types.rs), [тип schema клиента](https://github.com/openai/codex/blob/rust-v0.160.0/codex-rs/tools/src/json_schema/types.rs), [Zod JSON Schema metadata](https://zod.dev/json-schema#metadata). Проверены официальные docs, exact-version source и Context7; dependencies Studio не обновлялись.
+
+## Полученный технический результат
+
+Сеанс `independent-codex-031-9ab419a3`: 52 MCP calls, восемь успешных apply, revision 1 → 9, empty scene → 22 куба, шесть цветов. Получены 20 PNG, включая все восемь видов итоговой revision и review с силуэтом/32/64 px. Один `NO_CHANGE` для paint не изменил сцену; клиент перечитал её и пересчитал запрос.
+
+Независимая проверка заново воспроизвела все agent mutations из пустой сцены с тем же brief: итоговый project совпал полностью. Exact exported source bundle совпадает с `assetRequest(finalProject)`; четыре files и manifest проверены штатным bundle verifier. Широкая кромка, обмотка и кристалл видны на actual PNG. Это наблюдение о форме, не художественная оценка. [Точные hashes и retained failed attempts](evidence/independent-codex-031.json).
+
+## Hosted проверка приложения
+
+Windows job [`111722133851`](https://github.com/Zulut30/minemod/actions/runs/37294506792/job/111722133851), attempt 2, прошёл portable suites, HTTP MCP, package и полный hidden packaged E2E по source `fa1d871`. Проверены actual packaged report, MCP PNG hashes и review pixels. Actual installed CLI-сеанс выполнен отдельно: offline CI честно оставляет installed clients `not-run`.
+
+Первый Windows attempt отменён после зависания portable stage; причина не подтверждена, job logs возвращали HTTP 404. Этот attempt сохранён отдельно. Linux control-plane и production Fabric 1.20.1 build/GameTests/server/client прошли по тому же source. Общий workflow остаётся failed на legacy Fabric 26.2 checksum gate.
