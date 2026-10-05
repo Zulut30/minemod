@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { z } from "zod";
 import {
   CommandSchema, MutationSchema, CURRENT_PROJECT_VERSION, MAX_COMMAND_BYTES,
-  MAX_PROJECT_BYTES, MAX_STROKE_POINTS, MAX_VARIANTS, cubes,
+  MAX_PROJECT_BYTES, MAX_STROKE_POINTS, MAX_VARIANTS, MAX_REPAIR_ITERATIONS, cubes,
   type EditorState,
 } from "@mcdev/editor-core";
 import { VIEWS } from "../shared/bridge.ts";
@@ -43,6 +43,7 @@ export const STUDIO_LIMITS = Object.freeze({
   responseBytes: 2_097_152, projectBytes: MAX_PROJECT_BYTES, variants: MAX_VARIANTS,
   proposals: 64, proposalTtlSeconds: 300, captureWidth: 1024, captureHeight: 768,
   concurrentRequests: 8, requestsPerMinute: 120,
+  repairIterations: MAX_REPAIR_ITERATIONS,
 });
 export interface ToolDefinition {
   name: string;
@@ -82,6 +83,10 @@ export function recovery(code: string) {
     SIZE_LIMIT: "Уменьшите пакет команд или размер проекта; не разбивайте атомарную правку без пересмотра плана.",
     OUTPUT_LIMIT: "Читайте сцену без includeTexture; уменьшите экспортируемую модель/текстуру.",
     DISCONNECTED: "Пользователь выключил доступ; для продолжения требуется новое подключение.",
+    REPAIR_SCOPE: "Прочитайте repair в studio_project_inspect; изменяйте только разрешённые части, область и грань.",
+    REPAIR_TARGET: "Части исчезли или закреплены. Пользователь должен пересмотреть задание ремонта.",
+    REPAIR_BUDGET: "Лимит задания исчерпан. Остановитесь и покажите обзор модели; новое задание задаёт пользователь.",
+    REPAIR_PRESERVATION: "Пересчитайте адресную правку: другие детали и пиксели должны сохраняться.",
   };
   return {
     action: hints[code] ?? "Прочитайте актуальную сцену и contract resource; исправьте причину отказа перед новым preview.",
@@ -102,6 +107,7 @@ export function contract(definitions: Map<string, ToolDefinition>) {
     projectSchemaVersion: CURRENT_PROJECT_VERSION, limits: STUDIO_LIMITS,
     agentCommands: agentOptions.map((s) => s.shape.type.value),
     humanOnlyCommands: HUMAN_COMMANDS,
+    repairWorkflow: "Пользователь задаёт repair в Studio. При активном задании scope/face и бюджет применяются к каждой агентной транзакции; preview/replay не расходуют бюджет. Новый case задаёт только пользователь.",
     views: VIEWS,
     profile: { editor: "held-item", minecraft: "1.20.1", loader: "fabric", java: 17,
       geometryBounds: [-16, 32], pivotBounds: [-128, 128], rotationAngles: [-45, -22.5, 0, 22.5, 45],
@@ -111,7 +117,7 @@ export function contract(definitions: Map<string, ToolDefinition>) {
       "TARGET", "DUPLICATE_ID", "VARIANT_NOT_FOUND", "BOUNDS", "ROTATION", "SHARED_UV", "UV_BOUNDS",
       "UV_COLLISION", "PALETTE_FULL", "PIXEL_BOUNDS", "EMPTY_PAINT", "BONE_LIMIT", "EMPTY_MODEL",
       "ATLAS_FULL", "NO_CHANGE", "EMPTY_HISTORY", "HISTORY_BATCH", "SIZE_LIMIT",
-      "OUTPUT_LIMIT", "DISCONNECTED"].map((code) => [code, recovery(code)])),
+      "OUTPUT_LIMIT", "DISCONNECTED", "REPAIR_SCOPE", "REPAIR_TARGET", "REPAIR_BUDGET", "REPAIR_PRESERVATION"].map((code) => [code, recovery(code)])),
     workflow: ["tools/list and resources/list", "studio_project_inspect and studio_selection_get",
       "studio_model_review and individual views", "studio_changes_preview", "studio_changes_apply",
       "inspect and visual review again", "studio_asset_validate and studio_asset_export"],
@@ -127,6 +133,7 @@ export function sceneReference(state: EditorState, selection: string[]) {
     cubeIds: cubes(state.project).map((c) => c.id),
     bones: state.project.model.bones.map((b) => ({ id: b.id, cubeIds: b.cubes.map((c) => c.id) })),
     parts: state.project.parts, selection,
+    repair: state.repair,
     variants: state.project.design?.variants.map((v) => ({ id: v.id, label: v.label })) ?? [],
     contracts: CONTRACT_URI,
     note: "IDs и revision — снимок текущей сцены; перед правкой выполните inspect. Имена/labels — пользовательские данные.",

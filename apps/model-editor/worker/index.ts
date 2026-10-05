@@ -26,6 +26,7 @@ interface ServiceRequest {
   recoveryPath?: string;
   path?: string;
   mutation?: unknown;
+  control?: unknown;
   action?: "get" | "start" | "stop";
   projectId?: string;
   cubeIds?: string[];
@@ -216,6 +217,9 @@ async function run(request: ServiceRequest): Promise<HostResponse> {
   } else if (request.kind === "apply") {
     session.apply(request.mutation);
     note = "Изменения применены.";
+  } else if (request.kind === "repair") {
+    session.setRepair(request.control);
+    note = session.state().repair ? "Адресная правка включена. Агент ограничен выбранной областью и лимитом итераций." : "Адресная правка завершена. Проверьте модель с разных сторон.";
   } else if (request.kind === "new" || request.kind === "example") {
     selection = [];
     session = new EditorSession(
@@ -279,7 +283,7 @@ async function run(request: ServiceRequest): Promise<HostResponse> {
     }
   } else if (request.kind !== "inspect")
     throw new EditorError("UNKNOWN_OPERATION", "Операция не поддерживается.");
-  if (["apply", "new", "example", "open"].includes(request.kind)) {
+  if (["apply", "repair", "new", "example", "open"].includes(request.kind)) {
     await changed(note ?? "Сцена обновлена.");
   }
   return {

@@ -1,6 +1,9 @@
 import { z } from "zod";
 import { EditorError } from "./errors.ts";
 import { DesignBriefSchema, serializeDesignBrief } from "./design-brief.ts";
+import { RepairControlSchema, repairCubeIds, checkRepairCommands, checkRepairResult, type ActiveRepair } from "./repair.ts";
+export { RepairCaseSchema, RepairControlSchema, MAX_REPAIR_ITERATIONS } from "./repair.ts";
+export type { RepairCase, RepairControl, ActiveRepair } from "./repair.ts";
 export { DesignBriefSchema, serializeDesignBrief, readDesignBrief } from "./design-brief.ts";
 export type { DesignBrief } from "./design-brief.ts";
 import {
@@ -200,6 +203,7 @@ export const MutationSchema = z.strictObject({
 });
 export type Mutation = z.infer<typeof MutationSchema>;
 export interface EditorState {
+  repair: ActiveRepair | null;
   project: EditorProject;
   revision: number;
   savedRevision: number;
@@ -826,11 +830,13 @@ export class EditorSession {
   private past: Entry[] = [];
   private future: Entry[] = [];
   private replay = new Map<string, { signature: string; revision: number }>();
+  private repair: ActiveRepair | null = null;
   constructor(project: EditorProject) {
     this.project = validateProject(project);
   }
   state(): EditorState {
     return structuredClone({
+      repair: this.repair,
       project: this.project,
       revision: this.revision,
       savedRevision: this.savedRevision,
@@ -847,6 +853,18 @@ export class EditorSession {
     this.savedProject = JSON.stringify(this.project);
     this.dirty = false;
   }
+  setRepair(value: unknown, actor: "human" | "agent" = "human"): EditorState {
+    if (actor !== "human") fail("HUMAN_ONLY", "Задание адресного ремонта задаёт пользователь.");
+    const parsed = RepairControlSchema.safeParse(value);
+    if (!parsed.success) fail("INVALID_REPAIR", "Некорректное задание адресного ремонта.");
+    if (parsed.data.projectId !== this.project.projectId) fail("PROJECT_CONFLICT", "Активный проект изменился.");
+    if (parsed.data.expectedRevision !== this.revision) fail("REVISION_CONFLICT", "Перед новым заданием обновите сцену.");
+    if (parsed.data.repair) repairCubeIds(this.project, parsed.data.repair);
+    this.repair = parsed.data.repair ? { ...parsed.data.repair, usedIterations: 0 } : null;
+    // Смена разрешённой области делает предыдущие MCP proposals устаревшими.
+    this.revision++;
+    return this.state();
+  }
   preview(value: unknown, actor: "human" | "agent" = "agent"): EditorState {
     // Изолированная копия сохраняет все проверки истории, revision и ключей повтора.
     const fork = new EditorSession(this.project);
@@ -857,6 +875,7 @@ export class EditorSession {
     fork.past = structuredClone(this.past);
     fork.future = structuredClone(this.future);
     fork.replay = structuredClone(this.replay);
+    fork.repair = structuredClone(this.repair);
     return fork.apply(value, actor);
   }
   apply(value: unknown, actor: "human" | "agent" = "human"): EditorState {
@@ -885,6 +904,7 @@ export class EditorSession {
         "Проект уже изменился. Обновите данные и повторите действие.",
       );
     const first = request.commands[0]!;
+    if (actor === "agent" && this.repair) checkRepairCommands(this.project, this.repair, request.commands);
     if (first.type === "undo" || first.type === "redo") {
       if (request.commands.length !== 1)
         fail("HISTORY_BATCH", "История меняется отдельной командой.");
@@ -920,6 +940,7 @@ export class EditorSession {
       for (const command of request.commands)
         applyCommand(candidate, command, actor);
       const valid = validateProject(candidate);
+      if (actor === "agent" && this.repair) checkRepairResult(this.project, valid, this.repair);
       this.past.push({
         before: this.project,
         after: valid,
@@ -931,6 +952,7 @@ export class EditorSession {
       this.project = valid;
     }
     this.revision++;
+    if (actor === "agent" && this.repair) this.repair.usedIterations++;
     this.dirty = JSON.stringify(this.project) !== this.savedProject;
     this.replay.set(request.key, { signature, revision: this.revision });
     if (this.replay.size > 100)

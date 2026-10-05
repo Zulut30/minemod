@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useStudio } from "./store.ts";
+import { RepairPanel } from "./RepairPanel.tsx";
 export function ConnectionPanel() {
   const { connection, request, busy } = useStudio();
   const [provider, setProvider] = useState<"codex" | "claude">("codex");
@@ -28,6 +29,7 @@ export function ConnectionPanel() {
       >
         {connection.enabled ? "Выключить доступ" : "Включить подключение"}
       </button>
+      <RepairPanel />
       {connection.enabled && (
         <>
           <small data-testid="agent-endpoint">{connection.url}</small>

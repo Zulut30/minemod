@@ -941,6 +941,10 @@ select {
   border: 1px solid var(--border);
   border-radius: 5px;
 }
+.repair-panel label { display: grid; gap: 5px; margin-top: 10px; }
+.repair-panel textarea { font: inherit; color: var(--text); background: var(--surface-raised); line-height: 1.5; }
+.repair-panel summary { color: var(--text); line-height: 1.5; }
+.repair-panel [data-testid="repair-budget"] { color: var(--accent); }
 .capture-stage {
   position: absolute;
   inset: 0;

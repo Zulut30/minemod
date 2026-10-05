@@ -1,0 +1,298 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 38,
+  "status": "PARTIAL",
+  "checkedAtUtc": "2026-10-05T15:00:30.748Z",
+  "studioVersion": "0.14.0",
+  "node": "24.21.0",
+  "scope": "Human-authorized scoped repair with bounded agent iterations; local core/HTTP/packaged proof, hosted pending; no artistic or authored game approval",
+  "sourceHashes": [
+    {
+      "path": "packages/editor-core/repair.ts",
+      "bytes": 5597,
+      "sha256": "56268ea827fb9d58675abd5f11005038b4db966ff5243898e726199c57708160"
+    },
+    {
+      "path": "packages/editor-core/repair.test.ts",
+      "bytes": 6344,
+      "sha256": "14fd7cb257d6cdfdd80ce8993ea15d7d126523a75113f82507df7b01abd95b35"
+    },
+    {
+      "path": "packages/editor-core/index.ts",
+      "bytes": 36849,
+      "sha256": "cddd39255c774d6cb2905cc42b6a299f71d74baeeffc982b1a9c706e4eac174e"
+    },
+    {
+      "path": "packages/editor-core/package.json",
+      "bytes": 800,
+      "sha256": "41b5089eb40c230531040c35a6120e743b0783194b7af1fab8c54f5560633d49"
+    },
+    {
+      "path": "apps/model-editor/package.json",
+      "bytes": 1531,
+      "sha256": "c2f22855705748f7432ea066763048123bfa3371d89f70a09c32475e4c44e16b"
+    },
+    {
+      "path": "apps/model-editor/main/index.ts",
+      "bytes": 14676,
+      "sha256": "9a978f032f0c3a1b02867fdd254e034d12ffdf9128176cb55d610be047d1dbcd"
+    },
+    {
+      "path": "apps/model-editor/shared/bridge.ts",
+      "bytes": 1561,
+      "sha256": "a1fb2f476b42ad9d581989edc8c9018528dce57dce69363f1a867754919239bc"
+    },
+    {
+      "path": "apps/model-editor/worker/index.ts",
+      "bytes": 13680,
+      "sha256": "bd19e62f6791b36081712786562768be0f6e559883a780f5442e22a38edfc123"
+    },
+    {
+      "path": "apps/model-editor/worker/mcp.ts",
+      "bytes": 32247,
+      "sha256": "393ac12929d57e6728992f227a86098ebbf9f0ab839414c3bbb7cfc88a3898d1"
+    },
+    {
+      "path": "apps/model-editor/worker/mcp.test.ts",
+      "bytes": 17746,
+      "sha256": "87bf7f2560483219e2213634b0743b246383ebfa02d72daacd239e1bc3960202"
+    },
+    {
+      "path": "apps/model-editor/worker/discovery.ts",
+      "bytes": 12185,
+      "sha256": "1104b46d3c0cd852207fab04c557171ca47c618eaa22ece1919c34cc55ce5425"
+    },
+    {
+      "path": "apps/model-editor/renderer/RepairPanel.tsx",
+      "bytes": 4097,
+      "sha256": "167f2cada3659ebf97cce74c1b5cda29ca81ef991abb47988a28ec9160063e4d"
+    },
+    {
+      "path": "apps/model-editor/renderer/ConnectionPanel.tsx",
+      "bytes": 3041,
+      "sha256": "78216f8ef0d5206ebdbb1b5d68c67eccabd14b893d1bd3107eda1fe2846428a8"
+    },
+    {
+      "path": "apps/model-editor/renderer/style.css",
+      "bytes": 31181,
+      "sha256": "5877b3f32db8cc79c54d51e463bb4790a38d89655d57969a8b603464d12c81eb"
+    },
+    {
+      "path": "apps/model-editor/scripts/check-repair-desktop.mjs",
+      "bytes": 11872,
+      "sha256": "60b7d2395547d4731f2f1ed903cacac48f1fc6f79e304202f3cc1eac5ce46516"
+    },
+    {
+      "path": "apps/model-editor/scripts/test-desktop.mjs",
+      "bytes": 17630,
+      "sha256": "feeb1ffaaa020bcfbda98d7a74f26f5ff407c60fb30e295228e56b4d557fbfde"
+    }
+  ],
+  "package": {
+    "metadata": {
+      "path": "output/model-editor/latest-build.json",
+      "bytes": 328,
+      "sha256": "26403f644d5b1cd2f9b65b75439aba14364a0f49c7472927626eac1f00f5761c"
+    },
+    "executable": {
+      "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.14.0\\155b6429\\MineMod Studio-win32-x64\\MineMod Studio.exe",
+      "bytes": 245726208,
+      "sha256": "a41495c9b58a30ae421ac79ec357e56f3dc5e04853499b3710b2445391922f6c"
+    },
+    "asar": {
+      "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.14.0\\155b6429\\MineMod Studio-win32-x64\\resources\\app.asar",
+      "bytes": 3582564,
+      "sha256": "8430a348e9a6c7aa26034da1b509ded292402cd505afbd8aecd22f11dc91097b"
+    }
+  },
+  "local": {
+    "status": "PASS",
+    "report": {
+      "path": "output/playwright/targeted-repair-038-c0ed01b0/repair/report.json",
+      "bytes": 1910,
+      "sha256": "0c536839e92bf74e0302c3159365f07f9047b84308e10080149c358c0178ffb9"
+    },
+    "reportBody": {
+      "status": "PASS",
+      "hidden": true,
+      "projectId": "569f34da-46e0-45c1-9486-c3eebbc77455",
+      "captures": [
+        {
+          "path": "before-review.png",
+          "bytes": 75110,
+          "sha256": "25e0853a63c3769fe255a3691b4aa3aa68d87af7f2f9f2a341c54705f07ec7c0"
+        },
+        {
+          "path": "after-1-review.png",
+          "bytes": 74327,
+          "sha256": "90c470277bac6a8ea3a1c995119fa5e928b5aa23d55ca4e1aaaa81e2ea0df5c3"
+        },
+        {
+          "path": "after-2-review.png",
+          "bytes": 73238,
+          "sha256": "5358d1ec5330feeb17c547b32c809050672cd358b7604c7deb9145e0e465f260"
+        },
+        {
+          "path": "material-review.png",
+          "bytes": 73243,
+          "sha256": "35cbc8c98d5a638bc1635247238d23da1cabd073d2a2a9080d2a9563e08e9cd5"
+        },
+        {
+          "path": "uv-review.png",
+          "bytes": 73243,
+          "sha256": "35cbc8c98d5a638bc1635247238d23da1cabd073d2a2a9080d2a9563e08e9cd5"
+        }
+      ],
+      "manualPng": {
+        "path": "assets/mcdev/textures/item/aurora_longsword_v2.png",
+        "sha256": "55a940bf644c5cc5869ef694bce022d5579c33760d7aa2294dc497b160547a07",
+        "bytes": 1659
+      },
+      "finalProjectSha256": "e3c281dbcb3e7ea141e8010656c7d99bd2e6f5f6ac849b6a75403ae92c8c8c86",
+      "checks": [
+        "real human canvas stroke",
+        "human starts scoped case via UI",
+        "MCP discovers note/parts/budget",
+        "out-of-scope request rejected atomically",
+        "preview preserves actual state and budget",
+        "two targeted HTTP geometry applies",
+        "accepted geometry and manual PNG unchanged",
+        "exact replay spends no budget",
+        "actual multi-angle PNG before/after",
+        "third iteration rejected",
+        "agent cannot reset authorization",
+        "UI shows exhausted budget",
+        "human ends and starts face-specific material task",
+        "wrong face rejected",
+        "actual target face material paint preserves geometry/other pixels",
+        "actual scoped UV mirror preserves geometry",
+        "material and UV rendered reviews"
+      ]
+    },
+    "captures": [
+      {
+        "path": "output/playwright/targeted-repair-038-c0ed01b0/repair/before-review.png",
+        "bytes": 75110,
+        "sha256": "25e0853a63c3769fe255a3691b4aa3aa68d87af7f2f9f2a341c54705f07ec7c0"
+      },
+      {
+        "path": "output/playwright/targeted-repair-038-c0ed01b0/repair/after-1-review.png",
+        "bytes": 74327,
+        "sha256": "90c470277bac6a8ea3a1c995119fa5e928b5aa23d55ca4e1aaaa81e2ea0df5c3"
+      },
+      {
+        "path": "output/playwright/targeted-repair-038-c0ed01b0/repair/after-2-review.png",
+        "bytes": 73238,
+        "sha256": "5358d1ec5330feeb17c547b32c809050672cd358b7604c7deb9145e0e465f260"
+      },
+      {
+        "path": "output/playwright/targeted-repair-038-c0ed01b0/repair/material-review.png",
+        "bytes": 73243,
+        "sha256": "35cbc8c98d5a638bc1635247238d23da1cabd073d2a2a9080d2a9563e08e9cd5"
+      },
+      {
+        "path": "output/playwright/targeted-repair-038-c0ed01b0/repair/uv-review.png",
+        "bytes": 73243,
+        "sha256": "35cbc8c98d5a638bc1635247238d23da1cabd073d2a2a9080d2a9563e08e9cd5"
+      }
+    ],
+    "uiScreenshot": {
+      "path": "output/playwright/targeted-repair-038-c0ed01b0/repair/repair-panel.png",
+      "bytes": 349825,
+      "sha256": "eb4c7144cb5d783a86cc1e131c62aa2e448ba48e9efaa6818b86f7b59fb45e6c"
+    },
+    "logs": [
+      {
+        "path": "output/verification/roadmap-038-portable-current.log",
+        "bytes": 3931,
+        "sha256": "2d79adac11e33398b1c39aecd7c9254dcf693b3490037f0c128acc722acb35fa"
+      },
+      {
+        "path": "output/verification/roadmap-038-mcp-final.log",
+        "bytes": 207,
+        "sha256": "ce600a29360c371575566860a7c94c33766d03e9a2ba5f6249e976ae6338a777"
+      },
+      {
+        "path": "output/verification/roadmap-038-discovery-final.log",
+        "bytes": 203,
+        "sha256": "a8a7fda7aed1426020f3caa5d1d22f036754524f8906a1f3f78035671b9171ac"
+      },
+      {
+        "path": "output/verification/roadmap-038-lint-verified.log",
+        "bytes": 29,
+        "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+      },
+      {
+        "path": "output/verification/roadmap-038-typecheck-verified.log",
+        "bytes": 176,
+        "sha256": "fe0327fb3a908a7cea6b4e5ef62bbaa7903d4f4149a209170e6249f0dd5c8190"
+      },
+      {
+        "path": "output/verification/roadmap-038-package.log",
+        "bytes": 787,
+        "sha256": "61a6bd858b4fe2ac1f30f0650d545ba191f7c7de8017ff79b83207a3b4209532"
+      },
+      {
+        "path": "output/verification/roadmap-038-desktop-recorded.log",
+        "bytes": 257,
+        "sha256": "f46242761e9a182bfe2e58b1007898870dfc161369d2b9d80588246f676b7bf4"
+      },
+      {
+        "path": "output/verification/roadmap-038-repair-current.log",
+        "bytes": 148,
+        "sha256": "d1328d6458383858b96406deda5518c289b88a91b2f6c26d383cff4ca625f0bb"
+      },
+      {
+        "path": "output/verification/roadmap-038-frozen-install.log",
+        "bytes": 204,
+        "sha256": "e19b27662d752079cdb1527051a0037326251646fe867de7dbe0613ab364c343"
+      },
+      {
+        "path": "output/verification/roadmap-038-lint-before-commit.log",
+        "bytes": 29,
+        "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+      }
+    ],
+    "finalReview": {
+      "checkedAtUtc": "2026-10-05T15:04:21.319Z",
+      "sourceFilesMatched": 16,
+      "allRecordedArtifactDigestsMatched": true,
+      "partsOwnership": "Validated by existing project validator: every cube belongs to exactly one part",
+      "lockfile": "UNCHANGED"
+    }
+  },
+  "limits": {
+    "parts": 16,
+    "noteCharacters": 400,
+    "iterations": 3,
+    "commandsPerTransaction": 32
+  },
+  "boundaries": {
+    "hosted": "PENDING",
+    "independentCodexClaudeRepairSession": "NOT_RUN",
+    "artisticAcceptance": "NOT_PERFORMED",
+    "authoredGameAcceptance": "NOT_RUN",
+    "gameplayCode": "UNCHANGED",
+    "dependencies": "UNCHANGED",
+    "trustedPacks": "UNCHANGED",
+    "projectSchema": "UNCHANGED_V2",
+    "repairPersistence": "SESSION_ONLY_NEW_HUMAN_CASE_AFTER_OPEN_OR_RESTART"
+  },
+  "retainedDiagnostics": [
+    {
+      "path": "output/verification/roadmap-038-core-initial.log",
+      "bytes": 3154,
+      "sha256": "d4bd56707095d729b1a57cbf48201a4eb0e428c8038c7936190514227b810764"
+    },
+    {
+      "path": "output/verification/roadmap-038-typecheck-initial.log",
+      "bytes": 1293,
+      "sha256": "f301707e0aa3991fe9cc0b480490d5e9db7bdf94d6dd5743c2ae7a66227e83b0"
+    },
+    {
+      "path": "output/verification/roadmap-038-desktop-initial.log",
+      "bytes": 257,
+      "sha256": "e851efd648be88b02bc68523ff6181c882616ddd28383be205304b0537c7bc9a"
+    }
+  ]
+}

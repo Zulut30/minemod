@@ -28,6 +28,7 @@ import { checkPartsDesktop } from "./check-parts-desktop.mjs";
 import { checkManualDesktop } from "./check-manual-desktop.mjs";
 import { checkAccessibilityDesktop } from "./check-accessibility-desktop.mjs";
 import { checkAccessibilityStatesDesktop } from "./check-accessibility-states-desktop.mjs";
+import { checkRepairDesktop } from "./check-repair-desktop.mjs";
 
 const appDir = resolve(dirname(fileURLToPath(import.meta.url)), ".."),
   repo = resolve(appDir, "../..");
@@ -393,6 +394,7 @@ try {
   const variants = await checkVariantsDesktop(options, output);
   const brief = await checkBriefDesktop(options, output);
   const parts = await checkPartsDesktop(options, output);
+  const repair = await checkRepairDesktop(options, output);
   const manual = await checkManualDesktop(options, output);
   const accessibility = await checkAccessibilityDesktop(options, output);
   const accessibilityStates = await checkAccessibilityStatesDesktop(options, output);
@@ -418,6 +420,7 @@ try {
         variants,
         brief,
         parts,
+        repair,
         manual,
         accessibility,
         accessibilityStates,

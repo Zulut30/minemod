@@ -1,4 +1,4 @@
-import type { EditorState, EditorProject, Mutation } from "@mcdev/editor-core";
+import type { EditorState, EditorProject, Mutation, RepairControl } from "@mcdev/editor-core";
 export const VIEWS = ["perspective", "front", "side", "back", "left", "right", "top", "bottom", "rear-perspective"] as const;
 export type View = typeof VIEWS[number];
 export interface ConnectionInfo {
@@ -27,6 +27,7 @@ export type HostRequest =
         | "export";
     }
   | { kind: "apply"; mutation: Mutation }
+  | { kind: "repair"; control: RepairControl }
   | { kind: "connection"; action: "get" | "start" | "stop" };
 export type HostResponse =
   | {

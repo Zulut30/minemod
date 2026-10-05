@@ -481,6 +481,24 @@ try {
     (oversizedReview.data.error as { code: string }).code,
     "OUTPUT_LIMIT",
   );
+  const repairPart = session.state().project.parts.find(part => !part.locked)!;
+  const repairBefore = session.state();
+  session.setRepair({ projectId: repairBefore.project.projectId, expectedRevision: repairBefore.revision,
+    repair: { id: randomUUID(), note: "Исправить пропорции выбранной детали", partIds: [repairPart.id], area: "geometry", maxIterations: 1 } });
+  const repairScene = await call(0, "studio_project_inspect", {});
+  assert.deepEqual(repairScene.data.repair, session.state().repair);
+  const repairMove: EditorCommand = { type: "transform", cubeIds: [repairPart.cubeIds[0]!], translation: [0.125,0,0], scale: [1,1,1] };
+  const repairPreview = await call(0, "studio_changes_preview", mutation([repairMove]));
+  assert.equal(repairPreview.error, undefined);assert.equal(session.state().repair?.usedIterations,0);
+  const repairApplyArgs = { projectId: session.state().project.projectId, proposalId: repairPreview.data.proposalId };
+  assert.equal((await call(0,"studio_changes_apply",repairApplyArgs)).error,undefined);
+  assert.equal(session.state().repair?.usedIterations,1);
+  assert.equal((await call(0,"studio_changes_apply",repairApplyArgs)).error,undefined);
+  assert.equal(session.state().repair?.usedIterations,1);
+  const budgetDenied = await call(0,"studio_changes_preview",mutation([repairMove]));
+  assert.equal((budgetDenied.data.error as {code:string}).code,"REPAIR_BUDGET");
+  assert.deepEqual(session.state().project.texturePlan,repairBefore.project.texturePlan);
+  assert.equal((await clients[0]!.callTool({name:"studio_repair_reset",arguments:{}})).isError,true);
   process.stdout.write(
     "Studio MCP: real HTTP clients, authentication, origins, byte limits, preview isolation, conflicts, locks, human history, replay and bounded export PASS\n",
   );

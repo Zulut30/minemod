@@ -13,7 +13,7 @@ import { join, resolve, sep, basename } from "node:path";
 import { pathToFileURL } from "node:url";
 import { Buffer } from "node:buffer";
 import process from "node:process";
-import { MAX_COMMAND_BYTES, MutationSchema } from "@mcdev/editor-core";
+import { MAX_COMMAND_BYTES, MutationSchema, RepairControlSchema } from "@mcdev/editor-core";
 import { z } from "zod";
 import type {
   HostRequest,
@@ -132,12 +132,14 @@ async function handle(request: HostRequest): Promise<HostResponse> {
     case "inspect":
     case "apply":
     case "connection":
+    case "repair":
       result = await ask(
         request.kind,
         request.kind === "apply"
           ? { mutation: request.mutation }
           : request.kind === "connection"
             ? { action: request.action }
+            : request.kind === "repair" ? { control: request.control }
             : {},
       );
       break;
@@ -312,17 +314,20 @@ async function boot(): Promise<void> {
         "saveAs",
         "export",
         "connection",
+        "repair",
       ].includes(request.kind) ||
       Object.keys(value).sort().join(",") !==
         (request.kind === "apply"
           ? "kind,mutation"
           : request.kind === "connection"
             ? "action,kind"
+            : request.kind === "repair" ? "control,kind"
             : "kind") ||
       (request.kind === "connection" &&
         !["get", "start", "stop"].includes(request.action)) ||
       (request.kind === "apply" &&
-        !MutationSchema.safeParse(request.mutation).success)
+        !MutationSchema.safeParse(request.mutation).success) ||
+      (request.kind === "repair" && !RepairControlSchema.safeParse(request.control).success)
     ) {
       return {
         ok: false,
