@@ -5,7 +5,7 @@
   "pointClosed": false,
   "checkedAtUtc": "2026-10-05T20:38:31.679Z",
   "sourceBeforeImplementation": "8a49732fbd5f50b5ae2237861d4d2c264e2fa83e",
-  "sourceCommit": null,
+  "sourceCommit": "5758cb6f42a22081c47a1929b048c3dd4fb94ed1",
   "sourceInputs": [
     {
       "path": "apps/model-editor/scripts/create-leaf-bevel-draft.mjs",
