@@ -54,6 +54,7 @@ function reject(change: (draft: ArtSpecV1) => void, path: string, fixture = weap
   negatives += 1;
 }
 reject(d => { d.modelIntent.parts[1]!.materialRecipe = "minemod:missing"; }, "/modelIntent/parts/1/materialRecipe");
+for(const text of ["😀","\uD83D","\uDC00"])reject(d=>{d.modelIntent.parts[0]!.label=text;},"/modelIntent/parts/0/label");
 reject(d => { d.style.materialRecipes.push(structuredClone(d.style.materialRecipes[0]!)); }, "/style/materialRecipes");
 reject(d => { d.style.materialRecipes[0]!.base = "#FFFFFF"; }, "/style/materialRecipes/0");
 reject(d => { d.style.materialRecipes[0]!.highlight = d.style.materialRecipes[0]!.base; }, "/style/materialRecipes/0");

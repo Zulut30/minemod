@@ -18,6 +18,8 @@ ArtSpec v1 добавляет обязательный `modelIntent` и `texture
 
 JSON Schema фиксирует форму и пределы полей; ссылки, циклы и cross-field условия проходят Zod/server-side validation. Проверены [официальная документация Zod](https://zod.dev/api) и [экспорт JSON Schema](https://zod.dev/json-schema), а также Context7. Dependency остаётся закреплённой 4.4.2; фактический parser и CLI/MCP проверяются на этой версии.
 
+После исходного evidence 041 найдена и локально проверена [корректировка BMP policy ModelIntent v1](MODEL_INTENT_UNICODE_FIX.md): supplementary symbols и lone surrogates отклоняются явными scalar ranges. Старые ArtSpec v0 и ModSpec v0/v1 JSON Schema hashes сохранены; hosted evidence исправления фиксируется отдельно.
+
 ## Публичные операции
 
 `mcdev spec validate <inline-json>` принимает ModSpec v0/v1 и ArtSpec v0/v1. `mcdev art plan <inline-artspec-v1-json>` и MCP `mcdev_art_plan({payload})` возвращают один `mcdev.art-plan/v1`: SHA-256 payload, проверенные parts/style/budgets/contexts и отдельные статусы generation/runtime/artistic/game/integration. CLI/MCP не читают произвольные файлы, не записывают assets и не вызывают build runner. MCP принимает только bounded payload; shell/script/eval аргументы отклоняются. Прежние validation/asset/build tools остаются доступны. Десять tools MCP самого Studio этим пунктом не расширяются.

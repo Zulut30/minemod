@@ -2,7 +2,9 @@ import {z} from "zod";
 
 // Декларативное задание; соответствие фактической геометрии проверяется отдельно.
 const partId=z.string().regex(/^[a-z][a-z0-9_]{0,63}$/u);
-const text=(maximum:number)=>z.string().min(1).max(maximum).regex(/^[^\uD800-\uDFFF]*$/u).regex(/\S/u);
+// Явные BMP диапазоны одинаково ограничивают scalar values в Zod и JSON Schema.
+const bmpScalarPattern="^[\\u0000-\\uD7FF\\uE000-\\uFFFF]*$";
+const text=(maximum:number)=>z.string().min(1).max(maximum).regex(new RegExp(bmpScalarPattern)).regex(/\S/u);
 const dimension=z.enum(["width","height","depth"]);
 const ratio=z.number().finite().min(0.01).max(16);
 export const MODEL_INTENT_SCHEMA_ID="https://mcdev.local/schemas/model-intent-v1.json";

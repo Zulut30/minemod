@@ -9,6 +9,16 @@ const leaf={schemaVersion:1,kind:"mcdev-model-intent",modelClass:"weapon",runtim
   proportions:[{partId:"blade",dimension:"height",relativeTo:"whole",relativeDimension:"height",minimum:0.62,maximum:0.76,reason:"Пропорция конкретного брифа; не универсальная оценка красоты"}],
   features:[{label:"Широкий центральный клинок",partIds:["blade"],meaning:"Главный акцент силуэта",readableAt:[32,64]}],reject:["Плоская необработанная обратная сторона"]};
 assert(ModelIntentSchema.safeParse(leaf).success);
+const bmp=structuredClone(leaf);bmp.parts[0]!.label="Ж".repeat(80);
+assert(ModelIntentSchema.safeParse(bmp).success,"BMP label at its maximum remains valid");
+for(const invalid of ["😀","\uD83D","\uDC00"]){
+  const drafts=Array.from({length:7},()=>structuredClone(leaf));
+  drafts[0]!.silhouette=invalid;drafts[1]!.parts[0]!.label=invalid;drafts[2]!.parts[0]!.purpose=invalid;
+  drafts[3]!.proportions[0]!.reason=invalid;drafts[4]!.features[0]!.label=invalid;drafts[5]!.features[0]!.meaning=invalid;drafts[6]!.reject=[invalid];
+  for(const draft of drafts)assert.equal(ModelIntentSchema.safeParse(draft).success,false,"Supplementary scalars and lone surrogates must be rejected in every text role");
+}
+const labelJson=(ModelIntentJsonSchema.properties as Record<string,{items?:{properties?:{label?:{allOf?:Array<{pattern?:string}>}}}}>).parts!.items!.properties!.label!;
+assert(labelJson.allOf?.some(rule=>rule.pattern==="^[\\u0000-\\uD7FF\\uE000-\\uFFFF]*$"),"Emitted JSON Schema must contain the same explicit BMP constraint");
 assert.equal(ModelIntentJsonSchema.additionalProperties,false);
 assert.equal(ModelIntentJsonSchema.$id,MODEL_INTENT_SCHEMA_ID);
 const properties=ModelIntentJsonSchema.properties as Record<string,{maxItems?:number}>;
@@ -44,4 +54,4 @@ for(const modelClass of MODEL_CLASSES){
     proportions:[{...leaf.proportions[0],partId:roles[0]}],features:[{...leaf.features[0],partIds:[roles[0]]}]};
   assert(ModelIntentSchema.safeParse(intent).success,modelClass);
 }
-process.stdout.write("Model intent: named parts, ratio bounds, attachment cycles, reference roles, unknown schema, class/runtime separation and bounded JSON Schema PASS\n");
+process.stdout.write("Model intent: named parts, ratio bounds, attachment cycles, reference roles, unknown schema, class/runtime separation, BMP scalars in Zod/JSON Schema and bounded JSON Schema PASS\n");
