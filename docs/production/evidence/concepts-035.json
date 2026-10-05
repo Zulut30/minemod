@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "roadmapPoint": 35,
-  "status": "PARTIAL",
-  "checkedAtUtc": "2026-10-05T15:55:31.090Z",
+  "status": "PASS",
+  "checkedAtUtc": "2026-10-05T16:13:45.187Z",
   "studioVersion": "0.15.0",
   "editorProjectVersion": 3,
   "node": "24.21.0",
@@ -324,10 +324,36 @@
       "fixed": "Original is reverified before each capture; job-specific closed image URL avoids cache reuse after disk corruption"
     },
     "fullPackage": {
-      "status": "RUNNING",
+      "status": "PASS_PREVIOUS_LOCAL_CANDIDATE",
       "path": "output/playwright/studio-packaged-254ff6a3",
       "package": "output/model-editor/releases/0.15.0/613ca243/MineMod Studio-win32-x64",
-      "note": "Started before final concept-form CSS and UUID case refinement; current package has focused concept proof. Exact-source full suite is required hosted."
+      "note": "Started before final concept-form CSS and UUID case refinement; current package has focused concept proof. Exact-source full suite is required hosted.",
+      "report": {
+        "path": "output/playwright/studio-packaged-254ff6a3/report.json",
+        "bytes": 36898,
+        "sha256": "51eb496b8b4a14d8747ae8861dd69cb42132781936ad6a9a09b5770692ca05f0"
+      },
+      "subreports": [
+        "mcp",
+        "texture",
+        "polish",
+        "editing",
+        "variants",
+        "brief",
+        "concepts",
+        "parts",
+        "repair",
+        "manual",
+        "accessibility",
+        "accessibilityStates",
+        "review",
+        "migrations",
+        "history",
+        "geometry",
+        "camera",
+        "discovery"
+      ],
+      "notes": "18 subreports pass on immutable 613ca243 package. Final 6b8c9d48 adds concept-form styling and uppercase UUID protocol refinement; focused concept run covers those. Full exact-source hosted acceptance remains pending."
     }
   },
   "lock": {
@@ -336,7 +362,7 @@
     "sha256": "e955ab8e82d8bb87128cf10f0f95b67c217fb1bf31eb7f2321823e66b03195c2"
   },
   "boundaries": {
-    "hosted": "PENDING",
+    "hosted": "SCOPED_PASS",
     "authored3DArtisticAcceptance": "NOT_PERFORMED",
     "authoredGameAcceptance": "NOT_RUN",
     "licenseVerification": "USER_DECLARATION_ONLY",
@@ -345,6 +371,286 @@
     "imageTo3D": "NOT_IMPLEMENTED",
     "conceptTestImage": "OWN_SYNTHETIC_TECHNICAL_FIXTURE",
     "nativeIntegration": "SEPARATE_REVIEW_REQUIRED",
-    "dependenciesAndTrustedPacks": "UNCHANGED"
+    "dependenciesAndTrustedPacks": "UNCHANGED",
+    "wholeCI": "FAILURE_LEGACY_FABRIC_26_2"
+  },
+  "hosted": {
+    "status": "SCOPED_PASS",
+    "sourceCommit": "5a7e5f553de43175eaf1a1b916449f596e58afde",
+    "runId": 37336772703,
+    "url": "https://github.com/Zulut30/minemod/actions/runs/37336772703",
+    "checkedAtUtc": "2026-10-05T16:13:44.963Z",
+    "jobs": [
+      {
+        "name": "neoforge",
+        "id": 111853418885,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37336772703/job/111853418885"
+      },
+      {
+        "name": "studio-windows",
+        "id": 111853419237,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37336772703/job/111853419237"
+      },
+      {
+        "name": "fabric",
+        "id": 111853419257,
+        "status": "completed",
+        "conclusion": "failure",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37336772703/job/111853419257"
+      },
+      {
+        "name": "control-plane",
+        "id": 111853419278,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37336772703/job/111853419278"
+      },
+      {
+        "name": "Fabric 1.20.1 / Java 17 production target",
+        "id": 111853419313,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37336772703/job/111853419313"
+      },
+      {
+        "name": "fabric-client",
+        "id": 111853791113,
+        "status": "completed",
+        "conclusion": "skipped",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37336772703/job/111853791113"
+      },
+      {
+        "name": "client-smoke",
+        "id": 111855004356,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/Zulut30/minemod/actions/runs/37336772703/job/111855004356"
+      }
+    ],
+    "statusReport": {
+      "path": "output/verification/roadmap-035-hosted-status.json",
+      "bytes": 19134,
+      "sha256": "d1f5cf6737c37c0cd04dea8d57469ab61cfd14c83d2447a2ebbc238caab6a02e"
+    },
+    "artifactMetadata": {
+      "path": "output/verification/roadmap-035-hosted-artifacts.json",
+      "bytes": 2890,
+      "sha256": "d0161181455962ae0152f27ef26b29416e4d852fac406ee45c4cbd3229fe3ea7"
+    },
+    "artifacts": [
+      {
+        "id": 11357700625,
+        "name": "minemod-studio-windows-evidence",
+        "bytes": 2938950,
+        "digest": "sha256:ae70bef8b931833f3d708353557db18f776972514732cd62035e11dcc0e00d46"
+      },
+      {
+        "id": 11357146161,
+        "name": "fabric-1.20.1-java17-evidence",
+        "bytes": 50662,
+        "digest": "sha256:9228d4b225e911231020761c5961527e40e7d576f38ab8a88949679499493dff"
+      },
+      {
+        "id": 11356269088,
+        "name": "fabric-26.2-verification-failure",
+        "bytes": 102357,
+        "digest": "sha256:20600afc60dc9d6c6093466b9fe407df9dbb3a6c210bee7847a101f2135ebbe0"
+      },
+      {
+        "id": 11356234258,
+        "name": "control-plane-clean-checkout-evidence",
+        "bytes": 1896,
+        "digest": "sha256:c8e95592fa6f3a845862c87b103a81c4eaf5e04d72291e47749278398fc79e85"
+      }
+    ],
+    "windows": {
+      "report": {
+        "path": "output/ci/37336772703-windows\\output\\playwright\\studio-packaged-56d235e8\\report.json",
+        "bytes": 36578,
+        "sha256": "7e9c013e769b755142e7eb501f5a424ca6b7ec304e2c8afbededca5fd7abdfc4"
+      },
+      "packagePath": "D:\\a\\minemod\\minemod\\output\\model-editor\\releases\\0.15.0\\51f05cfd\\MineMod Studio-win32-x64\\MineMod Studio.exe",
+      "subreports": [
+        "mcp",
+        "texture",
+        "polish",
+        "editing",
+        "variants",
+        "brief",
+        "concepts",
+        "parts",
+        "repair",
+        "manual",
+        "accessibility",
+        "accessibilityStates",
+        "review",
+        "migrations",
+        "history",
+        "geometry",
+        "camera",
+        "discovery"
+      ],
+      "conceptReport": {
+        "path": "output\\ci\\37336772703-windows\\output\\playwright\\studio-packaged-56d235e8\\concepts\\report.json",
+        "bytes": 1702,
+        "sha256": "0c60bbcfa5c1eb62ed0ed61929024868dba0dbe60f5142b455fd2c48ceedf094"
+      },
+      "conceptBody": {
+        "status": "PASS",
+        "hidden": true,
+        "projectVersion": 3,
+        "concept": {
+          "label": "Форма оружия · технический PNG",
+          "role": "concept",
+          "origin": "original",
+          "attribution": "Собственные тестовые пиксели",
+          "rights": "Собственная работа для проверки импорта",
+          "source": "",
+          "note": "Изображение-направление; не художественная приёмка",
+          "id": "3458942b-1fde-42e3-96ba-cc1c3122a57d",
+          "mime": "image/png",
+          "sha256": "27a54f2332f401408835811577ff999e2b0d9cf1e3a291d7555265b7010b03f4",
+          "bytes": 160,
+          "width": 32,
+          "height": 64,
+          "review": "direction-only"
+        },
+        "originalBytes": 160,
+        "originalSha256": "27a54f2332f401408835811577ff999e2b0d9cf1e3a291d7555265b7010b03f4",
+        "capture": {
+          "path": "mcp-concept.png",
+          "bytes": 30864,
+          "sha256": "9a3594193b37f33df6230de33c340c8eb7f1161c77d6ab88eb55f9665baa5cfc",
+          "pixels": {
+            "cyan": 15348,
+            "gold": 6748
+          }
+        },
+        "checks": [
+          "GUI provenance and mandatory permission source",
+          "invalid PNG is atomic",
+          "original bytes and model/pixels preserved",
+          "closed protocol IDs",
+          "saved sidecar",
+          "MCP original concept pixels and read-only scene",
+          "corrupt original gives controlled capture failure",
+          "all windows hidden",
+          "human remove/undo keeps original",
+          "stale import rejected",
+          "concept excluded from game bundle",
+          "exported editor source has sidecar",
+          "fresh-profile transfer",
+          "missing recovery PNG protects source and backup",
+          "corrupt sidecar refuses open without replacing scene"
+        ]
+      },
+      "original": {
+        "path": "output\\ci\\37336772703-windows\\output\\playwright\\studio-packaged-56d235e8\\concepts\\оригинальный PNG.png",
+        "bytes": 160,
+        "sha256": "27a54f2332f401408835811577ff999e2b0d9cf1e3a291d7555265b7010b03f4"
+      },
+      "sidecar": {
+        "path": "output\\ci\\37336772703-windows\\output\\playwright\\studio-packaged-56d235e8\\concepts\\проект с концептом.mmeditor.json.assets\\concepts\\27a54f2332f401408835811577ff999e2b0d9cf1e3a291d7555265b7010b03f4.png",
+        "bytes": 160,
+        "sha256": "27a54f2332f401408835811577ff999e2b0d9cf1e3a291d7555265b7010b03f4"
+      },
+      "returnedPng": {
+        "path": "output\\ci\\37336772703-windows\\output\\playwright\\studio-packaged-56d235e8\\concepts\\mcp-concept.png",
+        "bytes": 30864,
+        "sha256": "9a3594193b37f33df6230de33c340c8eb7f1161c77d6ab88eb55f9665baa5cfc"
+      },
+      "uiScreenshot": {
+        "path": "output\\ci\\37336772703-windows\\output\\playwright\\studio-packaged-56d235e8\\concepts\\concept-panel.png",
+        "bytes": 93037,
+        "sha256": "5966fd7c1fca47cd4766d09038923fa47637cdfcf3d774066f48bad71bbda37b"
+      },
+      "sourceJsonProof": {
+        "status": "RUNTIME_ASSERTIONS_PASS",
+        "retained": "NOT_IN_WINDOWS_ARTIFACT",
+        "checks": "helper asserts exact saved JSON and fresh-profile transfer; independently reread original and saved sidecar PNG; local source JSON retained separately"
+      },
+      "migrations": {
+        "status": "PASS",
+        "hidden": true,
+        "sourceVersion": 1,
+        "sourceVersions": [
+          1,
+          2
+        ],
+        "v2OriginalSourceSha256": "0f983b283d1bc87dd26a13a35d8afbb2e627c6c8556ee2cce3a3d51f8f9ede44",
+        "targetVersion": 3,
+        "originalSourceSha256": "340fa7518183db4439664112d9fbf77e688cce8a88058c70be1af3f01087d835",
+        "originalSourceBytes": 485502,
+        "checks": [
+          "real v1 recovery keeps IDs/pixels/UV/variants",
+          "startup read leaves source bytes intact",
+          "autosave keeps permanent exact original and rotating backup",
+          "manual open/save migration",
+          "future open/save refuse without changing file or active project",
+          "future primary bypasses old fallback",
+          "future backup-only blocks autosave",
+          "future backup with current primary blocks autosave",
+          "future variant blocks autosave",
+          "persistent visible recovery warning",
+          "actual v2 original bytes, model and pixels preserved"
+        ]
+      }
+    },
+    "native": {
+      "report": {
+        "path": "output/ci/37336772703-production/output/ci/fabric-production/generated/operation-evidence.v1.json",
+        "bytes": 9643,
+        "sha256": "3e42770acd9daa1262d7b44f9c93dc75dba6d8e0939b96caf5799ea41536dfd3"
+      },
+      "jar": {
+        "path": "output/ci/37336772703-production/output/ci/fabric-production/generated/build/libs/infectedfrontier-0.1.0.jar",
+        "bytes": 28835,
+        "sha256": "63c8139423e57b925edfa40f030020b23ae2cc21571eaf711c879d58a382cc15"
+      },
+      "independentlyCheckedSourceFiles": 6,
+      "harnessXml": {
+        "path": "output/ci/37336772703-production/fixtures/fabric-1.20.1-empty/build/reports/gametest/production.xml",
+        "bytes": 405,
+        "sha256": "0399e36089600555164862747a18b26fdde375c98b487d948cc055c94b6a95e8"
+      },
+      "harnessTests": 2
+    },
+    "legacy": {
+      "report": {
+        "path": "output/ci/37336772703-legacy\\at-1791215779597\\dependency-verification-report.html",
+        "bytes": 9060,
+        "sha256": "d5c1ba0abb99f6da97532167f99ff77e6d5df6e5809d934c1ff5c4493c495a5b"
+      },
+      "coordinate": "net.minecraft:minecraft-common-043a8b3edf:26.2",
+      "expectedSha256": "23248c15f8413aa0d06ac59e676913dd6a1dc0c5fffaa09365afd6c98d59fcd3",
+      "actualSha256": "fb65ad08c0af993cb98974e834723384aa2b254631d960bccc957a49d9104a68",
+      "cause": "NOT_ESTABLISHED"
+    },
+    "logs": [
+      {
+        "path": "output/verification/roadmap-035-hosted-control.log",
+        "bytes": 40048,
+        "sha256": "52dec228ce5cd7946d9fe5fd6654519ee63bfae62258d79a263521e7bed42066"
+      },
+      {
+        "path": "output/verification/roadmap-035-hosted-windows.log",
+        "bytes": 39164,
+        "sha256": "e3e6269e3d89e18da1f7283a8ce2661880149f929dfe36aecf00030d06b36a96"
+      },
+      {
+        "path": "output/verification/roadmap-035-hosted-production.log",
+        "bytes": 75092,
+        "sha256": "0f00a0c8cce24d3f635c21a40f481b25ee0af4cd378794d5d21571a5137d12a9"
+      },
+      {
+        "path": "output/verification/roadmap-035-hosted-legacy.log",
+        "bytes": 32122,
+        "sha256": "c0e6b6cd67e39f0503495eab06ce9e1f1794dda3ed9b1babc563ff165bfc7c21"
+      }
+    ]
   }
 }
