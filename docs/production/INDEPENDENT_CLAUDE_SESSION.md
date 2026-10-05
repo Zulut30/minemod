@@ -1,6 +1,6 @@
 # Самостоятельный сеанс установленного Claude Code
 
-Пункт 032, в работе. Установленный Claude Code 2.1.289 создал held-item из пустой сцены через тот же публичный MCP контракт Studio 0.10.1, что Codex в пункте 031. Это повторение ограниченного технического брифа 031 с атласом 256×256 и одним дизайном; полный benchmark 005 с тремя вариантами и игровыми contexts не заявляется. Художественного human approval нет.
+Пункт 032 закрыт в описанном техническом объёме. Установленный Claude Code 2.1.289 создал held-item из пустой сцены через тот же публичный MCP контракт Studio 0.10.1, что Codex в пункте 031. Это повторение ограниченного технического брифа 031 с атласом 256×256 и одним дизайном; полный benchmark 005 с тремя вариантами и игровыми contexts не заявляется. Художественного human approval нет.
 
 ## Сеанс и полномочия
 
@@ -28,7 +28,7 @@ Native client reported model `claude-opus-5-5`; это измерение дан
 
 ## Повторение
 
-Профиль пока проверяется; он не входит в offline CI и использует квоту установленного клиента. Из корня checkout после packaging Studio:
+Профиль проверен на установленном клиенте указанной версии; model turns не входят в offline CI и используют квоту установленного клиента. Из корня checkout после packaging Studio:
 
 ```powershell
 $env:PATH = (Join-Path (Get-Location) 'output/tools/node-v24.11.0-win-x64') + [IO.Path]::PathSeparator + $env:PATH
@@ -46,4 +46,6 @@ Script сверяет exact installed CLI 2.1.289; другую версию с�
 
 Collector сразу сохранил исходный 128715-byte native export. Независимый replay воспроизвёл все семь agent applies до exact final project. Bundle source совпал с `assetRequest(finalProject)`; проверены files, manifest, actual PNG bytes/SHA и native response SHA. Это отдельный новый PASS; FAIL первого harness сохранён.
 
-Actual final images показывают ступенчатый прямоугольный клинок, ромб у основания головы и три полосы обмотки. Плоская кожаная заливка и слабый контраст тёмных деталей остаются; технический PASS не подтверждает улучшение художественного качества. [Точные session/source/package hashes и границы проверки](evidence/independent-claude-032.json). Hosted verification нового operator source ещё ожидается.
+Actual final images показывают ступенчатый прямоугольный клинок, ромб у основания головы и три полосы обмотки. Плоская кожаная заливка и слабый контраст тёмных деталей остаются; технический PASS не подтверждает улучшение художественного качества. [Точные session/source/package hashes и границы проверки](evidence/independent-claude-032.json). Hosted verification operator source `2fe607e` прошёл: control-plane, полный hidden packaged Windows и production Fabric 1.20.1 build/GameTests/server/client.
+
+Hosted Windows job [`111725840391`](https://github.com/Zulut30/minemod/actions/runs/37298652447/job/111725840391) сохранил packaged report и PNG по exact source. Offline suite не запускает модель и честно отмечает installed clients `not-run`; самостоятельные сеансы и независимый replay проверены отдельно. Общий workflow failed на legacy Fabric 26.2 checksum gate.

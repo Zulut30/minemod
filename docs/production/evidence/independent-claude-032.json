@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "roadmapPoint": 32,
-  "status": "PARTIAL",
+  "status": "PASS",
   "checkedAtUtc": "2026-10-05T10:39:18.303Z",
   "scope": "Installed Claude Code creates one held-item through the same public MCP contract and technical brief as 031",
   "runtimeSourceRevision": "fa1d871ed8dc7aa655f97f5ddaa837f41737abe2",
@@ -32,7 +32,7 @@
     "nativeReader": "PASS real previous native response and six negative cases; no generic agent filesystem capability",
     "lint": "PASS local pinned Node/pnpm",
     "typecheck": "PASS local workspace and desktop",
-    "hostedCurrentOperatorSource": "pending; new optional harness not yet pushed"
+    "hostedCurrentOperatorSource": "PASS exact operator source lint/typecheck/full Linux tests and complete packaged Windows suite; production build/GameTests/server/client also passed"
   },
   "successfulSession": {
     "schemaVersion": 1,
@@ -382,6 +382,21 @@
       "path": "output/verification/roadmap-032-native-reader-check.json",
       "bytes": 846,
       "sha256": "b9361eb618cb92aadee048a056f333b27edce69cfc2855cd2851b81d24b388c8"
+    },
+    {
+      "path": "output/verification/roadmap-032-hosted-status.json",
+      "bytes": 18111,
+      "sha256": "3aee026a752f072c773a69022651da4fc36868e75f44517ed0902e034071a546"
+    },
+    {
+      "path": "output/verification/roadmap-032-hosted-windows.log",
+      "bytes": 29467,
+      "sha256": "6e125b8d6e8f8316db505582bc39a7c0d8fc807f85fcda2b88d2dbad96f1733b"
+    },
+    {
+      "path": "output/verification/roadmap-032-hosted-artifact.json",
+      "bytes": 268,
+      "sha256": "37f0e3434425cc8f2d66e9790699fa638534a0d74686833cd596b777db17db2f"
     }
   ],
   "permissions": "Only ten exact Studio MCP tools; builtins, skills, hooks, other MCP and user plugins disabled per process; own hidden Studio",
@@ -391,5 +406,63 @@
   "artisticApproval": "not-granted",
   "minecraftAcceptance": "not-tested",
   "fullControlBrief005": "not-tested: same single-design technical brief as 031; not three variants/game views",
-  "visualObservation": "Actual final images show stepped rectangular blade, diamond at head base and three wrap bands. Flat leather and weak dark-on-dark contrast remain. No score, quality improvement or human acceptance inferred from technical PASS."
+  "visualObservation": "Actual final images show stepped rectangular blade, diamond at head base and three wrap bands. Flat leather and weak dark-on-dark contrast remain. No score, quality improvement or human acceptance inferred from technical PASS.",
+  "verifiedAtUtc": "2026-10-05T10:56:32.047Z",
+  "operatorSourceRevision": "2fe607e7ca25dd2ab7647f977b956c2932851be7",
+  "hosted": {
+    "runId": 37298652447,
+    "sourceRevision": "2fe607e7ca25dd2ab7647f977b956c2932851be7",
+    "attempt": 1,
+    "status": "completed",
+    "workflowConclusion": "failure",
+    "jobs": [
+      {
+        "name": "Fabric 1.20.1 / Java 17 production target",
+        "jobId": 111725840062,
+        "conclusion": "success"
+      },
+      {
+        "name": "fabric",
+        "jobId": 111725840333,
+        "conclusion": "failure"
+      },
+      {
+        "name": "studio-windows",
+        "jobId": 111725840391,
+        "conclusion": "success"
+      },
+      {
+        "name": "control-plane",
+        "jobId": 111725840462,
+        "conclusion": "success"
+      },
+      {
+        "name": "neoforge",
+        "jobId": 111725840522,
+        "conclusion": "success"
+      },
+      {
+        "name": "fabric-client",
+        "jobId": 111726072490,
+        "conclusion": "skipped"
+      },
+      {
+        "name": "client-smoke",
+        "jobId": 111726972909,
+        "conclusion": "success"
+      }
+    ],
+    "artifactId": 11340629915,
+    "artifactName": "minemod-studio-windows-evidence",
+    "report": {
+      "path": "output/ci/37298652447-windows/output/playwright/studio-packaged-6839e02a/report.json",
+      "bytes": 21315,
+      "sha256": "4e58ad52e341208a4b812a1d0ed517bffb41661c348824ff7939e9741a3ac402"
+    },
+    "packaged": true,
+    "hidden": true,
+    "installedClients": "not-run",
+    "scope": "Offline packaged checks do not run account/model clients; actual external client turn retained separately",
+    "remainingRegression": "Legacy Fabric 26.2 checksum mismatch remains; no verification bypass"
+  }
 }
