@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "roadmapPoint": 39,
-  "status": "LOCAL_PASS_HOSTED_PENDING",
-  "checkedAtUtc": "2026-10-05T17:48:49.343Z",
+  "status": "PASS",
+  "checkedAtUtc": "2026-10-05T18:04:40.781Z",
   "sourceCommit": "0ee7a4fad009f5a729dae7d51c179d672adec628",
   "studioVersion": "0.17.0",
   "node": "24.21.0",
@@ -316,7 +316,7 @@
       "packagedWorkerSha256": "28b82ae6816653547517ac78082a602a0a6a5570bd1b40fe6997d76599641059",
       "rebuiltWorkerSha256": "28b82ae6816653547517ac78082a602a0a6a5570bd1b40fe6997d76599641059",
       "status": "IDENTICAL",
-      "boundary": "Test adapter correction and Russian comment only after initial runtime commit; exact final hosted source still pending."
+      "boundary": "Initial packaged runtime and corrected-source worker are identical; exact corrected source verified by terminal hosted run 37351573480. Evidence closure commit changes documentation only."
     }
   },
   "initialFailures": {
@@ -547,6 +547,199 @@
           "sha256": "bb78e1848dab1fd2c17110b0a0b036242f9fee28cb6434cfd2bdd760598d77ac"
         }
       ]
+    },
+    "finalTerminal": {
+      "status": "completed",
+      "conclusion": "failure",
+      "sourceCommit": "f3d961f0be5082ae09c8f4bad8b4b8ed7bf8c4e8",
+      "url": "https://github.com/Zulut30/minemod/actions/runs/37351573480",
+      "jobs": [
+        {
+          "id": 111903429998,
+          "name": "control-plane",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 111903430219,
+          "name": "studio-windows",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 111903430236,
+          "name": "neoforge",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 111903430274,
+          "name": "Fabric 1.20.1 / Java 17 production target",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 111903430435,
+          "name": "fabric",
+          "status": "completed",
+          "conclusion": "failure"
+        },
+        {
+          "id": 111903860857,
+          "name": "fabric-client",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111904962213,
+          "name": "client-smoke",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ],
+      "cleanCheckouts": [
+        {
+          "name": "windows",
+          "path": "output/ci/37351573480-windows/output/ci/clean-checkout/studio-windows.json",
+          "bytes": 4469,
+          "sha256": "d9ecad38b60e9d87ea2a01f33f9e35dbfe9b94c9eeb81cf0fece915b02668a8a",
+          "tree": "970eb157b20e6294bc15e23b2d8297c6b7a187af",
+          "sourceRevision": "f3d961f0be5082ae09c8f4bad8b4b8ed7bf8c4e8"
+        },
+        {
+          "name": "control",
+          "path": "output/ci/37351573480-control/control-plane.json",
+          "bytes": 4469,
+          "sha256": "b94f915e5aaf02b887fa9af5287a57ab80df393c7a7de586d1639ef47b595442",
+          "tree": "970eb157b20e6294bc15e23b2d8297c6b7a187af",
+          "sourceRevision": "f3d961f0be5082ae09c8f4bad8b4b8ed7bf8c4e8"
+        },
+        {
+          "name": "production",
+          "path": "output/ci/37351573480-production/output/ci/clean-checkout/fabric-production.json",
+          "bytes": 4469,
+          "sha256": "b94f915e5aaf02b887fa9af5287a57ab80df393c7a7de586d1639ef47b595442",
+          "tree": "970eb157b20e6294bc15e23b2d8297c6b7a187af",
+          "sourceRevision": "f3d961f0be5082ae09c8f4bad8b4b8ed7bf8c4e8"
+        }
+      ],
+      "windows": {
+        "status": "PASS",
+        "root": "output\\ci\\37351573480-windows\\output\\playwright\\studio-packaged-76099b61",
+        "report": {
+          "path": "output\\ci\\37351573480-windows\\output\\playwright\\studio-packaged-76099b61\\report.json",
+          "bytes": 92069,
+          "sha256": "d95a991cf1bd8bcba04473a386cf49636546e93d345b6609e3904dc66fbc787d"
+        },
+        "subreports": 20,
+        "continuation": {
+          "status": "PASS",
+          "hidden": true,
+          "actor": "Scripted GUI and SDK in own packaged app",
+          "independentModelTurn": false,
+          "pauseMs": 2010,
+          "sdkCancelledNativeCapture": true,
+          "sameSdkSessionAfterCancellation": true,
+          "cancelledNativeCapture": true,
+          "pauseBypassedBusySave": true,
+          "queuedSaveCompleted": true,
+          "pausedCallsRejected": true,
+          "endpointPreservedOnResume": true,
+          "expiredProposalRejected": true,
+          "reconnectReplay": true,
+          "humanCasConflict": true,
+          "sameProjectOpenRevisionProtected": true,
+          "restartSourcePreserved": true,
+          "restartAccessOff": true,
+          "newTokenAfterRestart": true,
+          "sourceSha256": "853ac43b880c420b3cf629513055e491706ec4a548a8561141951f954820ba44",
+          "png": {
+            "path": "after-resume.png",
+            "bytes": 24425,
+            "sha256": "8f5bb54b287890a59c3927a75d814194589e3369842defff11413f3f7de071f7"
+          },
+          "replayBoundary": "Last 100 keys in current EditorSession; process restart cache is not persisted",
+          "artisticApproval": "NOT_PERFORMED",
+          "gameAcceptance": "NOT_RUN"
+        },
+        "captures": [
+          {
+            "path": "output\\ci\\37351573480-windows\\output\\playwright\\studio-packaged-76099b61\\continuation\\after-resume.png",
+            "bytes": 24425,
+            "sha256": "8f5bb54b287890a59c3927a75d814194589e3369842defff11413f3f7de071f7"
+          },
+          {
+            "path": "output\\ci\\37351573480-windows\\output\\playwright\\studio-packaged-76099b61\\continuation\\paused-ui.png",
+            "bytes": 94903,
+            "sha256": "28a35e1a8c00e92a0078e4aac737f43a9166734091dff9417a99c60fbf6ecba9"
+          },
+          {
+            "path": "output\\ci\\37351573480-windows\\output\\playwright\\studio-packaged-76099b61\\continuation\\resumed-ui.png",
+            "bytes": 96261,
+            "sha256": "213866c7b18420e2ccdca1bba0c8d40b7b28128e0a1b65c2503fc1a89c094baa"
+          }
+        ],
+        "sourceRetention": "Reports and PNG retained; editable source JSON and hosted asar not retained. Runtime preservation assertions and local retained source are separate."
+      },
+      "production": {
+        "status": "PASS",
+        "operation": {
+          "path": "output\\ci\\37351573480-production\\output\\ci\\fabric-production\\generated\\operation-evidence.v1.json",
+          "bytes": 9643,
+          "sha256": "3e42770acd9daa1262d7b44f9c93dc75dba6d8e0939b96caf5799ea41536dfd3"
+        },
+        "jar": {
+          "path": "output\\ci\\37351573480-production\\output\\ci\\fabric-production\\generated\\build\\libs\\infectedfrontier-0.1.0.jar",
+          "bytes": 28835,
+          "sha256": "63c8139423e57b925edfa40f030020b23ae2cc21571eaf711c879d58a382cc15"
+        },
+        "sourceManifest": {
+          "path": "output\\ci\\37351573480-production\\output\\ci\\fabric-production\\generated\\source-review-manifest.json",
+          "bytes": 1663,
+          "sha256": "358db61afefcc01b674e313b928d69e9edd122c0f6528bb3d48e70971a78871f"
+        },
+        "verifiedGeneratedFiles": 6,
+        "gameTestReport": {
+          "path": "output/ci/37351573480-production/fixtures/fabric-1.20.1-empty/build/reports/gametest/production.xml",
+          "bytes": 406,
+          "sha256": "40f42c67490afd387f443366886411bd3896d5202fa69469b72ee2e494ed4d26"
+        },
+        "scope": "Clean online/offline build, infrastructure GameTests, server/client smoke and generated fixture; no authored Leaf model integration."
+      },
+      "legacyFabric262": {
+        "status": "FAILED_CHECKSUM",
+        "report": {
+          "path": "output\\ci\\37351573480-legacy\\at-1791222736748\\dependency-verification-report.html",
+          "bytes": 9060,
+          "sha256": "8f63ea95ed4eab3677da2a0a265e72c5a14b253235529e5d604843b35aa44f22"
+        },
+        "coordinate": "net.minecraft:minecraft-common-043a8b3edf:26.2",
+        "expected": "23248c15f8413aa0d06ac59e676913dd6a1dc0c5fffaa09365afd6c98d59fcd3",
+        "actual": "9857c5ef0304c1bcbc3ebfecaeecbc617adc753cc10fc6e39e6ff48d133c79f7",
+        "cause": "NOT_ESTABLISHED"
+      },
+      "logs": [
+        {
+          "path": "output/verification/roadmap-039-windows-final.log",
+          "bytes": 39697,
+          "sha256": "8e2a2aa6f40c78413a1cedab6ac0dbb7417e70f84a69ffb5a7fdd585f7138310"
+        },
+        {
+          "path": "output/verification/roadmap-039-control-plane-final.log",
+          "bytes": 40538,
+          "sha256": "615d27ac6c521a6f86f03afefd85de4d142f66352366cf1e7c2899632d93f133"
+        },
+        {
+          "path": "output/verification/roadmap-039-production-final.log",
+          "bytes": 74935,
+          "sha256": "028b29c19d4bd4416943458b96327c3886d28800f888252a400adc9a5e4e2369"
+        },
+        {
+          "path": "output/verification/roadmap-039-fabric262-final.log",
+          "bytes": 32122,
+          "sha256": "9b95b2947b9acd68ef473ce86ca29ee7a71e29e7f1afec241b5c88fd61f98ebd"
+        }
+      ]
     }
   },
   "boundaries": {
@@ -557,5 +750,7 @@
     "cancelAtomicMutation": "Best effort; applied atomic mutation is preserved",
     "legacyFabric262": "NOT_CLOSED"
   },
-  "pointClosed": false
+  "pointClosed": true,
+  "verifiedSourceCommit": "f3d961f0be5082ae09c8f4bad8b4b8ed7bf8c4e8",
+  "closureBoundary": "039 technical continuation/cancel/replay/CAS only. Whole CI remains failed on legacy Fabric 26.2 checksum. New external model generation, artistic acceptance and authored model in-game acceptance are not assigned."
 }
