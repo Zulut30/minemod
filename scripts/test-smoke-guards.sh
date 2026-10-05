@@ -176,9 +176,10 @@ assert workflow.index('name: Prepare verified headless client runtime') < workfl
     'name: Smoke-test headless client'
 )
 assert workflow.count('PHASE0_SMOKE_TARGET: fabric\n') == 2
-assert workflow.count(
-    'uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2'
-) == 5
+assert 'name: control-plane-clean-checkout-evidence' in workflow
+for job in ("control-plane", "studio-windows", "fabric-production"):
+    assert f"run: node scripts/verify-clean-checkout.mjs {job}" in workflow
+assert workflow.count('name: Verify untouched clean checkout') == 3
 assert 'name: fabric-26.2-verification-failure' in workflow
 assert 'path: fixtures/fabric-26.2-empty/build/reports/dependency-verification/**' in workflow
 assert 'fabric-api.gametest.report-file' in fabric_build

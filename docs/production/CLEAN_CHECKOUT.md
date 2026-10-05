@@ -55,3 +55,5 @@ cd fixtures/fabric-1.20.1-empty
 Guard suite создаёт собственный disposable clone с `core.autocrlf=true`. Проверяются raw CRLF corruption, bootstrap corruption, изменённый executable bit, untracked input и четыре заранее существовавших generated dirs; после восстановления clone снова совпадает с первоначальным отчётом. Linux дополнительно проверяет отказ после снятия physical executable bit. Рабочая копия пользователя не очищается.
 
 Локальный Windows guard suite прошёл. Hosted checks нового source ещё ожидаются; пункт пока открыт. Legacy Fabric 26.2 checksum failure относится к отдельному regression-target и не обходится ради общего зелёного статуса.
+
+Первый hosted source `37077a4` прошёл fresh-checkout guards на Linux/Windows и production runtime, но новый evidence uploader выявил старый статический smoke-test с точным общим числом upload-шагов. NeoForge job отказал до dedicated-server smoke. Этот отказ сохранён; проверка заменена на конкретные обязательные artifact/guard commands. Новый source ещё требует hosted проверки, исключения проверки не добавлялись.

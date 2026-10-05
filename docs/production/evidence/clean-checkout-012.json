@@ -26,9 +26,14 @@
       "sha256": "a705044e85376bd72bef44ea9fad94d95ff8baafb6cd717c8fd3834d113f55b0"
     },
     {
+      "path": "scripts/test-smoke-guards.sh",
+      "bytes": 41335,
+      "sha256": "dfd75dc5acfbc42f7d1bc3de85f57dfe2727fc35f0a63316069831f3cb71ed3c"
+    },
+    {
       "path": "docs/production/CLEAN_CHECKOUT.md",
-      "bytes": 6380,
-      "sha256": "f4d6e068f185b25d6457306fe48d0e489b2196355bca308583aad860d0ae04d5"
+      "bytes": 6985,
+      "sha256": "8a1443655fbdc654fa38a457cd1c353ef6dbbbcb8b353f5d38595ab7d3217e4d"
     }
   ],
   "local": {
@@ -76,5 +81,23 @@
     "rawBootstrapPins": "same reviewed inputs; no checksum bypass",
     "legacyFabric26": "existing derived artifact checksum failure remains",
     "minecraftAuthoredArt": "not-tested"
+  },
+  "retainedFirstHostedAttempt": {
+    "runId": 37301870055,
+    "sourceRevision": "37077a4c444604a8e291fba7ce88b79d2696f465",
+    "guardJobs": "PASS control-plane and Windows raw bytes/modes; production build/GameTests/server/client PASS",
+    "failedJob": {
+      "jobId": 111736237904,
+      "name": "neoforge",
+      "step": "Test smoke-process guards"
+    },
+    "cause": "New control-plane artifact changed global upload-step count; existing static assertion required exactly five uploaders",
+    "correction": "Assert concrete clean-checkout artifact/commands; preserve reviewed bootstrap and runtime safety guards",
+    "log": {
+      "path": "output/verification/roadmap-012-hosted-neoforge.log",
+      "bytes": 74331,
+      "sha256": "0e5269b4ba0640ce5b415b9e2c4a705248a4d5e4ccf8ece5cae7fbfc78a5c11e"
+    },
+    "subsequentHosted": "pending fixed source"
   }
 }
