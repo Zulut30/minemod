@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "sourceBeforeRefactor": "70acd7a1fa087015d8b777da53783dfc67708250",
+  "sourceInput": {
+    "path": "apps/model-editor/scripts/measure-leaf-construction.mjs",
+    "bytes": 5930,
+    "sha256": "6098d76353a42124b9c45b7d05319409314c5613b4c1d5fcd637a20d49bc87e2"
+  },
+  "output": {
+    "path": "output/verification/leaf-construction-044.json",
+    "bytes": 21894,
+    "sha256": "170b2a5719fb04c74d87940016ae13af02606c1a9a3c0693af5b110ca4b95474",
+    "equalToPriorBytes": true
+  },
+  "contactProbes": "PASS",
+  "scope": "Readability of the fixed A/B study; public interface and measured JSON unchanged; no new art or game acceptance",
+  "lint": {
+    "status": "PASS",
+    "command": "corepack pnpm lint",
+    "log": "output/verification/leaf-construction-readability-lint.log"
+  }
+}

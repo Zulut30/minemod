@@ -64,6 +64,8 @@ node --experimental-strip-types scripts/verify-blockout-construction.mjs output/
 
 Runner требует сохранённые A/B JSON с точными SHA-256 выше и их concept sidecars. Он создаёт новую output-папку при каждом запуске. UUID и пути различаются; исходные snapshots и геометрический рецепт сохраняются. Эти локальные результаты не поставляются как release assets.
 
+Скрипт измерений разделён на расчёт ориентированного box/world bounds, построение связей, контакты частей и сбор отчёта. Прежние аналитические probes проходят; итоговый A/B JSON побайтово совпадает с результатом до правки, SHA-256 `170b2a5719fb04c74d87940016ae13af02606c1a9a3c0693af5b110ca4b95474`. Общий lint PASS. [Проверка сохранения поведения](evidence/leaf-construction-readability.json) связывает вывод с конкретными bytes скрипта.
+
 ## Воспроизведение локального исследования
 
 ```powershell
