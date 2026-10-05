@@ -149,6 +149,21 @@ try {
     resultCount: 1,
   });
   const compiled = await compileFabricPhase1(JSON.stringify(fixture));
+  if (reportDirectory !== undefined) {
+    const reviewFiles = compiled.outputs.filter(({ file }) =>
+      file.path.endsWith(".java") || file.path === "src/main/resources/fabric.mod.json");
+    for (const { file } of reviewFiles) {
+      const destination = join(reportDirectory, "generated-source", file.path);
+      await mkdir(dirname(destination), { recursive: true });
+      await writeFile(destination, file.bytes);
+    }
+    await writeFile(join(reportDirectory, "source-review-manifest.json"), JSON.stringify({
+      schemaVersion: 1, purpose: "generated-source-review", planId: compiled.plan.planId,
+      pack: compiled.plan.pack,
+      files: reviewFiles.map(({ file }) => ({ path: file.path, bytes: file.bytes.byteLength, sha256: file.sha256 })),
+      note: "Generated Java and metadata only; build/runtime logs are separate. No artistic acceptance.",
+    }, null, 2) + "\n");
+  }
   for (const { file } of compiled.outputs) {
     const destination = join(workspace, file.path);
     await mkdir(dirname(destination), { recursive: true });

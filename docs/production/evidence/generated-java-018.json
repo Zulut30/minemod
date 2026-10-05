@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 18,
+  "status": "PARTIAL",
+  "verifiedAtUtc": "2026-10-05T09:24:24.084268+00:00",
+  "scope": "Readable native Tier/ArmorMaterial emitters, removal of empty client initializer, mandatory owned Java source quality gate and retained generated source review evidence",
+  "sourceParentRevision": "7183b8f",
+  "compilerIdentity": "@mcdev/compiler-fabric@0.1.1-phase.1",
+  "sourceHashes": [
+    {
+      "path": "packages/compiler-fabric/compiler.ts",
+      "bytes": 62063,
+      "sha256": "c46813c1ef58ea1a140c2e9df557de9993960078bc2220f08f54689ca2a61655"
+    },
+    {
+      "path": "packages/compiler-fabric/source-quality.ts",
+      "bytes": 3093,
+      "sha256": "8408a8bef888991a73aef67f499facada3e8016fb9d0f1c5ad1b793e35088408"
+    },
+    {
+      "path": "packages/compiler-fabric/source-quality.test.ts",
+      "bytes": 3526,
+      "sha256": "038aba6c53e0c512baec109cc0615984c3710d53b0df6612e3fdfe974b204c94"
+    },
+    {
+      "path": "packages/compiler-fabric/test.ts",
+      "bytes": 29154,
+      "sha256": "ec5f9df05473d9a57fd8c60a1ea4012e18e540b76ca512150a1a75f4fd62b3fc"
+    },
+    {
+      "path": "packages/compiler-fabric/build-test.ts",
+      "bytes": 10156,
+      "sha256": "0b6a5426ca6fc5dc36c860627a36382624f8ef4b21f4462b13e7079caf34f743"
+    },
+    {
+      "path": "packages/compiler-fabric/package.json",
+      "bytes": 778,
+      "sha256": "b32648f34f8f39c2a2b21ecd102b57a31f3e8f658d0718734e897a4af2afe5e1"
+    }
+  ],
+  "checks": {
+    "sourceQualityUnit": "PASS",
+    "allowedCases": 15,
+    "rejectedCases": 22,
+    "typecheck": "PASS",
+    "lint": "PASS",
+    "fullCompilerSuite": "pending hosted Linux; local Windows rejects executable mode",
+    "generatedCleanBuild": "pending hosted",
+    "productionGameTests": "pending hosted",
+    "dedicatedServer": "pending hosted"
+  },
+  "logs": [
+    {
+      "path": "output/verification/roadmap-018-source-quality.log",
+      "bytes": 179,
+      "sha256": "91724ceba9b58bc6d8d11e7356af1ea03503c6e3ce15b05e3ec7ec8ab6c65f30"
+    },
+    {
+      "path": "output/verification/roadmap-018-typecheck.log",
+      "bytes": 176,
+      "sha256": "fe0327fb3a908a7cea6b4e5ef62bbaa7903d4f4149a209170e6249f0dd5c8190"
+    },
+    {
+      "path": "output/verification/roadmap-018-lint.log",
+      "bytes": 29,
+      "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+    },
+    {
+      "path": "output/verification/roadmap-018-compiler.log",
+      "bytes": 1257,
+      "sha256": "4ae3955560590896eb267e5d9232e1f6366f016ace60e6b571872d5f905d9c76"
+    },
+    {
+      "path": "output/verification/roadmap-018-windows-pack.log",
+      "bytes": 163,
+      "sha256": "d9d6c19dc818a6ec9d2f1216d2586beb5da1bfa5dd6251d464f523f9e75630e0"
+    }
+  ],
+  "windowsPackObservation": {
+    "file": "packs/fabric-1.20.1/runtime-r5/templates/gradlew",
+    "expectedBytes": 9671,
+    "actualBytes": 9671,
+    "expectedSha256": "edeebb8b7ddcd62dc39d85846bf93bc016da6a644bf7489fad47c3d6c02ad0ad",
+    "actualSha256": "edeebb8b7ddcd62dc39d85846bf93bc016da6a644bf7489fad47c3d6c02ad0ad",
+    "expectedMode": "0755",
+    "actualMode": "0666",
+    "verificationBypass": false
+  },
+  "limits": "Lexical quality checks for owned generated source; not a Java parser or proof of all gameplay semantics. Placeholder textures remain warned and unreviewed.",
+  "newDependencies": false,
+  "gamePackBaselineChanged": false,
+  "artisticApproval": "not-granted",
+  "fullProductionAcceptance": "not-granted",
+  "hostedCurrentSource": "pending after commit",
+  "remainingRegressionFailure": "Existing Fabric 26.2 derived JAR checksum mismatch; no checksum bypass."
+}

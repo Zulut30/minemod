@@ -37,6 +37,7 @@ import {
 } from "@mcdev/library-catalog";
 import type { ModSpecV1 } from "@mcdev/modspec";
 import { FabricCompilerError, fabricCompilerError } from "./errors.ts";
+import { assertGeneratedJavaQuality } from "./source-quality.ts";
 import type {
   CompiledFabricOutput,
   CompiledFabricProject,
@@ -46,7 +47,7 @@ import type {
 
 type VerifiedFabricPack = VerifiedCompatibilityPack<CompatibilityPackManifestV3>;
 
-const COMPILER_ID = "@mcdev/compiler-fabric@0.1.0-phase.1";
+const COMPILER_ID = "@mcdev/compiler-fabric@0.1.1-phase.1";
 const SPEC_DIGEST_DOMAIN = "mcdev.compiler-fabric.modspec/v1";
 const NODE_INPUT_DIGEST_DOMAIN = "mcdev.compiler-fabric.node-input/v1";
 const NODE_CACHE_KEY_DOMAIN = "mcdev.compiler-fabric.node-cache/v1";
@@ -437,13 +438,23 @@ function fabricMetadataWithLibraries(
   libraries: readonly ResolvedFabricLibrary[],
   modId: string,
 ): Uint8Array {
-  if (libraries.length === 0) return utf8FileBytes(source);
   let metadata: Record<string, unknown>;
   try {
     metadata = JSON.parse(source) as Record<string, unknown>;
   } catch {
     throw fabricCompilerError("PACK_INTEGRITY_FAILED", "The reviewed Fabric metadata template is invalid.");
   }
+  const entrypoints = metadata.entrypoints;
+  if (typeof entrypoints !== "object" || entrypoints === null || Array.isArray(entrypoints))
+    throw fabricCompilerError("PACK_INTEGRITY_FAILED", "The reviewed Fabric metadata entrypoint block is invalid.");
+  const clientEntrypoints = (entrypoints as Record<string, unknown>).client;
+  if (!Array.isArray(clientEntrypoints) || clientEntrypoints.length !== 1 ||
+      clientEntrypoints[0] !== `dev.mcdev.generated.m_${modId}.client.GeneratedClient`)
+    throw fabricCompilerError("PACK_INTEGRITY_FAILED", "The reviewed client entrypoint changed; generator support is required.");
+  // У этого профиля нет client initializer: UI загружается отдельным modmenu entrypoint.
+  const activeEntrypoints = { ...entrypoints } as Record<string, unknown>;
+  delete activeEntrypoints.client;
+  metadata.entrypoints = activeEntrypoints;
   const baseDepends = metadata.depends;
   if (typeof baseDepends !== "object" || baseDepends === null || Array.isArray(baseDepends)) {
     throw fabricCompilerError("PACK_INTEGRITY_FAILED", "The reviewed Fabric metadata dependency block is invalid.");
@@ -459,12 +470,8 @@ function fabricMetadataWithLibraries(
   const hasYacl = libraries.some(({ id }) => id === "yet_another_config_lib_v3");
   const hasModMenu = libraries.some(({ id }) => id === "modmenu");
   if (hasYacl && hasModMenu) {
-    const entrypoints = metadata.entrypoints;
-    if (typeof entrypoints !== "object" || entrypoints === null || Array.isArray(entrypoints)) {
-      throw fabricCompilerError("PACK_INTEGRITY_FAILED", "The reviewed Fabric metadata entrypoint block is invalid.");
-    }
     metadata.entrypoints = {
-      ...entrypoints,
+      ...activeEntrypoints,
       modmenu: [`dev.mcdev.generated.m_${modId}.client.GeneratedModMenuIntegration`],
     };
   }
@@ -584,14 +591,33 @@ function repairIngredientSource(id: string): string {
 function toolMaterialSource(material: GameplayMaterial, parts: ResourceLocationParts): string {
   const constant = javaConstantPath(parts.path);
   return `    private static final Tier MATERIAL_${constant} = new Tier() {
-        @Override public int getUses() { return ${material.durability}; }
-        @Override public float getSpeed() { return Float.intBitsToFloat(0x${float32Bits(material.miningSpeed)}); }
-        @Override public float getAttackDamageBonus() {
+        @Override
+        public int getUses() {
+            return ${material.durability};
+        }
+
+        @Override
+        public float getSpeed() {
+            return Float.intBitsToFloat(0x${float32Bits(material.miningSpeed)});
+        }
+
+        @Override
+        public float getAttackDamageBonus() {
             return Float.intBitsToFloat(0x${float32Bits(material.attackDamageBonus)});
         }
-        @Override public int getLevel() { return ${material.miningLevel}; }
-        @Override public int getEnchantmentValue() { return ${material.enchantmentValue}; }
-        @Override public Ingredient getRepairIngredient() {
+
+        @Override
+        public int getLevel() {
+            return ${material.miningLevel};
+        }
+
+        @Override
+        public int getEnchantmentValue() {
+            return ${material.enchantmentValue};
+        }
+
+        @Override
+        public Ingredient getRepairIngredient() {
             return ${repairIngredientSource(material.repairIngredient)};
         }
     };`;
@@ -602,7 +628,8 @@ function armorMaterialSource(material: GameplayMaterial, parts: ResourceLocation
   const constant = javaConstantPath(parts.path);
   const { armor } = material;
   return `    private static final ArmorMaterial ARMOR_MATERIAL_${constant} = new ArmorMaterial() {
-        @Override public int getDurabilityForType(ArmorItem.Type type) {
+        @Override
+        public int getDurabilityForType(ArmorItem.Type type) {
             return switch (type) {
                 case HELMET -> ${11 * armor.durabilityMultiplier};
                 case CHESTPLATE -> ${16 * armor.durabilityMultiplier};
@@ -610,7 +637,9 @@ function armorMaterialSource(material: GameplayMaterial, parts: ResourceLocation
                 case BOOTS -> ${13 * armor.durabilityMultiplier};
             };
         }
-        @Override public int getDefenseForType(ArmorItem.Type type) {
+
+        @Override
+        public int getDefenseForType(ArmorItem.Type type) {
             return switch (type) {
                 case HELMET -> ${armor.defense.helmet};
                 case CHESTPLATE -> ${armor.defense.chestplate};
@@ -618,16 +647,34 @@ function armorMaterialSource(material: GameplayMaterial, parts: ResourceLocation
                 case BOOTS -> ${armor.defense.boots};
             };
         }
-        @Override public int getEnchantmentValue() { return ${material.enchantmentValue}; }
-        @Override public SoundEvent getEquipSound() { return SoundEvents.ARMOR_EQUIP_IRON; }
-        @Override public Ingredient getRepairIngredient() {
+
+        @Override
+        public int getEnchantmentValue() {
+            return ${material.enchantmentValue};
+        }
+
+        @Override
+        public SoundEvent getEquipSound() {
+            return SoundEvents.ARMOR_EQUIP_IRON;
+        }
+
+        @Override
+        public Ingredient getRepairIngredient() {
             return ${repairIngredientSource(material.repairIngredient)};
         }
-        @Override public String getName() { return ${javaString(material.id)}; }
-        @Override public float getToughness() {
+
+        @Override
+        public String getName() {
+            return ${javaString(material.id)};
+        }
+
+        @Override
+        public float getToughness() {
             return Float.intBitsToFloat(0x${float32Bits(armor.toughness)});
         }
-        @Override public float getKnockbackResistance() {
+
+        @Override
+        public float getKnockbackResistance() {
             return Float.intBitsToFloat(0x${float32Bits(armor.knockbackResistance)});
         }
     };`;
@@ -991,21 +1038,10 @@ ${initializeContent}
     }
 }
 `;
-  const clientSource = `package ${packageRoot}.client;
-
-import net.fabricmc.api.ClientModInitializer;
-
-public final class GeneratedClient implements ClientModInitializer {
-    @Override
-    public void onInitializeClient() {
-    }
-}
-`;
   const resourceRoot = "src/main/resources";
   const inputs: GeneratedFileInput[] = [
     input(`src/main/java/${pathRoot}/GeneratedMod.java`, utf8FileBytes(mainSource)),
     input(`src/main/java/${pathRoot}/GeneratedContent.java`, utf8FileBytes(generatedContentSource(modId, content))),
-    input(`src/client/java/${pathRoot}/client/GeneratedClient.java`, utf8FileBytes(clientSource)),
   ];
   const language: Record<string, string> = {};
   if (hasYacl) {
@@ -1377,6 +1413,8 @@ export function compileVerifiedFabricPhase1(
       "The ModSpec expands to duplicate, colliding, oversized, or non-portable generated paths.",
     );
   }
+  for (const file of files) if (file.path.endsWith(".java"))
+    assertGeneratedJavaQuality(file.path, new TextDecoder("utf-8", { fatal: true }).decode(file.bytes));
   const projectPaths = new Set(projectFileInputs.map(({ path }) => path));
   const projectFiles = files.filter(({ path }) => projectPaths.has(path));
   const contentFiles = files.filter(({ path }) => !projectPaths.has(path));

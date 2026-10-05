@@ -143,7 +143,6 @@ const expectedPaths = [
   "gradlew",
   "gradlew.bat",
   "settings.gradle",
-  "src/client/java/dev/mcdev/generated/m_infectedfrontier/client/GeneratedClient.java",
   "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedContent.java",
   "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedMod.java",
   "src/main/resources/assets/infectedfrontier/blockstates/blue_ore.json",
@@ -178,27 +177,23 @@ const buildNode = compiled.plan.nodes.find(({ kind }) => kind === "gradle-clean-
 assert.ok(buildNode?.kind === "gradle-clean-build");
 assert.equal(buildNode.policy, "fabric-1.20.1-phase1-v1");
 assert.equal(compiled.plan.nodes.find(({ nodeId }) => nodeId === "generate-project")?.outputs.length, 10);
-assert.equal(compiled.plan.nodes.find(({ nodeId }) => nodeId === "generate-content")?.outputs.length, 12);
+assert.equal(compiled.plan.nodes.find(({ nodeId }) => nodeId === "generate-content")?.outputs.length, 11);
 assert.deepEqual(compiled.plan.warnings, ["PLACEHOLDER_ASSETS_USED"]);
 
 const fabricMod = JSON.parse(textOutput(compiled, "src/main/resources/fabric.mod.json")) as {
   name: string;
-  entrypoints: { main: string[]; client: string[] };
+  entrypoints: { main: string[]; client?: string[] };
 };
 assert.equal(fabricMod.name, fixture.project.name);
 assert.deepEqual(fabricMod.entrypoints, {
   main: ["dev.mcdev.generated.m_infectedfrontier.GeneratedMod"],
-  client: ["dev.mcdev.generated.m_infectedfrontier.client.GeneratedClient"],
 });
 assert.equal(textOutput(compiled, "src/main/resources/fabric.mod.json").includes("@@MCDEV_"), false);
 assert.match(
   textOutput(compiled, "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedMod.java"),
   /implements ModInitializer/u,
 );
-assert.match(
-  textOutput(compiled, "src/client/java/dev/mcdev/generated/m_infectedfrontier/client/GeneratedClient.java"),
-  /implements ClientModInitializer/u,
-);
+assert.equal(compiled.outputs.some(({ file }) => file.path.endsWith("/GeneratedClient.java")), false);
 const generatedContent = textOutput(
   compiled,
   "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedContent.java",
@@ -310,8 +305,8 @@ const equipmentSource = textOutput(
   "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedContent.java",
 );
 assert.match(equipmentSource, /private static final Tier MATERIAL_BLUE_USTEEL = new Tier\(\)/u);
-assert.match(equipmentSource, /getUses\(\) \{ return 1024; \}/u);
-assert.match(equipmentSource, /getLevel\(\) \{ return 3; \}/u);
+assert.match(equipmentSource, /@Override\n {8}public int getUses\(\) \{\n {12}return 1024;\n {8}\}/u);
+assert.match(equipmentSource, /@Override\n {8}public int getLevel\(\) \{\n {12}return 3;\n {8}\}/u);
 assert.match(equipmentSource, /private static final ArmorMaterial ARMOR_MATERIAL_BLUE_USTEEL/u);
 assert.match(equipmentSource, /case CHESTPLATE -> 512;/u);
 assert.match(equipmentSource, /case CHESTPLATE -> 8;/u);
@@ -565,6 +560,13 @@ assert.match(
   /config\.option_spawn_limit = Math\.max\(1, Math\.min\(32, config\.option_spawn_limit\)\);/u,
 );
 assert.match(configuredSource, /config\.option_welcome_message = limitString\(config\.option_welcome_message, 64\);/u);
+const literalMarkerSpec = structuredClone(configuredLibraries);
+literalMarkerSpec.integrations.yacl!.categories[0]!.options[0]!.description =
+  'Documentation literal: /* TODO */ "net.minecraft.client.Minecraft"';
+const literalMarkerOutput = await compileFabricPhase1(JSON.stringify(literalMarkerSpec));
+assert(textOutput(literalMarkerOutput,
+  "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedConfig.java").includes("/* TODO */"),
+  "Quality gate must preserve user documentation inside annotation string literals.");
 assert.match(
   textOutput(
     compiledConfiguredLibraries,
