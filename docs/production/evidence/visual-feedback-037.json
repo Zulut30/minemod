@@ -1,0 +1,234 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 37,
+  "status": "PASS",
+  "verifiedAtUtc": "2026-10-05T10:46:36.700Z",
+  "scope": "Actual image -> model critique -> bounded targeted repair -> new revision images, installed Codex client",
+  "runtimeSourceRevision": "fa1d871ed8dc7aa655f97f5ddaa837f41737abe2",
+  "projectId": "3015b117-c981-44dc-a0c7-e29e5c2c2b76",
+  "reviews": [
+    {
+      "toolCallId": "item_16",
+      "revision": 3,
+      "file": "output/playwright/independent-codex-031-9ab419a3/item_16-1.png",
+      "bytes": 61579,
+      "sha256": "674a28c0b4199f840c41ca1ad1e45ba5a1be1e4f1aa89cc12faf3c4ccf6a0073",
+      "views": [
+        "front",
+        "side",
+        "back",
+        "perspective"
+      ],
+      "smallPreviews": [
+        32,
+        64
+      ],
+      "silhouette": "front-alpha-mask"
+    },
+    {
+      "toolCallId": "item_20",
+      "revision": 4,
+      "file": "output/playwright/independent-codex-031-9ab419a3/item_20-1.png",
+      "bytes": 72691,
+      "sha256": "1666d32a1e8968818ba8576e863acf9dc9c4c38ced77b2fb73d14d0432dfc227",
+      "views": [
+        "front",
+        "side",
+        "back",
+        "perspective"
+      ],
+      "smallPreviews": [
+        32,
+        64
+      ],
+      "silhouette": "front-alpha-mask"
+    },
+    {
+      "toolCallId": "item_39",
+      "revision": 7,
+      "file": "output/playwright/independent-codex-031-9ab419a3/item_39-1.png",
+      "bytes": 86578,
+      "sha256": "e94e76213b03474beedaaa10bbe180b53b913cb1ff764614cb0638b7edd97b06",
+      "views": [
+        "front",
+        "side",
+        "back",
+        "perspective"
+      ],
+      "smallPreviews": [
+        32,
+        64
+      ],
+      "silhouette": "front-alpha-mask"
+    },
+    {
+      "toolCallId": "item_49",
+      "revision": 9,
+      "file": "output/playwright/independent-codex-031-9ab419a3/item_49-1.png",
+      "bytes": 91112,
+      "sha256": "915b8cea0cfe9368f33ee33069f3b054e8ce2de55864e0f867f0fd93739f5820",
+      "views": [
+        "front",
+        "side",
+        "back",
+        "perspective"
+      ],
+      "smallPreviews": [
+        32,
+        64
+      ],
+      "silhouette": "front-alpha-mask"
+    }
+  ],
+  "temporalSequenceVerified": true,
+  "allMutationsExactlyReplay": true,
+  "geometryActuallyChanged": true,
+  "textureActuallyChanged": true,
+  "shapeFeedback": {
+    "id": "item_17",
+    "text": "На PNG blockout уже читается как односторонний топор, но лопасть пока прямоугольная, кромка обрывается квадратными уступами, а рукоять выглядит гладкой. Исправлю верх и нижний «бородатый» край наклонными деталями, добавлю объёмное крепление, кристалл и отчётливые витки обмотки.\n",
+    "repairPreviewId": "item_18",
+    "applyId": "item_19",
+    "beforeRevision": 3,
+    "afterRevision": 4,
+    "changedExistingCubes": [
+      "blade_crown",
+      "blade_beard",
+      "broad_edge",
+      "guard_bar"
+    ],
+    "newDetails": [
+      "edge_crown",
+      "edge_beard",
+      "pommel_crystal",
+      "guard_hook"
+    ]
+  },
+  "surfaceFeedback": {
+    "id": "item_35",
+    "text": "Крупные снимки фронта и тыла выявили две конкретные проблемы: тёмная грань текстуры оказалась возле режущей кромки, а блик кристалла дал зубчатую полосу. Перенесу тёмную грань к креплению, упрощу блик и разведу пересекающиеся плоскости сегментов кромки по глубине.\n",
+    "reviewRevision": 6,
+    "repairReviewRevision": 7,
+    "actualInputs": [
+      "item_31",
+      "item_32",
+      "item_33"
+    ],
+    "scope": "Texture placement and edge depth; resulting editor images retained"
+  },
+  "finalRevision": 9,
+  "finalViews": [
+    "back",
+    "bottom",
+    "front",
+    "left",
+    "perspective",
+    "rear-perspective",
+    "right",
+    "top"
+  ],
+  "imageInspection": "Root inspected original revision3 blockout and final revision9 review. Tilted blade and leather seams visible; no human artistic score assigned.",
+  "artisticApproval": "not-granted",
+  "minecraftAcceptance": "not-tested",
+  "beautyScore": "not-assigned",
+  "limits": "Editor 32/64 px are not game screenshots. This proves a visual feedback loop, not increased artistic quality or preservation guarantees for every accepted manual detail (038).",
+  "implementation": "Existing MCP image/capture/review pipeline; installed-client loop now exercised and verified",
+  "sourceHashes": [
+    {
+      "path": "apps/model-editor/worker/mcp.ts",
+      "bytes": 30476,
+      "sha256": "077080b8bb5b61b271ee1dc324f62e669a8cf7e2989eac475d2130f8637ef512"
+    },
+    {
+      "path": "apps/model-editor/renderer/ReviewBoard.tsx",
+      "bytes": 5557,
+      "sha256": "bfe1441a3e9b111907f96fed035666620ec1a2d702f949e5c86c30145ea74eb0"
+    },
+    {
+      "path": "apps/model-editor/renderer/Viewport.tsx",
+      "bytes": 13565,
+      "sha256": "fdde5d60190fda4fc0eed6675b014b38858f77cfb6ad40a56401f23381f51959"
+    },
+    {
+      "path": "apps/model-editor/renderer/CaptureApp.tsx",
+      "bytes": 1628,
+      "sha256": "18a253fd40fb61c9501d4c0def43672641d8e9718bf11f07ed95990e80c877b6"
+    },
+    {
+      "path": "apps/model-editor/main/index.ts",
+      "bytes": 14394,
+      "sha256": "422438cca01837b2398b5c623df1a6c9da417c63f6c469a5e591ada17800b753"
+    },
+    {
+      "path": "apps/model-editor/scripts/check-review-desktop.mjs",
+      "bytes": 10576,
+      "sha256": "025cb602d32c7ec7894e0d08bad2ffaa51a8e13b7105757b61cb5eea40297a11"
+    },
+    {
+      "path": "apps/model-editor/worker/mcp.test.ts",
+      "bytes": 15408,
+      "sha256": "bf19c114bb82e02a0d00dc48a9c015d66c299bad758e35433564fd94af001661"
+    }
+  ],
+  "verification": {
+    "path": "output/verification/roadmap-037-feedback-verification.json",
+    "bytes": 4601,
+    "sha256": "49793c85dd9700e266fa96c557837aa79dd8811de4b03f8e6b2e1a8480fd7a4c"
+  },
+  "checks": {
+    "realClientLoop": "PASS temporal order, concrete image criticism, targeted commands and repeated actual PNG",
+    "geometryAndTexture": "PASS exact mutation replay and actual before/after changes",
+    "finalRevision": "PASS combined review and eight views at revision9",
+    "hostedPackagedReview": "PASS full exact-source Windows packaged suite, actual pixels/framing/readonly guards",
+    "artisticAcceptance": "not-granted",
+    "minecraftAcceptance": "not-tested"
+  },
+  "boundaries": {
+    "gameView": "Editor 32/64 px, no Minecraft game contexts",
+    "humanScorecard": "not-scored",
+    "iterationBudget": "Only operator watchdog; in-product budgets and preservation guarantees remain in 038/039/040"
+  },
+  "claudeSupplement": {
+    "path": "docs/production/evidence/independent-claude-032.json",
+    "correctedSession": "independent-claude-032-e587d05a",
+    "finalRevision": 8,
+    "combinedReviewRevisions": [
+      5,
+      7,
+      8
+    ],
+    "originalHarness": "PASS",
+    "qualityApproval": "not-granted"
+  },
+  "hosted": {
+    "runId": 37294506792,
+    "attempt": 2,
+    "sourceRevision": "fa1d871ed8dc7aa655f97f5ddaa837f41737abe2",
+    "windowsJobId": 111722133851,
+    "artifactId": 11339153989,
+    "report": {
+      "path": "output/ci/37294506792-windows/output/playwright/studio-packaged-f145da5c/report.json",
+      "bytes": 21315,
+      "sha256": "cb3d961ba4b18b283a2ae27ad79b8b9d57703aa1ce202503cbe45bb26ac021e9"
+    },
+    "review": {
+      "status": "PASS",
+      "hidden": true,
+      "checks": [
+        "dark text and active control contrast",
+        "four independent views with common framing",
+        "real alpha silhouette",
+        "native square 64px render and nearest 32px preview",
+        "thumbnail framing independent of panel aspect ratio",
+        "compact review",
+        "bounded MCP review PNG",
+        "read-only scene and manual camera",
+        "project conflict rejected"
+      ],
+      "textContrast": 14.980762409476815,
+      "activeContrast": 8.972271758994312
+    },
+    "workflowConclusion": "failure",
+    "remainingRegression": "Legacy Fabric 26.2 derived JAR checksum mismatch; no verification bypass"
+  }
+}
