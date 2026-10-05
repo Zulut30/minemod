@@ -10,6 +10,7 @@ import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import { LATEST_PROTOCOL_VERSION } from "@modelcontextprotocol/sdk/types.js";
 import { validModFixture } from "../../fixtures/specs/validation.ts";
 import { MAX_INLINE_SPEC_BYTES, validateInlineSpec } from "@mcdev/validation";
+import { isOperationEvidence } from "@mcdev/contracts";
 import {
   BoundedJsonLineInput,
   createMcpServer,
@@ -165,7 +166,7 @@ async function testLinkedInMemoryProtocol(): Promise<void> {
               revision: 2,
               treeSha256: "2".repeat(64),
             },
-            entries: [],
+            entries: [{ path: "build/libs/example.jar", mode: 420, size: 1, sha256: "3".repeat(64), kind: "build-output", provenance: "build" }],
           },
         };
       },
@@ -227,6 +228,7 @@ async function testLinkedInMemoryProtocol(): Promise<void> {
     const itemBundle = asObject(JSON.parse(itemContent[0]!.text) as unknown, "item asset bundle");
     assert.equal(itemBundle.reviewRequired, true);
     assert.equal(itemBundle.elements, 35);
+    assert(isOperationEvidence(itemBundle.evidence));assert.equal(itemBundle.evidence.game.status, "not-run");
     const paintedPayload = readFileSync(new URL("../../fixtures/assets/aurora-longsword-v2.item-asset.json", import.meta.url), "utf8");
     const paintedCall = await client.callTool({ name: MCP_ITEM_ASSET_TOOL_NAME, arguments: { payload: paintedPayload } });
     assert.notEqual(paintedCall.isError, true);
@@ -236,6 +238,8 @@ async function testLinkedInMemoryProtocol(): Promise<void> {
     assert.equal(buildCalls, 0, "data-only asset export must not invoke the build runner");
     const invalidItem = await client.callTool({ name: MCP_ITEM_ASSET_TOOL_NAME, arguments: { payload: "{}" } });
     assert.equal(invalidItem.isError, true);
+    const invalidEvidence = asObject(JSON.parse((invalidItem.content as { text: string }[])[0]!.text), "asset failure").evidence;
+    assert(isOperationEvidence(invalidEvidence));assert.equal(invalidEvidence.technical.status, "fail");
     const openItemArguments = await client.callTool({ name: MCP_ITEM_ASSET_TOOL_NAME, arguments: { payload: itemPayload, script: "unsafe" } });
     assert.equal(openItemArguments.isError, true);
 
@@ -255,6 +259,9 @@ async function testLinkedInMemoryProtocol(): Promise<void> {
       .find((entry) => entry.type === "text")?.text;
     assert.ok(typeof buildText === "string");
     assert.equal(asObject(JSON.parse(buildText) as unknown, "Fabric build result").workspaceStatus, "created");
+    const buildEvidence = asObject(JSON.parse(buildText), "build result").evidence;
+    assert(isOperationEvidence(buildEvidence));assert.equal(buildEvidence.revision.kind, "plan");
+    assert.equal(buildEvidence.pack?.revision, 2);assert.equal(buildEvidence.game.status, "not-run");
     assert.match(buildText, /PLACEHOLDER_ASSETS_USED/u);
     assert.deepEqual(buildConfig, { artifactCacheRoot: "/fixed/cache", java17Home: "/fixed/jdk-17" });
     assert.deepEqual(buildRequest, {

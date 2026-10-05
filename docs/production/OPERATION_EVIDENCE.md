@@ -1,0 +1,30 @@
+# Диагностика операции и границы приёмки
+
+Roadmap 020, в работе. Studio 0.13.0 добавляет bounded `mcdev.operation-evidence/v1` рядом с результатом операции. [Локальное evidence](evidence/operation-evidence-020.json) описывает фактические проверки; hosted/native proof новой revision фиксируется после завершения CI.
+
+Отчёт связывает SHA-256 точного UTF-8 входа и его bytes, content revision или editor projectId/revision, команду, resolved pack при сборке, безопасную ошибку и отсортированные path/bytes/SHA-256 ресурсов. Build revision — настоящий planId из verified artifact index. Export revision — текущий editor snapshot; экспорт формата Fabric не означает разрешение trusted pack, поэтому pack равен null. Для ошибки до разрешения pack его значение также null.
+
+| Проверка | Значение этого producer | Что подтверждено |
+|---|---|---|
+| `technical` | pass/fail с конкретным scope и bounded error | Export/integrity либо clean build и индекс артефактов; число кубов не является quality score |
+| `artistic` | requires-human-review | Художественная приёмка человеком ещё не получена |
+| `game` | not-run | Эта операция не провела игровую приёмку; separate GameTests/server/client reports имеют собственный scope |
+
+Producer не принимает пользовательские PASS/approval, shell или arguments. Validator проверяет JSON shape и пределы, а не удостоверяет автора отчёта. Для доверия к technical PASS нужны source revision и actual runtime/CI evidence. Human approval остаётся отдельной границей пункта 049 и [ролей review](REVIEW_ROLES.md).
+
+## Реализованные пути
+
+- `mcdev asset report <inline-item-json>` выполняет versioned exporter и возвращает `{ok, bundle, evidence}` либо `{ok:false, error, evidence}` с exit 1. Старые `asset item/bundle/verify` сохраняют прежний raw bundle output.
+- `mcdev fabric build ...` и `mcdev_fabric_build` возвращают evidence вместе с successful artifact index. Ошибка CLI теперь bounded JSON в stderr с code/evidence; error stack и workspace/Java/cache paths туда не переносятся.
+- `mcdev_asset_compile_item` добавляет evidence рядом с существующими полями legacy result; failure сохраняет `isError` и bounded code.
+- `studio_asset_validate` и `studio_asset_export` возвращают evidence с exact editor reference. Исходный `bundle` не расширяется: V1 manifest, SHA и четыре file contents сохраняют прежний контракт.
+- Ручной GUI export атомарно сохраняет `operation-evidence.v1.json` в новой export directory рядом с `asset-bundle.v1.json`. Report индексирует четыре manifest resources; container JSON и `source.mmeditor.json` остаются отдельными файлами.
+- Production build-test collector готовит этот же report из actual strict/offline Gradle build, resolved plan/pack, generated inputs и прочитанных JAR bytes. Он сохраняет JAR для независимой проверки SHA; hosted выполнение этой новой ветки требуется отдельно.
+
+Authorization/transport/schema failures до выполнения операции не становятся successful evidence. CAS, readonly tools, response limits, trusted packs и политика human review сохраняются.
+
+## Границы и проверка
+
+Report ограничен 2 MiB и 2048 descriptors, каждый file не более 16 MiB, общий бюджет 128 MiB. Payload digest вычисляется до 8 MiB; для большего отклонённого input bytes записываются, digest равен null. Raw input content в evidence отсутствует. Пути portable relative, без traversal, повторов и case collisions; revisions — safe integers, SHA-256 — exact lowercase hex.
+
+Локально прошли exact input/artifact checks, byte-identical bundle comparison, corrupted-bundle отказ, UTF-8 bytes, 18 malformed report shapes, error privacy и metadata getter guard. HTTP MCP и CLI проверяют emitted reports. Hidden packaged GUI сохранил report, совпавший с реальной revision и manifest files, затем восстановил исходный authored document после restart. Synthetic build-index test не объявляется native Gradle proof. Hosted full suite, native generated JAR report и Windows matrix новой source revision ещё нужны для закрытия 020.

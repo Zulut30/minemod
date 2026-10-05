@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { pathToFileURL } from "node:url";
-import { compileItemAssetPayload, compileItemAssetBundleV1, verifyAssetBundlePayloadV1, createFabricApplication, itemAssetDiagnostic } from "@mcdev/application";
+import { compileItemAssetPayload, compileItemAssetBundleV1, verifyAssetBundlePayloadV1, createFabricApplication, itemAssetDiagnostic,
+  assetOperationWithEvidence, fabricBuildEvidence, operationFailureEvidence } from "@mcdev/application";
 import { isDomainErrorCode } from "@mcdev/contracts";
 import {
   MAX_INLINE_SPEC_BYTES,
@@ -18,6 +19,7 @@ Usage:
   mcdev asset item <inline-json>
   mcdev asset bundle <inline-item-json>
   mcdev asset verify <inline-bundle-v1-json>
+  mcdev asset report <inline-item-json>
   mcdev spec validate --profile ${VALIDATION_PROFILE_IDS[0]} <inline-json>
   mcdev fabric build --workspace <path> --java17-home <path> --artifact-cache <path> <inline-json>
 
@@ -69,6 +71,11 @@ export async function runCli(
       return 1;
     }
   }
+  if (args.length === 3 && args[0] === "asset" && args[1] === "report") {
+    const result = assetOperationWithEvidence(args[2] ?? "", "asset-bundle-export");
+    writeOut(`${JSON.stringify(result, null, 2)}\n`);
+    return result.ok ? 0 : 1;
+  }
   if (
     args.length === 5 &&
     args[0] === "spec" &&
@@ -93,10 +100,10 @@ export async function runCli(
         workspaceRoot: args[3] ?? "",
         payload: args[8] ?? "",
       });
-      writeOut(`${JSON.stringify(result, null, 2)}\n`);
+      writeOut(`${JSON.stringify({ ...result, evidence: fabricBuildEvidence(args[8] ?? "", result.artifacts) }, null, 2)}\n`);
       return 0;
     } catch (error) {
-      writeError(`Fabric build failed: ${publicErrorCode(error)}\n`);
+      writeError(`${JSON.stringify({ code: publicErrorCode(error), evidence: operationFailureEvidence(args[8] ?? "", "fabric-build", error) })}\n`);
       return 1;
     }
   }

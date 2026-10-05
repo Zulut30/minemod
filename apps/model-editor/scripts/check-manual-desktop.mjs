@@ -7,6 +7,7 @@ import { createHash } from "node:crypto";
 import { Buffer } from "node:buffer";
 import { cubes, assetRequest } from "@mcdev/editor-core";
 import { verifyAssetBundleV1 } from "@mcdev/application";
+import { isOperationEvidence } from "../../../packages/contracts/index.ts";
 
 export async function checkManualDesktop(options, output) {
   const root = join(output, "manual"); await mkdir(root, { recursive: true });
@@ -43,11 +44,20 @@ export async function checkManualDesktop(options, output) {
     assert.notEqual((await inspect()).project.projectId, edited.project.projectId);
     await page.getByTestId("open-project").click(); await settled();
     assert.deepEqual((await inspect()).project, edited.project); assert(!(await inspect()).dirty);
+    const exporting = await inspect();
     await page.getByTestId("export-assets").click(); await settled();
     await page.waitForFunction(() => document.querySelector('[data-testid="status-message"]')?.textContent?.startsWith("Экспортировано"));
     const directory = (await readdir(root)).find(name => name.startsWith("item-")); assert(directory);
     const exported = join(root, directory), bundle = verifyAssetBundleV1(JSON.parse(await readFile(join(exported, "asset-bundle.v1.json"), "utf8")));
     assert.equal(bundle.files.length, 4);
+    const evidence = JSON.parse(await readFile(join(exported, "operation-evidence.v1.json"), "utf8"));
+    assert(isOperationEvidence(evidence));
+    assert.deepEqual(evidence.revision, { kind: "editor", projectId: exporting.project.projectId, revision: exporting.revision });
+    assert.equal(evidence.input.sha256, createHash("sha256").update(bundle.files[3].content).digest("hex"));
+    assert.equal(evidence.technical.status, "pass");assert.equal(evidence.game.status, "not-run");
+    assert.equal(evidence.artistic.status, "requires-human-review");
+    for (const file of bundle.manifest.files) assert.deepEqual(evidence.artifacts.find(entry => entry.path === file.path),
+      { path: file.path, bytes: file.bytes, sha256: file.sha256 });
     const files = [];
     for (const file of bundle.files) {
       const bytes = await readFile(join(exported, file.path)), descriptor = bundle.manifest.files.find(f => f.path === file.path);
@@ -65,7 +75,8 @@ export async function checkManualDesktop(options, output) {
     assert((await readFile(path)).equals(savedBytes));
     const report = { status: "PASS", hidden, projectId: edited.project.projectId, startedEmpty: true,
       savedFile: { bytes: savedBytes.length, sha256: createHash("sha256").update(savedBytes).digest("hex") },
-      manifestSha256: bundle.manifestSha256, files,
+      manifestSha256: bundle.manifestSha256, files, evidence,
+      evidenceSha256: createHash("sha256").update(await readFile(join(exported, "operation-evidence.v1.json"))).digest("hex"),
       mutationPath: "UI controls only; inspect reads state, native dialog mocks provide paths only",
       checks: ["new empty project", "add/name/geometry/color from UI", "Cyrillic Save As exact bytes", "saved clean state",
         "switch to another empty document", "reopen exact original", "GUI export actual bundle/files/source integrity", "restart restores authored document and original file"] };

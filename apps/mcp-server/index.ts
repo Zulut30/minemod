@@ -4,7 +4,7 @@ import { Transform, type TransformCallback } from "node:stream";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
-import { compileItemAssetPayload, createFabricApplication, itemAssetDiagnostic, MAX_ITEM_ASSET_PAYLOAD_BYTES } from "@mcdev/application";
+import { assetOperationWithEvidence, fabricBuildEvidence, operationFailureEvidence, createFabricApplication, MAX_ITEM_ASSET_PAYLOAD_BYTES } from "@mcdev/application";
 import { isDomainErrorCode } from "@mcdev/contracts";
 import {
   MAX_INLINE_SPEC_BYTES,
@@ -197,11 +197,9 @@ export function createMcpServer(
       inputSchema: z.strictObject({ payload: z.string().max(MAX_ITEM_ASSET_PAYLOAD_BYTES) }),
     },
     ({ payload }) => {
-      try {
-        return { content: [{ type: "text" as const, text: JSON.stringify(compileItemAssetPayload(payload)) }] };
-      } catch (error) {
-        return { isError: true, content: [{ type: "text" as const, text: JSON.stringify(itemAssetDiagnostic(error)) }] };
-      }
+      const result = assetOperationWithEvidence(payload, "asset-item-export");
+      const body = result.ok ? { ...result.bundle, evidence: result.evidence } : { ...result.error, evidence: result.evidence };
+      return { ...(!result.ok ? { isError: true } : {}), content: [{ type: "text" as const, text: JSON.stringify(body) }] };
     },
   );
   server.registerTool(
@@ -214,7 +212,7 @@ export function createMcpServer(
       try {
         const application = createApplication({ artifactCacheRoot, java17Home });
         const result = await application.build({ payload, workspaceRoot });
-        return { content: [{ type: "text" as const, text: JSON.stringify(result) }] };
+        return { content: [{ type: "text" as const, text: JSON.stringify({ ...result, evidence: fabricBuildEvidence(payload, result.artifacts) }) }] };
       } catch (error) {
         const descriptor = typeof error === "object" && error !== null
           ? Object.getOwnPropertyDescriptor(error, "code")
@@ -224,7 +222,7 @@ export function createMcpServer(
           : "INTERNAL_ERROR";
         return {
           isError: true,
-          content: [{ type: "text" as const, text: JSON.stringify({ code }) }],
+          content: [{ type: "text" as const, text: JSON.stringify({ code, evidence: operationFailureEvidence(payload, "fabric-build", error) }) }],
         };
       }
     },

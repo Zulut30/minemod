@@ -19,7 +19,7 @@ import {
   type EditorProject,
 } from "@mcdev/editor-core";
 import { VIEWS, type View } from "../shared/bridge.ts";
-import { compileItemAssetBundleV1 } from "../../../packages/application/asset-bundles.ts";
+import { assetOperationWithEvidence } from "../../../packages/application/evidence.ts";
 import {
   AgentMutationSchema, CONTRACT_URI, SCENE_URI, HUMAN_COMMANDS, STUDIO_LIMITS,
   contract, sceneReference, recovery, type ToolDefinition,
@@ -441,34 +441,40 @@ export async function startEditorMcp(
     );
     tool(
       "studio_asset_validate",
-      "Технический экспортный preflight текущей версии. Не является визуальной или игровой проверкой.",
+      "Технический экспортный preflight текущей версии. evidence связывает input/revision и hashes; artistic/game статусы самостоятельные. Не является визуальной или игровой проверкой.",
       refSchema,
       true,
       (args) => {
         const state = editor.inspect();
         reference(state, args);
-        editor.export();
+        const result = assetOperationWithEvidence(JSON.stringify(assetRequest(state.project)), "asset-item-export",
+          { kind: "editor", projectId: state.project.projectId, revision: state.revision });
+        if (!result.ok) return { ...json({ ...summary(state), error: result.error, evidence: result.evidence }), isError: true };
         return json({
           ...summary(state),
           technical: "pass",
           visual: "requires-human-review",
           game: "not-verified",
+          evidence: result.evidence,
         });
       },
     );
     tool(
       "studio_asset_export",
-      "Получить Minecraft JSON, PNG и bbmodel для review. format=bundle-v1 также включает source, manifest и hashes; по умолчанию legacy. Не записывает файлы, не меняет trusted pack, не собирает JAR.",
+      "Получить Minecraft JSON, PNG и bbmodel для review. format=bundle-v1 также включает source, manifest и hashes; по умолчанию legacy. evidence рядом с bundle содержит input/revision, files и отдельные technical/artistic/game статусы. Не записывает файлы, не меняет trusted pack, не собирает JAR.",
       refSchema.extend({ format: z.enum(["legacy", "bundle-v1"]).default("legacy") }),
       true,
       (args) => {
         const state = editor.inspect();
         reference(state, args);
+        const result = assetOperationWithEvidence(JSON.stringify(assetRequest(state.project)),
+          args.format === "bundle-v1" ? "asset-bundle-export" : "asset-item-export",
+          { kind: "editor", projectId: state.project.projectId, revision: state.revision });
+        if (!result.ok) return { ...json({ ...summary(state), error: result.error, evidence: result.evidence }), isError: true };
         return json({
           ...summary(state),
-          bundle: args.format === "bundle-v1"
-            ? compileItemAssetBundleV1(JSON.stringify(assetRequest(state.project)))
-            : editor.export(),
+          bundle: result.bundle,
+          evidence: result.evidence,
           integration: "requires-separate-review",
         });
       },

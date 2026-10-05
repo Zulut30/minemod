@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
-import { randomUUID } from "node:crypto";
+import { randomUUID, createHash } from "node:crypto";
 import { Buffer } from "node:buffer";
 import process from "node:process";
 import { request as httpRequest } from "node:http";
@@ -14,6 +14,7 @@ import {
 } from "@mcdev/editor-core";
 import { compileItemAssetPayload } from "../../../packages/application/item-assets.ts";
 import { verifyAssetBundleV1 } from "../../../packages/application/asset-bundles.ts";
+import { isOperationEvidence } from "../../../packages/contracts/index.ts";
 import { assetRequest } from "@mcdev/editor-core";
 import { startEditorMcp } from "./mcp.ts";
 import { VIEWS, type View } from "../shared/bridge.ts";
@@ -243,6 +244,14 @@ try {
   const beforeExport = session.state();
   const exportedV1 = await call(0, "studio_asset_export", { ...ref, format: "bundle-v1" });
   const verified = verifyAssetBundleV1(exportedV1.data.bundle);
+  assert(isOperationEvidence(exportedV1.data.evidence));
+  assert.deepEqual(exportedV1.data.evidence.revision, { kind: "editor", projectId: ref.projectId, revision: ref.expectedRevision });
+  assert.equal(exportedV1.data.evidence.input.sha256,
+    createHash("sha256").update(JSON.stringify(assetRequest(beforeExport.project))).digest("hex"));
+  assert.equal(exportedV1.data.evidence.technical.status, "pass");
+  assert.equal(exportedV1.data.evidence.artistic.status, "requires-human-review");
+  assert.equal(exportedV1.data.evidence.game.status, "not-run");
+  assert.equal(exportedV1.data.evidence.pack, null);
   assert.equal(verified.files.length, 4);
   assert.equal(verified.manifest.reviewRequired, true);
   assert.deepEqual(JSON.parse(verified.files[3]!.content), assetRequest(beforeExport.project));

@@ -1,6 +1,7 @@
 export * from "./v1/artifacts.ts";
 export * from "./v1/common.ts";
 export * from "./v1/errors.ts";
+export * from "./v1/evidence.ts";
 export * from "./v1/logs.ts";
 export * from "./v1/operations.ts";
 export * from "./v1/pack.ts";

@@ -14,7 +14,7 @@ import {
   type EditorProject,
 } from "@mcdev/editor-core";
 import { compileItemAssetPayload } from "../../../packages/application/item-assets.ts";
-import { compileItemAssetBundleV1 } from "../../../packages/application/asset-bundles.ts";
+import { assetOperationWithEvidence } from "../../../packages/application/evidence.ts";
 import { readProjectWithVersion, writeProject, renameWithRetry } from "./persistence.ts";
 import type { HostResponse, View } from "../shared/bridge.ts";
 import { startEditorMcp } from "./mcp.ts";
@@ -239,9 +239,11 @@ async function run(request: ServiceRequest): Promise<HostResponse> {
     note = loaded.sourceVersion === 1 ? "Проект v1 открыт в формате v2. Исходник не изменён; при сохранении будет оставлена отдельная оригинальная копия." : "Проект открыт.";
   } else if (request.kind === "export") {
     const exported = bundle();
-    const versionedBundle = compileItemAssetBundleV1(
-      JSON.stringify(assetRequest(session.state().project)),
-    );
+    const state = session.state();
+    const operation = assetOperationWithEvidence(JSON.stringify(assetRequest(state.project)), "asset-bundle-export",
+      { kind: "editor", projectId: state.project.projectId, revision: state.revision });
+    if (!operation.ok) throw new EditorError(operation.error.code, operation.error.message);
+    const versionedBundle = operation.bundle;
     const destination = join(request.path!, `item-${randomUUID()}`),
       stage = destination + ".pending";
     await mkdir(stage, { recursive: true });
@@ -264,6 +266,7 @@ async function run(request: ServiceRequest): Promise<HostResponse> {
         join(stage, "asset-bundle.v1.json"),
         JSON.stringify(versionedBundle, null, 2) + "\n",
       );
+      await writeFile(join(stage, "operation-evidence.v1.json"), JSON.stringify(operation.evidence, null, 2) + "\n");
       await writeProject(
         join(stage, "source.mmeditor.json"),
         session.state().project,

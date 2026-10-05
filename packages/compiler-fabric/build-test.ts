@@ -1,10 +1,12 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { chmod, mkdir, mkdtemp, readdir, rm, writeFile } from "node:fs/promises";
+import { chmod, mkdir, mkdtemp, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fabricBasicContentFixture } from "../../fixtures/specs/fabric-basic-content.ts";
 import { compileFabricPhase1 } from "./index.ts";
+import { createArtifactIndex } from "../artifacts/index.ts";
+import { fabricBuildEvidence } from "../application/evidence.ts";
 
 const javaHome = process.env.MCDEV_FABRIC_TEST_JAVA_HOME;
 const gradleHome = process.env.MCDEV_FABRIC_TEST_GRADLE_HOME;
@@ -148,7 +150,8 @@ try {
     result: "infectedfrontier:blue_steel_sword",
     resultCount: 1,
   });
-  const compiled = await compileFabricPhase1(JSON.stringify(fixture));
+  const payload = JSON.stringify(fixture);
+  const compiled = await compileFabricPhase1(payload);
   if (reportDirectory !== undefined) {
     const reviewFiles = compiled.outputs.filter(({ file }) =>
       file.path.endsWith(".java") || file.path === "src/main/resources/fabric.mod.json");
@@ -218,6 +221,20 @@ try {
   const artifacts = await readdir(join(workspace, "build", "libs"));
   const artifact = artifacts.find((name) => name === "infectedfrontier-0.1.0.jar");
   assert.ok(artifact !== undefined);
+  if (reportDirectory !== undefined) {
+    const jarBytes = await readFile(join(workspace, "build", "libs", artifact));
+    const artifactPath = `build/libs/${artifact}`;
+    const index = createArtifactIndex({ planId: compiled.plan.planId, pack: compiled.plan.pack,
+      sources: [...compiled.outputs.map(({ artifactKind, file }) => ({ path: file.path, mode: file.mode, bytes: file.bytes,
+        kind: artifactKind, provenance: file.origin === "pack" ? "pack" as const : "generator" as const })),
+      { path: artifactPath, mode: 420, bytes: jarBytes, kind: "build-output", provenance: "build" }] });
+    const evidence = fabricBuildEvidence(payload, index);
+    assert.equal(evidence.game.status, "not-run");
+    assert.equal(evidence.artistic.status, "requires-human-review");
+    await mkdir(join(reportDirectory, "build", "libs"), { recursive: true });
+    await writeFile(join(reportDirectory, artifactPath), jarBytes);
+    await writeFile(join(reportDirectory, "operation-evidence.v1.json"), JSON.stringify(evidence, null, 2) + "\n");
+  }
   const jarList = spawnSync(join(javaHome, "bin", "jar"), ["tf", join(workspace, "build", "libs", artifact)], {
     cwd: workspace,
     encoding: "utf8",

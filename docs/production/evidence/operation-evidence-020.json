@@ -1,0 +1,202 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 20,
+  "status": "PARTIAL",
+  "checkedAtUtc": "2026-10-05T14:25:26.619Z",
+  "scope": "Local bounded operation reports across application/CLI/MCP and actual hidden packaged GUI; hosted/native collector pending",
+  "contract": "mcdev.operation-evidence/v1",
+  "studioVersion": "0.13.0",
+  "node": "24.21.0",
+  "sourceHashes": [
+    {
+      "path": "packages/contracts/v1/evidence.ts",
+      "bytes": 5567,
+      "sha256": "bfb9904a1bce1b61bd11da914121c8410378979bc64b791bd98e49436696d647"
+    },
+    {
+      "path": "packages/contracts/index.ts",
+      "bytes": 354,
+      "sha256": "b536bf8e02a3582e895871bd6777ba5d6db16163da7b2e6d4f44db04932397b6"
+    },
+    {
+      "path": "packages/application/evidence.ts",
+      "bytes": 4384,
+      "sha256": "d629b88b64d8a156afc55abcf2b32c46b65e23f83ef11ac57ad7f921a8715bd4"
+    },
+    {
+      "path": "packages/application/evidence.test.ts",
+      "bytes": 7056,
+      "sha256": "9ce0b00f98e693271ea86db28935a343a749d0861c482589a6fa796d88875d16"
+    },
+    {
+      "path": "packages/application/index.ts",
+      "bytes": 5489,
+      "sha256": "971031fbf9c4441c21f5680ce82fdfa49b81d3670b9628f3da0b8c21fcce1bd3"
+    },
+    {
+      "path": "packages/application/package.json",
+      "bytes": 936,
+      "sha256": "f157475ad60125f973143aaa00f048388e9f177ac217b0f000116af92a9c3d1f"
+    },
+    {
+      "path": "packages/compiler-fabric/build-test.ts",
+      "bytes": 11369,
+      "sha256": "0faabd443b26d676fd5a12768324f76a46be4564193556e47a9eaf387101597d"
+    },
+    {
+      "path": "apps/cli/index.ts",
+      "bytes": 4823,
+      "sha256": "a9ca6c4e2662959ce4b3d7b9d1e17de0b393180a067c4e8e296c6ab349156d77"
+    },
+    {
+      "path": "apps/cli/test.ts",
+      "bytes": 7833,
+      "sha256": "ec153be29d05fba9f7140c700e5510ff0ddd928afee12e0cd9b25ef6eec85349"
+    },
+    {
+      "path": "apps/mcp-server/index.ts",
+      "bytes": 10985,
+      "sha256": "f0ee91645895d40b3d1c005db74ac00cb3b940c8624d0a87f7acc27d97e2ce82"
+    },
+    {
+      "path": "apps/mcp-server/test.ts",
+      "bytes": 41220,
+      "sha256": "27bd5c4a117731a7ee1f4921791db5324209e0f7995db111e569ea3381ef0f37"
+    },
+    {
+      "path": "apps/model-editor/package.json",
+      "bytes": 1531,
+      "sha256": "1f7e5a8f00dbec12249437da7f113d587e8173d9d6c0e549f4930c783fac4ddd"
+    },
+    {
+      "path": "apps/model-editor/worker/index.ts",
+      "bytes": 13262,
+      "sha256": "304b1417f3e8e0ae83ae51316bc8c0c8d2580b54a9aa9c7815e7670ee97bc027"
+    },
+    {
+      "path": "apps/model-editor/worker/mcp.ts",
+      "bytes": 31491,
+      "sha256": "6c5e2aed6cc617a8004d8168c5c5b3784a7e4392cc9dcc1a5d040bf340c555bc"
+    },
+    {
+      "path": "apps/model-editor/worker/mcp.test.ts",
+      "bytes": 16108,
+      "sha256": "5a2293fdce7f945efdaef9226b847e6a225daeed074e3ce6c88ba5fab19db5a9"
+    },
+    {
+      "path": "apps/model-editor/scripts/check-manual-desktop.mjs",
+      "bytes": 7156,
+      "sha256": "419ef2cb94c091a6000776dd62e0adb80f638f3b521938cc06db82771070628f"
+    }
+  ],
+  "localReports": [
+    {
+      "exitCode": 0,
+      "path": "output/verification/evidence-020-a78d44ba/asset-success.json",
+      "bytes": 309540,
+      "sha256": "0baafb566ff1043ba7f5e031c5d6066b49af9c1f7e8f691271723c87b7a4fa68"
+    },
+    {
+      "exitCode": 1,
+      "path": "output/verification/evidence-020-a78d44ba/asset-failure.json",
+      "bytes": 947,
+      "sha256": "fe76d427047ef260c7f2294114afd813c0e99afafa08761b16d1b9e105ef9d83"
+    }
+  ],
+  "manual": {
+    "path": "output/playwright/evidence-manual-020-7d622c7c/manual/report.json",
+    "bytes": 2898,
+    "sha256": "7c4e9c5f17c2d17b51c19f49fc0832b25d0117dc81e2413de9d8a4016785d034"
+  },
+  "originalManualPackage": "output/model-editor/releases/0.13.0/b600e154/MineMod Studio-win32-x64/MineMod Studio.exe",
+  "finalPackageMetadata": {
+    "path": "output/model-editor/latest-build.json",
+    "bytes": 328,
+    "sha256": "0af69ee67813a361df5e5bbd11484f9aa887ecf26962875be69a86d755ecdf77"
+  },
+  "logs": [
+    {
+      "path": "output/verification/roadmap-020-portable.log",
+      "bytes": 3706,
+      "sha256": "0d93e286677b4c52439eaa8f25b1ec792f79f15b80eab5d7c4afbcea7a19f5cb"
+    },
+    {
+      "path": "output/verification/roadmap-020-mcp.log",
+      "bytes": 207,
+      "sha256": "ce600a29360c371575566860a7c94c33766d03e9a2ba5f6249e976ae6338a777"
+    },
+    {
+      "path": "output/verification/roadmap-020-boundary-final.log",
+      "bytes": 203,
+      "sha256": "c3ecbcb4f9765f65b3a4c6cd2de79dd86b36ba065696a8ff29c4cfb2db9c312b"
+    },
+    {
+      "path": "output/verification/roadmap-020-lint-complete.log",
+      "bytes": 29,
+      "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+    },
+    {
+      "path": "output/verification/roadmap-020-typecheck-native-collector.log",
+      "bytes": 176,
+      "sha256": "fe0327fb3a908a7cea6b4e5ef62bbaa7903d4f4149a209170e6249f0dd5c8190"
+    },
+    {
+      "path": "output/verification/roadmap-020-manual.log",
+      "bytes": 3120,
+      "sha256": "ef85237ef0624f75145963a4e193cff56e7b8a707f19916be6b37555420485b5"
+    },
+    {
+      "path": "output/verification/roadmap-020-package.log",
+      "bytes": 787,
+      "sha256": "a0de018f3426a159e9e85a2b9d3dc49305400b6288b7eb43a36404f798e329f5"
+    },
+    {
+      "path": "output/verification/roadmap-020-package-final.log",
+      "bytes": 787,
+      "sha256": "ecb5e728b2a0ddb10a621cf313b5f90ca3e0222b98a9e6accdfde5b1052e5b3c"
+    },
+    {
+      "path": "output/verification/roadmap-020-assets-final.log",
+      "bytes": 458,
+      "sha256": "5e5f7b73825d8923aa8ceeb5c9bec1a4abe369ea6f91665de64deaea8c2fc8f4"
+    },
+    {
+      "path": "output/verification/roadmap-020-mcp-final.log",
+      "bytes": 207,
+      "sha256": "ce600a29360c371575566860a7c94c33766d03e9a2ba5f6249e976ae6338a777"
+    },
+    {
+      "path": "output/verification/roadmap-020-install.log",
+      "bytes": 204,
+      "sha256": "23eab63a9dd376dfc8060aeaccc550452ef4a61530963ec49fd6410fe624d7b4"
+    }
+  ],
+  "checks": [
+    "exact UTF-8 input hash/bytes",
+    "deterministic report",
+    "bundle bytes/source/manifest preserved",
+    "editor revision binding",
+    "sorted exact resource hashes",
+    "18 rejected report shapes",
+    "corrupt bundle failure",
+    "private exception paths/stack omitted",
+    "getter not invoked",
+    "new GUI report atomically saved",
+    "UI-only save/open/export/restart"
+  ],
+  "boundaries": {
+    "artisticAcceptance": "NOT_PERFORMED",
+    "authoredGameAcceptance": "NOT_RUN",
+    "nativeGeneratedJarReport": "HOSTED_PENDING",
+    "wholeCI": "PENDING",
+    "reportValidator": "Transport shape only, not producer identity",
+    "assetBundleSchema": "UNCHANGED",
+    "trustedPacks": "UNCHANGED",
+    "dependencies": "UNCHANGED"
+  },
+  "retainedInitialTypecheckDiagnostic": {
+    "path": "output/verification/roadmap-020-typecheck-initial.log",
+    "bytes": 504,
+    "sha256": "35b75018008f4240d7bf8e5513e721b444f4c7bfef19888fdab23668cfcaefb4"
+  }
+}

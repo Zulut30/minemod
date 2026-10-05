@@ -4,6 +4,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { validModFixture } from "../../fixtures/specs/validation.ts";
 import { VALIDATION_PROFILE_IDS } from "@mcdev/validation";
+import { isOperationEvidence } from "@mcdev/contracts";
 import { runCli } from "./index.ts";
 
 const output: string[] = [];
@@ -62,6 +63,15 @@ const versionedText = output.join(""), versioned = JSON.parse(versionedText) as 
 assert.equal(versioned.manifest.reviewRequired, true);
 assert.equal(versioned.files.length, 4);
 output.length = 0;
+assert.equal(await runCli(["asset", "report", paintedPayload], text => output.push(text)), 0);
+const reported = JSON.parse(output.join("")) as { ok: boolean; bundle: unknown; evidence: unknown };
+assert(reported.ok);assert.deepEqual(reported.bundle, versioned);assert(isOperationEvidence(reported.evidence));
+assert.equal(reported.evidence.game.status, "not-run");assert.equal(reported.evidence.artistic.status, "requires-human-review");
+output.length = 0;
+assert.equal(await runCli(["asset", "report", "{}"], text => output.push(text)), 1);
+const failedReport = JSON.parse(output.join("")) as { ok: boolean; evidence: unknown };
+assert.equal(failedReport.ok, false);assert(isOperationEvidence(failedReport.evidence));assert.equal(failedReport.evidence.technical.status, "fail");
+output.length = 0;
 assert.equal(await runCli(["asset", "verify", versionedText], (text) => output.push(text)), 0);
 assert.deepEqual(JSON.parse(output.join("")), versioned);
 for (const operation of ["bundle", "verify"]) {
@@ -102,7 +112,7 @@ for (const operation of ["bundle", "verify"]) {
                 revision: 2,
                 treeSha256: "2".repeat(64),
               },
-              entries: [],
+              entries: [{ path: "build/libs/example.jar", mode: 420, size: 1, sha256: "3".repeat(64), kind: "build-output", provenance: "build" }],
             },
           };
         },
@@ -135,7 +145,10 @@ for (const operation of ["bundle", "verify"]) {
     }),
   });
   assert.equal(code, 1);
-  assert.deepEqual(errors, ["Fabric build failed: BUILD_FAILED\n"]);
+  const failure = JSON.parse(errors.join("")) as { code: string; evidence: unknown };
+  assert.equal(failure.code, "BUILD_FAILED");assert(isOperationEvidence(failure.evidence));
+  assert.equal(failure.evidence.technical.status, "fail");assert.equal(failure.evidence.pack, null);
+  assert(!errors.join("").includes("/workspace"));
 }
 
 const entrypoint = fileURLToPath(new URL("./index.ts", import.meta.url));

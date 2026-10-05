@@ -143,3 +143,4 @@ export function createFabricApplication(
 
 export { compileItemAssetPayload, itemAssetDiagnostic, MAX_ITEM_ASSET_PAYLOAD_BYTES, type ItemAssetBundle } from "./item-assets.ts";
 export { compileItemAssetBundleV1, verifyAssetBundleV1, verifyAssetBundlePayloadV1 } from "./asset-bundles.ts";
+export { assetOperationWithEvidence, fabricBuildEvidence, operationFailureEvidence } from "./evidence.ts";
