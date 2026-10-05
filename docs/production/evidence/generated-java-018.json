@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "roadmapPoint": 18,
-  "status": "PARTIAL",
-  "verifiedAtUtc": "2026-10-05T09:32:22.435324+00:00",
+  "status": "PASS",
+  "verifiedAtUtc": "2026-10-05T09:42:28.166150+00:00",
   "scope": "Readable native Tier/ArmorMaterial emitters, removal of empty client initializer, mandatory owned Java source quality gate and retained generated source review evidence; omit no-op default/boolean config normalization and redundant explicit constructor",
   "sourceParentRevision": "6f98af6dd52ef680d7a483a286d04fb93b335e4a",
   "compilerIdentity": "@mcdev/compiler-fabric@0.1.1-phase.2",
@@ -44,10 +44,10 @@
     "rejectedCases": 22,
     "typecheck": "PASS",
     "lint": "PASS",
-    "fullCompilerSuite": "pending hosted Linux; local Windows rejects executable mode",
-    "generatedCleanBuild": "pending hosted",
-    "productionGameTests": "pending hosted",
-    "dedicatedServer": "pending hosted"
+    "fullCompilerSuite": "PASS hosted Linux exact phase.2 source",
+    "generatedCleanBuild": "PASS generated equipment/config strict build",
+    "productionGameTests": "PASS 2 nonempty infrastructure tests online/offline; not complete generated gameplay",
+    "dedicatedServer": "PASS fixture and generated equipment/config mod started and stopped cleanly"
   },
   "logs": [
     {
@@ -89,6 +89,46 @@
       "path": "output/verification/roadmap-018-v2-lint.log",
       "bytes": 29,
       "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+    },
+    {
+      "path": "output/verification/roadmap-018-v2-hosted-linux.log",
+      "bytes": 27213,
+      "sha256": "001b8b36fa8dbf078cdc1037656b25c8d893fb502568f945df28cadea52f4ec7"
+    },
+    {
+      "path": "output/verification/roadmap-018-v2-hosted-production.log",
+      "bytes": 67631,
+      "sha256": "2ee3042c481844986f7ebb1f4153ce07861dec6da410c0f795ea94320e01a6c9"
+    },
+    {
+      "path": "output/verification/roadmap-018-generated-source-gate.log",
+      "bytes": 63,
+      "sha256": "7f191308977f7272e1dbfcd4052c8fce484350d72dd2ed1b36ca2374f73bcb23"
+    },
+    {
+      "path": "output/ci/37290676327-production/output/ci/fabric-production/generated/source-review-manifest.json",
+      "bytes": 1663,
+      "sha256": "358db61afefcc01b674e313b928d69e9edd122c0f6528bb3d48e70971a78871f"
+    },
+    {
+      "path": "output/ci/37290676327-production/output/ci/fabric-production/generated/bootstrap.log",
+      "bytes": 912,
+      "sha256": "a4ec6367285f93d08303a3b7610233dabd2d474d240d3bfd4621755c063b2502"
+    },
+    {
+      "path": "output/ci/37290676327-production/output/ci/fabric-production/generated/clean-build.log",
+      "bytes": 853,
+      "sha256": "88884f5dde09d47e111e048ce9d456b24f69fd328d78e4f01031e4ddbad4339f"
+    },
+    {
+      "path": "output/ci/37290676327-production/output/ci/fabric-production/generated/dedicated-server.log",
+      "bytes": 10050,
+      "sha256": "7a5cdb881f6868bdf9838bc15e5eeb66c251a547df3be8d3f8ee8801114156e9"
+    },
+    {
+      "path": "output/ci/37290676327-production/fixtures/fabric-1.20.1-empty/build/reports/gametest/production.xml",
+      "bytes": 406,
+      "sha256": "a9e8c7d7ac5ca742702b8bb663581cac52c8a7d900bb4daf5059dc5a4fd4058c"
     }
   ],
   "windowsPackObservation": {
@@ -106,7 +146,115 @@
   "gamePackBaselineChanged": false,
   "artisticApproval": "not-granted",
   "fullProductionAcceptance": "not-granted",
-  "hostedCurrentSource": "pending after phase.2 commit; phase.1 production and control-plane jobs passed but do not verify phase.2 changes",
+  "hostedCurrentSource": {
+    "runId": 37290676327,
+    "url": "https://github.com/Zulut30/minemod/actions/runs/37290676327",
+    "sourceRevision": "da6c6f69b6f45b2d8c5b347e5ea05719e4831498",
+    "workflowConclusion": "failure",
+    "jobs": [
+      {
+        "name": "control-plane",
+        "jobId": 111700166780,
+        "conclusion": "success"
+      },
+      {
+        "name": "Fabric 1.20.1 / Java 17 production target",
+        "jobId": 111700166404,
+        "conclusion": "success"
+      },
+      {
+        "name": "studio-windows",
+        "jobId": 111700166851,
+        "conclusion": "success"
+      },
+      {
+        "name": "neoforge",
+        "jobId": 111700166814,
+        "conclusion": "success"
+      },
+      {
+        "name": "client-smoke",
+        "jobId": 111701040063,
+        "conclusion": "success"
+      },
+      {
+        "name": "fabric",
+        "jobId": 111700166901,
+        "conclusion": "failure"
+      },
+      {
+        "name": "fabric-client",
+        "jobId": 111700448192,
+        "conclusion": "skipped"
+      }
+    ],
+    "artifactName": "fabric-1.20.1-java17-evidence",
+    "artifactId": 11336636477,
+    "scope": "Generated native Java, full workspace compiler suite and current packaged Studio. Legacy Fabric26 regression remains failed."
+  },
   "remainingRegressionFailure": "Existing Fabric 26.2 derived JAR checksum mismatch; no checksum bypass.",
-  "configNormalizationChecks": "Default and boolean-only omit normalize and call; mixed integer/string retain actual bounds and length checks. Regression assertions await hosted full compiler suite."
+  "configNormalizationChecks": "PASS exact-source Linux default and boolean-only omit no-op method/call; mixed integer/string retain bounds and length; YACL handler works in generated dedicated server.",
+  "sourceReview": {
+    "schemaVersion": 1,
+    "sourceRevision": "da6c6f69b6f45b2d8c5b347e5ea05719e4831498",
+    "ciRunId": 37290676327,
+    "reviewer": "Codex implementation self-review in current chat",
+    "humanCodeAcceptance": "not-recorded",
+    "checkedAtUtc": "2026-10-05T09:41:16.573416+00:00",
+    "files": [
+      {
+        "path": "src/client/java/dev/mcdev/generated/m_infectedfrontier/client/GeneratedModMenuIntegration.java",
+        "bytes": 4582,
+        "sha256": "6f7a89b230ce2827f83d8594ce04f545f8516be3cd5ec3ec54c957635b4ff808"
+      },
+      {
+        "path": "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedConfig.java",
+        "bytes": 1947,
+        "sha256": "f0f16ba4dd8623949447c816bb1047dbf3f4c179a3292137e3fec2505a6502bc"
+      },
+      {
+        "path": "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedConfiguredBehavior.java",
+        "bytes": 636,
+        "sha256": "45edea171920ccb5f00b2173a5871202a9b1ba5a9f44018334a7d086a7e89a8a"
+      },
+      {
+        "path": "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedContent.java",
+        "bytes": 6384,
+        "sha256": "6b475a89f39a229a1144ba72cacafe3bb7fee6220f0da281b44b403f163b0f01"
+      },
+      {
+        "path": "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedMod.java",
+        "bytes": 497,
+        "sha256": "c0c8e389a8e8e11b98afddd5ff495046e9c0ad7ddf2171b5e31a15ae7884d187"
+      },
+      {
+        "path": "src/main/resources/fabric.mod.json",
+        "bytes": 601,
+        "sha256": "7a26b533a01233c980b0a1d58705c4f1760c41d987ee68cdb3214000b6849c4d"
+      }
+    ],
+    "allBytesAndSha256Match": true,
+    "commonClientSeparated": true,
+    "emptyClientInitializerAbsent": true,
+    "mixedConfigBoundsRetained": true,
+    "redundantConfigConstructorAbsent": true,
+    "onlyChangedSourceSincePhase1": [
+      "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedConfig.java"
+    ],
+    "reviewedBehavior": "Typed native 1.20.1 registrations; Tier/ArmorMaterial overrides; config load/range/length; server JOIN event; Mod Menu client UI.",
+    "limits": "Source review and two infrastructure GameTests; not complete generated gameplay, human art acceptance or release approval.",
+    "report": {
+      "path": "output/verification/roadmap-018-generated-source-review.json",
+      "bytes": 2132,
+      "sha256": "7b4b29630939d03df6a8f1767aadcf6dab4903e1f827445e947cb06b15222369"
+    }
+  },
+  "previousSourceRun": {
+    "runId": 37289845344,
+    "sourceRevision": "6f98af6dd52ef680d7a483a286d04fb93b335e4a",
+    "workflowConclusion": "cancelled",
+    "windowsConclusion": "cancelled after next source push",
+    "productionConclusion": "success",
+    "notUsedAsFinalProof": true
+  }
 }
