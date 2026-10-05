@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "roadmapPoint": 25,
-  "status": "PARTIAL",
+  "status": "PASS",
   "checkedAtUtc": "2026-10-05T11:27:23.999Z",
   "studioVersion": "0.12.0",
   "scope": "Human named flat groups, additive cube selection, actual hide/show view and enforced protected parts; no geometry/UV changes by structure",
@@ -76,7 +76,7 @@
     "http": "PASS",
     "package": "PASS fresh Windows x64 0.12.0",
     "focusedPackaged": "PASS twelve GUI/public MCP/save/restart checks; actual viewport hide/show PNG restores exact pixels",
-    "hostedNewSource": "pending"
+    "hostedNewSource": "PASS exact source Linux full suite, full hidden Windows packaged suite including twelve parts checks, production strict build/GameTests/server/client"
   },
   "focused": {
     "report": {
@@ -202,6 +202,21 @@
       "path": "output/verification/roadmap-025-desktop-visibility-corrected.log",
       "bytes": 952,
       "sha256": "f3b739bd8ba3f382f2f55af9a1eae9836d6076a77a325433d7cf2d785e056b2a"
+    },
+    {
+      "path": "output/verification/roadmap-012-025-hosted-status.json",
+      "bytes": 19147,
+      "sha256": "53e74ff4b7ebeb80fc989a22a61c1da4fd91688f2f35f45b4657995549e1982f"
+    },
+    {
+      "path": "output/verification/roadmap-012-025-hosted-artifacts.json",
+      "bytes": 2892,
+      "sha256": "a2ef8d61d81323afcc225c7da08cc054692f56cd79975b1bfc02da574b2dbabc"
+    },
+    {
+      "path": "output/verification/roadmap-025-hosted-windows.log",
+      "bytes": 38932,
+      "sha256": "86fee716daf9f60d232296675dac751e65fbfc8469cf1788aa190271fe59bee8"
     }
   ],
   "scopeLimits": {
@@ -214,5 +229,82 @@
   },
   "newDependencies": false,
   "trustedPacksChanged": false,
-  "fixturesChanged": false
+  "fixturesChanged": false,
+  "verifiedAtUtc": "2026-10-05T11:38:55.461Z",
+  "sourceRevision": "9247445a96a8f67c6d47c73dbc607b181c49cec6",
+  "hosted": {
+    "runId": 37303019843,
+    "sourceRevision": "9247445a96a8f67c6d47c73dbc607b181c49cec6",
+    "workflowConclusion": "failure",
+    "artifactId": 11342592570,
+    "artifactName": "minemod-studio-windows-evidence",
+    "jobs": [
+      {
+        "name": "studio-windows",
+        "jobId": 111740010177,
+        "conclusion": "success"
+      },
+      {
+        "name": "neoforge",
+        "jobId": 111740010487,
+        "conclusion": "success"
+      },
+      {
+        "name": "Fabric 1.20.1 / Java 17 production target",
+        "jobId": 111740010501,
+        "conclusion": "success"
+      },
+      {
+        "name": "fabric",
+        "jobId": 111740010572,
+        "conclusion": "failure"
+      },
+      {
+        "name": "control-plane",
+        "jobId": 111740010852,
+        "conclusion": "success"
+      },
+      {
+        "name": "fabric-client",
+        "jobId": 111740340052,
+        "conclusion": "skipped"
+      },
+      {
+        "name": "client-smoke",
+        "jobId": 111741140868,
+        "conclusion": "success"
+      }
+    ],
+    "report": {
+      "path": "output/ci/37303019843-windows/output/playwright/studio-packaged-ae5c3579/report.json",
+      "bytes": 24686,
+      "sha256": "a6f8fb63ba51277e3982b104845d2ee4ce155b7870f717e03dafa37b1c731467"
+    },
+    "partsReport": {
+      "path": "output/ci/37303019843-windows/output/playwright/studio-packaged-ae5c3579/parts/report.json",
+      "bytes": 807,
+      "sha256": "8ae9bda584286189892fb93636f674ec7aaf12708e692ade923d01a56da124ee"
+    },
+    "images": [
+      {
+        "path": "output/ci/37303019843-windows/output/playwright/studio-packaged-ae5c3579/parts/named-parts.png",
+        "bytes": 97644,
+        "sha256": "f38544233461097d3846dfe7f0f1f57a5a613f0fc63ce5d92dc736da7525d940"
+      },
+      {
+        "path": "output/ci/37303019843-windows/output/playwright/studio-packaged-ae5c3579/parts/grip-shown.png",
+        "bytes": 17090,
+        "sha256": "7dd9e9d39d8410cdbaf6d81f41108a251e7769394c3b7062c14a941b7bf130ee"
+      },
+      {
+        "path": "output/ci/37303019843-windows/output/playwright/studio-packaged-ae5c3579/parts/grip-hidden.png",
+        "bytes": 15935,
+        "sha256": "9f1c74aff1d39879aef4bafd9e9ac4b126f404557f721494c0389c3a3f541890"
+      }
+    ],
+    "packaged": true,
+    "hidden": true,
+    "installedClients": "not-run",
+    "remainingRegression": "Legacy Fabric 26.2 derived checksum mismatch remains"
+  }
 }
