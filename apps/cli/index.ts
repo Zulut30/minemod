@@ -7,6 +7,7 @@ import {
   MAX_INLINE_SPEC_BYTES,
   VALIDATION_PROFILE_IDS,
   validateInlineSpec,
+  createArtPlan,
 } from "@mcdev/validation";
 
 const VERSION = "0.0.0-phase.0";
@@ -16,6 +17,7 @@ Usage:
   mcdev help
   mcdev version
   mcdev spec validate <inline-json>
+  mcdev art plan <inline-artspec-v1-json>
   mcdev asset item <inline-json>
   mcdev asset bundle <inline-item-json>
   mcdev asset verify <inline-bundle-v1-json>
@@ -57,6 +59,11 @@ export async function runCli(
   }
   if (args.length === 3 && args[0] === "spec" && args[1] === "validate") {
     const result = validateInlineSpec(args[2] ?? "", "auto");
+    writeOut(`${JSON.stringify(result, null, 2)}\n`);
+    return result.valid ? 0 : 1;
+  }
+  if (args.length === 3 && args[0] === "art" && args[1] === "plan") {
+    const result = createArtPlan(args[2] ?? "");
     writeOut(`${JSON.stringify(result, null, 2)}\n`);
     return result.valid ? 0 : 1;
   }

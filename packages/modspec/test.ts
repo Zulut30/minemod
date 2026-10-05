@@ -43,7 +43,7 @@ assert.equal(modProperties.schemaVersion?.const, 0);
 assert.equal(ModSpecV1JsonSchema.additionalProperties, false);
 assert.equal((ModSpecV1JsonSchema.properties as Record<string, Record<string, unknown>>).schemaVersion?.const, 1);
 assert.equal(artProperties.schemaVersion?.const, 0);
-assert.deepEqual(SUPPORTED_SPEC_VERSIONS, { mod: [0, 1], art: [0] });
+assert.deepEqual(SUPPORTED_SPEC_VERSIONS, { mod: [0, 1], art: [0, 1] });
 assert.equal(Object.isFrozen(SUPPORTED_SPEC_VERSIONS), true);
 assert.equal(Object.isFrozen(SUPPORTED_SPEC_VERSIONS.mod), true);
 assert.equal(Object.isFrozen(SUPPORTED_SPEC_VERSIONS.art), true);

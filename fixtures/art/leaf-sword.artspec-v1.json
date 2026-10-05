@@ -1,0 +1,248 @@
+{
+  "schemaVersion": 1,
+  "kind": "art",
+  "id": "minemod:leaf_sword",
+  "targetMatrix": [
+    {
+      "minecraft": "1.20.1",
+      "loader": "fabric",
+      "java": 17,
+      "loaderVersion": "0.19.3",
+      "runtime": {
+        "id": "java",
+        "version": "17"
+      },
+      "renderer": {
+        "id": "minecraft-native-item",
+        "version": "1.20.1"
+      }
+    }
+  ],
+  "assetClass": "cuboid-model",
+  "targetContexts": [
+    "eight-neutral-views",
+    "uv-sheet",
+    "silhouette-32",
+    "silhouette-64",
+    "inventory-normal",
+    "hand",
+    "ground",
+    "daylight",
+    "night"
+  ],
+  "style": {
+    "family": "minecraft-expressive-pixel",
+    "palette": [
+      "#172333",
+      "#304b63",
+      "#628fa5",
+      "#b8e5ed",
+      "#e9f8ed",
+      "#665040"
+    ],
+    "targetPaletteColors": 6,
+    "hueValueHierarchy": {
+      "shadows": [
+        "#304b63"
+      ],
+      "midtones": [
+        "#628fa5"
+      ],
+      "highlights": [
+        "#b8e5ed"
+      ],
+      "minimumValueStep": 4
+    },
+    "lighting": {
+      "source": "studio-neutral",
+      "direction": "top-left"
+    },
+    "outline": {
+      "policy": "none"
+    },
+    "saturation": {
+      "minimum": 0,
+      "maximum": 100
+    },
+    "detail": {
+      "scale": "broad",
+      "maxNoisePercent": 8
+    },
+    "materialRecipes": [
+      {
+        "id": "minemod:steel",
+        "material": "metal",
+        "shadow": "#304b63",
+        "base": "#628fa5",
+        "highlight": "#b8e5ed",
+        "pattern": "Крупные холодные плоскости, узкая светлая рабочая грань."
+      },
+      {
+        "id": "minemod:ice",
+        "material": "glass",
+        "shadow": "#628fa5",
+        "base": "#b8e5ed",
+        "highlight": "#e9f8ed",
+        "pattern": "Гранёный светлый кристалл без мелкой россыпи бликов."
+      },
+      {
+        "id": "minemod:leather",
+        "material": "cloth",
+        "shadow": "#172333",
+        "base": "#665040",
+        "highlight": "#b8e5ed",
+        "pattern": "Тёмный хват, редкая обмотка, холодный отражённый свет по краю."
+      }
+    ],
+    "silhouetteLanguage": "Симметричный меч Лист: широкий листовидный клинок, собранная гарда и видимое крепление рукояти; обратная сторона имеет полный объём.",
+    "forbiddenReferences": [
+      {
+        "subject": "Чужие модели и текстуры без совместимых прав",
+        "reason": "Оригинальное задание; не копировать assets reference-модов."
+      }
+    ],
+    "textureResolution": 128,
+    "texelDensity": {
+      "pixelsPerBlock": 16,
+      "tolerancePercent": 10
+    }
+  },
+  "provenancePolicy": {
+    "allowedSourceKinds": [
+      "generated",
+      "manual"
+    ],
+    "requireSourceHashes": true,
+    "requireReferenceRights": true,
+    "forbidLivingArtistStylePrompts": true
+  },
+  "references": [],
+  "budgets": {
+    "maxTextureBytes": 1048576,
+    "maxCubes": 64,
+    "maxBones": 8,
+    "maxTriangles": 768,
+    "maxKeyframes": 0
+  },
+  "assets": [],
+  "modelIntent": {
+    "schemaVersion": 1,
+    "kind": "mcdev-model-intent",
+    "modelClass": "weapon",
+    "runtimeRequirement": "native-held-item",
+    "silhouette": "Симметричный меч Лист: широкий листовидный клинок, собранная гарда и видимое крепление рукояти; обратная сторона имеет полный объём.",
+    "symmetry": "bilateral",
+    "modelUnitsPerBlock": 16,
+    "bounds": {
+      "width": 8,
+      "height": 24,
+      "depth": 3
+    },
+    "parts": [
+      {
+        "id": "blade",
+        "label": "Листовидный клинок",
+        "role": "blade",
+        "parent": null,
+        "instances": 1,
+        "importance": "primary",
+        "materialRecipe": "minemod:steel",
+        "purpose": "Широкий центр и направленное остриё"
+      },
+      {
+        "id": "handle",
+        "label": "Хват",
+        "role": "handle",
+        "parent": "blade",
+        "instances": 1,
+        "importance": "secondary",
+        "materialRecipe": "minemod:leather",
+        "purpose": "Видимое соединение клинка и хвата"
+      },
+      {
+        "id": "guard",
+        "label": "Собранная гарда",
+        "role": "guard",
+        "parent": "handle",
+        "instances": 1,
+        "importance": "secondary",
+        "materialRecipe": "minemod:steel",
+        "purpose": "Защита руки без конкуренции с клинком"
+      },
+      {
+        "id": "crystal",
+        "label": "Кристальный акцент",
+        "role": "accent",
+        "parent": "guard",
+        "instances": 1,
+        "importance": "accent",
+        "materialRecipe": "minemod:ice",
+        "purpose": "Один крупный акцент"
+      }
+    ],
+    "proportions": [
+      {
+        "partId": "blade",
+        "dimension": "height",
+        "relativeTo": "whole",
+        "relativeDimension": "height",
+        "minimum": 0.62,
+        "maximum": 0.76,
+        "reason": "Клинок доминирует над хватом"
+      },
+      {
+        "partId": "handle",
+        "dimension": "height",
+        "relativeTo": "whole",
+        "relativeDimension": "height",
+        "minimum": 0.2,
+        "maximum": 0.28,
+        "reason": "Достаточная длина хвата"
+      },
+      {
+        "partId": "guard",
+        "dimension": "width",
+        "relativeTo": "blade",
+        "relativeDimension": "width",
+        "minimum": 0.85,
+        "maximum": 1.2,
+        "reason": "Гарда собрана вокруг центрального клинка"
+      }
+    ],
+    "features": [
+      {
+        "label": "Листовидный клинок",
+        "partIds": [
+          "blade"
+        ],
+        "meaning": "Выбранное пользователем направление A",
+        "readableAt": [
+          32,
+          64
+        ]
+      },
+      {
+        "label": "Одна собранная гарда",
+        "partIds": [
+          "guard",
+          "crystal"
+        ],
+        "meaning": "Акцент поддерживает центральный силуэт",
+        "readableAt": [
+          32,
+          64
+        ]
+      }
+    ],
+    "reject": [
+      "Плоская необработанная обратная сторона",
+      "Мелкий шум вместо крупного акцента",
+      "Палитра выдана за одобренную текстуру",
+      "Направление A выдано за финальную приёмку объёма"
+    ]
+  },
+  "textureLayout": {
+    "kind": "square-atlas",
+    "count": 1
+  }
+}

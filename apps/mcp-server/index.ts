@@ -9,11 +9,13 @@ import { isDomainErrorCode } from "@mcdev/contracts";
 import {
   MAX_INLINE_SPEC_BYTES,
   validateInlineSpec,
+  createArtPlan,
 } from "@mcdev/validation";
 
 export const MCP_SERVER_NAME = "@mcdev/mcp-server";
 export const MCP_SERVER_VERSION = "0.0.0-phase.0";
 export const MCP_VALIDATE_TOOL_NAME = "mcdev_spec_validate";
+export const MCP_ART_PLAN_TOOL_NAME = "mcdev_art_plan";
 export const MCP_FABRIC_BUILD_TOOL_NAME = "mcdev_fabric_build";
 export const MCP_ITEM_ASSET_TOOL_NAME = "mcdev_asset_compile_item";
 // A payload can expand by up to 6x when control characters are escaped in the
@@ -182,12 +184,24 @@ export function createMcpServer(
   server.registerTool(
     MCP_VALIDATE_TOOL_NAME,
     {
-      description: "Validate one bounded inline ModSpec v0/v1 or ArtSpec v0 locally with loader-neutral validation.",
+      description: "Validate one bounded inline ModSpec v0/v1 or ArtSpec v0/v1 locally with loader-neutral validation.",
       inputSchema: McpValidateInputSchema,
     },
     ({ kind, payload }) => {
       const result = validate(payload, kind);
       return { content: [{ type: "text" as const, text: JSON.stringify(result) }] };
+    },
+  );
+  server.registerTool(
+    MCP_ART_PLAN_TOOL_NAME,
+    {
+      description: "Validate one bounded inline ArtSpec v1 and describe parts, proportions, materials, budgets and required reviews before generation. Does not generate, export or verify runtime capability.",
+      inputSchema: z.strictObject({ payload: z.string().max(MAX_INLINE_SPEC_BYTES) }),
+      annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
+    },
+    ({ payload }) => {
+      const result = createArtPlan(payload);
+      return { ...(!result.valid ? { isError: true } : {}), content: [{ type: "text" as const, text: JSON.stringify(result) }] };
     },
   );
   server.registerTool(

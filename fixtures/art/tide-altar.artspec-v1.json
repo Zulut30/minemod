@@ -1,0 +1,239 @@
+{
+  "schemaVersion": 1,
+  "kind": "art",
+  "id": "minemod:tide_altar",
+  "targetMatrix": [
+    {
+      "minecraft": "1.20.1",
+      "loader": "fabric",
+      "java": 17,
+      "loaderVersion": "0.19.3",
+      "runtime": {
+        "id": "java",
+        "version": "17"
+      },
+      "renderer": {
+        "id": "minecraft-native-block",
+        "version": "1.20.1"
+      }
+    }
+  ],
+  "assetClass": "cuboid-model",
+  "targetContexts": [
+    "eight-neutral-views",
+    "uv-sheet",
+    "four-placement-directions",
+    "active-inactive",
+    "placed",
+    "daylight",
+    "night",
+    "silhouette-32",
+    "silhouette-64"
+  ],
+  "style": {
+    "family": "minecraft-expressive-pixel",
+    "palette": [
+      "#263334",
+      "#506266",
+      "#8b9996",
+      "#674735",
+      "#af7851",
+      "#d6b08a",
+      "#ac5361",
+      "#edaaa1"
+    ],
+    "targetPaletteColors": 8,
+    "hueValueHierarchy": {
+      "shadows": [
+        "#263334"
+      ],
+      "midtones": [
+        "#506266"
+      ],
+      "highlights": [
+        "#8b9996"
+      ],
+      "minimumValueStep": 4
+    },
+    "lighting": {
+      "source": "studio-neutral",
+      "direction": "top-left"
+    },
+    "outline": {
+      "policy": "none"
+    },
+    "saturation": {
+      "minimum": 0,
+      "maximum": 100
+    },
+    "detail": {
+      "scale": "broad",
+      "maxNoisePercent": 8
+    },
+    "materialRecipes": [
+      {
+        "id": "minemod:stone",
+        "material": "stone",
+        "shadow": "#263334",
+        "base": "#506266",
+        "highlight": "#8b9996",
+        "pattern": "Крупные спокойные каменные пятна с согласованными швами."
+      },
+      {
+        "id": "minemod:copper",
+        "material": "metal",
+        "shadow": "#674735",
+        "base": "#af7851",
+        "highlight": "#d6b08a",
+        "pattern": "Тёплая медь, светлый край, немного тёмных углов."
+      },
+      {
+        "id": "minemod:coral",
+        "material": "organic",
+        "shadow": "#674735",
+        "base": "#ac5361",
+        "highlight": "#edaaa1",
+        "pattern": "Крупные ветви с мягкой розовой светлой гранью."
+      }
+    ],
+    "silhouetteLanguage": "Широкое каменное основание, низкая медная чаша и три заметных коралловых выступа; законченная передняя и задняя стороны.",
+    "forbiddenReferences": [
+      {
+        "subject": "Чужие модели и текстуры без совместимых прав",
+        "reason": "Оригинальное задание; не копировать assets reference-модов."
+      }
+    ],
+    "textureResolution": 128,
+    "texelDensity": {
+      "pixelsPerBlock": 16,
+      "tolerancePercent": 10
+    }
+  },
+  "provenancePolicy": {
+    "allowedSourceKinds": [
+      "generated",
+      "manual"
+    ],
+    "requireSourceHashes": true,
+    "requireReferenceRights": true,
+    "forbidLivingArtistStylePrompts": true
+  },
+  "references": [],
+  "budgets": {
+    "maxTextureBytes": 1048576,
+    "maxCubes": 64,
+    "maxBones": 8,
+    "maxTriangles": 768,
+    "maxKeyframes": 0
+  },
+  "assets": [],
+  "modelIntent": {
+    "schemaVersion": 1,
+    "kind": "mcdev-model-intent",
+    "modelClass": "decorative-prop",
+    "runtimeRequirement": "native-block-model",
+    "silhouette": "Широкое каменное основание, низкая медная чаша и три заметных коралловых выступа; законченная передняя и задняя стороны.",
+    "symmetry": "bilateral",
+    "modelUnitsPerBlock": 16,
+    "bounds": {
+      "width": 16,
+      "height": 16,
+      "depth": 16
+    },
+    "parts": [
+      {
+        "id": "base",
+        "label": "Каменное основание",
+        "role": "base",
+        "parent": null,
+        "instances": 1,
+        "importance": "secondary",
+        "materialRecipe": "minemod:stone",
+        "purpose": "Опора в одной block cell"
+      },
+      {
+        "id": "bowl",
+        "label": "Медная чаша",
+        "role": "focal",
+        "parent": "base",
+        "instances": 1,
+        "importance": "primary",
+        "materialRecipe": "minemod:copper",
+        "purpose": "Главная рабочая часть ритуала"
+      },
+      {
+        "id": "coral",
+        "label": "Три коралловых выступа",
+        "role": "accent",
+        "parent": "bowl",
+        "instances": 3,
+        "importance": "accent",
+        "materialRecipe": "minemod:coral",
+        "purpose": "Ясный внешний силуэт"
+      }
+    ],
+    "proportions": [
+      {
+        "partId": "base",
+        "dimension": "width",
+        "relativeTo": "whole",
+        "relativeDimension": "width",
+        "minimum": 0.8,
+        "maximum": 1,
+        "reason": "Основание устойчивее чаши"
+      },
+      {
+        "partId": "bowl",
+        "dimension": "width",
+        "relativeTo": "base",
+        "relativeDimension": "width",
+        "minimum": 0.65,
+        "maximum": 0.85,
+        "reason": "Чаша остаётся главным объёмом"
+      },
+      {
+        "partId": "coral",
+        "dimension": "height",
+        "relativeTo": "whole",
+        "relativeDimension": "height",
+        "minimum": 0.3,
+        "maximum": 0.5,
+        "reason": "Кораллы не закрывают чашу"
+      }
+    ],
+    "features": [
+      {
+        "label": "Открытая чаша",
+        "partIds": [
+          "bowl"
+        ],
+        "meaning": "Главное действие считывается спереди",
+        "readableAt": [
+          32,
+          64
+        ]
+      },
+      {
+        "label": "Три разных выступа",
+        "partIds": [
+          "coral"
+        ],
+        "meaning": "Коралловый характер узнаваем сзади",
+        "readableAt": [
+          32,
+          64
+        ]
+      }
+    ],
+    "reject": [
+      "Украшения закрывают главное действие",
+      "Задняя сторона пустая",
+      "Свечение существует только в редакторе",
+      "Необоснованный выход за block bounds"
+    ]
+  },
+  "textureLayout": {
+    "kind": "square-atlas",
+    "count": 1
+  }
+}

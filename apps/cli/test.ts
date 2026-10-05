@@ -3,7 +3,7 @@ import { spawnSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { validModFixture } from "../../fixtures/specs/validation.ts";
-import { VALIDATION_PROFILE_IDS } from "@mcdev/validation";
+import { VALIDATION_PROFILE_IDS, createArtPlan } from "@mcdev/validation";
 import { isOperationEvidence } from "@mcdev/contracts";
 import { FabricBuildOperationError } from "@mcdev/application";
 import { runCli } from "./index.ts";
@@ -44,6 +44,21 @@ assert.equal(
 );
 assert.equal(await runCli(["publish"], () => undefined, () => undefined), 2);
 assert.equal(await runCli(["--self-test"], () => undefined, () => undefined), 2);
+
+for (const name of ["polar-cleaver", "polar-armor", "copper-masonry", "tide-altar", "tidecaller-crab", "leaf-sword"]) {
+  const payload = readFileSync(new URL(`../../fixtures/art/${name}.artspec-v1.json`, import.meta.url), "utf8");
+  output.length = 0;
+  assert.equal(await runCli(["art", "plan", payload], text => output.push(text)), 0);
+  assert.deepEqual(JSON.parse(output.join("")), createArtPlan(payload));
+}
+output.length = 0;
+assert.equal(await runCli(["art", "plan", "{}"], text => output.push(text)), 1);
+assert.equal((JSON.parse(output.join("")) as { plan?: unknown }).plan, undefined);
+assert.equal(await runCli(["art", "plan", "--file", "/arbitrary/path"], () => undefined, () => undefined), 2);
+const leafPayload = readFileSync(new URL("../../fixtures/art/leaf-sword.artspec-v1.json", import.meta.url), "utf8");
+const artChild = spawnSync(process.execPath, ["--experimental-strip-types", fileURLToPath(new URL("./index.ts", import.meta.url)), "art", "plan", leafPayload], { encoding: "utf8", timeout: 10_000 });
+assert.equal(artChild.status, 0, artChild.stderr);
+assert.deepEqual(JSON.parse(artChild.stdout), createArtPlan(leafPayload), "CLI process uses the same validated data-only plan.");
 
 const itemAssetPayload = readFileSync(new URL("../../fixtures/assets/aurora-longsword.item-asset.json", import.meta.url), "utf8");
 output.length = 0;

@@ -1,0 +1,217 @@
+{
+  "schemaVersion": 1,
+  "kind": "art",
+  "id": "minemod:copper_masonry",
+  "targetMatrix": [
+    {
+      "minecraft": "1.20.1",
+      "loader": "fabric",
+      "java": 17,
+      "loaderVersion": "0.19.3",
+      "runtime": {
+        "id": "java",
+        "version": "17"
+      },
+      "renderer": {
+        "id": "minecraft-native-block",
+        "version": "1.20.1"
+      }
+    }
+  ],
+  "assetClass": "cuboid-model",
+  "targetContexts": [
+    "all-six-faces",
+    "wall-3x3",
+    "placed",
+    "daylight",
+    "night",
+    "near",
+    "mid"
+  ],
+  "style": {
+    "family": "minecraft-expressive-pixel",
+    "palette": [
+      "#263334",
+      "#506266",
+      "#8b9996",
+      "#674735",
+      "#af7851",
+      "#d6b08a"
+    ],
+    "targetPaletteColors": 6,
+    "hueValueHierarchy": {
+      "shadows": [
+        "#263334"
+      ],
+      "midtones": [
+        "#506266"
+      ],
+      "highlights": [
+        "#8b9996"
+      ],
+      "minimumValueStep": 4
+    },
+    "lighting": {
+      "source": "studio-neutral",
+      "direction": "top-left"
+    },
+    "outline": {
+      "policy": "none"
+    },
+    "saturation": {
+      "minimum": 0,
+      "maximum": 100
+    },
+    "detail": {
+      "scale": "broad",
+      "maxNoisePercent": 8
+    },
+    "materialRecipes": [
+      {
+        "id": "minemod:stone",
+        "material": "stone",
+        "shadow": "#263334",
+        "base": "#506266",
+        "highlight": "#8b9996",
+        "pattern": "Крупные спокойные каменные пятна с согласованными швами."
+      },
+      {
+        "id": "minemod:copper",
+        "material": "metal",
+        "shadow": "#674735",
+        "base": "#af7851",
+        "highlight": "#d6b08a",
+        "pattern": "Тёплая медь, светлый край, немного тёмных углов."
+      }
+    ],
+    "silhouetteLanguage": "Полный строительный куб: спокойный серый камень, медные крепления и собственный рисунок верхней и нижней граней.",
+    "forbiddenReferences": [
+      {
+        "subject": "Чужие модели и текстуры без совместимых прав",
+        "reason": "Оригинальное задание; не копировать assets reference-модов."
+      }
+    ],
+    "textureResolution": 32,
+    "texelDensity": {
+      "pixelsPerBlock": 16,
+      "tolerancePercent": 10
+    }
+  },
+  "provenancePolicy": {
+    "allowedSourceKinds": [
+      "generated",
+      "manual"
+    ],
+    "requireSourceHashes": true,
+    "requireReferenceRights": true,
+    "forbidLivingArtistStylePrompts": true
+  },
+  "references": [],
+  "budgets": {
+    "maxTextureBytes": 1048576,
+    "maxCubes": 1,
+    "maxBones": 1,
+    "maxTriangles": 12,
+    "maxKeyframes": 0
+  },
+  "assets": [],
+  "modelIntent": {
+    "schemaVersion": 1,
+    "kind": "mcdev-model-intent",
+    "modelClass": "building-block",
+    "runtimeRequirement": "native-block-model",
+    "silhouette": "Полный строительный куб: спокойный серый камень, медные крепления и собственный рисунок верхней и нижней граней.",
+    "symmetry": "bilateral",
+    "modelUnitsPerBlock": 16,
+    "bounds": {
+      "width": 16,
+      "height": 16,
+      "depth": 16
+    },
+    "parts": [
+      {
+        "id": "stone",
+        "label": "Каменная поверхность",
+        "role": "surface",
+        "parent": null,
+        "instances": 1,
+        "importance": "primary",
+        "materialRecipe": "minemod:stone",
+        "purpose": "Все шесть граней согласованы; один куб"
+      },
+      {
+        "id": "copper",
+        "label": "Медные крепления",
+        "role": "accent",
+        "parent": "stone",
+        "instances": 4,
+        "importance": "accent",
+        "materialRecipe": "minemod:copper",
+        "purpose": "Пиксельный рисунок на гранях, не отдельные кубы"
+      }
+    ],
+    "proportions": [
+      {
+        "partId": "stone",
+        "dimension": "width",
+        "relativeTo": "whole",
+        "relativeDimension": "width",
+        "minimum": 1,
+        "maximum": 1,
+        "reason": "Полная ячейка; одна Minecraft единица"
+      },
+      {
+        "partId": "stone",
+        "dimension": "height",
+        "relativeTo": "whole",
+        "relativeDimension": "height",
+        "minimum": 1,
+        "maximum": 1,
+        "reason": "Полная ячейка по высоте"
+      },
+      {
+        "partId": "copper",
+        "dimension": "width",
+        "relativeTo": "whole",
+        "relativeDimension": "width",
+        "minimum": 0.05,
+        "maximum": 0.15,
+        "reason": "Крепления не превращают стену в шумную сетку"
+      }
+    ],
+    "features": [
+      {
+        "label": "Связный шов камня",
+        "partIds": [
+          "stone"
+        ],
+        "meaning": "Повтор 3x3 должен выглядеть намеренно",
+        "readableAt": [
+          32,
+          64
+        ]
+      },
+      {
+        "label": "Спокойный медный край",
+        "partIds": [
+          "copper"
+        ],
+        "meaning": "Материал различим рядом с обычным камнем",
+        "readableAt": [
+          32,
+          64
+        ]
+      }
+    ],
+    "reject": [
+      "Один рисунок случайно повернут на всех гранях",
+      "Чужие texels на краях",
+      "Резкая сетка повторения без художественного намерения",
+      "Missing texture в игре"
+    ]
+  },
+  "textureLayout": {
+    "kind": "square-atlas",
+    "count": 1
+  }
+}

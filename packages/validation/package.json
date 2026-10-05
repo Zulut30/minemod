@@ -8,7 +8,7 @@
     ".": "./index.ts"
   },
   "scripts": {
-    "test": "node --expose-gc --experimental-strip-types test.ts"
+    "test": "node --expose-gc --experimental-strip-types test.ts && node --experimental-strip-types model-art.test.ts"
   },
   "dependencies": {
     "@mcdev/modspec": "workspace:*"

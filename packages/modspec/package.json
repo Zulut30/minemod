@@ -8,7 +8,7 @@
     ".": "./index.ts"
   },
   "scripts": {
-    "test": "node --experimental-strip-types test.ts"
+    "test": "node --experimental-strip-types test.ts && node --experimental-strip-types model-intent.test.ts"
   },
   "dependencies": {
     "zod": "4.4.2"

@@ -1,11 +1,13 @@
 import { isProxy } from "node:util/types";
 import {
   AnyModSpecSchema,
-  ArtSpecSchema,
+  AnyArtSpecSchema,
   SPEC_COLLECTION_LIMITS,
   SUPPORTED_SPEC_VERSIONS,
   type Spec,
 } from "@mcdev/modspec";
+import { validateModelArtConstraints, REQUIRED_MODEL_CONTEXTS } from "./model-art.ts";
+export { createArtPlan, MAX_ART_PLAN_BYTES, type ArtPlan, type ArtPlanResult } from "./art-plan.ts";
 
 export const MAX_INLINE_SPEC_BYTES = 262_144;
 export const MAX_DIAGNOSTICS = 100;
@@ -1182,7 +1184,9 @@ function validateArtConstraints(spec: Spec, diagnostics: Diagnostic[]): void {
     }
     targetContexts.add(context);
   });
-  const missingContexts = REQUIRED_CONTEXTS_BY_ASSET_CLASS[spec.assetClass]
+  const requiredContexts = spec.schemaVersion === 1 ? REQUIRED_MODEL_CONTEXTS[spec.modelIntent.modelClass] :
+    REQUIRED_CONTEXTS_BY_ASSET_CLASS[spec.assetClass];
+  const missingContexts = requiredContexts
     .filter((context) => !targetContexts.has(context));
   if (missingContexts.length > 0) {
     push(diagnostics, {
@@ -1213,6 +1217,7 @@ function validateArtConstraints(spec: Spec, diagnostics: Diagnostic[]): void {
       }
     });
   });
+  if (spec.schemaVersion === 1) validateModelArtConstraints(spec, diagnostics, MAX_DIAGNOSTICS);
 }
 
 /**
@@ -1281,7 +1286,7 @@ export function validateSpec(
   validateResourceGraph(normalized, diagnostics);
 
   const schemaKind = actualKind ?? (expectedKind === "art" ? "art" : "mod");
-  const schema = schemaKind === "art" ? ArtSpecSchema : AnyModSpecSchema;
+  const schema = schemaKind === "art" ? AnyArtSpecSchema : AnyModSpecSchema;
   const parsed = schema.safeParse(normalized);
   if (!parsed.success) {
     for (const issue of parsed.error.issues) {

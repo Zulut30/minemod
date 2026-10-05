@@ -9,7 +9,7 @@ import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import { LATEST_PROTOCOL_VERSION } from "@modelcontextprotocol/sdk/types.js";
 import { validModFixture } from "../../fixtures/specs/validation.ts";
-import { MAX_INLINE_SPEC_BYTES, validateInlineSpec } from "@mcdev/validation";
+import { MAX_INLINE_SPEC_BYTES, validateInlineSpec, createArtPlan } from "@mcdev/validation";
 import { isOperationEvidence } from "@mcdev/contracts";
 import { FabricBuildOperationError } from "@mcdev/application";
 import {
@@ -21,6 +21,7 @@ import {
   MCP_SERVER_NAME,
   MCP_SERVER_VERSION,
   MCP_VALIDATE_TOOL_NAME,
+  MCP_ART_PLAN_TOOL_NAME,
 } from "./index.ts";
 
 type JsonObject = Record<string, unknown>;
@@ -195,7 +196,7 @@ async function testLinkedInMemoryProtocol(): Promise<void> {
     const listResult = await client.listTools();
     assert.deepEqual(
       listResult.tools.map(({ name }) => name),
-      [MCP_VALIDATE_TOOL_NAME, MCP_ITEM_ASSET_TOOL_NAME, MCP_FABRIC_BUILD_TOOL_NAME],
+      [MCP_VALIDATE_TOOL_NAME, MCP_ART_PLAN_TOOL_NAME, MCP_ITEM_ASSET_TOOL_NAME, MCP_FABRIC_BUILD_TOOL_NAME],
       "tools/list must expose validation, bounded asset export and approved Fabric build",
     );
     const validateTool = listResult.tools.find(({ name }) => name === MCP_VALIDATE_TOOL_NAME);
@@ -223,6 +224,22 @@ async function testLinkedInMemoryProtocol(): Promise<void> {
     assert.equal(validation.valid, true);
     assert.equal(validation.kind, "mod");
     assert.equal(handlerCalls, 1);
+
+    const artTool = listResult.tools.find(tool => tool.name === MCP_ART_PLAN_TOOL_NAME);
+    assert.equal(artTool?.inputSchema.additionalProperties, false);
+    assert.equal(artTool?.annotations?.readOnlyHint, true);
+    for (const name of ["polar-cleaver", "polar-armor", "copper-masonry", "tide-altar", "tidecaller-crab", "leaf-sword"]) {
+      const payload = readFileSync(new URL(`../../fixtures/art/${name}.artspec-v1.json`, import.meta.url), "utf8");
+      const response = await client.callTool({ name: MCP_ART_PLAN_TOOL_NAME, arguments: { payload } });
+      assert.notEqual(response.isError, true);
+      assert.deepEqual(JSON.parse((response.content as { text: string }[])[0]!.text), createArtPlan(payload));
+    }
+    const rejectedPlan = await client.callTool({ name: MCP_ART_PLAN_TOOL_NAME, arguments: { payload: "{}" } });
+    assert.equal(rejectedPlan.isError, true);
+    assert.equal((JSON.parse((rejectedPlan.content as { text: string }[])[0]!.text) as { plan?: unknown }).plan, undefined);
+    const openPlan = await client.callTool({ name: MCP_ART_PLAN_TOOL_NAME, arguments: { payload: "{}", shell: "arbitrary" } });
+    assert.equal(openPlan.isError, true);
+    assert.equal(buildCalls, 0, "Art planning cannot start the build runner.");
 
     const itemPayload = readFileSync(new URL("../../fixtures/assets/aurora-longsword.item-asset.json", import.meta.url), "utf8");
     const itemCall = await client.callTool({ name: MCP_ITEM_ASSET_TOOL_NAME, arguments: { payload: itemPayload } });
@@ -450,6 +467,7 @@ async function testStdioStdoutPurity(): Promise<void> {
     assert.ok(Array.isArray(tools));
     assert.deepEqual(tools.map((tool) => asObject(tool, "tool").name), [
       MCP_VALIDATE_TOOL_NAME,
+      MCP_ART_PLAN_TOOL_NAME,
       MCP_ITEM_ASSET_TOOL_NAME,
       MCP_FABRIC_BUILD_TOOL_NAME,
     ]);
@@ -463,6 +481,15 @@ async function testStdioStdoutPurity(): Promise<void> {
     const listedProperties = asObject(listedInputSchema.properties, "listed input properties");
     assert.deepEqual(Object.keys(listedProperties).sort(), ["kind", "payload"]);
     assert.equal(Object.hasOwn(listedProperties, "__proto__"), false);
+
+    const artPayload = readFileSync(new URL("../../fixtures/art/leaf-sword.artspec-v1.json", import.meta.url), "utf8");
+    await send({ jsonrpc: "2.0", id: 41, method: "tools/call", params: { name: MCP_ART_PLAN_TOOL_NAME, arguments: { payload: artPayload } } });
+    const artResponse = await readResponse();
+    assert.equal(artResponse.id, 41);
+    const artResult = asObject(artResponse.result, "stdio art-plan result");
+    assert.notEqual(artResult.isError, true);
+    const artContent = artResult.content as { text: string }[];
+    assert.deepEqual(JSON.parse(artContent[0]!.text), createArtPlan(artPayload), "Actual stdio MCP returns the same validated plan.");
 
     await send({
       jsonrpc: "2.0",
@@ -724,7 +751,7 @@ async function testStdioStdoutPurity(): Promise<void> {
 
     const stdout = subprocess.stdout();
     const stdoutLines = stdout.split(/\r?\n/u).filter((line) => line.length > 0);
-    assert.equal(stdoutLines.length, 11, `unexpected stdout: ${stdout}`);
+    assert.equal(stdoutLines.length, 12, `unexpected stdout: ${stdout}`);
     for (const line of stdoutLines) parseProtocolLine(line);
   } finally {
     lines.close();

@@ -1,12 +1,13 @@
 # Версии спецификаций и отказ до генерации
 
-Пункт 019. Реализованы строгие ModSpec v0/v1 и ArtSpec v0. Поддержка структуры документа и способность backend выпустить соответствующий мод проверяются раздельно.
+Пункт 019 и расширение 041. Реализованы строгие ModSpec v0/v1 и ArtSpec v0/v1. Поддержка структуры документа и способность backend выпустить соответствующий мод проверяются раздельно.
 
 | Контракт | Принимаемая версия | Текущий путь |
 |---|---|---|
 | ModSpec | numeric `0`, schema `modspec-v0.json` | Исторический loader-neutral контракт и NeoForge regression backend |
 | ModSpec | numeric `1`, schema `modspec-v1.json` | Production target Fabric 1.20.1 / Java 17; bounded items/materials/basic blocks/recipes и allowlisted libraries |
 | ArtSpec | numeric `0`, schema `artspec-v0.json` | Декларативный стиль, target matrix, contexts, provenance и asset budgets; принятие schema не подтверждает runtime exporter |
+| ArtSpec | numeric `1`, schema `artspec-v1.json` | Требования пяти классов моделей, semantic parts, пропорции, materials, texture layout и обязательные виды; [границы и операции](MODEL_ART_SPEC.md) |
 | EditorProject | numeric `2` | Отдельная миграция проекта v1 → v2; не миграция ModSpec или ArtSpec |
 | Asset bundle | numeric `1` | Отдельный reviewed-export contract; ещё не разрешает интеграцию authored assets в JAR |
 

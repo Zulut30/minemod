@@ -1,0 +1,249 @@
+{
+  "schemaVersion": 1,
+  "kind": "art",
+  "id": "minemod:polar_cleaver",
+  "targetMatrix": [
+    {
+      "minecraft": "1.20.1",
+      "loader": "fabric",
+      "java": 17,
+      "loaderVersion": "0.19.3",
+      "runtime": {
+        "id": "java",
+        "version": "17"
+      },
+      "renderer": {
+        "id": "minecraft-native-item",
+        "version": "1.20.1"
+      }
+    }
+  ],
+  "assetClass": "cuboid-model",
+  "targetContexts": [
+    "eight-neutral-views",
+    "uv-sheet",
+    "silhouette-32",
+    "silhouette-64",
+    "inventory-normal",
+    "hand",
+    "ground",
+    "daylight",
+    "night"
+  ],
+  "style": {
+    "family": "minecraft-expressive-pixel",
+    "palette": [
+      "#172333",
+      "#304b63",
+      "#628fa5",
+      "#b8e5ed",
+      "#e9f8ed",
+      "#665040"
+    ],
+    "targetPaletteColors": 6,
+    "hueValueHierarchy": {
+      "shadows": [
+        "#304b63"
+      ],
+      "midtones": [
+        "#628fa5"
+      ],
+      "highlights": [
+        "#b8e5ed"
+      ],
+      "minimumValueStep": 4
+    },
+    "lighting": {
+      "source": "studio-neutral",
+      "direction": "top-left"
+    },
+    "outline": {
+      "policy": "none"
+    },
+    "saturation": {
+      "minimum": 0,
+      "maximum": 100
+    },
+    "detail": {
+      "scale": "broad",
+      "maxNoisePercent": 8
+    },
+    "materialRecipes": [
+      {
+        "id": "minemod:steel",
+        "material": "metal",
+        "shadow": "#304b63",
+        "base": "#628fa5",
+        "highlight": "#b8e5ed",
+        "pattern": "Крупные холодные плоскости, узкая светлая рабочая грань."
+      },
+      {
+        "id": "minemod:ice",
+        "material": "glass",
+        "shadow": "#628fa5",
+        "base": "#b8e5ed",
+        "highlight": "#e9f8ed",
+        "pattern": "Гранёный светлый кристалл без мелкой россыпи бликов."
+      },
+      {
+        "id": "minemod:leather",
+        "material": "cloth",
+        "shadow": "#172333",
+        "base": "#665040",
+        "highlight": "#b8e5ed",
+        "pattern": "Тёмный хват, редкая обмотка, холодный отражённый свет по краю."
+      }
+    ],
+    "silhouetteLanguage": "Короткий односторонний топор: широкая светлая голова, тёмный обух, заметное крепление к короткому хвату.",
+    "forbiddenReferences": [
+      {
+        "subject": "Чужие модели и текстуры без совместимых прав",
+        "reason": "Оригинальное задание; не копировать assets reference-модов."
+      }
+    ],
+    "textureResolution": 128,
+    "texelDensity": {
+      "pixelsPerBlock": 16,
+      "tolerancePercent": 10
+    }
+  },
+  "provenancePolicy": {
+    "allowedSourceKinds": [
+      "generated",
+      "manual"
+    ],
+    "requireSourceHashes": true,
+    "requireReferenceRights": true,
+    "forbidLivingArtistStylePrompts": true
+  },
+  "references": [],
+  "budgets": {
+    "maxTextureBytes": 1048576,
+    "maxCubes": 64,
+    "maxBones": 8,
+    "maxTriangles": 768,
+    "maxKeyframes": 0
+  },
+  "assets": [],
+  "modelIntent": {
+    "schemaVersion": 1,
+    "kind": "mcdev-model-intent",
+    "modelClass": "weapon",
+    "runtimeRequirement": "native-held-item",
+    "silhouette": "Короткий односторонний топор: широкая светлая голова, тёмный обух, заметное крепление к короткому хвату.",
+    "symmetry": "asymmetric",
+    "modelUnitsPerBlock": 16,
+    "bounds": {
+      "width": 12,
+      "height": 24,
+      "depth": 4
+    },
+    "parts": [
+      {
+        "id": "handle",
+        "label": "Хват",
+        "role": "handle",
+        "parent": null,
+        "instances": 1,
+        "importance": "secondary",
+        "materialRecipe": "minemod:leather",
+        "purpose": "Короткий удобный хват"
+      },
+      {
+        "id": "head",
+        "label": "Голова топора",
+        "role": "head",
+        "parent": "handle",
+        "instances": 1,
+        "importance": "primary",
+        "materialRecipe": "minemod:steel",
+        "purpose": "Широкий односторонний рабочий объём"
+      },
+      {
+        "id": "crystal",
+        "label": "Кристалл крепления",
+        "role": "accent",
+        "parent": "head",
+        "instances": 1,
+        "importance": "accent",
+        "materialRecipe": "minemod:ice",
+        "purpose": "Один светлый гранёный акцент"
+      },
+      {
+        "id": "guard",
+        "label": "Короткая гарда",
+        "role": "guard",
+        "parent": "handle",
+        "instances": 1,
+        "importance": "secondary",
+        "materialRecipe": "minemod:steel",
+        "purpose": "Защита руки; не закрывает голову"
+      }
+    ],
+    "proportions": [
+      {
+        "partId": "head",
+        "dimension": "width",
+        "relativeTo": "whole",
+        "relativeDimension": "width",
+        "minimum": 0.72,
+        "maximum": 0.88,
+        "reason": "Голова задаёт узнаваемость топора"
+      },
+      {
+        "partId": "handle",
+        "dimension": "height",
+        "relativeTo": "whole",
+        "relativeDimension": "height",
+        "minimum": 0.45,
+        "maximum": 0.62,
+        "reason": "Хват остаётся коротким относительно головы"
+      },
+      {
+        "partId": "crystal",
+        "dimension": "height",
+        "relativeTo": "head",
+        "relativeDimension": "height",
+        "minimum": 0.15,
+        "maximum": 0.3,
+        "reason": "Кристалл поддерживает форму, не заменяет её"
+      }
+    ],
+    "features": [
+      {
+        "label": "Широкая рабочая кромка",
+        "partIds": [
+          "head"
+        ],
+        "meaning": "Топор читается без текстуры",
+        "readableAt": [
+          32,
+          64
+        ]
+      },
+      {
+        "label": "Видимое крепление",
+        "partIds": [
+          "head",
+          "handle",
+          "crystal"
+        ],
+        "meaning": "Голова не выглядит висящей отдельно",
+        "readableAt": [
+          32,
+          64
+        ]
+      }
+    ],
+    "reject": [
+      "Перекраска одного меча вместо разных силуэтов",
+      "Плоская необработанная обратная сторона",
+      "Плавающий кристалл",
+      "Микрорунный шум вместо крупного акцента"
+    ]
+  },
+  "textureLayout": {
+    "kind": "square-atlas",
+    "count": 1
+  }
+}

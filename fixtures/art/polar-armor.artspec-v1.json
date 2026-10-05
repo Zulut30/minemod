@@ -1,0 +1,261 @@
+{
+  "schemaVersion": 1,
+  "kind": "art",
+  "id": "minemod:polar_armor",
+  "targetMatrix": [
+    {
+      "minecraft": "1.20.1",
+      "loader": "fabric",
+      "java": 17,
+      "loaderVersion": "0.19.3",
+      "runtime": {
+        "id": "java",
+        "version": "17"
+      },
+      "renderer": {
+        "id": "minecraft-native-armor-layers",
+        "version": "1.20.1"
+      }
+    }
+  ],
+  "assetClass": "wearable-set",
+  "targetContexts": [
+    "four-slot-icons",
+    "player-front-back-sides",
+    "walk-poses",
+    "uv-sheet",
+    "daylight",
+    "night",
+    "enchanted-glint"
+  ],
+  "style": {
+    "family": "minecraft-expressive-pixel",
+    "palette": [
+      "#172333",
+      "#304b63",
+      "#628fa5",
+      "#b8e5ed",
+      "#e9f8ed",
+      "#665040"
+    ],
+    "targetPaletteColors": 6,
+    "hueValueHierarchy": {
+      "shadows": [
+        "#304b63"
+      ],
+      "midtones": [
+        "#628fa5"
+      ],
+      "highlights": [
+        "#b8e5ed"
+      ],
+      "minimumValueStep": 4
+    },
+    "lighting": {
+      "source": "studio-neutral",
+      "direction": "top-left"
+    },
+    "outline": {
+      "policy": "none"
+    },
+    "saturation": {
+      "minimum": 0,
+      "maximum": 100
+    },
+    "detail": {
+      "scale": "broad",
+      "maxNoisePercent": 8
+    },
+    "materialRecipes": [
+      {
+        "id": "minemod:steel",
+        "material": "metal",
+        "shadow": "#304b63",
+        "base": "#628fa5",
+        "highlight": "#b8e5ed",
+        "pattern": "Крупные холодные плоскости, узкая светлая рабочая грань."
+      },
+      {
+        "id": "minemod:ice",
+        "material": "glass",
+        "shadow": "#628fa5",
+        "base": "#b8e5ed",
+        "highlight": "#e9f8ed",
+        "pattern": "Гранёный светлый кристалл без мелкой россыпи бликов."
+      },
+      {
+        "id": "minemod:leather",
+        "material": "cloth",
+        "shadow": "#172333",
+        "base": "#665040",
+        "highlight": "#b8e5ed",
+        "pattern": "Тёмный хват, редкая обмотка, холодный отражённый свет по краю."
+      }
+    ],
+    "silhouetteLanguage": "Согласованный комплект на игроке: светлые внешние грани, открытое лицо и один кристальный мотив нагрудника.",
+    "forbiddenReferences": [
+      {
+        "subject": "Чужие модели и текстуры без совместимых прав",
+        "reason": "Оригинальное задание; не копировать assets reference-модов."
+      }
+    ],
+    "textureResolution": 64,
+    "texelDensity": {
+      "pixelsPerBlock": 16,
+      "tolerancePercent": 10
+    }
+  },
+  "provenancePolicy": {
+    "allowedSourceKinds": [
+      "generated",
+      "manual"
+    ],
+    "requireSourceHashes": true,
+    "requireReferenceRights": true,
+    "forbidLivingArtistStylePrompts": true
+  },
+  "references": [],
+  "budgets": {
+    "maxTextureBytes": 1048576,
+    "maxCubes": 96,
+    "maxBones": 24,
+    "maxTriangles": 1152,
+    "maxKeyframes": 0
+  },
+  "assets": [],
+  "modelIntent": {
+    "schemaVersion": 1,
+    "kind": "mcdev-model-intent",
+    "modelClass": "armor",
+    "runtimeRequirement": "native-wearable-layers",
+    "silhouette": "Согласованный комплект на игроке: светлые внешние грани, открытое лицо и один кристальный мотив нагрудника.",
+    "symmetry": "bilateral",
+    "modelUnitsPerBlock": 16,
+    "bounds": {
+      "width": 16,
+      "height": 32,
+      "depth": 8
+    },
+    "parts": [
+      {
+        "id": "helmet",
+        "label": "Шлем",
+        "role": "helmet",
+        "parent": null,
+        "instances": 1,
+        "importance": "secondary",
+        "materialRecipe": "minemod:steel",
+        "purpose": "Рамка вокруг открытого лица"
+      },
+      {
+        "id": "chest",
+        "label": "Нагрудник",
+        "role": "chest",
+        "parent": null,
+        "instances": 1,
+        "importance": "primary",
+        "materialRecipe": "minemod:steel",
+        "purpose": "Общий мотив комплекта и главный акцент"
+      },
+      {
+        "id": "legs",
+        "label": "Поножи",
+        "role": "legs",
+        "parent": null,
+        "instances": 1,
+        "importance": "secondary",
+        "materialRecipe": "minemod:leather",
+        "purpose": "Спокойное основание, продолжение светлых граней"
+      },
+      {
+        "id": "boots",
+        "label": "Сапоги",
+        "role": "boots",
+        "parent": "legs",
+        "instances": 2,
+        "importance": "secondary",
+        "materialRecipe": "minemod:steel",
+        "purpose": "Устойчивое основание комплекта"
+      },
+      {
+        "id": "crystal",
+        "label": "Мотив кристалла",
+        "role": "accent",
+        "parent": "chest",
+        "instances": 1,
+        "importance": "accent",
+        "materialRecipe": "minemod:ice",
+        "purpose": "Рисунок на native layer; не обещает дополнительную геометрию"
+      }
+    ],
+    "proportions": [
+      {
+        "partId": "helmet",
+        "dimension": "width",
+        "relativeTo": "whole",
+        "relativeDimension": "width",
+        "minimum": 0.45,
+        "maximum": 0.6,
+        "reason": "Шлем соответствует зоне головы в player-space"
+      },
+      {
+        "partId": "chest",
+        "dimension": "height",
+        "relativeTo": "whole",
+        "relativeDimension": "height",
+        "minimum": 0.3,
+        "maximum": 0.42,
+        "reason": "Нагрудник занимает торс"
+      },
+      {
+        "partId": "legs",
+        "dimension": "height",
+        "relativeTo": "whole",
+        "relativeDimension": "height",
+        "minimum": 0.35,
+        "maximum": 0.48,
+        "reason": "Ноги сохраняют анатомическую длину"
+      }
+    ],
+    "features": [
+      {
+        "label": "Светлый общий край",
+        "partIds": [
+          "helmet",
+          "chest",
+          "legs",
+          "boots"
+        ],
+        "meaning": "Четыре слота выглядят одним набором",
+        "readableAt": [
+          32,
+          64
+        ]
+      },
+      {
+        "label": "Один центральный кристальный мотив",
+        "partIds": [
+          "chest",
+          "crystal"
+        ],
+        "meaning": "Акцент читается на игроке и в иконке",
+        "readableAt": [
+          32,
+          64
+        ]
+      }
+    ],
+    "reject": [
+      "Held-item экспорт выдан за wearable armor",
+      "Неравномерный масштаб пикселя",
+      "Глитч в движении игрока",
+      "Набор держится только на одном общем цвете"
+    ]
+  },
+  "textureLayout": {
+    "kind": "native-armor-layers",
+    "width": 64,
+    "height": 32,
+    "count": 2
+  }
+}

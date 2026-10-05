@@ -189,7 +189,7 @@ function selfTest(): void {
       assert.deepEqual(result.diagnostics, [{
         code: "SCHEMA_INVALID", path: "/schemaVersion",
         message: `Unsupported ${fixture.kind === "mod" ? "ModSpec" : "ArtSpec"} schemaVersion; ` +
-          `supported versions: ${fixture.kind === "mod" ? "0, 1" : "0"}.`,
+          "supported versions: 0, 1.",
       }]);
       assert.equal(JSON.stringify(candidate), snapshot, "Version rejection must not rewrite input.");
     }

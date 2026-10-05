@@ -1,8 +1,11 @@
 import { z } from "zod";
+import { ModelIntentSchema } from "./model-intent.ts";
+export { ModelIntentSchema, ModelIntentJsonSchema, MODEL_CLASSES, MODEL_INTENT_SCHEMA_ID, type ModelIntent } from "./model-intent.ts";
 
 export const MODSPEC_SCHEMA_ID = "https://mcdev.local/schemas/modspec-v0.json";
 export const MODSPEC_V1_SCHEMA_ID = "https://mcdev.local/schemas/modspec-v1.json";
 export const ARTSPEC_SCHEMA_ID = "https://mcdev.local/schemas/artspec-v0.json";
+export const ARTSPEC_V1_SCHEMA_ID = "https://mcdev.local/schemas/artspec-v1.json";
 export const SPEC_COLLECTION_LIMITS = Object.freeze({
   projectProvenance: 16,
   gameplayItems: 64,
@@ -707,16 +710,36 @@ export const ArtSpecSchema = z.strictObject({
   assets: z.array(AssetEntrySchema).max(SPEC_COLLECTION_LIMITS.artAssets),
 });
 
+// v0 сохраняет прежнюю форму. v1 описывает ожидания до авторинга, а не наличие renderer.
+export const ArtSpecV1Schema = ArtSpecSchema.extend({
+  schemaVersion: z.literal(1),
+  assetClass: z.enum(["cuboid-model", "wearable-set", "animated-model"]),
+  targetContexts: z.array(z.enum([
+    ...ArtSpecSchema.shape.targetContexts.element.options,
+    "eight-neutral-views", "silhouette-32", "silhouette-64",
+    "four-slot-icons", "player-front-back-sides", "walk-poses",
+    "all-six-faces", "wall-3x3", "four-placement-directions", "active-inactive", "rig-sheet",
+  ])).min(1).max(SPEC_COLLECTION_LIMITS.targetContexts),
+  modelIntent: ModelIntentSchema,
+  textureLayout: z.discriminatedUnion("kind", [
+    z.strictObject({ kind: z.literal("square-atlas"), count: z.literal(1) }),
+    z.strictObject({ kind: z.literal("native-armor-layers"), width: z.literal(64), height: z.literal(32), count: z.literal(2) }),
+  ]),
+});
+export const AnyArtSpecSchema = z.discriminatedUnion("schemaVersion", [ArtSpecSchema, ArtSpecV1Schema]);
+
 export type ModSpec = z.infer<typeof ModSpecSchema>;
 export type ModSpecV1 = z.infer<typeof ModSpecV1Schema>;
 export type AnyModSpec = z.infer<typeof AnyModSpecSchema>;
 export type ArtSpec = z.infer<typeof ArtSpecSchema>;
-export type Spec = AnyModSpec | ArtSpec;
+export type ArtSpecV1 = z.infer<typeof ArtSpecV1Schema>;
+export type AnyArtSpec = z.infer<typeof AnyArtSpecSchema>;
+export type Spec = AnyModSpec | AnyArtSpec;
 
 /** Supported discriminators come from the actual parsers; no implicit version migration. */
 export const SUPPORTED_SPEC_VERSIONS = Object.freeze({
   mod: Object.freeze(AnyModSpecSchema.options.map((schema) => schema.shape.schemaVersion.value)),
-  art: Object.freeze([ArtSpecSchema.shape.schemaVersion.value]),
+  art: Object.freeze(AnyArtSpecSchema.options.map((schema) => schema.shape.schemaVersion.value)),
 });
 
 function jsonSchema(schema: z.ZodType, id: string): Readonly<Record<string, unknown>> {
@@ -730,3 +753,4 @@ function jsonSchema(schema: z.ZodType, id: string): Readonly<Record<string, unkn
 export const ModSpecJsonSchema = jsonSchema(ModSpecSchema, MODSPEC_SCHEMA_ID);
 export const ModSpecV1JsonSchema = jsonSchema(ModSpecV1Schema, MODSPEC_V1_SCHEMA_ID);
 export const ArtSpecJsonSchema = jsonSchema(ArtSpecSchema, ARTSPEC_SCHEMA_ID);
+export const ArtSpecV1JsonSchema = jsonSchema(ArtSpecV1Schema, ARTSPEC_V1_SCHEMA_ID);
