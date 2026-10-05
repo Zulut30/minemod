@@ -6,6 +6,7 @@ import { join } from "node:path";
 import { createHash, randomUUID } from "node:crypto";
 import { Buffer } from "node:buffer";
 import { URL } from "node:url";
+import { CURRENT_PROJECT_VERSION } from "@mcdev/editor-core";
 
 export async function checkMigrationsDesktop(options, output) {
   const root = join(output, "migrations");
@@ -13,8 +14,8 @@ export async function checkMigrationsDesktop(options, output) {
   const source = await readFile(new URL("../../../fixtures/editor-projects/v1-painted-variants.mmeditor.json", import.meta.url), "utf8");
   const sourceBytes = Buffer.from(source.replaceAll("\n", "\r\n"));
   const legacy = JSON.parse(source), expected = structuredClone(legacy);
-  expected.schemaVersion = 2;
-  for (const variant of expected.design.variants) variant.project.schemaVersion = 2;
+  expected.schemaVersion = CURRENT_PROJECT_VERSION;
+  for (const variant of expected.design.variants) variant.project.schemaVersion = CURRENT_PROJECT_VERSION;
   const future = JSON.stringify({ ...expected, schemaVersion: 99 });
   let application;
   const inspect = (page) => page.evaluate(() => window.studio.request({ kind: "inspect" }));
@@ -44,7 +45,7 @@ export async function checkMigrationsDesktop(options, output) {
     const loaded = await inspect(page);
     assert.equal(loaded.ok, true);
     assert.deepEqual(loaded.state.project, expected);
-    assert.match(await page.getByTestId("status-message").textContent(), /Миграция в v2/u);
+    assert.match(await page.getByTestId("status-message").textContent(), new RegExp(`Миграция в v${CURRENT_PROJECT_VERSION}`,"u"));
     assert.deepEqual(await readFile(recovery), sourceBytes, "Startup must not write legacy source.");
     const changed = await change(page, loaded.state, "Первая правка после миграции");
     const hash = createHash("sha256").update(sourceBytes).digest("hex");
@@ -60,10 +61,10 @@ export async function checkMigrationsDesktop(options, output) {
     const manual = join(root, "legacy-manual.json"); await writeFile(manual, sourceBytes);
     await application.evaluate(({ dialog }, path) => { dialog.showOpenDialog = async () => ({ canceled: false, filePaths: [path] }); }, manual);
     const opened = await request(page, { kind: "open" });
-    assert.equal(opened.ok, true); assert.deepEqual(opened.state.project, expected); assert.match(opened.note, /v1.*v2/u);
+    assert.equal(opened.ok, true); assert.deepEqual(opened.state.project, expected); assert.match(opened.note, new RegExp(`v1.*v${CURRENT_PROJECT_VERSION}`,"u"));
     assert.deepEqual(await readFile(manual), sourceBytes);
     const saved = await request(page, { kind: "save" });
-    assert.equal(saved.ok, true); assert.equal(JSON.parse(await readFile(manual, "utf8")).schemaVersion, 2);
+    assert.equal(saved.ok, true); assert.equal(JSON.parse(await readFile(manual, "utf8")).schemaVersion, CURRENT_PROJECT_VERSION);
     assert.deepEqual(await readFile(`${manual}.v1-${hash}.original.json`), sourceBytes);
 
     const futureFile = join(root, "future-manual.json"); await writeFile(futureFile, future);
@@ -100,13 +101,22 @@ export async function checkMigrationsDesktop(options, output) {
       assert.equal(await readFile(active.recovery + ".bak", "utf8"), backup);
       await stop();
     }
-    const report = { status: "PASS", hidden: true, sourceVersion: 1, targetVersion: 2,
+    const v2Bytes = await readFile(new URL("../../../fixtures/editor-projects/v2-painted-repair.mmeditor.json", import.meta.url));
+    const v2Expected = JSON.parse(v2Bytes); assert.equal(v2Expected.schemaVersion,2);v2Expected.schemaVersion=CURRENT_PROJECT_VERSION;
+    for(const variant of v2Expected.design?.variants??[])variant.project.schemaVersion=CURRENT_PROJECT_VERSION;
+    const v2Started=await start("legacy-v2",v2Bytes);const v2Loaded=await inspect(v2Started.page);
+    assert.deepEqual(v2Loaded.state.project,v2Expected);assert.deepEqual(await readFile(v2Started.recovery),v2Bytes);
+    const v2Changed=await change(v2Started.page,v2Loaded.state,"Правка v2 после миграции");
+    const v2Hash=createHash("sha256").update(v2Bytes).digest("hex");
+    assert.deepEqual(await readFile(`${v2Started.recovery}.v2-${v2Hash}.original.json`),v2Bytes);
+    assert.deepEqual(await readFile(v2Started.recovery+".bak"),v2Bytes);assert.deepEqual(v2Changed.state.project.model,v2Expected.model);assert.deepEqual(v2Changed.state.project.texturePlan,v2Expected.texturePlan);await stop();
+    const report = { status: "PASS", hidden: true, sourceVersion: 1, sourceVersions:[1,2], v2OriginalSourceSha256:v2Hash, targetVersion: CURRENT_PROJECT_VERSION,
       originalSourceSha256: hash, originalSourceBytes: sourceBytes.length,
       checks: ["real v1 recovery keeps IDs/pixels/UV/variants", "startup read leaves source bytes intact",
         "autosave keeps permanent exact original and rotating backup", "manual open/save migration",
         "future open/save refuse without changing file or active project", "future primary bypasses old fallback",
         "future backup-only blocks autosave", "future backup with current primary blocks autosave",
-        "future variant blocks autosave", "persistent visible recovery warning"] };
+        "future variant blocks autosave", "persistent visible recovery warning", "actual v2 original bytes, model and pixels preserved"] };
     await writeFile(join(root, "report.json"), JSON.stringify(report, null, 2) + "\n");
     return report;
   } finally {

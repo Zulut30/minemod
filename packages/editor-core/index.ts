@@ -1,6 +1,9 @@
 import { z } from "zod";
 import { EditorError } from "./errors.ts";
 import { DesignBriefSchema, serializeDesignBrief } from "./design-brief.ts";
+import { ConceptDescriptorSchema, MAX_CONCEPTS } from "./concepts.ts";
+export { ConceptDraftSchema, ConceptDescriptorSchema, ConceptImportSchema, MAX_CONCEPTS, MAX_CONCEPT_BYTES, MAX_CONCEPT_DIMENSION } from "./concepts.ts";
+export type { Concept, ConceptDraft, ConceptImport } from "./concepts.ts";
 import { RepairControlSchema, repairCubeIds, checkRepairCommands, checkRepairResult, type ActiveRepair } from "./repair.ts";
 export { RepairCaseSchema, RepairControlSchema, MAX_REPAIR_ITERATIONS } from "./repair.ts";
 export type { RepairCase, RepairControl, ActiveRepair } from "./repair.ts";
@@ -28,7 +31,7 @@ import {
 
 export const MAX_PROJECT_BYTES = 1_048_576;
 export const MAX_COMMAND_BYTES = 262_144;
-export const CURRENT_PROJECT_VERSION = 2;
+export const CURRENT_PROJECT_VERSION = 3;
 const id = z.string().regex(/^[a-z][a-z0-9_]{0,63}$/u);
 const vector = z.tuple([
   z.number().finite(),
@@ -61,6 +64,7 @@ export const ProjectSchema = BaseProjectSchema.extend({
   design: z
     .strictObject({
       brief: z.string().max(1200),
+      concepts: z.array(ConceptDescriptorSchema).max(MAX_CONCEPTS).optional(),
       variants: z
         .array(
           z.strictObject({
@@ -76,10 +80,16 @@ export const ProjectSchema = BaseProjectSchema.extend({
 });
 export type EditorProject = z.infer<typeof ProjectSchema>;
 const LegacyBaseProjectV1Schema = BaseProjectSchema.extend({ schemaVersion: z.literal(1) });
+const LegacyBaseProjectV2Schema = BaseProjectSchema.extend({ schemaVersion: z.literal(2) });
 const designShape = ProjectSchema.shape.design.unwrap().shape;
 const LegacyProjectV1Schema = LegacyBaseProjectV1Schema.extend({
-  design: z.strictObject({ ...designShape, variants: z.array(
+  design: z.strictObject({ brief: designShape.brief, variants: z.array(
     designShape.variants.element.extend({ project: LegacyBaseProjectV1Schema }),
+  ).max(MAX_VARIANTS) }).optional(),
+});
+const LegacyProjectV2Schema = LegacyBaseProjectV2Schema.extend({
+  design: z.strictObject({ brief: designShape.brief, variants: z.array(
+    designShape.variants.element.extend({ project: LegacyBaseProjectV2Schema }),
   ).max(MAX_VARIANTS) }).optional(),
 });
 export type Cube = EditorProject["model"]["bones"][number]["cubes"][number];
@@ -185,6 +195,8 @@ export const CommandSchema = z.discriminatedUnion("type", [
   z.strictObject({ type: z.literal("redo") }),
   z.strictObject({ type: z.literal("brief"), text: z.string().max(1200) }),
   z.strictObject({ type: z.literal("designBrief"), brief: DesignBriefSchema }),
+  z.strictObject({ type: z.literal("conceptAdd"), concept: ConceptDescriptorSchema }),
+  z.strictObject({ type: z.literal("conceptRemove"), conceptId: z.uuid() }),
   z.strictObject({
     type: z.literal("checkpoint"),
     variantId: z.uuid(),
@@ -239,6 +251,9 @@ export function validateProject(value: unknown): EditorProject {
     fail("INVALID_PROJECT", "Проект не соответствует формату редактора.");
   const p = parsed.data;
   if (p.design) {
+    const concepts = p.design.concepts ?? [];
+    if (new Set(concepts.map(c => c.id)).size !== concepts.length || new Set(concepts.map(c => c.sha256)).size !== concepts.length)
+      fail("CONCEPT_DUPLICATE", "Один concept ID и PNG hash должны встречаться в проекте только один раз.");
     if (
       new Set(p.design.variants.map((v) => v.id)).size !==
       p.design.variants.length
@@ -323,13 +338,13 @@ export function parseProject(text: string): EditorProject {
     return fail("INVALID_JSON", "Не удалось прочитать JSON проекта.");
   }
 }
-/** Единственная миграция v1 -> v2: сохраняет идентичности и asset data, обновляет версии snapshots. */
+/** v1/v2 -> v3: сохраняет asset data и IDs; concept data не придумывается. */
 export function migrateProject(value: unknown): EditorProject {
   if (typeof value !== "object" || value === null || Array.isArray(value))
     return fail("INVALID_PROJECT", "Нужен объект проекта редактора.");
   const version = (value as { schemaVersion?: unknown }).schemaVersion;
   if (version === undefined) return fail("INVALID_PROJECT", "В проекте отсутствует schemaVersion.");
-  if (version !== 1 && version !== CURRENT_PROJECT_VERSION)
+  if (version !== 1 && version !== 2 && version !== CURRENT_PROJECT_VERSION)
     return fail("UNSUPPORTED_PROJECT_VERSION", "Версия проекта не поддерживается. Оригинал сохранён; откройте его совместимой версией Studio.");
   const design = (value as { design?: unknown }).design;
   if (typeof design === "object" && design !== null && "variants" in design && Array.isArray(design.variants)) {
@@ -337,12 +352,12 @@ export function migrateProject(value: unknown): EditorProject {
       if (typeof variant !== "object" || variant === null || !("project" in variant)) continue;
       const snapshot = variant.project as unknown;
       if (typeof snapshot !== "object" || snapshot === null || !("schemaVersion" in snapshot)) continue;
-      if (snapshot.schemaVersion !== 1 && snapshot.schemaVersion !== CURRENT_PROJECT_VERSION)
+      if (snapshot.schemaVersion !== 1 && snapshot.schemaVersion !== 2 && snapshot.schemaVersion !== CURRENT_PROJECT_VERSION)
         return fail("UNSUPPORTED_PROJECT_VERSION", "Вариант проекта имеет неподдерживаемую версию. Исходный файл сохранён.");
     }
   }
   if (version === CURRENT_PROJECT_VERSION) return validateProject(value);
-  const legacy = LegacyProjectV1Schema.safeParse(value);
+  const legacy = (version === 1 ? LegacyProjectV1Schema : LegacyProjectV2Schema).safeParse(value);
   if (!legacy.success) return fail("INVALID_PROJECT", "Исходный проект v1 не соответствует согласованному формату.");
   const p = legacy.data;
   return validateProject({ ...p, schemaVersion: CURRENT_PROJECT_VERSION,
@@ -579,7 +594,7 @@ function applyCommand(
   if ((command.type === "renamePart" || command.type === "groupPart") && actor !== "human")
     return fail("HUMAN_ONLY", "Имена и состав частей меняет пользователь.");
   if (
-    ["brief", "designBrief", "checkpoint", "restoreVariant", "deleteVariant"].includes(
+    ["brief", "designBrief", "conceptAdd", "conceptRemove", "checkpoint", "restoreVariant", "deleteVariant"].includes(
       command.type,
     )
   ) {
@@ -597,6 +612,14 @@ function applyCommand(
           fail("BRIEF_PROTECTION", "Деталь брифа отсутствует или не закреплена. Сверьте замки в дереве модели.");
       }
       p.design.brief = serializeDesignBrief(command.brief);
+    }
+    else if (command.type === "conceptAdd") {
+      const concepts = p.design.concepts ??= [];
+      if (concepts.length >= MAX_CONCEPTS) fail("CONCEPT_LIMIT", "Можно сохранить до трёх концептов или references.");
+      concepts.push(structuredClone(command.concept));
+    } else if (command.type === "conceptRemove") {
+      if (!p.design.concepts?.some(c => c.id === command.conceptId)) fail("CONCEPT_NOT_FOUND", "Концепт отсутствует в текущем проекте.");
+      p.design.concepts = p.design.concepts.filter(c => c.id !== command.conceptId);
     }
     else if (command.type === "checkpoint") {
       if (p.design.variants.length >= MAX_VARIANTS)
@@ -802,6 +825,8 @@ const labels: Record<EditorCommand["type"], string> = {
   redo: "Повтор",
   brief: "Задание для модели",
   designBrief: "Структурированный бриф",
+  conceptAdd: "Концепт или reference",
+  conceptRemove: "Удаление ссылки на концепт",
   checkpoint: "Сохранение варианта",
   restoreVariant: "Возврат к варианту",
   deleteVariant: "Удаление варианта",

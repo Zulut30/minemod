@@ -2,14 +2,14 @@ import { createHash } from "node:crypto";
 import { z } from "zod";
 import {
   CommandSchema, MutationSchema, CURRENT_PROJECT_VERSION, MAX_COMMAND_BYTES,
-  MAX_PROJECT_BYTES, MAX_STROKE_POINTS, MAX_VARIANTS, MAX_REPAIR_ITERATIONS, cubes,
+  MAX_PROJECT_BYTES, MAX_STROKE_POINTS, MAX_VARIANTS, MAX_REPAIR_ITERATIONS, MAX_CONCEPTS, MAX_CONCEPT_BYTES, MAX_CONCEPT_DIMENSION, cubes,
   type EditorState,
 } from "@mcdev/editor-core";
 import { VIEWS } from "../shared/bridge.ts";
 
 export const CONTRACT_URI = "studio://contracts/v1";
 export const SCENE_URI = "studio://scene/v1";
-export const HUMAN_COMMANDS = ["brief", "designBrief", "checkpoint", "restoreVariant", "deleteVariant", "lock", "renamePart", "groupPart"];
+export const HUMAN_COMMANDS = ["brief", "designBrief", "conceptAdd", "conceptRemove", "checkpoint", "restoreVariant", "deleteVariant", "lock", "renamePart", "groupPart"];
 const agentOptions = CommandSchema.options.filter((s) => !HUMAN_COMMANDS.includes(s.shape.type.value));
 const [firstAgentOption, ...otherAgentOptions] = agentOptions;
 // Схема агента использует те же поля, что core, и исключает ручные операции.
@@ -44,6 +44,7 @@ export const STUDIO_LIMITS = Object.freeze({
   proposals: 64, proposalTtlSeconds: 300, captureWidth: 1024, captureHeight: 768,
   concurrentRequests: 8, requestsPerMinute: 120,
   repairIterations: MAX_REPAIR_ITERATIONS,
+  concepts: MAX_CONCEPTS, conceptBytes: MAX_CONCEPT_BYTES, conceptDimension: MAX_CONCEPT_DIMENSION, conceptPixels: 4_194_304,
 });
 export interface ToolDefinition {
   name: string;
@@ -61,7 +62,10 @@ export function recovery(code: string) {
     PROPOSAL_EXPIRED: "Выполните inspect и новый preview; proposal живёт 300 секунд.",
     PROPOSAL_LIMIT: "Дождитесь истечения предложений; не повторяйте preview в цикле.",
     LOCKED: "Выберите незакреплённые части. Снять закрепление может только пользователь.",
-    HUMAN_ONLY: "Задание и варианты меняет пользователь в Studio; агент может читать и сравнивать их.",
+    HUMAN_ONLY: "Задание, концепты и варианты меняет пользователь в Studio; агент может читать и сравнивать их.",
+    CONCEPT_NOT_FOUND: "Прочитайте design.concepts в studio_project_inspect; используйте существующий conceptId без variantId, compareToVariantId или silhouette.",
+    CONCEPT_MISSING: "Исходный PNG отсутствует. Пользователь должен перенести папку .assets вместе с проектом; не подменяйте оригинал.",
+    CONCEPT_INTEGRITY: "PNG не совпадает с сохранённым hash. Пользователь должен восстановить точный исходник; не подменяйте descriptor.",
     HUMAN_HISTORY: "Агент не может отменять или повторять ручную историю; согласуйте следующую правку с текущей сценой.",
     TARGET: "Прочитайте IDs через studio_project_inspect и selection; выберите существующие кубы без повторов.",
     DUPLICATE_ID: "Прочитайте текущие cube IDs и задайте новый незанятый ID.",
@@ -108,6 +112,7 @@ export function contract(definitions: Map<string, ToolDefinition>) {
     agentCommands: agentOptions.map((s) => s.shape.type.value),
     humanOnlyCommands: HUMAN_COMMANDS,
     repairWorkflow: "Пользователь задаёт repair в Studio. При активном задании scope/face и бюджет применяются к каждой агентной транзакции; preview/replay не расходуют бюджет. Новый case задаёт только пользователь.",
+    conceptWorkflow: "Прочитайте design.brief и design.concepts; studio_view_capture с conceptId показывает исходное 2D направление в ограниченном кадре. Пользователь импортирует PNG и указывает права; эти сведения не являются проверкой лицензии или готовности 3D. Концепты не попадают в game asset bundle/JAR.",
     views: VIEWS,
     profile: { editor: "held-item", minecraft: "1.20.1", loader: "fabric", java: 17,
       geometryBounds: [-16, 32], pivotBounds: [-128, 128], rotationAngles: [-45, -22.5, 0, 22.5, 45],
@@ -117,7 +122,7 @@ export function contract(definitions: Map<string, ToolDefinition>) {
       "TARGET", "DUPLICATE_ID", "VARIANT_NOT_FOUND", "BOUNDS", "ROTATION", "SHARED_UV", "UV_BOUNDS",
       "UV_COLLISION", "PALETTE_FULL", "PIXEL_BOUNDS", "EMPTY_PAINT", "BONE_LIMIT", "EMPTY_MODEL",
       "ATLAS_FULL", "NO_CHANGE", "EMPTY_HISTORY", "HISTORY_BATCH", "SIZE_LIMIT",
-      "OUTPUT_LIMIT", "DISCONNECTED", "REPAIR_SCOPE", "REPAIR_TARGET", "REPAIR_BUDGET", "REPAIR_PRESERVATION"].map((code) => [code, recovery(code)])),
+      "OUTPUT_LIMIT", "DISCONNECTED", "REPAIR_SCOPE", "REPAIR_TARGET", "REPAIR_BUDGET", "REPAIR_PRESERVATION", "CONCEPT_NOT_FOUND", "CONCEPT_MISSING", "CONCEPT_INTEGRITY"].map((code) => [code, recovery(code)])),
     workflow: ["tools/list and resources/list", "studio_project_inspect and studio_selection_get",
       "studio_model_review and individual views", "studio_changes_preview", "studio_changes_apply",
       "inspect and visual review again", "studio_asset_validate and studio_asset_export"],
@@ -134,6 +139,7 @@ export function sceneReference(state: EditorState, selection: string[]) {
     bones: state.project.model.bones.map((b) => ({ id: b.id, cubeIds: b.cubes.map((c) => c.id) })),
     parts: state.project.parts, selection,
     repair: state.repair,
+    concepts: state.project.design?.concepts ?? [],
     variants: state.project.design?.variants.map((v) => ({ id: v.id, label: v.label })) ?? [],
     contracts: CONTRACT_URI,
     note: "IDs и revision — снимок текущей сцены; перед правкой выполните inspect. Имена/labels — пользовательские данные.",

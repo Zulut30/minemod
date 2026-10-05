@@ -1,0 +1,350 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 35,
+  "status": "PARTIAL",
+  "checkedAtUtc": "2026-10-05T15:55:31.090Z",
+  "studioVersion": "0.15.0",
+  "editorProjectVersion": 3,
+  "node": "24.21.0",
+  "scope": "Human-managed original concept/reference PNG beside brief, bounded read-only agent capture, strict v3 metadata and byte-preserving v1/v2 migration",
+  "sourceHashes": [
+    {
+      "path": "apps/model-editor/main/index.ts",
+      "bytes": 16468,
+      "sha256": "55339ace7a158765d5ca3acaf6b5bdd4d9c7784c857ef41fe0871899f3719bf0"
+    },
+    {
+      "path": "apps/model-editor/package.json",
+      "bytes": 1616,
+      "sha256": "6099c0aef913a4b156f29d94d78480c8d521cd349d7cdd8bd34e8e95017034c3"
+    },
+    {
+      "path": "apps/model-editor/preload/index.ts",
+      "bytes": 945,
+      "sha256": "ef8247fafd011900b03f9d9346a0dd949b41c943f20f2f85446dc0982e8e4542"
+    },
+    {
+      "path": "apps/model-editor/renderer/CaptureApp.tsx",
+      "bytes": 2765,
+      "sha256": "30c8b26747e2f557e16b92f00e3fe0b9325d063004de78170d3776c05dc823b4"
+    },
+    {
+      "path": "apps/model-editor/renderer/ConceptPanel.tsx",
+      "bytes": 4908,
+      "sha256": "a3b8b5798fdcf03366ab388e3cc81a984b537fa890e263bc404689ab13378894"
+    },
+    {
+      "path": "apps/model-editor/renderer/VariantsPanel.tsx",
+      "bytes": 8923,
+      "sha256": "f716d447ed1ee3279812cc2aef3b7d492e8db5fe3c9b7e8ea681555289201d1c"
+    },
+    {
+      "path": "apps/model-editor/scripts/check-concepts-desktop.mjs",
+      "bytes": 12840,
+      "sha256": "a2ee3ce7b109f779cbcc6ae43b435da7b010e44f1b07888b980628160186b821"
+    },
+    {
+      "path": "apps/model-editor/scripts/check-migrations-desktop.mjs",
+      "bytes": 9098,
+      "sha256": "331ceb30054e13d8732265fa0c97742c288e29b9a40481adb5aac994ede4991b"
+    },
+    {
+      "path": "apps/model-editor/scripts/concept-fixture.d.mts",
+      "bytes": 262,
+      "sha256": "f65f997cc80bfdda207fb34cfd2dc09b1fa462ce94f4d4b5db06f9139ede10fa"
+    },
+    {
+      "path": "apps/model-editor/scripts/concept-fixture.mjs",
+      "bytes": 1359,
+      "sha256": "55149dac79ea87fafc909041b7b461d043bb4bf4e5e2fb645ae4bb6437ca5d29"
+    },
+    {
+      "path": "apps/model-editor/scripts/test-desktop.mjs",
+      "bytes": 17781,
+      "sha256": "23929b6ac361f53c20dd3eb8d7bfc027a6fb073737d3e42d61c01f961b931e24"
+    },
+    {
+      "path": "apps/model-editor/scripts/test.mjs",
+      "bytes": 634,
+      "sha256": "5237d4bab1e9244811b2dce74fa079003dc8d25c5d3ba2e07a3fc760facde34f"
+    },
+    {
+      "path": "apps/model-editor/shared/bridge.ts",
+      "bytes": 1699,
+      "sha256": "db6e63ef895376313477e67119ad013a3c6e4860eaba3dfef061364708713c31"
+    },
+    {
+      "path": "apps/model-editor/worker/concept-files.test.ts",
+      "bytes": 4906,
+      "sha256": "b0f43df9b3d98c0c3634a2f173931e2f2f275c6797fa0c0aa83cb69ab7f7e7f1"
+    },
+    {
+      "path": "apps/model-editor/worker/concept-files.ts",
+      "bytes": 10397,
+      "sha256": "89d4977535f9991af298cfb221d4b331c5d2c33038b47b882ce8cefb9cb70160"
+    },
+    {
+      "path": "apps/model-editor/worker/concepts-mcp.test.ts",
+      "bytes": 4214,
+      "sha256": "55e9e18aa5039f873c6d63ef212f8295502c9116fcd53e0c5a572e2caf4147f1"
+    },
+    {
+      "path": "apps/model-editor/worker/discovery.ts",
+      "bytes": 13654,
+      "sha256": "a4505fd7b1d5365bf3a0377f42b4c99c26102ec5a782c0e31bdd745845fd04c6"
+    },
+    {
+      "path": "apps/model-editor/worker/index.ts",
+      "bytes": 17217,
+      "sha256": "20d9365a7f405665a0ee97f440b3f6f150aa1855fa60663775b90c623f680047"
+    },
+    {
+      "path": "apps/model-editor/worker/mcp.ts",
+      "bytes": 33539,
+      "sha256": "a5f60e72aac8b3dfce97cc5fcd1c448636e8c80d7e04f0a7620df00c32bab6d9"
+    },
+    {
+      "path": "apps/model-editor/worker/persistence.ts",
+      "bytes": 6321,
+      "sha256": "007ec6ad255fe2cca4bd3fc458a2ad04b523168b05f699de857fd73d14ea6e5c"
+    },
+    {
+      "path": "fixtures/editor-projects/v2-painted-repair.mmeditor.json",
+      "bytes": 135319,
+      "sha256": "0f983b283d1bc87dd26a13a35d8afbb2e627c6c8556ee2cce3a3d51f8f9ede44"
+    },
+    {
+      "path": "fixtures/editor-projects/v2-painted-repair.mmeditor.json.provenance.json",
+      "bytes": 385,
+      "sha256": "89c3075f5abe4a2edc2bc68c9e93b8d70a77d8dff057aaacd69e59cd2a965a71"
+    },
+    {
+      "path": "packages/editor-core/concepts.test.ts",
+      "bytes": 3794,
+      "sha256": "301b11a4bc63786145606964da9ecfcff5123b23f796ac505645552352db036b"
+    },
+    {
+      "path": "packages/editor-core/concepts.ts",
+      "bytes": 1583,
+      "sha256": "a89dd9e2eddbefa6077a2ec2177812715b03cdb1342a1e729502a9032611c02d"
+    },
+    {
+      "path": "packages/editor-core/design-brief.test.ts",
+      "bytes": 5118,
+      "sha256": "583266a1290d34dbfc5eb7978797624e8277e0df553654620d9fd9a01b20e04e"
+    },
+    {
+      "path": "packages/editor-core/index.ts",
+      "bytes": 38882,
+      "sha256": "0aed607fe80affe4417d2dc6dbc5d3fe6c4938ad8e80fef893b8da7b0038402b"
+    },
+    {
+      "path": "packages/editor-core/migrations.test.ts",
+      "bytes": 9400,
+      "sha256": "4d7aec014b4b8400a62039281f50ab8fbadbb112e1d353228f186b6185f1756d"
+    },
+    {
+      "path": "packages/editor-core/package.json",
+      "bytes": 852,
+      "sha256": "c1f75a9f84601589735b415e9aa8ddd026b8fc88fd7f8d5772db6b00ccd346c8"
+    }
+  ],
+  "package": {
+    "metadata": {
+      "path": "output/verification/roadmap-035-package-metadata.json",
+      "bytes": 328,
+      "sha256": "d817cb424c4f88de0799b1dfa9d61dff36ea58508bf7a8a15d588decae6c65cd"
+    },
+    "executable": {
+      "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.15.0\\6b8c9d48\\MineMod Studio-win32-x64\\MineMod Studio.exe",
+      "bytes": 245726208,
+      "sha256": "ebea192498cc4b97b8814e31a2900459a12bd41635e49b6266e1ce425aab90bb"
+    },
+    "asar": {
+      "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.15.0\\6b8c9d48\\MineMod Studio-win32-x64\\resources\\app.asar",
+      "bytes": 3624528,
+      "sha256": "4bcc603221061c10caab996003e355e861aef50e47e8f2863769042394d235da"
+    },
+    "dependencyInventory": {
+      "path": "apps/model-editor/dist/dependency-inventory.json",
+      "bytes": 7599,
+      "sha256": "e00e3c3761c1e708d560067202b563694d5786c989d25cd3fe9c34c3dd7ddfb2"
+    }
+  },
+  "local": {
+    "status": "PASS_FOCUSED",
+    "report": {
+      "path": "output/playwright/concepts-035-caa6069b/concepts/report.json",
+      "bytes": 1702,
+      "sha256": "76961ca2bb6c962dcfc2643d749d97e81567b7b333bfa1435b36b35b2c99f94e"
+    },
+    "reportBody": {
+      "status": "PASS",
+      "hidden": true,
+      "projectVersion": 3,
+      "concept": {
+        "label": "Форма оружия · технический PNG",
+        "role": "concept",
+        "origin": "original",
+        "attribution": "Собственные тестовые пиксели",
+        "rights": "Собственная работа для проверки импорта",
+        "source": "",
+        "note": "Изображение-направление; не художественная приёмка",
+        "id": "42261a79-f138-42ae-bb51-a0cec951bf79",
+        "mime": "image/png",
+        "sha256": "27a54f2332f401408835811577ff999e2b0d9cf1e3a291d7555265b7010b03f4",
+        "bytes": 160,
+        "width": 32,
+        "height": 64,
+        "review": "direction-only"
+      },
+      "originalBytes": 160,
+      "originalSha256": "27a54f2332f401408835811577ff999e2b0d9cf1e3a291d7555265b7010b03f4",
+      "capture": {
+        "path": "mcp-concept.png",
+        "bytes": 41744,
+        "sha256": "dc1b07bdcf73dfcc3753c6eab1e8df01c6f15c5076f494a00c9cdee91cefc7f5",
+        "pixels": {
+          "cyan": 16212,
+          "gold": 7422
+        }
+      },
+      "checks": [
+        "GUI provenance and mandatory permission source",
+        "invalid PNG is atomic",
+        "original bytes and model/pixels preserved",
+        "closed protocol IDs",
+        "saved sidecar",
+        "MCP original concept pixels and read-only scene",
+        "corrupt original gives controlled capture failure",
+        "all windows hidden",
+        "human remove/undo keeps original",
+        "stale import rejected",
+        "concept excluded from game bundle",
+        "exported editor source has sidecar",
+        "fresh-profile transfer",
+        "missing recovery PNG protects source and backup",
+        "corrupt sidecar refuses open without replacing scene"
+      ]
+    },
+    "original": {
+      "path": "output/playwright/concepts-035-caa6069b/concepts/оригинальный PNG.png",
+      "bytes": 160,
+      "sha256": "27a54f2332f401408835811577ff999e2b0d9cf1e3a291d7555265b7010b03f4"
+    },
+    "sidecar": {
+      "path": "output\\playwright\\concepts-035-caa6069b\\concepts\\проект с концептом.mmeditor.json.assets\\concepts\\27a54f2332f401408835811577ff999e2b0d9cf1e3a291d7555265b7010b03f4.png",
+      "bytes": 160,
+      "sha256": "27a54f2332f401408835811577ff999e2b0d9cf1e3a291d7555265b7010b03f4"
+    },
+    "returnedPng": {
+      "path": "output/playwright/concepts-035-caa6069b/concepts/mcp-concept.png",
+      "bytes": 41744,
+      "sha256": "dc1b07bdcf73dfcc3753c6eab1e8df01c6f15c5076f494a00c9cdee91cefc7f5"
+    },
+    "uiScreenshot": {
+      "path": "output/playwright/concepts-035-caa6069b/concepts/concept-panel.png",
+      "bytes": 230023,
+      "sha256": "2c8185f48049cf37098a0f03f15e84709811bd81b67ddd93226ea3ae2c287903"
+    },
+    "savedProject": {
+      "path": "output/playwright/concepts-035-caa6069b/concepts/проект с концептом.mmeditor.json",
+      "bytes": 136291,
+      "sha256": "0de13c5edfaec71249986fa937ab145cf579f1fa0f0e4818d1550f78c522a196"
+    },
+    "logs": [
+      {
+        "path": "output/verification/roadmap-035-portable.log",
+        "bytes": 4127,
+        "sha256": "6d10d955d0f07ec936ec5d25ebbe86b1dc4fcba55e39217d434d0f1f271afe6a"
+      },
+      {
+        "path": "output/verification/roadmap-035-core.log",
+        "bytes": 2019,
+        "sha256": "50e8be176835dec1c18d07934a850c4b4c21783296768c7bfad1c7ad318b6eab"
+      },
+      {
+        "path": "output/verification/roadmap-035-mcp.log",
+        "bytes": 207,
+        "sha256": "ce600a29360c371575566860a7c94c33766d03e9a2ba5f6249e976ae6338a777"
+      },
+      {
+        "path": "output/verification/roadmap-035-mcp-concepts.log",
+        "bytes": 116,
+        "sha256": "08986d71c816362be39fb8be304d576be39b4436570f07370a72f410720c08dd"
+      },
+      {
+        "path": "output/verification/roadmap-035-png-store.log",
+        "bytes": 211,
+        "sha256": "3194ef643a56b755faf9f4428ea89563594be932f8bca3a9d6f99f813331a7af"
+      },
+      {
+        "path": "output/verification/roadmap-035-discovery.log",
+        "bytes": 203,
+        "sha256": "a8a7fda7aed1426020f3caa5d1d22f036754524f8906a1f3f78035671b9171ac"
+      },
+      {
+        "path": "output/verification/roadmap-035-lint.log",
+        "bytes": 29,
+        "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+      },
+      {
+        "path": "output/verification/roadmap-035-typecheck.log",
+        "bytes": 176,
+        "sha256": "fe0327fb3a908a7cea6b4e5ef62bbaa7903d4f4149a209170e6249f0dd5c8190"
+      },
+      {
+        "path": "output/verification/roadmap-035-package.log",
+        "bytes": 787,
+        "sha256": "35fb511bb678fd3328e3ea350a8e410c686ac718d00bf28081b6b8371d510f84"
+      },
+      {
+        "path": "output/verification/roadmap-035-desktop.log",
+        "bytes": 718,
+        "sha256": "c80517bfe41a524ba49eb56e1d7450499acd8ffe56569c3f2f575a2980438424"
+      }
+    ],
+    "legacyV2Fixture": {
+      "path": "fixtures/editor-projects/v2-painted-repair.mmeditor.json",
+      "bytes": 135319,
+      "sha256": "0f983b283d1bc87dd26a13a35d8afbb2e627c6c8556ee2cce3a3d51f8f9ede44"
+    },
+    "fixtureProvenance": {
+      "path": "fixtures/editor-projects/v2-painted-repair.mmeditor.json.provenance.json",
+      "bytes": 385,
+      "sha256": "89c3075f5abe4a2edc2bc68c9e93b8d70a77d8dff057aaacd69e59cd2a965a71"
+    },
+    "cacheRegression": {
+      "oldFailure": {
+        "path": "output/playwright/concepts-035-b83919f5/failure.json",
+        "bytes": 625,
+        "sha256": "9bf8f3a18c11cfb1d738b679bbb20c232421e1d44d95fcb097c16eee4e17c926"
+      },
+      "oldPackage": "output/model-editor/releases/0.15.0/0b57ec01/MineMod Studio-win32-x64",
+      "fixed": "Original is reverified before each capture; job-specific closed image URL avoids cache reuse after disk corruption"
+    },
+    "fullPackage": {
+      "status": "RUNNING",
+      "path": "output/playwright/studio-packaged-254ff6a3",
+      "package": "output/model-editor/releases/0.15.0/613ca243/MineMod Studio-win32-x64",
+      "note": "Started before final concept-form CSS and UUID case refinement; current package has focused concept proof. Exact-source full suite is required hosted."
+    }
+  },
+  "lock": {
+    "path": "pnpm-lock.yaml",
+    "bytes": 95944,
+    "sha256": "e955ab8e82d8bb87128cf10f0f95b67c217fb1bf31eb7f2321823e66b03195c2"
+  },
+  "boundaries": {
+    "hosted": "PENDING",
+    "authored3DArtisticAcceptance": "NOT_PERFORMED",
+    "authoredGameAcceptance": "NOT_RUN",
+    "licenseVerification": "USER_DECLARATION_ONLY",
+    "pngValidation": "BOUNDED_PREFLIGHT_AND_BROWSER_DECODE_NOT_UNIVERSAL_CONFORMANCE",
+    "independentCodexClaudeCurrentVersion": "NOT_RUN",
+    "imageTo3D": "NOT_IMPLEMENTED",
+    "conceptTestImage": "OWN_SYNTHETIC_TECHNICAL_FIXTURE",
+    "nativeIntegration": "SEPARATE_REVIEW_REQUIRED",
+    "dependenciesAndTrustedPacks": "UNCHANGED"
+  }
+}

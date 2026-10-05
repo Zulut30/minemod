@@ -1559,6 +1559,21 @@ select {
   height: 64px;
   flex-shrink: 0;
 }
+.concept-panel { padding: 12px; border: 1px solid var(--border); border-radius: 8px; }
+.concept-panel summary { cursor: pointer; color: var(--text); }
+.concept-panel p, .concept-panel small { color: var(--muted); overflow-wrap: anywhere; }
+.concept-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+.concept-card { display: flex; flex-direction: column; gap: 8px; padding: 10px; background: var(--surface-raised); border-radius: 6px; }
+.concept-card img { width: 100%; height: 180px; object-fit: contain; background: var(--canvas); }
+.concept-import { display: grid; gap: 9px; max-width: 680px; margin-top: 12px; }
+.concept-import label { display: flex; flex-direction: column; gap: 5px; color: var(--muted); }
+.concept-import input, .concept-import select, .concept-import textarea { min-width: 0; width: 100%; border: 1px solid var(--border); border-radius: 6px; padding: 8px; font: inherit; color: var(--text); background: var(--surface-raised); }
+.concept-import textarea { resize: vertical; }
+.concept-import textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.concept-capture { height: 100%; margin: 0; padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+.concept-capture figcaption { display: flex; justify-content: space-between; gap: 12px; }
+.concept-capture span, .concept-capture p { color: var(--muted); }
+.concept-capture img { flex: 1; min-height: 0; width: 100%; object-fit: contain; }
 .review-readability span {
   font-size: 11px;
   color: var(--text);

@@ -30,7 +30,7 @@ export async function renameWithRetry(
   }
 }
 
-async function readProjectDocument(path: string): Promise<{ bytes: Buffer; project: EditorProject; sourceVersion: 1 | 2 }> {
+async function readProjectDocument(path: string): Promise<{ bytes: Buffer; project: EditorProject; sourceVersion: 1 | 2 | 3 }> {
   const file = await open(path, "r");
   try {
     const metadata = await file.stat();
@@ -61,7 +61,7 @@ async function readProjectDocument(path: string): Promise<{ bytes: Buffer; proje
     if (!Buffer.from(text, "utf8").equals(source))
       throw new EditorError("INVALID_JSON", "Проект требует корректный UTF-8; исходник сохранён.");
     const project = parseProject(text);
-    return { bytes: source, project, sourceVersion: (JSON.parse(text) as { schemaVersion: 1 | 2 }).schemaVersion };
+    return { bytes: source, project, sourceVersion: (JSON.parse(text) as { schemaVersion: 1 | 2 | 3 }).schemaVersion };
   } finally {
     await file.close();
   }
@@ -69,7 +69,7 @@ async function readProjectDocument(path: string): Promise<{ bytes: Buffer; proje
 export async function readProject(path: string): Promise<EditorProject> {
   return (await readProjectDocument(path)).project;
 }
-export async function readProjectWithVersion(path: string): Promise<{ project: EditorProject; sourceVersion: 1 | 2 }> {
+export async function readProjectWithVersion(path: string): Promise<{ project: EditorProject; sourceVersion: 1 | 2 | 3 }> {
   const { project, sourceVersion } = await readProjectDocument(path);
   return { project, sourceVersion };
 }
@@ -115,10 +115,10 @@ export async function writeProject(
         !(error instanceof EditorError) && (error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
     }
     if (previous !== undefined) {
-      if (previous.sourceVersion === 1) {
+      if (previous.sourceVersion < CURRENT_PROJECT_VERSION) {
         // Отдельный inode: последующие save/backup не меняют original migration source.
         const sourceHash = createHash("sha256").update(previous.bytes).digest("hex");
-        const original = `${path}.v1-${sourceHash}.original.json`, migrationTemp = `${path}.${randomUUID()}.migration.pending`;
+        const original = `${path}.v${previous.sourceVersion}-${sourceHash}.original.json`, migrationTemp = `${path}.${randomUUID()}.migration.pending`;
         await stage(migrationTemp, previous.bytes);
         try { await link(migrationTemp, original); }
         catch (error) {

@@ -26,7 +26,7 @@ assert.deepEqual(migrateProject(legacy), expected);
 assert.deepEqual(legacy, JSON.parse(legacyText), "Migration cannot mutate input.");
 const early = structuredClone(legacy); delete early.design;
 assert.deepEqual(migrateProject(early), { ...early, schemaVersion: CURRENT_PROJECT_VERSION });
-for (const version of [0, 3, 99, -1, "2", null])
+for (const version of [0, 4, 99, -1, "2", null])
   assert.throws(() => parseProject(JSON.stringify({ ...legacy, schemaVersion: version })), { code: "UNSUPPORTED_PROJECT_VERSION" });
 const futureVariant = structuredClone(legacy); futureVariant.design!.variants[0]!.project.schemaVersion = 99;
 assert.throws(() => parseProject(JSON.stringify(futureVariant)), { code: "UNSUPPORTED_PROJECT_VERSION" });
@@ -55,6 +55,19 @@ try {
   assert.deepEqual(await readFile(original), originalBytes, "Repeated saves cannot rotate away the migration source.");
   await writeFile(path + ".bak", "{broken backup}");
   assert.deepEqual(await readFile(original), originalBytes, "Original must not share an inode with mutable backup.");
+
+  // Настоящий файл v2, сохранённый прежним упакованным редактором.
+  const v2Text = await readFile(new URL("../../fixtures/editor-projects/v2-painted-repair.mmeditor.json", import.meta.url), "utf8");
+  const v2 = JSON.parse(v2Text) as LegacyProject, v2Expected = structuredClone(v2);
+  assert.equal(v2.schemaVersion, 2);
+  v2Expected.schemaVersion = CURRENT_PROJECT_VERSION;
+  for (const variant of v2Expected.design?.variants ?? []) variant.project.schemaVersion = CURRENT_PROJECT_VERSION;
+  assert.deepEqual(parseProject(v2Text), v2Expected, "v2 migration preserves exact painted model and IDs.");
+  const v2Path = join(directory, "v2.json"), v2Bytes = Buffer.from(v2Text);
+  await writeFile(v2Path, v2Bytes); await writeProject(v2Path, parseProject(v2Text));
+  assert.deepEqual(await readFile(v2Path + ".bak"), v2Bytes);
+  assert.deepEqual(await readFile(`${v2Path}.v2-${createHash("sha256").update(v2Bytes).digest("hex")}.original.json`), v2Bytes);
+  assert.deepEqual(parseProject(await readFile(v2Path, "utf8")), v2Expected);
 
   // Collision не даёт уничтожить существующую оригинальную копию.
   const collision = join(directory, "collision.json");
@@ -111,4 +124,4 @@ try {
   await assert.rejects(readProject(malformed), { code: "INVALID_JSON" });
   assert.equal((await readdir(directory)).some((name) => name.endsWith(".pending")), false);
 } finally { await rm(directory, { recursive: true, force: true }); }
-process.stdout.write("editor-core: v1 -> v2 IDs/pixels/UV/variants, exact persistent migration source, collision and future-file guards PASS\n");
+process.stdout.write("editor-core: v1/v2 -> v3 IDs/pixels/UV/variants, exact persistent migration source, collision and future-file guards PASS\n");

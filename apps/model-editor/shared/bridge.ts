@@ -1,4 +1,4 @@
-import type { EditorState, EditorProject, Mutation, RepairControl } from "@mcdev/editor-core";
+import type { EditorState, EditorProject, Mutation, RepairControl, ConceptImport } from "@mcdev/editor-core";
 export const VIEWS = ["perspective", "front", "side", "back", "left", "right", "top", "bottom", "rear-perspective"] as const;
 export type View = typeof VIEWS[number];
 export interface ConnectionInfo {
@@ -14,6 +14,7 @@ export interface CaptureJob {
   referenceProject?: EditorProject;
   silhouette?: boolean;
   layout?: "review";
+  conceptId?: string;
 }
 export type HostRequest =
   | {
@@ -28,6 +29,7 @@ export type HostRequest =
     }
   | { kind: "apply"; mutation: Mutation }
   | { kind: "repair"; control: RepairControl }
+  | { kind: "conceptImport"; control: ConceptImport }
   | { kind: "connection"; action: "get" | "start" | "stop" };
 export type HostResponse =
   | {
@@ -38,6 +40,7 @@ export type HostResponse =
       sequence?: number;
       fileName?: string;
       connection?: ConnectionInfo;
+      conceptImage?: string;
     }
   | { ok: false; error: { code: string; message: string } };
 export interface EditorBridge {
@@ -45,7 +48,7 @@ export interface EditorBridge {
   onState: (callback: (response: HostResponse) => void) => () => void;
   selection: (value: { projectId: string; cubeIds: string[] }) => Promise<void>;
   onCapture: (callback: (job: CaptureJob) => void) => () => void;
-  captureReady: (id: string) => void;
+  captureReady: (id: string, failed?: boolean) => void;
 }
 declare global {
   interface Window {

@@ -15,6 +15,6 @@ const bridge: EditorBridge = {
     ipcRenderer.on("studio:capture", listener);
     return () => ipcRenderer.removeListener("studio:capture", listener);
   },
-  captureReady: (id) => ipcRenderer.send("studio:capture-ready", id),
+  captureReady: (id, failed = false) => ipcRenderer.send("studio:capture-ready", id, failed),
 };
 contextBridge.exposeInMainWorld("studio", bridge);

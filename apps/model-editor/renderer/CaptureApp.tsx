@@ -33,7 +33,7 @@ export function CaptureApp() {
   }, []);
   return (
     <div className={`capture-stage ${job?.silhouette ? "is-silhouette" : ""}`}>
-      {job?.layout === "review" ? (
+      {job?.conceptId ? <ConceptCapture key={job.id} job={job} /> : job?.layout === "review" ? (
         <ReviewBoard
           key={job.id}
           project={job.project}
@@ -53,4 +53,21 @@ export function CaptureApp() {
       )}
     </div>
   );
+}
+function ConceptCapture({job}: {job:CaptureJob}) {
+  const concept=job.project.design?.concepts?.find(c=>c.id===job.conceptId);
+  const [loaded,setLoaded]=useState(false);
+  useEffect(()=>{
+    if(!loaded)return;
+    let cancelled=false;
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{if(!cancelled)window.studio.captureReady(job.id);}));
+    return ()=>{cancelled=true;};
+  },[loaded,job.id]);
+  return <figure className="concept-capture">
+    <figcaption><strong>{concept?.label}</strong><span>Концепт · 2D изображение-направление</span></figcaption>
+    <img src={`studio://app/concepts/${job.project.projectId}/${job.conceptId}.png?capture=${job.id}`} alt={concept?.label}
+      onError={()=>window.studio.captureReady(job.id,true)}
+      onLoad={e=>void e.currentTarget.decode().then(()=>setLoaded(true)).catch(()=>window.studio.captureReady(job.id,true))} />
+    <p>Это не готовая 3D-модель. Геометрия, рисунок и игровой вид проверяются отдельно.</p>
+  </figure>;
 }

@@ -10,6 +10,7 @@ import {
   emptyProject,
   assetRequest,
   cubes,
+  ConceptImportSchema, CURRENT_PROJECT_VERSION, MutationSchema,
   type EditorState,
   type EditorProject,
 } from "@mcdev/editor-core";
@@ -18,6 +19,7 @@ import { assetOperationWithEvidence } from "../../../packages/application/eviden
 import { readProjectWithVersion, writeProject, renameWithRetry } from "./persistence.ts";
 import type { HostResponse, View } from "../shared/bridge.ts";
 import { startEditorMcp } from "./mcp.ts";
+import { ConceptStore } from "./concept-files.ts";
 
 interface ServiceRequest {
   id: number;
@@ -27,6 +29,8 @@ interface ServiceRequest {
   path?: string;
   mutation?: unknown;
   control?: unknown;
+  conceptImport?: unknown;
+  conceptId?: string;
   action?: "get" | "start" | "stop";
   projectId?: string;
   cubeIds?: string[];
@@ -37,14 +41,16 @@ if (!port) throw new Error("Editor worker requires its private parent port.");
 let session: EditorSession;
 let fixture: unknown;
 let recoveryPath: string;
+let conceptStore: ConceptStore;
 let connection: Awaited<ReturnType<typeof startEditorMcp>> | undefined;
 let selection: string[] = [];
 let recoveryWarning = "";
 let recoveryWritable = true;
 const unsupportedVersion = (error: unknown) => error instanceof EditorError && error.code === "UNSUPPORTED_PROJECT_VERSION";
+const protectedSource = (error: unknown) => unsupportedVersion(error) || error instanceof EditorError && error.code.startsWith("CONCEPT_");
 function protectRecovery(): void {
   recoveryWritable = false;
-  recoveryWarning = "Автосохранение остановлено: восстановительный проект имеет неподдерживаемую версию. Оригинал и backup сохранены. Сохраните текущую работу в новый файл.";
+  recoveryWarning = "Автосохранение остановлено: версия восстановительного проекта или его concept assets недоступны. Оригинал и backup сохранены. Проверьте исходные файлы; текущую работу можно сохранить в новый файл.";
 }
 let finalizing = false;
 let stateSequence = 0;
@@ -65,15 +71,21 @@ const captureWaiters = new Map<
     timer: ReturnType<typeof setTimeout>;
   }
 >();
-function capture(
+async function capture(
   state: EditorState,
   view: View,
   options?: {
     referenceProject?: EditorProject;
     silhouette?: boolean;
     layout?: "review";
+    conceptId?: string;
   },
 ): Promise<string> {
+  if (options?.conceptId) {
+    const concept=state.project.design?.concepts?.find(c=>c.id===options.conceptId);
+    if(!concept)throw new EditorError("CONCEPT_NOT_FOUND","Концепт отсутствует в текущем проекте.");
+    await conceptStore.image(concept);
+  }
   return new Promise((resolve, reject) => {
     const id = randomUUID();
     const timer = setTimeout(() => {
@@ -108,10 +120,11 @@ async function changed(note: string): Promise<void> {
   );
   if (recoveryWritable) {
     try {
+      await conceptStore.persist(recoveryPath, session.state().project);
       await writeProject(recoveryPath, session.state().project);
       recoveryWarning = "";
     } catch (error) {
-      if (unsupportedVersion(error)) protectRecovery();
+      if (protectedSource(error)) protectRecovery();
       else recoveryWarning = "Восстановительная копия недоступна. Сохраните проект вручную.";
     }
   }
@@ -150,21 +163,24 @@ async function run(request: ServiceRequest): Promise<HostResponse> {
       await readFile(request.fixturePath!, "utf8"),
     ) as unknown;
     recoveryPath = request.recoveryPath!;
+    conceptStore = new ConceptStore(join(dirname(recoveryPath),"concepts"));
     let project = projectFromAsset(fixture, randomUUID());
     try {
       const loaded = await readProjectWithVersion(recoveryPath);
+      await conceptStore.restore(recoveryPath, loaded.project);
       project = loaded.project;
-      note = loaded.sourceVersion === 1 ? "Восстановлен проект v1. Миграция в v2 выполнена в памяти; перед сохранением будет создана точная копия исходника." : "Восстановлен последний рабочий проект.";
+      note = loaded.sourceVersion < CURRENT_PROJECT_VERSION ? `Восстановлен проект v${loaded.sourceVersion}. Миграция в v${CURRENT_PROJECT_VERSION} выполнена в памяти; перед сохранением будет создана точная копия исходника.` : "Восстановлен последний рабочий проект.";
     } catch (error) {
-      if (unsupportedVersion(error)) {
+      if (protectedSource(error)) {
         protectRecovery();
-        note = "Восстановительный проект требует совместимую версию Studio. Открыт исходный пример.";
+        note = unsupportedVersion(error) ? "Восстановительный проект требует совместимую версию Studio. Открыт исходный пример." : "Исходные изображения восстановительного проекта недоступны. Оригинал сохранён; открыт исходный пример.";
       } else try {
         const loaded = await readProjectWithVersion(`${recoveryPath}.bak`);
+        await conceptStore.restore(recoveryPath, loaded.project);
         project = loaded.project;
-        note = loaded.sourceVersion === 1 ? "Восстановлена резервная копия v1. Миграция в v2 выполнена в памяти; исходник сохранён." : "Восстановлена резервная копия проекта.";
+        note = loaded.sourceVersion < CURRENT_PROJECT_VERSION ? `Восстановлена резервная копия v${loaded.sourceVersion}. Миграция в v${CURRENT_PROJECT_VERSION} выполнена в памяти; исходник сохранён.` : "Восстановлена резервная копия проекта.";
       } catch (backupError) {
-        if (unsupportedVersion(backupError)) protectRecovery();
+        if (protectedSource(backupError)) protectRecovery();
         if (
           (error as NodeJS.ErrnoException).code !== "ENOENT" ||
           (backupError as NodeJS.ErrnoException).code !== "ENOENT"
@@ -215,8 +231,24 @@ async function run(request: ServiceRequest): Promise<HostResponse> {
       );
     }
   } else if (request.kind === "apply") {
+    const mutation=MutationSchema.parse(request.mutation);
+    for(const command of mutation.commands)if(command.type==="conceptAdd")await conceptStore.image(command.concept);
     session.apply(request.mutation);
     note = "Изменения применены.";
+  } else if (request.kind === "conceptImport") {
+    const control=ConceptImportSchema.parse(request.conceptImport),before=session.state();
+    if(control.projectId!==before.project.projectId||control.expectedRevision!==before.revision)
+      throw new EditorError("REVISION_CONFLICT","Сцена изменилась во время выбора PNG. Повторите импорт.");
+    const image=await conceptStore.import(request.path!);
+    session.apply({projectId:control.projectId,expectedRevision:control.expectedRevision,key:randomUUID(),commands:[{
+      type:"conceptAdd",concept:{...control.draft,...image,id:randomUUID(),mime:"image/png",review:"direction-only"},
+    }]});
+    note="Концепт сохранён как изображение-направление. Готовая 3D-модель проверяется отдельно.";
+  } else if (request.kind === "conceptImage") {
+    const state=session.state(),concept=state.project.design?.concepts?.find(c=>c.id===request.conceptId);
+    if(state.project.projectId!==request.projectId||!concept)throw new EditorError("CONCEPT_NOT_FOUND","Концепт отсутствует в текущем проекте.");
+    const bytes=await conceptStore.image(concept);
+    return {ok:true,state,conceptImage:bytes.toString("base64")};
   } else if (request.kind === "repair") {
     session.setRepair(request.control);
     note = session.state().repair ? "Адресная правка включена. Агент ограничен выбранной областью и лимитом итераций." : "Адресная правка завершена. Проверьте модель с разных сторон.";
@@ -232,15 +264,17 @@ async function run(request: ServiceRequest): Promise<HostResponse> {
         ? "Создан новый проект."
         : "Открыт исходный пример меча.";
   } else if (request.kind === "save") {
+    await conceptStore.persist(request.path!, session.state().project);
     await writeProject(request.path!, session.state().project);
     session.markSaved();
     note = "Проект сохранён.";
   } else if (request.kind === "open") {
     const loaded = await readProjectWithVersion(request.path!);
+    await conceptStore.restore(request.path!, loaded.project);
     selection = [];
     session = new EditorSession(loaded.project);
     session.markSaved();
-    note = loaded.sourceVersion === 1 ? "Проект v1 открыт в формате v2. Исходник не изменён; при сохранении будет оставлена отдельная оригинальная копия." : "Проект открыт.";
+    note = loaded.sourceVersion < CURRENT_PROJECT_VERSION ? `Проект v${loaded.sourceVersion} открыт в формате v${CURRENT_PROJECT_VERSION}. Исходник не изменён; при сохранении будет оставлена отдельная оригинальная копия.` : "Проект открыт.";
   } else if (request.kind === "export") {
     const exported = bundle();
     const state = session.state();
@@ -271,6 +305,7 @@ async function run(request: ServiceRequest): Promise<HostResponse> {
         JSON.stringify(versionedBundle, null, 2) + "\n",
       );
       await writeFile(join(stage, "operation-evidence.v1.json"), JSON.stringify(operation.evidence, null, 2) + "\n");
+      await conceptStore.persist(join(stage,"source.mmeditor.json"), state.project);
       await writeProject(
         join(stage, "source.mmeditor.json"),
         session.state().project,
@@ -283,7 +318,7 @@ async function run(request: ServiceRequest): Promise<HostResponse> {
     }
   } else if (request.kind !== "inspect")
     throw new EditorError("UNKNOWN_OPERATION", "Операция не поддерживается.");
-  if (["apply", "repair", "new", "example", "open"].includes(request.kind)) {
+  if (["apply", "repair", "conceptImport", "new", "example", "open"].includes(request.kind)) {
     await changed(note ?? "Сцена обновлена.");
   }
   return {
@@ -321,7 +356,7 @@ port.on(
       }
       return;
     }
-    void enqueue(async () => {
+    const dispatch = async () => {
       let result: HostResponse;
       try {
         if (data.path && data.kind !== "save" && data.kind !== "export")
@@ -345,6 +380,10 @@ port.on(
         };
       }
       port.postMessage({ id: data.id, result: versioned(result) });
-    });
+    };
+    // Только чтение исходного PNG: capture ждёт renderer, который запросит его через protocol.
+    // Постановка этого закрытого запроса в очередь capture создала бы взаимное ожидание.
+    if (data.kind === "conceptImage") void dispatch();
+    else void enqueue(dispatch);
   },
 );

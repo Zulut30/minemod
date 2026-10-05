@@ -29,8 +29,8 @@ assert.deepEqual(saved.project.parts, locked.project.parts);
 assert.equal(saved.revision, locked.revision + 1);
 const parsed = readDesignBrief(saved.project.design!.brief)!;
 assert.deepEqual(parsed, {...brief, palette: brief.palette.map(c => c.toLowerCase())});
-assert.deepEqual(parseProject(JSON.stringify(saved.project)), saved.project, "Existing project v2 roundtrip preserves the entire brief text");
-assert.equal(saved.project.schemaVersion, 2);
+assert.deepEqual(parseProject(JSON.stringify(saved.project)), saved.project, "Project roundtrip preserves the entire brief text");
+assert.equal(saved.project.schemaVersion, 3);
 assert.throws(() => session.preview(request([{type: "designBrief", brief}]), "agent"), {code: "HUMAN_ONLY"});
 assert.throws(() => session.apply(request([{type: "designBrief", brief}]), "agent"), {code: "HUMAN_ONLY"});
 assert.deepEqual(session.state(), saved);
@@ -62,4 +62,4 @@ blank.apply({projectId: blank.state().project.projectId, expectedRevision: 0, ke
 ]}, "human");
 assert.equal(cubes(blank.state().project).length, 0, "Brief can be reviewed before any geometry is created");
 assert.equal(readDesignBrief(blank.state().project.design!.brief)!.palette.length, 24);
-process.stdout.write("Structured brief: human-only/CAS/protection/13 malformed cases, unchanged geometry/pixels and exact v2 persistence/undo PASS\n");
+process.stdout.write("Structured brief: human-only/CAS/protection/13 malformed cases, unchanged geometry/pixels and current project persistence/undo PASS\n");

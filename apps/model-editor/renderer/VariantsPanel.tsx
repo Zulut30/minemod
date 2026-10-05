@@ -3,6 +3,7 @@ import { MAX_VARIANTS, cubes, type EditorProject } from "@mcdev/editor-core";
 import { useStudio } from "./store.ts";
 import { Viewport, comparisonFrame } from "./Viewport.tsx";
 import { BriefEditor } from "./BriefEditor.tsx";
+import { ConceptPanel } from "./ConceptPanel.tsx";
 
 export function VariantsPanel({ project }: { project: EditorProject }) {
   const busy = useStudio((s) => s.busy),
@@ -63,6 +64,7 @@ export function VariantsPanel({ project }: { project: EditorProject }) {
         </summary>
         <BriefEditor key={project.projectId} project={project} />
       </details>
+      <ConceptPanel key={project.projectId} project={project} />
       <div className="variant-history">
         <button
           disabled={busy || !canUndo}

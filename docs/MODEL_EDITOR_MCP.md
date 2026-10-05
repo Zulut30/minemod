@@ -98,3 +98,5 @@ Desktop E2E проверяет GUI-синхронизацию агентного
 ## Источники
 
 Сверены официальные [MCP transports](https://modelcontextprotocol.io/specification/2025-11-25/basic/transports), [SDK 1.29.0](https://github.com/modelcontextprotocol/typescript-sdk/tree/v1.29.0), [Codex MCP](https://learn.chatgpt.com/docs/extend/mcp?surface=cli), [Claude Code MCP](https://code.claude.com/docs/en/mcp), [Electron capturePage](https://www.electronjs.org/docs/latest/api/web-contents#contentscapturepagerect-opts). Context7 использован для SDK 1.29.0 schemas и stateless transport; реальный CLI protocol дополнительно получен через установленный `codex app-server generate-json-schema`.
+
+Studio 0.15.0: [концепты](production/CONCEPT_WORKFLOW.md) доступны в `project.design.concepts` и scene resource. `studio_view_capture` принимает `conceptId` для read-only PNG 2D направления; импорт, provenance и удаление выполняет пользователь. Не смешивайте conceptId с variantId/compareToVariantId/silhouette. Это EditorProject v3, а не автоматический image-to-3D или art approval.

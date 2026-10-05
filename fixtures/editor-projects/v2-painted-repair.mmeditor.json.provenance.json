@@ -1,0 +1,8 @@
+{
+  "kind": "own-authored-compatibility-fixture",
+  "sourcePackage": "0.14.1",
+  "source": "output/playwright/review-frame-related-fe018533/repair/user-data/recovery.mmeditor.json",
+  "bytes": 135319,
+  "sha256": "0f983b283d1bc87dd26a13a35d8afbb2e627c6c8556ee2cce3a3d51f8f9ede44",
+  "notes": "Actual saved project before v3, scoped repair desktop fixture. Not an artistic approval."
+}

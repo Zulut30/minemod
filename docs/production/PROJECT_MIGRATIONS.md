@@ -1,5 +1,7 @@
 # Миграции проекта Studio
 
+Текущий формат Studio 0.15.0 — v3; [концепты и переход v1/v2 → v3](CONCEPT_WORKFLOW.md). Ниже сохранена историческая приёмка roadmap 027 для Studio 0.7.0, а не повторное доказательство новой версии.
+
 Roadmap 027. Studio 0.7.0 читает согласованный EditorProject v1 и сохраняет EditorProject v2. Версии ModSpec, item asset request и bundle этим не меняются. Геометрия остаётся held-item; новый block target ещё не реализован.
 
 ## Переход v1 → v2

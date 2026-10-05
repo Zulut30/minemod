@@ -13,7 +13,7 @@ import { join, resolve, sep, basename } from "node:path";
 import { pathToFileURL } from "node:url";
 import { Buffer } from "node:buffer";
 import process from "node:process";
-import { MAX_COMMAND_BYTES, MutationSchema, RepairControlSchema } from "@mcdev/editor-core";
+import { MAX_COMMAND_BYTES, MutationSchema, RepairControlSchema, ConceptImportSchema, MAX_CONCEPT_BYTES } from "@mcdev/editor-core";
 import { z } from "zod";
 import type {
   HostRequest,
@@ -147,6 +147,15 @@ async function handle(request: HostRequest): Promise<HostResponse> {
     case "saveAs":
       result = await save(request.kind === "saveAs");
       break;
+    case "conceptImport": {
+      const chosen = await dialog.showOpenDialog(window, {
+        title: "PNG концепта или разрешённого reference",
+        properties: ["openFile"], filters: [{name:"PNG",extensions:["png"]}],
+      });
+      result = chosen.canceled || !chosen.filePaths[0] ? await ask("inspect")
+        : await ask("conceptImport", {path:chosen.filePaths[0],conceptImport:request.control});
+      break;
+    }
     case "new":
     case "example": {
       const reference = await mayReplace();
@@ -191,6 +200,15 @@ async function boot(): Promise<void> {
   const runtime = join(app.getAppPath(), "dist");
   protocol.handle("studio", async (request) => {
     const url = new URL(request.url);
+    if (url.hostname === "app" && url.pathname.startsWith("/concepts/")) {
+      const match=/^\/concepts\/([0-9a-f-]{36})\/([0-9a-f-]{36})\.png$/iu.exec(url.pathname);
+      const activeCapture = url.searchParams.size === 1 && url.searchParams.get("capture") === captureJob?.id && captureJob?.conceptId === match?.[2] && captureJob?.project.projectId === match?.[1];
+      if(!match || !z.uuid().safeParse(match[1]).success || !z.uuid().safeParse(match[2]).success || (url.search && !activeCapture) || url.hash || !worker) return new Response("Not found",{status:404});
+      const result=await ask("conceptImage",{projectId:match[1],conceptId:match[2]});
+      if(!result.ok || !result.conceptImage || result.conceptImage.length>Math.ceil(MAX_CONCEPT_BYTES/3)*4) return new Response("Not found",{status:404});
+      const bytes=Buffer.from(result.conceptImage,"base64");
+      return new Response(new Uint8Array(bytes),{headers:{"Content-Type":"image/png","Cache-Control":"no-store"}});
+    }
     const root = resolve(runtime, "renderer");
     const target = resolve(root, "." + decodeURIComponent(url.pathname));
     if (url.hostname !== "app" || !target.startsWith(root + sep))
@@ -273,7 +291,7 @@ async function boot(): Promise<void> {
     if (!trusted(event) || !selectionSchema.safeParse(value).success) return;
     await ask("selection", selectionSchema.parse(value));
   });
-  ipcMain.on("studio:capture-ready", (event, id: unknown) => {
+  ipcMain.on("studio:capture-ready", (event, id: unknown, failed: unknown = false) => {
     if (
       !captureWindow ||
       event.sender !== captureWindow.webContents ||
@@ -286,6 +304,8 @@ async function boot(): Promise<void> {
       return;
     }
     if (id !== captureJob?.id || typeof id !== "string") return;
+    if (failed === true) { captureFailure(id); return; }
+    if (failed !== false) return;
     void finishCapture(id);
   });
   ipcMain.handle("studio:request", (event, value: unknown) => {
@@ -315,6 +335,7 @@ async function boot(): Promise<void> {
         "export",
         "connection",
         "repair",
+        "conceptImport",
       ].includes(request.kind) ||
       Object.keys(value).sort().join(",") !==
         (request.kind === "apply"
@@ -322,12 +343,14 @@ async function boot(): Promise<void> {
           : request.kind === "connection"
             ? "action,kind"
             : request.kind === "repair" ? "control,kind"
+            : request.kind === "conceptImport" ? "control,kind"
             : "kind") ||
       (request.kind === "connection" &&
         !["get", "start", "stop"].includes(request.action)) ||
       (request.kind === "apply" &&
         !MutationSchema.safeParse(request.mutation).success) ||
-      (request.kind === "repair" && !RepairControlSchema.safeParse(request.control).success)
+      (request.kind === "repair" && !RepairControlSchema.safeParse(request.control).success) ||
+      (request.kind === "conceptImport" && !ConceptImportSchema.safeParse(request.control).success)
     ) {
       return {
         ok: false,
