@@ -1,6 +1,6 @@
 # Структурированный бриф в Studio
 
-Пункт 034, в работе. Studio 0.11.0 добавляет редактируемые поля назначения, стиля, силуэта, материалов и палитры. Target фиксирован: held-item для Fabric 1.20.1. Замки частей показываются рядом с заданием. Поля можно сохранить в пустой сцене до создания геометрии.
+Пункт 034 закрыт в описанном техническом объёме. Studio 0.11.0 добавляет редактируемые поля назначения, стиля, силуэта, материалов и палитры. Target фиксирован: held-item для Fabric 1.20.1. Замки частей показываются рядом с заданием. Поля можно сохранить в пустой сцене до создания геометрии.
 
 ## Путь пользователя
 
@@ -28,6 +28,8 @@ Focused hidden packaged E2E проверил GUI-поля, неправильн�
 
 Первый operator check завершил GUI cases, но cleanup завис на confirmation dialog из-за ошибочного test-close flag. Report сохранён; остановлен только идентифицированный собственный процесс. После исправления повтор закончился естественно с exit 0, скрытый экземпляр закрыт. Это ошибка тестового harness, не заявляемый production PASS первого cleanup.
 
-Local lint/typecheck/portable suites, discovery, HTTP MCP и clean package прошли. Полный hosted Windows и production-target по новому source ещё ожидаются; пункт пока открыт. [Точные hashes и evidence](evidence/structured-brief-034.json).
+Local lint/typecheck/portable suites, discovery, HTTP MCP и clean package прошли. Exact source `84ebaee` прошёл полный hosted Windows, включая 12 проверок формы, полный Linux suite и production strict clean build/GameTests/server/client. Общий workflow остаётся failed на legacy Fabric 26.2 checksum gate. [Точные hashes и evidence](evidence/structured-brief-034.json).
 
 Проверены [React controlled textarea](https://react.dev/reference/react-dom/components/textarea) и [reset state по key](https://react.dev/learn/preserving-and-resetting-state) через официальные docs/Context7. Dependencies не добавлены, trusted packs и fixtures не изменены.
+
+Hosted Windows job [`111732601207`](https://github.com/Zulut30/minemod/actions/runs/37300743930/job/111732601207) сохранил packaged report и реальный PNG формы. Offline CI не запускает account/model clients; поле `installedClients` остаётся `not-run`. Художественная и игровая приёмка моделей не присвоена.
