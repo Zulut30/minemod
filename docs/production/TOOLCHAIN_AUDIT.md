@@ -13,6 +13,8 @@
 
 Node major 24 находится в LTS по [официальной матрице](https://nodejs.org/en/about/previous-releases). Это не означает, что старый patch 24.11.0 включает последующие исправления. На дату аудита официальный [24.21.0 LTS](https://nodejs.org/en/blog/release/v24.21.0) опубликован 8 сентября 2026 года. Security delta нужно проверить по [официальным advisories](https://nodejs.org/en/blog/vulnerability/), затем оформить отдельное обновление с повторными frozen install/build/runtime checks. Этот аудит не обновляет версии молча.
 
+Candidate development Node 24.21.0 Windows x64 подготовлен отдельно в `output/tools`: ZIP проверен по подписанному официальным release key checksum, paths архива ограничены собственным version directory, `node.exe --version` подтвердил 24.21.0. Глобальная установка, PATH вне тестового процесса, `package.json` engines и lockfile не изменены. Frozen install, compatibility suites и hosted CI на candidate пока не запускались; перенос pin выполняется отдельным проверяемым изменением.
+
 Electron поддерживает последние три stable major и последнюю minor в каждой по [официальной политике](https://www.electronjs.org/docs/latest/tutorial/electron-timelines). [Текущий schedule](https://releases.electronjs.org/schedule) показывает 44 stable и плановый EOL 2 марта 2027 года; даты и patch status нужно сверить перед distribution. Development Node и встроенный runtime Electron проверяются раздельно.
 
 Actual packaged host `process.versions` прочитан в собственном скрытом EXE 0.12.1: Electron 44.5.1, Node 24.21.0, Chromium 152.0.7977.130 и V8 15.2.124.28-electron.0. Сеанс закрыт штатно, модель и пользовательский workspace не изменялись. Поэтому gap development Node 24.11.0 не обозначает, что именно эта версия встроена в desktop package.

@@ -76,6 +76,33 @@
         }
       ],
       "retainedEarlierOperator": "Git-for-Windows key resource rejects Windows drive syntax; corrected relative paths in isolated cwd, no weaker verification"
+    },
+    "candidate": {
+      "status": "VERIFIED_ARCHIVE",
+      "checkedAtUtc": "2026-10-05T12:09:24.253Z",
+      "candidate": "24.21.0",
+      "source": "https://nodejs.org/dist/v24.21.0/node-v24.21.0-win-x64.zip",
+      "archive": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\tools\\node-v24.21.0-win-x64.zip",
+      "bytes": 37618919,
+      "sha256": "158f7685b44de51f6c0df1d153526cbcd3e1bc739a8dfc607721cef75de9e541",
+      "publisherSignature": "PASS official Node release key",
+      "keyRevision": "481637f813e912c4aa3622d7964ab426c97b8e8d",
+      "globalInstall": "not-changed",
+      "packageEngines": "not-changed",
+      "lockfile": "not-changed",
+      "compatibilityTests": "not-run",
+      "extractedLocally": true,
+      "standaloneVersion": "24.21.0",
+      "report": {
+        "path": "output/verification/node-candidate-011-f55d5b62/report.json",
+        "bytes": 639,
+        "sha256": "9fe6a0b58cd23934508517fe9b920a270a92980d0662baac52211cb6bc34f2d8"
+      },
+      "license": {
+        "path": "output/tools/node-v24.21.0-win-x64/LICENSE",
+        "bytes": 160555,
+        "sha256": "ed34dd8e3f0a78dbaf00d0444ce8e285b015b765379c2e17880455f70370f8e9"
+      }
     }
   },
   "pnpm": {
