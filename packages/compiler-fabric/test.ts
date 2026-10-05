@@ -439,6 +439,11 @@ const generatedConfig = textOutput(
 assert.match(generatedConfig, /ConfigClassHandler\.createBuilder\(GeneratedConfig\.class\)/u);
 assert.match(generatedConfig, /resolve\(GeneratedMod\.MOD_ID \+ "\.json5"\)/u);
 assert.match(generatedConfig, /showGeneratedContentInCreativeTabs = true/u);
+assert.doesNotMatch(generatedConfig, /\bnormalize\(|\bpublic GeneratedConfig\(/u);
+assert.doesNotMatch(
+  textOutput(compiledLibraries, "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedMod.java"),
+  /GeneratedConfig\.normalize\(/u,
+);
 assert.match(
   textOutput(compiledLibraries, "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedMod.java"),
   /GeneratedConfig\.HANDLER\.load\(\);[\s\S]*GeneratedContent\.register\(\s*GeneratedConfig\.HANDLER\.instance\(\)\.showGeneratedContentInCreativeTabs\);/u,
@@ -526,6 +531,20 @@ await expectCompilerError(
 const configuredLibraries = structuredClone(configuredWithoutLibraries);
 configuredLibraries.dependencies.required = ["yet_another_config_lib_v3"];
 configuredLibraries.dependencies.optional = ["modmenu"];
+const booleanOnly = await compileFabricPhase1(JSON.stringify(configuredLibraries));
+assert.doesNotMatch(
+  textOutput(booleanOnly, "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedConfig.java"),
+  /\bnormalize\(|\blimitString\(/u,
+);
+assert.doesNotMatch(
+  textOutput(booleanOnly, "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedMod.java"),
+  /GeneratedConfig\.normalize\(/u,
+);
+assert.match(
+  textOutput(booleanOnly,
+    "src/client/java/dev/mcdev/generated/m_infectedfrontier/client/GeneratedModMenuIntegration.java"),
+  /option_enable_special_attacks/u,
+);
 configuredLibraries.integrations.yacl!.categories[0]!.options.push(
   {
     id: "spawn_limit",

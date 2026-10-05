@@ -47,7 +47,7 @@ import type {
 
 type VerifiedFabricPack = VerifiedCompatibilityPack<CompatibilityPackManifestV3>;
 
-const COMPILER_ID = "@mcdev/compiler-fabric@0.1.1-phase.1";
+const COMPILER_ID = "@mcdev/compiler-fabric@0.1.1-phase.2";
 const SPEC_DIGEST_DOMAIN = "mcdev.compiler-fabric.modspec/v1";
 const NODE_INPUT_DIGEST_DOMAIN = "mcdev.compiler-fabric.node-input/v1";
 const NODE_CACHE_KEY_DOMAIN = "mcdev.compiler-fabric.node-cache/v1";
@@ -858,13 +858,16 @@ function generatedConfigSource(
     if (option.type === "string") return [`        ${field} = limitString(${field}, ${option.maxLength});`];
     return [];
   });
-  const customFieldSection = customFields.length === 0 ? "" : `\n${customFields.join("\n\n")}\n`;
-  const normalizationSection = normalization.length === 0 ? "" : `${normalization.join("\n")}\n`;
+  const customFieldSection = customFields.length === 0 ? "" : `\n${customFields.join("\n\n")}`;
+  const normalizationSection = normalization.length === 0 ? ""
+    : `\n\n    public static void normalize() {\n` +
+      `        GeneratedConfig config = HANDLER.instance();\n` +
+      `${normalization.join("\n")}\n    }`;
   const stringLimiter = options.some(({ type }) => type === "string")
-    ? `\n    public static String limitString(String value, int maxLength) {\n` +
+    ? `\n\n    public static String limitString(String value, int maxLength) {\n` +
       `        if (value == null) return "";\n` +
       `        return value.length() <= maxLength ? value : value.substring(0, maxLength);\n` +
-      `    }\n`
+      `    }`
     : "";
   return `package dev.mcdev.generated.m_${modId};
 
@@ -886,14 +889,7 @@ public final class GeneratedConfig {
                     .build();
 
     @SerialEntry(comment = "Show generated items and blocks in their default creative tabs.")
-    public boolean showGeneratedContentInCreativeTabs = true;
-${customFieldSection}
-    public static void normalize() {
-        GeneratedConfig config = HANDLER.instance();
-${normalizationSection}    }
-${stringLimiter}
-
-    public GeneratedConfig() {}
+    public boolean showGeneratedContentInCreativeTabs = true;${customFieldSection}${normalizationSection}${stringLimiter}
 }
 `;
 }
@@ -1013,15 +1009,16 @@ function contentInputs(spec: ModSpecV1, content: NormalizedContent): readonly Ge
   const pathRoot = `dev/mcdev/generated/m_${modId}`;
   const hasYacl = content.libraries.some(({ id }) => id === "yet_another_config_lib_v3");
   const hasModMenu = content.libraries.some(({ id }) => id === "modmenu");
-  const joinMessageOption = spec.integrations.yacl?.categories
-    .flatMap(({ options }) => options)
+  const configuredOptions = spec.integrations.yacl?.categories.flatMap(({ options }) => options) ?? [];
+  const joinMessageOption = configuredOptions
     .find((option) => option.type === "string" && option.binding === "player_join_message");
   const configuredBehavior = joinMessageOption === undefined
     ? ""
     : "\n        GeneratedConfiguredBehavior.register();";
   const initializeContent = hasYacl
     ? `        GeneratedConfig.HANDLER.load();\n` +
-      `        GeneratedConfig.normalize();\n` +
+      (configuredOptions.some(({ type }) => type === "integer" || type === "string")
+        ? `        GeneratedConfig.normalize();\n` : "") +
       `        GeneratedContent.register(GeneratedConfig.HANDLER.instance().showGeneratedContentInCreativeTabs);` +
       configuredBehavior
     : "        GeneratedContent.register();";

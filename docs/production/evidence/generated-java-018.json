@@ -2,15 +2,15 @@
   "schemaVersion": 1,
   "roadmapPoint": 18,
   "status": "PARTIAL",
-  "verifiedAtUtc": "2026-10-05T09:24:24.084268+00:00",
-  "scope": "Readable native Tier/ArmorMaterial emitters, removal of empty client initializer, mandatory owned Java source quality gate and retained generated source review evidence",
-  "sourceParentRevision": "7183b8f",
-  "compilerIdentity": "@mcdev/compiler-fabric@0.1.1-phase.1",
+  "verifiedAtUtc": "2026-10-05T09:32:22.435324+00:00",
+  "scope": "Readable native Tier/ArmorMaterial emitters, removal of empty client initializer, mandatory owned Java source quality gate and retained generated source review evidence; omit no-op default/boolean config normalization and redundant explicit constructor",
+  "sourceParentRevision": "6f98af6dd52ef680d7a483a286d04fb93b335e4a",
+  "compilerIdentity": "@mcdev/compiler-fabric@0.1.1-phase.2",
   "sourceHashes": [
     {
       "path": "packages/compiler-fabric/compiler.ts",
-      "bytes": 62063,
-      "sha256": "c46813c1ef58ea1a140c2e9df557de9993960078bc2220f08f54689ca2a61655"
+      "bytes": 62200,
+      "sha256": "93c542bc72c3416724d506ed8250e6767e289a20e64c451c05d33b32edc9de99"
     },
     {
       "path": "packages/compiler-fabric/source-quality.ts",
@@ -24,8 +24,8 @@
     },
     {
       "path": "packages/compiler-fabric/test.ts",
-      "bytes": 29154,
-      "sha256": "ec5f9df05473d9a57fd8c60a1ea4012e18e540b76ca512150a1a75f4fd62b3fc"
+      "bytes": 29993,
+      "sha256": "297bf014be5afbf4f16b3fe06faad15b0c3c874109af70dc44ebeb681c9dc3cf"
     },
     {
       "path": "packages/compiler-fabric/build-test.ts",
@@ -35,7 +35,7 @@
     {
       "path": "packages/compiler-fabric/package.json",
       "bytes": 778,
-      "sha256": "b32648f34f8f39c2a2b21ecd102b57a31f3e8f658d0718734e897a4af2afe5e1"
+      "sha256": "321308d4c2867d0f41a9f05e60510d782b3b7df8d3a12eec1778e6b2f72f53b2"
     }
   ],
   "checks": {
@@ -74,6 +74,21 @@
       "path": "output/verification/roadmap-018-windows-pack.log",
       "bytes": 163,
       "sha256": "d9d6c19dc818a6ec9d2f1216d2586beb5da1bfa5dd6251d464f523f9e75630e0"
+    },
+    {
+      "path": "output/verification/roadmap-018-v2-source-quality.log",
+      "bytes": 179,
+      "sha256": "91724ceba9b58bc6d8d11e7356af1ea03503c6e3ce15b05e3ec7ec8ab6c65f30"
+    },
+    {
+      "path": "output/verification/roadmap-018-v2-typecheck.log",
+      "bytes": 176,
+      "sha256": "fe0327fb3a908a7cea6b4e5ef62bbaa7903d4f4149a209170e6249f0dd5c8190"
+    },
+    {
+      "path": "output/verification/roadmap-018-v2-lint.log",
+      "bytes": 29,
+      "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
     }
   ],
   "windowsPackObservation": {
@@ -91,6 +106,7 @@
   "gamePackBaselineChanged": false,
   "artisticApproval": "not-granted",
   "fullProductionAcceptance": "not-granted",
-  "hostedCurrentSource": "pending after commit",
-  "remainingRegressionFailure": "Existing Fabric 26.2 derived JAR checksum mismatch; no checksum bypass."
+  "hostedCurrentSource": "pending after phase.2 commit; phase.1 production and control-plane jobs passed but do not verify phase.2 changes",
+  "remainingRegressionFailure": "Existing Fabric 26.2 derived JAR checksum mismatch; no checksum bypass.",
+  "configNormalizationChecks": "Default and boolean-only omit normalize and call; mixed integer/string retain actual bounds and length checks. Regression assertions await hosted full compiler suite."
 }

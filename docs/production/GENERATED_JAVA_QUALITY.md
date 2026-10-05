@@ -1,12 +1,14 @@
 # Generated Java: читаемые emitters и обязательная проверка исходников
 
-Дата: 5 октября 2026 года. Пункт 018 в работе. Compiler `@mcdev/compiler-fabric@0.1.1-phase.1`. Основной target остаётся Fabric 1.20.1 / Java 17.
+Дата: 5 октября 2026 года. Пункт 018 в работе. Compiler `@mcdev/compiler-fabric@0.1.1-phase.2`. Основной target остаётся Fabric 1.20.1 / Java 17.
 
 Методы `Tier` и `ArmorMaterial` теперь имеют отдельные annotations, сигнатуры, тела и разделение пустыми строками. Расчёт durability/defense, float32 values, repair ingredients и registrations сохраняется. Compiler identity изменена, поэтому node input/cache keys не смешиваются с предыдущим emitter. ModSpec и trusted pack tuple/revision не менялись.
 
 Пустой `GeneratedClient.onInitializeClient()` и его `client` entrypoint больше не генерируются. У current basic-content profile нет работы для этого callback. Common initialization по-прежнему регистрирует содержимое; YACL/Mod Menu UI загружается собственным `modmenu` entrypoint из client source set. Перед удалением scaffold hook compiler проверяет точное ожидаемое имя из проверенного template. Неизвестный client hook приводит к отказу, вместо молчаливого удаления нового поведения. Pack/templates и fixtures не изменяются: compiler обрабатывает проверенный template в своих generated outputs.
 
 ## Проверка исходников
+
+`GeneratedConfig.normalize()` создаётся и вызывается только при наличии integer/string options, которые действительно требуют проверки диапазона или длины. Default и boolean-only конфигурации не содержат пустую нормализацию. Лишний явный public constructor убран: для public top-level класса Java 17 предоставляет public constructor без аргументов автоматически. Сохраняются JSON5 handler, поля и их начальные значения, настоящие ограничения и YACL controls. Это проверяется отдельно для default, boolean-only и mixed конфигурации; источник правила — [JLS 17, default constructor](https://docs.oracle.com/javase/specs/jls/se17/html/jls-8.html#jls-8.8.9).
 
 Перед созданием BuildPlan все generated `.java` проходят `assertGeneratedJavaQuality`:
 

@@ -1,6 +1,6 @@
 {
   "name": "@mcdev/compiler-fabric",
-  "version": "0.1.1-phase.1",
+  "version": "0.1.1-phase.2",
   "license": "Apache-2.0",
   "private": true,
   "type": "module",
