@@ -26,6 +26,7 @@ import { checkDiscoveryDesktop } from "./check-discovery-desktop.mjs";
 import { checkBriefDesktop } from "./check-brief-desktop.mjs";
 import { checkPartsDesktop } from "./check-parts-desktop.mjs";
 import { checkManualDesktop } from "./check-manual-desktop.mjs";
+import { checkAccessibilityDesktop } from "./check-accessibility-desktop.mjs";
 
 const appDir = resolve(dirname(fileURLToPath(import.meta.url)), ".."),
   repo = resolve(appDir, "../..");
@@ -392,6 +393,7 @@ try {
   const brief = await checkBriefDesktop(options, output);
   const parts = await checkPartsDesktop(options, output);
   const manual = await checkManualDesktop(options, output);
+  const accessibility = await checkAccessibilityDesktop(options, output);
   const review = await checkReviewDesktop(options, output);
   const migrations = await checkMigrationsDesktop(options, output);
   const history = await checkHistoryDesktop(options, output);
@@ -415,6 +417,7 @@ try {
         brief,
         parts,
         manual,
+        accessibility,
         review,
         migrations,
         history,

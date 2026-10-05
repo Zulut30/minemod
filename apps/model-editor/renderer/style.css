@@ -689,6 +689,10 @@ select {
 .axis-field input::-webkit-inner-spin-button {
   display: none;
 }
+.axis-field:focus-within {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
 .rotation-row {
   display: flex;
   gap: 6px;

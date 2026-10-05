@@ -1,0 +1,268 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 22,
+  "status": "PARTIAL",
+  "checkedAtUtc": "2026-10-05T11:51:00.951Z",
+  "studioVersion": "0.12.1",
+  "scope": "Focused dark-theme keyboard/ARIA/contrast at actual 175% display and two window sizes; exact numeric geometry regression",
+  "sourceHashes": [
+    {
+      "path": "apps/model-editor/package.json",
+      "bytes": 1531,
+      "sha256": "19209564a74a36536e33342ec94e3f192ff508d88256b3088ef4e3b0880812ad"
+    },
+    {
+      "path": "apps/model-editor/renderer/App.tsx",
+      "bytes": 33960,
+      "sha256": "0383551fd34b0e557c7bb5990c210b54f3813b5e85fdabc713dc848f1cdd8305"
+    },
+    {
+      "path": "apps/model-editor/renderer/style.css",
+      "bytes": 30865,
+      "sha256": "2bf4d15faf7250a7a6712a93a7755b6c511704847f83af734946f2cfd3e3098c"
+    },
+    {
+      "path": "apps/model-editor/scripts/check-accessibility-desktop.mjs",
+      "bytes": 7247,
+      "sha256": "838c0bfeb4960d07eba60ec476fc3af8f45b13262dbfe1723c5d1c44eea41a89"
+    },
+    {
+      "path": "apps/model-editor/scripts/check-geometry-desktop.mjs",
+      "bytes": 9413,
+      "sha256": "fe626db5c1aeac57ea3fb79fd205247d51ad177919a68aa2ec8b4f627f70b64d"
+    },
+    {
+      "path": "apps/model-editor/scripts/test-desktop.mjs",
+      "bytes": 17282,
+      "sha256": "b2e16466b5b7e9d4b7132d18b682d0b70330270a7dfcc142d822e26feac7f064"
+    }
+  ],
+  "focused": {
+    "report": {
+      "status": "PASS",
+      "hidden": true,
+      "displayScale": 1.75,
+      "zoomFactor": 1,
+      "focus": {
+        "label": "Размер Y",
+        "keyboard": true,
+        "outlineStyle": "solid",
+        "outlineWidth": 2.85714,
+        "color": "rgb(121, 212, 197)"
+      },
+      "contrast": [
+        {
+          "selector": ".document-bar strong",
+          "ratio": 14.980762409476815
+        },
+        {
+          "selector": ".hint",
+          "ratio": 8.036161751378462
+        },
+        {
+          "selector": ".panel-heading",
+          "ratio": 13.266603272738223
+        },
+        {
+          "selector": ".part-editor input",
+          "ratio": 11.406076391141136
+        },
+        {
+          "selector": ".tool-button.primary",
+          "ratio": 8.972271758994312
+        },
+        {
+          "selector": ".editor-mode button.active",
+          "ratio": 8.972271758994312
+        },
+        {
+          "selector": "[data-testid=\"status-message\"]",
+          "ratio": 7.838434322607535
+        },
+        {
+          "selector": ".axis-field input",
+          "ratio": 11.406076391141136
+        }
+      ],
+      "layouts": [
+        {
+          "width": 1120,
+          "height": 760,
+          "innerWidth": 1107,
+          "innerHeight": 726,
+          "devicePixelRatio": 1.75,
+          "noBodyOverflow": true,
+          "fieldAccessible": true
+        },
+        {
+          "width": 1440,
+          "height": 960,
+          "innerWidth": 1427,
+          "innerHeight": 925,
+          "devicePixelRatio": 1.75,
+          "noBodyOverflow": true,
+          "fieldAccessible": true
+        }
+      ],
+      "checks": [
+        "visible keyboard numeric focus",
+        "unfocused compact numbers without precision loss on focus/blur",
+        "keyboard mode switching and pressed state",
+        "invalid input announces alert without changing document",
+        "important text/error contrast at least 4.5",
+        "two actual window sizes with scrollable controls",
+        "document/geometry unchanged by accessibility checks"
+      ],
+      "scope": "Actual current display scale only; forced zoom and per-monitor DPI transfer are separate checks"
+    },
+    "geometry": {
+      "status": "PASS",
+      "hidden": true,
+      "gridNumericFields": true,
+      "mixedPivotEscape": true,
+      "exactPivotDecimal": true,
+      "nativeRotationExport": true,
+      "pngUnchanged": true,
+      "humanUndoRedo": 6,
+      "publicMcpPivotSnap": true,
+      "stalePivotInputRejected": true,
+      "beforeFrontSha256": "6d878cee8d3ec715c6c4574372c9540f3ced90d445aa0c81d99aad2f47418058",
+      "changedFrontSha256": "6ef0154ac76c20d5eeebd4be065e387ed1267292f23d85eb9c47bb060d292c85",
+      "afterUndoFrontSha256": "6d878cee8d3ec715c6c4574372c9540f3ced90d445aa0c81d99aad2f47418058"
+    },
+    "artifacts": [
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\playwright\\accessibility-022-7219d440\\accessibility\\report.json",
+        "bytes": 1897,
+        "sha256": "79f70940dfb42cfa6838c371832d1ae6aacb7f1392ebbd5664e6424a2f499a1f"
+      },
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\playwright\\accessibility-022-7219d440\\accessibility\\keyboard-focus.png",
+        "bytes": 499227,
+        "sha256": "9e64a871cc4eb7a95f1b598b81b6b2b220c4a22ee1658fa0c22a79fea6314c55"
+      }
+    ],
+    "geometryArtifacts": [
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\playwright\\accessibility-geometry-022-7e39426f\\geometry\\report.json",
+        "bytes": 547,
+        "sha256": "88db6515ea0c589d7e4c62304adb7ab14fa3a066a47c1756522a99dea0eb2589"
+      },
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\playwright\\accessibility-geometry-022-7e39426f\\geometry\\before-front.png",
+        "bytes": 35328,
+        "sha256": "6d878cee8d3ec715c6c4574372c9540f3ced90d445aa0c81d99aad2f47418058"
+      },
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\playwright\\accessibility-geometry-022-7e39426f\\geometry\\pivot-rotation-front.png",
+        "bytes": 36379,
+        "sha256": "6ef0154ac76c20d5eeebd4be065e387ed1267292f23d85eb9c47bb060d292c85"
+      },
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\playwright\\accessibility-geometry-022-7e39426f\\geometry\\after-undo-front.png",
+        "bytes": 35328,
+        "sha256": "6d878cee8d3ec715c6c4574372c9540f3ced90d445aa0c81d99aad2f47418058"
+      }
+    ],
+    "packageHashes": [
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.12.1\\e2a2c4a3\\MineMod Studio-win32-x64\\MineMod Studio.exe",
+        "bytes": 245726208,
+        "sha256": "924b4c6a27dc81a753b1e9618dc2385de98f45540767e7ddcc662fb6f959d609"
+      },
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.12.1\\e2a2c4a3\\MineMod Studio-win32-x64\\resources\\app.asar",
+        "bytes": 3549522,
+        "sha256": "501135efaf565cfc8bf6889c6cc6f40ff0ccc44d23a8fb82d4bd53ed4405bc35"
+      }
+    ]
+  },
+  "retainedFailures": [
+    "Initial 2px outline rounded below 2 CSS px at actual 175% DPI",
+    "Controlled focus/input transition produced missing or appended input; kept failing expected-value assertions, fixed synchronous focus and selection"
+  ],
+  "checks": {
+    "focusedAccessibility": "PASS seven cases and eight contrast samples",
+    "geometryRegression": "PASS unchanged expectations and exact PNG undo",
+    "lint": "PASS",
+    "typecheck": "PASS",
+    "hostedNewSource": "pending"
+  },
+  "remaining": [
+    "Other actual display scales and per-monitor transfer",
+    "All important hover/warning/disabled/selection text states",
+    "Screen reader complete manual workflow",
+    "Full hosted packaged source suite"
+  ],
+  "logs": [
+    {
+      "path": "output\\verification\\roadmap-022-audit.log",
+      "bytes": 1097,
+      "sha256": "886faa692e899e020116414bafa90564b7e764ab73b8c33be0e4682b132073e8"
+    },
+    {
+      "path": "output\\verification\\roadmap-022-desktop.log",
+      "bytes": 786,
+      "sha256": "b3db0abd955ea20210dfa71fbca513052fa9df656fd8218379bc517f30ab30b2"
+    },
+    {
+      "path": "output\\verification\\roadmap-022-desktop-final.log",
+      "bytes": 569,
+      "sha256": "90ada28c1bc53233167fe9cd7031c1696f37cb0d86457ee700d615543cc5f7d0"
+    },
+    {
+      "path": "output\\verification\\roadmap-022-desktop-alert.log",
+      "bytes": 569,
+      "sha256": "e06a17562469faeaa83a345073940416ff833a3c61ac4f55cfe6bd8efd56c66b"
+    },
+    {
+      "path": "output\\verification\\roadmap-022-geometry.log",
+      "bytes": 822,
+      "sha256": "516002e78ab7133a254c45ccffe27dda0a0598b8c61cba8f99b9999bc157e58c"
+    },
+    {
+      "path": "output\\verification\\roadmap-022-geometry-focus.log",
+      "bytes": 822,
+      "sha256": "256c3a36d070232df6272a19ae8f11050784cd628694fb03919efc206596501e"
+    },
+    {
+      "path": "output\\verification\\roadmap-022-geometry-diagnostic.log",
+      "bytes": 840,
+      "sha256": "d57727540bb0f7a170567163b64eb5211bd70adbd8373ef37d40c7fda7b06f5d"
+    },
+    {
+      "path": "output\\verification\\roadmap-022-package-select.log",
+      "bytes": 787,
+      "sha256": "5f6974e6f90bd90cd4844bbdf018c901e24350e9fa591c52696ac9f31071e9e7"
+    },
+    {
+      "path": "output\\verification\\roadmap-022-desktop-selected.log",
+      "bytes": 2102,
+      "sha256": "d647b2e7086d1fb805357999d90738b8af1965390e0c09d8ac5e6854d30a6799"
+    },
+    {
+      "path": "output\\verification\\roadmap-022-geometry-selected.log",
+      "bytes": 699,
+      "sha256": "eb593069ff9a044531753113bfa4e250bc7c9bda0c861eaf391607ebad91be6f"
+    },
+    {
+      "path": "output\\verification\\roadmap-022-lint-release.log",
+      "bytes": 29,
+      "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+    },
+    {
+      "path": "output\\verification\\roadmap-022-typecheck-release.log",
+      "bytes": 62,
+      "sha256": "7f1749195a67dd86a18bfb4f76b66413850f0ee377a565acbf98182de15f29c2"
+    }
+  ],
+  "limits": {
+    "forcedZoom": "not-used",
+    "userDisplaySettings": "not-changed",
+    "userWorkspace": "not-touched",
+    "artisticApproval": "not-granted",
+    "minecraftAssets": "not-tested"
+  },
+  "newDependencies": false,
+  "trustedPacksChanged": false
+}

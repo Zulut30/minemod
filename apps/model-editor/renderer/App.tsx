@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import { ConnectionPanel } from "./ConnectionPanel.tsx";
 import { TextureEditor } from "./TextureEditor.tsx";
 import { VariantsPanel } from "./VariantsPanel.tsx";
@@ -117,9 +118,15 @@ function Atlas({ project }: { project: EditorProject }) {
 }
 function GeometryNumber({ value, onFocus, onBlur, ...input }: Omit<ComponentProps<"input">, "value" | "defaultValue" | "onChange"> & { value: string | number }) {
   const [editing, setEditing] = useState(false), [draft, setDraft] = useState("");
-  return <input {...input} value={editing ? draft : value}
+  const display = typeof value === "number" ? Number(value.toFixed(6)) : value;
+  return <input {...input} value={editing ? draft : display}
     onChange={(event) => setDraft(event.currentTarget.value)}
-    onFocus={(event) => { setDraft(event.currentTarget.value); setEditing(true); onFocus?.(event); }}
+    onFocus={(event) => {
+      // Полная точность должна попасть в DOM до следующего browser input event.
+      flushSync(() => { setDraft(String(value)); setEditing(true); });
+      event.currentTarget.select();
+      onFocus?.(event);
+    }}
     onBlur={(event) => { setEditing(false); onBlur?.(event); }} />;
 }
 function Inspector({ project }: { project: EditorProject }) {
@@ -628,6 +635,7 @@ export function App() {
           <div className="editor-mode">
             <button
               data-testid="mode-model"
+              aria-pressed={ui.mode === "model"}
               className={ui.mode === "model" ? "active" : ""}
               onClick={() => useStudio.setState({ mode: "model" })}
             >
@@ -635,6 +643,7 @@ export function App() {
             </button>
             <button
               data-testid="mode-texture"
+              aria-pressed={ui.mode === "texture"}
               className={ui.mode === "texture" ? "active" : ""}
               onClick={() => useStudio.setState({ mode: "texture" })}
             >
@@ -642,6 +651,7 @@ export function App() {
             </button>
             <button
               data-testid="mode-variants"
+              aria-pressed={ui.mode === "variants"}
               className={ui.mode === "variants" ? "active" : ""}
               onClick={() =>
                 useStudio.setState({ mode: "variants", draft: null })
@@ -651,6 +661,7 @@ export function App() {
             </button>
             <button
               data-testid="mode-review"
+              aria-pressed={ui.mode === "review"}
               className={ui.mode === "review" ? "active" : ""}
               onClick={() =>
                 useStudio.setState({ mode: "review", draft: null })
@@ -803,11 +814,12 @@ export function App() {
       </main>
       <footer
         className={`statusbar ${ui.error ? "error" : ui.warning ? "warning" : ""}`}
-        role="status"
       >
         <span className="status-light" />
         <span
           data-testid="status-message"
+          role={ui.error ? "alert" : "status"}
+          aria-live={ui.error ? "assertive" : "polite"}
           title={ui.error || ui.warning || ui.note}
         >
           {ui.error || (ui.busy ? "Выполняется…" : ui.warning || ui.note)}

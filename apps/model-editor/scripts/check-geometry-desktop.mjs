@@ -53,8 +53,10 @@ export async function checkGeometryDesktop(options, output) {
     await page.getByLabel("Положение X", { exact: true }).press("Enter"); await settled(1);
     assert.equal(bounds(selected((await inspect()).project)).min[0], snapToGrid(oldBox.min[0] + 0.13, 0.25));
     await page.getByLabel("Размер X", { exact: true }).fill(String(oldBox.size[0] + 0.13));
+    assert.equal(await page.getByLabel("Размер X", { exact: true }).inputValue(), String(oldBox.size[0] + 0.13));
     await page.getByLabel("Размер X", { exact: true }).press("Enter"); await settled(2);
-    assert(Math.abs(bounds(selected((await inspect()).project)).size[0] - snapToGrid(oldBox.size[0] + 0.13, 0.25)) < 1e-12);
+    const actualSize = bounds(selected((await inspect()).project)).size[0], expectedSize = snapToGrid(oldBox.size[0] + 0.13, 0.25);
+    assert(Math.abs(actualSize - expectedSize) < 1e-12, `Size after keyboard commit: ${actualSize}, expected ${expectedSize}`);
 
     const state = await inspect();
     assert((await page.evaluate((mutation) => window.studio.request({ kind: "apply", mutation }),
