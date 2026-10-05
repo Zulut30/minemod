@@ -1,7 +1,7 @@
 {
   "name": "@mcdev/model-editor",
   "productName": "MineMod Studio",
-  "version": "0.18.0",
+  "version": "0.19.0",
   "private": true,
   "type": "module",
   "license": "Apache-2.0",

@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import type { EditorProject } from "@mcdev/editor-core";
 import type { View } from "../shared/bridge.ts";
-import { Viewport, comparisonFrame } from "./Viewport.tsx";
+import { Viewport, comparisonFrame, type NativePreviews } from "./Viewport.tsx";
 
 const angles: [View, string, string][] = [
   ["front", "Спереди", "Силуэт и акцент"],
@@ -27,60 +27,63 @@ export function ReviewBoard({
       ]),
     [project, referenceProject],
   );
-  const [thumbs, setThumbs] = useState<Partial<Record<View, string>>>({});
-  const [small, setSmall] = useState("");
-  const [silhouette, setSilhouette] = useState("");
+  const [thumbs, setThumbs] = useState<Partial<Record<View, NativePreviews>>>({});
+  const [silhouettes, setSilhouettes] = useState<Partial<NativePreviews>>({});
+  const [pixelRatio, setPixelRatio] = useState(() => window.devicePixelRatio);
   const root = useRef<HTMLDivElement>(null);
   const ready = useRef(false);
   useEffect(() => {
+    let media: MediaQueryList;
+    const update = () => {
+      media?.removeEventListener("change", update);
+      const ratio = window.devicePixelRatio;
+      setPixelRatio(ratio);
+      // Учитывает перенос на другой монитор и изменение масштаба страницы.
+      media = window.matchMedia(`(resolution: ${ratio}dppx)`);
+      media.addEventListener("change", update);
+    };
+    update();
+    return () => media.removeEventListener("change", update);
+  }, []);
+  useEffect(() => {
     ready.current = false;
     setThumbs({});
-    setSmall("");
-    setSilhouette("");
+    setSilhouettes({});
   }, [project, referenceProject]);
   useEffect(() => {
-    if (!thumbs.front || !thumbs.perspective) return;
-    const convert = (
-      url: string,
-      size: number,
-      mask: boolean,
-      done: (url: string) => void,
-    ) => {
+    if (!thumbs.front) return;
+    let canceled = false;
+    const mask = (url: string, resolution: 32 | 64) => {
       const image = new Image();
-      let canceled = false;
       image.onload = () => {
-        if (canceled) return;
+        if (canceled || image.naturalWidth !== resolution || image.naturalHeight !== resolution) return;
         const canvas = document.createElement("canvas");
-        canvas.width = canvas.height = size;
+        canvas.width = canvas.height = resolution;
         const context = canvas.getContext("2d")!;
-        context.imageSmoothingEnabled = false;
-        context.drawImage(image, 0, 0, size, size);
-        if (mask) {
-          context.globalCompositeOperation = "source-in";
-          context.fillStyle = "#e6edf5";
-          context.fillRect(0, 0, size, size);
-        }
-        done(canvas.toDataURL());
+        // Меняется только цвет: alpha и разрешение нативного рендера сохраняются.
+        context.drawImage(image, 0, 0);
+        context.globalCompositeOperation = "source-in";
+        context.fillStyle = "#000000";
+        context.fillRect(0, 0, resolution, resolution);
+        const png = canvas.toDataURL();
+        setSilhouettes((old) => ({ ...old, [resolution]: png }));
       };
       image.src = url;
-      return () => {
-        canceled = true;
-      };
     };
-    const cleanSmall = convert(thumbs.perspective, 32, false, setSmall);
-    const cleanMask = convert(thumbs.front, 64, true, setSilhouette);
+    setSilhouettes({});
+    mask(thumbs.front[32], 32);
+    mask(thumbs.front[64], 64);
     return () => {
-      cleanSmall();
-      cleanMask();
+      canceled = true;
     };
-  }, [thumbs.front, thumbs.perspective]);
+  }, [thumbs.front]);
   useEffect(() => {
     if (
       !onReady ||
       ready.current ||
       angles.some(([v]) => !thumbs[v]) ||
-      !small ||
-      !silhouette
+      !silhouettes[32] ||
+      !silhouettes[64]
     )
       return;
     let canceled = false;
@@ -102,9 +105,10 @@ export function ReviewBoard({
     return () => {
       canceled = true;
     };
-  }, [thumbs, small, silhouette, onReady]);
+  }, [thumbs, silhouettes, onReady]);
   return (
-    <div className="review-board" data-testid="review-board" ref={root}>
+    <div className="review-board" data-testid="review-board" ref={root}
+      style={{ "--native-pixel-ratio": pixelRatio } as CSSProperties}>
       <div className="review-heading">
         <div>
           <strong>Обзор модели</strong>
@@ -126,9 +130,10 @@ export function ReviewBoard({
                   framing,
                   view,
                   silhouette: false,
-                  onThumbnail: (url) =>
+                  onNativePreviews: (previews) =>
                     setThumbs((old) =>
-                      old[view] === url ? old : { ...old, [view]: url },
+                      old[view]?.[32] === previews[32] && old[view]?.[64] === previews[64]
+                        ? old : { ...old, [view]: previews },
                     ),
                 }}
               />
@@ -137,46 +142,32 @@ export function ReviewBoard({
         ))}
       </div>
       <div className="review-readability">
-        <div>
-          <div className="review-preview-image">
-          {silhouette && (
-            <img src={silhouette} width={64} height={64} alt="Силуэт спереди" />
-          )}
+        {([32, 64] as const).map((resolution) => (
+          <div key={`silhouette-${resolution}`}>
+            <div className="review-preview-image review-silhouette-image">
+              {silhouettes[resolution] && (
+                <img data-testid={`review-silhouette-${resolution}`}
+                  src={silhouettes[resolution]} width={resolution} height={resolution}
+                  style={{ width: resolution / pixelRatio, height: resolution / pixelRatio }}
+                  alt={`Чёрный силуэт спереди, ${resolution} пикселя`} />
+              )}
+            </div>
+            <span>Силуэт · {resolution} px<small>Спереди · 1:1</small></span>
           </div>
-          <span>
-            Силуэт<small>Форма без цвета</small>
-          </span>
-        </div>
-        <div>
-          <div className="review-preview-image">
-          {small && (
-            <img
-              src={small}
-              width={64}
-              height={64}
-              alt="Три четверти на 32 пикселях"
-            />
-          )}
+        ))}
+        {([32, 64] as const).map((resolution) => (
+          <div key={`color-${resolution}`}>
+            <div className="review-preview-image">
+              {thumbs.perspective && (
+                <img data-testid={`review-color-${resolution}`}
+                  src={thumbs.perspective[resolution]} width={resolution} height={resolution}
+                  style={{ width: resolution / pixelRatio, height: resolution / pixelRatio }}
+                  alt={`Три четверти, ${resolution} пикселя`} />
+              )}
+            </div>
+            <span>Цвет · {resolution} px<small>Три четверти · 1:1</small></span>
           </div>
-          <span>
-            32 px<small>Крупные акценты</small>
-          </span>
-        </div>
-        <div>
-          <div className="review-preview-image">
-          {thumbs.perspective && (
-            <img
-              src={thumbs.perspective}
-              width={64}
-              height={64}
-              alt="Три четверти на 64 пикселях"
-            />
-          )}
-          </div>
-          <span>
-            64 px<small>Рисунок и контраст</small>
-          </span>
-        </div>
+        ))}
       </div>
       <p className="review-limit">
         Предпросмотр редактора. Вид в игровом инвентаре и работа в Minecraft ещё

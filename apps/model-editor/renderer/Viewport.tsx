@@ -14,11 +14,14 @@ import type { View } from "../shared/bridge.ts";
 import { frameCubes, cameraSettings, viewUp, type CameraFrame } from "./camera.ts";
 export { comparisonFrame } from "./camera.ts";
 
+export type NativePreviews = Record<32 | 64, string>;
+
 export interface ReviewRender {
   framing: CameraFrame;
   silhouette: boolean;
   view?: View;
   onThumbnail?: (png: string) => void;
+  onNativePreviews?: (previews: NativePreviews) => void;
 }
 const quads = {
   north: [3, 2, 1, 0],
@@ -284,7 +287,7 @@ function Scene({
   return (
     <>
       <Camera project={project} {...(review ? { review } : {})} {...(captureId ? { captureId } : {})} />
-      {review?.onThumbnail && (
+      {(review?.onThumbnail || review?.onNativePreviews) && review && (
         <ReviewThumbnail project={project} review={review} />
       )}
       {captureId && <CaptureSignal id={captureId} />}
@@ -345,44 +348,52 @@ function ReviewThumbnail({
       const current = generation.current;
       queueMicrotask(() => {
         if (generation.current !== current) return;
-        const canvas = document.createElement("canvas");
-        canvas.width = canvas.height = 64;
-        const ctx = canvas.getContext("2d")!;
-        ctx.imageSmoothingEnabled = false;
-        // Отдельная квадратная проекция: размер предмета не зависит от ширины панели.
-        const thumbnailCamera = (camera as THREE.OrthographicCamera).clone();
-        thumbnailCamera.left = thumbnailCamera.bottom = -32;
-        thumbnailCamera.right = thumbnailCamera.top = 32;
-        thumbnailCamera.zoom = cameraSettings(review.framing, view, 64, 64).zoom;
-        thumbnailCamera.updateProjectionMatrix();
-        const target = new THREE.WebGLRenderTarget(64, 64);
-        target.texture.colorSpace = THREE.SRGBColorSpace;
         const previousTarget = gl.getRenderTarget();
         const previousViewport = gl.getViewport(new THREE.Vector4());
         const previousScissor = gl.getScissor(new THREE.Vector4());
         const previousScissorTest = gl.getScissorTest();
-        try {
-          gl.setRenderTarget(target);
-          gl.setScissorTest(false);
-          gl.render(scene, thumbnailCamera);
-          const pixels = new Uint8Array(64 * 64 * 4);
-          gl.readRenderTargetPixels(target, 0, 0, 64, 64, pixels);
-          const data = ctx.createImageData(64, 64);
-          // WebGL начинает строки снизу; PNG — сверху.
-          for (let y = 0; y < 64; y++)
-            data.data.set(
-              pixels.subarray((63 - y) * 256, (64 - y) * 256),
-              y * 256,
-            );
-          ctx.putImageData(data, 0, 0);
-        } finally {
-          gl.setRenderTarget(previousTarget);
-          gl.setViewport(previousViewport);
-          gl.setScissor(previousScissor);
-          gl.setScissorTest(previousScissorTest);
-          target.dispose();
-        }
-        review.onThumbnail?.(canvas.toDataURL());
+        const renderNative = (resolution: 32 | 64) => {
+          const canvas = document.createElement("canvas");
+          canvas.width = canvas.height = resolution;
+          const ctx = canvas.getContext("2d")!;
+          // Квадратная проекция с общим framing; каждый размер рендерится отдельно.
+          const thumbnailCamera = (camera as THREE.OrthographicCamera).clone();
+          thumbnailCamera.left = thumbnailCamera.bottom = -resolution / 2;
+          thumbnailCamera.right = thumbnailCamera.top = resolution / 2;
+          thumbnailCamera.zoom = cameraSettings(
+            review.framing, view, resolution, resolution,
+          ).zoom;
+          thumbnailCamera.updateProjectionMatrix();
+          const target = new THREE.WebGLRenderTarget(resolution, resolution);
+          target.texture.colorSpace = THREE.SRGBColorSpace;
+          try {
+            gl.setRenderTarget(target);
+            gl.setScissorTest(false);
+            gl.render(scene, thumbnailCamera);
+            const pixels = new Uint8Array(resolution * resolution * 4);
+            gl.readRenderTargetPixels(target, 0, 0, resolution, resolution, pixels);
+            const data = ctx.createImageData(resolution, resolution);
+            const stride = resolution * 4;
+            // WebGL начинает строки снизу; PNG — сверху. Масштабирования нет.
+            for (let y = 0; y < resolution; y++)
+              data.data.set(
+                pixels.subarray((resolution - 1 - y) * stride, (resolution - y) * stride),
+                y * stride,
+              );
+            ctx.putImageData(data, 0, 0);
+            return canvas.toDataURL();
+          } finally {
+            gl.setRenderTarget(previousTarget);
+            gl.setViewport(previousViewport);
+            gl.setScissor(previousScissor);
+            gl.setScissorTest(previousScissorTest);
+            target.dispose();
+          }
+        };
+        const large = renderNative(64);
+        if (review.onNativePreviews)
+          review.onNativePreviews({ 32: renderNative(32), 64: large });
+        review.onThumbnail?.(large);
       });
     }
   });

@@ -1,0 +1,503 @@
+{
+  "schemaVersion": 1,
+  "status": "LOCAL_TECHNICAL_PASS",
+  "point": 43,
+  "pointClosed": false,
+  "checkedAtUtc": "2026-10-05T19:59:38.936Z",
+  "sourceBeforeImplementation": "4091a5de4b9e1e0cc9327d372d453ac42d8be0ad",
+  "sourceCommit": null,
+  "sourceInputs": [
+    {
+      "path": "apps/model-editor/package.json",
+      "bytes": 2031,
+      "sha256": "057b7e8879a6d2c66c5895880dd280191cdb1226104d99e8a464789ea5f945ef"
+    },
+    {
+      "path": "apps/model-editor/renderer/Viewport.tsx",
+      "bytes": 14272,
+      "sha256": "8987530405b3e81ed76b839b6d9794eff60d21f96c328229934fb316943dc990"
+    },
+    {
+      "path": "apps/model-editor/renderer/ReviewBoard.tsx",
+      "bytes": 6764,
+      "sha256": "cef735304e3b1a2b3dae07b9fb76bbe859f3984006e4927b36a70db515e3f87a"
+    },
+    {
+      "path": "apps/model-editor/renderer/style.css",
+      "bytes": 33569,
+      "sha256": "dc7185835b1ca5042fee02fcc580c3fb77c3db93d9ca49bc10f177adb5c48e78"
+    },
+    {
+      "path": "apps/model-editor/scripts/check-review-desktop.mjs",
+      "bytes": 16183,
+      "sha256": "eaa069a948c0f00acc3948808a9c7a37ce979e1409833068066e11f8f7bd7569"
+    },
+    {
+      "path": "apps/model-editor/scripts/create-weapon-directions.mjs",
+      "bytes": 18542,
+      "sha256": "1f00b1540d46e38b594ca5776d25effa72c8beb6d3a815958ddeb55c8345d37c"
+    },
+    {
+      "path": "apps/model-editor/scripts/review-blockout-drafts.mjs",
+      "bytes": 17929,
+      "sha256": "0ee4bfa3263ebf5721f853196f3974bc0aebad810b6af8099cde0e8ad57f4b4c"
+    },
+    {
+      "path": "apps/model-editor/scripts/preview-art-benchmark.mjs",
+      "bytes": 20759,
+      "sha256": "40a8eb35cbb7ab2ee8900348790059c8877d8854cd156df0ab1a80d89401b9f1"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "bytes": 95944,
+      "sha256": "e955ab8e82d8bb87128cf10f0f95b67c217fb1bf31eb7f2321823e66b03195c2"
+    }
+  ],
+  "studioVersion": "0.19.0",
+  "package": {
+    "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.19.0\\b098a2e4\\MineMod Studio-win32-x64\\resources\\app.asar",
+    "bytes": 3671198,
+    "sha256": "32d78fa6863c4181d25299361e8713aacbbc25df51693053af8d0b83cbc2176a"
+  },
+  "dist": [
+    {
+      "path": "apps/model-editor/dist/main.cjs",
+      "bytes": 620160,
+      "sha256": "0e19713d6df4a89ca8ba08e9719928aacd2b963b1e362daf12b3b924fdcbd014"
+    },
+    {
+      "path": "apps/model-editor/dist/worker.cjs",
+      "bytes": 1500754,
+      "sha256": "8c99e26fe4bf96564380e48c15402a8fa6b1a1e056d7fe753f983a3f5e512712"
+    },
+    {
+      "path": "apps/model-editor/dist/preload.cjs",
+      "bytes": 1186,
+      "sha256": "6516e0ddc1af23f45d8a978d90be61c3f0e3533fc315924ff368c149d9952b92"
+    },
+    {
+      "path": "apps/model-editor/dist/renderer/assets/index-BQn5uoTq.css",
+      "bytes": 27432,
+      "sha256": "4f8a6d0c228feda02654af1f2ec4d285dd728489934b087fb8995047fc7471ae"
+    },
+    {
+      "path": "apps/model-editor/dist/renderer/assets/index-wd9gRMFk.js",
+      "bytes": 1343861,
+      "sha256": "01ab59babf03ca3e58cb9e5fc66eac91e2ad62d0f49871f995bf7f9cd98a0483"
+    }
+  ],
+  "local": {
+    "desktop": {
+      "report": {
+        "path": "output/playwright/studio-packaged-58bab615/report.json",
+        "bytes": 95174,
+        "sha256": "117c014e5966a2afea21920cb909b3bddecb58b6a2bf498485c56bb7dd63aec0"
+      },
+      "subreports": [
+        {
+          "name": "mcp",
+          "status": "PASS"
+        },
+        {
+          "name": "texture",
+          "status": "PASS"
+        },
+        {
+          "name": "polish",
+          "status": "PASS"
+        },
+        {
+          "name": "editing",
+          "status": "PASS"
+        },
+        {
+          "name": "variants",
+          "status": "PASS"
+        },
+        {
+          "name": "agentBlockouts",
+          "status": "PASS"
+        },
+        {
+          "name": "continuation",
+          "status": "PASS"
+        },
+        {
+          "name": "agentStatus",
+          "status": "PASS"
+        },
+        {
+          "name": "brief",
+          "status": "PASS"
+        },
+        {
+          "name": "concepts",
+          "status": "PASS"
+        },
+        {
+          "name": "parts",
+          "status": "PASS"
+        },
+        {
+          "name": "repair",
+          "status": "PASS"
+        },
+        {
+          "name": "manual",
+          "status": "PASS"
+        },
+        {
+          "name": "accessibility",
+          "status": "PASS"
+        },
+        {
+          "name": "accessibilityStates",
+          "status": "PASS"
+        },
+        {
+          "name": "review",
+          "status": "PASS"
+        },
+        {
+          "name": "migrations",
+          "status": "PASS"
+        },
+        {
+          "name": "history",
+          "status": "PASS"
+        },
+        {
+          "name": "geometry",
+          "status": "PASS"
+        },
+        {
+          "name": "camera",
+          "status": "PASS"
+        },
+        {
+          "name": "discovery",
+          "status": "PASS"
+        }
+      ],
+      "nativeRaster": {
+        "widths": [
+          32,
+          64,
+          32,
+          64
+        ],
+        "displaySizes": [
+          [
+            18.285715103149414,
+            18.285715103149414
+          ],
+          [
+            36.57143020629883,
+            36.57143020629883
+          ],
+          [
+            18.285715103149414,
+            18.285715103149414
+          ],
+          [
+            36.57143020629883,
+            36.57143020629883
+          ]
+        ],
+        "pixelRatio": 1.75,
+        "zoomNativeSizes": [
+          {
+            "pixelRatio": 1.399999976158142,
+            "widths": [
+              32.00000021798269,
+              64.00000043596538,
+              32.00000021798269,
+              64.00000043596538
+            ]
+          },
+          {
+            "pixelRatio": 1.75,
+            "widths": [
+              32.000001430511475,
+              64.00000286102295,
+              32.000001430511475,
+              64.00000286102295
+            ]
+          }
+        ],
+        "masks": [
+          {
+            "resolution": 32,
+            "painted": 78,
+            "invalid": 0,
+            "edgePixels": 0,
+            "rows": 25
+          },
+          {
+            "resolution": 64,
+            "painted": 256,
+            "invalid": 0,
+            "edgePixels": 0,
+            "rows": 52
+          }
+        ],
+        "differingPixelsFromNearestDownsample": 55,
+        "recognition": "NOT_PERFORMED"
+      }
+    },
+    "leaf": {
+      "report": {
+        "path": "output\\model-editor\\leaf-volume-20261005-v3c\\reviews-c167c4d7\\report.json",
+        "bytes": 30177,
+        "sha256": "725a83d68bbad4b915e1c7b16491c9c121909b6d0448df3bfe33116bfa3fe427"
+      },
+      "sources": [
+        {
+          "key": "a",
+          "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\leaf-volume-20261005-v3c\\a.mmeditor.json",
+          "sha256": "6996f1cceb3ac0f1ffed341c0ff109d289a05b608ca4994493b3601bd76c007b"
+        },
+        {
+          "key": "b",
+          "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\leaf-volume-20261005-v3c\\b.mmeditor.json",
+          "sha256": "7f0407e6840320b2255c0f59e87ea643ac5644204f04053c4a4c99784d1c76e8"
+        }
+      ],
+      "allFramesEqual": true,
+      "reviewCamerasEqual": true,
+      "captures": [
+        {
+          "path": "output\\model-editor\\leaf-volume-20261005-v3c\\reviews-c167c4d7\\a-review.png",
+          "bytes": 68840,
+          "sha256": "573f11517cd73aebcb1dfa2b87fa73d61fab0da68b5087b3d706138f21a6efc1"
+        },
+        {
+          "path": "output\\model-editor\\leaf-volume-20261005-v3c\\reviews-c167c4d7\\a-front.png",
+          "bytes": 12419,
+          "sha256": "a0e0688184f11efbaa5e920a259d73c4320446a92e43ca36343a00c4902b6828"
+        },
+        {
+          "path": "output\\model-editor\\leaf-volume-20261005-v3c\\reviews-c167c4d7\\a-back.png",
+          "bytes": 11891,
+          "sha256": "95ad8cbcf3d0007096cbaa7748f479fbc987a80bd672bb67a5e63a02fc0ed628"
+        },
+        {
+          "path": "output\\model-editor\\leaf-volume-20261005-v3c\\reviews-c167c4d7\\a-left.png",
+          "bytes": 7832,
+          "sha256": "e21d54fa341e5bc120b279e7be0c7a248b88bacce09f97fd49c9ef296b0a49d7"
+        },
+        {
+          "path": "output\\model-editor\\leaf-volume-20261005-v3c\\reviews-c167c4d7\\a-right.png",
+          "bytes": 8264,
+          "sha256": "4d63eab86d0ac701f30fc1b00c531657d046b1391ec8a292018f1f01032d4179"
+        },
+        {
+          "path": "output\\model-editor\\leaf-volume-20261005-v3c\\reviews-c167c4d7\\a-top.png",
+          "bytes": 5863,
+          "sha256": "31eec96903e45daa1e3d32bd8beb3bf3e46476e414b03926b39a12609fcf9e5d"
+        },
+        {
+          "path": "output\\model-editor\\leaf-volume-20261005-v3c\\reviews-c167c4d7\\a-bottom.png",
+          "bytes": 5869,
+          "sha256": "e674f2b8de0fcb1a415cfec5f10b8d83f0dc1cf511b2a553e05111df500cab1c"
+        },
+        {
+          "path": "output\\model-editor\\leaf-volume-20261005-v3c\\reviews-c167c4d7\\a-perspective.png",
+          "bytes": 34957,
+          "sha256": "7a36bf82fe524c80989d09f6de7260f6691925fe7ca3476e15d5d09719b5a004"
+        },
+        {
+          "path": "output\\model-editor\\leaf-volume-20261005-v3c\\reviews-c167c4d7\\a-rear-perspective.png",
+          "bytes": 33281,
+          "sha256": "2b8e4561d67ef189739ac7f86658cae8b785febf4111ae316463ba16f6ef0e15"
+        },
+        {
+          "path": "output\\model-editor\\leaf-volume-20261005-v3c\\reviews-c167c4d7\\a-silhouette.png",
+          "bytes": 12262,
+          "sha256": "db0a618d6f4f1703a1c1aac21d823322110f69699ace2cb0d213e6823986a449"
+        },
+        {
+          "path": "output\\model-editor\\leaf-volume-20261005-v3c\\reviews-c167c4d7\\a-native-silhouette-32.png",
+          "bytes": 221,
+          "sha256": "cf1784c701143e22e2cb6a90eddd6f750925d16f9233f25243037554f03dcc4c"
+        },
+        {
+          "path": "output\\model-editor\\leaf-volume-20261005-v3c\\reviews-c167c4d7\\a-native-silhouette-64.png",
+          "bytes": 452,
+          "sha256": "942ecb419b352aeb7efe7618be0785d4720bbf4b91cdd392ef69cb4c63b284c2"
+        },
+        {
+          "path": "output\\model-editor\\leaf-volume-20261005-v3c\\reviews-c167c4d7\\a-native-color-32.png",
+          "bytes": 287,
+          "sha256": "faf9859b72516ee2b9f1c442ca2474b8b44d2ee182839fde3c19c3f78eef846f"
+        },
+        {
+          "path": "output\\model-editor\\leaf-volume-20261005-v3c\\reviews-c167c4d7\\a-native-perspective-silhouette-32.png",
+          "bytes": 228,
+          "sha256": "fe2493386aa33aac520e5dbace8842d3a057a6731cd51b8cdd7ead036f6d04e6"
+        },
+        {
+          "path": "output\\model-editor\\leaf-volume-20261005-v3c\\reviews-c167c4d7\\a-native-color-64.png",
+          "bytes": 531,
+          "sha256": "180fb884dfea01be02155ef03187c1203bdc552d7ca9039b3bf640000f8bc723"
+        },
+        {
+          "path": "output\\model-editor\\leaf-volume-20261005-v3c\\reviews-c167c4d7\\a-native-perspective-silhouette-64.png",
+          "bytes": 427,
+          "sha256": "446c6d20b4549621229ae805d1ef7652639d9f46a9604cb35c404c8d7ad401bb"
+        },
+        {
+          "path": "output\\model-editor\\leaf-volume-20261005-v3c\\reviews-c167c4d7\\b-review.png",
+          "bytes": 70568,
+          "sha256": "3f1e0001ef336167d8bec8f395a7af9b7abe286af93039f1459cecf46c32d935"
+        },
+        {
+          "path": "output\\model-editor\\leaf-volume-20261005-v3c\\reviews-c167c4d7\\b-front.png",
+          "bytes": 17120,
+          "sha256": "470a50aacc07553d63548241e58e189469d20d911b90ee4ea4f0aec3df1b72bb"
+        },
+        {
+          "path": "output\\model-editor\\leaf-volume-20261005-v3c\\reviews-c167c4d7\\b-back.png",
+          "bytes": 16186,
+          "sha256": "ea5262859ca7f627c00fe63d515736001473871083effd178662180d59503431"
+        },
+        {
+          "path": "output\\model-editor\\leaf-volume-20261005-v3c\\reviews-c167c4d7\\b-left.png",
+          "bytes": 8831,
+          "sha256": "dd3556daa132b9ecd64b3e891e5523bd11267442992c517b8b840943ae297c3d"
+        },
+        {
+          "path": "output\\model-editor\\leaf-volume-20261005-v3c\\reviews-c167c4d7\\b-right.png",
+          "bytes": 9253,
+          "sha256": "acac78f5f4fbdaf01ee4609fd7ea5354957336335af198b0d236ae5331e509b9"
+        },
+        {
+          "path": "output\\model-editor\\leaf-volume-20261005-v3c\\reviews-c167c4d7\\b-top.png",
+          "bytes": 5799,
+          "sha256": "865560d9eccfaccc8900263c5499ab2af772572a84a3ab125b326650e8be0b55"
+        },
+        {
+          "path": "output\\model-editor\\leaf-volume-20261005-v3c\\reviews-c167c4d7\\b-bottom.png",
+          "bytes": 5514,
+          "sha256": "d56533a979b2470790d306d72d12212b809481e818ddce616171e8a8144549ba"
+        },
+        {
+          "path": "output\\model-editor\\leaf-volume-20261005-v3c\\reviews-c167c4d7\\b-perspective.png",
+          "bytes": 27430,
+          "sha256": "f69e20755189aafa4b347d2c41549de66e8bf244a0472eb1382206adcb1a5029"
+        },
+        {
+          "path": "output\\model-editor\\leaf-volume-20261005-v3c\\reviews-c167c4d7\\b-rear-perspective.png",
+          "bytes": 26238,
+          "sha256": "edf2e8fa6e3c95344c2476b8e5b377d50e00793186cef7b32c1e791f4462f453"
+        },
+        {
+          "path": "output\\model-editor\\leaf-volume-20261005-v3c\\reviews-c167c4d7\\b-silhouette.png",
+          "bytes": 16422,
+          "sha256": "7f4220f58d2b0bbc71805e8b587b656b5c4a47bad3c10fa4e03cc8663319209d"
+        },
+        {
+          "path": "output\\model-editor\\leaf-volume-20261005-v3c\\reviews-c167c4d7\\b-native-silhouette-32.png",
+          "bytes": 219,
+          "sha256": "87765007a0528e29354309067d43a4e94ef679ed05c09e3567ed133462915028"
+        },
+        {
+          "path": "output\\model-editor\\leaf-volume-20261005-v3c\\reviews-c167c4d7\\b-native-silhouette-64.png",
+          "bytes": 465,
+          "sha256": "db0f3ac88aeec0a000ab2e1c2db57fd27d9a83f246735439e5a90d35bd182363"
+        },
+        {
+          "path": "output\\model-editor\\leaf-volume-20261005-v3c\\reviews-c167c4d7\\b-native-color-32.png",
+          "bytes": 337,
+          "sha256": "179e69f3f37c792843b14a8e45d863efab300d817b2bb17f3f61ab3115481da6"
+        },
+        {
+          "path": "output\\model-editor\\leaf-volume-20261005-v3c\\reviews-c167c4d7\\b-native-perspective-silhouette-32.png",
+          "bytes": 226,
+          "sha256": "eaac28d343097e0daaaf9ea77f012a76ae9612cdbd9d509c22492b38e3c29d3a"
+        },
+        {
+          "path": "output\\model-editor\\leaf-volume-20261005-v3c\\reviews-c167c4d7\\b-native-color-64.png",
+          "bytes": 585,
+          "sha256": "cc1ae043b4fca9b51f5989b949dc07790ae10bc4aeeb03d79c6614dc1659458f"
+        },
+        {
+          "path": "output\\model-editor\\leaf-volume-20261005-v3c\\reviews-c167c4d7\\b-native-perspective-silhouette-64.png",
+          "bytes": 442,
+          "sha256": "dce439f758d57be0dcc2a136a912935ad4ce365838876d2f84415862565146d8"
+        }
+      ],
+      "recognitionPage": {
+        "path": "output\\model-editor\\leaf-volume-20261005-v3c\\reviews-c167c4d7\\recognition.html",
+        "bytes": 8695,
+        "sha256": "2d88781f13569d292a0c5daa56898f2e8ed29559a59acd3c23a8174fcf22ccd5"
+      },
+      "recognition": "NOT_PERFORMED",
+      "artisticApproval": "NOT_PERFORMED",
+      "gameAcceptance": "NOT_RUN"
+    },
+    "page": {
+      "report": {
+        "path": "output/playwright/native-043-recognition-final/report.json",
+        "bytes": 4934,
+        "sha256": "221448bcf5b63aa305cefbec2243c30bd1fd8c57df6ca5c8f96551b6e0f53223"
+      },
+      "viewportWidths": [
+        1400,
+        390
+      ],
+      "pixelRatios": [
+        1,
+        1.75
+      ],
+      "scriptedDownloadProbe": "PASS; not a human observation",
+      "unexpectedNetworkRequests": 0
+    },
+    "logs": [
+      {
+        "path": "output/verification/native-043-lint.log",
+        "bytes": 29,
+        "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+      },
+      {
+        "path": "output/verification/native-043-typecheck.log",
+        "bytes": 176,
+        "sha256": "fe0327fb3a908a7cea6b4e5ef62bbaa7903d4f4149a209170e6249f0dd5c8190"
+      },
+      {
+        "path": "output/verification/native-043-package.log",
+        "bytes": 787,
+        "sha256": "b985b5c4d034152750dfeb0f869d299cb886a4d46bb6a9746aad0305e4ff314f"
+      },
+      {
+        "path": "output/verification/native-043-portable.log",
+        "bytes": 4345,
+        "sha256": "adb032e4ac9b8b145e376bac23a8668b8cd14b5bdd642acfc6551fb68de188b2"
+      },
+      {
+        "path": "output/verification/native-043-desktop.log",
+        "bytes": 156,
+        "sha256": "7aeb0ff4d653ca1d81b4acdd1a65cbb38b8409c753df82727a527f2f89859dd6"
+      },
+      {
+        "path": "output/verification/native-043-focused.log",
+        "bytes": 145,
+        "sha256": "07c7ff0cfb2a626b0cb14b5e973f0e48abfdf96ed73f419822e1067d0f456171"
+      },
+      {
+        "path": "output/verification/native-043-page-final.log",
+        "bytes": 168,
+        "sha256": "79a28a0c9fcd128f414d20129dfa2a93ee8cb33a734770a22ed63e318d494350"
+      },
+      {
+        "path": "output/verification/native-043-leaf-final.log",
+        "bytes": 208,
+        "sha256": "0b03252a69389365655fbf728e4634ae63ace1394a8fe809ab7ac8f5f1316b46"
+      }
+    ]
+  },
+  "hosted": {
+    "status": "NOT_RUN_FOR_NEW_SOURCE"
+  },
+  "boundary": "Technical native raster/display and read-only capture verified. User selected direction A only. Human type/distinctive-form recognition is still required for 043; volume/texture/art approval and authored Minecraft/JAR integration are not granted."
+}

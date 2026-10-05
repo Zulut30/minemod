@@ -215,9 +215,9 @@ try {
       perspective: document
         .querySelector('[data-view="perspective"] canvas')
         .toDataURL(),
-      silhouette: document.querySelectorAll(".review-readability img")[0].src,
-      small32: document.querySelectorAll(".review-readability img")[1].src,
-      small64: document.querySelectorAll(".review-readability img")[2].src,
+      silhouette: document.querySelector('[data-testid="review-silhouette-64"]').src,
+      small32: document.querySelector('[data-testid="review-color-32"]').src,
+      small64: document.querySelector('[data-testid="review-color-64"]').src,
     }));
     for (const [view, url] of Object.entries(pixels)) {
       const bytes = Buffer.from(url.split(",")[1], "base64");
@@ -254,7 +254,7 @@ try {
   await page.getByTestId("mode-review").click();
   await page.waitForFunction(
     () =>
-      [...document.querySelectorAll(".review-readability img")].length === 3 &&
+      [...document.querySelectorAll(".review-readability img")].length === 4 &&
       [...document.querySelectorAll(".review-readability img")].every(
         (i) => i.complete && i.naturalWidth > 0,
       ),

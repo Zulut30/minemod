@@ -31,7 +31,7 @@ export async function checkReviewDesktop(options, output) {
     await page.waitForFunction(() => {
       const imgs = [...document.querySelectorAll(".review-readability img")];
       return (
-        imgs.length === 3 && imgs.every((i) => i.complete && i.naturalWidth > 0)
+        imgs.length === 4 && imgs.every((i) => i.complete && i.naturalWidth > 0)
       );
     });
     const visuals = await page.evaluate(async () => {
@@ -46,27 +46,31 @@ export async function checkReviewDesktop(options, output) {
         ctx.drawImage(image, 0, 0);
         return ctx.getImageData(0, 0, canvas.width, canvas.height).data;
       };
-      const mask = pixels(images[0]);
-      let painted = 0,
-        invalidMask = 0;
-      for (let i = 0; i < mask.length; i += 4)
-        if (mask[i + 3]) {
-          painted++;
-          if (
-            mask[i + 3] === 255 &&
-            (mask[i] !== 230 || mask[i + 1] !== 237 || mask[i + 2] !== 245)
-          )
-            invalidMask++;
-        }
-      const paintedRows = new Set();
-      for (let y = 0; y < 64; y++)
-        for (let x = 0; x < 64; x++)
-          if (mask[(y * 64 + x) * 4 + 3]) paintedRows.add(y);
+      const masks = images.slice(0, 2).map((image) => {
+        const data = pixels(image), resolution = image.naturalWidth;
+        let painted = 0, invalid = 0, edgePixels = 0;
+        const rows = new Set();
+        for (let y = 0; y < resolution; y++)
+          for (let x = 0; x < resolution; x++) {
+            const i = (y * resolution + x) * 4;
+            if (!data[i + 3]) continue;
+            painted++;
+            rows.add(y);
+            if (data[i] || data[i + 1] || data[i + 2] || data[i + 3] !== 255) invalid++;
+            if (x === 0 || y === 0 || x === resolution - 1 || y === resolution - 1) edgePixels++;
+          }
+        return { resolution, painted, invalid, edgePixels, rows: rows.size };
+      });
       const small = document.createElement("canvas");
       small.width = small.height = 32;
       const smallCtx = small.getContext("2d");
       smallCtx.imageSmoothingEnabled = false;
-      smallCtx.drawImage(images[2], 0, 0, 32, 32);
+      smallCtx.drawImage(images[3], 0, 0, 32, 32);
+      const downsampled = smallCtx.getImageData(0, 0, 32, 32).data;
+      const native = pixels(images[2]);
+      let differingPixels = 0;
+      for (let i = 0; i < native.length; i += 4)
+        if ([0, 1, 2, 3].some((offset) => native[i + offset] !== downsampled[i + offset])) differingPixels++;
       const luminance = (color) => {
         const rgb = color
           .match(/[\d.]+/g)
@@ -91,10 +95,14 @@ export async function checkReviewDesktop(options, output) {
       return {
         cameras,
         widths: images.map((i) => i.naturalWidth),
-        painted,
-        invalidMask,
-        actual64: paintedRows.size >= 44 && paintedRows.size <= 60,
-        actual32: images[1].src === small.toDataURL(),
+        masks,
+        differingPixels,
+        pixelRatio: window.devicePixelRatio,
+        displaySizes: images.map((image) => {
+          const rect = image.getBoundingClientRect();
+          return [rect.width, rect.height];
+        }),
+        silhouetteBackground: getComputedStyle(images[0]).backgroundColor,
         colorScheme: rootStyle.colorScheme,
         textContrast: contrast(rootStyle.color, rootStyle.backgroundColor),
         activeContrast: contrast(
@@ -113,13 +121,17 @@ export async function checkReviewDesktop(options, output) {
       new Set(visuals.cameras.map((c) => JSON.stringify(c.target))).size,
       1,
     );
-    assert.deepEqual(visuals.widths, [64, 32, 64]);
-    assert(visuals.painted > 10);
-    assert.equal(visuals.invalidMask, 0);
-    assert(
-      visuals.actual32 && visuals.actual64,
-      "Миниатюры должны соответствовать текущему 3D-кадру",
-    );
+    assert.deepEqual(visuals.widths, [32, 64, 32, 64]);
+    for (let i = 0; i < visuals.widths.length; i++)
+      assert(visuals.displaySizes[i].every((size) => Math.abs(size * visuals.pixelRatio - visuals.widths[i]) < 0.1), "Показывать пиксели 1:1 с учётом DPI");
+    for (const mask of visuals.masks) {
+      assert(mask.painted > 10);
+      assert.equal(mask.invalid, 0, "Силуэт должен быть чёрным, без цвета и полупрозрачных краёв");
+      assert.equal(mask.edgePixels, 0, "Силуэт не обрезан границей drawing buffer");
+      assert(mask.rows >= mask.resolution * 0.68 && mask.rows <= mask.resolution * 0.94);
+    }
+    assert(visuals.differingPixels > 0, "Native 32 px должен отличаться от nearest уменьшения 64 px на этой контрольной геометрии");
+    assert.equal(visuals.silhouetteBackground, "rgb(230, 237, 245)");
     assert.equal(visuals.colorScheme, "dark");
     assert(visuals.textContrast >= 4.5 && visuals.activeContrast >= 4.5);
     assert(visuals.visible && !visuals.overflow);
@@ -148,9 +160,25 @@ export async function checkReviewDesktop(options, output) {
     };
     await screenshot("dark-review.png");
     const squareBeforeResize = await page
-      .locator(".review-readability img")
-      .nth(2)
+      .getByTestId("review-color-64")
       .getAttribute("src");
+    const smallBeforeResize = await page.getByTestId("review-color-32").getAttribute("src");
+    // Меняется только масштаб собственного скрытого окна, настройки Windows не трогаем.
+    const zoomNativeSizes = [];
+    for (const factor of [0.8, 1]) {
+      await application.evaluate(({ BrowserWindow }, zoom) =>
+        BrowserWindow.getAllWindows()
+          .find((w) => w.webContents.getURL() === "studio://app/index.html")
+          .webContents.setZoomFactor(zoom), factor);
+      await page.waitForFunction(() => [...document.querySelectorAll(".review-readability img")].every((image) => {
+        const rect = image.getBoundingClientRect();
+        return [rect.width, rect.height].every((n) => Math.abs(n * window.devicePixelRatio - image.naturalWidth) < 0.1);
+      }));
+      zoomNativeSizes.push(await page.evaluate(() => ({ pixelRatio: window.devicePixelRatio,
+        widths: [...document.querySelectorAll(".review-readability img")].map((i) => i.getBoundingClientRect().width * window.devicePixelRatio) })));
+    }
+    assert.equal(await page.getByTestId("review-color-32").getAttribute("src"), smallBeforeResize);
+    assert.equal(await page.getByTestId("review-color-64").getAttribute("src"), squareBeforeResize);
     await application.evaluate(({ BrowserWindow }) =>
       BrowserWindow.getAllWindows()
         .find((w) => w.webContents.getURL() === "studio://app/index.html")
@@ -185,15 +213,16 @@ export async function checkReviewDesktop(options, output) {
     ]);
     await page.waitForFunction(
       (old) =>
-        document.querySelectorAll(".review-readability img")[2]?.src !== old,
+        document.querySelector('[data-testid="review-color-64"]')?.src !== old,
       squareBeforeResize,
     );
     await mutate([{ type: "undo" }]);
     await page.waitForFunction(
       (old) =>
-        document.querySelectorAll(".review-readability img")[2]?.src === old,
+        document.querySelector('[data-testid="review-color-64"]')?.src === old,
       squareBeforeResize,
     );
+    assert.equal(await page.getByTestId("review-color-32").getAttribute("src"), smallBeforeResize);
     assert.deepEqual((await inspect()).project, compactBefore.project);
     await screenshot("compact-review.png");
     await page.getByTestId("mode-model").click();
@@ -290,11 +319,21 @@ export async function checkReviewDesktop(options, output) {
     const report = {
       status: "PASS",
       hidden: true,
+      nativeRaster: {
+        widths: visuals.widths,
+        displaySizes: visuals.displaySizes,
+        pixelRatio: visuals.pixelRatio,
+        zoomNativeSizes,
+        masks: visuals.masks,
+        differingPixelsFromNearestDownsample: visuals.differingPixels,
+        recognition: "NOT_PERFORMED",
+      },
       checks: [
         "dark text and active control contrast",
         "four independent views with common framing",
         "real alpha silhouette",
-        "native square 64px render and nearest 32px preview",
+        "independent native 32/64px renders, black masks, unclipped raster and 1:1 display",
+        "native 32px differs from nearest downsample on control geometry",
         "thumbnail framing independent of panel aspect ratio",
         "compact review",
         "bounded MCP review PNG",
