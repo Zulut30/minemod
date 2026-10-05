@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "status": "WINDOWS_HOSTED_TECHNICAL_PASS",
+  "status": "HOSTED_BASELINE_TECHNICAL_PASS",
   "point": 43,
   "pointClosed": false,
-  "checkedAtUtc": "2026-10-05T19:59:38.936Z",
+  "checkedAtUtc": "2026-10-05T21:00:44.976Z",
   "sourceBeforeImplementation": "4091a5de4b9e1e0cc9327d372d453ac42d8be0ad",
   "sourceCommit": "0a1f7393616d332407b118d9f92aeaa3a547094b",
   "sourceInputs": [
@@ -497,7 +497,7 @@
     ]
   },
   "hosted": {
-    "status": "PARTIAL_MATRIX",
+    "status": "BASELINE_PASS_LEGACY_GATE_UNRESOLVED",
     "runId": 37368539822,
     "url": "https://github.com/Zulut30/minemod/actions/runs/37368539822",
     "sourceCommit": "8a49732fbd5f50b5ae2237861d4d2c264e2fa83e",
@@ -734,14 +734,118 @@
       "asarByteComparison": "NOT_PERFORMED; archive not uploaded"
     },
     "linux": {
-      "status": "CANCELLED_BEFORE_RUN",
-      "affected": [
-        "control-plane",
-        "fabric-production",
-        "neoforge"
-      ],
-      "cause": "NOT_ESTABLISHED",
-      "retry": "attempt 2 dispatched; no success claimed"
+      "status": "PASS",
+      "attempt": 2,
+      "controlPlane": {
+        "jobId": 111966387120,
+        "artifactId": 11370002114,
+        "cleanCheckout": {
+          "path": "output/ci/37368539822-control/control-plane.json",
+          "bytes": 4469,
+          "sha256": "edfa1665be8cf21d23db9995d2db16eeadbcfc6e26a30847a8d2d9e625b867c4"
+        },
+        "trackedFiles": 579
+      },
+      "production": {
+        "jobId": 111966387198,
+        "artifactId": 11371047260,
+        "cleanCheckout": {
+          "path": "output/ci/37368539822-production/output/ci/clean-checkout/fabric-production.json",
+          "bytes": 4469,
+          "sha256": "edfa1665be8cf21d23db9995d2db16eeadbcfc6e26a30847a8d2d9e625b867c4"
+        },
+        "inputs": {
+          "path": "output/ci/37368539822-production/output/ci/fabric-production/inputs.json",
+          "bytes": 884,
+          "sha256": "9ee967c1efa32b52ab1128b35c3afbf4e28427b7eab1d6a82842656a816e8f02"
+        },
+        "javaRuntime": "17.0.19+10",
+        "gameTests": {
+          "report": {
+            "path": "output/ci/37368539822-production/fixtures/fabric-1.20.1-empty/build/reports/gametest/production.xml",
+            "bytes": 405,
+            "sha256": "66fd41306e77104bf8817ec3910ab2d445e54b617008d2cd102038505ec26475"
+          },
+          "verification": "PASS: 2 required Fabric 1.20.1 harness tests",
+          "scope": "two required harness tests; not authored Leaf acceptance"
+        },
+        "cleanBuild": "PASS_STRICT_VERIFICATION",
+        "dedicatedServer": "READINESS_EXIT_0_NONCE_STOPPED",
+        "headlessClient": "READINESS_NONCE_STOPPED",
+        "jobLog": {
+          "path": "output/verification/native-043-ci-attempt2-production.log",
+          "bytes": 122960,
+          "sha256": "48c1989c9781837481330e719c1f6167b129f59735b7e85836a78675552f4490"
+        },
+        "generated": {
+          "manifest": {
+            "path": "output/ci/37368539822-production/output/ci/fabric-production/generated/source-review-manifest.json",
+            "bytes": 1663,
+            "sha256": "358db61afefcc01b674e313b928d69e9edd122c0f6528bb3d48e70971a78871f"
+          },
+          "operationEvidence": {
+            "path": "output/ci/37368539822-production/output/ci/fabric-production/generated/operation-evidence.v1.json",
+            "bytes": 9643,
+            "sha256": "3e42770acd9daa1262d7b44f9c93dc75dba6d8e0939b96caf5799ea41536dfd3"
+          },
+          "sourceFilesVerified": [
+            {
+              "path": "src/client/java/dev/mcdev/generated/m_infectedfrontier/client/GeneratedModMenuIntegration.java",
+              "bytes": 4582,
+              "sha256": "6f7a89b230ce2827f83d8594ce04f545f8516be3cd5ec3ec54c957635b4ff808"
+            },
+            {
+              "path": "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedConfig.java",
+              "bytes": 1947,
+              "sha256": "f0f16ba4dd8623949447c816bb1047dbf3f4c179a3292137e3fec2505a6502bc"
+            },
+            {
+              "path": "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedConfiguredBehavior.java",
+              "bytes": 636,
+              "sha256": "45edea171920ccb5f00b2173a5871202a9b1ba5a9f44018334a7d086a7e89a8a"
+            },
+            {
+              "path": "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedContent.java",
+              "bytes": 6384,
+              "sha256": "6b475a89f39a229a1144ba72cacafe3bb7fee6220f0da281b44b403f163b0f01"
+            },
+            {
+              "path": "src/main/java/dev/mcdev/generated/m_infectedfrontier/GeneratedMod.java",
+              "bytes": 497,
+              "sha256": "c0c8e389a8e8e11b98afddd5ff495046e9c0ad7ddf2171b5e31a15ae7884d187"
+            },
+            {
+              "path": "src/main/resources/fabric.mod.json",
+              "bytes": 601,
+              "sha256": "7a26b533a01233c980b0a1d58705c4f1760c41d987ee68cdb3214000b6849c4d"
+            }
+          ],
+          "jar": {
+            "path": "output/ci/37368539822-production/output/ci/fabric-production/generated/build/libs/infectedfrontier-0.1.0.jar",
+            "bytes": 28835,
+            "sha256": "63c8139423e57b925edfa40f030020b23ae2cc21571eaf711c879d58a382cc15"
+          },
+          "dedicatedLog": {
+            "path": "output/ci/37368539822-production/output/ci/fabric-production/generated/dedicated-server.log",
+            "bytes": 8934,
+            "sha256": "0be69679938e8e2468ef076b771c403e97fe2171cbbbfcd3ee88ad597a7b6d64"
+          },
+          "boundary": "build/runtime smoke of generated fixture; separate from operation evidence game=not-run and Leaf integration"
+        }
+      },
+      "neoforge": {
+        "jobId": 111966386848,
+        "status": "PASS"
+      },
+      "auxiliaryClient": {
+        "jobId": 111971349460,
+        "status": "PASS",
+        "jobLog": {
+          "path": "output/verification/native-043-ci-attempt2-aux-client.log",
+          "bytes": 56867,
+          "sha256": "70563e93709a3272b861d5ee74cde906589ad905a530af9732d1d324ed0da025"
+        }
+      }
     },
     "legacyFabric262": {
       "status": "FAILED_CHECKSUM",
@@ -753,7 +857,86 @@
       "coordinate": "net.minecraft:minecraft-common-043a8b3edf:26.2",
       "expected": "23248c15f8413aa0d06ac59e676913dd6a1dc0c5fffaa09365afd6c98d59fcd3",
       "actual": "d46235d854bbe3843a34472ecd635574fdab1d948efd2fc087a338e332c4fbbd",
-      "cause": "NOT_ESTABLISHED"
+      "cause": "NOT_ESTABLISHED",
+      "attempt2": {
+        "status": "CANCELLED_BEFORE_RUN",
+        "jobId": 111966387071,
+        "stepCount": 0,
+        "cause": "NOT_ESTABLISHED",
+        "fabricClient": "SKIPPED"
+      }
+    },
+    "attempt2": {
+      "status": "completed",
+      "conclusion": "failure",
+      "run": {
+        "path": "output/verification/native-043-ci-attempt2-run.json",
+        "bytes": 12008,
+        "sha256": "c9cdea67d2150f1f013bd8ac6df95f74a742e84af5fffe68c42372c18312cc10"
+      },
+      "jobSnapshot": {
+        "path": "output/verification/native-043-ci-attempt2-jobs.json",
+        "bytes": 20915,
+        "sha256": "2ea1520bd696ffbdd4a34aca11383434f1771ddc76214cbcb0646470f11dad17"
+      },
+      "jobs": [
+        {
+          "id": 111966386848,
+          "name": "neoforge",
+          "conclusion": "success",
+          "startedAt": "2026-10-05T20:45:34Z",
+          "completedAt": "2026-10-05T20:48:44Z",
+          "stepCount": 20
+        },
+        {
+          "id": 111966387071,
+          "name": "fabric",
+          "conclusion": "cancelled",
+          "startedAt": "2026-10-05T20:34:22Z",
+          "completedAt": "2026-10-05T20:49:25Z",
+          "stepCount": 0
+        },
+        {
+          "id": 111966387120,
+          "name": "control-plane",
+          "conclusion": "success",
+          "startedAt": "2026-10-05T20:45:21Z",
+          "completedAt": "2026-10-05T20:46:39Z",
+          "stepCount": 15
+        },
+        {
+          "id": 111966387198,
+          "name": "Fabric 1.20.1 / Java 17 production target",
+          "conclusion": "success",
+          "startedAt": "2026-10-05T20:45:46Z",
+          "completedAt": "2026-10-05T20:49:52Z",
+          "stepCount": 21
+        },
+        {
+          "id": 111966388230,
+          "name": "studio-windows",
+          "conclusion": "success",
+          "startedAt": "2026-10-05T20:20:41Z",
+          "completedAt": "2026-10-05T20:33:53Z",
+          "stepCount": 16
+        },
+        {
+          "id": 111971349460,
+          "name": "client-smoke",
+          "conclusion": "success",
+          "startedAt": "2026-10-05T20:53:59Z",
+          "completedAt": "2026-10-05T20:56:19Z",
+          "stepCount": 15
+        },
+        {
+          "id": 111971581238,
+          "name": "fabric-client",
+          "conclusion": "skipped",
+          "startedAt": "2026-10-05T20:49:26Z",
+          "completedAt": "2026-10-05T20:49:26Z",
+          "stepCount": 0
+        }
+      ]
     }
   },
   "boundary": "Technical native raster/display and read-only capture verified. User selected direction A only. Human type/distinctive-form recognition is still required for 043; volume/texture/art approval and authored Minecraft/JAR integration are not granted."
