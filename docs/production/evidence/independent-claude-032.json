@@ -1,0 +1,395 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 32,
+  "status": "PARTIAL",
+  "checkedAtUtc": "2026-10-05T10:39:18.303Z",
+  "scope": "Installed Claude Code creates one held-item through the same public MCP contract and technical brief as 031",
+  "runtimeSourceRevision": "fa1d871ed8dc7aa655f97f5ddaa837f41737abe2",
+  "studioVersion": "0.10.1",
+  "cliVersion": "2.1.289",
+  "sourceHashes": [
+    {
+      "path": "apps/model-editor/scripts/verify-claude-session.mjs",
+      "bytes": 12443,
+      "sha256": "ca3cca791cfca0edfbd82fbfce75f79d3e754a60939d03f9f18ca54fe52200d3"
+    },
+    {
+      "path": "apps/model-editor/scripts/retain-native-export.mjs",
+      "bytes": 1987,
+      "sha256": "9b3ee0cde0859287ad075a6c6c0b2b718c74af9852d1903979da1a1b00684e09"
+    },
+    {
+      "path": "apps/model-editor/package.json",
+      "bytes": 1531,
+      "sha256": "cf5fb3ae0ccea4f23406875391ceffed793fa5b6b477a6088f9561f635eefe51"
+    }
+  ],
+  "checks": {
+    "independentSession": "PASS actual installed client, only ten allowed Studio MCP tools; empty scene -> model",
+    "exactReplay": "PASS all seven successful applies reproduce the final project exactly",
+    "images": "PASS six actual PNG bytes/hash/signatures/dimensions; combined final review plus front/back/perspective at revision8",
+    "export": "PASS corrected collector retains original native tool response immediately; bundle files/hash and source match final scene",
+    "nativeReader": "PASS real previous native response and six negative cases; no generic agent filesystem capability",
+    "lint": "PASS local pinned Node/pnpm",
+    "typecheck": "PASS local workspace and desktop",
+    "hostedCurrentOperatorSource": "pending; new optional harness not yet pushed"
+  },
+  "successfulSession": {
+    "schemaVersion": 1,
+    "status": "PASS",
+    "actor": "Installed Claude Code independent model turn",
+    "cliVersion": "2.1.289",
+    "studioVersion": "0.10.1",
+    "executable": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.10.1\\1aab9f14\\MineMod Studio-win32-x64\\MineMod Studio.exe",
+    "output": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\playwright\\independent-claude-032-e587d05a",
+    "projectId": "1fee504a-fb92-4b86-9866-ca21148c5232",
+    "initialRevision": 1,
+    "finalRevision": 8,
+    "initialCubes": 0,
+    "finalCubes": 16,
+    "hidden": true,
+    "exitCode": 0,
+    "timedOut": false,
+    "violations": [],
+    "captures": [
+      {
+        "file": "toolu_01UjuarkjMdUEVK7EUze37Qd-0.png",
+        "bytes": 76175,
+        "sha256": "a88a96856e8cc8ee877e44a676ac7af3f21d8311810e43bb4f52c94c94d8fdd5",
+        "tool": "mcp__studio_verification_032__studio_model_review",
+        "arguments": {
+          "projectId": "1fee504a-fb92-4b86-9866-ca21148c5232",
+          "expectedRevision": 5
+        }
+      },
+      {
+        "file": "toolu_01HXhFyAqkTaQShWQFc9XfPm-1.png",
+        "bytes": 79977,
+        "sha256": "12afb6df3718b8c7e3c19f5c3490f38ac40c3178a1bea412f3647092dc93e3e0",
+        "tool": "mcp__studio_verification_032__studio_model_review",
+        "arguments": {
+          "projectId": "1fee504a-fb92-4b86-9866-ca21148c5232",
+          "expectedRevision": 7
+        }
+      },
+      {
+        "file": "toolu_01S17o1qizqE7Fge6RJwkdub-2.png",
+        "bytes": 80112,
+        "sha256": "c08b71f9d131407a6df3a512378c2e5c6ff1cc56fc6eabf478020970378a344a",
+        "tool": "mcp__studio_verification_032__studio_model_review",
+        "arguments": {
+          "projectId": "1fee504a-fb92-4b86-9866-ca21148c5232",
+          "expectedRevision": 8
+        }
+      },
+      {
+        "file": "toolu_01Dvp4KziNrc2BxZmfNswhdq-3.png",
+        "bytes": 17023,
+        "sha256": "065694feb1c3282f8889800af4778d49fb30cfd394569adb7a10b9b240f11a69",
+        "tool": "mcp__studio_verification_032__studio_view_capture",
+        "arguments": {
+          "projectId": "1fee504a-fb92-4b86-9866-ca21148c5232",
+          "expectedRevision": 8,
+          "view": "front"
+        }
+      },
+      {
+        "file": "toolu_01GTfSSB2SK76bwvPKybnbyL-4.png",
+        "bytes": 16070,
+        "sha256": "09f445a1bca91367aed725ffe4d62f5bebfc80338bfa44e0b62a8110f3144897",
+        "tool": "mcp__studio_verification_032__studio_view_capture",
+        "arguments": {
+          "projectId": "1fee504a-fb92-4b86-9866-ca21148c5232",
+          "expectedRevision": 8,
+          "view": "back"
+        }
+      },
+      {
+        "file": "toolu_01XRpmUqBcVFWGAD2U8gRj2v-5.png",
+        "bytes": 224515,
+        "sha256": "7934237f6f32264b052a4e3a006d15dbb4638bc55e6ef5a1dd4831f92257e82a",
+        "tool": "mcp__studio_verification_032__studio_view_capture",
+        "arguments": {
+          "projectId": "1fee504a-fb92-4b86-9866-ca21148c5232",
+          "expectedRevision": 8,
+          "view": "perspective"
+        }
+      }
+    ],
+    "exports": [
+      "toolu_019XHmWfYKrAEHQ7NCkczsFU-bundle.json"
+    ],
+    "nativeOutputs": [
+      {
+        "toolUseId": "toolu_019XHmWfYKrAEHQ7NCkczsFU",
+        "path": "C:\\Users\\zulut\\.claude\\projects\\C--Users-zulut-Documents-minecraft-mods-ai-output-playwright-independent-claude-032-e587d05a-agent-workspace\\ba66e8b1-2b6b-41c4-8c66-7fa8d01b78ad\\tool-results\\mcp-studio_verification_032-studio_asset_export-1791196666047.txt",
+        "retained": "toolu_019XHmWfYKrAEHQ7NCkczsFU-native-tool-output.txt",
+        "bytes": 128715,
+        "sha256": "c4551be6e15289f46103e06c4f8a1df834b5d150553fa4b29ff9823ed458ee7d"
+      }
+    ],
+    "mcpCalls": 27,
+    "actualModel": "claude-opus-5-5",
+    "usage": {
+      "input_tokens": 42,
+      "cache_creation_input_tokens": 35635,
+      "cache_read_input_tokens": 528694,
+      "output_tokens": 12810,
+      "output_tokens_details": {
+        "thinking_tokens": 5709
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 35635,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "not_available",
+      "iterations": [
+        {
+          "input_tokens": 2,
+          "output_tokens": 1088,
+          "cache_read_input_tokens": 43932,
+          "cache_creation_input_tokens": 859,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 859
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard",
+      "fallback_credit": null
+    },
+    "artisticApproval": "not-granted",
+    "minecraftAcceptance": "not-tested",
+    "fullControlBrief005": "not-tested: same single-design technical brief as 031; not three variants/game views",
+    "scope": "Corrected installed-client collector, exact image/export checks and replay",
+    "paletteColors": 6,
+    "successfulApplies": 7,
+    "exactReplay": true,
+    "exportMatchesFinalProject": true,
+    "bundleManifestSha256": "efc2bd7cb83be415a6f71642570d39dae4c5714d73388e5a18986658598d5a5a",
+    "bundleManifest": {
+      "schemaVersion": 1,
+      "kind": "mcdev-asset-bundle-manifest",
+      "target": {
+        "minecraft": "1.20.1",
+        "loader": "fabric",
+        "java": 17
+      },
+      "reviewRequired": true,
+      "modSpecSha256": null,
+      "artSpecSha256": null,
+      "namespaces": [
+        "mcdev"
+      ],
+      "files": [
+        {
+          "path": "assets/mcdev/models/item/new_item.json",
+          "role": "model",
+          "encoding": "utf8",
+          "bytes": 20494,
+          "sha256": "c3d97a9ce5a3f554c7efca72960b225e7e651627219c56119f4e7729ce487c19"
+        },
+        {
+          "path": "assets/mcdev/textures/item/new_item.png",
+          "role": "texture",
+          "encoding": "base64",
+          "bytes": 646,
+          "sha256": "ecc1ba8b9a39a9755f21cc5cf43fd834577f2ecba2bbd298d9a6811bbf559993"
+        },
+        {
+          "path": "editable/mcdev/new_item.bbmodel",
+          "role": "editable",
+          "encoding": "utf8",
+          "bytes": 27121,
+          "sha256": "9b15fde799c1bfb728f2e2f87fdf6022faedce56fb6602e4422ec3544b564785"
+        },
+        {
+          "path": "source/mcdev/new_item.item-asset.json",
+          "role": "source",
+          "encoding": "utf8",
+          "bytes": 71547,
+          "sha256": "b6740e60fbd0d4a10f2cc4c5c32ea7cba6c073f16cb4a7c394ef59a3539e6aa8"
+        }
+      ],
+      "assets": [
+        {
+          "id": "mcdev:new_item",
+          "source": "source/mcdev/new_item.item-asset.json",
+          "editable": [
+            "editable/mcdev/new_item.bbmodel"
+          ],
+          "references": [
+            {
+              "collection": "items",
+              "id": "mcdev:new_item"
+            }
+          ],
+          "kind": "held-item",
+          "runtime": {
+            "model": "assets/mcdev/models/item/new_item.json",
+            "textures": [
+              "assets/mcdev/textures/item/new_item.png"
+            ]
+          }
+        }
+      ]
+    },
+    "artifacts": [
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\playwright\\independent-claude-032-e587d05a\\report.json",
+        "bytes": 4665,
+        "sha256": "1fbb26fd81df2bce89a7c861bd59d04abb0cd3a26ee2e413f1e9c0898a694559"
+      },
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\playwright\\independent-claude-032-e587d05a\\initial-project.json",
+        "bytes": 69905,
+        "sha256": "8d38d683d67c0205c40d2e1194797f7c8de128bde2b814beb57223b1210b1d05"
+      },
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\playwright\\independent-claude-032-e587d05a\\final-project.json",
+        "bytes": 91536,
+        "sha256": "c495ac8b6c67a69f538db66a44ef54989164c06fdb73e341f9213cd4fa114c81"
+      },
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\playwright\\independent-claude-032-e587d05a\\events.jsonl",
+        "bytes": 856895,
+        "sha256": "343f1f0c62e36dfa7798d3bf49154afc987a9d982d923c46ee5b145144602b92"
+      },
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\playwright\\independent-claude-032-e587d05a\\toolu_019XHmWfYKrAEHQ7NCkczsFU-bundle.json",
+        "bytes": 128850,
+        "sha256": "df1543fb1ab8bf2bc1b39461dc978206190ec2ff83de3abae0e94c3715854e53"
+      }
+    ],
+    "failures": [],
+    "feedback": [
+      {
+        "id": "ea621f15-ec7e-4b00-8be7-4c4fb30a478c",
+        "text": "Сцена пустая (rev 3, один куб-рукоять для проверки семантики transform). Собираю blockout топора."
+      },
+      {
+        "id": "2244bbb4-9dd9-4fa1-a13c-6c1de810daae",
+        "text": "Геометрия обновлена (rev 6). Теперь рисунок: грани кристалла, блик на обухе, градиент клинка."
+      },
+      {
+        "id": "1c03c80f-1ea9-4de1-863f-fbf1c9aed636",
+        "text": "Клинок теперь расширяется ступенями к кромке, торец обуха читается. Снимаю финальные виды."
+      },
+      {
+        "id": "a9ac9aaa-c92f-496c-8c3f-0285028d8ddc",
+        "text": "Ледяной топор готов, итоговая **revision 8**: 16 кубов, 6 цветов из брифа. Техническая проверка `studio_asset_validate` прошла (`technical: pass`), но выставила `visual: requires-human-review` и `game: not-verified`. Художественной приёмки и проверки в Minecraft не было.\n\n**Конструкция:**\n- **Рукоять:** `#304b63`, на ней три кожаные обмотки `#665040` и тёмное навершие.\n- **Гарда:** короткая и асимметричная, с выступом-шипом в сторону клинка.\n- **Крепление головы:** втулка с тёмным воротником и крышкой.\n- **Кристалл:** у основания головы, повёрнут на 45° и выступает с обеих сторон. На гранях нарисованы светлая и тёмная половины.\n- **Обух:** тёмный `#172333`, со светлым торцом `#628fa5`.\n- **Клинок:** расширяется к кромке тремя ступенями: `#628fa5`, затем `#b8e5ed`, затем широкая кромка `#e9f8ed`.\n\n**Что исправлено по реальным PNG `studio_model_review`:**\n- Rev 5: клинок был плоским прямоугольником и походил на молот. Сделал ступенчатое расширение к кромке.\n- Rev 5: шип гарды был мелким и казался оторванным. Увеличил его.\n- Rev 5: кристалл был мал для 32 px. Увеличил его.\n- Rev 7: кромка читалась как отдельная планка. Удлинил среднюю часть клинка.\n- Rev 7: тёмный обух сливался с фоном. Осветлил его торец.\n\nПовторный обзор rev 8 подтвердил, что эти недостатки ушли. На 32 и 64 px читаются кромка, кристалл и полосы обмотки. Фронт, тыл и перспектива сняты на rev 8; спереди и сзади рисунок совпадает.\n\n**Ограничения:**\n- Шип гарды и навершие тёмные, на тёмном фоне контраст у них слабый.\n- Рисунок на гранях почти плоский: детали кожаной обмотки не прорисованы.\n- В размерах двух кубов остались значения с плавающей погрешностью, например `1.99999995`. Я их не выравнивал.\n- `studio_asset_export` с `format=\"bundle-v1\"` выполнен на rev 8, но его ответ (~128 тыс. символов) оказался больше лимита. Его сохранил не я, а сама среда, в файл `…\\tool-results\\mcp-studio_verification_032-studio_asset_export-1791196666047.txt`. Читать этот файл через shell запрещено, поэтому содержимое бандла (манифест, хеши) я не проверял. Точный экспорт сохраняет оператор.\n\nЯ не пользовался ничем, кроме 10 разрешённых инструментов. Контекст разросся, так что дальше лучше продолжить после `/clear`."
+      }
+    ],
+    "finalViews": [
+      null,
+      "front",
+      "back",
+      "perspective"
+    ],
+    "combinedReviewRevisions": [
+      5,
+      7,
+      8
+    ],
+    "operatorGeometryChanges": 0,
+    "packageHashes": [
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.10.1\\1aab9f14\\MineMod Studio-win32-x64\\MineMod Studio.exe",
+        "bytes": 245726208,
+        "sha256": "8332e485c470ac7521ed752a02881bdb28a8399ac3c7b77afa3ded514931c805"
+      },
+      {
+        "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.10.1\\1aab9f14\\MineMod Studio-win32-x64\\resources\\app.asar",
+        "bytes": 3531764,
+        "sha256": "bc5ce83be204785bc2114663c9aa17da5cfa0a4b7d57c0d0aedefd3d1458a0f3"
+      }
+    ]
+  },
+  "retainedEarlierAttempt": {
+    "path": "output/playwright/independent-claude-032-6ca08968/report.json",
+    "originalStatus": "FAIL",
+    "reason": "First collector did not recognize native CLI transport retention of an oversized export",
+    "originalReportUnchanged": true,
+    "noSecondExportOrSceneMutation": true,
+    "independentPostVerificationStatus": "PASS",
+    "projectId": "41391d55-87e8-4f83-b2f6-a113ad35f007",
+    "mcpCalls": 40,
+    "successfulApplies": 8,
+    "captures": 11,
+    "finalCubes": 20,
+    "finalRevision": 9,
+    "finalViews": [
+      "front",
+      "back",
+      "perspective"
+    ],
+    "lastSmallReviewRevision": 8,
+    "bundleManifestSha256": "97a5c3b8763cd85e07e8567818f58e1f90bd2a300ceab9d13f1685833b081a19"
+  },
+  "nativeReaderVerification": {
+    "status": "PASS",
+    "actualNativeCliResult": true,
+    "exactRetainedBytes": {
+      "toolUseId": "toolu_013YGFAsAPressbajBqpWrjd",
+      "path": "C:\\Users\\zulut\\.claude\\projects\\C--Users-zulut-Documents-minecraft-mods-ai-output-playwright-independent-claude-032-6ca08968-agent-workspace\\1e6f311d-8351-49e1-a2a6-b09b27572ea8\\tool-results\\mcp-studio_verification_032-studio_asset_export-1791195495323.txt",
+      "retained": "toolu_013YGFAsAPressbajBqpWrjd-native-tool-output.txt",
+      "bytes": 143244,
+      "sha256": "c5a6d3666bc37c004f8a781be345f79aab24a74f7c690cab3a539bce30b0efc0"
+    },
+    "cases": [
+      "actual export equals original recovered bundle",
+      "other tool ignored",
+      "foreign directory rejected",
+      "other session rejected",
+      "other revision rejected",
+      "other project rejected",
+      "unsafe tool id rejected"
+    ]
+  },
+  "logs": [
+    {
+      "path": "output/verification/roadmap-032-lint.log",
+      "bytes": 29,
+      "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+    },
+    {
+      "path": "output/verification/roadmap-032-typecheck.log",
+      "bytes": 176,
+      "sha256": "fe0327fb3a908a7cea6b4e5ef62bbaa7903d4f4149a209170e6249f0dd5c8190"
+    },
+    {
+      "path": "output/verification/roadmap-032-corrected-collector.log",
+      "bytes": 3038,
+      "sha256": "e1b70005f489e68fca9b9fe16902f1d73a257d2ecafe7cbf5673832de2bfc4ed"
+    },
+    {
+      "path": "output/verification/roadmap-032-corrected-session-verification.json",
+      "bytes": 11173,
+      "sha256": "34cb412257a59a864cc0b5235987e968ecc69dd9ba8858525016be1c5c905998"
+    },
+    {
+      "path": "output/verification/roadmap-032-independent-session-verification.json",
+      "bytes": 15549,
+      "sha256": "e9822cd3c86e28199fb5be6b6bc45e1d2bcaca4f57a46c6cf0b0d9c1678a8518"
+    },
+    {
+      "path": "output/verification/roadmap-032-native-reader-check.json",
+      "bytes": 846,
+      "sha256": "b9361eb618cb92aadee048a056f333b27edce69cfc2855cd2851b81d24b388c8"
+    }
+  ],
+  "permissions": "Only ten exact Studio MCP tools; builtins, skills, hooks, other MCP and user plugins disabled per process; own hidden Studio",
+  "auth": "Existing user claude.ai login; model/effort inherited; no user-config modifications or copied credentials",
+  "newDependencies": false,
+  "trustedPacksChanged": false,
+  "artisticApproval": "not-granted",
+  "minecraftAcceptance": "not-tested",
+  "fullControlBrief005": "not-tested: same single-design technical brief as 031; not three variants/game views",
+  "visualObservation": "Actual final images show stepped rectangular blade, diamond at head base and three wrap bands. Flat leather and weak dark-on-dark contrast remain. No score, quality improvement or human acceptance inferred from technical PASS."
+}
