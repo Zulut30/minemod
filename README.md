@@ -124,16 +124,20 @@ artifact index ←── verified JAR ←── fixed Gradle runner ←── ne
 
 - Node.js `24.11.0`;
 - pnpm `11.8.0` через Corepack;
-- Eclipse Temurin `17.0.19+10` для Fabric 1.20.1 builds.
+- Git и Python 3 для проверок checkout и игровых bootstrap inputs;
+- Eclipse Temurin `17.0.19+10` для Fabric 1.20.1 builds на Linux x64.
 
 ```bash
-corepack pnpm install
-pnpm test
-pnpm typecheck
-pnpm lint
+node scripts/verify-clean-checkout.mjs
+corepack pnpm install --frozen-lockfile
+corepack pnpm typecheck:all
+corepack pnpm lint
+corepack pnpm build
 ```
 
-`pnpm test` выполняет полный suite на Linux x64 и явно отказывает на другой ОС: он проверяет реальные POSIX file modes и Linux-only build runner. Для Windows используйте `corepack pnpm test:portable`, `corepack pnpm typecheck:all` и `corepack pnpm lint`; packaged Studio проверяется отдельным Windows E2E. Успешный portable suite не подтверждает build/GameTests/dedicated server. [Матрица проверок ОС](docs/production/OS_VERIFICATION.md).
+Проверка checkout предназначена для свежего clone до `install`: старые `output/`, dependencies и build-каталоги вызывают отказ. Она не удаляет их из рабочей копии. [Чистый старт, команды сборки и границы воспроизводимости](docs/production/CLEAN_CHECKOUT.md).
+
+`corepack pnpm test` выполняет полный suite на Linux x64 и явно отказывает на другой ОС: он проверяет реальные POSIX file modes и Linux-only build runner. Для Windows используйте `corepack pnpm test:portable`; packaged Studio проверяется отдельным Windows E2E. Успешный portable suite не подтверждает build/GameTests/dedicated server. [Матрица проверок ОС](docs/production/OS_VERIFICATION.md).
 
 Проверка спецификации:
 

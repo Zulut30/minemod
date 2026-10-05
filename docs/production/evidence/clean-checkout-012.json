@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 12,
+  "status": "PARTIAL",
+  "checkedAtUtc": "2026-10-05T11:16:34.582Z",
+  "scope": "Fresh Windows x64 Studio and Linux x64 TypeScript/production Fabric 1.20.1 builds; checkout byte/mode guards before install",
+  "sourceHashes": [
+    {
+      "path": "scripts/verify-clean-checkout.mjs",
+      "bytes": 5790,
+      "sha256": "098c115e1ce9b9f4d04891a0f8d7ab29d9a817c652c2f94781c9e6429abf4bb7"
+    },
+    {
+      "path": "scripts/verify-clean-checkout.test.mjs",
+      "bytes": 4117,
+      "sha256": "62067f6f3d6a42e8164d960fe34bfd81bbde7322185d2f6139dac7bad3bf6066"
+    },
+    {
+      "path": ".github/workflows/phase-0.yml",
+      "bytes": 26989,
+      "sha256": "549bd24bee360fb2db1862690d1ad082612cfd0c706d935442b036b737b95392"
+    },
+    {
+      "path": "README.md",
+      "bytes": 20287,
+      "sha256": "a705044e85376bd72bef44ea9fad94d95ff8baafb6cd717c8fd3834d113f55b0"
+    },
+    {
+      "path": "docs/production/CLEAN_CHECKOUT.md",
+      "bytes": 6380,
+      "sha256": "f4d6e068f185b25d6457306fe48d0e489b2196355bca308583aad860d0ae04d5"
+    }
+  ],
+  "local": {
+    "status": "PASS",
+    "platform": "win32",
+    "cloneSourceRevision": "3ed59356c0d46b0146f58c340386728bdf16b99d",
+    "checks": [
+      "fresh checkout with core.autocrlf=true preserves exact committed bytes",
+      "rejects pre-existing output",
+      "rejects pre-existing node_modules",
+      "rejects pre-existing apps/model-editor/dist",
+      "rejects pre-existing fixtures/fabric-1.20.1-empty/run",
+      "rejects transformed raw LF bytes even when Git normalizes text",
+      "rejects altered index executable bit",
+      "rejects corrupted bootstrap JAR without rewriting reviewed inputs",
+      "rejects untracked source input"
+    ],
+    "note": "Disposable clone of committed baseline; new guard is exercised from current implementation, hosted exact new source pending"
+  },
+  "logs": [
+    {
+      "path": "output/verification/roadmap-012-guards-local.json",
+      "bytes": 659,
+      "sha256": "31330408ee1eb41a9bbc475870b7a3b329eea75e0233951850c4b38a586efe9b"
+    },
+    {
+      "path": "output/verification/roadmap-012-lint-full.log",
+      "bytes": 29,
+      "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+    }
+  ],
+  "checks": {
+    "lint": "PASS full workspace",
+    "negativeGuards": "PASS nine Windows cases",
+    "hostedNewSource": "pending"
+  },
+  "newDependencies": false,
+  "trustedPacksChanged": false,
+  "fixturesChanged": false,
+  "limits": {
+    "byteIdenticalJarExe": "not-claimed",
+    "offlineFirstInstall": "not-claimed",
+    "otherOperatingSystems": "not-verified",
+    "windowsJarBuildRunner": "unsupported",
+    "rawBootstrapPins": "same reviewed inputs; no checksum bypass",
+    "legacyFabric26": "existing derived artifact checksum failure remains",
+    "minecraftAuthoredArt": "not-tested"
+  }
+}

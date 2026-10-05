@@ -25,6 +25,10 @@ jobs:
         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
           node-version: 24.11.0
+      - name: Verify untouched clean checkout
+        run: node scripts/verify-clean-checkout.mjs control-plane
+      - name: Test clean-checkout rejection guards
+        run: node scripts/verify-clean-checkout.test.mjs > output/ci/clean-checkout/guard-tests.json
       - name: Install frozen dependencies
         run: corepack pnpm install --frozen-lockfile
       - name: Lint
@@ -37,6 +41,14 @@ jobs:
         run: corepack pnpm build
       - name: Build desktop bundles
         run: corepack pnpm --filter @mcdev/model-editor build
+      - name: Upload clean-checkout evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: control-plane-clean-checkout-evidence
+          path: output/ci/clean-checkout/**
+          if-no-files-found: error
+          retention-days: 14
 
   studio-windows:
     runs-on: windows-2022
@@ -53,6 +65,10 @@ jobs:
         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
           node-version: 24.11.0
+      - name: Verify untouched clean checkout
+        run: node scripts/verify-clean-checkout.mjs studio-windows
+      - name: Test clean-checkout rejection guards
+        run: node scripts/verify-clean-checkout.test.mjs > output/ci/clean-checkout/guard-tests.json
       - name: Install frozen dependencies
         run: corepack pnpm install --frozen-lockfile
       - name: Lint
@@ -76,6 +92,7 @@ jobs:
         with:
           name: minemod-studio-windows-evidence
           path: |
+            output/ci/clean-checkout/**
             output/playwright/**/report.json
             output/playwright/**/failure.json
             output/playwright/**/*.png
@@ -98,6 +115,8 @@ jobs:
         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
           node-version: 24.11.0
+      - name: Verify untouched clean checkout
+        run: node scripts/verify-clean-checkout.mjs fabric-production
       - name: Install frozen dependencies
         run: corepack pnpm install --frozen-lockfile
       - name: Verify production bootstrap inputs
@@ -176,6 +195,7 @@ jobs:
         with:
           name: fabric-1.20.1-java17-evidence
           path: |
+            output/ci/clean-checkout/**
             output/ci/fabric-production/**
             fixtures/fabric-1.20.1-empty/build/reports/gametest/production.xml
             fixtures/fabric-1.20.1-empty/build/reports/dependency-verification/**
