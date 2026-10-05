@@ -8,7 +8,7 @@ import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/
 import type { Transport } from "@modelcontextprotocol/sdk/shared/transport.js";
 import { EditorSession, projectFromAsset, type EditorCommand } from "@mcdev/editor-core";
 import { startEditorMcp } from "./mcp.ts";
-import { CONTRACT_URI, SCENE_URI, HUMAN_COMMANDS, STUDIO_LIMITS } from "./discovery.ts";
+import { CONTRACT_URI, SCENE_URI, HUMAN_COMMANDS, STUDIO_LIMITS, AgentMutationSchema } from "./discovery.ts";
 
 let session = new EditorSession(projectFromAsset(JSON.parse(await readFile(new URL(
   "../../../fixtures/assets/aurora-longsword-v2.item-asset.json", import.meta.url,
@@ -60,6 +60,45 @@ try {
   const commandSchemas = previewSchema.properties.commands.items.oneOf ?? previewSchema.properties.commands.items.anyOf;
   const advertised = commandSchemas.map((s: { properties: { type: { const: string } } }) => s.properties.type.const);
   assert.deepEqual(advertised, contracts.agentCommands);
+  // Реальный CLI пропускал preview из-за draft-7 items: [schema, ...].
+  const byCommand = (name: string) => commandSchemas.find((s: { properties: { type: { const: string } } }) =>
+    s.properties.type.const === name).properties;
+  const tuples = [
+    [byCommand("transform").translation, 3, "number"],
+    [byCommand("transform").scale, 3, "number"],
+    [byCommand("paint").points.items, 2, "integer"],
+    [byCommand("fill").seed, 2, "integer"],
+    [byCommand("uv").rect, 4, "integer"],
+  ] as const;
+  for (const [tuple, length, itemType] of tuples) {
+    assert.equal(Array.isArray(tuple.items), false, "CLI must receive a single items schema.");
+    assert.equal(tuple.items.type, itemType);
+    assert.equal(tuple.minItems, length); assert.equal(tuple.maxItems, length);
+  }
+  assert.equal(byCommand("transform").scale.items.minimum, 0.01);
+  assert.equal(byCommand("transform").scale.items.maximum, 20);
+  assert.equal(byCommand("paint").points.maxItems, STUDIO_LIMITS.strokePoints);
+  assert.equal(byCommand("paint").points.items.items.maximum, 255);
+  assert.equal(byCommand("uv").rect.items.maximum, 256);
+  const validTuples = [
+    { type: "transform", cubeIds: ["test_cube"], translation: [0, 1, 2], scale: [1, 2, 3] },
+    { type: "paint", cubeIds: ["test_cube"], color: "#112233", size: 1, points: [[0, 255]] },
+    { type: "fill", cubeIds: ["test_cube"], color: null, seed: [0, 255] },
+    { type: "uv", cubeId: "test_cube", face: "north", rect: [0, 0, 256, 256] },
+  ];
+  for (const command of validTuples) {
+    const payload = mutation([command]);
+    assert.equal(AgentMutationSchema.safeParse(payload).success, true);
+    for (const [field, value] of Object.entries(command)) {
+      if (!Array.isArray(value) || field === "cubeIds") continue;
+      const nested = field === "points";
+      const tuple = nested ? value[0] as number[] : value;
+      for (const wrong of [tuple.slice(1), [...tuple, 0]]) {
+        assert.equal(AgentMutationSchema.safeParse(mutation([{ ...command,
+          [field]: nested ? [wrong] : wrong }])).success, false, `${command.type}/${field} length`);
+      }
+    }
+  }
   assert.deepEqual(contracts.humanOnlyCommands, HUMAN_COMMANDS);
   for (const human of HUMAN_COMMANDS) assert(!advertised.includes(human));
   for (const required of ["pivot", "snap", "paint", "uv", "redo"]) assert(advertised.includes(required));

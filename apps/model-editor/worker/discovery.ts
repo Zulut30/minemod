@@ -13,9 +13,30 @@ export const HUMAN_COMMANDS = ["brief", "checkpoint", "restoreVariant", "deleteV
 const agentOptions = CommandSchema.options.filter((s) => !HUMAN_COMMANDS.includes(s.shape.type.value));
 const [firstAgentOption, ...otherAgentOptions] = agentOptions;
 // Схема агента использует те же поля, что core, и исключает ручные операции.
-export const AgentMutationSchema = MutationSchema.extend({
+const agentMutationSchema = MutationSchema.extend({
   commands: z.array(z.discriminatedUnion("type", [firstAgentOption!, ...otherAgentOptions])).min(1).max(32),
 });
+// Codex CLI 0.160.0 ожидает schema object в items, а не draft-7 tuple array.
+// Однородный tuple выражается тем же item schema и точной длиной без ослабления parser.
+function homogeneousTupleSchemas(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(homogeneousTupleSchemas);
+  if (value === null || typeof value !== "object") return value;
+  const result: Record<string, unknown> = Object.fromEntries(Object.entries(value)
+    .map(([key, child]) => [key, homogeneousTupleSchemas(child)]));
+  if (result.type === "array" && Array.isArray(result.items)) {
+    const items: unknown[] = result.items;
+    if (!items.length || items.some((item) => JSON.stringify(item) !== JSON.stringify(items[0])))
+      throw new Error("Studio MCP input schema requires homogeneous fixed tuples.");
+    result.items = items[0];
+    result.minItems = items.length;
+    result.maxItems = items.length;
+  }
+  return result;
+}
+const compatibleInput = homogeneousTupleSchemas(z.toJSONSchema(agentMutationSchema,
+  { io: "input", target: "draft-7" })) as { properties: Record<string, unknown> };
+// Metadata используется обоими SDK tools/list и contract resource. Runtime Zod schema та же.
+export const AgentMutationSchema = agentMutationSchema.meta({ properties: compatibleInput.properties });
 export const STUDIO_LIMITS = Object.freeze({
   cubes: 256, commands: 32, strokePoints: MAX_STROKE_POINTS, brushSize: 8,
   paletteColors: 32, uvPadding: 1, requestBytes: MAX_COMMAND_BYTES,

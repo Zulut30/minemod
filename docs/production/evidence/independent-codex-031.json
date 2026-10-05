@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 31,
+  "status": "PARTIAL",
+  "checkedAtUtc": "2026-10-05T10:07:30.656Z",
+  "scope": "One independent installed Codex CLI 0.160.0 model turn creating held-item through bounded Studio HTTP MCP from empty scene",
+  "implementation": "Studio 0.10.1 homogeneous fixed tuple schema metadata; unchanged runtime parsers; optional installed-client operator harness",
+  "sourceHashes": [
+    {
+      "path": "apps/model-editor/worker/discovery.ts",
+      "bytes": 10924,
+      "sha256": "bb80de136fbf9ebcf40040f42d5e9c753ab23f4667427133b0502f6bca0fe258"
+    },
+    {
+      "path": "apps/model-editor/worker/discovery.test.ts",
+      "bytes": 11155,
+      "sha256": "739d4386117c45a9f560857c12e8ea3fd9b426587d64d782ab1eeb86f65fbd49"
+    },
+    {
+      "path": "apps/model-editor/package.json",
+      "bytes": 1433,
+      "sha256": "5d33249d2f536f8e37a45675efa28107958b8fe193ac50f06dff8484f0e70dee"
+    },
+    {
+      "path": "apps/model-editor/scripts/verify-codex-session.mjs",
+      "bytes": 12933,
+      "sha256": "3c430a7c509659a24dabb5f8e8e9cd27678784fd3702f96843d87e8f85cc625c"
+    }
+  ],
+  "checks": {
+    "discovery": "PASS exact SDK schemas plus five fixed tuples/bounds/lengths and existing negative/CAS cases",
+    "http": "PASS local authentication/limits/replay/locks/export",
+    "lint": "PASS",
+    "typecheck": "PASS",
+    "package": "PASS Windows x64",
+    "independentSession": "running; not claimed as PASS",
+    "hostedFullWindows": "pending current source"
+  },
+  "logs": [
+    {
+      "path": "output/verification/roadmap-031-discovery.log",
+      "bytes": 203,
+      "sha256": "a8a7fda7aed1426020f3caa5d1d22f036754524f8906a1f3f78035671b9171ac"
+    },
+    {
+      "path": "output/verification/roadmap-031-mcp.log",
+      "bytes": 207,
+      "sha256": "ce600a29360c371575566860a7c94c33766d03e9a2ba5f6249e976ae6338a777"
+    },
+    {
+      "path": "output/verification/roadmap-031-lint.log",
+      "bytes": 29,
+      "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+    },
+    {
+      "path": "output/verification/roadmap-031-typecheck.log",
+      "bytes": 176,
+      "sha256": "fe0327fb3a908a7cea6b4e5ef62bbaa7903d4f4149a209170e6249f0dd5c8190"
+    },
+    {
+      "path": "output/verification/roadmap-031-package.log",
+      "bytes": 787,
+      "sha256": "a5b249ff3da2d6258c63133d4c6b62ff8b9775fb3f3d970258e2cf1023dd261a"
+    }
+  ],
+  "retainedFailedAttempts": [
+    {
+      "path": "output/playwright/independent-codex-031-086685b3/setup-failure.json",
+      "status": "SETUP_FAILED",
+      "cliStarted": false,
+      "reason": "Fresh default dirty scene opened native dialog in owned hidden harness"
+    },
+    {
+      "path": "output/playwright/independent-codex-031-ad5dc4aa/report.json",
+      "status": "FAIL",
+      "cliStarted": true,
+      "initialCubes": 0,
+      "finalCubes": 0,
+      "exports": 0,
+      "reason": "CLI skipped studio_changes_preview: draft-7 tuple items array could not deserialize"
+    },
+    {
+      "path": "output/playwright/independent-codex-031-a01c8fca/report.json",
+      "status": "FAIL",
+      "cliStarted": true,
+      "initialCubes": 0,
+      "finalCubes": 0,
+      "exports": 0,
+      "reason": "Schema exposed preview, but auto/never client configuration required approval for apply"
+    }
+  ],
+  "activeSession": "output/playwright/independent-codex-031-9ab419a3",
+  "auth": "Existing user ChatGPT CLI login; no copied credentials or user-config writes; model/effort inherited",
+  "permissions": "Ten known Studio tools only; per-tool approve for bounded apply/undo in owned empty scene; other configured MCP explicitly disabled; shell/file/web/subagents forbidden",
+  "newDependencies": false,
+  "trustedPacksChanged": false,
+  "artisticApproval": "not-granted",
+  "minecraftAcceptance": "not-tested",
+  "fullControlBrief005": "not-tested: one design with existing 256 atlas, not three variants/game contexts"
+}
