@@ -5,7 +5,7 @@
   "pointClosed": false,
   "checkedAtUtc": "2026-10-05T19:59:38.936Z",
   "sourceBeforeImplementation": "4091a5de4b9e1e0cc9327d372d453ac42d8be0ad",
-  "sourceCommit": null,
+  "sourceCommit": "0a1f7393616d332407b118d9f92aeaa3a547094b",
   "sourceInputs": [
     {
       "path": "apps/model-editor/package.json",

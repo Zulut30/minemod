@@ -1,0 +1,274 @@
+{
+  "schemaVersion": 1,
+  "kind": "model-intent-unicode-fix",
+  "status": "BASELINE_TECHNICAL_PASS",
+  "sourceCommit": "4091a5de4b9e1e0cc9327d372d453ac42d8be0ad",
+  "sourceTree": "c7a9280ce48ba0a72dee2675054c10a0dc803dae",
+  "checkedAtUtc": "2026-10-05T20:03:12.357Z",
+  "inputs": [
+    {
+      "path": "packages/modspec/model-intent.ts",
+      "bytes": 7006,
+      "sha256": "99479836fcce5ec15aabe7fcfa120761ebf7f3a4a99cca2da7952af96fa6b863"
+    },
+    {
+      "path": "packages/modspec/model-intent.test.ts",
+      "bytes": 5247,
+      "sha256": "14b28cfb744f7a7a69422e7e8517d3cd2f53fb26c393abf72d4bcf7e642be298"
+    },
+    {
+      "path": "packages/validation/model-art.test.ts",
+      "bytes": 8960,
+      "sha256": "cce5f9c0637c0ad9eb5a9ca5d71aebf69ccae134e9b97f885436d1510efdd38e"
+    }
+  ],
+  "local": [
+    {
+      "path": "output/verification/art-intent-unicode-cli.json",
+      "bytes": 403,
+      "sha256": "106fbc9e420324153d3dad0a8c6a7b2c042b047a59b219ab955303699efb4a21"
+    },
+    {
+      "path": "output/verification/art-intent-unicode-legacy-schemas.json",
+      "bytes": 630,
+      "sha256": "c561a9bd076c2652a8a0d16bd19d1df154b998d766b436abe376ac76f7c9d636"
+    },
+    {
+      "path": "output/verification/art-intent-unicode-lint.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "output/verification/art-intent-unicode-typecheck.log",
+      "bytes": 31,
+      "sha256": "996f3562f9208e98d465f549a4df5ffe56751fdf4a4c54c23db693e88a46e347"
+    },
+    {
+      "path": "output/verification/art-intent-unicode-tests.log",
+      "bytes": 711,
+      "sha256": "36516349f8a058dd5e052c400c75d62a1f900a20c2d68032bb4d554c3d48f723"
+    },
+    {
+      "path": "output/verification/art-intent-unicode-portable.log",
+      "bytes": 4345,
+      "sha256": "f2c0f6f09f8c9c5ff21c37fb6a6f024a9a390b10280e75ced38bc332dfc99343"
+    },
+    {
+      "path": "output/verification/art-intent-unicode-studio-build.log",
+      "bytes": 540,
+      "sha256": "0d248ca817185861264515c09ca97dbb509e4be9345e870267cf7ea2fd26438a"
+    }
+  ],
+  "hosted": {
+    "runId": 37364290675,
+    "attempt": 1,
+    "url": "https://github.com/Zulut30/minemod/actions/runs/37364290675",
+    "wholeConclusion": "failure",
+    "jobs": [
+      {
+        "id": 111945713502,
+        "name": "studio-windows",
+        "conclusion": "success",
+        "status": "completed"
+      },
+      {
+        "id": 111945713578,
+        "name": "neoforge",
+        "conclusion": "success",
+        "status": "completed"
+      },
+      {
+        "id": 111945713604,
+        "name": "fabric",
+        "conclusion": "failure",
+        "status": "completed"
+      },
+      {
+        "id": 111945713646,
+        "name": "control-plane",
+        "conclusion": "success",
+        "status": "completed"
+      },
+      {
+        "id": 111945713710,
+        "name": "Fabric 1.20.1 / Java 17 production target",
+        "conclusion": "success",
+        "status": "completed"
+      },
+      {
+        "id": 111946891826,
+        "name": "client-smoke",
+        "conclusion": "cancelled",
+        "status": "completed"
+      },
+      {
+        "id": 111947768138,
+        "name": "fabric-client",
+        "conclusion": "skipped",
+        "status": "completed"
+      }
+    ],
+    "cleanCheckouts": [
+      {
+        "kind": "windows",
+        "sourceRevision": "4091a5de4b9e1e0cc9327d372d453ac42d8be0ad",
+        "tree": "c7a9280ce48ba0a72dee2675054c10a0dc803dae",
+        "trackedFiles": 574,
+        "path": "output/ci/37364290675-windows/output/ci/clean-checkout/studio-windows.json",
+        "bytes": 4469,
+        "sha256": "10dc7268ea9516414ca69a1730ec87d845900cc7b97a85f81d0383813a64e2ae"
+      },
+      {
+        "kind": "linux",
+        "sourceRevision": "4091a5de4b9e1e0cc9327d372d453ac42d8be0ad",
+        "tree": "c7a9280ce48ba0a72dee2675054c10a0dc803dae",
+        "trackedFiles": 574,
+        "path": "output/ci/37364290675-control/control-plane.json",
+        "bytes": 4469,
+        "sha256": "2fcf448dc24bd1164be19af445d35318015ef7527fa09feb7eaa2010ab992458"
+      },
+      {
+        "kind": "production",
+        "sourceRevision": "4091a5de4b9e1e0cc9327d372d453ac42d8be0ad",
+        "tree": "c7a9280ce48ba0a72dee2675054c10a0dc803dae",
+        "trackedFiles": 574,
+        "path": "output/ci/37364290675-production/output/ci/clean-checkout/fabric-production.json",
+        "bytes": 4469,
+        "sha256": "2fcf448dc24bd1164be19af445d35318015ef7527fa09feb7eaa2010ab992458"
+      }
+    ],
+    "windows": {
+      "report": {
+        "path": "output\\ci\\37364290675-windows\\output\\playwright\\studio-packaged-229dbe1d\\report.json",
+        "bytes": 93347,
+        "sha256": "10fc1e6be323c764c76c79bc34f2ef6214542676bc6c11d20d331da7452f1c4a"
+      },
+      "subreports": [
+        {
+          "name": "mcp",
+          "status": "PASS"
+        },
+        {
+          "name": "texture",
+          "status": "PASS"
+        },
+        {
+          "name": "polish",
+          "status": "PASS"
+        },
+        {
+          "name": "editing",
+          "status": "PASS"
+        },
+        {
+          "name": "variants",
+          "status": "PASS"
+        },
+        {
+          "name": "agentBlockouts",
+          "status": "PASS"
+        },
+        {
+          "name": "continuation",
+          "status": "PASS"
+        },
+        {
+          "name": "agentStatus",
+          "status": "PASS"
+        },
+        {
+          "name": "brief",
+          "status": "PASS"
+        },
+        {
+          "name": "concepts",
+          "status": "PASS"
+        },
+        {
+          "name": "parts",
+          "status": "PASS"
+        },
+        {
+          "name": "repair",
+          "status": "PASS"
+        },
+        {
+          "name": "manual",
+          "status": "PASS"
+        },
+        {
+          "name": "accessibility",
+          "status": "PASS"
+        },
+        {
+          "name": "accessibilityStates",
+          "status": "PASS"
+        },
+        {
+          "name": "review",
+          "status": "PASS"
+        },
+        {
+          "name": "migrations",
+          "status": "PASS"
+        },
+        {
+          "name": "history",
+          "status": "PASS"
+        },
+        {
+          "name": "geometry",
+          "status": "PASS"
+        },
+        {
+          "name": "camera",
+          "status": "PASS"
+        },
+        {
+          "name": "discovery",
+          "status": "PASS"
+        }
+      ],
+      "studio": "0.18.0"
+    },
+    "fabricProduction": {
+      "operation": {
+        "path": "output\\ci\\37364290675-production\\output\\ci\\fabric-production\\generated\\operation-evidence.v1.json",
+        "bytes": 9643,
+        "sha256": "3e42770acd9daa1262d7b44f9c93dc75dba6d8e0939b96caf5799ea41536dfd3"
+      },
+      "verifiedGeneratedFiles": 6,
+      "jar": {
+        "path": "output\\ci\\37364290675-production\\output\\ci\\fabric-production\\generated\\build\\libs\\infectedfrontier-0.1.0.jar",
+        "bytes": 28835,
+        "sha256": "63c8139423e57b925edfa40f030020b23ae2cc21571eaf711c879d58a382cc15"
+      },
+      "gameTests": {
+        "path": "output/ci/37364290675-production/fixtures/fabric-1.20.1-empty/build/reports/gametest/production.xml",
+        "bytes": 406,
+        "sha256": "ee50ec0a44c25b13df32ffe5732da9d6e1289b3c213fe17b1abc342fb5026ea3"
+      },
+      "dedicatedServer": "PASS; nonce stopped",
+      "headlessClient": "PASS; nonce stopped",
+      "authoredLeafInJar": false
+    },
+    "legacyFabric262": {
+      "status": "FAILED_CHECKSUM",
+      "report": {
+        "path": "output\\ci\\37364290675-legacy\\at-1791229232078\\dependency-verification-report.html",
+        "bytes": 9060,
+        "sha256": "e724fc64773648b4315e3f240776339eb0f94faabcf65867c38914bd02de328e"
+      },
+      "coordinate": "net.minecraft:minecraft-common-043a8b3edf:26.2",
+      "expected": "23248c15f8413aa0d06ac59e676913dd6a1dc0c5fffaa09365afd6c98d59fcd3",
+      "actual": "4708c213640f30b39490ed7ed9ff922a7ab950217d419d5d585ec292982cc02d",
+      "cause": "NOT_ESTABLISHED"
+    },
+    "auxiliaryClient": {
+      "status": "CANCELLED_BEFORE_RUN",
+      "steps": 0,
+      "retry": "dispatched; no success claimed"
+    }
+  },
+  "boundary": "Supplementary 041 contract correction. Baseline technical evidence only; no new art/game acceptance, no global CI PASS. Auxiliary NeoForge client retry is recorded separately when terminal."
+}
