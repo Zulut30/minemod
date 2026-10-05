@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "roadmapPoint": 22,
-  "status": "PARTIAL",
+  "status": "PASS",
   "checkedAtUtc": "2026-10-05T11:51:00.951Z",
   "studioVersion": "0.12.1",
-  "scope": "Focused dark-theme keyboard/ARIA/contrast at actual 175% display and two window sizes; exact numeric geometry regression",
+  "scope": "Dark-theme important visible text/state and keyboard form/file/view/tool controls at declared 100% hosted and 175% local scales, 1120x760 and 1440x960 DIP; not full WCAG certification",
   "sourceHashes": [
     {
       "path": "apps/model-editor/package.json",
@@ -186,12 +186,12 @@
     "geometryRegression": "PASS unchanged expectations and exact PNG undo",
     "lint": "PASS",
     "typecheck": "PASS",
-    "hostedNewSource": "pending"
+    "hostedNewSource": "PASS exact source full Windows packaged suite, Linux full suite and production strict build/GameTests/server/client"
   },
   "remaining": [
-    "Other actual display scales and per-monitor transfer",
-    "Screen reader complete manual workflow",
-    "Full hosted packaged expanded source suite"
+    "Other physical display scales and per-monitor transfer, not claimed",
+    "Full screen reader/WCAG certification, not claimed",
+    "External user pilot point 092"
   ],
   "logs": [
     {
@@ -278,6 +278,21 @@
       "path": "output/verification/roadmap-022-states-typecheck.log",
       "bytes": 62,
       "sha256": "7f1749195a67dd86a18bfb4f76b66413850f0ee377a565acbf98182de15f29c2"
+    },
+    {
+      "path": "output/verification/roadmap-022-hosted-status.json",
+      "bytes": 19159,
+      "sha256": "cfb853e58c309b1cb268c9c598a615e5e84ee31048150ffdd112db4632ec40a9"
+    },
+    {
+      "path": "output/verification/roadmap-022-hosted-artifacts.json",
+      "bytes": 2890,
+      "sha256": "0ba504188b5e62e2ca4a1736db47e2e7ee2ea6c4902813fc5384413f6ac7fe1d"
+    },
+    {
+      "path": "output/verification/roadmap-022-hosted-windows.log",
+      "bytes": 38839,
+      "sha256": "004f1bd5a6f2e76698e83c06e1174f3e9a6dc53746ea1e57e5dced98f005f98e"
     }
   ],
   "limits": {
@@ -438,6 +453,83 @@
       },
       "reason": "Helper assumed sample grip initially locked; now checks actual document state, then tests and restores lock by keyboard"
     },
-    "hostedNewSource": "pending"
+    "hostedNewSource": "PASS eleven actual states and keyboard actions on actual hosted 100% display"
+  },
+  "verifiedAtUtc": "2026-10-05T12:11:58.366Z",
+  "sourceRevision": "127925fe461c25627f8d09a5f26e1ae30cb80ee4",
+  "focusedSourceRevision": "38a8e91c917b15e9a54499436944f96d022ff269",
+  "hosted": {
+    "runId": 37306719669,
+    "sourceRevision": "127925fe461c25627f8d09a5f26e1ae30cb80ee4",
+    "workflowConclusion": "failure",
+    "artifactId": 11344511871,
+    "jobs": [
+      {
+        "name": "neoforge",
+        "jobId": 111752052835,
+        "conclusion": "success"
+      },
+      {
+        "name": "control-plane",
+        "jobId": 111752052996,
+        "conclusion": "success"
+      },
+      {
+        "name": "studio-windows",
+        "jobId": 111752053027,
+        "conclusion": "success"
+      },
+      {
+        "name": "fabric",
+        "jobId": 111752053028,
+        "conclusion": "failure"
+      },
+      {
+        "name": "Fabric 1.20.1 / Java 17 production target",
+        "jobId": 111752053297,
+        "conclusion": "success"
+      },
+      {
+        "name": "fabric-client",
+        "jobId": 111752389930,
+        "conclusion": "skipped"
+      },
+      {
+        "name": "client-smoke",
+        "jobId": 111753179183,
+        "conclusion": "success"
+      }
+    ],
+    "report": {
+      "path": "output\\ci\\37306719669-windows\\output\\playwright\\studio-packaged-a43bf97d\\report.json",
+      "bytes": 30231,
+      "sha256": "982852d82ec7a0e0a262ad44ad9e1a8870821900a561b6ea91c2496c35f6cca4"
+    },
+    "accessibilityReport": {
+      "path": "output\\ci\\37306719669-windows\\output\\playwright\\studio-packaged-a43bf97d\\accessibility\\report.json",
+      "bytes": 1882,
+      "sha256": "306e81b45b3d05ba6787100b6cdb8760535ed716e60ef4921b29c70ec4fb03e0"
+    },
+    "statesReport": {
+      "path": "output\\ci\\37306719669-windows\\output\\playwright\\studio-packaged-a43bf97d\\accessibility-states\\report.json",
+      "bytes": 1767,
+      "sha256": "90134773ce5eeda45495fa68c2dea1911ff31836829da6df6988cb52ce89007a"
+    },
+    "artifacts": [
+      {
+        "path": "output\\ci\\37306719669-windows\\output\\playwright\\studio-packaged-a43bf97d\\accessibility\\keyboard-focus.png",
+        "bytes": 118104,
+        "sha256": "a1fa02e11d442aeed0765e3e9f4334745c69ad973e1734df0fa2419039b5281e"
+      },
+      {
+        "path": "output\\ci\\37306719669-windows\\output\\playwright\\studio-packaged-a43bf97d\\accessibility-states\\warning-keyboard-save.png",
+        "bytes": 97762,
+        "sha256": "61e797494fdae787179d6c95b355018fcc1f4236d406f065e65632615aa015ee"
+      }
+    ],
+    "displayScale": 1,
+    "zoomFactor": 1,
+    "installedClients": "not-run",
+    "remainingRegression": "Legacy Fabric 26.2 checksum failure remains"
   }
 }
