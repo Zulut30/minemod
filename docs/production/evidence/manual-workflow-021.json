@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "roadmapPoint": 21,
-  "status": "PARTIAL",
+  "status": "PASS",
   "checkedAtUtc": "2026-10-05T11:32:28.542Z",
   "studioVersion": "0.12.0",
   "scope": "Fresh held-item authored through manual GUI, exact save/reopen/export/restart; no terminal or model writes in product flow",
@@ -106,12 +106,27 @@
       "path": "output/verification/roadmap-021-desktop-corrected.log",
       "bytes": 1624,
       "sha256": "e560a7086ced0887e43ac92f609e8ff2b62b9e887122dd409e06ac83cb19895e"
+    },
+    {
+      "path": "output/verification/roadmap-021-hosted-status.json",
+      "bytes": 19159,
+      "sha256": "f0baedb4e26f8f9f0c5c28f4d20b3c68be19182dea3bff0202c512c169a23c62"
+    },
+    {
+      "path": "output/verification/roadmap-021-hosted-artifacts.json",
+      "bytes": 2890,
+      "sha256": "1b67b95e636ece25d395458a6407a94984261fe40f77a8f64fce3f8c70d3bcc5"
+    },
+    {
+      "path": "output/verification/roadmap-021-hosted-windows.log",
+      "bytes": 38923,
+      "sha256": "227c761f2b34a9d44107f6ac352c32e08d0dfff6957b0b20a5450d4913820f3a"
     }
   ],
   "checks": {
     "focusedGui": "PASS eight sequential cases, exact four exported files",
     "helperLint": "PASS",
-    "hostedNewTestSource": "pending"
+    "hostedNewTestSource": "PASS identical manual helper and extended full packaged harness in exact source 38a8e91"
   },
   "limits": {
     "nativeDialogPaths": "mocked paths/discard only; actual dialogs and external pilot not verified",
@@ -123,5 +138,71 @@
   },
   "runtimeChanged": false,
   "newDependencies": false,
-  "trustedPacksChanged": false
+  "trustedPacksChanged": false,
+  "verifiedAtUtc": "2026-10-05T12:01:44.434Z",
+  "testSourceRevision": "eed5bcf1260309a5b6e574f242742999cd69b55e",
+  "hosted": {
+    "runId": 37305560056,
+    "sourceRevision": "38a8e91c917b15e9a54499436944f96d022ff269",
+    "studioVersion": "0.12.1",
+    "workflowConclusion": "failure",
+    "artifactId": 11343922117,
+    "jobs": [
+      {
+        "name": "studio-windows",
+        "jobId": 111748269637,
+        "conclusion": "success"
+      },
+      {
+        "name": "control-plane",
+        "jobId": 111748269833,
+        "conclusion": "success"
+      },
+      {
+        "name": "fabric",
+        "jobId": 111748269874,
+        "conclusion": "failure"
+      },
+      {
+        "name": "Fabric 1.20.1 / Java 17 production target",
+        "jobId": 111748269951,
+        "conclusion": "success"
+      },
+      {
+        "name": "neoforge",
+        "jobId": 111748269955,
+        "conclusion": "success"
+      },
+      {
+        "name": "fabric-client",
+        "jobId": 111748573768,
+        "conclusion": "skipped"
+      },
+      {
+        "name": "client-smoke",
+        "jobId": 111749204825,
+        "conclusion": "success"
+      }
+    ],
+    "report": {
+      "path": "output\\ci\\37305560056-windows\\output\\playwright\\studio-packaged-2c5aa15f\\report.json",
+      "bytes": 28298,
+      "sha256": "0b0c6c27314208cd473d89768db51b8d34eb0657efeaab521d0a9aadc3dc0e2d"
+    },
+    "manualReport": {
+      "path": "output\\ci\\37305560056-windows\\output\\playwright\\studio-packaged-2c5aa15f\\manual\\report.json",
+      "bytes": 1459,
+      "sha256": "ae7c670e3a442fd3c17bed7ccbb8ce4bda46cb4e3c6f3170e5f06d6129bcfb55"
+    },
+    "image": {
+      "path": "output\\ci\\37305560056-windows\\output\\playwright\\studio-packaged-2c5aa15f\\manual\\manual-export.png",
+      "bytes": 79207,
+      "sha256": "78a7af9fe7b8f08ad24ed3703ac223f4d997fe0d0b39207b924617481164b29f"
+    },
+    "harnessHash": "b2e16466b5b7e9d4b7132d18b682d0b70330270a7dfcc142d822e26feac7f064",
+    "helperHash": "e52e484e7418ee0ec8940190f81e4e1ef3cf2eaff320508495ea5d0be5820967",
+    "retainedFiles": "Hosted uploader retains report and PNG; saved project/export bytes are verified by actual helper, full local files retained separately",
+    "installedClients": "not-run",
+    "remainingRegression": "Legacy Fabric 26.2 checksum failure remains"
+  }
 }

@@ -1,6 +1,6 @@
 # Полный ручной путь в Studio
 
-Пункт 021, в работе. Проверяется новый пустой held-item, созданный через GUI: добавление куба, имя части, размер, положение, цвет, сохранение, смена документа, повторное открытие и экспорт. Терминал не входит в пользовательский путь. Developer test запускает собственный скрытый экземпляр упакованного EXE.
+Пункт 021 закрыт в описанном GUI scope. Проверяется новый пустой held-item, созданный через GUI: добавление куба, имя части, размер, положение, цвет, сохранение, смена документа, повторное открытие и экспорт. Терминал не входит в пользовательский путь. Developer test запускает собственный скрытый экземпляр упакованного EXE.
 
 ## Сценарий
 
@@ -18,4 +18,6 @@
 
 Ранее существующие packaged suites дополнительно проверяют cancel, Save As, неверный ввод, stale open/save, backup recovery, UV/painting, undo/redo и человеческую историю. Это автоматизированная проверка GUI; внешний пользовательский пилот и наблюдение за затруднениями человека остаются пунктом 092.
 
-Первый helper неверно прочитал расположение source path в manifest и отказал после уже выполненного GUI экспорта. Исправлено чтение `manifest.assets[0].source`; лог отказа сохранён, файлы не подменялись. Локальный corrected GUI PASS, hosted нового test source ещё ожидается. [Точное evidence](evidence/manual-workflow-021.json).
+Первый helper неверно прочитал расположение source path в manifest и отказал после уже выполненного GUI экспорта. Исправлено чтение `manifest.assets[0].source`; лог отказа сохранён, файлы не подменялись. Локальный corrected GUI PASS на 0.12.0 дополнен полным hosted packaged PASS на 0.12.1 по exact source `38a8e91`; manual helper совпадает побайтно. Новый harness включает дополнительную accessibility suite. [Точное evidence](evidence/manual-workflow-021.json).
+
+[Hosted Windows job](https://github.com/Zulut30/minemod/actions/runs/37305560056/job/111748269637) подтвердил все 15 packaged subreports. Report и PNG retained в artifact; фактический saved project и четыре экспортированных файла проверены самим helper, полные локальные файлы сохранены отдельно. Workflow failed на legacy Fabric 26.2; art approval и authored Minecraft assets не присвоены.
