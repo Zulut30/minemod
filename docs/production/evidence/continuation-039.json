@@ -1,0 +1,561 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 39,
+  "status": "LOCAL_PASS_HOSTED_PENDING",
+  "checkedAtUtc": "2026-10-05T17:48:49.343Z",
+  "sourceCommit": "0ee7a4fad009f5a729dae7d51c179d672adec628",
+  "studioVersion": "0.17.0",
+  "node": "24.21.0",
+  "sourceHashes": [
+    {
+      "path": "apps/model-editor/main/index.ts",
+      "bytes": 16965,
+      "sha256": "cd7d0063b0f19d68b89781845d0e75fe012fa7aaa20dd8e3b7bf5f4795a062b6"
+    },
+    {
+      "path": "apps/model-editor/package.json",
+      "bytes": 1823,
+      "sha256": "80b9249eb5ce28b3cd86bfb21912bdeef2b2ab16e367270257d25475b76e75bd"
+    },
+    {
+      "path": "apps/model-editor/renderer/App.tsx",
+      "bytes": 34675,
+      "sha256": "37f18b47e66fdede39e400f1474dfdaa8346a2449fb3d33c87e2019be76ebe24"
+    },
+    {
+      "path": "apps/model-editor/renderer/ConnectionPanel.tsx",
+      "bytes": 4269,
+      "sha256": "0c8d9abd6e979911d651aa7f086b474c22ce957bac264aefb89533d6fcccf1a4"
+    },
+    {
+      "path": "apps/model-editor/renderer/store.ts",
+      "bytes": 5435,
+      "sha256": "2bdd44a3abbb4f7a596fc4a0257c9046883229c3146f0e48755def861efe73d3"
+    },
+    {
+      "path": "apps/model-editor/scripts/check-continuation-desktop.mjs",
+      "bytes": 11136,
+      "sha256": "ab557e1fdae0e87e30dd90144785a87f94770cf9656828a99aa8c7a2ec831b46"
+    },
+    {
+      "path": "apps/model-editor/scripts/check-texture-desktop.mjs",
+      "bytes": 12974,
+      "sha256": "4d3d57944d1c2e5764da931f109eba042399602fd08db2b3a3ed2f44be3eb394"
+    },
+    {
+      "path": "apps/model-editor/scripts/run-continuation-desktop.mjs",
+      "bytes": 1099,
+      "sha256": "1cb8e0a616319b0972b662f1f97e10bedc769ded5ee15b4e10c0a353af94de5f"
+    },
+    {
+      "path": "apps/model-editor/scripts/test-desktop.mjs",
+      "bytes": 18286,
+      "sha256": "4c0a512b9fe26a78f066e90d8698980e28c0025f3c30a3bda1053a4cb4f1ad8c"
+    },
+    {
+      "path": "apps/model-editor/scripts/test.mjs",
+      "bytes": 682,
+      "sha256": "34ff2dbe38ae8aeda53445369cf31e394479e1801ac6c1bd6f6ba210fc7f8da1"
+    },
+    {
+      "path": "apps/model-editor/shared/bridge.ts",
+      "bytes": 1740,
+      "sha256": "ac426c10a7469d70b8175897d9c8fa8757db13ba09de51e10a2773b9e690edec"
+    },
+    {
+      "path": "apps/model-editor/worker/concepts-mcp.test.ts",
+      "bytes": 4328,
+      "sha256": "d3b387b4cc523a3367876fd5a041f7820babd75b726d25ed58261b52c362cb5f"
+    },
+    {
+      "path": "apps/model-editor/worker/continuation.test.ts",
+      "bytes": 17395,
+      "sha256": "558c75ba2244e871e8f2b5bc0ceda7da34eb296089313f843e92d9807eadc7c6"
+    },
+    {
+      "path": "apps/model-editor/worker/discovery.ts",
+      "bytes": 17526,
+      "sha256": "de84159d87d114dba4ae81c88647e0a22e4fbfb5f0807cf7e57fca41edff19ec"
+    },
+    {
+      "path": "apps/model-editor/worker/index.ts",
+      "bytes": 18921,
+      "sha256": "0aae87eff3b8944b67912cfc2971fc2f6e62b1d81266c4ca5da5ce96fa9c0349"
+    },
+    {
+      "path": "apps/model-editor/worker/mcp.ts",
+      "bytes": 42315,
+      "sha256": "479c2ec7834667bf72be715ace5c0f3f1fd3075c966d956e15a20c7635f8b903"
+    },
+    {
+      "path": "docs/production/SESSION_CONTINUATION.md",
+      "bytes": 6969,
+      "sha256": "5aaf82667ead6c01c39b25d668abf643fd2b684dd1db85532fadfa56141fb840"
+    },
+    {
+      "path": "packages/editor-core/index.ts",
+      "bytes": 40651,
+      "sha256": "ae8e78875d376d571588561a1d9266ec889fc7842c57ffcd0a82647b34aa1bdf"
+    }
+  ],
+  "package": {
+    "path": "output/model-editor/releases/0.17.0/009ed5f1/MineMod Studio-win32-x64/MineMod Studio.exe",
+    "asar": {
+      "path": "output/model-editor/releases/0.17.0/009ed5f1/MineMod Studio-win32-x64/resources/app.asar",
+      "bytes": 3653716,
+      "sha256": "721ef0ccfb94f9b06d5a3e6fd8436953a3f367dc3f12e06de72d099a7cbaa136"
+    }
+  },
+  "local": {
+    "fullPackaged": {
+      "root": "output/playwright/studio-packaged-6f3b7f7d",
+      "report": {
+        "path": "output/playwright/studio-packaged-6f3b7f7d/report.json",
+        "bytes": 92444,
+        "sha256": "23c9b68f4bba0e3904d1afe5c48bbedc2e716a129466aa751c7df20375b2e7cc"
+      },
+      "hidden": true,
+      "subreports": [
+        {
+          "name": "mcp",
+          "status": "PASS"
+        },
+        {
+          "name": "texture",
+          "status": "PASS"
+        },
+        {
+          "name": "polish",
+          "status": "PASS"
+        },
+        {
+          "name": "editing",
+          "status": "PASS"
+        },
+        {
+          "name": "variants",
+          "status": "PASS"
+        },
+        {
+          "name": "agentBlockouts",
+          "status": "PASS"
+        },
+        {
+          "name": "continuation",
+          "status": "PASS"
+        },
+        {
+          "name": "brief",
+          "status": "PASS"
+        },
+        {
+          "name": "concepts",
+          "status": "PASS"
+        },
+        {
+          "name": "parts",
+          "status": "PASS"
+        },
+        {
+          "name": "repair",
+          "status": "PASS"
+        },
+        {
+          "name": "manual",
+          "status": "PASS"
+        },
+        {
+          "name": "accessibility",
+          "status": "PASS"
+        },
+        {
+          "name": "accessibilityStates",
+          "status": "PASS"
+        },
+        {
+          "name": "review",
+          "status": "PASS"
+        },
+        {
+          "name": "migrations",
+          "status": "PASS"
+        },
+        {
+          "name": "history",
+          "status": "PASS"
+        },
+        {
+          "name": "geometry",
+          "status": "PASS"
+        },
+        {
+          "name": "camera",
+          "status": "PASS"
+        },
+        {
+          "name": "discovery",
+          "status": "PASS"
+        }
+      ]
+    },
+    "focused": {
+      "root": "output/playwright/continuation-039-3b43986d/continuation",
+      "report": {
+        "status": "PASS",
+        "hidden": true,
+        "actor": "Scripted GUI and SDK in own packaged app",
+        "independentModelTurn": false,
+        "pauseMs": 2038,
+        "sdkCancelledNativeCapture": true,
+        "sameSdkSessionAfterCancellation": true,
+        "cancelledNativeCapture": true,
+        "pauseBypassedBusySave": true,
+        "queuedSaveCompleted": true,
+        "pausedCallsRejected": true,
+        "endpointPreservedOnResume": true,
+        "expiredProposalRejected": true,
+        "reconnectReplay": true,
+        "humanCasConflict": true,
+        "sameProjectOpenRevisionProtected": true,
+        "restartSourcePreserved": true,
+        "restartAccessOff": true,
+        "newTokenAfterRestart": true,
+        "sourceSha256": "701cdf7d4f0dd33732e95f505a5a25864dfbb900292649778944386855e4f354",
+        "png": {
+          "path": "after-resume.png",
+          "bytes": 34597,
+          "sha256": "cf1e43fa3b1ac8df80c93c5335ac95c6bb7c2d11a129e54de624068d18c5525e"
+        },
+        "replayBoundary": "Last 100 keys in current EditorSession; process restart cache is not persisted",
+        "artisticApproval": "NOT_PERFORMED",
+        "gameAcceptance": "NOT_RUN"
+      },
+      "files": [
+        {
+          "path": "output/playwright/continuation-039-3b43986d/continuation/report.json",
+          "bytes": 1029,
+          "sha256": "bb7433cf45be379c64c946ad943c0b5ad0f4236439dae44a983cf38f85c7a9b4"
+        },
+        {
+          "path": "output/playwright/continuation-039-3b43986d/continuation/paused-ui.png",
+          "bytes": 514993,
+          "sha256": "993b3efe6dc70347d6b964f0aa241f1f6dc4770aea71ff0af1c0cb67a705fed8"
+        },
+        {
+          "path": "output/playwright/continuation-039-3b43986d/continuation/resumed-ui.png",
+          "bytes": 647414,
+          "sha256": "0a8647753b6dc30e03de475e1a0024d7315120bc50b9fb0fa60c8803546771a3"
+        },
+        {
+          "path": "output/playwright/continuation-039-3b43986d/continuation/after-resume.png",
+          "bytes": 34597,
+          "sha256": "cf1e43fa3b1ac8df80c93c5335ac95c6bb7c2d11a129e54de624068d18c5525e"
+        },
+        {
+          "path": "output/playwright/continuation-039-3b43986d/continuation/продолжение.mmeditor.json",
+          "bytes": 135481,
+          "sha256": "701cdf7d4f0dd33732e95f505a5a25864dfbb900292649778944386855e4f354"
+        }
+      ],
+      "uiVisualInspection": "Pausing state and resume control confirmed on focused PNG",
+      "actor": "Scripted GUI and real SDK, own hidden app"
+    },
+    "logs": [
+      {
+        "path": "output/verification/roadmap-039-typecheck-after-ci-fix.log",
+        "bytes": 176,
+        "sha256": "fe0327fb3a908a7cea6b4e5ef62bbaa7903d4f4149a209170e6249f0dd5c8190"
+      },
+      {
+        "path": "output/verification/roadmap-039-lint-after-ci-fix.log",
+        "bytes": 29,
+        "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+      },
+      {
+        "path": "output/verification/roadmap-039-portable.log",
+        "bytes": 4345,
+        "sha256": "adb032e4ac9b8b145e376bac23a8668b8cd14b5bdd642acfc6551fb68de188b2"
+      },
+      {
+        "path": "output/verification/roadmap-039-mcp-terminal.log",
+        "bytes": 461,
+        "sha256": "1ffd88d8d9ef489825f3057c14d352635aaf8101bad23d8f6d8b68dbefa94c2f"
+      },
+      {
+        "path": "output/verification/roadmap-039-studio-units-terminal.log",
+        "bytes": 876,
+        "sha256": "9b2520a9b5331087a2ad5583ab3bc6eea51831ffe5c76e5c8549125f220773fd"
+      },
+      {
+        "path": "output/verification/roadmap-039-discovery-terminal.log",
+        "bytes": 203,
+        "sha256": "c381fd74a9c839fee0200a334dbf87010cab39c8853aa68e71722b5c0b072dd3"
+      },
+      {
+        "path": "output/verification/roadmap-039-package-stateful.log",
+        "bytes": 787,
+        "sha256": "471d87ba7e269e84b72cabf62ef094afdf0f1aeda20cf8ec1090cc54ad3ad85f"
+      },
+      {
+        "path": "output/verification/roadmap-039-rebuild-equivalence.log",
+        "bytes": 651,
+        "sha256": "fc3cab9ef94930a75f8d296662532dfe703efc145ca919000b2d4da92cc02ec5"
+      },
+      {
+        "path": "output/verification/roadmap-039-full-desktop-terminal.log",
+        "bytes": 156,
+        "sha256": "6a9f18b24a8ad9350ddce17d18f2db6f57600685645aa5bf616acac70ba4e857"
+      },
+      {
+        "path": "output/verification/roadmap-039-desktop-stateful.log",
+        "bytes": 209,
+        "sha256": "165acc1d3ebbea976ae9799f90ac7d353105e474ae1befea6cb175f659962d86"
+      }
+    ],
+    "runtimeEquivalence": {
+      "packagedWorkerSha256": "28b82ae6816653547517ac78082a602a0a6a5570bd1b40fe6997d76599641059",
+      "rebuiltWorkerSha256": "28b82ae6816653547517ac78082a602a0a6a5570bd1b40fe6997d76599641059",
+      "status": "IDENTICAL",
+      "boundary": "Test adapter correction and Russian comment only after initial runtime commit; exact final hosted source still pending."
+    }
+  },
+  "initialFailures": {
+    "files": [
+      {
+        "path": "output/verification/roadmap-039-full-desktop.log",
+        "bytes": 738,
+        "sha256": "8ccd020c4e2bce1b6d428ed7a7964b926e53b49b9893f11f24c629e94239884a"
+      },
+      {
+        "path": "output/verification/roadmap-039-full-desktop-stateful.log",
+        "bytes": 583,
+        "sha256": "c2a1b5c5522329b48cf197ba093dde5c47a654c74fcd671fe363b09c66513967"
+      },
+      {
+        "path": "output/verification/roadmap-039-focused-desktop.log",
+        "bytes": 897,
+        "sha256": "432457d373ac38d2488e6547bd8f2923defba175bde462969e7569772ffcf47e"
+      },
+      {
+        "path": "output/verification/roadmap-039-control-plane-initial.log",
+        "bytes": 42845,
+        "sha256": "d2902de31d6421eac93944788d95195138c93d8707cbb5dc429186703a68782b"
+      }
+    ],
+    "notes": [
+      "Two full desktop runs had obsolete revision reset expectations; tests now check monotonic revisions.",
+      "First focused run stopped at Playwright screenshot; native hidden repaint capture was then visually checked.",
+      "Focused intermediate 4d4750a5 passed logic but had stale UI PNG, excluded from visual proof.",
+      "Initial hosted control-plane failed concept adapter options assertion; final test verifies live AbortSignal plus exact prior parameters."
+    ]
+  },
+  "hosted": {
+    "status": "PENDING",
+    "sourceCommit": "0ee7a4fad009f5a729dae7d51c179d672adec628",
+    "initialRun": 37349780975,
+    "initialSource": "580f88156259a83a7f9085dc11b4d42e9ec0b833",
+    "initialControlPlane": "FAILED_CONCEPT_TEST_EXPECTATION",
+    "finalRun": null,
+    "initialTerminal": {
+      "status": "completed",
+      "conclusion": "failure",
+      "sourceCommit": "580f88156259a83a7f9085dc11b4d42e9ec0b833",
+      "url": "https://github.com/Zulut30/minemod/actions/runs/37349780975",
+      "jobs": [
+        {
+          "id": 111897401874,
+          "name": "neoforge",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 111897402155,
+          "name": "control-plane",
+          "status": "completed",
+          "conclusion": "failure"
+        },
+        {
+          "id": 111897402165,
+          "name": "fabric",
+          "status": "completed",
+          "conclusion": "failure"
+        },
+        {
+          "id": 111897402192,
+          "name": "studio-windows",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 111897402328,
+          "name": "Fabric 1.20.1 / Java 17 production target",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 111897775302,
+          "name": "fabric-client",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111898989703,
+          "name": "client-smoke",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ],
+      "cleanCheckouts": [
+        {
+          "name": "windows",
+          "path": "output/ci/37349780975-windows/output/ci/clean-checkout/studio-windows.json",
+          "bytes": 4469,
+          "sha256": "17bb12cef08a0219661c672bfc519cba9568cfbf9e4981b66e0dfedc04df1484",
+          "tree": "abcca521b3aeeca707444c876f5461a7f3baeff5",
+          "sourceRevision": "580f88156259a83a7f9085dc11b4d42e9ec0b833"
+        },
+        {
+          "name": "control",
+          "path": "output/ci/37349780975-control/control-plane.json",
+          "bytes": 4469,
+          "sha256": "3869ff93869f6c405e68fd5c4e22fb3da5fa84d8e68a7d1bd9efec0b5c13a765",
+          "tree": "abcca521b3aeeca707444c876f5461a7f3baeff5",
+          "sourceRevision": "580f88156259a83a7f9085dc11b4d42e9ec0b833"
+        },
+        {
+          "name": "production",
+          "path": "output/ci/37349780975-production/output/ci/clean-checkout/fabric-production.json",
+          "bytes": 4469,
+          "sha256": "3869ff93869f6c405e68fd5c4e22fb3da5fa84d8e68a7d1bd9efec0b5c13a765",
+          "tree": "abcca521b3aeeca707444c876f5461a7f3baeff5",
+          "sourceRevision": "580f88156259a83a7f9085dc11b4d42e9ec0b833"
+        }
+      ],
+      "windows": {
+        "status": "PASS",
+        "root": "output/ci/37349780975-windows/output/playwright/studio-packaged-27d7cced",
+        "report": {
+          "path": "output\\ci\\37349780975-windows\\output\\playwright\\studio-packaged-27d7cced\\report.json",
+          "bytes": 92069,
+          "sha256": "5deb10ebb21fc658bedf33dc9f05cc3d7daaf868cff7bc3d607d947fe089be28"
+        },
+        "subreports": 20,
+        "continuation": {
+          "status": "PASS",
+          "hidden": true,
+          "actor": "Scripted GUI and SDK in own packaged app",
+          "independentModelTurn": false,
+          "pauseMs": 2010,
+          "sdkCancelledNativeCapture": true,
+          "sameSdkSessionAfterCancellation": true,
+          "cancelledNativeCapture": true,
+          "pauseBypassedBusySave": true,
+          "queuedSaveCompleted": true,
+          "pausedCallsRejected": true,
+          "endpointPreservedOnResume": true,
+          "expiredProposalRejected": true,
+          "reconnectReplay": true,
+          "humanCasConflict": true,
+          "sameProjectOpenRevisionProtected": true,
+          "restartSourcePreserved": true,
+          "restartAccessOff": true,
+          "newTokenAfterRestart": true,
+          "sourceSha256": "d37c04d79f276f2e08222c68e4ef57ead9ae52f4f65fd1d27292df0ab7cc844f",
+          "png": {
+            "path": "after-resume.png",
+            "bytes": 24425,
+            "sha256": "8f5bb54b287890a59c3927a75d814194589e3369842defff11413f3f7de071f7"
+          },
+          "replayBoundary": "Last 100 keys in current EditorSession; process restart cache is not persisted",
+          "artisticApproval": "NOT_PERFORMED",
+          "gameAcceptance": "NOT_RUN"
+        },
+        "captures": [
+          {
+            "path": "output\\ci\\37349780975-windows\\output\\playwright\\studio-packaged-27d7cced\\continuation\\after-resume.png",
+            "bytes": 24425,
+            "sha256": "8f5bb54b287890a59c3927a75d814194589e3369842defff11413f3f7de071f7"
+          },
+          {
+            "path": "output\\ci\\37349780975-windows\\output\\playwright\\studio-packaged-27d7cced\\continuation\\paused-ui.png",
+            "bytes": 94903,
+            "sha256": "28a35e1a8c00e92a0078e4aac737f43a9166734091dff9417a99c60fbf6ecba9"
+          },
+          {
+            "path": "output\\ci\\37349780975-windows\\output\\playwright\\studio-packaged-27d7cced\\continuation\\resumed-ui.png",
+            "bytes": 96261,
+            "sha256": "213866c7b18420e2ccdca1bba0c8d40b7b28128e0a1b65c2503fc1a89c094baa"
+          }
+        ],
+        "sourceRetention": "Hosted uploader retains reports/PNG; editable source JSON not retained; preservation assertions were runtime checks."
+      },
+      "production": {
+        "status": "PASS",
+        "operation": {
+          "path": "output\\ci\\37349780975-production\\output\\ci\\fabric-production\\generated\\operation-evidence.v1.json",
+          "bytes": 9643,
+          "sha256": "3e42770acd9daa1262d7b44f9c93dc75dba6d8e0939b96caf5799ea41536dfd3"
+        },
+        "jar": {
+          "path": "output\\ci\\37349780975-production\\output\\ci\\fabric-production\\generated\\build\\libs\\infectedfrontier-0.1.0.jar",
+          "bytes": 28835,
+          "sha256": "63c8139423e57b925edfa40f030020b23ae2cc21571eaf711c879d58a382cc15"
+        },
+        "sourceManifest": {
+          "path": "output\\ci\\37349780975-production\\output\\ci\\fabric-production\\generated\\source-review-manifest.json",
+          "bytes": 1663,
+          "sha256": "358db61afefcc01b674e313b928d69e9edd122c0f6528bb3d48e70971a78871f"
+        },
+        "gameTestReport": {
+          "path": "output/ci/37349780975-production/fixtures/fabric-1.20.1-empty/build/reports/gametest/production.xml",
+          "bytes": 406,
+          "sha256": "02206ab24d7cfa01218d12b0085dcd7b2dc9aedb59fefc41a75beaddf068572a"
+        },
+        "scope": "Clean build, infrastructure GameTests, dedicated server/client smoke and generated fixture. No authored Leaf integration."
+      },
+      "legacyFabric262": {
+        "status": "FAILED_CHECKSUM",
+        "report": {
+          "path": "output/ci/37349780975-legacy/at-1791221870948/dependency-verification-report.html",
+          "bytes": 9060,
+          "sha256": "4878e6223a5729e9b6a7043c9e3ce6adb6d5cc52277a5216c64c9f996dce174c"
+        },
+        "coordinate": "net.minecraft:minecraft-common-043a8b3edf:26.2",
+        "expected": "23248c15f8413aa0d06ac59e676913dd6a1dc0c5fffaa09365afd6c98d59fcd3",
+        "actual": "1f67ba1505470bc13d9fc7ece413bf773ae859c2636af1d9ed0b83f5e6dd0c5b",
+        "cause": "NOT_ESTABLISHED"
+      },
+      "logs": [
+        {
+          "path": "output/verification/roadmap-039-windows-initial.log",
+          "bytes": 39700,
+          "sha256": "b47b917bc8b73a0522511798b5d76a44454bf1d1b1213f951a0dab24ce89e728"
+        },
+        {
+          "path": "output/verification/roadmap-039-control-plane-initial.log",
+          "bytes": 42845,
+          "sha256": "d2902de31d6421eac93944788d95195138c93d8707cbb5dc429186703a68782b"
+        },
+        {
+          "path": "output/verification/roadmap-039-production-initial.log",
+          "bytes": 75373,
+          "sha256": "10d9e008f6aa1345cd2752e126a48d7a4b175853ab8afb4a9d332c030e0a8c6f"
+        },
+        {
+          "path": "output/verification/roadmap-039-fabric262-initial.log",
+          "bytes": 32120,
+          "sha256": "bb78e1848dab1fd2c17110b0a0b036242f9fee28cb6434cfd2bdd760598d77ac"
+        }
+      ]
+    }
+  },
+  "boundaries": {
+    "independentModelTurn": "NOT_RUN_THIS_POINT",
+    "artisticApproval": "NOT_PERFORMED",
+    "authoredGameAcceptance": "NOT_RUN",
+    "replayCache": "Last 100 keys in current EditorSession, not persisted",
+    "cancelAtomicMutation": "Best effort; applied atomic mutation is preserved",
+    "legacyFabric262": "NOT_CLOSED"
+  },
+  "pointClosed": false
+}
