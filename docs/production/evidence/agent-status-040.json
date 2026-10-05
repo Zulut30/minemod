@@ -1,0 +1,614 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 40,
+  "status": "PASS",
+  "pointClosed": true,
+  "checkedAtUtc": "2026-10-05T18:31:31.347Z",
+  "sourceCommit": "b1d5c06cd7411fd2fbe107aca07dcb317a606bf1",
+  "studioVersion": "0.18.0",
+  "node": "24.21.0",
+  "sourceHashes": [
+    {
+      "path": "apps/model-editor/main/index.ts",
+      "bytes": 18525,
+      "sha256": "fd9d63b2e6a842a0e892c3794afbcc4b0a3ca0214d78832972e020b91153f23c"
+    },
+    {
+      "path": "apps/model-editor/package.json",
+      "bytes": 1895,
+      "sha256": "89d284efe8b5c972091b6d665585e89ad27eb5e3cf3f77d902ac59fd23a8d6d9"
+    },
+    {
+      "path": "apps/model-editor/preload/index.ts",
+      "bytes": 1210,
+      "sha256": "858cf81de7dcb460698a5ed35c99d9bb08732a7bbc8e769ecd81572bdfc21c6f"
+    },
+    {
+      "path": "apps/model-editor/renderer/AgentStatusPanel.tsx",
+      "bytes": 4531,
+      "sha256": "254094cd89c75a699e39f368e25077b2baf228a6826085b6c03c745123337376"
+    },
+    {
+      "path": "apps/model-editor/renderer/App.tsx",
+      "bytes": 34893,
+      "sha256": "07b7bbc1203b8fb76bd269e4624f7d20da13091fee2f46a24671fc9a4c2f10d5"
+    },
+    {
+      "path": "apps/model-editor/renderer/ConnectionPanel.tsx",
+      "bytes": 4413,
+      "sha256": "4b84e80a3b3dd0ade2034d8e9a808d97865e2db888d5cd1537b2c2d585d9ae10"
+    },
+    {
+      "path": "apps/model-editor/renderer/store.ts",
+      "bytes": 6054,
+      "sha256": "7c5475d6fb23d732fcbe8ff91ae0d024b8a8436d5719dfd96654d031d36da015"
+    },
+    {
+      "path": "apps/model-editor/renderer/style.css",
+      "bytes": 33373,
+      "sha256": "b04ce9fe0e93852d118aea66ce53134298eae05a12de9a3316d4e175c5c045bd"
+    },
+    {
+      "path": "apps/model-editor/scripts/check-agent-status-desktop.mjs",
+      "bytes": 11981,
+      "sha256": "687cd862cad9afe1d129cc0c1a645aab79c98b618cd5898483d8beb2fe29bd1b"
+    },
+    {
+      "path": "apps/model-editor/scripts/run-agent-status-desktop.mjs",
+      "bytes": 1086,
+      "sha256": "9b6fdc29ff16e666a5d11630b5ce693fc5516808a364c6f9b240eaddf6b08244"
+    },
+    {
+      "path": "apps/model-editor/scripts/test-desktop.mjs",
+      "bytes": 18453,
+      "sha256": "2edc26fee5b37414ddff2806427174af024c5ca38036e2ac24e51504b15ba68d"
+    },
+    {
+      "path": "apps/model-editor/scripts/test.mjs",
+      "bytes": 730,
+      "sha256": "4500311468af9c0c95fa26f3c3c22bedaca9fd64ad7b50357434539b5987a8a9"
+    },
+    {
+      "path": "apps/model-editor/shared/agent-status.ts",
+      "bytes": 2167,
+      "sha256": "cc369df897af3adbea269ddb7fed40e78fea6e1eea7af5c0efb89550f73404b5"
+    },
+    {
+      "path": "apps/model-editor/shared/bridge.ts",
+      "bytes": 1917,
+      "sha256": "aaa9b887f9bb8d9c4f5d96e45f2cecc1279219721c735aed73b975ff033c8bc9"
+    },
+    {
+      "path": "apps/model-editor/worker/agent-status.test.ts",
+      "bytes": 3216,
+      "sha256": "d5141a70d0c3af41282807db6b4b78d79f59d201044797392aae553e0b7b5ff9"
+    },
+    {
+      "path": "apps/model-editor/worker/agent-status.ts",
+      "bytes": 3559,
+      "sha256": "7c00a04c8093f011fab78ce9324d6e43435b2cb59c01f8b2c63a332950fb3c34"
+    },
+    {
+      "path": "apps/model-editor/worker/continuation.test.ts",
+      "bytes": 19047,
+      "sha256": "74fdb978704f6e39fea5302c0879008dcb7814d3d464b183f9631ec9ba505325"
+    },
+    {
+      "path": "apps/model-editor/worker/index.ts",
+      "bytes": 19402,
+      "sha256": "79ab8fd22db220da67cad053e1b925f73b9c2d4ef02f5d5db3ece51a6e25aff3"
+    },
+    {
+      "path": "apps/model-editor/worker/mcp.ts",
+      "bytes": 45081,
+      "sha256": "443ad66205df3ea169bc9b0f3a951e1a84f0ed90d24aaa92f30a8d372c02dcad"
+    },
+    {
+      "path": "docs/PRODUCTION_ROADMAP_100.md",
+      "bytes": 65444,
+      "sha256": "c9a9d39234fd2ffe6406faf176d57ed42b6e5721ddf6cb1d7d9db51684520dce"
+    },
+    {
+      "path": "docs/production/AGENT_STATUS.md",
+      "bytes": 6377,
+      "sha256": "3b5aefce56a2a04a8de692a59e926e08500c943ae8db61734c56dfebce4b26f4"
+    }
+  ],
+  "lockfile": {
+    "path": "pnpm-lock.yaml",
+    "bytes": 95944,
+    "sha256": "e955ab8e82d8bb87128cf10f0f95b67c217fb1bf31eb7f2321823e66b03195c2"
+  },
+  "package": {
+    "executable": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.18.0\\efa17d62\\MineMod Studio-win32-x64\\MineMod Studio.exe",
+    "asar": {
+      "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.18.0\\efa17d62\\MineMod Studio-win32-x64\\resources\\app.asar",
+      "bytes": 3670686,
+      "sha256": "a23e88231ce05e43b47c7012b1b72e36a6d923e38147294dc3f7736f0a94e7a3"
+    },
+    "runtime": [
+      {
+        "path": "dist/main.cjs",
+        "bytes": 620160,
+        "sha256": "0e19713d6df4a89ca8ba08e9719928aacd2b963b1e362daf12b3b924fdcbd014",
+        "matchesBuilt": true
+      },
+      {
+        "path": "dist/worker.cjs",
+        "bytes": 1500754,
+        "sha256": "8c99e26fe4bf96564380e48c15402a8fa6b1a1e056d7fe753f983a3f5e512712",
+        "matchesBuilt": true
+      },
+      {
+        "path": "dist/preload.cjs",
+        "bytes": 1186,
+        "sha256": "6516e0ddc1af23f45d8a978d90be61c3f0e3533fc315924ff368c149d9952b92",
+        "matchesBuilt": true
+      }
+    ]
+  },
+  "local": {
+    "focused": {
+      "report": {
+        "status": "PASS",
+        "hidden": true,
+        "actor": "Own packaged app, scripted GUI and real SDK",
+        "runningText": "Выполняется · Готовит снимок",
+        "metadataEvents": 58,
+        "maxMetadataBytes": 1643,
+        "realNativeCapture": true,
+        "queuedState": true,
+        "liveElapsed": true,
+        "cancelledRequestObserved": true,
+        "lateCancellationDoesNotReplaceSuccess": true,
+        "failedInputObserved": true,
+        "localBudgetsObserved": true,
+        "expiredSessionReconnect": true,
+        "noPayloadOrClientNameOrTokenInMetadata": true,
+        "unknownExternalUsage": true,
+        "sourcePreserved": true,
+        "workerFailureObserved": true,
+        "captureClosedOnWorkerExit": true,
+        "unavailableMs": 3,
+        "restartSourcePreserved": true,
+        "restartAccessOff": true,
+        "source": {
+          "path": "исходник.mmeditor.json",
+          "sha256": "9a5cab2d9bf6de0bd4c62c54e5d14975a3467e2db09dde935f03326371bce019"
+        },
+        "png": {
+          "path": "native.png",
+          "sha256": "6d878cee8d3ec715c6c4574372c9540f3ced90d445aa0c81d99aad2f47418058",
+          "bytes": 35328
+        },
+        "boundaries": {
+          "externalModelTurn": "NOT_RUN_THIS_POINT",
+          "artisticApproval": "NOT_PERFORMED",
+          "authoredGameAcceptance": "NOT_RUN"
+        }
+      },
+      "retained": [
+        {
+          "path": "output\\playwright\\agent-status-040-d03f72ae\\agent-status\\report.json",
+          "bytes": 1186,
+          "sha256": "cecb27011df1af5a3fa695c176772390b07ba033da953bc7c29839d854d3bfc6"
+        },
+        {
+          "path": "output\\playwright\\agent-status-040-d03f72ae\\agent-status\\исходник.mmeditor.json",
+          "bytes": 135634,
+          "sha256": "9a5cab2d9bf6de0bd4c62c54e5d14975a3467e2db09dde935f03326371bce019"
+        },
+        {
+          "path": "output\\playwright\\agent-status-040-d03f72ae\\agent-status\\native.png",
+          "bytes": 35328,
+          "sha256": "6d878cee8d3ec715c6c4574372c9540f3ced90d445aa0c81d99aad2f47418058"
+        },
+        {
+          "path": "output\\playwright\\agent-status-040-d03f72ae\\agent-status\\queued-ui.png",
+          "bytes": 521885,
+          "sha256": "43a4d35bf56802e3bc053f51d97305a56f4dc1b90e8cf6e753301bb4ee566a36"
+        },
+        {
+          "path": "output\\playwright\\agent-status-040-d03f72ae\\agent-status\\status-ui.png",
+          "bytes": 683077,
+          "sha256": "fa690d83627ad3397447446daf331b090b1149c973fa466621e45330d3b74270"
+        },
+        {
+          "path": "output\\playwright\\agent-status-040-d03f72ae\\agent-status\\service-unavailable-ui.png",
+          "bytes": 354205,
+          "sha256": "98cdca93e3512d4637d0cf439b38b8c6203c7cd36dd8c559ea328f1e859a401c"
+        }
+      ]
+    },
+    "fullPackaged": {
+      "status": "PASS",
+      "root": "output/playwright/studio-packaged-8ae4a482",
+      "report": {
+        "path": "output\\playwright\\studio-packaged-8ae4a482\\report.json",
+        "bytes": 93722,
+        "sha256": "a8beb26c28e74f12b401273b335173be54d61054c73fde4f0a1b40e73dce7cad"
+      },
+      "subreports": [
+        {
+          "name": "mcp",
+          "status": "PASS"
+        },
+        {
+          "name": "texture",
+          "status": "PASS"
+        },
+        {
+          "name": "polish",
+          "status": "PASS"
+        },
+        {
+          "name": "editing",
+          "status": "PASS"
+        },
+        {
+          "name": "variants",
+          "status": "PASS"
+        },
+        {
+          "name": "agentBlockouts",
+          "status": "PASS"
+        },
+        {
+          "name": "continuation",
+          "status": "PASS"
+        },
+        {
+          "name": "agentStatus",
+          "status": "PASS"
+        },
+        {
+          "name": "brief",
+          "status": "PASS"
+        },
+        {
+          "name": "concepts",
+          "status": "PASS"
+        },
+        {
+          "name": "parts",
+          "status": "PASS"
+        },
+        {
+          "name": "repair",
+          "status": "PASS"
+        },
+        {
+          "name": "manual",
+          "status": "PASS"
+        },
+        {
+          "name": "accessibility",
+          "status": "PASS"
+        },
+        {
+          "name": "accessibilityStates",
+          "status": "PASS"
+        },
+        {
+          "name": "review",
+          "status": "PASS"
+        },
+        {
+          "name": "migrations",
+          "status": "PASS"
+        },
+        {
+          "name": "history",
+          "status": "PASS"
+        },
+        {
+          "name": "geometry",
+          "status": "PASS"
+        },
+        {
+          "name": "camera",
+          "status": "PASS"
+        },
+        {
+          "name": "discovery",
+          "status": "PASS"
+        }
+      ],
+      "agentStatus": {
+        "status": "PASS",
+        "hidden": true,
+        "actor": "Own packaged app, scripted GUI and real SDK",
+        "runningText": "Выполняется · Готовит снимок",
+        "metadataEvents": 58,
+        "maxMetadataBytes": 1643,
+        "realNativeCapture": true,
+        "queuedState": true,
+        "liveElapsed": true,
+        "cancelledRequestObserved": true,
+        "lateCancellationDoesNotReplaceSuccess": true,
+        "failedInputObserved": true,
+        "localBudgetsObserved": true,
+        "expiredSessionReconnect": true,
+        "noPayloadOrClientNameOrTokenInMetadata": true,
+        "unknownExternalUsage": true,
+        "sourcePreserved": true,
+        "workerFailureObserved": true,
+        "captureClosedOnWorkerExit": true,
+        "unavailableMs": 1,
+        "restartSourcePreserved": true,
+        "restartAccessOff": true,
+        "source": {
+          "path": "исходник.mmeditor.json",
+          "sha256": "338d0a203b7fffa082095c3ea4e844470030b293436c4962c49bab42911d8c24"
+        },
+        "png": {
+          "path": "native.png",
+          "sha256": "6d878cee8d3ec715c6c4574372c9540f3ced90d445aa0c81d99aad2f47418058",
+          "bytes": 35328
+        },
+        "boundaries": {
+          "externalModelTurn": "NOT_RUN_THIS_POINT",
+          "artisticApproval": "NOT_PERFORMED",
+          "authoredGameAcceptance": "NOT_RUN"
+        }
+      },
+      "log": {
+        "path": "output/verification/roadmap-040-full-desktop.log",
+        "bytes": 202,
+        "sha256": "80885d3dbdd932ff08603f410900881cf1f1e08f42cd6e83bf625eaae02d0dd5"
+      }
+    },
+    "logs": [
+      {
+        "path": "output/verification/roadmap-040-lint-terminal.log",
+        "bytes": 29,
+        "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+      },
+      {
+        "path": "output/verification/roadmap-040-typecheck-terminal.log",
+        "bytes": 176,
+        "sha256": "fe0327fb3a908a7cea6b4e5ef62bbaa7903d4f4149a209170e6249f0dd5c8190"
+      },
+      {
+        "path": "output/verification/roadmap-040-studio-units.log",
+        "bytes": 1173,
+        "sha256": "cc3ebbfcc170dd53b11dfeb9215f67af1b7ba448d0cc6d463d4732802b64c4e4"
+      },
+      {
+        "path": "output/verification/roadmap-040-portable.log",
+        "bytes": 4345,
+        "sha256": "112eda4b79cccc68bb1340d5522466b156d43a48418af3dbdfbf09ea8313b345"
+      },
+      {
+        "path": "output/verification/roadmap-040-package-final.log",
+        "bytes": 787,
+        "sha256": "731d3d95fd3bcb89a3daf4d27eb4c943cab7f7fddf01c8aef6b0c8849c938c7b"
+      },
+      {
+        "path": "output/verification/roadmap-040-focused-desktop-terminal.log",
+        "bytes": 194,
+        "sha256": "10ff5530c30b10e0c8c3d9670f08fcb3632521b83bd55b1a55b51bbce790e34c"
+      }
+    ]
+  },
+  "hosted": {
+    "status": "TERMINAL",
+    "runId": 37354686450,
+    "url": "https://github.com/Zulut30/minemod/actions/runs/37354686450",
+    "sourceCommit": "b1d5c06cd7411fd2fbe107aca07dcb317a606bf1",
+    "wholeConclusion": "failure",
+    "jobs": [
+      {
+        "id": 111914222122,
+        "name": "control-plane",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111914222227,
+        "name": "Fabric 1.20.1 / Java 17 production target",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111914222279,
+        "name": "studio-windows",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111914222280,
+        "name": "fabric",
+        "status": "completed",
+        "conclusion": "failure"
+      },
+      {
+        "id": 111914222394,
+        "name": "neoforge",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111914633257,
+        "name": "fabric-client",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 111915559242,
+        "name": "client-smoke",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "cleanCheckouts": [
+      {
+        "name": "windows",
+        "path": "output/ci/37354686450-windows/output/ci/clean-checkout/studio-windows.json",
+        "bytes": 4469,
+        "sha256": "f23f7a9bdefbcfb59529db3241bb772e3b10456e9f068664fc7a8e5f9755be54",
+        "tree": "aa99269c4555c70cb9653f8ada712534ed2db7f0",
+        "sourceRevision": "b1d5c06cd7411fd2fbe107aca07dcb317a606bf1"
+      },
+      {
+        "name": "control",
+        "path": "output/ci/37354686450-control/control-plane.json",
+        "bytes": 4469,
+        "sha256": "e535e5ec78756ee3ba59fa76f58fae467d85cf66cb4d4b60ad917401bc228d7f",
+        "tree": "aa99269c4555c70cb9653f8ada712534ed2db7f0",
+        "sourceRevision": "b1d5c06cd7411fd2fbe107aca07dcb317a606bf1"
+      },
+      {
+        "name": "production",
+        "path": "output/ci/37354686450-production/output/ci/clean-checkout/fabric-production.json",
+        "bytes": 4469,
+        "sha256": "e535e5ec78756ee3ba59fa76f58fae467d85cf66cb4d4b60ad917401bc228d7f",
+        "tree": "aa99269c4555c70cb9653f8ada712534ed2db7f0",
+        "sourceRevision": "b1d5c06cd7411fd2fbe107aca07dcb317a606bf1"
+      }
+    ],
+    "windows": {
+      "status": "PASS",
+      "root": "output\\ci\\37354686450-windows\\output\\playwright\\studio-packaged-9fe3a0b6",
+      "report": {
+        "path": "output\\ci\\37354686450-windows\\output\\playwright\\studio-packaged-9fe3a0b6\\report.json",
+        "bytes": 93347,
+        "sha256": "24c11b2a9d1432f1067fb4fa25c6e6b2857d718610d80a0466eac3809a7af4b4"
+      },
+      "subreports": 21,
+      "agentStatus": {
+        "status": "PASS",
+        "hidden": true,
+        "actor": "Own packaged app, scripted GUI and real SDK",
+        "runningText": "Выполняется · Готовит снимок",
+        "metadataEvents": 58,
+        "maxMetadataBytes": 1643,
+        "realNativeCapture": true,
+        "queuedState": true,
+        "liveElapsed": true,
+        "cancelledRequestObserved": true,
+        "lateCancellationDoesNotReplaceSuccess": true,
+        "failedInputObserved": true,
+        "localBudgetsObserved": true,
+        "expiredSessionReconnect": true,
+        "noPayloadOrClientNameOrTokenInMetadata": true,
+        "unknownExternalUsage": true,
+        "sourcePreserved": true,
+        "workerFailureObserved": true,
+        "captureClosedOnWorkerExit": true,
+        "unavailableMs": 1,
+        "restartSourcePreserved": true,
+        "restartAccessOff": true,
+        "source": {
+          "path": "исходник.mmeditor.json",
+          "sha256": "b66eab20915b6384d52126ce2fa91cd13a69fb96350f0549531f144275f9e0c6"
+        },
+        "png": {
+          "path": "native.png",
+          "sha256": "8be53ecb2b628a1a562ca410ad871c34e8efed968b5fed12feb1b5462b95bd5a",
+          "bytes": 25365
+        },
+        "boundaries": {
+          "externalModelTurn": "NOT_RUN_THIS_POINT",
+          "artisticApproval": "NOT_PERFORMED",
+          "authoredGameAcceptance": "NOT_RUN"
+        }
+      },
+      "captures": [
+        {
+          "path": "output\\ci\\37354686450-windows\\output\\playwright\\studio-packaged-9fe3a0b6\\agent-status\\queued-ui.png",
+          "bytes": 101467,
+          "sha256": "5c6353aeafaf42c1983aac272734571a44e2d94b9028bf319f5668bf8063cd30"
+        },
+        {
+          "path": "output\\ci\\37354686450-windows\\output\\playwright\\studio-packaged-9fe3a0b6\\agent-status\\status-ui.png",
+          "bytes": 101168,
+          "sha256": "164789b8ee3e8ae6c4b5c87c48388341236de8da75d83da42d2e0b6ee289c909"
+        },
+        {
+          "path": "output\\ci\\37354686450-windows\\output\\playwright\\studio-packaged-9fe3a0b6\\agent-status\\service-unavailable-ui.png",
+          "bytes": 99302,
+          "sha256": "4728ad3d12d7a1088c00e8dacd692981718a75bcf2e501fe895a709c55691187"
+        },
+        {
+          "path": "output\\ci\\37354686450-windows\\output\\playwright\\studio-packaged-9fe3a0b6\\agent-status\\native.png",
+          "bytes": 25365,
+          "sha256": "8be53ecb2b628a1a562ca410ad871c34e8efed968b5fed12feb1b5462b95bd5a"
+        }
+      ],
+      "sourceRetention": "Hosted retains reports/PNG, not editable project JSON or asar. Source hash/preservation assertions were made at runtime; local source and package retained separately."
+    },
+    "production": {
+      "status": "PASS",
+      "operation": {
+        "path": "output\\ci\\37354686450-production\\output\\ci\\fabric-production\\generated\\operation-evidence.v1.json",
+        "bytes": 9643,
+        "sha256": "3e42770acd9daa1262d7b44f9c93dc75dba6d8e0939b96caf5799ea41536dfd3"
+      },
+      "sourceManifest": {
+        "path": "output\\ci\\37354686450-production\\output\\ci\\fabric-production\\generated\\source-review-manifest.json",
+        "bytes": 1663,
+        "sha256": "358db61afefcc01b674e313b928d69e9edd122c0f6528bb3d48e70971a78871f"
+      },
+      "verifiedGeneratedFiles": 6,
+      "jar": {
+        "path": "output\\ci\\37354686450-production\\output\\ci\\fabric-production\\generated\\build\\libs\\infectedfrontier-0.1.0.jar",
+        "bytes": 28835,
+        "sha256": "63c8139423e57b925edfa40f030020b23ae2cc21571eaf711c879d58a382cc15"
+      },
+      "gameTests": {
+        "path": "output/ci/37354686450-production/fixtures/fabric-1.20.1-empty/build/reports/gametest/production.xml",
+        "bytes": 406,
+        "sha256": "2d942ddc4f85af4eda5ffdd9615c34787be345686f1d0c89e96928a4677359a1"
+      },
+      "scope": "Strict clean online/offline build, infrastructure GameTests, dedicated/client smoke and generated fixture. No authored Leaf integration."
+    },
+    "legacyFabric262": {
+      "status": "FAILED_CHECKSUM",
+      "report": {
+        "path": "output\\ci\\37354686450-legacy\\at-1791224252917\\dependency-verification-report.html",
+        "bytes": 9060,
+        "sha256": "2682306c9c06da16e2e941dcd7f968b9615b2de878e9e954a953917316d329b8"
+      },
+      "coordinate": "net.minecraft:minecraft-common-043a8b3edf:26.2",
+      "expected": "23248c15f8413aa0d06ac59e676913dd6a1dc0c5fffaa09365afd6c98d59fcd3",
+      "actual": "1c1b6b315331ce60028cd6b448cdeefe477980cce4ed9bbb9da35cfd96eae848",
+      "cause": "NOT_ESTABLISHED"
+    },
+    "logs": [
+      {
+        "path": "output/verification/roadmap-040-windows.log",
+        "bytes": 39862,
+        "sha256": "f8c9a871af2ae966cce55c70197f549009734bf1b1d50d9446a0fee46b95e7ce"
+      },
+      {
+        "path": "output/verification/roadmap-040-control-plane.log",
+        "bytes": 40939,
+        "sha256": "1092234da044993bb782c119b57e7cbaab18ef89d9b38b5239d330d02acaa525"
+      },
+      {
+        "path": "output/verification/roadmap-040-production.log",
+        "bytes": 75482,
+        "sha256": "7e3ba895203f974b7693553f5b9ec97643b80c1be79b92768a67109d355bc58b"
+      },
+      {
+        "path": "output/verification/roadmap-040-fabric262.log",
+        "bytes": 32122,
+        "sha256": "4ff1d779bdb5c11293ca3d2325ff84dcf4a03e94f1851ae7dbac88c5a9c38a3b"
+      }
+    ]
+  },
+  "boundaries": {
+    "externalTokens": "UNKNOWN",
+    "externalCost": "UNKNOWN",
+    "observedActivity": "Studio MCP tools only; no client process heartbeat",
+    "metadataBytes": 8192,
+    "recentOperations": 8,
+    "sessions": "Local MCP sessions, not AI online count",
+    "externalModelTurn": "NOT_RUN_THIS_POINT",
+    "artisticApproval": "NOT_PERFORMED",
+    "authoredGameAcceptance": "NOT_RUN",
+    "legacyFabric262": "UNRESOLVED_CHECKSUM"
+  },
+  "closureBoundary": "040 observed Studio activity/budgets/recovery only. External AI usage unknown. Whole CI failed on legacy checksum. Closure changes documentation only."
+}
