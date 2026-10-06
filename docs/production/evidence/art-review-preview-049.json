@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "roadmapPoint": 49,
   "pointClosed": false,
-  "status": "LOCAL_PREVIEW_FOUNDATION_PASS_HOSTED_PENDING",
-  "checkedAtUtc": "2026-10-06T13:17:50.926Z",
+  "status": "HOSTED_PREVIEW_FOUNDATION_PASS_ART_PENDING",
+  "checkedAtUtc": "2026-10-06T13:53:35.007Z",
   "sourceCommit": "a02676a8b4168ac2509a91b51102326678c73a82",
   "sourceTree": "d7d78ba92aef486800af809cd9e3fddb6ce4c89a",
   "sourceInputs": [
@@ -298,8 +298,126 @@
     "boundary": "Historical neutral scaffold exports/captures; no approved volume, texture, provenance, ArtSpec/runtime identity or authored Minecraft integration"
   },
   "hosted": {
-    "status": "NOT_RUN_FOR_SOURCE",
-    "sourceCommit": "a02676a8b4168ac2509a91b51102326678c73a82"
+    "status": "EXACT_SOURCE_JOB_AND_ARTIFACT_PASS_LEGACY_WORKFLOW_FAILURE",
+    "sourceCommit": "1451a8cb14062fc5d165a695d47a3b1d6e8759a9",
+    "tree": "28b4846364c211e8c1828b70c4f0f2746abe80c0",
+    "trackedFiles": 606,
+    "runId": 37470080203,
+    "url": "https://github.com/Zulut30/minemod/actions/runs/37470080203",
+    "implementationCommit": "a02676a8b4168ac2509a91b51102326678c73a82",
+    "matchedCanonicalSourceInputs": 13,
+    "scope": "Committed library preview foundation and existing Studio 0.22 regression; excludes subsequent ArtSpec/history/Studio 0.23 work",
+    "workflowConclusion": "failure",
+    "jobs": [
+      {
+        "id": 112291009987,
+        "name": "neoforge",
+        "conclusion": "success"
+      },
+      {
+        "id": 112291010237,
+        "name": "control-plane",
+        "conclusion": "success"
+      },
+      {
+        "id": 112291010295,
+        "name": "studio-windows",
+        "conclusion": "success"
+      },
+      {
+        "id": 112291010411,
+        "name": "Fabric 1.20.1 / Java 17 production target",
+        "conclusion": "success"
+      },
+      {
+        "id": 112291010530,
+        "name": "fabric",
+        "conclusion": "failure"
+      },
+      {
+        "id": 112291472511,
+        "name": "fabric-client",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 112292575582,
+        "name": "client-smoke",
+        "conclusion": "success"
+      }
+    ],
+    "windows": {
+      "report": {
+        "path": "output/ci/37470080203-windows/output/playwright/studio-packaged-85919af5/report.json",
+        "bytes": 105775,
+        "sha256": "54cd3941742983305ec410160599374b42f5c1c38403603b149e54e610a327ab"
+      },
+      "subreports": [
+        "mcp",
+        "texture",
+        "polish",
+        "editing",
+        "variants",
+        "agentBlockouts",
+        "continuation",
+        "agentStatus",
+        "brief",
+        "concepts",
+        "parts",
+        "repair",
+        "manual",
+        "accessibility",
+        "accessibilityStates",
+        "review",
+        "migrations",
+        "history",
+        "geometry",
+        "camera",
+        "discovery",
+        "uvRepack",
+        "texelDensity"
+      ],
+      "count": 23,
+      "packaged": true,
+      "hidden": true,
+      "asarIncludedInArtifact": false
+    },
+    "production": {
+      "cleanCheckout": {
+        "path": "output/ci/37470080203-production/output/ci/clean-checkout/fabric-production.json",
+        "bytes": 4469,
+        "sha256": "4d93eba68a0757ceb4b792733937a28a78a00b0c5bcedc87d1aba6c520dbb3b3"
+      },
+      "gameTests": {
+        "path": "output/ci/37470080203-production/fixtures/fabric-1.20.1-empty/build/reports/gametest/production.xml",
+        "bytes": 406,
+        "sha256": "e8f757225a603b4461ebca1f3863c7c85435bb73189debcc500edcf6a6f82c04"
+      },
+      "requiredTestsPassed": 2,
+      "authoredLeafInGame": "NOT_RUN"
+    },
+    "control": {
+      "cleanCheckout": {
+        "path": "output/ci/37470080203-control/control-plane.json",
+        "bytes": 4469,
+        "sha256": "4d93eba68a0757ceb4b792733937a28a78a00b0c5bcedc87d1aba6c520dbb3b3"
+      },
+      "guards": {
+        "path": "output/ci/37470080203-control/guard-tests.json",
+        "bytes": 695,
+        "sha256": "8b1be255ebd6c5085cd53bc00374a3c4ab0c90bdb135a77e9a3c6302203e29f4"
+      }
+    },
+    "legacy": {
+      "report": {
+        "path": "output/ci/37470080203-legacy/at-1791292898900/dependency-verification-report.html",
+        "bytes": 9060,
+        "sha256": "f8cd2eaca39a607a0d8f9f9b9715d05b8d45706b20f1f5a08b554f56d87538a1"
+      },
+      "expected": "23248c15f8413aa0d06ac59e676913dd6a1dc0c5fffaa09365afd6c98d59fcd3",
+      "actual": "f01fdf52eefb79c0cabaf76bded8fcf128b00f93290779420afeecb67d5a9c3d",
+      "cause": "NOT_ESTABLISHED",
+      "verificationRelaxed": false
+    }
   },
   "boundaries": [
     "Caller proposals and JSON files never provide human authority",
