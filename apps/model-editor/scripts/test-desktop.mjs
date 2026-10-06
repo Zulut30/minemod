@@ -34,6 +34,7 @@ import { checkAgentBlockoutsDesktop } from "./check-agent-blockouts-desktop.mjs"
 import { checkContinuationDesktop } from "./check-continuation-desktop.mjs";
 import { checkAgentStatusDesktop } from "./check-agent-status-desktop.mjs";
 import { checkUvRepackDesktop } from "./check-uv-repack-desktop.mjs";
+import { checkTexelDensityDesktop } from "./check-texel-density-desktop.mjs";
 
 const appDir = resolve(dirname(fileURLToPath(import.meta.url)), ".."),
   repo = resolve(appDir, "../..");
@@ -416,6 +417,7 @@ try {
   const camera = await checkCameraDesktop(options, output);
   const discovery = await checkDiscoveryDesktop(options, output);
   const uvRepack = await checkUvRepackDesktop(options, output);
+  const texelDensity = await checkTexelDensityDesktop(options, output);
   await writeFile(
     join(output, "report.json"),
     JSON.stringify(
@@ -447,6 +449,7 @@ try {
         camera,
         discovery,
         uvRepack,
+        texelDensity,
         checks: [
           "real texture render",
           "resize",

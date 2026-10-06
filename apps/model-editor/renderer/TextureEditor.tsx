@@ -16,6 +16,7 @@ import {
 } from "@mcdev/editor-core";
 import { useStudio } from "./store.ts";
 import { drawAtlas } from "./Viewport.tsx";
+import { TexelDensityInspector } from "./TexelDensityInspector.tsx";
 
 type Stroke = {
   project: EditorProject;
@@ -60,8 +61,8 @@ function UvFields({
         ? [2, 1]
         : [0, 2];
   const density = [
-    Math.abs(rect[2] - rect[0]) / cube.size[axes[0]!]!,
-    Math.abs(rect[3] - rect[1]) / cube.size[axes[1]!]!,
+    Math.abs(rect[2] - rect[0]) / (cube.size[axes[0]!]! + 2 * cube.inflate),
+    Math.abs(rect[3] - rect[1]) / (cube.size[axes[1]!]! + 2 * cube.inflate),
   ];
   const busy = useStudio((s) => s.busy);
   return (
@@ -527,6 +528,7 @@ export function TextureEditor({ project }: { project: EditorProject }) {
           ))}
         </select>
       </div>
+      <TexelDensityInspector project={project} cubeIds={selection} />
       <details className="uv-repack">
         <summary>Упаковка UV выделения</summary>
         <p className="hint">Перенести все грани выбранных кубов без изменения рисунка, отражения и масштаба пикселей.</p>

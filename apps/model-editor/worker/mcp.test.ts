@@ -91,7 +91,22 @@ try {
         requestInit: { headers },
       }) as Transport,
     );
-  assert.equal((await clients[0]!.listTools()).tools.length, 10);
+  assert.equal((await clients[0]!.listTools()).tools.length, 11);
+  const densityState = session.state(), densityRef = { projectId: densityState.project.projectId, expectedRevision: densityState.revision };
+  const density = await call(0, "studio_uv_inspect", { ...densityRef, profile: { pixelsPerBlock: 16, tolerancePercent: 10 }, cubeIds: ["guard_left"] });
+  assert.equal(density.error, undefined);
+  assert.equal((density.data.measurement as { summary: { faces: number } }).summary.faces, 6);
+  assert.equal((density.data.measurement as { artisticAcceptance: string }).artisticAcceptance, "requires-human-review");
+  assert.deepEqual(session.state(), densityState);
+  for (const bad of [
+    { profile: { pixelsPerBlock: 0, tolerancePercent: 10 } },
+    { profile: { pixelsPerBlock: 16, tolerancePercent: 10, approve: true } },
+    { profile: { pixelsPerBlock: 16, tolerancePercent: 10 }, cubeIds: [] },
+    { profile: { pixelsPerBlock: 16, tolerancePercent: 10 }, cubeIds: ["missing"] },
+    { profile: { pixelsPerBlock: 16, tolerancePercent: 10 }, cubeIds: ["guard_left", "guard_left"] },
+  ]) assert.equal((await call(1, "studio_uv_inspect", { ...densityRef, ...bad })).error, true);
+  assert.equal(((await call(1, "studio_uv_inspect", { ...densityRef, expectedRevision: 1, profile: { pixelsPerBlock: 16, tolerancePercent: 10 } })).data.error as { code: string }).code, "REVISION_CONFLICT");
+  assert.deepEqual(session.state(), densityState);
   assert.equal(
     (
       await fetch(editor.url, {

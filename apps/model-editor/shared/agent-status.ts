@@ -1,5 +1,6 @@
 export const AGENT_TOOL_LABELS = Object.freeze({
   studio_project_inspect: "Читает сцену",
+  studio_uv_inspect: "Измеряет масштаб текстуры",
   studio_selection_get: "Читает выделение",
   studio_variant_inspect: "Читает вариант",
   studio_changes_preview: "Проверяет правку",

@@ -33,7 +33,7 @@ export async function checkDiscoveryDesktop(options, output) {
     };
     const initial = await inspect(), tools = (await client.listTools()).tools, contract = await read(CONTRACT_URI);
     assert.deepEqual((await client.listResources()).resources.map((r) => r.uri), [CONTRACT_URI, SCENE_URI]);
-    assert.equal(tools.length, 10);
+    assert.equal(tools.length, 11);
     for (const tool of tools) assert.deepEqual(contract.tools.find((t) => t.name === tool.name).inputSchema, tool.inputSchema);
     assert.equal(contract.schemaDigest, createHash("sha256").update(JSON.stringify(contract.tools)).digest("hex"));
     const scene = await read(SCENE_URI);

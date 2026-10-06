@@ -12,6 +12,9 @@ import {
   MutationSchema,
   cubes,
   assetRequest,
+  inspectTexelDensity,
+  TexelDensityProfileSchema,
+  TexelDensityCubeIdsSchema,
   readDesignBrief,
   MAX_COMMAND_BYTES,
   type EditorState,
@@ -232,6 +235,17 @@ export async function startEditorMcp(
           limits: STUDIO_LIMITS,
           discovery: { contracts: CONTRACT_URI, scene: SCENE_URI },
         });
+      },
+    );
+    tool(
+      "studio_uv_inspect",
+      "Измерить texel density всех шести граней: пикс./блок, inflate, отражённые UV и достижимость профиля целыми пикселями текущего атласа. profile задаётся явно; его соответствие ArtSpec не удостоверяется. cubeIds ограничивает выборку, без него измеряется вся сцена. Не изменяет модель/рисунок и не выдаёт art approval.",
+      refSchema.extend({ profile: TexelDensityProfileSchema, cubeIds: TexelDensityCubeIdsSchema.optional() }),
+      true,
+      (args) => {
+        const state = editor.inspect();
+        reference(state, args);
+        return json({ ...summary(state), measurement: inspectTexelDensity(state.project, args.profile, args.cubeIds) });
       },
     );
     tool(

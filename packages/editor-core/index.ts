@@ -1,4 +1,7 @@
 import { z } from "zod";
+import { measureTexelDensity } from "./texel-density.ts";
+export { TexelDensityProfileSchema, TexelDensityCubeIdsSchema } from "./texel-density.ts";
+export type { TexelDensityProfile, TexelDensityReport } from "./texel-density.ts";
 import { EditorError } from "./errors.ts";
 import { DesignBriefSchema, serializeDesignBrief } from "./design-brief.ts";
 import { ConceptDescriptorSchema, MAX_CONCEPTS } from "./concepts.ts";
@@ -261,6 +264,9 @@ export function bounds(items: readonly Cube[]): {
       min[a]!,
   ) as [number, number, number];
   return { min, size };
+}
+export function inspectTexelDensity(projectInput: unknown, profileInput: unknown, cubeIdsInput?: unknown) {
+  return measureTexelDensity(validateProject(projectInput), profileInput, cubeIdsInput);
 }
 export function validateProject(value: unknown): EditorProject {
   const parsed = ProjectSchema.safeParse(value);

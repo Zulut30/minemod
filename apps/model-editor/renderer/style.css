@@ -800,6 +800,16 @@ select {
 .uv-repack label { display: inline-flex; align-items: center; gap: 6px; margin-right: 8px; font-size: 12px; }
 .uv-repack button { padding: 8px 12px; border: 1px solid var(--border); border-radius: 5px; background: var(--accent-soft); color: var(--accent); }
 .uv-repack button:hover:enabled { background: var(--surface-hover); }
+.texel-density { padding: 6px 12px; border-bottom: 1px solid var(--border); font-size: 11px; }
+.texel-density summary { cursor: pointer; font-size: 12px; }
+.density-controls { display: flex; flex-wrap: wrap; gap: 12px; }
+.density-controls label { display: inline-flex; align-items: center; gap: 6px; }
+.density-controls input { width: 65px; background: var(--surface-raised); border: 1px solid var(--border); border-radius: 4px; padding: 5px; }
+.density-summary { color: var(--muted); }
+.density-warning { color: var(--warm); }
+.density-match { color: var(--accent); }
+.density-faces { display: grid; gap: 4px; margin: 8px 0; }
+.density-faces > div { display: flex; justify-content: space-between; gap: 8px; }
 .color-preservation summary { cursor: pointer; font-size: 12px; }
 .preserve-color-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
 .preserve-color-list label { display: flex; align-items: center; gap: 5px; font-size: 10px; cursor: pointer; }
@@ -1181,6 +1191,8 @@ select {
   overflow: hidden;
   background: var(--surface);
 }
+.texture-editor:has(.texel-density[open]) { overflow-y: auto; }
+.texture-editor:has(.texel-density[open]) > * { flex-shrink: 0; }
 .paint-toolbar {
   display: flex;
   flex-wrap: wrap;
@@ -1307,6 +1319,7 @@ select {
   color: var(--muted);
 }
 .uv-coordinates input {
+  background: var(--surface-raised);
   width: 48px;
   font-size: 11px;
   padding: 5px;

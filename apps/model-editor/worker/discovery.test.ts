@@ -44,7 +44,7 @@ try {
   const resources = (await client.listResources()).resources;
   assert.deepEqual(resources.map((r) => r.uri), [CONTRACT_URI, SCENE_URI]);
   const tools = (await client.listTools()).tools, contracts = await read(CONTRACT_URI);
-  assert.equal(tools.length, 10);
+  assert.equal(tools.length, 11);
   assert.equal(contracts.tools.length, tools.length);
   for (const tool of tools) {
     const declared = contracts.tools.find((t: { name: string }) => t.name === tool.name);
@@ -56,6 +56,13 @@ try {
   }
   assert.equal(contracts.schemaDigest, createHash("sha256").update(JSON.stringify(contracts.tools)).digest("hex"));
   assert.deepEqual(contracts.limits, STUDIO_LIMITS);
+  const inspection = contracts.tools.find((t: { name: string }) => t.name === "studio_uv_inspect");
+  assert(inspection.readOnly);
+  assert.equal(inspection.inputSchema.properties.cubeIds.maxItems, 256);
+  assert.equal(inspection.inputSchema.properties.profile.additionalProperties, false);
+  assert.equal(inspection.inputSchema.properties.profile.properties.pixelsPerBlock.maximum, 256);
+  assert.equal(contracts.limits.uvInspectionFaces, 1536);
+  assert(contracts.uvInspectionWorkflow.includes("не удостоверен как ArtSpec"));
   const previewSchema = contracts.tools.find((t: { name: string }) => t.name === "studio_changes_preview").inputSchema;
   const commandSchemas = previewSchema.properties.commands.items.oneOf ?? previewSchema.properties.commands.items.anyOf;
   const advertised = commandSchemas.map((s: { properties: { type: { const: string } } }) => s.properties.type.const);
@@ -169,5 +176,5 @@ try {
   await assert.rejects(client.readResource({ uri: "file:///C:/Windows/system.ini" }));
   assert.equal((await fetch(server.url, { method: "POST", headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ jsonrpc: "2.0", id: 9, method: "resources/read", params: { uri: CONTRACT_URI } }) })).status, 401);
-  process.stdout.write(`Studio discovery: exact ten SDK schemas, dynamic IDs/revision, ${invalid.length} rejected calls without payload echo, bounded recovery and repaired CAS PASS\n`);
+  process.stdout.write(`Studio discovery: exact ${tools.length} SDK schemas, dynamic IDs/revision, ${invalid.length} rejected calls without payload echo, bounded recovery and repaired CAS PASS\n`);
 } finally { await client.close(); server.close(); }

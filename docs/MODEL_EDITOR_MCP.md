@@ -1,5 +1,7 @@
 # MineMod Studio 0.5.0: подключение к общей сцене
 
+Дополнение Studio 0.22: [диагностика масштаба текстуры](production/TEXEL_DENSITY_INSPECTION.md) добавляет read-only `studio_uv_inspect` с явным ограниченным profile и выборкой cube IDs. Текущий inventory содержит 11 инструментов; авторизация/CAS, human-only commands и project format v3 сохраняются. Профиль не удостоверяется как ArtSpec, art approval не выдаётся. Ниже сохранены исторические contracts и результаты прежних версий.
+
 Дополнение Studio 0.16.0: команда `draftVariant` добавляет снимок текущей формы через обычные preview/apply. Максимум три ИИ-черновика и четыре снимка всего; существующие ручные snapshots не заменяются. Вход содержит новый UUID, label и note, без модели или approval. Только цвет, UV, IDs или дублирование того же размещённого кубоида не создают новый blockout. Checkpoint, restore/delete, brief/locks и conceptual metadata остаются ручными. Во время адресного repair новый снимок запрещён. Текущие проверки и ещё открытые gates описаны в [blockout workflow](production/BLOCKOUT_DRAFTS.md).
 
 Дополнение Studio 0.10.0: [agent discovery](production/AGENT_DISCOVERY.md) публикует schemas и текущие IDs через два фиксированных MCP resources. Неверные вызовы получают bounded code/recovery без отражения исходного payload; десять имён инструментов сохранены. Ручные операции исключены из агентной mutation schema. Это проверка интерфейса, а самостоятельные model turns Codex/Claude Code остаются отдельной приёмкой.
