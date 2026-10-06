@@ -1,0 +1,1357 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 51,
+  "pointClosed": false,
+  "status": "HOSTED_INSPECTION_PASS_ART_PENDING",
+  "checkedAtUtc": "2026-10-06T13:05:10.040Z",
+  "sourceCommit": "b2791f3d39b716eef53efb2ba1456d89e08ade21",
+  "sourceInputs": [
+    {
+      "path": "packages/editor-core/index.ts",
+      "gitBlobBytes": 41997,
+      "gitBlobSha256": "0b15ac6ce6319a90b3fef716d9063d169fbf8b563a46d59717152d60cc103030",
+      "workingTreeBytes": 41997,
+      "workingTreeSha256": "0b15ac6ce6319a90b3fef716d9063d169fbf8b563a46d59717152d60cc103030"
+    },
+    {
+      "path": "packages/editor-core/package.json",
+      "gitBlobBytes": 1015,
+      "gitBlobSha256": "ebf305b09daa5f794755e8f53157816f4c078e393f019be99828f8587be746e0",
+      "workingTreeBytes": 1015,
+      "workingTreeSha256": "ebf305b09daa5f794755e8f53157816f4c078e393f019be99828f8587be746e0"
+    },
+    {
+      "path": "packages/editor-core/texel-density.ts",
+      "gitBlobBytes": 4397,
+      "gitBlobSha256": "1511eb61977d0e5e036e7f650b9dbb1d0e10ff4612970247ba91a9739c81b1aa",
+      "workingTreeBytes": 4397,
+      "workingTreeSha256": "1511eb61977d0e5e036e7f650b9dbb1d0e10ff4612970247ba91a9739c81b1aa"
+    },
+    {
+      "path": "packages/editor-core/texel-density.test.ts",
+      "gitBlobBytes": 6357,
+      "gitBlobSha256": "b9e37d99b372648d4506a5fb887c17754b02968ba34fbc7c096e51a38c4956f5",
+      "workingTreeBytes": 6357,
+      "workingTreeSha256": "b9e37d99b372648d4506a5fb887c17754b02968ba34fbc7c096e51a38c4956f5"
+    },
+    {
+      "path": "apps/model-editor/package.json",
+      "gitBlobBytes": 2171,
+      "gitBlobSha256": "f325af598a7e7fe6d680a9c95b33baaa2b82632779612e5e3f1b94c44017edae",
+      "workingTreeBytes": 2171,
+      "workingTreeSha256": "f325af598a7e7fe6d680a9c95b33baaa2b82632779612e5e3f1b94c44017edae"
+    },
+    {
+      "path": "apps/model-editor/renderer/TexelDensityInspector.tsx",
+      "gitBlobBytes": 4321,
+      "gitBlobSha256": "318dad3d3654246df62912b2173b18b91dc113dce9da0acf8daeb575d05c4099",
+      "workingTreeBytes": 4321,
+      "workingTreeSha256": "318dad3d3654246df62912b2173b18b91dc113dce9da0acf8daeb575d05c4099"
+    },
+    {
+      "path": "apps/model-editor/renderer/TextureEditor.tsx",
+      "gitBlobBytes": 20513,
+      "gitBlobSha256": "5e73f4c2a4acf9e96d29ebf118e888179f0d3fe34882f5b859cf6b5c2e31c5a3",
+      "workingTreeBytes": 20513,
+      "workingTreeSha256": "5e73f4c2a4acf9e96d29ebf118e888179f0d3fe34882f5b859cf6b5c2e31c5a3"
+    },
+    {
+      "path": "apps/model-editor/renderer/style.css",
+      "gitBlobBytes": 35435,
+      "gitBlobSha256": "b1654ecc70b5441f516b5c4ae1765f2a894008338abd97d5cf6365153cc4f05f",
+      "workingTreeBytes": 35435,
+      "workingTreeSha256": "b1654ecc70b5441f516b5c4ae1765f2a894008338abd97d5cf6365153cc4f05f"
+    },
+    {
+      "path": "apps/model-editor/worker/mcp.ts",
+      "gitBlobBytes": 47458,
+      "gitBlobSha256": "130c3bcaa088745d43da9478abace9092821b04d6e385ddab5e42b1ed64a4ea4",
+      "workingTreeBytes": 47458,
+      "workingTreeSha256": "130c3bcaa088745d43da9478abace9092821b04d6e385ddab5e42b1ed64a4ea4"
+    },
+    {
+      "path": "apps/model-editor/worker/mcp.test.ts",
+      "gitBlobBytes": 22118,
+      "gitBlobSha256": "2ca592bfaf847125bbd9872122b5ce17877e03fbebeede4633c4664c18b2bbdf",
+      "workingTreeBytes": 22118,
+      "workingTreeSha256": "2ca592bfaf847125bbd9872122b5ce17877e03fbebeede4633c4664c18b2bbdf"
+    },
+    {
+      "path": "apps/model-editor/worker/discovery.ts",
+      "gitBlobBytes": 19784,
+      "gitBlobSha256": "40c318f23cbd45a7ee46fd5a3d04ac887a6adf5c604906a22f178ac8121a6e1d",
+      "workingTreeBytes": 19784,
+      "workingTreeSha256": "40c318f23cbd45a7ee46fd5a3d04ac887a6adf5c604906a22f178ac8121a6e1d"
+    },
+    {
+      "path": "apps/model-editor/worker/discovery.test.ts",
+      "gitBlobBytes": 12566,
+      "gitBlobSha256": "950e1fcddff42b0712a019c0a3172fe4006bd7d9756782d17b27a1bf7b478a93",
+      "workingTreeBytes": 12566,
+      "workingTreeSha256": "950e1fcddff42b0712a019c0a3172fe4006bd7d9756782d17b27a1bf7b478a93"
+    },
+    {
+      "path": "apps/model-editor/shared/agent-status.ts",
+      "gitBlobBytes": 2240,
+      "gitBlobSha256": "df2e42603e1b7805b73449f98b72069028bf22b3afa46f578da753705ff9aa53",
+      "workingTreeBytes": 2240,
+      "workingTreeSha256": "df2e42603e1b7805b73449f98b72069028bf22b3afa46f578da753705ff9aa53"
+    },
+    {
+      "path": "apps/model-editor/scripts/check-texel-density-desktop.mjs",
+      "gitBlobBytes": 7999,
+      "gitBlobSha256": "b46d5eda7cca58a62d3fe8dbe606f11b0153e3b67bd7c8c2285a15680f3ffafd",
+      "workingTreeBytes": 7999,
+      "workingTreeSha256": "b46d5eda7cca58a62d3fe8dbe606f11b0153e3b67bd7c8c2285a15680f3ffafd"
+    },
+    {
+      "path": "apps/model-editor/scripts/run-texel-density-desktop.mjs",
+      "gitBlobBytes": 971,
+      "gitBlobSha256": "804f82ff85f3495283525578cfd275d021ccfd3193cbaaae02c5e750e581a3b0",
+      "workingTreeBytes": 971,
+      "workingTreeSha256": "804f82ff85f3495283525578cfd275d021ccfd3193cbaaae02c5e750e581a3b0"
+    },
+    {
+      "path": "apps/model-editor/scripts/test-desktop.mjs",
+      "gitBlobBytes": 18777,
+      "gitBlobSha256": "5042b92e0c133ee37ec29c143a9224081a1a2b64d63f5aa6d2a0833cdfd63270",
+      "workingTreeBytes": 18777,
+      "workingTreeSha256": "5042b92e0c133ee37ec29c143a9224081a1a2b64d63f5aa6d2a0833cdfd63270"
+    },
+    {
+      "path": "apps/model-editor/scripts/check-discovery-desktop.mjs",
+      "gitBlobBytes": 6620,
+      "gitBlobSha256": "69a4a071a3ad71a2a5cfdafff33ba5b1afa22bd9c382292b26433b5cf8999e48",
+      "workingTreeBytes": 6620,
+      "workingTreeSha256": "69a4a071a3ad71a2a5cfdafff33ba5b1afa22bd9c382292b26433b5cf8999e48"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "gitBlobBytes": 95944,
+      "gitBlobSha256": "e955ab8e82d8bb87128cf10f0f95b67c217fb1bf31eb7f2321823e66b03195c2",
+      "workingTreeBytes": 95944,
+      "workingTreeSha256": "e955ab8e82d8bb87128cf10f0f95b67c217fb1bf31eb7f2321823e66b03195c2"
+    }
+  ],
+  "lineEndings": "Canonical Git source blobs; raw working bytes recorded separately",
+  "studioVersion": "0.22.0",
+  "package": {
+    "executable": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.22.0\\cf1ae7b7\\MineMod Studio-win32-x64\\MineMod Studio.exe",
+    "asar": {
+      "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.22.0\\cf1ae7b7\\MineMod Studio-win32-x64\\resources\\app.asar",
+      "bytes": 3707890,
+      "sha256": "68735e99c99ef95031592f9afdd21950e18b077bb76e60e83e2c4bad92e25cb7"
+    }
+  },
+  "local": {
+    "logs": [
+      {
+        "kind": "core",
+        "status": "PASS",
+        "path": "output/verification/texel-density-051-core.log",
+        "bytes": 2689,
+        "sha256": "86d81c6560ce56ed2b18f01c385c3715284e76d82fc090b445dca4b7ab40e38d"
+      },
+      {
+        "kind": "portable",
+        "status": "PASS",
+        "path": "output/verification/texel-density-051-portable.log",
+        "bytes": 4878,
+        "sha256": "748fbcb95a8e83a75dcb2166db681345a38c3241c41df3dfc05edda4184f6216"
+      },
+      {
+        "kind": "HTTP MCP",
+        "status": "PASS",
+        "path": "output/verification/texel-density-051-mcp.log",
+        "bytes": 597,
+        "sha256": "903bc6ffa85c6eca4cf021f2c685d09a29ef707d26d735a9faa0d71cca3395cf"
+      },
+      {
+        "kind": "discovery",
+        "status": "PASS",
+        "path": "output/verification/texel-density-051-discovery.log",
+        "bytes": 202,
+        "sha256": "44e50d6764454a0a8e6c3f361194a4fa351f8bfca8f269255cbd20698a23f9a4"
+      },
+      {
+        "kind": "lint",
+        "status": "PASS",
+        "path": "output/verification/texel-density-051-lint.log",
+        "bytes": 29,
+        "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+      },
+      {
+        "kind": "typecheck-all",
+        "status": "PASS",
+        "path": "output/verification/texel-density-051-typecheck.log",
+        "bytes": 176,
+        "sha256": "fe0327fb3a908a7cea6b4e5ef62bbaa7903d4f4149a209170e6249f0dd5c8190"
+      },
+      {
+        "kind": "package",
+        "status": "PASS",
+        "path": "output/verification/texel-density-051-package.log",
+        "bytes": 787,
+        "sha256": "a69c212d7ba596b4d9e06162648c3111454fba834ccd6906232038b2c9cf1fd1"
+      },
+      {
+        "kind": "focused",
+        "status": "PASS",
+        "path": "output/verification/texel-density-051-focused.log",
+        "bytes": 171,
+        "sha256": "6a2ba0eb76197052befc2c78e8dd196591eb364a9b4831f419cffdbd7dd620f7"
+      }
+    ],
+    "focused": {
+      "report": {
+        "path": "output/playwright/texel-density-051-f331606e/texel-density/report.json",
+        "bytes": 5480,
+        "sha256": "ba0da93859ae36db0b322d5d75dc430ce3b0ca287a6c9d24e2d85b990f69b9c3"
+      },
+      "proof": {
+        "status": "PASS",
+        "hidden": true,
+        "uiProfileInput": true,
+        "invalidProfileHint": true,
+        "inflatedUvHint": true,
+        "mcpReadOnlyInspection": true,
+        "staleAndBoundsRejected": true,
+        "exactProjectAndFileUnchanged": true,
+        "measurement": {
+          "kind": "texel-density-measurement",
+          "profile": {
+            "pixelsPerBlock": 16,
+            "tolerancePercent": 10
+          },
+          "profileSource": "caller-supplied-not-ArtSpec-verified",
+          "modelUnitsPerBlock": 16,
+          "selectedCubes": 1,
+          "summary": {
+            "faces": 6,
+            "axes": 12,
+            "axesWithinTolerance": 4,
+            "axesOutsideTolerance": 8,
+            "axesWithoutIntegerCoverage": 0,
+            "axesWithoutAtlasCapacity": 0,
+            "unmeasurableAxes": 0
+          },
+          "faces": [
+            {
+              "cubeId": "sample",
+              "face": "north",
+              "axes": [
+                {
+                  "modelUnits": 4,
+                  "pixels": 4,
+                  "pixelsPerBlock": 16,
+                  "withinTolerance": true,
+                  "integerPixelRange": [
+                    4,
+                    4
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 4
+                },
+                {
+                  "modelUnits": 6,
+                  "pixels": 8,
+                  "pixelsPerBlock": 21.333333333333332,
+                  "withinTolerance": false,
+                  "integerPixelRange": [
+                    6,
+                    6
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 6
+                }
+              ]
+            },
+            {
+              "cubeId": "sample",
+              "face": "south",
+              "axes": [
+                {
+                  "modelUnits": 4,
+                  "pixels": 4,
+                  "pixelsPerBlock": 16,
+                  "withinTolerance": true,
+                  "integerPixelRange": [
+                    4,
+                    4
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 4
+                },
+                {
+                  "modelUnits": 6,
+                  "pixels": 8,
+                  "pixelsPerBlock": 21.333333333333332,
+                  "withinTolerance": false,
+                  "integerPixelRange": [
+                    6,
+                    6
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 6
+                }
+              ]
+            },
+            {
+              "cubeId": "sample",
+              "face": "east",
+              "axes": [
+                {
+                  "modelUnits": 10,
+                  "pixels": 4,
+                  "pixelsPerBlock": 6.4,
+                  "withinTolerance": false,
+                  "integerPixelRange": [
+                    9,
+                    11
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 10
+                },
+                {
+                  "modelUnits": 6,
+                  "pixels": 8,
+                  "pixelsPerBlock": 21.333333333333332,
+                  "withinTolerance": false,
+                  "integerPixelRange": [
+                    6,
+                    6
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 6
+                }
+              ]
+            },
+            {
+              "cubeId": "sample",
+              "face": "west",
+              "axes": [
+                {
+                  "modelUnits": 10,
+                  "pixels": 4,
+                  "pixelsPerBlock": 6.4,
+                  "withinTolerance": false,
+                  "integerPixelRange": [
+                    9,
+                    11
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 10
+                },
+                {
+                  "modelUnits": 6,
+                  "pixels": 8,
+                  "pixelsPerBlock": 21.333333333333332,
+                  "withinTolerance": false,
+                  "integerPixelRange": [
+                    6,
+                    6
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 6
+                }
+              ]
+            },
+            {
+              "cubeId": "sample",
+              "face": "up",
+              "axes": [
+                {
+                  "modelUnits": 4,
+                  "pixels": 4,
+                  "pixelsPerBlock": 16,
+                  "withinTolerance": true,
+                  "integerPixelRange": [
+                    4,
+                    4
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 4
+                },
+                {
+                  "modelUnits": 10,
+                  "pixels": 8,
+                  "pixelsPerBlock": 12.8,
+                  "withinTolerance": false,
+                  "integerPixelRange": [
+                    9,
+                    11
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 10
+                }
+              ]
+            },
+            {
+              "cubeId": "sample",
+              "face": "down",
+              "axes": [
+                {
+                  "modelUnits": 4,
+                  "pixels": 4,
+                  "pixelsPerBlock": 16,
+                  "withinTolerance": true,
+                  "integerPixelRange": [
+                    4,
+                    4
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 4
+                },
+                {
+                  "modelUnits": 10,
+                  "pixels": 8,
+                  "pixelsPerBlock": 12.8,
+                  "withinTolerance": false,
+                  "integerPixelRange": [
+                    9,
+                    11
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 10
+                }
+              ]
+            }
+          ],
+          "artisticAcceptance": "requires-human-review"
+        },
+        "compactControlsReachableByScroll": true,
+        "controlsScreenshotSha256": "4901e4bdebbacf12990d5c893f8a2d7eaa5e50a7e88f0e9ef7e932297453c101",
+        "screenshotSha256": "14ace9cee99bdb39be3134f5a96e6eadfbc5bddc619b8b791bd235fd26b81f31",
+        "artisticApproval": "NOT_PERFORMED",
+        "gameIntegration": "NOT_RUN"
+      },
+      "screenshots": [
+        {
+          "path": "output/playwright/texel-density-051-f331606e/texel-density/inspector.png",
+          "bytes": 356713,
+          "sha256": "14ace9cee99bdb39be3134f5a96e6eadfbc5bddc619b8b791bd235fd26b81f31"
+        },
+        {
+          "path": "output/playwright/texel-density-051-f331606e/texel-density/controls.png",
+          "bytes": 297137,
+          "sha256": "4901e4bdebbacf12990d5c893f8a2d7eaa5e50a7e88f0e9ef7e932297453c101"
+        }
+      ]
+    },
+    "leaf": {
+      "report": {
+        "path": "output/model-editor/leaf-density-022-6470e3e8/report.json",
+        "bytes": 1450,
+        "sha256": "12b3eeb840d6582707f194bf3be44c2117fe3f508105571254b5faaf13d6b663"
+      },
+      "proof": {
+        "status": "READ_ONLY_MCP_MEASUREMENT_PASS",
+        "roadmapPoint": 51,
+        "pointClosed": false,
+        "sourceCommit": "b2791f3d39b716eef53efb2ba1456d89e08ade21",
+        "studioVersion": "0.22.0",
+        "asarSha256": "68735e99c99ef95031592f9afdd21950e18b077bb76e60e83e2c4bad92e25cb7",
+        "project": {
+          "path": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\leaf-bevel-94fbca11\\c.mmeditor.json",
+          "sha256": "9b8e63ce3279981870260d8c960dffea567e4c7a091b672154fa46d1c455f82b"
+        },
+        "callerArtSpec": {
+          "path": "fixtures/art/leaf-sword.artspec-v1.json",
+          "sha256": "45af443a83f00a0075b9de23df9e91d357cae50104156384a9a6cff01c329157",
+          "profile": {
+            "pixelsPerBlock": 16,
+            "tolerancePercent": 10
+          },
+          "textureResolution": 128
+        },
+        "actualAtlas": {
+          "width": 256,
+          "height": 256
+        },
+        "measurementSummary": {
+          "faces": 354,
+          "axes": 708,
+          "axesWithinTolerance": 0,
+          "axesOutsideTolerance": 708,
+          "axesWithoutIntegerCoverage": 564,
+          "axesWithoutAtlasCapacity": 0,
+          "unmeasurableAxes": 0
+        },
+        "screenshotSha256": "e48cbf4f71b1537671dfbbd0a2addd9104d1697bc1a3d9b8d65634a20adea075",
+        "artisticApproval": "NOT_PERFORMED",
+        "gameIntegration": "NOT_RUN",
+        "boundaries": [
+          "Profile supplied by this caller from recorded ArtSpec bytes; MCP does not authenticate ArtSpec",
+          "Unchanged neutral Leaf C, no UV/paint/geometry edits; no artistic score or permitted integer exception"
+        ]
+      },
+      "measurement": {
+        "path": "output/model-editor/leaf-density-022-6470e3e8/measurement.json",
+        "bytes": 253990,
+        "sha256": "b16f95e555c28501b1fdc4cfeabcd8b4f295cf9cf8463ca5583a361e433c5d26"
+      },
+      "screenshot": {
+        "path": "output/model-editor/leaf-density-022-6470e3e8/inspector.png",
+        "bytes": 257567,
+        "sha256": "e48cbf4f71b1537671dfbbd0a2addd9104d1697bc1a3d9b8d65634a20adea075"
+      }
+    },
+    "failurePreserved": {
+      "report": {
+        "path": "output/playwright/texel-density-051-800a8398/texel-density/failure.json",
+        "bytes": 78,
+        "sha256": "a2a456cecab5655be0064f7cf3f5cdc79b9eadc0733d8bbdad9a54cdc7fcbe5b"
+      },
+      "log": {
+        "path": "output/verification/texel-density-051-layout-before-fix.log",
+        "bytes": 709,
+        "sha256": "1d8dd1ecb46272f13bae9e5926279cdf93ece8848c1c12af6834090833b8bb2c"
+      },
+      "fix": "Scrollable expanded texture panel, actual wheel and UV button bounds verified"
+    },
+    "fullDesktop": {
+      "status": "PASS",
+      "sourceCommit": "b2791f3d39b716eef53efb2ba1456d89e08ade21",
+      "report": {
+        "path": "output/playwright/studio-packaged-5dbade1f/report.json",
+        "bytes": 106348,
+        "sha256": "5cfb2e3aff65bc6eca99a322e4239d24afae50ed002bdd522459a63df77653e3"
+      },
+      "log": {
+        "path": "output/verification/texel-density-051-desktop.log",
+        "bytes": 202,
+        "sha256": "6cf8f5d1f4ef4d191e7fa2d69033e368bc1d3d918d757fec0ba0492cc7cfaf22"
+      },
+      "subreports": [
+        {
+          "name": "mcp",
+          "status": "PASS"
+        },
+        {
+          "name": "texture",
+          "status": "PASS"
+        },
+        {
+          "name": "polish",
+          "status": "PASS"
+        },
+        {
+          "name": "editing",
+          "status": "PASS"
+        },
+        {
+          "name": "variants",
+          "status": "PASS"
+        },
+        {
+          "name": "agentBlockouts",
+          "status": "PASS"
+        },
+        {
+          "name": "continuation",
+          "status": "PASS"
+        },
+        {
+          "name": "agentStatus",
+          "status": "PASS"
+        },
+        {
+          "name": "brief",
+          "status": "PASS"
+        },
+        {
+          "name": "concepts",
+          "status": "PASS"
+        },
+        {
+          "name": "parts",
+          "status": "PASS"
+        },
+        {
+          "name": "repair",
+          "status": "PASS"
+        },
+        {
+          "name": "manual",
+          "status": "PASS"
+        },
+        {
+          "name": "accessibility",
+          "status": "PASS"
+        },
+        {
+          "name": "accessibilityStates",
+          "status": "PASS"
+        },
+        {
+          "name": "review",
+          "status": "PASS"
+        },
+        {
+          "name": "migrations",
+          "status": "PASS"
+        },
+        {
+          "name": "history",
+          "status": "PASS"
+        },
+        {
+          "name": "geometry",
+          "status": "PASS"
+        },
+        {
+          "name": "camera",
+          "status": "PASS"
+        },
+        {
+          "name": "discovery",
+          "status": "PASS"
+        },
+        {
+          "name": "uvRepack",
+          "status": "PASS"
+        },
+        {
+          "name": "texelDensity",
+          "status": "PASS"
+        }
+      ],
+      "discoveryTools": 11,
+      "texelDensity": {
+        "status": "PASS",
+        "hidden": true,
+        "uiProfileInput": true,
+        "invalidProfileHint": true,
+        "inflatedUvHint": true,
+        "mcpReadOnlyInspection": true,
+        "staleAndBoundsRejected": true,
+        "exactProjectAndFileUnchanged": true,
+        "measurement": {
+          "kind": "texel-density-measurement",
+          "profile": {
+            "pixelsPerBlock": 16,
+            "tolerancePercent": 10
+          },
+          "profileSource": "caller-supplied-not-ArtSpec-verified",
+          "modelUnitsPerBlock": 16,
+          "selectedCubes": 1,
+          "summary": {
+            "faces": 6,
+            "axes": 12,
+            "axesWithinTolerance": 4,
+            "axesOutsideTolerance": 8,
+            "axesWithoutIntegerCoverage": 0,
+            "axesWithoutAtlasCapacity": 0,
+            "unmeasurableAxes": 0
+          },
+          "faces": [
+            {
+              "cubeId": "sample",
+              "face": "north",
+              "axes": [
+                {
+                  "modelUnits": 4,
+                  "pixels": 4,
+                  "pixelsPerBlock": 16,
+                  "withinTolerance": true,
+                  "integerPixelRange": [
+                    4,
+                    4
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 4
+                },
+                {
+                  "modelUnits": 6,
+                  "pixels": 8,
+                  "pixelsPerBlock": 21.333333333333332,
+                  "withinTolerance": false,
+                  "integerPixelRange": [
+                    6,
+                    6
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 6
+                }
+              ]
+            },
+            {
+              "cubeId": "sample",
+              "face": "south",
+              "axes": [
+                {
+                  "modelUnits": 4,
+                  "pixels": 4,
+                  "pixelsPerBlock": 16,
+                  "withinTolerance": true,
+                  "integerPixelRange": [
+                    4,
+                    4
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 4
+                },
+                {
+                  "modelUnits": 6,
+                  "pixels": 8,
+                  "pixelsPerBlock": 21.333333333333332,
+                  "withinTolerance": false,
+                  "integerPixelRange": [
+                    6,
+                    6
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 6
+                }
+              ]
+            },
+            {
+              "cubeId": "sample",
+              "face": "east",
+              "axes": [
+                {
+                  "modelUnits": 10,
+                  "pixels": 4,
+                  "pixelsPerBlock": 6.4,
+                  "withinTolerance": false,
+                  "integerPixelRange": [
+                    9,
+                    11
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 10
+                },
+                {
+                  "modelUnits": 6,
+                  "pixels": 8,
+                  "pixelsPerBlock": 21.333333333333332,
+                  "withinTolerance": false,
+                  "integerPixelRange": [
+                    6,
+                    6
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 6
+                }
+              ]
+            },
+            {
+              "cubeId": "sample",
+              "face": "west",
+              "axes": [
+                {
+                  "modelUnits": 10,
+                  "pixels": 4,
+                  "pixelsPerBlock": 6.4,
+                  "withinTolerance": false,
+                  "integerPixelRange": [
+                    9,
+                    11
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 10
+                },
+                {
+                  "modelUnits": 6,
+                  "pixels": 8,
+                  "pixelsPerBlock": 21.333333333333332,
+                  "withinTolerance": false,
+                  "integerPixelRange": [
+                    6,
+                    6
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 6
+                }
+              ]
+            },
+            {
+              "cubeId": "sample",
+              "face": "up",
+              "axes": [
+                {
+                  "modelUnits": 4,
+                  "pixels": 4,
+                  "pixelsPerBlock": 16,
+                  "withinTolerance": true,
+                  "integerPixelRange": [
+                    4,
+                    4
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 4
+                },
+                {
+                  "modelUnits": 10,
+                  "pixels": 8,
+                  "pixelsPerBlock": 12.8,
+                  "withinTolerance": false,
+                  "integerPixelRange": [
+                    9,
+                    11
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 10
+                }
+              ]
+            },
+            {
+              "cubeId": "sample",
+              "face": "down",
+              "axes": [
+                {
+                  "modelUnits": 4,
+                  "pixels": 4,
+                  "pixelsPerBlock": 16,
+                  "withinTolerance": true,
+                  "integerPixelRange": [
+                    4,
+                    4
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 4
+                },
+                {
+                  "modelUnits": 10,
+                  "pixels": 8,
+                  "pixelsPerBlock": 12.8,
+                  "withinTolerance": false,
+                  "integerPixelRange": [
+                    9,
+                    11
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 10
+                }
+              ]
+            }
+          ],
+          "artisticAcceptance": "requires-human-review"
+        },
+        "compactControlsReachableByScroll": true,
+        "controlsScreenshotSha256": "4901e4bdebbacf12990d5c893f8a2d7eaa5e50a7e88f0e9ef7e932297453c101",
+        "screenshotSha256": "14ace9cee99bdb39be3134f5a96e6eadfbc5bddc619b8b791bd235fd26b81f31",
+        "artisticApproval": "NOT_PERFORMED",
+        "gameIntegration": "NOT_RUN"
+      },
+      "screenshots": [
+        {
+          "path": "output\\playwright\\studio-packaged-5dbade1f\\texel-density\\inspector.png",
+          "bytes": 356713,
+          "sha256": "14ace9cee99bdb39be3134f5a96e6eadfbc5bddc619b8b791bd235fd26b81f31"
+        },
+        {
+          "path": "output\\playwright\\studio-packaged-5dbade1f\\texel-density\\controls.png",
+          "bytes": 297137,
+          "sha256": "4901e4bdebbacf12990d5c893f8a2d7eaa5e50a7e88f0e9ef7e932297453c101"
+        }
+      ],
+      "asarSha256": "68735e99c99ef95031592f9afdd21950e18b077bb76e60e83e2c4bad92e25cb7"
+    }
+  },
+  "hosted": {
+    "status": "BASELINE_PASS_LEGACY_GATE_UNRESOLVED",
+    "sourceCommit": "b2791f3d39b716eef53efb2ba1456d89e08ade21",
+    "tree": "f80aee2da295d52b2c7c29aca251d7ce20e4a49e",
+    "runId": 37465942001,
+    "attempt": 1,
+    "url": "https://github.com/Zulut30/minemod/actions/runs/37465942001",
+    "workflowConclusion": "failure",
+    "run": {
+      "path": "output/verification/texel-density-051-ci-run.json",
+      "bytes": 11952,
+      "sha256": "b36d6ab5b6980724aef6595dab8cc31aa3252746332a1c686ee6d1165fd5af75"
+    },
+    "jobs": {
+      "path": "output/verification/texel-density-051-ci-jobs.json",
+      "bytes": 23569,
+      "sha256": "8c1d7c62f9ede1b74d1f9a10c6e2e4afcb26849323a64580d9b907845b309039"
+    },
+    "artifacts": {
+      "path": "output/verification/texel-density-051-ci-artifacts.json",
+      "bytes": 2892,
+      "sha256": "73c63d95afa2f3d99ca7385745f79f14ace1813db0f18fe1da695a57d29547a4"
+    },
+    "jobResults": [
+      {
+        "id": 112276860960,
+        "name": "Fabric 1.20.1 / Java 17 production target",
+        "conclusion": "success"
+      },
+      {
+        "id": 112276861110,
+        "name": "neoforge",
+        "conclusion": "success"
+      },
+      {
+        "id": 112276861189,
+        "name": "fabric",
+        "conclusion": "failure"
+      },
+      {
+        "id": 112276861326,
+        "name": "control-plane",
+        "conclusion": "success"
+      },
+      {
+        "id": 112276861367,
+        "name": "studio-windows",
+        "conclusion": "success"
+      },
+      {
+        "id": 112277193307,
+        "name": "fabric-client",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 112278411305,
+        "name": "client-smoke",
+        "conclusion": "success"
+      }
+    ],
+    "cleanCheckouts": [
+      {
+        "path": "output/ci/37465942001-windows/output/ci/clean-checkout/studio-windows.json",
+        "bytes": 4469,
+        "sha256": "73b41081bf22dc5062c02db90782bc0ee3f51e7fdc566bf7388a78f6c2063274"
+      },
+      {
+        "path": "output/ci/37465942001-control/control-plane.json",
+        "bytes": 4469,
+        "sha256": "ab8ab3de26136eb5d91bb48ee08676b591f0a878dda5c05e9ee4ad2e2e7f0461"
+      },
+      {
+        "path": "output/ci/37465942001-production/output/ci/clean-checkout/fabric-production.json",
+        "bytes": 4469,
+        "sha256": "ab8ab3de26136eb5d91bb48ee08676b591f0a878dda5c05e9ee4ad2e2e7f0461"
+      }
+    ],
+    "windows": {
+      "status": "PASS",
+      "jobId": 112276861367,
+      "artifactId": 11415077649,
+      "report": {
+        "path": "output\\ci\\37465942001-windows\\output\\playwright\\studio-packaged-1028e0af\\report.json",
+        "bytes": 105775,
+        "sha256": "e7f1066d4009de633d4f2f644f41ee7d22bdafc77026d7c69039244aaee2c475"
+      },
+      "subreports": [
+        {
+          "name": "mcp",
+          "status": "PASS"
+        },
+        {
+          "name": "texture",
+          "status": "PASS"
+        },
+        {
+          "name": "polish",
+          "status": "PASS"
+        },
+        {
+          "name": "editing",
+          "status": "PASS"
+        },
+        {
+          "name": "variants",
+          "status": "PASS"
+        },
+        {
+          "name": "agentBlockouts",
+          "status": "PASS"
+        },
+        {
+          "name": "continuation",
+          "status": "PASS"
+        },
+        {
+          "name": "agentStatus",
+          "status": "PASS"
+        },
+        {
+          "name": "brief",
+          "status": "PASS"
+        },
+        {
+          "name": "concepts",
+          "status": "PASS"
+        },
+        {
+          "name": "parts",
+          "status": "PASS"
+        },
+        {
+          "name": "repair",
+          "status": "PASS"
+        },
+        {
+          "name": "manual",
+          "status": "PASS"
+        },
+        {
+          "name": "accessibility",
+          "status": "PASS"
+        },
+        {
+          "name": "accessibilityStates",
+          "status": "PASS"
+        },
+        {
+          "name": "review",
+          "status": "PASS"
+        },
+        {
+          "name": "migrations",
+          "status": "PASS"
+        },
+        {
+          "name": "history",
+          "status": "PASS"
+        },
+        {
+          "name": "geometry",
+          "status": "PASS"
+        },
+        {
+          "name": "camera",
+          "status": "PASS"
+        },
+        {
+          "name": "discovery",
+          "status": "PASS"
+        },
+        {
+          "name": "uvRepack",
+          "status": "PASS"
+        },
+        {
+          "name": "texelDensity",
+          "status": "PASS"
+        }
+      ],
+      "discoveryTools": 11,
+      "texelDensity": {
+        "status": "PASS",
+        "hidden": true,
+        "uiProfileInput": true,
+        "invalidProfileHint": true,
+        "inflatedUvHint": true,
+        "mcpReadOnlyInspection": true,
+        "staleAndBoundsRejected": true,
+        "exactProjectAndFileUnchanged": true,
+        "measurement": {
+          "kind": "texel-density-measurement",
+          "profile": {
+            "pixelsPerBlock": 16,
+            "tolerancePercent": 10
+          },
+          "profileSource": "caller-supplied-not-ArtSpec-verified",
+          "modelUnitsPerBlock": 16,
+          "selectedCubes": 1,
+          "summary": {
+            "faces": 6,
+            "axes": 12,
+            "axesWithinTolerance": 4,
+            "axesOutsideTolerance": 8,
+            "axesWithoutIntegerCoverage": 0,
+            "axesWithoutAtlasCapacity": 0,
+            "unmeasurableAxes": 0
+          },
+          "faces": [
+            {
+              "cubeId": "sample",
+              "face": "north",
+              "axes": [
+                {
+                  "modelUnits": 4,
+                  "pixels": 4,
+                  "pixelsPerBlock": 16,
+                  "withinTolerance": true,
+                  "integerPixelRange": [
+                    4,
+                    4
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 4
+                },
+                {
+                  "modelUnits": 6,
+                  "pixels": 8,
+                  "pixelsPerBlock": 21.333333333333332,
+                  "withinTolerance": false,
+                  "integerPixelRange": [
+                    6,
+                    6
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 6
+                }
+              ]
+            },
+            {
+              "cubeId": "sample",
+              "face": "south",
+              "axes": [
+                {
+                  "modelUnits": 4,
+                  "pixels": 4,
+                  "pixelsPerBlock": 16,
+                  "withinTolerance": true,
+                  "integerPixelRange": [
+                    4,
+                    4
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 4
+                },
+                {
+                  "modelUnits": 6,
+                  "pixels": 8,
+                  "pixelsPerBlock": 21.333333333333332,
+                  "withinTolerance": false,
+                  "integerPixelRange": [
+                    6,
+                    6
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 6
+                }
+              ]
+            },
+            {
+              "cubeId": "sample",
+              "face": "east",
+              "axes": [
+                {
+                  "modelUnits": 10,
+                  "pixels": 4,
+                  "pixelsPerBlock": 6.4,
+                  "withinTolerance": false,
+                  "integerPixelRange": [
+                    9,
+                    11
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 10
+                },
+                {
+                  "modelUnits": 6,
+                  "pixels": 8,
+                  "pixelsPerBlock": 21.333333333333332,
+                  "withinTolerance": false,
+                  "integerPixelRange": [
+                    6,
+                    6
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 6
+                }
+              ]
+            },
+            {
+              "cubeId": "sample",
+              "face": "west",
+              "axes": [
+                {
+                  "modelUnits": 10,
+                  "pixels": 4,
+                  "pixelsPerBlock": 6.4,
+                  "withinTolerance": false,
+                  "integerPixelRange": [
+                    9,
+                    11
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 10
+                },
+                {
+                  "modelUnits": 6,
+                  "pixels": 8,
+                  "pixelsPerBlock": 21.333333333333332,
+                  "withinTolerance": false,
+                  "integerPixelRange": [
+                    6,
+                    6
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 6
+                }
+              ]
+            },
+            {
+              "cubeId": "sample",
+              "face": "up",
+              "axes": [
+                {
+                  "modelUnits": 4,
+                  "pixels": 4,
+                  "pixelsPerBlock": 16,
+                  "withinTolerance": true,
+                  "integerPixelRange": [
+                    4,
+                    4
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 4
+                },
+                {
+                  "modelUnits": 10,
+                  "pixels": 8,
+                  "pixelsPerBlock": 12.8,
+                  "withinTolerance": false,
+                  "integerPixelRange": [
+                    9,
+                    11
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 10
+                }
+              ]
+            },
+            {
+              "cubeId": "sample",
+              "face": "down",
+              "axes": [
+                {
+                  "modelUnits": 4,
+                  "pixels": 4,
+                  "pixelsPerBlock": 16,
+                  "withinTolerance": true,
+                  "integerPixelRange": [
+                    4,
+                    4
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 4
+                },
+                {
+                  "modelUnits": 10,
+                  "pixels": 8,
+                  "pixelsPerBlock": 12.8,
+                  "withinTolerance": false,
+                  "integerPixelRange": [
+                    9,
+                    11
+                  ],
+                  "fitsCurrentAtlas": true,
+                  "closestPositivePixels": 10
+                }
+              ]
+            }
+          ],
+          "artisticAcceptance": "requires-human-review"
+        },
+        "compactControlsReachableByScroll": true,
+        "controlsScreenshotSha256": "ee35c897d8ccb06c12cf2bdc8b16363da035f46b52b6b5f8dcc46b6f1edcb3d1",
+        "screenshotSha256": "5646b12136f5d4139374d82335d463c583e8bf3e23bd7af5d0c01249814b7829",
+        "artisticApproval": "NOT_PERFORMED",
+        "gameIntegration": "NOT_RUN"
+      },
+      "screenshots": [
+        {
+          "path": "output\\ci\\37465942001-windows\\output\\playwright\\studio-packaged-1028e0af\\texel-density\\inspector.png",
+          "bytes": 91468,
+          "sha256": "5646b12136f5d4139374d82335d463c583e8bf3e23bd7af5d0c01249814b7829"
+        },
+        {
+          "path": "output\\ci\\37465942001-windows\\output\\playwright\\studio-packaged-1028e0af\\texel-density\\controls.png",
+          "bytes": 77981,
+          "sha256": "ee35c897d8ccb06c12cf2bdc8b16363da035f46b52b6b5f8dcc46b6f1edcb3d1"
+        }
+      ],
+      "jobLog": {
+        "path": "output/verification/texel-density-051-ci-windows.log",
+        "bytes": 59095,
+        "sha256": "99b25956a75da3dea6e8e447684eefc75d76f5a44237bac48a69c56a08aeb75b"
+      },
+      "asarByteComparison": "NOT_AVAILABLE_ARTIFACT_DOES_NOT_INCLUDE_ASAR"
+    },
+    "linux": {
+      "status": "PASS",
+      "jobId": 112276861326,
+      "artifactId": 11414900675,
+      "jobLog": {
+        "path": "output/verification/texel-density-051-ci-control.log",
+        "bytes": 59475,
+        "sha256": "087e1b72c53794fcc102db6c9056d5463d08a5ae1d3f7f647822748fb6114bbd"
+      }
+    },
+    "production": {
+      "status": "PASS",
+      "jobId": 112276860960,
+      "artifactId": 11415715521,
+      "inputs": {
+        "path": "output/ci/37465942001-production/output/ci/fabric-production/inputs.json",
+        "bytes": 884,
+        "sha256": "9ee967c1efa32b52ab1128b35c3afbf4e28427b7eab1d6a82842656a816e8f02"
+      },
+      "javaRuntime": "17.0.19+10",
+      "gameTests": {
+        "report": {
+          "path": "output/ci/37465942001-production/fixtures/fabric-1.20.1-empty/build/reports/gametest/production.xml",
+          "bytes": 406,
+          "sha256": "909d34656fe839b0617f544b36f70844f796ea890f3b39a158eeb6f69a8925a5"
+        },
+        "verification": "PASS: 2 required Fabric 1.20.1 harness tests",
+        "scope": "two required baseline harness tests"
+      },
+      "dedicatedServer": {
+        "status": "READINESS_EXIT_0_NONCE_STOPPED",
+        "nonce": "phase0-fabric-1.20.1-server-3146-17842-17586-0"
+      },
+      "headlessClient": {
+        "status": "READINESS_NONCE_STOPPED",
+        "nonce": "phase0-fabric-1.20.1-client-8623-9816-24752-0"
+      },
+      "jobLog": {
+        "path": "output/verification/texel-density-051-ci-production.log",
+        "bytes": 123928,
+        "sha256": "b0a220414a37a6f11b0df941b48249fc65fbd3d203f6d18559f5d5ed12d62788"
+      },
+      "generated": {
+        "manifest": {
+          "path": "output/ci/37465942001-production/output/ci/fabric-production/generated/source-review-manifest.json",
+          "bytes": 1663,
+          "sha256": "358db61afefcc01b674e313b928d69e9edd122c0f6528bb3d48e70971a78871f"
+        },
+        "operationEvidence": {
+          "path": "output/ci/37465942001-production/output/ci/fabric-production/generated/operation-evidence.v1.json",
+          "bytes": 9643,
+          "sha256": "3e42770acd9daa1262d7b44f9c93dc75dba6d8e0939b96caf5799ea41536dfd3"
+        },
+        "sourceFiles": 6,
+        "jar": {
+          "path": "output/ci/37465942001-production/output/ci/fabric-production/generated/build/libs/infectedfrontier-0.1.0.jar",
+          "bytes": 28835,
+          "sha256": "63c8139423e57b925edfa40f030020b23ae2cc21571eaf711c879d58a382cc15"
+        },
+        "dedicatedLog": {
+          "path": "output/ci/37465942001-production/output/ci/fabric-production/generated/dedicated-server.log",
+          "bytes": 9283,
+          "sha256": "445add985aa61932458b66febcf4b24add7d9ec4d00d01ddc74e2a0e06df4d5e"
+        }
+      }
+    },
+    "legacyFabric262": {
+      "status": "CHECKSUM_MISMATCH_UNRESOLVED",
+      "cause": "NOT_ESTABLISHED",
+      "jobId": 112276861189,
+      "artifactId": 11414840286,
+      "coordinate": "net.minecraft:minecraft-common-043a8b3edf:26.2",
+      "expectedSha256": "23248c15f8413aa0d06ac59e676913dd6a1dc0c5fffaa09365afd6c98d59fcd3",
+      "actualSha256": "19ce974aae51120b1cbcc942dce27d5cd8fd18d0723816584ee325601db4550f",
+      "report": {
+        "path": "output/ci/37465942001-legacy/at-1791290937084/dependency-verification-report.html",
+        "bytes": 9060,
+        "sha256": "b58a59ad8829460fc9a91802f1d5815053c3b765616d035d2d9a2d614bc9d79c"
+      }
+    },
+    "boundary": "Read-only inspection technical acceptance only; point 051 authored neighboring surfaces and human visual acceptance remain open; no authored Minecraft integration"
+  },
+  "boundaries": [
+    "Inspection is read-only and caller profile is not authenticated ArtSpec",
+    "Integer infeasibility/closest positive count do not grant profile exceptions",
+    "Neutral Leaf C and ArtSpec unchanged; no texture/volume approval, authored JAR integration or in-game acceptance",
+    "Point 051 remains open until authored neighboring surfaces are visually accepted"
+  ]
+}
