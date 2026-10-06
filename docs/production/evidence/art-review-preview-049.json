@@ -1,0 +1,312 @@
+{
+  "schemaVersion": 1,
+  "roadmapPoint": 49,
+  "pointClosed": false,
+  "status": "LOCAL_PREVIEW_FOUNDATION_PASS_HOSTED_PENDING",
+  "checkedAtUtc": "2026-10-06T13:17:50.926Z",
+  "sourceCommit": "a02676a8b4168ac2509a91b51102326678c73a82",
+  "sourceTree": "d7d78ba92aef486800af809cd9e3fddb6ce4c89a",
+  "sourceInputs": [
+    {
+      "path": "packages/assets-contracts/art-review.ts",
+      "gitBlobBytes": 7301,
+      "gitBlobSha256": "ab70c61ab0f4e12f9811ca3e5a1b2cba4e49df39919414805eb7bb4ca1d3a291",
+      "workingTreeBytes": 7301,
+      "workingTreeSha256": "ab70c61ab0f4e12f9811ca3e5a1b2cba4e49df39919414805eb7bb4ca1d3a291"
+    },
+    {
+      "path": "packages/assets-contracts/art-review.test.ts",
+      "gitBlobBytes": 4421,
+      "gitBlobSha256": "2235f2944d6594c2f9d93a935d580667da324440f04d3601f2dcb3fc25fa065b",
+      "workingTreeBytes": 4421,
+      "workingTreeSha256": "2235f2944d6594c2f9d93a935d580667da324440f04d3601f2dcb3fc25fa065b"
+    },
+    {
+      "path": "packages/assets-contracts/index.ts",
+      "gitBlobBytes": 18505,
+      "gitBlobSha256": "f852fcee81db7889b0cc117f1a242b304d29dc774a6a0b70f95e87b97a0068e0",
+      "workingTreeBytes": 18505,
+      "workingTreeSha256": "f852fcee81db7889b0cc117f1a242b304d29dc774a6a0b70f95e87b97a0068e0"
+    },
+    {
+      "path": "packages/assets-contracts/package.json",
+      "gitBlobBytes": 573,
+      "gitBlobSha256": "1e1630ff3c79c57a222678d801a52f2a53dc39f0ca9f700b024f4bfcecff4f9e",
+      "workingTreeBytes": 573,
+      "workingTreeSha256": "1e1630ff3c79c57a222678d801a52f2a53dc39f0ca9f700b024f4bfcecff4f9e"
+    },
+    {
+      "path": "packages/assets-core/art-review.ts",
+      "gitBlobBytes": 8854,
+      "gitBlobSha256": "28c32faef19c2743cdd6282a6e23d189c3e3281149e90f921d43c7ff50aa6d82",
+      "workingTreeBytes": 8854,
+      "workingTreeSha256": "28c32faef19c2743cdd6282a6e23d189c3e3281149e90f921d43c7ff50aa6d82"
+    },
+    {
+      "path": "packages/assets-core/art-review.test.ts",
+      "gitBlobBytes": 6759,
+      "gitBlobSha256": "aa11abd523ff7610c0fa7e4ae940de42956e46fd1b3e93ef3d76d32666642585",
+      "workingTreeBytes": 6759,
+      "workingTreeSha256": "aa11abd523ff7610c0fa7e4ae940de42956e46fd1b3e93ef3d76d32666642585"
+    },
+    {
+      "path": "packages/assets-core/index.ts",
+      "gitBlobBytes": 16204,
+      "gitBlobSha256": "4ebe6ecb70c85bf125f6c761ad4740b144a03fc2c2fa22b6977cef9b6a352461",
+      "workingTreeBytes": 16204,
+      "workingTreeSha256": "4ebe6ecb70c85bf125f6c761ad4740b144a03fc2c2fa22b6977cef9b6a352461"
+    },
+    {
+      "path": "packages/assets-core/package.json",
+      "gitBlobBytes": 470,
+      "gitBlobSha256": "75a9b45389859aeff383d208c585f9ffa3b632d0b5861514ed2b78ffa78e15b8",
+      "workingTreeBytes": 470,
+      "workingTreeSha256": "75a9b45389859aeff383d208c585f9ffa3b632d0b5861514ed2b78ffa78e15b8"
+    },
+    {
+      "path": "docs/production/ART_REVIEW_PREVIEW.md",
+      "gitBlobBytes": 7466,
+      "gitBlobSha256": "e508aa81d7fee2d3f4fbb083c6d0f5a493c47fb0960575a9ea60fe3802508a8c",
+      "workingTreeBytes": 7466,
+      "workingTreeSha256": "e508aa81d7fee2d3f4fbb083c6d0f5a493c47fb0960575a9ea60fe3802508a8c"
+    },
+    {
+      "path": "docs/production/REVIEW_ROLES.md",
+      "gitBlobBytes": 4989,
+      "gitBlobSha256": "9432bce37b42e981acf80bf2ede624874153cbb058703e86f0fb3e7c8e2f5a5f",
+      "workingTreeBytes": 4989,
+      "workingTreeSha256": "9432bce37b42e981acf80bf2ede624874153cbb058703e86f0fb3e7c8e2f5a5f"
+    },
+    {
+      "path": "docs/quality/art-quality-rubric-v0.md",
+      "gitBlobBytes": 28807,
+      "gitBlobSha256": "033709c2e404f7ee9d26da20ca2e1a6ffce65fc36e385c7ecb37c02811eb6023",
+      "workingTreeBytes": 28807,
+      "workingTreeSha256": "033709c2e404f7ee9d26da20ca2e1a6ffce65fc36e385c7ecb37c02811eb6023"
+    },
+    {
+      "path": "docs/PRODUCTION_ROADMAP_100.md",
+      "gitBlobBytes": 69442,
+      "gitBlobSha256": "a14d0788fc1033e55c8559703d00241de19d992ec749aac55c88b0ecd04ce25a",
+      "workingTreeBytes": 69442,
+      "workingTreeSha256": "a14d0788fc1033e55c8559703d00241de19d992ec749aac55c88b0ecd04ce25a"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "gitBlobBytes": 95944,
+      "gitBlobSha256": "e955ab8e82d8bb87128cf10f0f95b67c217fb1bf31eb7f2321823e66b03195c2",
+      "workingTreeBytes": 95944,
+      "workingTreeSha256": "e955ab8e82d8bb87128cf10f0f95b67c217fb1bf31eb7f2321823e66b03195c2"
+    }
+  ],
+  "lineEndings": "Canonical Git source blobs; raw working bytes recorded separately",
+  "local": {
+    "status": "PASS",
+    "scope": "Node library contracts/calculation/integrity; no Studio review UI or release authority",
+    "logs": [
+      {
+        "status": "PASS",
+        "path": "output/verification/art-review-049-focused.log",
+        "bytes": 249,
+        "sha256": "ecc7a3b0e2bf81a23858bb65b1b2a89e6df371ae2d97a7fcd0c5c91e3dc9bb19"
+      },
+      {
+        "status": "PASS",
+        "path": "output/verification/art-review-049-portable.log",
+        "bytes": 5294,
+        "sha256": "bdf89d38a457ba3488deb4c62debed5fd2ba4f32dff0e62c22284e19c67d3bdb"
+      },
+      {
+        "status": "PASS",
+        "path": "output/verification/art-review-049-typecheck.log",
+        "bytes": 176,
+        "sha256": "fe0327fb3a908a7cea6b4e5ef62bbaa7903d4f4149a209170e6249f0dd5c8190"
+      },
+      {
+        "status": "PASS",
+        "path": "output/verification/art-review-049-lint.log",
+        "bytes": 29,
+        "sha256": "9f55fa4f442193f038d9ed374e8109193ef8f404f0e87c8a57c77a8f64a3aa40"
+      },
+      {
+        "status": "PASS",
+        "path": "output/verification/art-review-049-leaf.log",
+        "bytes": 196,
+        "sha256": "fbcc553084bab3ba38a1108337b92fc9cb129f37103ed0b4471ada2eced07bbf"
+      }
+    ]
+  },
+  "leaf": {
+    "status": "READ_ONLY_DRAFT_PREVIEW_PASS",
+    "report": {
+      "path": "output/model-editor/art-review-049-leaf-b3e3a226/report.json",
+      "bytes": 6469,
+      "sha256": "023d8f1e935ac70a09a39c0233c4ce72483712724654215bd4cbe1da02109fa4"
+    },
+    "candidate": {
+      "path": "output/model-editor/art-review-049-leaf-b3e3a226/candidate.json",
+      "bytes": 3894,
+      "sha256": "3501d669f79054cb6022a3ca00508bb4f3107c4585d4dcae491f0dfe6b7dd8b3"
+    },
+    "scorecard": {
+      "path": "output/model-editor/art-review-049-leaf-b3e3a226/scorecard.json",
+      "bytes": 2512,
+      "sha256": "7d3920bec740158d472e6e3adcfc445d6daad35f51eeee01d1400b8832e599a6"
+    },
+    "preview": {
+      "path": "output/model-editor/art-review-049-leaf-b3e3a226/preview.json",
+      "bytes": 5449,
+      "sha256": "99ba26a25e275d4018e1223dab5d8f47d0644f5394264a10fda8a228980f49c9"
+    },
+    "integrity": {
+      "path": "output/model-editor/art-review-049-leaf-b3e3a226/integrity.json",
+      "bytes": 236,
+      "sha256": "fc0337a6b2eb30c8080178959e1e69b2874f677953d0c9e5e4a1571c76ff6a59"
+    },
+    "exactFiles": [
+      {
+        "logicalPath": "source/leaf.mmeditor.json",
+        "role": "source",
+        "path": "output/model-editor/leaf-bevel-94fbca11/c.mmeditor.json",
+        "bytes": 613693,
+        "sha256": "9b8e63ce3279981870260d8c960dffea567e4c7a091b672154fa46d1c455f82b"
+      },
+      {
+        "logicalPath": "source/artspec.json",
+        "role": "source",
+        "path": "fixtures/art/leaf-sword.artspec-v1.json",
+        "bytes": 7001,
+        "sha256": "45af443a83f00a0075b9de23df9e91d357cae50104156384a9a6cff01c329157"
+      },
+      {
+        "logicalPath": "source/rubric.md",
+        "role": "source",
+        "path": "docs/quality/art-quality-rubric-v0.md",
+        "bytes": 28807,
+        "sha256": "033709c2e404f7ee9d26da20ca2e1a6ffce65fc36e385c7ecb37c02811eb6023"
+      },
+      {
+        "logicalPath": "runtime/assets/mcdev/models/item/weapon_blockout.json",
+        "role": "runtime",
+        "path": "output\\model-editor\\leaf-studio-021-67086b85\\export\\assets\\mcdev\\models\\item\\weapon_blockout.json",
+        "bytes": 81979,
+        "sha256": "8a3a9fce5d6a8b9acc9b6eaa930033a486af3a458c6d5c37c24213be2e0cf095"
+      },
+      {
+        "logicalPath": "runtime/assets/mcdev/textures/item/weapon_blockout.png",
+        "role": "runtime",
+        "path": "output\\model-editor\\leaf-studio-021-67086b85\\export\\assets\\mcdev\\textures\\item\\weapon_blockout.png",
+        "bytes": 904,
+        "sha256": "8fa82113a430bb52fa6fa617ec94f648b0fa52c7f5ff4d3b8af367e2937d50fd"
+      },
+      {
+        "logicalPath": "source/export/editable/mcdev/weapon_blockout.bbmodel",
+        "role": "source",
+        "path": "output\\model-editor\\leaf-studio-021-67086b85\\export\\editable\\mcdev\\weapon_blockout.bbmodel",
+        "bytes": 97265,
+        "sha256": "51db3c9cd605ca996db6784b9b3af975c7732c61411828703c0ea066112708ee"
+      },
+      {
+        "logicalPath": "source/export/source/mcdev/weapon_blockout.item-asset.json",
+        "role": "source",
+        "path": "output\\model-editor\\leaf-studio-021-67086b85\\export\\source\\mcdev\\weapon_blockout.item-asset.json",
+        "bytes": 91446,
+        "sha256": "94ea47c7a997d4dfe0ed6d7368139d35326123d091a58169d61177fd70a9f649"
+      },
+      {
+        "logicalPath": "qa/technical-export.json",
+        "role": "technical",
+        "path": "output/model-editor/leaf-studio-021-67086b85/report.json",
+        "bytes": 3031,
+        "sha256": "6ac311d643224ea6cdb850eabec71d37a160bc19b0e7688fd69d5138ae3563b1"
+      },
+      {
+        "logicalPath": "qa/density.json",
+        "role": "technical",
+        "path": "output/model-editor/leaf-density-022-6470e3e8/measurement.json",
+        "bytes": 253990,
+        "sha256": "b16f95e555c28501b1fdc4cfeabcd8b4f295cf9cf8463ca5583a361e433c5d26"
+      },
+      {
+        "logicalPath": "qa/previews/front.png",
+        "role": "preview",
+        "path": "output/model-editor/leaf-studio-021-67086b85/front.png",
+        "bytes": 15463,
+        "sha256": "3cacffefb12be3b28189a97acacc915720e4f52e0964e2fd538a6900819d3a03"
+      },
+      {
+        "logicalPath": "qa/previews/back.png",
+        "role": "preview",
+        "path": "output/model-editor/leaf-studio-021-67086b85/back.png",
+        "bytes": 13739,
+        "sha256": "0f8b0590abd94996a645c13c7facb4bc2223c13ed190f607814ef60f02106a0e"
+      },
+      {
+        "logicalPath": "qa/previews/left.png",
+        "role": "preview",
+        "path": "output/model-editor/leaf-studio-021-67086b85/left.png",
+        "bytes": 7458,
+        "sha256": "7c75fb3a08b57c9bffb69630d8ea3e0d527c82ebde816e3a057e6adfdb3f83b8"
+      },
+      {
+        "logicalPath": "qa/previews/right.png",
+        "role": "preview",
+        "path": "output/model-editor/leaf-studio-021-67086b85/right.png",
+        "bytes": 7643,
+        "sha256": "91ec8acf5f6eefe28551e1b7ed7744ad78eba211d89b2f06d685b9388b61141a"
+      },
+      {
+        "logicalPath": "qa/previews/top.png",
+        "role": "preview",
+        "path": "output/model-editor/leaf-studio-021-67086b85/top.png",
+        "bytes": 22592,
+        "sha256": "75fc631ce1be24059645a87f8ba4f77063e22cf61116e5842c70823e54a67854"
+      },
+      {
+        "logicalPath": "qa/previews/bottom.png",
+        "role": "preview",
+        "path": "output/model-editor/leaf-studio-021-67086b85/bottom.png",
+        "bytes": 22321,
+        "sha256": "aa9621dbad5464e4eba01f7e13158013e5a90ae6cc305075d76e934fe53aae3f"
+      },
+      {
+        "logicalPath": "qa/previews/perspective.png",
+        "role": "preview",
+        "path": "output/model-editor/leaf-studio-021-67086b85/perspective.png",
+        "bytes": 122874,
+        "sha256": "d1a63e39ea7cf808f96ae7c23b2766316824541a63639550e10355dba1a72787"
+      },
+      {
+        "logicalPath": "qa/previews/rear-perspective.png",
+        "role": "preview",
+        "path": "output/model-editor/leaf-studio-021-67086b85/rear-perspective.png",
+        "bytes": 120625,
+        "sha256": "acb62f9ac946d02cc8e009d33aec2c514bd6d9646d37ec62945c76610cf73d99"
+      }
+    ],
+    "proposedDecision": "DRAFT",
+    "requestedReviewPreviewDecision": "NEEDS_REPAIR",
+    "unassessedCriteria": 19,
+    "actualArtScore": "NOT_MEASURED",
+    "inputAndCapturesUnchanged": true,
+    "runtimeExportSource": "384744df8bd9443d9cca68af0c24be4e28ad3c59",
+    "runtimeExportStudio": "0.21.0",
+    "runtimeExportProof": {
+      "executable": "C:\\Users\\zulut\\Documents\\minecraft-mods-ai\\output\\model-editor\\releases\\0.21.0\\adccefdc\\MineMod Studio-win32-x64\\MineMod Studio.exe",
+      "asarSha256": "119e3c9f2e15b4e278f02e444bc5013e9855fae6aff506420e6fd6fc70ff77b3"
+    },
+    "boundary": "Historical neutral scaffold exports/captures; no approved volume, texture, provenance, ArtSpec/runtime identity or authored Minecraft integration"
+  },
+  "hosted": {
+    "status": "NOT_RUN_FOR_SOURCE",
+    "sourceCommit": "a02676a8b4168ac2509a91b51102326678c73a82"
+  },
+  "boundaries": [
+    "Caller proposals and JSON files never provide human authority",
+    "Unconfirmed N/A retains criterion weight; trusted normalization not implemented",
+    "ArtSpec/rubric declared hash bindings do not authenticate their semantics",
+    "No persistent review history, APPROVED/REJECTED/SUPERSEDED or release permission",
+    "MCP inventory and authored asset/JAR integration unchanged",
+    "Point 049 stays open; roadmap completed count remains 42"
+  ]
+}
