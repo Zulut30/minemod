@@ -713,7 +713,7 @@ export function App() {
             <VariantsPanel key={project.projectId} project={project} />
           )}
           {ui.mode === "review" && project && (
-            <ReviewBoard key={project.projectId} project={project} />
+            <ReviewBoard key={project.projectId} project={project} materials />
           )}
           {ui.mode !== "variants" && ui.mode !== "review" && (
             <>

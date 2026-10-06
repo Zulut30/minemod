@@ -71,6 +71,7 @@ await copyFile(
   join(dist, "example.json"),
 );
 const licenses = join(dist, "licenses");
+await copyFile(join(repo, "docs/quality/art-quality-rubric-v0.md"), join(dist, "art-quality-rubric.md"));
 await mkdir(licenses, { recursive: true });
 await copyFile(join(repo, "LICENSE"), join(licenses, "MineMod-Apache-2.0.txt"));
 const entries = new Map();

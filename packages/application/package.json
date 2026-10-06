@@ -6,8 +6,8 @@
   "type": "module",
   "exports": "./index.ts",
   "scripts": {
-    "test": "node --experimental-strip-types item-assets.test.ts && node --experimental-strip-types asset-bundles.test.ts && node --experimental-strip-types evidence.test.ts && node --experimental-strip-types test.ts",
-    "test:assets": "node --experimental-strip-types item-assets.test.ts && node --experimental-strip-types asset-bundles.test.ts && node --experimental-strip-types evidence.test.ts"
+    "test": "node --experimental-strip-types item-assets.test.ts && node --experimental-strip-types asset-bundles.test.ts && node --experimental-strip-types evidence.test.ts && node --experimental-strip-types art-review.test.ts && node --experimental-strip-types art-review-history.test.ts && node --experimental-strip-types art-review-candidate.test.ts && node --experimental-strip-types test.ts",
+    "test:assets": "node --experimental-strip-types item-assets.test.ts && node --experimental-strip-types asset-bundles.test.ts && node --experimental-strip-types evidence.test.ts && node --experimental-strip-types art-review.test.ts && node --experimental-strip-types art-review-history.test.ts && node --experimental-strip-types art-review-candidate.test.ts"
   },
   "dependencies": {
     "@mcdev/assets-core": "workspace:*",
@@ -17,6 +17,7 @@
     "@mcdev/build-runner": "workspace:*",
     "@mcdev/compiler-fabric": "workspace:*",
     "@mcdev/contracts": "workspace:*",
-    "@mcdev/workspace": "workspace:*"
+    "@mcdev/workspace": "workspace:*",
+    "@mcdev/validation": "workspace:*"
   }
 }

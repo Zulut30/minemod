@@ -146,6 +146,9 @@ importers:
       '@mcdev/contracts':
         specifier: workspace:*
         version: link:../contracts
+      '@mcdev/validation':
+        specifier: workspace:*
+        version: link:../validation
       '@mcdev/workspace':
         specifier: workspace:*
         version: link:../workspace

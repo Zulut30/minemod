@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react"
 import type { EditorProject } from "@mcdev/editor-core";
 import type { View } from "../shared/bridge.ts";
 import { Viewport, comparisonFrame, type NativePreviews } from "./Viewport.tsx";
+import { ArtReviewPanel } from "./ArtReviewPanel.tsx";
 
 const angles: [View, string, string][] = [
   ["front", "Спереди", "Силуэт и акцент"],
@@ -14,10 +15,12 @@ export function ReviewBoard({
   project,
   referenceProject,
   onReady,
+  materials = false,
 }: {
   project: EditorProject;
   referenceProject?: EditorProject;
   onReady?: () => void;
+  materials?: boolean;
 }) {
   const framing = useMemo(
     () =>
@@ -116,6 +119,7 @@ export function ReviewBoard({
         </div>
         <span className="review-badge">Визуальная проверка</span>
       </div>
+      {materials && <ArtReviewPanel />}
       <div className="review-grid">
         {angles.map(([view, title, hint]) => (
           <section className="review-angle" key={view} data-view={view}>

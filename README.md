@@ -30,6 +30,7 @@
 - [Сохранение цветов при перекраске Studio 0.20](docs/production/LOCAL_RECOLOR.md): выбранный цвет руны, кристалла или блика сохраняется в локальном тонировании и через ограниченную MCP-команду;
 - [Безопасная перепаковка UV Studio 0.21](docs/production/SAFE_UV_REPACK.md): рисунок, отражения, защищённые поверхности и undo сохраняются; полный локальный и hosted Windows набор из 22 сценариев прошёл;
 - [Масштаб пикселей Studio 0.22](docs/production/TEXEL_DENSITY_INSPECTION.md): read-only диагностика по граням в UV-панели и MCP, учёт inflate, целых UV и размеров атласа; создание согласованной текстуры и визуальная приёмка ещё открыты;
+- [Материалы арт-проверки Studio 0.23](docs/production/ART_REVIEW_PREVIEW.md): экспорт и восемь ракурсов одной версии, реальные ArtSpec bindings и сохраняемая история черновика; художественная/игровая приёмка и release permission ещё открыты;
 - параметрический архетип большого дракона и structural/texture preflight;
 - доверенный каталог интеграций Fabric-библиотек.
 - сохраняемая JSON5-конфигурация с generated boolean/integer/string controls, YACL-экран и кнопка Mod Menu.

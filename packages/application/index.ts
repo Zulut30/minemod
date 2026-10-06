@@ -149,4 +149,7 @@ export function createFabricApplication(
 
 export { compileItemAssetPayload, itemAssetDiagnostic, MAX_ITEM_ASSET_PAYLOAD_BYTES, type ItemAssetBundle } from "./item-assets.ts";
 export { compileItemAssetBundleV1, verifyAssetBundleV1, verifyAssetBundlePayloadV1 } from "./asset-bundles.ts";
+export { inspectArtReviewInputs, type ArtReviewInputInspection } from "./art-review.ts";
+export { ArtReviewDraftHistory, ArtReviewHistoryError, ART_REVIEW_HISTORY_LIMITS, type ArtReviewDocuments, type ArtReviewHistorySnapshot } from "./art-review-history.ts";
+export { ART_REVIEW_VIEWS, prepareArtReviewExport, prepareArtReviewCandidate, verifyArtReviewContents, type ArtReviewContent } from "./art-review-candidate.ts";
 export { assetOperationWithEvidence, fabricBuildEvidence, operationFailureEvidence, FabricBuildOperationError } from "./evidence.ts";

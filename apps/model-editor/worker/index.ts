@@ -21,12 +21,16 @@ import type { HostResponse, View } from "../shared/bridge.ts";
 import {emptyAgentStatus, type AgentStatus, type AgentStatusMessage} from "../shared/agent-status.ts";
 import { startEditorMcp } from "./mcp.ts";
 import { ConceptStore } from "./concept-files.ts";
+import { StudioArtReview } from "./art-review.ts";
+import { ArtReviewHistoryError } from "../../../packages/application/art-review-history.ts";
+import { ArtReviewControlSchema } from "../shared/art-review.ts";
 
 interface ServiceRequest {
   id: number;
   kind: string;
   fixturePath?: string;
   recoveryPath?: string;
+  rubricPath?: string;
   path?: string;
   mutation?: unknown;
   control?: unknown;
@@ -43,6 +47,7 @@ let session: EditorSession;
 let fixture: unknown;
 let recoveryPath: string;
 let conceptStore: ConceptStore;
+let artReview: StudioArtReview;
 let connection: Awaited<ReturnType<typeof startEditorMcp>> | undefined;
 let agentSequence = 0;
 let agentStatus: AgentStatusMessage = {sequence:agentSequence,status:emptyAgentStatus()};
@@ -190,6 +195,7 @@ async function run(request: ServiceRequest): Promise<HostResponse> {
     ) as unknown;
     recoveryPath = request.recoveryPath!;
     conceptStore = new ConceptStore(join(dirname(recoveryPath),"concepts"));
+    artReview = new StudioArtReview(join(dirname(recoveryPath), "art-review"), request.rubricPath!);
     let project = projectFromAsset(fixture, randomUUID());
     try {
       const loaded = await readProjectWithVersion(recoveryPath);
@@ -216,6 +222,12 @@ async function run(request: ServiceRequest): Promise<HostResponse> {
       }
     }
     session = new EditorSession(project);
+  } else if (request.kind === "artReview") {
+    const state = session.state();
+    const control = ArtReviewControlSchema.parse(request.control), summary = await artReview.run(control, state, request.path, view => capture(state, view));
+    if (control.action === "prepare") await changed("Материалы арт-проверки сохранены для этой версии модели.");
+    return { ok: true, state, artReview: summary, warning: recoveryWarning,
+      ...(control.action !== "get" ? { note: "Материалы арт-проверки обновлены. Художественная и игровая приёмка ещё открыты." } : {}) };
   } else if (request.kind === "connection") {
     if (request.action === "start" && !connection)
       connection = await startEditorMcp({
@@ -406,7 +418,7 @@ port.on(
         result = {
           ok: false,
           error:
-            error instanceof EditorError
+            error instanceof EditorError || error instanceof ArtReviewHistoryError
               ? { code: error.code, message: error.message }
               : {
                   code: "SERVICE_ERROR",

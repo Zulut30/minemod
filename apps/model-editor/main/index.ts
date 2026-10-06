@@ -21,6 +21,7 @@ import type {
   CaptureJob,
 } from "../shared/bridge.ts";
 import {emptyAgentStatus, MAX_AGENT_STATUS_BYTES, type AgentStatusMessage} from "../shared/agent-status.ts";
+import { ArtReviewControlSchema } from "../shared/art-review.ts";
 
 protocol.registerSchemesAsPrivileged([
   {
@@ -76,7 +77,7 @@ function ask(
     const timer = setTimeout(() => {
       pending.delete(id);
       complete(unavailable());
-    }, 20_000);
+    }, kind === "artReview" ? 120_000 : 20_000);
     pending.set(id, { resolve: complete, timer });
     try {
       worker!.postMessage({ id, kind, ...fields });
@@ -165,6 +166,14 @@ async function handle(request: HostRequest): Promise<HostResponse> {
       });
       result = chosen.canceled || !chosen.filePaths[0] ? await ask("inspect")
         : await ask("conceptImport", {path:chosen.filePaths[0],conceptImport:request.control});
+      break;
+    }
+    case "artReview": {
+      if (request.control.action === "prepare") {
+        const chosen = await dialog.showOpenDialog(window, { title: "ArtSpec модели для проверки", properties: ["openFile"], filters: [{ name: "ArtSpec JSON", extensions: ["json"] }] });
+        result = chosen.canceled || !chosen.filePaths[0] ? await ask("artReview", { control: { action: "get" } })
+          : await ask("artReview", { control: request.control, path: chosen.filePaths[0] });
+      } else result = await ask("artReview", { control: request.control });
       break;
     }
     case "new":
@@ -286,6 +295,7 @@ async function boot(): Promise<void> {
   const initialized = await ask("init", {
     fixturePath: join(runtime, "example.json"),
     recoveryPath: join(app.getPath("userData"), "recovery.mmeditor.json"),
+    rubricPath: join(runtime, "art-quality-rubric.md"),
   });
   window = new BrowserWindow({
     title: "MineMod Studio",
@@ -366,6 +376,7 @@ async function boot(): Promise<void> {
         "connection",
         "repair",
         "conceptImport",
+        "artReview",
       ].includes(request.kind) ||
       Object.keys(value).sort().join(",") !==
         (request.kind === "apply"
@@ -374,13 +385,15 @@ async function boot(): Promise<void> {
             ? "action,kind"
             : request.kind === "repair" ? "control,kind"
             : request.kind === "conceptImport" ? "control,kind"
+            : request.kind === "artReview" ? "control,kind"
             : "kind") ||
       (request.kind === "connection" &&
         !["get", "start", "stop", "pause", "resume"].includes(request.action)) ||
       (request.kind === "apply" &&
         !MutationSchema.safeParse(request.mutation).success) ||
       (request.kind === "repair" && !RepairControlSchema.safeParse(request.control).success) ||
-      (request.kind === "conceptImport" && !ConceptImportSchema.safeParse(request.control).success)
+      (request.kind === "conceptImport" && !ConceptImportSchema.safeParse(request.control).success) ||
+      (request.kind === "artReview" && !ArtReviewControlSchema.safeParse(request.control).success)
     ) {
       return {
         ok: false,

@@ -1512,6 +1512,20 @@ select {
   justify-content: space-between;
   gap: 12px;
 }
+.art-review-panel { flex-shrink: 0; border: 1px solid var(--border); border-radius: 8px; background: #151d29; }
+.art-review-panel > summary { cursor: pointer; padding: 10px 12px; color: #dce5f3; }
+.art-review-panel > summary > span { float: right; color: #a6bdd8; font-size: 11px; }
+.art-review-body { padding: 0 12px 12px; display: grid; gap: 10px; }
+.art-review-body p { margin: 0; color: var(--muted); line-height: 1.45; font-size: 12px; }
+.art-review-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.art-review-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 0; font-size: 12px; }
+.art-review-facts dt { color: var(--muted); margin-bottom: 4px; }
+.art-review-facts dd { margin: 0; color: #dae6f5; }
+.art-review-identity { font-family: monospace; overflow-wrap: anywhere; }
+.art-review-diagnostics { max-height: 170px; overflow: auto; margin: 0; padding-left: 18px; font-size: 11px; color: #bacadd; }
+.art-review-diagnostics li { margin-bottom: 6px; overflow-wrap: anywhere; }
+.art-review-history { font-size: 12px; color: #b8c9dc; }
+.art-review-limit { border-top: 1px solid var(--border); padding-top: 8px; }
 .review-heading > div {
   display: flex;
   align-items: baseline;

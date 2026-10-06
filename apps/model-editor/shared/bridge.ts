@@ -1,5 +1,6 @@
 import type { EditorState, EditorProject, Mutation, RepairControl, ConceptImport } from "@mcdev/editor-core";
 import type { AgentStatusMessage } from "./agent-status.ts";
+import type { ArtReviewControl, ArtReviewSummary } from "./art-review.ts";
 export const VIEWS = ["perspective", "front", "side", "back", "left", "right", "top", "bottom", "rear-perspective"] as const;
 export type View = typeof VIEWS[number];
 export interface ConnectionInfo {
@@ -33,6 +34,7 @@ export type HostRequest =
   | { kind: "apply"; mutation: Mutation }
   | { kind: "repair"; control: RepairControl }
   | { kind: "conceptImport"; control: ConceptImport }
+  | { kind: "artReview"; control: ArtReviewControl }
   | { kind: "connection"; action: "get" | "start" | "stop" | "pause" | "resume" };
 export type HostResponse =
   | {
@@ -44,6 +46,7 @@ export type HostResponse =
       fileName?: string;
       connection?: ConnectionInfo;
       conceptImage?: string;
+      artReview?: ArtReviewSummary | null;
     }
   | { ok: false; error: { code: string; message: string } };
 export interface EditorBridge {
