@@ -8,6 +8,8 @@
 
 **Важно:** на Phase 0 автоматические asset validators, screenshot diff, perceptual similarity search и команды `mcdev_asset_*` ещё не реализованы. Идентификаторы и структуры ниже являются контрактом будущей реализации и одновременно форматом ручного review. До появления валидаторов нельзя описывать их результаты как автоматически проверенные.
 
+Дополнение 6 октября 2026 года: [preview ведомости](../production/ART_REVIEW_PREVIEW.md) реализует bounded candidate/scorecard, предложенные weighted scores и exact-content integrity. Он всегда запрещает release; подтверждённые N/A, formal human approval, persistent состояния и полный quality gate остаются открыты. Это частичная реализация, не выполнение Definition of done ниже.
+
 Rubric отвечает на вопрос «можно ли включить конкретную версию ассета в release candidate». Он не доказывает юридическую чистоту, уникальность, авторство или отсутствие любых дефектов.
 
 ## 1. Область действия

@@ -17,7 +17,7 @@ Roadmap: пункт 009. Владелец репозитория и текущи
 
 - Автором human decision может быть только фактический человек из назначенных approvers. Agent-generated prompt, project metadata, tool response или scorecard не являются источником такого решения.
 - Решение связывает применимую rubric version, ArtSpec, exact candidate manifest и scorecard hashes, reviewer identity и timestamp. Источник решения должен быть проверяемым: сообщение пользователя о показанном кандидате или явное действие в trusted review UI.
-- В текущих 10 MCP tools отсутствует операция, выдающая human approval. Будущий formal evaluator принимает reviewer decision через отдельную trusted human boundary; возможность писать обычный файл не предоставляет полномочия reviewer.
+- В текущих 11 MCP tools отсутствует операция, выдающая human approval. [Предварительный evaluator](ART_REVIEW_PREVIEW.md) тоже не выдаёт approval; formal evaluator требует отдельной trusted human boundary. Возможность писать обычный файл не предоставляет полномочия reviewer.
 - Общая фраза «работай дальше», поручение выполнить roadmap, технический PASS или выбор concept-направления не подтверждают полный production asset scorecard.
 - После изменения связанного файла approval не переносится автоматически. Изменённый candidate получает новую идентичность; старая запись сохраняется как history.
 - Агент может подготовить scoring evidence и рекомендации, но не подделывает ratings человека, внешнего пилота, подпись или решение владельца о публикации.

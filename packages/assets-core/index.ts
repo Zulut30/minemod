@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+export { previewArtScorecard, verifyArtCandidateContents, type ArtReviewPreview, type ArtReviewDiagnostic } from "./art-review.ts";
 import { compileMinecraftItemModel } from "./minecraft-item.ts";
 import { assemblePaintedMinecraftItem, type PaintedMinecraftItemAssets } from "./painted-item.ts";
 export { compileMinecraftItemModel, MinecraftItemModelError, type CompiledMinecraftItemModel } from "./minecraft-item.ts";

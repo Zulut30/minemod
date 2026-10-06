@@ -6,7 +6,7 @@
   "type": "module",
   "exports": "./index.ts",
   "scripts": {
-    "test": "node --experimental-strip-types test.ts && node --experimental-strip-types minecraft-item.test.ts && node --experimental-strip-types painted-item.test.ts"
+    "test": "node --experimental-strip-types test.ts && node --experimental-strip-types minecraft-item.test.ts && node --experimental-strip-types painted-item.test.ts && node --experimental-strip-types art-review.test.ts"
   },
   "dependencies": {
     "@mcdev/assets-contracts": "workspace:*"
